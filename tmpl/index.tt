@@ -23,9 +23,16 @@
 
         <header class="subhead jumbotron" id="overview">
             <div class="row">
-                <h1 class="title">tokuhirom.github.io</h1>
+                <h1 class="title">64p.org</h1>
             </div>
         </header>
+
+        <div class="row">
+          <p>Hi, I'm tokuhirom (徳永広夢).</p>
+          <p>I am a software engineer with extensive experience in designing and developing large-scale services, including those with over 10 million active users. Throughout my career, I have been deeply involved in building robust, scalable platforms and innovative solutions that empower users and businesses alike.</p>
+          <p>While I work across various languages and technologies, I have a strong background in Perl and have contributed significantly to its ecosystem. Additionally, I am well-versed in Kotlin, Java, and Rust, and I enjoy leveraging these tools to create efficient and maintainable software.</p>
+          <p>This website showcases my work, thoughts, and insights. Feel free to explore and connect if you’d like to learn more or collaborate!</p>
+        </div>
 
             <div class="row">
                 <div class="span4">
