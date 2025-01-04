@@ -54,12 +54,6 @@
             </div>
             <div class="row">
                 <div class="col-lg-4">
-                    <h2>Notes</h2>
-                    <ul>
-                    [% FOR note IN notes -%]
-                        <li><a href="[% note.link %]">[% note.title %]</a></li>
-                    [% END %]
-                    </ul>
                 </div>
                 <div class="col-lg-4">
                     <h2>Talks</h2>
