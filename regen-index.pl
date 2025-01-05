@@ -30,6 +30,7 @@ sub regen {
 
 sub spew {
     my $fname = shift;
+    print("Writing $fname\n");
     open my $fh, '>:utf8', $fname
         or Carp::croak("Can't open '$fname' for writing: '$!'");
     print {$fh} $_[0];
@@ -96,6 +97,7 @@ sub regen {
 
 sub spew {
     my $fname = shift;
+    print("Writing $fname\n");
     open my $fh, '>:utf8', $fname
         or Carp::croak("Can't open '$fname' for writing: '$!'");
     print {$fh} $_[0];
