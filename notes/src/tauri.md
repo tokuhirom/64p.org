@@ -32,7 +32,7 @@ WebViewはデフォルトでOS機能に一切アクセスできず、`capabiliti
 
 ## 類似ツールとの比較
 
-Electronがフル Chromium を同梱するのに対し、TauriはOSネイティブWebViewを使うことでバイナリサイズを大幅に削減する(READMEでは「Electronより95%小さいバイナリ」と謳う)。バックエンドをGoで書く[[wails]]とは、OSネイティブWebViewを使うという設計思想は共通しつつ、Rust製である点と上記capabilitiesによるセキュリティモデルが異なる。
+[[electron|Electron]]がフル Chromium を同梱するのに対し、TauriはOSネイティブWebViewを使うことでバイナリサイズを大幅に削減する(READMEでは「Electronより95%小さいバイナリ」と謳う)。バックエンドをGoで書く[[wails]]とは、OSネイティブWebViewを使うという設計思想は共通しつつ、Rust製である点と上記capabilitiesによるセキュリティモデルが異なる。
 
 ## 出典
 
