@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>Wails - Notes - 64p.org</title>
+    <title>Skia - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/highlight.js@11/styles/github.min.css" media="(prefers-color-scheme: light)">
@@ -20,9 +20,9 @@
             <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
             <ul class="notes-nav">
                             <li><a href="/notes/welcome.html">Notesコーナーへようこそ</a></li>
-                            <li><a href="/notes/wails.html" class="active">Wails</a></li>
+                            <li><a href="/notes/wails.html">Wails</a></li>
                             <li><a href="/notes/tableau.html">Tableau</a></li>
-                            <li><a href="/notes/skia.html">Skia</a></li>
+                            <li><a href="/notes/skia.html" class="active">Skia</a></li>
                             <li><a href="/notes/sakpilot.html">SakPilot</a></li>
                             <li><a href="/notes/rust-gui-libraries.html">Rust GUI ライブラリ一覧</a></li>
                             <li><a href="/notes/raku-rakudo-perl6.html">Raku / Rakudo / Perl 6</a></li>
@@ -51,49 +51,61 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>Wails</h1>
+                <h1>Skia</h1>
 
-<p><a class="note-tag" href="/notes/tags/go.html">#go</a> <a class="note-tag" href="/notes/tags/typescript.html">#typescript</a> <a class="note-tag" href="/notes/tags/wails.html">#wails</a></p>
+<p>Googleが管理しているオープンソースの2Dグラフィックスライブラリ。 <a class="note-tag" href="/notes/tags/graphics.html">#graphics</a></p>
 
-<p>Go言語のバックエンドとWeb技術(HTML/CSS/JS、React/Vue/Svelteなど)のフロントエンドを組み合わせてクロスプラットフォームのデスクトップアプリを作れるフレームワーク。MITライセンスのOSSで、GitHub Stars約35.7k。対応OSはWindows/macOS/Linux。<a href="/notes/sakpilot.html">SakPilot</a>もWails v2で作られている。</p>
-
-<h2>アーキテクチャ</h2>
-
-<p>Electronがフルの Chromium を同梱するのに対し、Wailsは OS のネイティブ WebView(macOSならWebKit、WindowsならWebView2、LinuxならWebKitGTK)を利用してUIを描画する。そのためアプリのバンドルサイズやメモリ使用量が大幅に小さく済む(公式ドキュメントの目安は~15MB、RAM~10MB、起動0.5秒未満)。GoとJS間のバインディングは自動生成され、Goの関数をJS側から直接呼び出せる。</p>
-
-<h2>類似ツールとの違い</h2>
+<h2>概要</h2>
 
 <ul>
-<li><strong>Electron</strong>: フルのChromiumを同梱する成熟したエコシステム。バイナリサイズは大きいがドキュメント・実績が豊富。</li>
-<li><strong>Tauri</strong>: WailsとほぼおなじくOSネイティブWebViewを使うアーキテクチャだが、バックエンドはRust。WebViewはデフォルトでネイティブ機能に一切アクセスできず、明示的な許可(capabilities)を与える設計でセキュリティ面で一歩進んでいる。</li>
-<li><strong>Wails</strong>: Goでバックエンドを書きたい開発者にとって、Tauriに近い軽量さのメリットを享受できる選択肢という位置づけ。</li>
+<li>C++製の汎用2D描画エンジン。テキスト・図形・画像の描画を、プラットフォーム固有のグラフィックスAPI（DirectX、Metal、Vulkan、OpenGLなど）の違いを吸収した共通APIで扱える</li>
+<li>ライセンス: New BSD</li>
 </ul>
 
 
-<h2>バージョン状況</h2>
+<h2>沿革</h2>
 
-<p>v2が安定版(stable)として広く使われており、v3は現在ベータ版で開発中。6,600以上のコミットで活発に開発が続いている。</p>
+<ul>
+<li>2004年、Mike ReedとCary ClarkがNorth Carolina州Chapel Hillで Skia Inc を設立</li>
+<li>2005年、Googleが買収</li>
+<li>2008年、BSDライセンスでオープンソース公開</li>
+</ul>
+
+
+<h2>採用プロダクト</h2>
+
+<ul>
+<li>Google Chrome / ChromeOS</li>
+<li>Android（標準の2D描画エンジン）</li>
+<li>Flutter（UIレンダリングの中核）</li>
+<li>Mozilla Firefox / Thunderbird</li>
+<li>LibreOffice、Avalonia（.NET製UIフレームワーク）など</li>
+</ul>
+
+
+<h2>このサイトでの登場文脈</h2>
+
+<p>新興のRust GUIフレームワークでも、安定した2D描画バックエンドとしてよく採用されている。</p>
+
+<ul>
+<li><a href="/notes/freya.html">Freya (freyaui.dev) — Rust製クロスプラットフォームGUIライブラリ</a> — レンダリングエンジンとしてSkiaを採用</li>
+<li><a href="/notes/rust-gui-libraries.html">Rust GUI ライブラリ一覧</a> — FloemがVello/Skia/tiny-skiaを選択可能なレンダラーとして紹介</li>
+</ul>
+
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://github.com/wailsapp/wails">wailsapp/wails - GitHub</a></li>
-<li><a href="https://www.stork.ai/blog/gos-secret-weapon-for-desktop-apps">Wails: Build Lightweight Desktop Apps with Golang and Web Tech</a></li>
-<li><a href="https://www.digitalapplied.com/blog/desktop-apps-web-stack-tauri-electron-deno-wails-2026">Desktop Apps from Web: Tauri vs Electron vs Deno 2026</a></li>
-<li><a href="https://medium.com/@tacherasasi/why-wails-wins-at-ipc-for-go-desktop-apps-and-how-it-stacks-up-against-tauri-electron-5a00b202cf09">Why Wails Wins at IPC for Go Desktop Apps - Medium</a></li>
+<li><a href="https://skia.org/">Skia</a></li>
+<li><a href="https://skia.org/about/">About Skia | Skia</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Skia_Graphics_Engine">Skia Graphics Engine - Wikipedia</a></li>
+<li><a href="https://github.com/google/skia">GitHub - google/skia</a></li>
 </ul>
 
 
-                                <div class="notes-backlinks">
-                    <h2>🔗 リンクされているノート</h2>
-                    <ul>
-                                            <li><a href="/notes/go-gui-libraries.html">Go GUI ライブラリ一覧</a></li>
-                    
-                    </ul>
-                </div>
                                 <div class="notes-meta">
                     <span>作成日: 2026-08-09</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=Wails&url=https%3A%2F%2F64p.org%2Fnotes%2Fwails.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=Skia&url=https%3A%2F%2F64p.org%2Fnotes%2Fskia.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">
