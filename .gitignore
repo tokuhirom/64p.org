@@ -1,3 +1,7 @@
 *.sw[po]
 .DS_Store
 **/.DS_Store
+
+# ~/.gitignore_global has a global "tags" rule (for ctags) that also
+# matches this project's generated notes/tags/ directory. Un-ignore it here.
+!notes/tags/
