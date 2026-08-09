@@ -6,7 +6,7 @@ updated: 2026-08-09
 
 PowerPointやKeynote、Google SlidesのようなGUI(WYSIWYG)スライド作成ツールに対し、スライドの中身をMarkdownのプレーンテキストで書き、それをレンダリングしてスライドとして表示・出力するツール群がある。
 
-#presentation #markdown
+#presentation #markdown #moc
 
 ## 共通する思想
 
