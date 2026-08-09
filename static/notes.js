@@ -25,4 +25,14 @@
             });
         });
     }
+
+    var sidebarToggle = document.querySelector('.notes-sidebar-toggle');
+    var sidebar = document.querySelector('.notes-sidebar');
+    if (sidebarToggle && sidebar) {
+        sidebarToggle.addEventListener('click', function () {
+            var isOpen = sidebar.classList.toggle('open');
+            sidebarToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+            sidebarToggle.textContent = isOpen ? 'ノート一覧を閉じる ▴' : 'ノート一覧を開く ▾';
+        });
+    }
 })();

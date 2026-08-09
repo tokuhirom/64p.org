@@ -4,14 +4,17 @@
                 <button class="theme-toggle" title="テーマ切替" aria-label="テーマ切替">◐</button>
             </div>
             <div class="notes-sidebar-byline">by <a href="/">tokuhirom</a></div>
-            <a class="notes-tags-link" href="/notes/tags/">🏷️ タグ一覧</a>
-            <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
-            <ul class="notes-nav">
-            [% FOR note IN notes -%]
-                <li><a href="[% note.link %]"[% IF note.file == current_file %] class="active"[% END %]>[% note.title %]</a></li>
-            [% END %]
-            </ul>
-            <div class="notes-sidebar-footer">
-                <a href="/">&larr; 64p.org トップへ</a>
+            <button class="notes-sidebar-toggle" aria-expanded="false">ノート一覧を開く ▾</button>
+            <div class="notes-sidebar-body">
+                <a class="notes-tags-link" href="/notes/tags/">🏷️ タグ一覧</a>
+                <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
+                <ul class="notes-nav">
+                [% FOR note IN notes -%]
+                    <li><a href="[% note.link %]"[% IF note.file == current_file %] class="active"[% END %]>[% note.title %]</a></li>
+                [% END %]
+                </ul>
+                <div class="notes-sidebar-footer">
+                    <a href="/">&larr; 64p.org トップへ</a>
+                </div>
             </div>
         </nav>
