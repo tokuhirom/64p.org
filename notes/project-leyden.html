@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>GPUI - Notes - 64p.org</title>
+    <title>Project Leyden - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/highlight.js@11/styles/github.min.css" media="(prefers-color-scheme: light)">
@@ -38,7 +38,7 @@
                                     <li><a href="/notes/project-valhalla.html">Project Valhalla</a></li>
                                     <li><a href="/notes/project-panama.html">Project Panama</a></li>
                                     <li><a href="/notes/project-loom.html">Project Loom</a></li>
-                                    <li><a href="/notes/project-leyden.html">Project Leyden</a></li>
+                                    <li><a href="/notes/project-leyden.html" class="active">Project Leyden</a></li>
                                     <li><a href="/notes/project-glasswing.html">Project Glasswing</a></li>
                                     <li><a href="/notes/project-babylon.html">Project Babylon</a></li>
                                     <li><a href="/notes/project-amber.html">Project Amber</a></li>
@@ -62,7 +62,7 @@
                                     <li><a href="/notes/harmonyos-pc.html">HarmonyOS PC版（鴻蒙電脳）</a></li>
                                     <li><a href="/notes/hacker-news.html">Hacker News (HN) について</a></li>
                                     <li><a href="/notes/hackathon-coding-agent-skills.html">ハッカソンでのコーディングエージェント向けスキル活用</a></li>
-                                    <li><a href="/notes/gpui.html" class="active">GPUI</a></li>
+                                    <li><a href="/notes/gpui.html">GPUI</a></li>
                                     <li><a href="/notes/gpt-5-6-sol-terra-luna.html">GPT-5.6のSol / Terra / Lunaの違い</a></li>
                                     <li><a href="/notes/go-gui-libraries.html">Go GUI ライブラリ一覧</a></li>
                                     <li><a href="/notes/freya.html">Freya (freyaui.dev) — Rust製クロスプラットフォームGUIライブラリ</a></li>
@@ -89,60 +89,50 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>GPUI</h1>
+                <h1>Project Leyden</h1>
 
-<p><a class="note-tag" href="/notes/tags/rust.html">#rust</a></p>
+<p>JVMの起動時間・ウォームアップ時間の改善を目指すOpenJDKプロジェクト。ランタイム情報をキャッシュし、2回目以降の起動を高速化するアプローチを取る。</p>
 
-<p>コードエディタ<a href="https://zed.dev/">Zed</a>の開発元(Zed Industries)が作った、Rust製のGPUアクセラレーションGUIフレームワーク。バージョン0.2.2、ライセンスApache-2.0。immediate modeとretained modeのハイブリッド設計。まだpre-1.0で開発中で、バージョン間で破壊的変更が頻繁に入る。</p>
+<h2>AOTキャッシュの仕組み</h2>
 
-<h2>設計の特徴</h2>
+<p>作業を実行時から「トレーニング実行」という一回限りの事前工程に前倒しする。JEP 483は既存のClass Data Sharing (CDS)をパース以上の範囲に拡張するもので、トレーニング実行後にクラスを完全にロード・リンク済みの状態で <code>.aot</code> キャッシュファイルに保存する。以降の起動では、これらのクラスに対する再パース・再検証・再リンクが不要になり即座に利用できる。</p>
 
-<p>macOSはMetal、WindowsはDirectWriteなど、プラットフォーム固有の技術でレンダリングをGPUに直接投げ、120FPSを目標にした高フレームレートを狙う。以下の三層構造で構成されている。</p>
+<h2>効果</h2>
+
+<p>AOTキャッシュにより起動時間が0.65秒(ベースライン比41%改善)、あるSpring Bootアプリでは1.1秒から0.27秒(約4倍高速化)という例が報告されている。</p>
+
+<h2>制約</h2>
+
+<p>AOTキャッシュは可搬性がない。特定のJDK・JARファイル・設定の組み合わせに紐付いており、いずれかが変わるとキャッシュの再生成が必要になる。</p>
+
+<h2>進捗</h2>
 
 <ul>
-<li>エンティティによる状態管理</li>
-<li><code>Render</code>トレイトによる宣言的UI(View)</li>
-<li>低レベルな命令型UI(Element)制御</li>
+<li>JDK 24: JEP 483でAOTキャッシュ導入</li>
+<li>JDK 25: JEP 514でさらに強化</li>
+<li>JDK 26: JEP 516 (Ahead-of-Time Object Caching with Any GC) 導入予定</li>
 </ul>
 
-
-<h2>Zedとの関係</h2>
-
-<p>元々Zed内部の一部として開発されていたが、現在はスタンドアロンのクレートとしてcrates.ioに公開されており、音楽プレイヤー・動画編集ツール・ファイルエクスプローラ・AIコーディングターミナルなど、Zed以外のアプリでも採用が広がっている(GitHubの<a href="https://github.com/zed-industries/awesome-gpui">awesome-gpui</a>にまとめられている)。Zed本体のGitHub Starsは約88,300。</p>
-
-<h2>外部利用者向け開発の位置づけ</h2>
-
-<p>Zedメンテナーのmaxdeviantは<a href="https://github.com/zed-industries/zed/discussions/9877">GitHub Discussion #9877</a>(2024年)で、「UIクレートは現状Zed専用で、汎用ライブラリとして切り出す具体的な計画は今のところない」と述べている。</p>
-
-<p>2026年2月頃の<a href="https://github.com/zed-industries/zed/discussions/30515">GitHub Discussion #30515「Please extract GPUI」</a>等では、GPUI本流の開発がZed外部ユーザーのニーズを優先しない方向にあり、Zed本体で直接使わないコード(トレイ対応やWayland周りのタッチイベント対応など)はアップストリームにマージされにくくなっていることが議論されている。Zed開発者自身が、Zed本体で不要な機能追加はコミュニティフォークの<a href="https://github.com/gpui-ce/gpui-ce">gpui-ce</a>(GPUI Community Edition)への提出を案内するようになっている。gpui-ceのフォーク作成者(iamnbutler)は、GPUIがZedのニーズに特化して作られているため、Zed Industriesがコミュニティ専用の作業に工数を割くのを正当化するのは難しい、という実務的な理由を説明している。ただしgpui-ce自体も、PR#1マージ後にメンテナー対応が滞りがちという指摘もある。</p>
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://crates.io/crates/gpui">gpui - crates.io</a></li>
-<li><a href="https://github.com/zed-industries/zed/tree/main/crates/gpui">zed/crates/gpui - GitHub</a></li>
-<li><a href="https://beckmoulton.medium.com/gpui-a-technical-overview-of-the-high-performance-rust-ui-framework-powering-zed-ac65975cda9f">GPUI: A Technical Overview - Medium</a></li>
-<li><a href="https://zed.dev/blog/gpui-2-on-preview">GPUI 2 is now in production — Zed&rsquo;s Blog</a></li>
-<li><a href="https://github.com/zed-industries/awesome-gpui">awesome-gpui - GitHub</a></li>
-<li><a href="https://github.com/zed-industries/zed/discussions/9877">Discussion about UI crate · Discussion #9877</a></li>
-<li><a href="https://github.com/zed-industries/zed/discussions/30515">Please extract GPUI · Discussion #30515</a></li>
-<li><a href="https://github.com/zed-industries/zed/discussions/20140">GPUI wish list · Discussion #20140</a></li>
-<li><a href="https://github.com/gpui-ce/gpui-ce">gpui-ce/gpui-ce - GitHub</a></li>
-<li><a href="https://news.ycombinator.com/item?id=47003569">Zed also stopped GPUI development for&hellip; - Hacker News</a></li>
+<li><a href="https://developer.ibm.com/articles/java-project-leyden/">Improve Java startup with Project Leyden | IBM Developer</a></li>
+<li><a href="https://www.javacodegeeks.com/2026/03/project-leydens-aot-code-cache-how-java-is-solving-its-cold-start-problem-without-graalvm.html">Project Leyden&rsquo;s AOT Code Cache | Java Code Geeks</a></li>
+<li><a href="https://softwaremill.com/project-leyden-and-jdk-26-bringing-aot-caching-to-zgc/">Project Leyden &amp; JDK 26: Bringing AOT Caching to ZGC</a></li>
 </ul>
 
 
                                 <div class="notes-backlinks">
                     <h2>🔗 リンクされているノート</h2>
                     <ul>
-                                            <li><a href="/notes/freya.html">Freya (freyaui.dev) — Rust製クロスプラットフォームGUIライブラリ</a></li>
-                                            <li><a href="/notes/rust-gui-libraries.html">Rust GUI ライブラリ一覧</a></li>
+                                            <li><a href="/notes/openjdk-projects.html">OpenJDKの主要プロジェクト</a></li>
                     
                     </ul>
                 </div>
                                 <div class="notes-meta">
                     <span>作成日: 2026-08-09</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=GPUI&url=https%3A%2F%2F64p.org%2Fnotes%2Fgpui.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=Project%20Leyden&url=https%3A%2F%2F64p.org%2Fnotes%2Fproject-leyden.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">

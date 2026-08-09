@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>GPUI - Notes - 64p.org</title>
+    <title>Project Loom - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/highlight.js@11/styles/github.min.css" media="(prefers-color-scheme: light)">
@@ -37,7 +37,7 @@
                                     <li><a href="/notes/raku-rakudo-perl6.html">Raku / Rakudo / Perl 6</a></li>
                                     <li><a href="/notes/project-valhalla.html">Project Valhalla</a></li>
                                     <li><a href="/notes/project-panama.html">Project Panama</a></li>
-                                    <li><a href="/notes/project-loom.html">Project Loom</a></li>
+                                    <li><a href="/notes/project-loom.html" class="active">Project Loom</a></li>
                                     <li><a href="/notes/project-leyden.html">Project Leyden</a></li>
                                     <li><a href="/notes/project-glasswing.html">Project Glasswing</a></li>
                                     <li><a href="/notes/project-babylon.html">Project Babylon</a></li>
@@ -62,7 +62,7 @@
                                     <li><a href="/notes/harmonyos-pc.html">HarmonyOS PC版（鴻蒙電脳）</a></li>
                                     <li><a href="/notes/hacker-news.html">Hacker News (HN) について</a></li>
                                     <li><a href="/notes/hackathon-coding-agent-skills.html">ハッカソンでのコーディングエージェント向けスキル活用</a></li>
-                                    <li><a href="/notes/gpui.html" class="active">GPUI</a></li>
+                                    <li><a href="/notes/gpui.html">GPUI</a></li>
                                     <li><a href="/notes/gpt-5-6-sol-terra-luna.html">GPT-5.6のSol / Terra / Lunaの違い</a></li>
                                     <li><a href="/notes/go-gui-libraries.html">Go GUI ライブラリ一覧</a></li>
                                     <li><a href="/notes/freya.html">Freya (freyaui.dev) — Rust製クロスプラットフォームGUIライブラリ</a></li>
@@ -89,60 +89,49 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>GPUI</h1>
+                <h1>Project Loom</h1>
 
-<p><a class="note-tag" href="/notes/tags/rust.html">#rust</a></p>
+<p>Javaの軽量並行処理を実現するOpenJDKプロジェクト。仮想スレッド(virtual threads)と構造化並行性(structured concurrency)が中核。</p>
 
-<p>コードエディタ<a href="https://zed.dev/">Zed</a>の開発元(Zed Industries)が作った、Rust製のGPUアクセラレーションGUIフレームワーク。バージョン0.2.2、ライセンスApache-2.0。immediate modeとretained modeのハイブリッド設計。まだpre-1.0で開発中で、バージョン間で破壊的変更が頻繁に入る。</p>
+<h2>仮想スレッド(Virtual Threads)</h2>
 
-<h2>設計の特徴</h2>
-
-<p>macOSはMetal、WindowsはDirectWriteなど、プラットフォーム固有の技術でレンダリングをGPUに直接投げ、120FPSを目標にした高フレームレートを狙う。以下の三層構造で構成されている。</p>
+<p>OSスレッドに紐付かない軽量なスレッド。JVMが管理し、スレッド・パー・リクエストのプログラミングスタイルをOSスレッドの制約なしに実現できる。スループットに影響を与えずに数百万の仮想スレッドを生成できる。基盤にはContinuations(実行フローの中断・再開を可能にする低レベル機構)がある。</p>
 
 <ul>
-<li>エンティティによる状態管理</li>
-<li><code>Render</code>トレイトによる宣言的UI(View)</li>
-<li>低レベルな命令型UI(Element)制御</li>
+<li>JDK 19でプレビュー導入(JEP 425)</li>
+<li>JDK 21で正式機能化</li>
 </ul>
 
 
-<h2>Zedとの関係</h2>
+<h2>構造化並行性(Structured Concurrency)</h2>
 
-<p>元々Zed内部の一部として開発されていたが、現在はスタンドアロンのクレートとしてcrates.ioに公開されており、音楽プレイヤー・動画編集ツール・ファイルエクスプローラ・AIコーディングターミナルなど、Zed以外のアプリでも採用が広がっている(GitHubの<a href="https://github.com/zed-industries/awesome-gpui">awesome-gpui</a>にまとめられている)。Zed本体のGitHub Starsは約88,300。</p>
+<p><code>StructuredTaskScope</code> を通じて提供される、協調タスク(多くの場合は仮想スレッド)をサブタスクの集合として一括で管理するAPI。スレッド間の親子関係を捉えたスレッドダンプ(構造化された観測性)も提供する。</p>
 
-<h2>外部利用者向け開発の位置づけ</h2>
+<ul>
+<li>JDK 19でプレビュー導入(JEP 428)</li>
+<li>Java 25で刷新、2026年(JDK 26)も小さな変更でプレビュー継続</li>
+</ul>
 
-<p>Zedメンテナーのmaxdeviantは<a href="https://github.com/zed-industries/zed/discussions/9877">GitHub Discussion #9877</a>(2024年)で、「UIクレートは現状Zed専用で、汎用ライブラリとして切り出す具体的な計画は今のところない」と述べている。</p>
-
-<p>2026年2月頃の<a href="https://github.com/zed-industries/zed/discussions/30515">GitHub Discussion #30515「Please extract GPUI」</a>等では、GPUI本流の開発がZed外部ユーザーのニーズを優先しない方向にあり、Zed本体で直接使わないコード(トレイ対応やWayland周りのタッチイベント対応など)はアップストリームにマージされにくくなっていることが議論されている。Zed開発者自身が、Zed本体で不要な機能追加はコミュニティフォークの<a href="https://github.com/gpui-ce/gpui-ce">gpui-ce</a>(GPUI Community Edition)への提出を案内するようになっている。gpui-ceのフォーク作成者(iamnbutler)は、GPUIがZedのニーズに特化して作られているため、Zed Industriesがコミュニティ専用の作業に工数を割くのを正当化するのは難しい、という実務的な理由を説明している。ただしgpui-ce自体も、PR#1マージ後にメンテナー対応が滞りがちという指摘もある。</p>
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://crates.io/crates/gpui">gpui - crates.io</a></li>
-<li><a href="https://github.com/zed-industries/zed/tree/main/crates/gpui">zed/crates/gpui - GitHub</a></li>
-<li><a href="https://beckmoulton.medium.com/gpui-a-technical-overview-of-the-high-performance-rust-ui-framework-powering-zed-ac65975cda9f">GPUI: A Technical Overview - Medium</a></li>
-<li><a href="https://zed.dev/blog/gpui-2-on-preview">GPUI 2 is now in production — Zed&rsquo;s Blog</a></li>
-<li><a href="https://github.com/zed-industries/awesome-gpui">awesome-gpui - GitHub</a></li>
-<li><a href="https://github.com/zed-industries/zed/discussions/9877">Discussion about UI crate · Discussion #9877</a></li>
-<li><a href="https://github.com/zed-industries/zed/discussions/30515">Please extract GPUI · Discussion #30515</a></li>
-<li><a href="https://github.com/zed-industries/zed/discussions/20140">GPUI wish list · Discussion #20140</a></li>
-<li><a href="https://github.com/gpui-ce/gpui-ce">gpui-ce/gpui-ce - GitHub</a></li>
-<li><a href="https://news.ycombinator.com/item?id=47003569">Zed also stopped GPUI development for&hellip; - Hacker News</a></li>
+<li><a href="https://developer.okta.com/blog/2022/08/26/state-of-java-project-loom">What the Heck Is Project Loom for Java? | Okta Developer</a></li>
+<li><a href="https://rockthejvm.com/articles/structured-concurrency-in-java">Project Loom: Structured Concurrency in Java | Rock the JVM</a></li>
+<li><a href="https://dev.java/future/innovation/">Java Innovation Projects - Dev.java</a></li>
 </ul>
 
 
                                 <div class="notes-backlinks">
                     <h2>🔗 リンクされているノート</h2>
                     <ul>
-                                            <li><a href="/notes/freya.html">Freya (freyaui.dev) — Rust製クロスプラットフォームGUIライブラリ</a></li>
-                                            <li><a href="/notes/rust-gui-libraries.html">Rust GUI ライブラリ一覧</a></li>
+                                            <li><a href="/notes/openjdk-projects.html">OpenJDKの主要プロジェクト</a></li>
                     
                     </ul>
                 </div>
                                 <div class="notes-meta">
                     <span>作成日: 2026-08-09</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=GPUI&url=https%3A%2F%2F64p.org%2Fnotes%2Fgpui.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=Project%20Loom&url=https%3A%2F%2F64p.org%2Fnotes%2Fproject-loom.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">
