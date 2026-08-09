@@ -18,5 +18,6 @@ PowerPointやKeynote、Google SlidesのようなGUI(WYSIWYG)スライド作成�
 
 - [[slidev]] — Vue.jsベースのWebアプリとして動くツール。ライブコーディング(Monaco Editor埋め込み)やVueコンポーネント埋め込みなど、インタラクティブな「Webスライド」寄り
 - [[marp]] — Marpit(HTML/CSSスライド生成フレームワーク)がコアの、CLI/VS Code拡張中心のツール。PDF/PPTX/HTML出力の再現性を重視
+- [[deck-k1low|deck]] — k1LoW氏によるGo製CLI。MarkdownをGoogle Slidesに流し込むツールで、出力先が自己完結したファイルではなく既存のGoogle Slidesという点が他と異なる
 
-両者とも「コードを多用する技術発表資料を、Git管理下で素早く作りたい」というエンジニア向けの動機は共通するが、SlidevはWebアプリとしての表現力・インタラクティブ性、Marpは変換フォーマット間の一貫性という、それぞれ異なる軸を重視している。
+SlidevとMarpは「コードを多用する技術発表資料を、Git管理下で素早く作りたい」というエンジニア向けの動機は共通するが、SlidevはWebアプリとしての表現力・インタラクティブ性、Marpは変換フォーマット間の一貫性という、それぞれ異なる軸を重視している。deckはさらに異なる軸で、Google Slidesのエコシステム（共同編集・コメントなど）をそのまま活かしたい場合に向く。
