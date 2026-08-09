@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>Notesコーナーへようこそ - Notes - 64p.org</title>
+    <title>Slidev - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/highlight.js@11/styles/github.min.css" media="(prefers-color-scheme: light)">
@@ -23,13 +23,13 @@
                 <ul class="notes-nav">
                                     <li><a href="/notes/zettelkasten.html">Zettelkasten</a></li>
                                     <li><a href="/notes/yusura-ume.html">ユスラウメ(梅桃)</a></li>
-                                    <li><a href="/notes/welcome.html" class="active">Notesコーナーへようこそ</a></li>
+                                    <li><a href="/notes/welcome.html">Notesコーナーへようこそ</a></li>
                                     <li><a href="/notes/wails.html">Wails</a></li>
                                     <li><a href="/notes/tauri.html">Tauri</a></li>
                                     <li><a href="/notes/tableau.html">Tableau</a></li>
                                     <li><a href="/notes/solaris.html">Solaris / illumos</a></li>
                                     <li><a href="/notes/snoop.html">snoop</a></li>
-                                    <li><a href="/notes/slidev.html">Slidev</a></li>
+                                    <li><a href="/notes/slidev.html" class="active">Slidev</a></li>
                                     <li><a href="/notes/skia.html">Skia</a></li>
                                     <li><a href="/notes/shokudai-ookonnyaku.html">ショクダイオオコンニャク</a></li>
                                     <li><a href="/notes/sakpilot.html">SakPilot</a></li>
@@ -90,49 +90,41 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>Notesコーナーへようこそ</h1>
+                <h1>Slidev</h1>
 
-<p>ちょっと調べたこと、AIに調査してもらった結果、忘れたくないスニペットなどを気軽に書き残しておく場所です。</p>
+<p>開発者向けのMarkdownベースのプレゼンテーションツール。<code>---</code>区切りでスライドを1ページずつMarkdownで記述する。内部はVue.jsベースのWebアプリとして動作し、Node.js/npmエコシステム上で開発・ビルドする。開発は Vue.js コアチームの Anthony Fu (antfu) らが中心。</p>
 
-<p><a href="https://blog.64p.org/">ブログ</a>はもう少しちゃんとした記事向けで、こちらはメモ書き程度のラフなものを想定しています。</p>
+<p><a class="note-tag" href="/notes/tags/slidev.html">#slidev</a> <a class="note-tag" href="/notes/tags/presentation.html">#presentation</a> <a class="note-tag" href="/notes/tags/markdown.html">#markdown</a> <a class="note-tag" href="/notes/tags/vue.html">#vue</a></p>
 
-<h2>コードブロックの例</h2>
+<h2>特徴</h2>
 
-<p>コードスニペットはシンタックスハイライト付きで表示されます。</p>
-
-<pre><code class="perl">use strict;
-use warnings;
-
-sub greet {
-    my ($name) = @_;
-    return "Hello, $name!";
-}
-
-print greet("world"), "\n";
-</code></pre>
+<ul>
+<li><strong>コード表示に強い</strong>: シンタックスハイライトにShikiを使用し、精度の高いハイライトが得られる</li>
+<li><strong>ライブコーディング</strong>: Monaco Editorをスライド内に埋め込み、実際にコードを編集・実行しながら発表できる</li>
+<li><strong>Vueコンポーネントの埋め込み</strong>: スライド内に直接インタラクティブなデモを組み込める</li>
+<li><strong>テーマ機構</strong>: テーマはnpmパッケージとして配布・切り替え可能</li>
+<li><strong>エクスポート</strong>: PDF/PNG/PPTXへの書き出し、プレゼンの録画、プレゼンター用ノート表示に対応</li>
+<li><strong>ホットリロード</strong>: 編集内容が即座にブラウザへ反映される</li>
+</ul>
 
 
+<h2>向いている用途</h2>
 
-<pre><code class="bash"># ちょっとしたシェルのワンライナー
-find . -name '*.md' | xargs wc -l
-</code></pre>
+<p>PowerPointやKeynoteのようなGUIツールと異なり、プレーンテキスト(Markdown)でスライドを書くためGitでの差分管理・レビューがしやすい。技術カンファレンスや社内LTなど、コードを多用する発表資料をGit管理下で素早く作りたい場合に向く。逆にデザイン重視の非エンジニア向け資料作成にはあまり向かない。</p>
 
-<h2>新しいノートの追加方法</h2>
+<h2>出典</h2>
 
-<p><code>notes/src/</code> 配下にMarkdownファイルを追加します。1行目がタイトルになります（<code># タイトル</code> でもプレーンテキストでもOK）。追加したら以下を実行します。</p>
+<ul>
+<li><a href="https://sli.dev/">Slidev 公式サイト</a></li>
+<li><a href="https://github.com/slidevjs/slidev">GitHub - slidevjs/slidev</a></li>
+<li><a href="https://sli.dev/guide/why">Why Slidev | Slidev</a></li>
+<li><a href="https://snyk.io/blog/slidev-101-coding-presentations-with-markdown/">Slidev 101: Coding presentations with Markdown | Snyk</a></li>
+</ul>
 
-<pre><code class="sh">perl regen-index.pl
-</code></pre>
-
-<h2>ノート同士のリンク</h2>
-
-<p>1トピック1ファイルを基本に、<code>[[ファイル名]]</code>と書くと他のノートにリンクできます。例えば<a href="/notes/dangouzaka-yurai.html">談合坂の地名由来</a>のように書くと、そのノートのタイトルでリンクが張られます。表示テキストを変えたい場合は<code>[[dangouzaka-yurai|地名の話]]</code>のように<code>|</code>区切りで指定できます。</p>
-
-<p>リンクされた側のノートには、どのノートからリンクされているかが自動で「🔗 リンクされているノート」として表示されます（バックリンク）。存在しないファイル名を指定するとビルド時に警告が出ます。</p>
 
                                 <div class="notes-meta">
                     <span>作成日: 2026-08-09</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=Notes%E3%82%B3%E3%83%BC%E3%83%8A%E3%83%BC%E3%81%B8%E3%82%88%E3%81%86%E3%81%93%E3%81%9D&url=https%3A%2F%2F64p.org%2Fnotes%2Fwelcome.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=Slidev&url=https%3A%2F%2F64p.org%2Fnotes%2Fslidev.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">
