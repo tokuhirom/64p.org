@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>Microsoft Edge、拡張機能をManifest V3へ完全移行 - Notes - 64p.org</title>
+    <title>Hacker News (HN) について - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/highlight.js@11/styles/github.min.css" media="(prefers-color-scheme: light)">
@@ -31,10 +31,10 @@
                             <li><a href="/notes/kyoka-vs-tanka.html">狂歌と短歌の違い</a></li>
                             <li><a href="/notes/harmonyos.html">HarmonyOSとは</a></li>
                             <li><a href="/notes/harmonyos-pc.html">HarmonyOS PC版（鴻蒙電脳）</a></li>
-                            <li><a href="/notes/hacker-news.html">Hacker News (HN) について</a></li>
+                            <li><a href="/notes/hacker-news.html" class="active">Hacker News (HN) について</a></li>
                             <li><a href="/notes/gpui.html">GPUI</a></li>
                             <li><a href="/notes/gpt-5-6-sol-terra-luna.html">GPT-5.6のSol / Terra / Lunaの違い</a></li>
-                            <li><a href="/notes/edge-manifest-v3.html" class="active">Microsoft Edge、拡張機能をManifest V3へ完全移行</a></li>
+                            <li><a href="/notes/edge-manifest-v3.html">Microsoft Edge、拡張機能をManifest V3へ完全移行</a></li>
                             <li><a href="/notes/dangouzaka-yurai.html">談合坂の地名由来</a></li>
                             <li><a href="/notes/claude-model-tiers.html">Claudeのモデル階層(Opus / Sonnet / Haiku / Fable)の違い</a></li>
                             <li><a href="/notes/carnivorous-plants.html">食虫植物</a></li>
@@ -47,44 +47,41 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>Microsoft Edge、拡張機能をManifest V3へ完全移行</h1>
+                <h1>Hacker News (HN) について</h1>
 
-<p><a class="note-tag" href="/notes/tags/browser.html">#browser</a> <a class="note-tag" href="/notes/tags/extensions.html">#extensions</a></p>
+<p>スタートアップアクセラレーター <strong>Y Combinator</strong> が運営するソーシャルニュースサイト。 <a class="note-tag" href="/notes/tags/startup.html">#startup</a> <a class="note-tag" href="/notes/tags/tech-news.html">#tech-news</a></p>
 
-<p><a href="https://blogs.windows.com/msedgedev/2026/08/07/moving-the-microsoft-edge-extensions-ecosystem-forward-with-manifest-version-3/">Edgeチームのブログ記事</a>(2026年8月7日付)で、Edge拡張機能のManifest V2(MV2)を廃止しManifest V3(MV3)へ完全移行する方針とスケジュールが発表された。</p>
-
-<h2>MV2廃止のスケジュール</h2>
+<h2>概要</h2>
 
 <ul>
-<li><strong>2026年8月</strong>: 一般ユーザー向けにMV2廃止を開始。ユーザーには段階的に通知され、MV3版への移行を促す。</li>
-<li><strong>2026年末</strong>: 一般ユーザー向け移行を完了させる目標。</li>
-<li><strong>2027年初頭</strong>: エンタープライズ環境での廃止を開始。</li>
+<li>URL: <a href="https://news.ycombinator.com/">https://news.ycombinator.com/</a></li>
+<li>2007年、Y Combinatorの共同創業者 Paul Graham が開始</li>
+<li>プログラミング・スタートアップ・テクノロジー全般に関するリンク投稿と議論の場</li>
+<li>Redditに似た仕組みで、ユーザーが投稿したリンクをupvote/downvoteし、スコアの高いものがトップページに表示される</li>
 </ul>
 
 
-<h2>エコシステムの現状</h2>
+<h2>特徴</h2>
 
-<p>利用数上位のMV2拡張機能のうち95%以上がすでにMV3へ移行済み。意味のある利用数を持つMV2拡張は58個のみで、そのうちMV3版が未提供なのはわずか3個。</p>
+<ul>
+<li>UIは装飾のないシンプルなテキストベース</li>
+<li>エンジニア・起業家コミュニティへの影響力が強く、プロダクトがHNのトップページに載ると急激なアクセス増加を招くことがある（"Hacker News effect" と呼ばれる）</li>
+<li>コメント欄の議論の質が比較的高いことで知られる</li>
+<li>YC投資先スタートアップによる &ldquo;Show HN&rdquo; 投稿など、YC自体のプロモーション・採用活動の場としても機能している</li>
+</ul>
 
-<h2>開発者への呼びかけ</h2>
-
-<p>未移行の開発者はMicrosoft Partner Center経由で速やかにアップデートを提出するよう求められている。Edgeチームは移行支援も提供予定。</p>
-
-<h2>Chromeとの比較</h2>
-
-<p>Chromeは一足先にMV2廃止を進めており、2024年6月から警告表示を開始、同年10月からstable版でMV2拡張をデフォルト無効化、2026年8月31日にChromeウェブストアから残存MV2拡張を完全削除する予定。EdgeはChromiumベースであるため、概ねこの流れを追う形になっている。</p>
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://blogs.windows.com/msedgedev/2026/08/07/moving-the-microsoft-edge-extensions-ecosystem-forward-with-manifest-version-3/">Moving the Microsoft Edge extensions ecosystem forward with Manifest Version 3</a></li>
-<li><a href="https://developer.chrome.com/docs/extensions/develop/migrate/mv2-deprecation-timeline">Manifest V2 support timeline - Chrome for Developers</a></li>
+<li><a href="https://news.ycombinator.com/">Hacker News</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Hacker_News">Hacker News - Wikipedia</a></li>
 </ul>
 
 
                                 <div class="notes-meta">
                     <span>作成日: 2026-08-09</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=Microsoft%20Edge%E3%80%81%E6%8B%A1%E5%BC%B5%E6%A9%9F%E8%83%BD%E3%82%92Manifest%20V3%E3%81%B8%E5%AE%8C%E5%85%A8%E7%A7%BB%E8%A1%8C&url=https%3A%2F%2F64p.org%2Fnotes%2Fedge-manifest-v3.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=Hacker%20News%20%28HN%29%20%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6&url=https%3A%2F%2F64p.org%2Fnotes%2Fhacker-news.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">
