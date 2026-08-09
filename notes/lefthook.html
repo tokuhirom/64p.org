@@ -1,0 +1,133 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>lefthook - Notes - 64p.org</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/static/notes.css">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/highlight.js@11/styles/github.min.css" media="(prefers-color-scheme: light)">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/highlight.js@11/styles/github-dark.min.css" media="(prefers-color-scheme: dark)">
+</head>
+<body>
+    <div class="notes-layout">
+        <nav class="notes-sidebar">
+            <div class="notes-sidebar-header">
+                <a href="/notes/">📝 Notes</a>
+                <button class="theme-toggle" title="テーマ切替" aria-label="テーマ切替">◐</button>
+            </div>
+            <div class="notes-sidebar-byline">by <a href="/">tokuhirom</a></div>
+            <a class="notes-tags-link" href="/notes/tags/">🏷️ タグ一覧</a>
+            <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
+            <ul class="notes-nav">
+                            <li><a href="/notes/welcome.html"># Notesコーナーへようこそ</a></li>
+                            <li><a href="/notes/raku-rakudo-perl6.html"># Raku / Rakudo / Perl 6</a></li>
+                            <li><a href="/notes/lefthook.html" class="active">lefthook</a></li>
+                            <li><a href="/notes/kyoka-vs-tanka.html"># 狂歌と短歌の違い</a></li>
+                            <li><a href="/notes/harmonyos.html"># HarmonyOSとは</a></li>
+                            <li><a href="/notes/harmonyos-pc.html"># HarmonyOS PC版（鴻蒙電脳）</a></li>
+                            <li><a href="/notes/gpt-5-6-sol-terra-luna.html"># GPT-5.6のSol / Terra / Lunaの違い</a></li>
+                            <li><a href="/notes/dangouzaka-yurai.html"># 談合坂の地名由来</a></li>
+                            <li><a href="/notes/claude-model-tiers.html"># Claudeのモデル階層(Opus / Sonnet / Haiku / Fable)の違い</a></li>
+            
+            </ul>
+            <div class="notes-sidebar-footer">
+                <a href="/">&larr; 64p.org トップへ</a>
+            </div>
+        </nav>
+
+        <main class="notes-main">
+            <article class="notes-content">
+                <h1>lefthook</h1>
+
+<p><a class="note-tag" href="/notes/tags/git.html">#git</a> <a class="note-tag" href="/notes/tags/perl.html">#perl</a></p>
+
+<p>Git hooks(pre-commit等)を管理するツール。このリポジトリでもnotesのfrontmatter(<code>created</code>/<code>updated</code>)自動付与のために導入している(後述)。</p>
+
+<h2>概要</h2>
+
+<ul>
+<li>開発元は <a href="https://evilmartians.com/">Evil Martians</a>（Rails周りで有名なコンサル企業）。Go製で、単一の依存フリーバイナリとして配布される。</li>
+<li>Ruby gem、npm、Go、Python、Swift、Homebrew、各種Linuxパッケージマネージャー(deb/rpm/apk/pacman)、Wingetなど、多様なパッケージマネージャー経由でインストールできる。</li>
+<li>ライセンスはMIT。GitHub star数は8.6k程度(2026-08時点)。</li>
+<li>公式サイトのキャッチコピーは &ldquo;Fast. Powerful. Simple.&rdquo; の3語。</li>
+</ul>
+
+
+<h2>主な特徴</h2>
+
+<ul>
+<li><strong>設定はYAML1枚</strong>: リポジトリルートの<code>lefthook.yml</code>にhook名(<code>pre-commit</code>, <code>commit-msg</code>, <code>pre-push</code>など)ごとにコマンドを書く。</li>
+<li><strong>並列実行</strong>: 複数のジョブ(lintやtestなど)を並列で走らせて高速化できる。</li>
+<li><strong>glob/ファイルフィルタ</strong>: <code>glob: "*.rb"</code>のように、変更されたファイルの種類ごとにコマンドを分けて実行できる。ステージされたファイルのみ(<code>{staged_files}</code>)、変更ファイル全体(<code>{all_files}</code>)などをプレースホルダで渡せる。</li>
+<li><strong>Docker対応</strong>: コマンドをDockerコンテナ内で実行することも可能。</li>
+<li><strong>単一バイナリ</strong>: Node.jsやRubyのランタイムに依存しない(Huskyのようにnpmパッケージとして入れることもできるが、本体はGo製バイナリ)。</li>
+</ul>
+
+
+<h2>Huskyなど類似ツールとの違い</h2>
+
+<ul>
+<li>npmエコシステム限定の<a href="https://typicode.github.io/husky/">Husky</a>と違い、言語非依存で使える。</li>
+<li><code>pre-commit</code>(Pythonのpre-commit framework)と比較されることが多いが、lefthookは設定がYAML1枚で完結し、並列実行やDocker実行など「速度」寄りの機能を前面に出しているのが特徴。</li>
+</ul>
+
+
+<h2>このリポジトリでの使い方</h2>
+
+<p><code>mise.toml</code>でバージョン固定して導入している。</p>
+
+<pre><code class="toml">[tools]
+lefthook = "2.1.10"
+</code></pre>
+
+
+
+<pre><code class="sh">mise install
+mise exec -- lefthook install
+</code></pre>
+
+<p><code>lefthook.yml</code>の設定:</p>
+
+<pre><code class="yaml">pre-commit:
+  commands:
+    notes-dates:
+      glob: "notes/src/*.md"
+      run: perl update-note-dates.pl {staged_files}
+</code></pre>
+
+<p><code>notes/src/*.md</code>がステージされたときだけ<code>update-note-dates.pl</code>を実行し、以下を行っている。</p>
+
+<ol>
+<li>新規ノートなら<code>created</code>/<code>updated</code>、既存ノートなら<code>updated</code>のみをYAML frontmatterに書き込む。</li>
+<li><code>regen-index.pl</code>を実行してHTMLを再生成。</li>
+<li>生成物(<code>notes/</code>, <code>index.html</code>, <code>talks/index.html</code>)を<code>git add</code>してコミットに含める。</li>
+</ol>
+
+
+<p>ファイルのmtimeには依存せず、frontmatter自体を正として日付を管理している。新規clone時やCI環境ではmtimeが信用できない(checkout時刻になってしまう)ため、この設計にしている。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://lefthook.dev/">Lefthook 公式サイト</a></li>
+<li><a href="https://github.com/evilmartians/lefthook">evilmartians/lefthook - GitHub</a></li>
+<li><a href="https://dev.to/recca0120/ditch-husky-speed-up-git-hooks-with-lefthook-hkm">Ditch Husky: Speed Up Git Hooks with Lefthook - DEV Community</a></li>
+</ul>
+
+
+                                <div class="notes-meta">
+                    <span>作成日: 2026-08-09</span>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=lefthook&url=https%3A%2F%2F64p.org%2Fnotes%2Flefthook.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                </div>
+            </article>
+            <footer class="notes-footer">
+                <a href="https://github.com/tokuhirom">tokuhirom</a> による調査メモです。
+                個人的な調査メモであり、正確な記述に努めていますが正確性を保証するものではなく、所属する団体を代表する見解でもありません。
+            </footer>
+        </main>
+    </div>
+    <script src="//cdn.jsdelivr.net/npm/highlight.js@11/lib/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+    <script src="/static/notes.js"></script>
+</body>
+</html>
