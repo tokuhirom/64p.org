@@ -1,6 +1,6 @@
 ---
-created: 2026-08-09
-updated: 2026-08-09
+created: 2026-08-09 14:04
+updated: 2026-08-09 17:38
 ---
 
 # Claudeのモデル階層(Opus / Sonnet / Haiku / Fable)の違い

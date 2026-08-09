@@ -1,6 +1,6 @@
 ---
-created: 2026-08-09
-updated: 2026-08-09
+created: 2026-08-09 15:59
+updated: 2026-08-09 15:59
 ---
 # Freya (freyaui.dev) — Rust製クロスプラットフォームGUIライブラリ
 

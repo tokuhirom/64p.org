@@ -1,6 +1,6 @@
 ---
-created: 2026-08-09
-updated: 2026-08-09
+created: 2026-08-09 18:07
+updated: 2026-08-09 18:07
 ---
 # ADR(Architecture Decision Record)
 

@@ -1,6 +1,6 @@
 ---
-created: 2026-08-09
-updated: 2026-08-09
+created: 2026-08-09 23:30
+updated: 2026-08-09 23:30
 ---
 # TDD (Test-Driven Development / テスト駆動開発)
 

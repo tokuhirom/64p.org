@@ -1,6 +1,6 @@
 ---
-created: 2026-08-09
-updated: 2026-08-09
+created: 2026-08-09 22:05
+updated: 2026-08-09 22:07
 ---
 # パーマネントノート (Permanent Notes)
 

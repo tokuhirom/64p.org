@@ -1,6 +1,6 @@
 ---
-created: 2026-08-09
-updated: 2026-08-09
+created: 2026-08-09 16:35
+updated: 2026-08-09 16:35
 ---
 # Obsidian
 
