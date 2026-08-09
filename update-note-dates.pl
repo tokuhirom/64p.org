@@ -1,15 +1,15 @@
 #!/usr/bin/env perl
 # Run by lefthook's pre-commit hook (see lefthook.yml). Given staged
 # notes/src/*.md paths as argv, stamps YAML frontmatter with created/updated
-# dates, regenerates the site, and stages everything the regen touched.
+# timestamps, regenerates the site, and stages everything the regen touched.
 use strict;
 use warnings;
 
 my @md_files = @ARGV;
 exit 0 unless @md_files;
 
-my ($mday, $mon, $year) = (localtime)[3, 4, 5];
-my $today = sprintf('%04d-%02d-%02d', $year + 1900, $mon + 1, $mday);
+my ($min, $hour, $mday, $mon, $year) = (localtime)[1, 2, 3, 4, 5];
+my $now = sprintf('%04d-%02d-%02d %02d:%02d', $year + 1900, $mon + 1, $mday, $hour, $min);
 
 for my $file (@md_files) {
     next unless -f $file;
@@ -21,15 +21,15 @@ for my $file (@md_files) {
     if ($content =~ /\A---\n(.*?)\n---\n/s) {
         my $fm = $1;
         if ($fm =~ /^updated:\s*.+$/m) {
-            $fm =~ s/^updated:\s*.+$/updated: $today/m;
+            $fm =~ s/^updated:\s*.+$/updated: $now/m;
         }
         else {
-            $fm .= "\nupdated: $today";
+            $fm .= "\nupdated: $now";
         }
         $content =~ s/\A---\n.*?\n---\n/---\n$fm\n---\n/s;
     }
     else {
-        $content = "---\ncreated: $today\nupdated: $today\n---\n" . $content;
+        $content = "---\ncreated: $now\nupdated: $now\n---\n" . $content;
     }
 
     open my $ofh, '>:utf8', $file or die "Cannot open $file for writing: $!";

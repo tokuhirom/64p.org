@@ -25,7 +25,7 @@
                 </div>
                 [% END -%]
                 <div class="notes-meta">
-                    <span>作成日: [% created %][% IF updated != created %] / 更新日: [% updated %][% END %]</span>
+                    <span>作成日時: [% created %] / 更新日時: [% updated %]</span>
                     <a class="share-x" href="https://twitter.com/intent/tweet?text=[% title | uri %]&url=[% url | uri %]" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>

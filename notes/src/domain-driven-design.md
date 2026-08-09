@@ -1,6 +1,6 @@
 ---
-created: 2026-08-09
-updated: 2026-08-09
+created: 2026-08-09 22:57
+updated: 2026-08-09 22:57
 ---
 # DDD (Domain-Driven Design / ドメイン駆動設計)
 

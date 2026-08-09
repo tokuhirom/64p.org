@@ -1,6 +1,6 @@
 ---
-created: 2026-08-09
-updated: 2026-08-09
+created: 2026-08-09 15:49
+updated: 2026-08-09 15:49
 ---
 # Microsoft Edge、拡張機能をManifest V3へ完全移行
 

@@ -137,11 +137,11 @@ sub regen {
     # pass 1: slurp every note's raw markdown + slug + title, before any
     # cross-note resolution (wikilinks need to see every title first).
     # created/updated come from a YAML frontmatter block
-    # (---\ncreated: YYYY-MM-DD\nupdated: YYYY-MM-DD\n---\n) that lefthook's
-    # pre-commit hook (see lefthook.yml / update-note-dates.pl) stamps onto
-    # every note on commit. Notes written outside that flow (or previewed
-    # before the first commit) fall back to the file's mtime so local
-    # `perl regen-index.pl` runs still show a sane date.
+    # (---\ncreated: YYYY-MM-DD HH:MM\nupdated: YYYY-MM-DD HH:MM\n---\n) that
+    # lefthook's pre-commit hook (see lefthook.yml / update-note-dates.pl)
+    # stamps onto every note on commit. Notes written outside that flow (or
+    # previewed before the first commit) fall back to the file's mtime so
+    # local `perl regen-index.pl` runs still show a sane timestamp.
     my @raw = map {
         my $src = $_;
         open my $fh, '<:utf8', $src or die "Cannot open $src: $!";
@@ -149,11 +149,11 @@ sub regen {
         my ($created, $updated);
         if ($mkdn =~ s/\A---\n(.*?)\n---\n//s) {
             my $fm = $1;
-            ($created) = ($fm =~ /^created:\s*(\S+)/m);
-            ($updated) = ($fm =~ /^updated:\s*(\S+)/m);
+            ($created) = ($fm =~ /^created:\s*(.+?)\s*$/m);
+            ($updated) = ($fm =~ /^updated:\s*(.+?)\s*$/m);
         }
         unless ($created && $updated) {
-            my $fallback = strftime('%Y-%m-%d', localtime(stat($src)->mtime));
+            my $fallback = strftime('%Y-%m-%d %H:%M', localtime(stat($src)->mtime));
             $created //= $fallback;
             $updated //= $fallback;
         }

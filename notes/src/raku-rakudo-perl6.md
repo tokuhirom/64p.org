@@ -1,6 +1,6 @@
 ---
-created: 2026-08-09
-updated: 2026-08-09
+created: 2026-08-09 13:26
+updated: 2026-08-09 22:15
 ---
 
 # Raku / Rakudo / Perl 6
