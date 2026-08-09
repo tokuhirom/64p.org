@@ -23,7 +23,7 @@ OpenBSD(27年間未発見)、FFmpeg(16年間未発見)、Linuxカーネルなど
 ## Anthropicの支援
 
 - 防御的セキュリティ研究向けに1億ドル相当のモデルクレジットを提供。
-- オープンソースセキュリティ団体へ計400万ドルを寄付(Linux Foundation経由でAlpha-Omega/OpenSSFに250万ドル、Apache Software Foundationに150万ドル)。
+- オープンソースセキュリティ団体へ計400万ドルを寄付(Linux Foundation経由で[[openssf]]傘下のAlpha-Omegaに250万ドル、Apache Software Foundationに150万ドル)。
 
 ## 出典
 
