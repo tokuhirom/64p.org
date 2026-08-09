@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>Roam Research - Notes - 64p.org</title>
+    <title>Metasploit - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/highlight.js@11/styles/github.min.css" media="(prefers-color-scheme: light)">
@@ -32,7 +32,7 @@
                                     <li><a href="/notes/skia.html">Skia</a></li>
                                     <li><a href="/notes/sakpilot.html">SakPilot</a></li>
                                     <li><a href="/notes/rust-gui-libraries.html">Rust GUI ライブラリ一覧</a></li>
-                                    <li><a href="/notes/roam-research.html" class="active">Roam Research</a></li>
+                                    <li><a href="/notes/roam-research.html">Roam Research</a></li>
                                     <li><a href="/notes/raku-rakudo-perl6.html">Raku / Rakudo / Perl 6</a></li>
                                     <li><a href="/notes/project-glasswing.html">Project Glasswing</a></li>
                                     <li><a href="/notes/openssf.html">OpenSSF (Open Source Security Foundation)</a></li>
@@ -41,7 +41,7 @@
                                     <li><a href="/notes/ngrep.html">ngrep (network grep)</a></li>
                                     <li><a href="/notes/network-doctor.html">Network Doctor (netdoc)</a></li>
                                     <li><a href="/notes/miidera-gomimushi.html">ミイデラゴミムシ</a></li>
-                                    <li><a href="/notes/metasploit.html">Metasploit</a></li>
+                                    <li><a href="/notes/metasploit.html" class="active">Metasploit</a></li>
                                     <li><a href="/notes/matsubokkuri-gogen.html">松ぼっくりの「ぼっくり」の語源</a></li>
                                     <li><a href="/notes/lefthook.html">lefthook</a></li>
                                     <li><a href="/notes/kyoka-vs-tanka.html">狂歌と短歌の違い</a></li>
@@ -73,55 +73,65 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>Roam Research</h1>
+                <h1>Metasploit</h1>
 
-<p>「双方向リンク」「ブロック参照」「networked thought(思考のネットワーク化)」という概念を世に広めた先駆的なアウトライナー型ノートアプリ。<a href="/notes/obsidian.html">Obsidian</a>・Logseq・Tanaなど、後発の「tools for thought」勢はこのRoamの影響下にある。 <a class="note-tag" href="/notes/tags/zettelkasten.html">#zettelkasten</a> <a class="note-tag" href="/notes/tags/note-taking.html">#note-taking</a></p>
+<p><a class="note-tag" href="/notes/tags/security.html">#security</a></p>
 
-<h2>概要</h2>
+<p>オープンソースの侵入テスト(ペネトレーションテスト)フレームワーク。<a href="/notes/kali-linux.html">Kali Linux</a>にもプリインストールされている定番セキュリティツールの一つ。</p>
+
+<h2>基本情報</h2>
 
 <ul>
-<li>創業者/CEO: Conor White-Sullivan(HuffPost Labsの共同創業者を経て、Roamを起業)</li>
-<li>2019年ローンチ。Mortimer Adlerの著書『How to Read a Book』に着想を得たと語られている</li>
-<li>ブロック単位のアウトライナーで、すべての箇条書き行が参照可能な「ブロック」として扱われる</li>
+<li>開発者: H. D. Moore(2003年に創設)</li>
+<li>開発元: Rapid7(2009年に買収、現在も所有・管理)</li>
+<li>実装言語: Ruby(当初はPerl、2007年までにRubyで書き直された)</li>
 </ul>
 
 
-<h2>特徴</h2>
+<h2>何をするツールか</h2>
+
+<p>セキュリティ専門家・研究者・攻撃者が、脆弱性の発見・検証・攻撃シミュレーションを行うためのツール。「攻撃コードを書いて実行する」までの一連の作業を効率化するフレームワークで、<code>msfconsole</code> というCUIツールから操作するのが一般的。</p>
+
+<h2>主な構成要素</h2>
 
 <ul>
-<li><strong>双方向リンク</strong>: フォルダ・タグではなく、すべてのページ/ブロックが相互にリンクし合う個人用ナレッジグラフとしてデザインされている</li>
-<li><strong>ブロック参照</strong>: 任意の箇条書きを他のノートに埋め込み参照でき、元のブロックを編集すると参照先すべてに反映される</li>
-<li><strong>デイリーノート</strong>: 毎日新しいノートページが自動生成され、そこにメモを書き溜めていく運用が特徴的</li>
+<li><strong>Exploit</strong>: バグを突いて対象システムに侵入するコード(2,000以上を実装)</li>
+<li><strong>Payload</strong>: 侵入成功後に対象システム上で実行されるコード(592以上)</li>
+<li><strong>Auxiliary modules</strong>: スキャン・ファジング・スニッフィングなど補助機能を提供するモジュール群</li>
 </ul>
 
 
-<h2>料金体系</h2>
+<h2>エディション</h2>
 
-<p>月額$15、または年額$165(当時のNotion Personal Proの約4倍・Evernote Premiumの約2倍の価格帯)。2020年には5年分をまとめ払いする「Believer」プラン($500、実質月額$8.33)も導入された。</p>
+<ul>
+<li><strong>無料版(Open Source Edition)</strong>: Ruby実装のモジュラー構成、1,500以上の組み込みexploitを含む</li>
+<li><strong>Pro版(商用)</strong>: Quick Start Wizard、ソーシャルエンジニアリング、Webアプリテスト、VPNピボッティングなど高度な機能を追加(旧Community版・Express版は廃止済み)</li>
+</ul>
 
-<h2>2026年時点の位置づけ</h2>
 
-<p>複数プレイヤーでの共同編集や成熟したクエリ機能が強み。一方、同じアウトライナー・ブロック参照・デイリーノートの体験をローカルファイルかつサブスクリプションなしで提供するLogseqなど、後発ツールとの選択肢も増えている。</p>
+<h2>最新動向</h2>
+
+<p>安定版は6.4.131(2026年5月リリース)。4,000超のエクスプロイトモジュールを収録している。</p>
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://newsletter.pricingsaas.com/p/roam-research-the-cult-packaging">Roam Research and the Art of Cult Packaging</a></li>
-<li><a href="https://costbench.com/software/note-taking/roam-research/">Roam Research Pricing 2026 - CostBench</a></li>
-<li><a href="https://aiproductivity.ai/tools/roam-research/">Roam Research Review 2026 - AI Productivity</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Metasploit">Metasploit - Wikipedia</a></li>
+<li><a href="https://www.rapid7.com/products/metasploit/">Metasploit: ペネトレーションテスト・ソフトウェア | Rapid7</a></li>
+<li><a href="https://www.eccouncil.org/cybersecurity-exchange/ethical-hacking/metasploit-framework-guide/">What is Metasploit Framework? A Step-by-Step Guide (2026)</a></li>
 </ul>
 
 
                                 <div class="notes-backlinks">
                     <h2>🔗 リンクされているノート</h2>
                     <ul>
-                                            <li><a href="/notes/zettelkasten.html">Zettelkasten</a></li>
+                                            <li><a href="/notes/kali-linux.html">Kali Linux</a></li>
                     
                     </ul>
                 </div>
                                 <div class="notes-meta">
                     <span>作成日: 2026-08-09</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=Roam%20Research&url=https%3A%2F%2F64p.org%2Fnotes%2Froam-research.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=Metasploit&url=https%3A%2F%2F64p.org%2Fnotes%2Fmetasploit.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">
