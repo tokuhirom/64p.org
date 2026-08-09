@@ -21,6 +21,7 @@ description: 64p.org の /notes/ コーナーに新しい調査メモ（ノー�
    `notes/<slug>.html`、`notes/index.html`、トップページ (`index.html`) のNotes欄がまとめて更新される。
 
 5. 生成されたHTMLも含めてコミットする。このリポジトリは生成物もgit管理してGitHub Pagesでそのまま配信しているため、`.gitignore`されていない。
+6. mdのみ(および付随する生成物)の変更なら、ブランチを切ってPRを作らずに直接masterへpushしてよい。テンプレートやビルドロジックなどコードに手を入れた場合は従来通りPRを作る。
 
 ## 書き方のトーン
 
