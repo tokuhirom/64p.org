@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>LYT (Linking Your Thinking) - Notes - 64p.org</title>
+    <title>正規表現エンジンの実装方式: バックトラッキング型とNFA/DFA型 - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/highlight.js@11/styles/github.min.css" media="(prefers-color-scheme: light)">
@@ -37,7 +37,7 @@
                                     <li><a href="/notes/sakpilot.html">SakPilot</a></li>
                                     <li><a href="/notes/rust-gui-libraries.html">Rust GUI ライブラリ一覧</a></li>
                                     <li><a href="/notes/roam-research.html">Roam Research</a></li>
-                                    <li><a href="/notes/regex-engine-backtracking-vs-nfa.html">正規表現エンジンの実装方式: バックトラッキング型とNFA/DFA型</a></li>
+                                    <li><a href="/notes/regex-engine-backtracking-vs-nfa.html" class="active">正規表現エンジンの実装方式: バックトラッキング型とNFA/DFA型</a></li>
                                     <li><a href="/notes/raku-rakudo-perl6.html">Raku / Rakudo / Perl 6</a></li>
                                     <li><a href="/notes/project-valhalla.html">Project Valhalla</a></li>
                                     <li><a href="/notes/project-panama.html">Project Panama</a></li>
@@ -61,7 +61,7 @@
                                     <li><a href="/notes/matsubokkuri-gogen.html">松ぼっくりの「ぼっくり」の語源</a></li>
                                     <li><a href="/notes/marp.html">Marp</a></li>
                                     <li><a href="/notes/markdown-presentation-tools.html">Markdownベースのプレゼンテーションツール</a></li>
-                                    <li><a href="/notes/lyt.html" class="active">LYT (Linking Your Thinking)</a></li>
+                                    <li><a href="/notes/lyt.html">LYT (Linking Your Thinking)</a></li>
                                     <li><a href="/notes/literature-notes.html">文献ノート (Literature Notes)</a></li>
                                     <li><a href="/notes/lefthook.html">lefthook</a></li>
                                     <li><a href="/notes/l2tp-ipsec.html">L2TP/IPsec</a></li>
@@ -104,49 +104,47 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>LYT (Linking Your Thinking)</h1>
+                <h1>正規表現エンジンの実装方式: バックトラッキング型とNFA/DFA型</h1>
 
-<p>Nick Miloが2020年に体系化した個人知識管理(PKM)フレームワーク。<a href="/notes/obsidian.html">Obsidian</a>コミュニティを中心に広まった。フォルダ階層ではなくリンクによってノートを繋ぎ、思考を育てていくという点で<a href="/notes/zettelkasten.html">Zettelkasten</a>や<a href="/notes/evergreen-notes.html">エバーグリーンノート</a>と発想を共有する。中心概念のひとつが<a href="/notes/moc.html">MOC</a>（Map of Content）。</p>
+<p>正規表現エンジンの実装は大きく2系統に分かれる。どちらを採用するかで、表現力とマッチング速度の保証がトレードオフになる。</p>
 
-<h2>Ideaverse</h2>
+<h2>バックトラッキング型</h2>
 
-<p>自分の脳と周囲のあらゆる場所との間に存在する、アイデアの宇宙全体を指す言葉。実務上はデジタルでリンクされたノート群そのものを指すことが多い。Nick MiloはObsidianの初期ベータテスターの一人で、2020年5月に最初のLYT実践キット（後に「Ideaverse」と改名）を無償公開し、7万ダウンロードを超える、最も広く使われているリンク型ノートのスターターキットになっている。</p>
+<p>Henry Spencerが先駆けとなり、Perl・PCRE・Pythonなどに広く採用された方式。深さ優先探索でマッチを試み、失敗したら直前の状態に戻ってやり直す（バックトラック）。後方参照(backreference)や先読み・後読み(lookaround)など表現力の高い構文を実装しやすい一方、パターンと入力の組み合わせによっては指数関数的に時間がかかる「catastrophic backtracking」（ReDoSの原因）を起こしうる。</p>
 
-<h2>Idea Emergence（アイデア創発）の6ステップ</h2>
+<h2>NFA/DFA型（Thompson construction系）</h2>
 
-<p>LYTでは、個々のノートが育って<a href="/notes/moc.html">MOC</a>にまとまっていくプロセスを次の6ステップで説明する。</p>
+<p>Ken Thompsonが考案したNFA構築法（Thompson construction）に基づき、NFAをDFAに変換するか、NFAを並行シミュレートすることでマッチングを行う方式。RE2、Rustの<code>regex</code>クレート、Goの<code>regexp</code>パッケージなどが採用している。後方参照や汎用lookaroundは表現できないというトレードオフと引き換えに、入力サイズに対して線形時間でのマッチングを保証できる（ReDoSが原理的に起こらない）。</p>
 
-<ol>
-<li>気になったものに出会う（"That&rsquo;s interesting"）</li>
-<li>それについてノートを作り、他のノートとリンクする</li>
-<li>これを100回ほど繰り返す</li>
-<li>頭がパンクしそうになる瞬間（mental squeeze point）を感じたら、関連ノートを<a href="/notes/moc.html">MOC</a>にまとめる</li>
-<li>Obsidianデータベース全体をナビゲートするための「ホームノート」を作る</li>
-<li>折に触れて自分のIdeaverseを探索し、好奇心の赴くままに飛び回る</li>
-</ol>
+<h2>Perl 5とRakuの場合</h2>
+
+<ul>
+<li><strong>Perl 5</strong>: バックトラッキング型。表現力は高いが、書き方次第でReDoSの温床になりうる。</li>
+<li><strong><a href="/notes/raku-rakudo-perl6.html">Raku</a></strong>: 文法的にはPerlの血統を継ぐバックトラッキング型のエンジンだが、grammarの<code>token</code>/<code>rule</code>宣言子は暗黙に<code>:ratchet</code>(<code>:r</code>)修飾子を持ち、一度マッチした箇所へのバックトラックを禁止する。フルバックトラック可能な<code>regex</code>宣言子と、バックトラックなしで高速・失敗も早い<code>token</code>/<code>rule</code>を書き分けられる設計になっており、Perl 5と比べてバックトラック起因の性能問題を抑えやすい。</li>
+</ul>
 
 
-<p><a class="note-tag" href="/notes/tags/zettelkasten.html">#zettelkasten</a> <a class="note-tag" href="/notes/tags/note-taking.html">#note-taking</a> <a class="note-tag" href="/notes/tags/obsidian.html">#obsidian</a></p>
+<p><a class="note-tag" href="/notes/tags/regex.html">#regex</a> <a class="note-tag" href="/notes/tags/raku.html">#raku</a> <a class="note-tag" href="/notes/tags/perl.html">#perl</a></p>
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://www.linkingyourthinking.com/">Linking Your Thinking</a></li>
-<li><a href="https://blog.linkingyourthinking.com/ideaverse-map">Ideaverse Map - LYT Blog - Linking Your Thinking</a></li>
-<li><a href="https://www.linkingyourthinking.com/ideaverse/benefits-of-lyt-frameworks">Benefits of LYT frameworks</a></li>
+<li><a href="https://news.ycombinator.com/item?id=10210133">Perl&rsquo;s regex engine uses a non-deterministic finite automata [NFA] - Hacker News</a></li>
+<li><a href="https://github.com/Raku/old-design-docs/blob/master/S05-regex.pod">old-design-docs/S05-regex.pod at master · Raku/old-design-docs</a></li>
+<li><a href="https://docs.raku.org/language/grammars">Grammars | Raku Documentation</a></li>
 </ul>
 
 
                                 <div class="notes-backlinks">
                     <h2>🔗 リンクされているノート</h2>
                     <ul>
-                                            <li><a href="/notes/moc.html">MOC (Map of Content)</a></li>
+                                            <li><a href="/notes/raku-rakudo-perl6.html">Raku / Rakudo / Perl 6</a></li>
                     
                     </ul>
                 </div>
                                 <div class="notes-meta">
                     <span>作成日: 2026-08-09</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=LYT%20%28Linking%20Your%20Thinking%29&url=https%3A%2F%2F64p.org%2Fnotes%2Flyt.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=%E6%AD%A3%E8%A6%8F%E8%A1%A8%E7%8F%BE%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%B3%E3%81%AE%E5%AE%9F%E8%A3%85%E6%96%B9%E5%BC%8F%3A%20%E3%83%90%E3%83%83%E3%82%AF%E3%83%88%E3%83%A9%E3%83%83%E3%82%AD%E3%83%B3%E3%82%B0%E5%9E%8B%E3%81%A8NFA%2FDFA%E5%9E%8B&url=https%3A%2F%2F64p.org%2Fnotes%2Fregex-engine-backtracking-vs-nfa.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">

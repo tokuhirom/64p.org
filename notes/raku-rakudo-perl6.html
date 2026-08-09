@@ -37,6 +37,7 @@
                                     <li><a href="/notes/sakpilot.html">SakPilot</a></li>
                                     <li><a href="/notes/rust-gui-libraries.html">Rust GUI ライブラリ一覧</a></li>
                                     <li><a href="/notes/roam-research.html">Roam Research</a></li>
+                                    <li><a href="/notes/regex-engine-backtracking-vs-nfa.html">正規表現エンジンの実装方式: バックトラッキング型とNFA/DFA型</a></li>
                                     <li><a href="/notes/raku-rakudo-perl6.html" class="active">Raku / Rakudo / Perl 6</a></li>
                                     <li><a href="/notes/project-valhalla.html">Project Valhalla</a></li>
                                     <li><a href="/notes/project-panama.html">Project Panama</a></li>
@@ -147,7 +148,7 @@
 
 <ul>
 <li><strong>Gradual typing</strong>: 動的型付けをベースに、任意で静的型注釈を追加できる。</li>
-<li><strong>Grammar（文法）</strong>: Perlの正規表現を拡張した「rules」により、PEGやANTLR相当のパーサーを言語内蔵で書ける。</li>
+<li><strong>Grammar（文法）</strong>: Perlの正規表現を拡張した「rules」により、PEGやANTLR相当のパーサーを言語内蔵で書ける。エンジンの実装方式は<a href="/notes/regex-engine-backtracking-vs-nfa.html">バックトラッキング型とNFA/DFA型</a>を参照。</li>
 <li><strong>マルチディスパッチ</strong>: 同名関数を引数の型・値でオーバーロードできる（例: <code>multi fact(0) { 1 }</code>）。</li>
 <li><strong>Sigil不変性</strong>: <code>@</code>, <code>$</code>などのシジルが変数アクセス時に変化しない設計で、複雑なデータ構造を簡潔に扱える。</li>
 <li><strong>遅延評価</strong>: <code>0..Inf</code>のような無限リストも安全に扱える。</li>
@@ -190,6 +191,13 @@
 </ul>
 
 
+                                <div class="notes-backlinks">
+                    <h2>🔗 リンクされているノート</h2>
+                    <ul>
+                                            <li><a href="/notes/regex-engine-backtracking-vs-nfa.html">正規表現エンジンの実装方式: バックトラッキング型とNFA/DFA型</a></li>
+                    
+                    </ul>
+                </div>
                                 <div class="notes-meta">
                     <span>作成日: 2026-08-09</span>
                     <a class="share-x" href="https://twitter.com/intent/tweet?text=Raku%20%2F%20Rakudo%20%2F%20Perl%206&url=https%3A%2F%2F64p.org%2Fnotes%2Fraku-rakudo-perl6.html" target="_blank" rel="noopener">𝕏 で共有</a>
