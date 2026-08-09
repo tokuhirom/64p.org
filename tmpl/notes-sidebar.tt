@@ -1,15 +1,15 @@
         <nav class="notes-sidebar">
             <div class="notes-sidebar-header">
                 <a href="/notes/">📝 Notes</a>
-                <button class="theme-toggle" title="Toggle theme" aria-label="Toggle theme">◐</button>
+                <button class="theme-toggle" title="テーマ切替" aria-label="テーマ切替">◐</button>
             </div>
-            <input class="notes-search" type="text" placeholder="Filter notes...">
+            <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
             <ul class="notes-nav">
             [% FOR note IN notes -%]
                 <li><a href="[% note.link %]"[% IF note.file == current_file %] class="active"[% END %]>[% note.title %]</a></li>
             [% END %]
             </ul>
             <div class="notes-sidebar-footer">
-                <a href="/">&larr; 64p.org</a>
+                <a href="/">&larr; 64p.org トップへ</a>
             </div>
         </nav>

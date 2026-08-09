@@ -14,10 +14,10 @@
         <main class="notes-main">
             <article class="notes-content">
                 [% body | raw %]
-                <div class="notes-meta">Updated [% mtime.strftime('%Y-%m-%d') %]</div>
+                <div class="notes-meta">更新日: [% mtime.strftime('%Y-%m-%d') %]</div>
             </article>
             <footer class="notes-footer">
-                Random research notes by <a href="https://github.com/tokuhirom">tokuhirom</a>.
+                <a href="https://github.com/tokuhirom">tokuhirom</a> による調査メモです。
             </footer>
         </main>
     </div>

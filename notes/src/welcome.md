@@ -1,12 +1,12 @@
-# Welcome to Notes
+# Notesコーナーへようこそ
 
-This corner is for jotting down small things I looked up, often with help from an AI assistant — quick research results, snippets, and things I don't want to forget.
+ちょっと調べたこと、AIに調査してもらった結果、忘れたくないスニペットなどを気軽に書き残しておく場所です。
 
-Unlike [the blog](https://blog.64p.org/), these are meant to be short and informal.
+[ブログ](https://blog.64p.org/)はもう少しちゃんとした記事向けで、こちらはメモ書き程度のラフなものを想定しています。
 
-## Example: code blocks
+## コードブロックの例
 
-Code snippets are rendered with syntax highlighting:
+コードスニペットはシンタックスハイライト付きで表示されます。
 
 ```perl
 use strict;
@@ -21,13 +21,13 @@ print greet("world"), "\n";
 ```
 
 ```bash
-# a quick shell one-liner
+# ちょっとしたシェルのワンライナー
 find . -name '*.md' | xargs wc -l
 ```
 
-## Adding a new note
+## 新しいノートの追加方法
 
-Drop a new Markdown file into `notes/src/`, with the title as the first line (either `# Title` or plain text), then run:
+`notes/src/` 配下にMarkdownファイルを追加します。1行目がタイトルになります（`# タイトル` でもプレーンテキストでもOK）。追加したら以下を実行します。
 
 ```sh
 perl regen-index.pl

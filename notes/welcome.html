@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>Welcome to Notes - Notes - 64p.org</title>
+    <title>Notesコーナーへようこそ - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/highlight.js@11/styles/github.min.css" media="(prefers-color-scheme: light)">
@@ -13,29 +13,29 @@
         <nav class="notes-sidebar">
             <div class="notes-sidebar-header">
                 <a href="/notes/">📝 Notes</a>
-                <button class="theme-toggle" title="Toggle theme" aria-label="Toggle theme">◐</button>
+                <button class="theme-toggle" title="テーマ切替" aria-label="テーマ切替">◐</button>
             </div>
-            <input class="notes-search" type="text" placeholder="Filter notes...">
+            <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
             <ul class="notes-nav">
-                            <li><a href="/notes/welcome.html" class="active">Welcome to Notes</a></li>
+                            <li><a href="/notes/welcome.html" class="active">Notesコーナーへようこそ</a></li>
             
             </ul>
             <div class="notes-sidebar-footer">
-                <a href="/">&larr; 64p.org</a>
+                <a href="/">&larr; 64p.org トップへ</a>
             </div>
         </nav>
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>Welcome to Notes</h1>
+                <h1>Notesコーナーへようこそ</h1>
 
-<p>This corner is for jotting down small things I looked up, often with help from an AI assistant — quick research results, snippets, and things I don&rsquo;t want to forget.</p>
+<p>ちょっと調べたこと、AIに調査してもらった結果、忘れたくないスニペットなどを気軽に書き残しておく場所です。</p>
 
-<p>Unlike <a href="https://blog.64p.org/">the blog</a>, these are meant to be short and informal.</p>
+<p><a href="https://blog.64p.org/">ブログ</a>はもう少しちゃんとした記事向けで、こちらはメモ書き程度のラフなものを想定しています。</p>
 
-<h2>Example: code blocks</h2>
+<h2>コードブロックの例</h2>
 
-<p>Code snippets are rendered with syntax highlighting:</p>
+<p>コードスニペットはシンタックスハイライト付きで表示されます。</p>
 
 <pre><code class="perl">use strict;
 use warnings;
@@ -50,21 +50,21 @@ print greet("world"), "\n";
 
 
 
-<pre><code class="bash"># a quick shell one-liner
+<pre><code class="bash"># ちょっとしたシェルのワンライナー
 find . -name '*.md' | xargs wc -l
 </code></pre>
 
-<h2>Adding a new note</h2>
+<h2>新しいノートの追加方法</h2>
 
-<p>Drop a new Markdown file into <code>notes/src/</code>, with the title as the first line (either <code># Title</code> or plain text), then run:</p>
+<p><code>notes/src/</code> 配下にMarkdownファイルを追加します。1行目がタイトルになります（<code># タイトル</code> でもプレーンテキストでもOK）。追加したら以下を実行します。</p>
 
 <pre><code class="sh">perl regen-index.pl
 </code></pre>
 
-                <div class="notes-meta">Updated 2026-08-09</div>
+                <div class="notes-meta">更新日: 2026-08-09</div>
             </article>
             <footer class="notes-footer">
-                Random research notes by <a href="https://github.com/tokuhirom">tokuhirom</a>.
+                <a href="https://github.com/tokuhirom">tokuhirom</a> による調査メモです。
             </footer>
         </main>
     </div>
