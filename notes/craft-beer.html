@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>Network Doctor (netdoc) - Notes - 64p.org</title>
+    <title>クラフトビール - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/highlight.js@11/styles/github.min.css" media="(prefers-color-scheme: light)">
@@ -39,7 +39,7 @@
                                     <li><a href="/notes/openrouter.html">OpenRouter</a></li>
                                     <li><a href="/notes/obsidian.html">Obsidian</a></li>
                                     <li><a href="/notes/ngrep.html">ngrep (network grep)</a></li>
-                                    <li><a href="/notes/network-doctor.html" class="active">Network Doctor (netdoc)</a></li>
+                                    <li><a href="/notes/network-doctor.html">Network Doctor (netdoc)</a></li>
                                     <li><a href="/notes/miidera-gomimushi.html">ミイデラゴミムシ</a></li>
                                     <li><a href="/notes/metasploit.html">Metasploit</a></li>
                                     <li><a href="/notes/matsubokkuri-gogen.html">松ぼっくりの「ぼっくり」の語源</a></li>
@@ -61,7 +61,7 @@
                                     <li><a href="/notes/electron.html">Electron</a></li>
                                     <li><a href="/notes/edge-manifest-v3.html">Microsoft Edge、拡張機能をManifest V3へ完全移行</a></li>
                                     <li><a href="/notes/dangouzaka-yurai.html">談合坂の地名由来</a></li>
-                                    <li><a href="/notes/craft-beer.html">クラフトビール</a></li>
+                                    <li><a href="/notes/craft-beer.html" class="active">クラフトビール</a></li>
                                     <li><a href="/notes/claude-model-tiers.html">Claudeのモデル階層(Opus / Sonnet / Haiku / Fable)の違い</a></li>
                                     <li><a href="/notes/carnivorous-plants.html">食虫植物</a></li>
                                     <li><a href="/notes/bpf.html">BPF (Berkeley Packet Filter)</a></li>
@@ -75,63 +75,50 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>Network Doctor (netdoc)</h1>
+                <h1>クラフトビール</h1>
 
-<p><a href="https://github.com/heymaikol/network-doctor">heymaikol/network-doctor</a> — Go製のクロスプラットフォーム対応ネットワーク診断TUIツール。コマンド名は<code>netdoc</code>。</p>
+<p><a class="note-tag" href="/notes/tags/beer.html">#beer</a> <a class="note-tag" href="/notes/tags/etymology.html">#etymology</a></p>
 
-<h2>コンセプト</h2>
+<p>小規模な醸造所が、独立性を保ちながら独自の製法・原料でつくるビールの総称。「craft(手工芸)」という言葉の通り、職人的なこだわりが特徴。</p>
 
-<p>「接続がどこで破綻しているか」を、DNS → TCP → TLS → HTTP → プロキシの各層で切り分けて特定する。単なる<code>ping</code>や<code>dig</code>の出力ではなく、「ネットワークの問題かサービス側の問題か」を実用的に診断するのが狙い。</p>
+<h2>起源</h2>
 
-<h2>技術スタック</h2>
+<p>1970年代のアメリカで、大手ビール会社の画一化された味に対抗し、昔ながらのレシピでビールを復活させる動きから始まったとされる。</p>
+
+<h2>定義の目安(米国Brewers Association基準)</h2>
+
+<ol>
+<li><strong>小規模性</strong>: 年間生産量が一定規模以下</li>
+<li><strong>独立性</strong>: 大手酒造メーカーに所有・支配されていない</li>
+<li><strong>伝統性</strong>: 麦芽100%のビールを主力商品としている</li>
+</ol>
+
+
+<p>日本の全国地ビール醸造者協議会(JBA)も2018年に、①大量生産の大資本ビールから独立している、②1回の仕込みが20キロリットル以下の小規模醸造、③伝統的製法か地域特産品を使った個性的なビール、という3条件で独自に定義している。</p>
+
+<h2>「地ビール」との違い</h2>
 
 <ul>
-<li>Go 1.25+</li>
-<li>Bubble Tea / Bubbles / Lip Gloss（TUIフレームワーク一式）</li>
-<li>Linux / macOS / Windows ネイティブバイナリ対応</li>
+<li><strong>地ビール</strong>: 1994年の酒税法改正(小規模醸造免許の規制緩和)により誕生した小規模醸造ビール。当初はお土産・町おこし要素が強く、一時的なブームで終わった経緯がある。</li>
+<li><strong>クラフトビール</strong>: その後、個性的なビールづくりを追求する醸造家たちによる新たなムーブメント。海外コンテストでの受賞例も多く、職人的なこだわりが強い。</li>
 </ul>
 
 
-<h2>主な機能</h2>
-
-<ul>
-<li>依存関係グラフに基づく複数の独立診断、結果は5段階評価（✓ Pass / ! Warn / ✗ Fail / ⊘ Skip / – N/A）</li>
-<li>ルート権限なしで動作（パスMTUチェックも含む）</li>
-<li>ドリルダウンツール（ping、traceroute、mtr、nmap、ssh等）呼び出し</li>
-<li>LANスキャン・ネットワークマップ表示、SSHログイン機能</li>
-<li><code>--watch</code>モードで5秒間隔の継続監視</li>
-<li>出力はTUI / JSON / NDJSON（watch時）に対応</li>
-</ul>
-
-
-<h2>インストール</h2>
-
-<p>Scoop（Windows）、Homebrew（macOS）、COPR（Fedora）、<code>.deb</code>/<code>.rpm</code>/<code>.apk</code>、<code>go install</code>など各種パッケージマネージャに対応。</p>
-
-<h2>使用例</h2>
-
-<pre><code class="bash">netdoc github.com           # DNS → TCP → TLS → HTTP 診断
-netdoc github.com:22        # SSH パスとバナー診断
-netdoc --watch host         # 間欠的障害の追跡
-netdoc --json host          # スクリプト向けの構造化レポート
-</code></pre>
-
-<h2>その他</h2>
-
-<p>GitHub上で156スター、560コミット。ライセンスはGPLv3以上。</p>
-
-<p><a class="note-tag" href="/notes/tags/go.html">#go</a> <a class="note-tag" href="/notes/tags/tui.html">#tui</a> <a class="note-tag" href="/notes/tags/network.html">#network</a> <a class="note-tag" href="/notes/tags/cli.html">#cli</a></p>
+<p>両者は「小規模醸造所がつくる」という点では同じだが、生まれた背景とニュアンスが異なる。</p>
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://github.com/heymaikol/network-doctor">heymaikol/network-doctor - GitHub</a></li>
+<li><a href="https://dreambeer.jp/blog/knowledge/20210630blog/">クラフトビールって何？定義や特徴、種類について知ってみよう！ | DREAMBEER</a></li>
+<li><a href="https://www.jbja.jp/archives/3522">クラフトビールの定義。クラフトビールとは？ - 日本ビアジャーナリスト協会</a></li>
+<li><a href="https://beer-engawa.jp/blog/column/about-craftbeer/">クラフトビールの定義と種類、地ビールとの違いは？ – ビールの縁側</a></li>
+<li><a href="https://beer.or.jp/about/">クラフトビールとは | 全国地ビール醸造者協議会</a></li>
 </ul>
 
 
                                 <div class="notes-meta">
                     <span>作成日: 2026-08-09</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=Network%20Doctor%20%28netdoc%29&url=https%3A%2F%2F64p.org%2Fnotes%2Fnetwork-doctor.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=%E3%82%AF%E3%83%A9%E3%83%95%E3%83%88%E3%83%93%E3%83%BC%E3%83%AB&url=https%3A%2F%2F64p.org%2Fnotes%2Fcraft-beer.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">
