@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>OpenSSF (Open Source Security Foundation) - Notes - 64p.org</title>
+    <title>Wails - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/highlight.js@11/styles/github.min.css" media="(prefers-color-scheme: light)">
@@ -20,11 +20,11 @@
             <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
             <ul class="notes-nav">
                             <li><a href="/notes/welcome.html">Notesコーナーへようこそ</a></li>
-                            <li><a href="/notes/wails.html">Wails</a></li>
+                            <li><a href="/notes/wails.html" class="active">Wails</a></li>
                             <li><a href="/notes/sakpilot.html">SakPilot</a></li>
                             <li><a href="/notes/raku-rakudo-perl6.html">Raku / Rakudo / Perl 6</a></li>
                             <li><a href="/notes/project-glasswing.html">Project Glasswing</a></li>
-                            <li><a href="/notes/openssf.html" class="active">OpenSSF (Open Source Security Foundation)</a></li>
+                            <li><a href="/notes/openssf.html">OpenSSF (Open Source Security Foundation)</a></li>
                             <li><a href="/notes/miidera-gomimushi.html">ミイデラゴミムシ</a></li>
                             <li><a href="/notes/lefthook.html">lefthook</a></li>
                             <li><a href="/notes/kyoka-vs-tanka.html">狂歌と短歌の違い</a></li>
@@ -43,49 +43,42 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>OpenSSF (Open Source Security Foundation)</h1>
+                <h1>Wails</h1>
 
-<p><a class="note-tag" href="/notes/tags/security.html">#security</a> <a class="note-tag" href="/notes/tags/oss.html">#oss</a></p>
+<p><a class="note-tag" href="/notes/tags/go.html">#go</a> <a class="note-tag" href="/notes/tags/typescript.html">#typescript</a> <a class="note-tag" href="/notes/tags/wails.html">#wails</a></p>
 
-<p>Linux Foundation傘下の非営利団体で、オープンソースソフトウェアのセキュリティ向上を目的とした業界横断の連携組織。2020年8月、Linux Foundationの前身プロジェクト「Core Infrastructure Initiative」の後継として設立された。</p>
+<p>Go言語のバックエンドとWeb技術(HTML/CSS/JS、React/Vue/Svelteなど)のフロントエンドを組み合わせてクロスプラットフォームのデスクトップアプリを作れるフレームワーク。MITライセンスのOSSで、GitHub Stars約35.7k。対応OSはWindows/macOS/Linux。<a href="/notes/sakpilot.html">SakPilot</a>もWails v2で作られている。</p>
 
-<p><a href="/notes/project-glasswing.html">Project Glasswing</a>でAnthropicが寄付した先の一つ(Linux Foundation経由でAlpha-Omega/OpenSSFに250万ドル)。</p>
+<h2>アーキテクチャ</h2>
 
-<h2>規模</h2>
+<p>Electronがフルの Chromium を同梱するのに対し、Wailsは OS のネイティブ WebView(macOSならWebKit、WindowsならWebView2、LinuxならWebKitGTK)を利用してUIを描画する。そのためアプリのバンドルサイズやメモリ使用量が大幅に小さく済む(公式ドキュメントの目安は~15MB、RAM~10MB、起動0.5秒未満)。GoとJS間のバインディングは自動生成され、Goの関数をJS側から直接呼び出せる。</p>
 
-<p>現在116のメンバー企業が参加、本拠地はサンフランシスコ。10のワーキンググループでセキュリティ関連の取り組みを実施している。2021年にBrian Behlendorfが初代総長に就任し、2023年からはOmkhar Arasaratnamが総長、Behlendorfは技術部門トップ(CTO)に転任した。</p>
-
-<h2>代表的なプロジェクト</h2>
+<h2>類似ツールとの違い</h2>
 
 <ul>
-<li><strong>Sigstore</strong>: ソフトウェアのコード署名・検証サービス。</li>
-<li><strong>Alpha-Omega</strong>: サプライチェーンセキュリティ改善のための大規模プロジェクト。</li>
-<li><strong>Scorecard</strong>: OSSプロジェクトのセキュリティ健全性を機械的にスコア化するツール群。</li>
+<li><strong>Electron</strong>: フルのChromiumを同梱する成熟したエコシステム。バイナリサイズは大きいがドキュメント・実績が豊富。</li>
+<li><strong>Tauri</strong>: WailsとほぼおなじくOSネイティブWebViewを使うアーキテクチャだが、バックエンドはRust。WebViewはデフォルトでネイティブ機能に一切アクセスできず、明示的な許可(capabilities)を与える設計でセキュリティ面で一歩進んでいる。</li>
+<li><strong>Wails</strong>: Goでバックエンドを書きたい開発者にとって、Tauriに近い軽量さのメリットを享受できる選択肢という位置づけ。</li>
 </ul>
 
 
-<h2>活動</h2>
+<h2>バージョン状況</h2>
 
-<p>2022年5月には「Open Source Software Security Mobilization Plan」で3000万ドルの資金調達を達成するなど、業界大手(Google, Microsoft, AWS等)が連携してOSSのセキュリティ基盤強化に投資する枠組みとして機能している。</p>
+<p>v2が安定版(stable)として広く使われており、v3は現在ベータ版で開発中。6,600以上のコミットで活発に開発が続いている。</p>
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://en.wikipedia.org/wiki/Open_Source_Security_Foundation">Open Source Security Foundation - Wikipedia</a></li>
-<li><a href="https://www.linuxfoundation.org/blog/blog/open-source-security-foundation-openssf-reflection-and-future">Open Source Security Foundation (OpenSSF): Reflection and Future - Linux Foundation</a></li>
+<li><a href="https://github.com/wailsapp/wails">wailsapp/wails - GitHub</a></li>
+<li><a href="https://www.stork.ai/blog/gos-secret-weapon-for-desktop-apps">Wails: Build Lightweight Desktop Apps with Golang and Web Tech</a></li>
+<li><a href="https://www.digitalapplied.com/blog/desktop-apps-web-stack-tauri-electron-deno-wails-2026">Desktop Apps from Web: Tauri vs Electron vs Deno 2026</a></li>
+<li><a href="https://medium.com/@tacherasasi/why-wails-wins-at-ipc-for-go-desktop-apps-and-how-it-stacks-up-against-tauri-electron-5a00b202cf09">Why Wails Wins at IPC for Go Desktop Apps - Medium</a></li>
 </ul>
 
 
-                                <div class="notes-backlinks">
-                    <h2>🔗 リンクされているノート</h2>
-                    <ul>
-                                            <li><a href="/notes/project-glasswing.html">Project Glasswing</a></li>
-                    
-                    </ul>
-                </div>
                                 <div class="notes-meta">
                     <span>作成日: 2026-08-09</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=OpenSSF%20%28Open%20Source%20Security%20Foundation%29&url=https%3A%2F%2F64p.org%2Fnotes%2Fopenssf.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=Wails&url=https%3A%2F%2F64p.org%2Fnotes%2Fwails.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">
