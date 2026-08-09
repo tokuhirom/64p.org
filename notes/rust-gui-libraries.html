@@ -1,0 +1,208 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Rust GUI ライブラリ一覧 - Notes - 64p.org</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/static/notes.css">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/highlight.js@11/styles/github.min.css" media="(prefers-color-scheme: light)">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/highlight.js@11/styles/github-dark.min.css" media="(prefers-color-scheme: dark)">
+</head>
+<body>
+    <div class="notes-layout">
+        <nav class="notes-sidebar">
+            <div class="notes-sidebar-header">
+                <a href="/notes/">📝 Notes</a>
+                <button class="theme-toggle" title="テーマ切替" aria-label="テーマ切替">◐</button>
+            </div>
+            <div class="notes-sidebar-byline">by <a href="/">tokuhirom</a></div>
+            <a class="notes-tags-link" href="/notes/tags/">🏷️ タグ一覧</a>
+            <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
+            <ul class="notes-nav">
+                            <li><a href="/notes/welcome.html">Notesコーナーへようこそ</a></li>
+                            <li><a href="/notes/wails.html">Wails</a></li>
+                            <li><a href="/notes/tableau.html">Tableau</a></li>
+                            <li><a href="/notes/sakpilot.html">SakPilot</a></li>
+                            <li><a href="/notes/rust-gui-libraries.html" class="active">Rust GUI ライブラリ一覧</a></li>
+                            <li><a href="/notes/raku-rakudo-perl6.html">Raku / Rakudo / Perl 6</a></li>
+                            <li><a href="/notes/project-glasswing.html">Project Glasswing</a></li>
+                            <li><a href="/notes/openssf.html">OpenSSF (Open Source Security Foundation)</a></li>
+                            <li><a href="/notes/miidera-gomimushi.html">ミイデラゴミムシ</a></li>
+                            <li><a href="/notes/lefthook.html">lefthook</a></li>
+                            <li><a href="/notes/kyoka-vs-tanka.html">狂歌と短歌の違い</a></li>
+                            <li><a href="/notes/harmonyos.html">HarmonyOSとは</a></li>
+                            <li><a href="/notes/harmonyos-pc.html">HarmonyOS PC版（鴻蒙電脳）</a></li>
+                            <li><a href="/notes/hacker-news.html">Hacker News (HN) について</a></li>
+                            <li><a href="/notes/gpui.html">GPUI</a></li>
+                            <li><a href="/notes/gpt-5-6-sol-terra-luna.html">GPT-5.6のSol / Terra / Lunaの違い</a></li>
+                            <li><a href="/notes/freya.html">Freya (freyaui.dev) — Rust製クロスプラットフォームGUIライブラリ</a></li>
+                            <li><a href="/notes/edge-manifest-v3.html">Microsoft Edge、拡張機能をManifest V3へ完全移行</a></li>
+                            <li><a href="/notes/dangouzaka-yurai.html">談合坂の地名由来</a></li>
+                            <li><a href="/notes/claude-model-tiers.html">Claudeのモデル階層(Opus / Sonnet / Haiku / Fable)の違い</a></li>
+                            <li><a href="/notes/carnivorous-plants.html">食虫植物</a></li>
+            
+            </ul>
+            <div class="notes-sidebar-footer">
+                <a href="/">&larr; 64p.org トップへ</a>
+            </div>
+        </nav>
+
+        <main class="notes-main">
+            <article class="notes-content">
+                <h1>Rust GUI ライブラリ一覧</h1>
+
+<p>Rust製のGUIライブラリ・フレームワークをまとめておく。個別に深掘りしたものは別ノート(<a href="/notes/gpui.html">GPUI</a>、<a href="/notes/freya.html">Freya (freyaui.dev) — Rust製クロスプラットフォームGUIライブラリ</a>)に切り出し、ここからリンクする。 <a class="note-tag" href="/notes/tags/rust.html">#rust</a> <a class="note-tag" href="/notes/tags/gui.html">#gui</a></p>
+
+<h2>比較表</h2>
+
+<table>
+<thead>
+<tr>
+<th> 名前 </th>
+<th> 開発元 </th>
+<th> スター数 </th>
+<th> レンダリング方式 </th>
+<th> 対応プラットフォーム </th>
+<th> ライセンス </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td> <a href="https://github.com/emilk/egui">egui</a> </td>
+<td> Emil Ernerfeldt </td>
+<td> 30k+ </td>
+<td> Immediate mode </td>
+<td> Web(Wasm)/デスクトップ/Android/ゲームエンジン組込 </td>
+<td> MIT/Apache-2.0 </td>
+</tr>
+<tr>
+<td> <a href="https://github.com/iced-rs/iced">Iced</a> </td>
+<td> iced-rs </td>
+<td> 31.2k </td>
+<td> Elm Architecture(宣言型)、wgpu/tiny-skia </td>
+<td> Windows/macOS/Linux/Web </td>
+<td> MIT </td>
+</tr>
+<tr>
+<td> <a href="https://github.com/slint-ui/slint">Slint</a> </td>
+<td> SixtyFPS GmbH </td>
+<td> 23.4k </td>
+<td> 独自DSL(<code>.slint</code>)をコンパイル </td>
+<td> 組込(RaspberryPi/STM32等)/デスクトップ/モバイル/Web </td>
+<td> デュアル(GPLv3 or 商用) </td>
+</tr>
+<tr>
+<td> <a href="https://github.com/DioxusLabs/dioxus">Dioxus</a> </td>
+<td> DioxusLabs </td>
+<td> 38.6k </td>
+<td> React/Solid/Svelte的なシグナルベース </td>
+<td> Web/デスクトップ/モバイル/SSR </td>
+<td> MIT/Apache-2.0 </td>
+</tr>
+<tr>
+<td> <a href="https://github.com/linebender/xilem">Xilem</a> </td>
+<td> Linebender(Druidチーム後継) </td>
+<td> 5.5k </td>
+<td> Masonryベースの反応型UI(実験的) </td>
+<td> ネイティブ(Vello/wgpu) </td>
+<td> Apache-2.0 </td>
+</tr>
+<tr>
+<td> <a href="https://github.com/lapce/floem">Floem</a> </td>
+<td> Lapceチーム </td>
+<td> 4.2k </td>
+<td> fine-grained reactivity、Vello/Skia/tiny-skia </td>
+<td> Windows/macOS/Linux </td>
+<td> MIT </td>
+</tr>
+<tr>
+<td> <a href="https://github.com/makepad/makepad">Makepad</a> </td>
+<td> Rik Arendsら </td>
+<td> 6.5k </td>
+<td> 独自DSL+GPUレンダリング </td>
+<td> ネイティブ/Web(WebGL)/iOS/Android </td>
+<td> MIT </td>
+</tr>
+<tr>
+<td> <a href="/notes/freya.html">Freya (freyaui.dev) — Rust製クロスプラットフォームGUIライブラリ</a> </td>
+<td> marc2332 </td>
+<td> 約3,000 </td>
+<td> Skia(元はDioxusベース) </td>
+<td> クロスプラットフォーム(非Web) </td>
+<td> MIT </td>
+</tr>
+<tr>
+<td> <a href="/notes/gpui.html">GPUI</a> </td>
+<td> Zed Industries </td>
+<td> (Zed本体で約88,300) </td>
+<td> GPUアクセラレーション、immediate/retainedハイブリッド </td>
+<td> macOS/Windows等(pre-1.0) </td>
+<td> Apache-2.0 </td>
+</tr>
+</tbody>
+</table>
+
+
+<p>※スター数は調査時点(2026年8月)のスナップショット。</p>
+
+<h2>各ライブラリの補足</h2>
+
+<h3>egui</h3>
+
+<p>即座に画面を組める手軽さが特徴のimmediate mode GUI。フレーム毎にレイアウトを再計算する設計で、デバッグUIやツール系アプリ向き。AccessKitによるアクセシビリティ対応あり。</p>
+
+<h3>Iced</h3>
+
+<p>Elm Architecture(State/Message/View/Update)を採用した宣言型GUI。Krakenの元Cryptowatchチームが開発。型安全なAPIとasync対応が特徴だが、ドキュメントに不足があるとの指摘がある(<a href="https://www.boringcactus.com/2025/04/13/2025-survey-of-rust-gui-libraries.html">boringcactusのサーベイ</a>参照)。</p>
+
+<h3>Slint</h3>
+
+<p><code>.slint</code>という独自DSLでUIを定義し、コンパイル時に最適化する組込機器フレンドリーな設計。Rust以外にC++/JavaScript/Pythonからも利用可能。ライセンスがGPLv3または商用ライセンスという点は他のMITライセンス系ライブラリと毛色が異なる。</p>
+
+<h3>Dioxus</h3>
+
+<p>React/Solid/Svelteのいいとこ取りを謳うシグナルベースの状態管理を持つフルスタックフレームワーク。Web/デスクトップ/モバイル/SSRを単一コードベースでカバーする。<a href="/notes/freya.html">Freya (freyaui.dev) — Rust製クロスプラットフォームGUIライブラリ</a>はDioxusの代替レンダラー(Skiaベース)としてREADME内で言及されている。</p>
+
+<h3>Xilem</h3>
+
+<p>かつてRust公式GUIの本命と目されていた<a href="https://github.com/linebender/druid">Druid</a>がsunset(開発終了)した後継として、同じLinebenderチームが開発。ウィジェットツールキットMasonryを基盤に、Vello/wgpu/Parley/AccessKitなどLinebender製コンポーネント群を組み合わせる。まだ実験的段階。</p>
+
+<h3>Floem</h3>
+
+<p>コードエディタ<a href="https://lapce.dev/">Lapce</a>と同じチームが開発。fine-grained reactivity(SolidJS的な、仮想DOMを介さない細粒度の再描画)が特徴。</p>
+
+<h3>Makepad</h3>
+
+<p>独自のライブUI DSLとGPUレンダリングパイプラインを持つ。Web(WebGL)やiOS/Android/tvOSまで幅広くカバーする。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://www.boringcactus.com/2025/04/13/2025-survey-of-rust-gui-libraries.html">A 2025 Survey of Rust GUI Libraries - boringcactus</a></li>
+<li><a href="https://wrenlearnsrust.com/posts/2026-03-11-rust-gui-landscape-2026.html">The Rust GUI Landscape in 2026: Picking Your Framework - Wren Learns Rust</a></li>
+<li><a href="https://github.com/emilk/egui">egui - GitHub</a></li>
+<li><a href="https://github.com/iced-rs/iced">Iced - GitHub</a></li>
+<li><a href="https://github.com/slint-ui/slint">Slint - GitHub</a></li>
+<li><a href="https://github.com/DioxusLabs/dioxus">Dioxus - GitHub</a></li>
+<li><a href="https://github.com/linebender/xilem">Xilem - GitHub</a></li>
+<li><a href="https://github.com/lapce/floem">Floem - GitHub</a></li>
+<li><a href="https://github.com/makepad/makepad">Makepad - GitHub</a></li>
+</ul>
+
+
+                                <div class="notes-meta">
+                    <span>作成日: 2026-08-09</span>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=Rust%20GUI%20%E3%83%A9%E3%82%A4%E3%83%96%E3%83%A9%E3%83%AA%E4%B8%80%E8%A6%A7&url=https%3A%2F%2F64p.org%2Fnotes%2Frust-gui-libraries.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                </div>
+            </article>
+            <footer class="notes-footer">
+                <a href="https://github.com/tokuhirom">tokuhirom</a> による調査メモです。
+                個人的な調査メモであり、正確な記述に努めていますが正確性を保証するものではなく、所属する団体を代表する見解でもありません。
+            </footer>
+        </main>
+    </div>
+    <script src="//cdn.jsdelivr.net/npm/highlight.js@11/lib/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+    <script src="/static/notes.js"></script>
+</body>
+</html>
