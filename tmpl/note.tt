@@ -14,6 +14,16 @@
         <main class="notes-main">
             <article class="notes-content">
                 [% body | raw %]
+                [% IF has_backlinks -%]
+                <div class="notes-backlinks">
+                    <h2>🔗 リンクされているノート</h2>
+                    <ul>
+                    [% FOR bl IN backlinks -%]
+                        <li><a href="[% bl.link %]">[% bl.title %]</a></li>
+                    [% END %]
+                    </ul>
+                </div>
+                [% END -%]
                 <div class="notes-meta">
                     更新日: [% mtime.strftime('%Y-%m-%d') %]
                     <a class="share-x" href="https://twitter.com/intent/tweet?text=[% title | uri %]&url=[% url | uri %]" target="_blank" rel="noopener">𝕏 で共有</a>

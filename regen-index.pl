@@ -133,30 +133,75 @@ use File::stat;
 use Time::Piece;
 
 sub regen {
-    my @notes = map {
+    # pass 1: slurp every note's raw markdown + slug + title, before any
+    # cross-note resolution (wikilinks need to see every title first).
+    my @raw = map {
         my $src = $_;
         open my $fh, '<:utf8', $src or die "Cannot open $src: $!";
         my $mkdn = do { local $/; <$fh> };
         my ($title) = ($mkdn =~ /\A#?\s*(.+?)\n/);
-        my $html = markdown(
-            $mkdn,
-            Text::Markdown::Discount::MKD_AUTOLINK
-                | Text::Markdown::Discount::MKD_FENCEDCODE
-                | Text::Markdown::Discount::MKD_GITHUBTAGS,
-        );
-        (my $link = $src) =~ s!^notes/src/!/notes/!;
-        $link =~ s/\.md$/\.html/;
-        (my $file = $src) =~ s!^notes/src/!!;
-        $file =~ s/\.md$/\.html/;
+        (my $slug = $src) =~ s!^notes/src/!!;
+        $slug =~ s/\.md$//;
         +{
+            src   => $src,
+            slug  => $slug,
             title => $title,
-            body  => $html,
-            link  => $link,
-            url   => "https://64p.org$link",
-            file  => $file,
-            mtime => scalar(localtime(stat($src)->mtime)),
+            mkdn  => $mkdn,
+            mtime => stat($src)->mtime,
         };
-    } reverse sort { stat($a)->mtime <=> stat($b)->mtime } glob('notes/src/*.md');
+    } glob('notes/src/*.md');
+    my %title_by_slug = map { $_->{slug} => $_->{title} } @raw;
+
+    # pass 2: resolve [[slug]] / [[slug|label]] wikilinks into normal
+    # markdown links, and record who links to whom for backlinks.
+    # Fenced/inline code is protected first, so example [[wikilink]] text
+    # in code blocks isn't mistaken for a real link.
+    my %backlinks;
+    for my $note (@raw) {
+        my @protected;
+        $note->{mkdn} =~ s{(```.*?```|`[^`\n]*`)}{
+            push @protected, $1;
+            "\x01$#protected\x02";
+        }gse;
+        $note->{mkdn} =~ s{\[\[([\w\-]+)(?:\|([^\]]+))?\]\]}{
+            my ($target, $label) = ($1, $2);
+            if (exists $title_by_slug{$target}) {
+                $backlinks{$target}{$note->{slug}} = 1;
+                '[' . ($label // $title_by_slug{$target}) . "](/notes/$target.html)";
+            }
+            else {
+                warn "notes/src/$note->{slug}.md: broken wikilink [[$target]]\n";
+                '**' . ($label // $target) . '**';
+            }
+        }ge;
+        $note->{mkdn} =~ s{\x01(\d+)\x02}{$protected[$1]}ge;
+    }
+
+    # pass 3: render markdown -> html now that wikilinks are plain links.
+    my @notes = map {
+        my $slug = $_->{slug};
+        my $link = "/notes/$slug.html";
+        +{
+            title     => $_->{title},
+            body      => markdown(
+                $_->{mkdn},
+                Text::Markdown::Discount::MKD_AUTOLINK
+                    | Text::Markdown::Discount::MKD_FENCEDCODE
+                    | Text::Markdown::Discount::MKD_GITHUBTAGS,
+            ),
+            link      => $link,
+            url       => "https://64p.org$link",
+            file      => "$slug.html",
+            slug      => $slug,
+            mtime     => scalar(localtime($_->{mtime})),
+            backlinks => [
+                map { +{ title => $title_by_slug{$_}, link => "/notes/$_.html" } }
+                sort { $title_by_slug{$a} cmp $title_by_slug{$b} }
+                keys %{ $backlinks{$slug} // {} }
+            ],
+            has_backlinks => (keys %{ $backlinks{$slug} // {} } ? 1 : 0),
+        };
+    } reverse sort { $a->{mtime} <=> $b->{mtime} } @raw;
 
     my $xslate = Text::Xslate->new(
         syntax => 'TTerse',
