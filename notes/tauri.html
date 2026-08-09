@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>Tableau - Notes - 64p.org</title>
+    <title>Tauri - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/highlight.js@11/styles/github.min.css" media="(prefers-color-scheme: light)">
@@ -21,8 +21,8 @@
             <ul class="notes-nav">
                             <li><a href="/notes/welcome.html">Notesコーナーへようこそ</a></li>
                             <li><a href="/notes/wails.html">Wails</a></li>
-                            <li><a href="/notes/tauri.html">Tauri</a></li>
-                            <li><a href="/notes/tableau.html" class="active">Tableau</a></li>
+                            <li><a href="/notes/tauri.html" class="active">Tauri</a></li>
+                            <li><a href="/notes/tableau.html">Tableau</a></li>
                             <li><a href="/notes/skia.html">Skia</a></li>
                             <li><a href="/notes/sakpilot.html">SakPilot</a></li>
                             <li><a href="/notes/rust-gui-libraries.html">Rust GUI ライブラリ一覧</a></li>
@@ -52,47 +52,67 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>Tableau</h1>
+                <h1>Tauri</h1>
 
-<p><a class="note-tag" href="/notes/tags/bi.html">#bi</a> <a class="note-tag" href="/notes/tags/dataviz.html">#dataviz</a></p>
+<p>Rustバックエンドとネイティブ(OS標準)WebViewを組み合わせてクロスプラットフォームのデスクトップ／モバイルアプリを作れるフレームワーク。 <a class="note-tag" href="/notes/tags/rust.html">#rust</a> <a class="note-tag" href="/notes/tags/tauri.html">#tauri</a></p>
 
-<p>Stanford大学のスピンオフとして2003年1月に、Chris Stolte、Christian Chabot、Pat Hanrahanの3人が創業したBI(ビジネスインテリジェンス)・データ可視化ツール。ドラッグ&amp;ドロップ操作だけで直感的にデータを分析・グラフ化でき、専門知識がなくてもインタラクティブなダッシュボードを作れる点で広く使われている。</p>
-
-<h2>中核技術</h2>
-
-<p>独自特許技術の<strong>VizQL</strong>(Visualization Query Language)。1999〜2002年の学術研究をもとに開発され、ドラッグ&amp;ドロップ操作を裏側でデータクエリに変換し、その結果をインタラクティブなグラフとして描画する仕組み。</p>
-
-<h2>沿革</h2>
-
-<p>2013年5月にニューヨーク証券取引所へ上場(ティッカー: DATA)。2019年6月にSalesforceが買収を発表し、同年8月に約157億ドルで買収完了(当時Salesforce史上最大の買収)。以降Salesforceの完全子会社として、独立ブランドのまま運営が続いている。</p>
-
-<h2>2026年現在の主な機能</h2>
+<h2>概要</h2>
 
 <ul>
-<li><strong>Tableau Pulse</strong>: AIがユーザーごとに重要な指標を自動要約し、SlackやメールにKPIの変化を配信する。</li>
-<li><strong>Tableau Agent</strong>: 会話型アシスタントとしてデータ探索・可視化作成・インサイト発見を支援する。</li>
-<li>エディションはStandard/Enterprise/Cloud+/Tableau+の4段階。Tableau Cloudの料金目安はViewer 1,800円/Explorer 5,040円/Creator 9,000円(1ユーザー月額、年間契約)。</li>
+<li>GitHub: <a href="https://github.com/tauri-apps/tauri">tauri-apps/tauri</a> — 約110,000スター、3,900フォーク</li>
+<li>運営: Tauri Programme（Commons Conservancy傘下、持続的なOSSコミュニティとして運営）</li>
+<li>ライセンス: MIT / Apache-2.0 デュアル</li>
+<li>対応OS: Windows 7+、macOS 10.15+、Linux、iOS/iPadOS 9+、Android 7+</li>
 </ul>
 
 
-<h2>位置づけ</h2>
+<h2>アーキテクチャ</h2>
 
-<p>Power BI(Microsoft)、Looker Studio(Google)などと並ぶ主要BIツールの一つで、全社的なデータ分析やアドホック分析を重視する中〜大企業に向いているとされる。</p>
+<ul>
+<li><strong>WRY</strong>: プラットフォームごとのWebView(macOS/iOS: WKWebView、Windows: WebView2、Linux: WebKitGTK)を抽象化するライブラリ</li>
+<li><strong>TAO</strong>: <code>winit</code>をフォークしたウィンドウ管理ライブラリ(メニューバー・システムトレイ機能を追加)</li>
+<li>Rustコアと WebView間はメッセージパッシングで通信する設計</li>
+</ul>
+
+
+<h2>セキュリティモデル</h2>
+
+<p>WebViewはデフォルトでOS機能に一切アクセスできず、<code>capabilities</code>/<code>permissions</code>という明示的な許可リストを与える設計になっている。<a href="/notes/wails.html">Wails</a>など類似ツールとの比較でもこの点がよく特徴として挙げられる。</p>
+
+<h2>沿革・バージョン</h2>
+
+<ul>
+<li>2022年6月: v1.0リリース</li>
+<li>2024年2月: v2 Beta(iOS/Androidのモバイル対応が追加)</li>
+<li>2024年10月2日: v2 安定版リリース。単一のRust+JSコードベースでデスクトップ・モバイル5プラットフォームを統合</li>
+<li>2026年8月時点で2.11系(2.11.5が2026-07-01リリース)</li>
+</ul>
+
+
+<h2>類似ツールとの比較</h2>
+
+<p>Electronがフル Chromium を同梱するのに対し、TauriはOSネイティブWebViewを使うことでバイナリサイズを大幅に削減する(READMEでは「Electronより95%小さいバイナリ」と謳う)。バックエンドをGoで書く<a href="/notes/wails.html">Wails</a>とは、OSネイティブWebViewを使うという設計思想は共通しつつ、Rust製である点と上記capabilitiesによるセキュリティモデルが異なる。</p>
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://www.tableau.com/why-tableau/what-is-tableau">What Is Tableau? - Tableau</a></li>
-<li><a href="https://www.salesforce.com/news/press-releases/2019/08/01/salesforce-completes-acquisition-of-tableau/">Salesforce Completes Acquisition of Tableau - Salesforce</a></li>
-<li><a href="https://www.tableau.com/blog/analyzing-history-tableau-innovation">Analyzing the history of Tableau innovation</a></li>
-<li><a href="https://www.sora-michi.co.jp/blog/7329">Tableauとは？できること・料金・Power BI/Looker Studioとの違い【2026年最新】</a></li>
-<li><a href="https://www.principle-c.com/column/bi-tools-comparison-ai-2026/">【2026年最新】AI時代のBIツール選び - Tableau・Power BI</a></li>
+<li><a href="https://github.com/tauri-apps/tauri">GitHub - tauri-apps/tauri</a></li>
+<li><a href="https://v2.tauri.app/concept/architecture/">Tauri Architecture</a></li>
+<li><a href="https://v2.tauri.app/blog/tauri-20/">Tauri 2.0 Stable Release</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Tauri_(software_framework">Tauri (software framework) - Wikipedia</a>)</li>
 </ul>
 
 
+                                <div class="notes-backlinks">
+                    <h2>🔗 リンクされているノート</h2>
+                    <ul>
+                                            <li><a href="/notes/wails.html">Wails</a></li>
+                    
+                    </ul>
+                </div>
                                 <div class="notes-meta">
                     <span>作成日: 2026-08-09</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=Tableau&url=https%3A%2F%2F64p.org%2Fnotes%2Ftableau.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=Tauri&url=https%3A%2F%2F64p.org%2Fnotes%2Ftauri.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">
