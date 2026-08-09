@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>ngrep (network grep) - Notes - 64p.org</title>
+    <title>Kali NetHunter - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/highlight.js@11/styles/github.min.css" media="(prefers-color-scheme: light)">
@@ -38,7 +38,7 @@
                                     <li><a href="/notes/openssf.html">OpenSSF (Open Source Security Foundation)</a></li>
                                     <li><a href="/notes/openrouter.html">OpenRouter</a></li>
                                     <li><a href="/notes/obsidian.html">Obsidian</a></li>
-                                    <li><a href="/notes/ngrep.html" class="active">ngrep (network grep)</a></li>
+                                    <li><a href="/notes/ngrep.html">ngrep (network grep)</a></li>
                                     <li><a href="/notes/network-doctor.html">Network Doctor (netdoc)</a></li>
                                     <li><a href="/notes/miidera-gomimushi.html">ミイデラゴミムシ</a></li>
                                     <li><a href="/notes/metasploit.html">Metasploit</a></li>
@@ -46,7 +46,7 @@
                                     <li><a href="/notes/lefthook.html">lefthook</a></li>
                                     <li><a href="/notes/kyoka-vs-tanka.html">狂歌と短歌の違い</a></li>
                                     <li><a href="/notes/kotchigai-shoukan.html">間違い召喚！ 追い出されたけど上位互換スキルでらくらく生活</a></li>
-                                    <li><a href="/notes/kali-nethunter.html">Kali NetHunter</a></li>
+                                    <li><a href="/notes/kali-nethunter.html" class="active">Kali NetHunter</a></li>
                                     <li><a href="/notes/kali-linux.html">Kali Linux</a></li>
                                     <li><a href="/notes/harmonyos.html">HarmonyOSとは</a></li>
                                     <li><a href="/notes/harmonyos-pc.html">HarmonyOS PC版（鴻蒙電脳）</a></li>
@@ -74,121 +74,75 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>ngrep (network grep)</h1>
+                <h1>Kali NetHunter</h1>
 
-<p><code>grep</code>のようなパターンマッチングをネットワークパケットに対して行えるコマンドラインツール。 <a class="note-tag" href="/notes/tags/networking.html">#networking</a> <a class="note-tag" href="/notes/tags/cli.html">#cli</a></p>
+<p><a class="note-tag" href="/notes/tags/security.html">#security</a> <a class="note-tag" href="/notes/tags/linux.html">#linux</a></p>
 
-<h2>概要</h2>
+<p>Android端末向けのペネトレーションテストプラットフォーム。<a href="/notes/kali-linux.html">Kali Linux</a>と同じOffensive Security(現OffSec)が開発した、オープンソースのAndroid用ペンテスト環境。</p>
+
+<h2>構成要素</h2>
 
 <ul>
-<li>名前の通り「grep + network」。pcapライブラリでパケットをキャプチャし、GNU regexライブラリで正規表現マッチングを行う</li>
-<li><code>tcpdump</code>（パケットキャプチャ）と<code>grep</code>（テキスト検索）の中間に位置するツール、というのがよくある説明</li>
-<li>TCP/UDP/ICMPを、Ethernet/PPP/SLIP/FDDI/nullインターフェース越しに解析可能</li>
-<li><code>tcpdump</code>や<a href="/notes/snoop.html">snoop</a>と同様の<a href="/notes/bpf.html">BPF</a>フィルタ構文が使える</li>
+<li><strong>Kaliコンテナ</strong>: Linuxのセキュリティツール一式を含むチルート環境</li>
+<li><strong>NetHunter App Store</strong>: ペンテスト/フォレンジック用Androidアプリのカタログ</li>
+<li><strong>Android専用クライアントアプリ</strong>: App Storeの管理・操作用</li>
+<li><strong>KeX(Desktop Experience)</strong>: HDMI出力やワイヤレス画面キャストでフルのLinuxデスクトップセッションを利用できる機能</li>
 </ul>
 
 
-<p><code>tcpdump</code>が「パケットの構造」を見るのに強い一方、ngrepは「ペイロード内の特定の文字列パターン」を探すのに向いている、という住み分け。</p>
-
-<h2>チートシート</h2>
-
-<pre><code class="sh"># デフォルトインターフェースでポート80(HTTP)を監視
-ngrep port 80
-
-# 全インターフェースを対象にする(-d any)
-ngrep -d any port 25
-
-# 特定文字列を含むパケットだけに絞り込む(syslogでerrorを検索)
-ngrep -d any 'error' port syslog
-
-# 単語マッチング+大文字小文字を区別しない(FTPのuser/passを監視)
-ngrep -wi -d any 'user|pass' port 21
-
-# 行単位で表示してヘッダを見やすく整形(HTTP向け)
-ngrep -W byline port 80
-
-# 16進数パターンでバイナリデータを検索
-ngrep -xX '0xc5d5e5f55666768696a6b6c6d6e6' port 80
-
-# キャプチャ結果をpcapファイルに保存(タイムスタンプ付き)
-ngrep -O /tmp/dns.dump -T port domain
-
-# 保存したpcapファイルを後から検索
-ngrep -I /tmp/dns.dump
-</code></pre>
-
-<p>主なオプション:</p>
+<h2>3つのエディション</h2>
 
 <table>
 <thead>
 <tr>
-<th> オプション </th>
-<th> 意味 </th>
+<th> エディション </th>
+<th> 要件 </th>
+<th> 対応機能 </th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td> <code>-d &lt;iface&gt;</code> </td>
-<td> キャプチャするインターフェース指定(<code>any</code>で全インターフェース) </td>
+<td> Rootless </td>
+<td> root不要 </td>
+<td> App Store、Kali CLI、KeX </td>
 </tr>
 <tr>
-<td> <code>-i</code> </td>
-<td> 大文字小文字を区別しない </td>
+<td> Lite </td>
+<td> Magiskによるroot必須 </td>
+<td> 上記 + <a href="/notes/metasploit.html">Metasploit</a> DB、NetHunter App </td>
 </tr>
 <tr>
-<td> <code>-w</code> </td>
-<td> 単語単位でマッチング </td>
-</tr>
-<tr>
-<td> <code>-x</code> </td>
-<td> 16進数ダンプも表示 </td>
-</tr>
-<tr>
-<td> <code>-X</code> </td>
-<td> 16進数パターンでマッチング </td>
-</tr>
-<tr>
-<td> <code>-W byline</code> </td>
-<td> 出力を行単位に整形 </td>
-</tr>
-<tr>
-<td> <code>-O &lt;file&gt;</code> </td>
-<td> キャプチャ結果をpcapファイルに保存 </td>
-</tr>
-<tr>
-<td> <code>-I &lt;file&gt;</code> </td>
-<td> 保存済みpcapファイルを読み込んで検索 </td>
-</tr>
-<tr>
-<td> <code>-T</code> </td>
-<td> タイムスタンプを表示 </td>
+<td> NetHunter(フル版) </td>
+<td> root + カスタムカーネル必須 </td>
+<td> 全機能(Wi-Fi注入、HIDキーボード攻撃、BadUSB、Evil AP MANA攻撃など) </td>
 </tr>
 </tbody>
 </table>
 
 
-<p>フィルタ部分(<code>port 80</code>など)は<code>tcpdump</code>と同じ<a href="/notes/bpf.html">BPF</a>構文が使える。</p>
+<h2>対応デバイス</h2>
+
+<p>GitLabリポジトリ上に250以上のカーネルが110以上のデバイス向けに存在する。公式イメージは四半期ごとにダウンロードページで公開されている。Nexus・OnePlusなど一部機種でフル機能に対応。</p>
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://linux.die.net/man/8/ngrep">ngrep(8): network grep - Linux man page</a></li>
-<li><a href="https://ngrep.sourceforge.net/usage.html">ngrep - network grep</a></li>
-<li><a href="https://linuxhint.com/how-to-use-ngrep/">What is ngrep and How to Use It? - Linux Hint</a></li>
+<li><a href="https://www.kali.org/docs/nethunter/">Kali NetHunter | Kali Linux Documentation</a></li>
+<li><a href="https://store.nethunter.com/">Kali NetHunter App Store - Android App Repository for Penetraton Testing and Forensics</a></li>
+<li><a href="https://www.linux.com/news/kali-linux-nethunter-30-android-mobile-penetration-testing-platform-out-now/">Kali Linux NetHunter 3.0 Android Mobile Penetration Testing Platform Out Now - Linux.com</a></li>
 </ul>
 
 
                                 <div class="notes-backlinks">
                     <h2>🔗 リンクされているノート</h2>
                     <ul>
-                                            <li><a href="/notes/bpf.html">BPF (Berkeley Packet Filter)</a></li>
-                                            <li><a href="/notes/snoop.html">snoop</a></li>
+                                            <li><a href="/notes/kali-linux.html">Kali Linux</a></li>
                     
                     </ul>
                 </div>
                                 <div class="notes-meta">
                     <span>作成日: 2026-08-09</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=ngrep%20%28network%20grep%29&url=https%3A%2F%2F64p.org%2Fnotes%2Fngrep.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=Kali%20NetHunter&url=https%3A%2F%2F64p.org%2Fnotes%2Fkali-nethunter.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">
