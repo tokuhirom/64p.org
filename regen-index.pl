@@ -15,6 +15,8 @@ use Text::Xslate;
 
 sub regen {
     my @talks = TGP::Talks->regen();
+    my @notes = TGP::Notes->regen();
+    my @recent_notes = @notes > 5 ? @notes[0..4] : @notes;
     my $xslate = Text::Xslate->new(
         syntax => 'TTerse',
         path => ['tmpl'],
@@ -22,6 +24,7 @@ sub regen {
     my $dat = $xslate->render(
         'index.tt' => {
             talks => [@talks[0..7]],
+            notes => \@recent_notes,
             now   => scalar(localtime),
         },
     );
@@ -121,6 +124,68 @@ sub replace_title {
     open my $ofh, '>:utf8', $filename or die "Cannot open $filename: $!";
     print {$ofh} $src;
     close $ofh;
+}
+
+package TGP::Notes;
+
+use Text::Markdown::Discount qw(markdown);
+use File::stat;
+use Time::Piece;
+
+sub regen {
+    my @notes = map {
+        my $src = $_;
+        open my $fh, '<:utf8', $src or die "Cannot open $src: $!";
+        my $mkdn = do { local $/; <$fh> };
+        my ($title) = ($mkdn =~ /\A#?\s*(.+?)\n/);
+        my $html = markdown(
+            $mkdn,
+            Text::Markdown::Discount::MKD_AUTOLINK
+                | Text::Markdown::Discount::MKD_FENCEDCODE
+                | Text::Markdown::Discount::MKD_GITHUBTAGS,
+        );
+        (my $link = $src) =~ s!^notes/src/!/notes/!;
+        $link =~ s/\.md$/\.html/;
+        (my $file = $src) =~ s!^notes/src/!!;
+        $file =~ s/\.md$/\.html/;
+        +{
+            title => $title,
+            body  => $html,
+            link  => $link,
+            file  => $file,
+            mtime => scalar(localtime(stat($src)->mtime)),
+        };
+    } reverse sort { stat($a)->mtime <=> stat($b)->mtime } glob('notes/src/*.md');
+
+    my $xslate = Text::Xslate->new(
+        syntax => 'TTerse',
+        path => ['tmpl'],
+    );
+    for my $note (@notes) {
+        my $res = $xslate->render(
+            'note.tt' => {
+                %$note,
+                notes        => \@notes,
+                current_file => $note->{file},
+            },
+        );
+        spew("notes/$note->{file}", $res);
+    }
+    my $index = $xslate->render(
+        'notes-index.tt' => {
+            notes => \@notes,
+        },
+    );
+    spew('notes/index.html', $index);
+
+    return @notes;
+}
+
+sub spew {
+    my $fname = shift;
+    open my $fh, '>:utf8', $fname
+        or Carp::croak("Can't open '$fname' for writing: '$!'");
+    print {$fh} $_[0];
 }
 
 if ($0 eq __FILE__) {

@@ -60,6 +60,10 @@
                       <li><a href="https://blog.64p.org/entry/2025/01/03/105446">vim plugins, i'm using</a></li>
                       <li><a href="https://blog.64p.org/entry/2024/12/31/043605">Best buy, 2024</a></li>
                       <li><a href="https://blog.64p.org/entry/2024/10/17/004158">mac aspps, i'm using</a></li>
+                    [% FOR note IN notes -%]
+                        <li><a href="[% note.link %]">[% note.title %]</a></li>
+                    [% END %]
+                        <li><a href="/notes/">more notes.</a></li>
                     </ul>
                 </div>
                 <div class="col-lg-4">
