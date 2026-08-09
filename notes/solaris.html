@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>Project Glasswing - Notes - 64p.org</title>
+    <title>Solaris / illumos - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/highlight.js@11/styles/github.min.css" media="(prefers-color-scheme: light)">
@@ -23,13 +23,13 @@
                             <li><a href="/notes/wails.html">Wails</a></li>
                             <li><a href="/notes/tauri.html">Tauri</a></li>
                             <li><a href="/notes/tableau.html">Tableau</a></li>
-                            <li><a href="/notes/solaris.html">Solaris / illumos</a></li>
+                            <li><a href="/notes/solaris.html" class="active">Solaris / illumos</a></li>
                             <li><a href="/notes/snoop.html">snoop</a></li>
                             <li><a href="/notes/skia.html">Skia</a></li>
                             <li><a href="/notes/sakpilot.html">SakPilot</a></li>
                             <li><a href="/notes/rust-gui-libraries.html">Rust GUI ライブラリ一覧</a></li>
                             <li><a href="/notes/raku-rakudo-perl6.html">Raku / Rakudo / Perl 6</a></li>
-                            <li><a href="/notes/project-glasswing.html" class="active">Project Glasswing</a></li>
+                            <li><a href="/notes/project-glasswing.html">Project Glasswing</a></li>
                             <li><a href="/notes/openssf.html">OpenSSF (Open Source Security Foundation)</a></li>
                             <li><a href="/notes/ngrep.html">ngrep (network grep)</a></li>
                             <li><a href="/notes/miidera-gomimushi.html">ミイデラゴミムシ</a></li>
@@ -58,51 +58,59 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>Project Glasswing</h1>
+                <h1>Solaris / illumos</h1>
 
-<p><a class="note-tag" href="/notes/tags/anthropic.html">#anthropic</a> <a class="note-tag" href="/notes/tags/claude.html">#claude</a> <a class="note-tag" href="/notes/tags/security.html">#security</a></p>
+<p><strong>Oracle Solaris</strong>(商用・プロプライエタリ)と、<strong>illumos</strong>(OpenSolarisの後継オープンソースプロジェクト)の2系統に分かれて、どちらも現在進行形で開発が続いている。 <a class="note-tag" href="/notes/tags/solaris.html">#solaris</a> <a class="note-tag" href="/notes/tags/unix.html">#unix</a></p>
 
-<p>Anthropicが2026年4月7日に開始した、AIのセキュリティ能力を「防御側」に先んじて使わせるための業界連携イニシアティブ。フロンティア級AIモデルがすでに人間トップクラスの専門家を上回るレベルで脆弱性の発見・悪用能力を持つに至ったという認識のもと、悪用側に先んじて重要なオープンソースソフトウェアの長年隠れていた脆弱性を見つけて修正することを目的としている。</p>
-
-<h2>使用モデル</h2>
-
-<p>未リリースのフロンティアモデル「Claude Mythos Preview」を使用。セキュリティ関連ベンチマーク「CyberGym」で83.1%のスコアを達成しており、前世代モデルの66.6%から大きく向上している(Claudeのモデル階層全般については<a href="/notes/claude-model-tiers.html">Claudeのモデル階層(Opus / Sonnet / Haiku / Fable)の違い</a>を参照)。</p>
-
-<h2>参加組織</h2>
-
-<p>AWS、Apple、Broadcom、Cisco、CrowdStrike、Google、JPMorganChase、Linux Foundation、Microsoft、NVIDIA、Palo Alto Networksなど12の主要パートナーに加え、40以上の組織が早期アクセスを得ている。</p>
-
-<h2>成果</h2>
-
-<p>OpenBSD(27年間未発見)、FFmpeg(16年間未発見)、Linuxカーネルなど、主要OS・主要ブラウザを含む重要ソフトウェア群から数千件規模の高〜重大深刻度の脆弱性を発見した。</p>
-
-<h2>Anthropicの支援</h2>
+<h2>Oracle Solaris(商用版)</h2>
 
 <ul>
-<li>防御的セキュリティ研究向けに1億ドル相当のモデルクレジットを提供。</li>
-<li>オープンソースセキュリティ団体へ計400万ドルを寄付(Linux Foundation経由で<a href="/notes/openssf.html">OpenSSF (Open Source Security Foundation)</a>傘下のAlpha-Omegaに250万ドル、Apache Software Foundationに150万ドル)。</li>
+<li>最新版は Solaris 11.4 SRU92(2026年4月21日リリース)で、SRU(月次更新)ベースで継続的にアップデートされている</li>
+<li>サポート期限: Solaris 11.4は2031年11月まで、Solaris 10は2027年1月まで延長</li>
+<li>2026年3月には開発者・FOSSコミュニティ向けに Solaris Common Build Environment (CBE) も公開されている</li>
 </ul>
 
+
+<h2>OpenSolaris → illumos</h2>
+
+<ul>
+<li>Sun時代のオープンソースプロジェクト「OpenSolaris」自体は、2010年にOracleがSunを買収した後に打ち切られた</li>
+<li>それに反発した開発者たちが <strong>illumos</strong> としてフォーク。2012年にillumos Foundationが501&copy;6として法人化され、コミュニティ主導で継続開発中</li>
+<li>ZFS、DTrace、Solaris Zonesといった目玉機能を引き継いでいる</li>
+<li>Oracle Solaris 11自体もOpenSolarisからのプロプライエタリフォークだが、illumosとはこの10年近くで実装がかなり乖離している</li>
+</ul>
+
+
+<h2>illumosディストリビューション</h2>
+
+<p>illumosを元にしたディストリビューションも活発。<strong>OpenIndiana</strong> は「Hipster 2026.04」を2026年5月5日にリリースしており、他にもOmniOS、SmartOS、Tribblixなどが存在する。</p>
+
+<h2>まとめ</h2>
+
+<p>「OpenSolarisという名前のプロジェクト」自体はもう存在しないが、その血筋は<strong>Oracle Solaris</strong>(商用)と<strong>illumos系</strong>(OSS)の2系統に分かれて、どちらも2026年現在生きている。</p>
+
+<p><a href="/notes/snoop.html">snoop</a>など、64p.orgのnotesで言及したSolaris標準ツール群は現行のOracle Solarisにも引き続き搭載されている。</p>
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://www.anthropic.com/glasswing">Project Glasswing: Securing critical software for the AI era \ Anthropic</a></li>
-<li><a href="https://www.anthropic.com/research/glasswing-initial-update">Project Glasswing: An initial update \ Anthropic</a></li>
-<li><a href="https://www.mindstudio.ai/blog/what-is-project-glasswing-anthropic-claude-mythos">What Is Project Glasswing? - MindStudio</a></li>
+<li><a href="https://www.oracle.com/solaris/technologies/releases.html">Solaris Operating System - Releases (Oracle)</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Oracle_Solaris">Oracle Solaris - Wikipedia</a></li>
+<li><a href="https://www.illumos.org/docs/about/faq/">FAQ - illumos</a></li>
+<li><a href="https://en.wikipedia.org/wiki/OpenIndiana">OpenIndiana - Wikipedia</a></li>
 </ul>
 
 
                                 <div class="notes-backlinks">
                     <h2>🔗 リンクされているノート</h2>
                     <ul>
-                                            <li><a href="/notes/openssf.html">OpenSSF (Open Source Security Foundation)</a></li>
+                                            <li><a href="/notes/snoop.html">snoop</a></li>
                     
                     </ul>
                 </div>
                                 <div class="notes-meta">
                     <span>作成日: 2026-08-09</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=Project%20Glasswing&url=https%3A%2F%2F64p.org%2Fnotes%2Fproject-glasswing.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=Solaris%20%2F%20illumos&url=https%3A%2F%2F64p.org%2Fnotes%2Fsolaris.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">

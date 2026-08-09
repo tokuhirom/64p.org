@@ -4,7 +4,7 @@ updated: 2026-08-09
 ---
 # snoop
 
-Sun Microsystems製の**Solaris**(SunOS)に標準搭載されているコマンドラインのパケットキャプチャ・解析ツール。 #networking #solaris #cli
+Sun Microsystems製の[[solaris|Solaris]](SunOS)に標準搭載されているコマンドラインのパケットキャプチャ・解析ツール。 #networking #solaris #cli
 
 ## 概要
 
