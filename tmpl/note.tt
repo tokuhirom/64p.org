@@ -25,7 +25,7 @@
                 </div>
                 [% END -%]
                 <div class="notes-meta">
-                    更新日: [% mtime.strftime('%Y-%m-%d') %]
+                    <span>作成日: [% created %][% IF updated != created %] / 更新日: [% updated %][% END %]</span>
                     <a class="share-x" href="https://twitter.com/intent/tweet?text=[% title | uri %]&url=[% url | uri %]" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>

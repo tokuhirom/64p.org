@@ -1,3 +1,8 @@
+---
+created: 2026-08-09
+updated: 2026-08-09
+---
+
 # GPT-5.6のSol / Terra / Lunaの違い
 
 #gpt #openai #llm

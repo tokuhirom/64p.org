@@ -131,23 +131,42 @@ package TGP::Notes;
 use Text::Markdown::Discount qw(markdown);
 use File::stat;
 use Time::Piece;
+use POSIX qw(strftime);
 
 sub regen {
     # pass 1: slurp every note's raw markdown + slug + title, before any
     # cross-note resolution (wikilinks need to see every title first).
+    # created/updated come from a YAML frontmatter block
+    # (---\ncreated: YYYY-MM-DD\nupdated: YYYY-MM-DD\n---\n) that lefthook's
+    # pre-commit hook (see lefthook.yml / update-note-dates.pl) stamps onto
+    # every note on commit. Notes written outside that flow (or previewed
+    # before the first commit) fall back to the file's mtime so local
+    # `perl regen-index.pl` runs still show a sane date.
     my @raw = map {
         my $src = $_;
         open my $fh, '<:utf8', $src or die "Cannot open $src: $!";
         my $mkdn = do { local $/; <$fh> };
+        my ($created, $updated);
+        if ($mkdn =~ s/\A---\n(.*?)\n---\n//s) {
+            my $fm = $1;
+            ($created) = ($fm =~ /^created:\s*(\S+)/m);
+            ($updated) = ($fm =~ /^updated:\s*(\S+)/m);
+        }
+        unless ($created && $updated) {
+            my $fallback = strftime('%Y-%m-%d', localtime(stat($src)->mtime));
+            $created //= $fallback;
+            $updated //= $fallback;
+        }
         my ($title) = ($mkdn =~ /\A#?\s*(.+?)\n/);
         (my $slug = $src) =~ s!^notes/src/!!;
         $slug =~ s/\.md$//;
         +{
-            src   => $src,
-            slug  => $slug,
-            title => $title,
-            mkdn  => $mkdn,
-            mtime => stat($src)->mtime,
+            src     => $src,
+            slug    => $slug,
+            title   => $title,
+            mkdn    => $mkdn,
+            created => $created,
+            updated => $updated,
         };
     } glob('notes/src/*.md');
     my %title_by_slug = map { $_->{slug} => $_->{title} } @raw;
@@ -203,7 +222,8 @@ sub regen {
             url       => "https://64p.org$link",
             file      => "$slug.html",
             slug      => $slug,
-            mtime     => scalar(localtime($_->{mtime})),
+            created   => $_->{created},
+            updated   => $_->{updated},
             backlinks => [
                 map { +{ title => $title_by_slug{$_}, link => "/notes/$_.html" } }
                 sort { $title_by_slug{$a} cmp $title_by_slug{$b} }
@@ -211,7 +231,7 @@ sub regen {
             ],
             has_backlinks => (keys %{ $backlinks{$slug} // {} } ? 1 : 0),
         };
-    } reverse sort { $a->{mtime} <=> $b->{mtime} } @raw;
+    } reverse sort { $a->{updated} cmp $b->{updated} } @raw;
 
     my $xslate = Text::Xslate->new(
         syntax => 'TTerse',

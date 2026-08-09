@@ -1,0 +1,44 @@
+#!/usr/bin/env perl
+# Run by lefthook's pre-commit hook (see lefthook.yml). Given staged
+# notes/src/*.md paths as argv, stamps YAML frontmatter with created/updated
+# dates, regenerates the site, and stages everything the regen touched.
+use strict;
+use warnings;
+
+my @md_files = @ARGV;
+exit 0 unless @md_files;
+
+my ($mday, $mon, $year) = (localtime)[3, 4, 5];
+my $today = sprintf('%04d-%02d-%02d', $year + 1900, $mon + 1, $mday);
+
+for my $file (@md_files) {
+    next unless -f $file;
+
+    open my $fh, '<:utf8', $file or die "Cannot open $file: $!";
+    my $content = do { local $/; <$fh> };
+    close $fh;
+
+    if ($content =~ /\A---\n(.*?)\n---\n/s) {
+        my $fm = $1;
+        if ($fm =~ /^updated:\s*.+$/m) {
+            $fm =~ s/^updated:\s*.+$/updated: $today/m;
+        }
+        else {
+            $fm .= "\nupdated: $today";
+        }
+        $content =~ s/\A---\n.*?\n---\n/---\n$fm\n---\n/s;
+    }
+    else {
+        $content = "---\ncreated: $today\nupdated: $today\n---\n" . $content;
+    }
+
+    open my $ofh, '>:utf8', $file or die "Cannot open $file for writing: $!";
+    print {$ofh} $content;
+    close $ofh;
+}
+
+system('perl', 'regen-index.pl') == 0
+    or die "regen-index.pl failed\n";
+
+system('git', 'add', 'notes/', 'index.html', 'talks/index.html') == 0
+    or die "git add failed\n";

@@ -20,7 +20,7 @@ description: 64p.org の /notes/ コーナーに新しい調査メモ（ノー�
 
    `notes/<slug>.html`、`notes/index.html`、トップページ (`index.html`) のNotes欄がまとめて更新される。
 
-5. 生成されたHTMLも含めてコミットする。このリポジトリは生成物もgit管理してGitHub Pagesでそのまま配信しているため、`.gitignore`されていない。
+5. 生成されたHTMLも含めてコミットする。このリポジトリは生成物もgit管理してGitHub Pagesでそのまま配信しているため、`.gitignore`されていない。`git commit`するとlefthookのpre-commitフックが自動で作成日・更新日のfrontmatterを付与し、`perl regen-index.pl`も実行して生成物ごとステージしてくれるので、手順4は省略してそのままcommitしてよい（フック未導入の場合のみ手動で手順4を実行する）。
 6. mdのみ(および付随する生成物)の変更なら、ブランチを切ってPRを作らずに直接masterへpushしてよい。テンプレートやビルドロジックなどコードに手を入れた場合は従来通りPRを作る。
 
 ## Zettelkasten的な相互リンク
@@ -46,6 +46,21 @@ Obsidianのように、本文中の好きな場所に`#tag`と書くとタグに
 - `/notes/tags/`（サイドバーの「🏷️ タグ一覧」からアクセス可）で全タグをタグクラウド形式で一覧できる。
 - タグページ・タグ一覧ページも`perl regen-index.pl`で自動生成される。手動でのメンテは不要。
 
+## 作成日・更新日
+
+各ノートのMarkdown先頭に、次のようなYAML frontmatterが自動で付く（手動で書く必要はない）。
+
+```
+---
+created: 2026-08-09
+updated: 2026-08-09
+---
+```
+
+- `git commit`時にlefthookのpre-commitフック（`update-note-dates.pl`）が、ステージされた`notes/src/*.md`について、新規ファイルなら`created`/`updated`を追加、既存ファイルなら`updated`だけ当日の日付に更新する。
+- ファイルの`stat()`のmtimeには依存していない（新規cloneやCIでのビルドではmtimeが壊れるため）。frontmatterが無い場合のみmtimeにフォールバックする。
+- ノート本文やタイトルと同様、`created`/`updated`を手で書き換える必要は基本的にない。
+
 ## 書き方のトーン
 
 - ラフなメモでOK。前置きや読者への配慮は不要（tokuhirom個人用のメモなので）。
@@ -62,10 +77,18 @@ Obsidianのように、本文中の好きな場所に`#tag`と書くとタグに
 cpanm --installdeps .
 ```
 
+lefthook（作成日・更新日の自動付与とregen自動実行に使う）は`mise.toml`でバージョン管理されている。
+
+```sh
+mise install
+mise exec -- lefthook install
+```
+
 ## 関連ファイル
 
-- `notes/src/*.md` — ノートのMarkdownソース
+- `notes/src/*.md` — ノートのMarkdownソース（先頭にcreated/updatedのYAML frontmatter）
 - `regen-index.pl` の `TGP::Notes` パッケージ — ビルドロジック
 - `tmpl/note.tt` / `tmpl/notes-index.tt` / `tmpl/notes-sidebar.tt` — テンプレート
 - `tmpl/notes-tag.tt` / `tmpl/notes-tags-index.tt` — タグ別ページ・タグ一覧ページのテンプレート
 - `static/notes.css` / `static/notes.js` — スタイルとサイドバー検索・テーマ切替
+- `lefthook.yml` / `update-note-dates.pl` / `mise.toml` — pre-commitフックによる作成日・更新日自動付与

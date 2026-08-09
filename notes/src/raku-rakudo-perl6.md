@@ -1,3 +1,8 @@
+---
+created: 2026-08-09
+updated: 2026-08-09
+---
+
 # Raku / Rakudo / Perl 6
 
 #raku #rust #perl
