@@ -1,0 +1,34 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>タグ一覧 - Notes - 64p.org</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/static/notes.css">
+</head>
+<body>
+    <div class="notes-layout">
+[% INCLUDE "notes-sidebar.tt" %]
+        <main class="notes-main">
+            <article class="notes-content">
+                <h1>🏷️ タグ一覧</h1>
+                <p class="notes-meta">[% tag_count %]件のタグがあります。</p>
+                [% IF tag_count -%]
+                <div class="notes-tag-cloud">
+                [% FOR t IN tag_list -%]
+                    <a class="note-tag notes-tag-cloud-item" href="/notes/tags/[% t.tag %].html">#[% t.tag %]<span class="notes-tag-count">[% t.count %]</span></a>
+                [% END %]
+                </div>
+                [% ELSE -%]
+                <p>まだタグが付いたノートはありません。</p>
+                [% END %]
+            </article>
+            <footer class="notes-footer">
+                <a href="https://github.com/tokuhirom">tokuhirom</a> による調査メモです。
+                個人的な調査メモであり、正確な記述に努めていますが正確性を保証するものではなく、所属する団体を代表する見解でもありません。
+            </footer>
+        </main>
+    </div>
+    <script src="/static/notes.js"></script>
+</body>
+</html>

@@ -1,5 +1,7 @@
 # Raku / Rakudo / Perl 6
 
+#raku #rust #perl
+
 ## 概要と関係性
 
 - **Perl 6**: 2000年にLarry Wallが発表した、Perl 5を置き換える新言語の開発コードネーム。

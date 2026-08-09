@@ -153,10 +153,12 @@ sub regen {
     my %title_by_slug = map { $_->{slug} => $_->{title} } @raw;
 
     # pass 2: resolve [[slug]] / [[slug|label]] wikilinks into normal
-    # markdown links, and record who links to whom for backlinks.
-    # Fenced/inline code is protected first, so example [[wikilink]] text
-    # in code blocks isn't mistaken for a real link.
+    # markdown links, and #tag hashtags into tag links, recording who
+    # links to whom (backlinks) and which notes carry which tags.
+    # Fenced/inline code is protected first, so example [[wikilink]] or
+    # #tag text in code blocks isn't mistaken for the real thing.
     my %backlinks;
+    my %tag_notes; # tag => { slug => 1 }
     for my $note (@raw) {
         my @protected;
         $note->{mkdn} =~ s{(```.*?```|`[^`\n]*`)}{
@@ -173,6 +175,14 @@ sub regen {
                 warn "notes/src/$note->{slug}.md: broken wikilink [[$target]]\n";
                 '**' . ($label // $target) . '**';
             }
+        }ge;
+        # '#' must be preceded by whitespace/start-of-line and followed by
+        # a letter, so ATX headings ("# Title") and URL fragments
+        # ("...#section") are left alone.
+        $note->{mkdn} =~ s{(?<!\S)#([a-zA-Z][\w\-]*)}{
+            my $tag = lc($1);
+            $tag_notes{$tag}{$note->{slug}} = 1;
+            qq{<a class="note-tag" href="/notes/tags/$tag.html">#$tag</a>};
         }ge;
         $note->{mkdn} =~ s{\x01(\d+)\x02}{$protected[$1]}ge;
     }
@@ -223,6 +233,30 @@ sub regen {
         },
     );
     spew('notes/index.html', $index);
+
+    # pass 4: /notes/tags/ - a tag cloud index plus one archive page per tag.
+    mkdir 'notes/tags' unless -d 'notes/tags';
+    my @tags = map {
+        +{ tag => $_, count => scalar keys %{ $tag_notes{$_} } }
+    } keys %tag_notes;
+    my $tags_index = $xslate->render(
+        'notes-tags-index.tt' => {
+            tag_list  => [ sort { $b->{count} <=> $a->{count} || $a->{tag} cmp $b->{tag} } @tags ],
+            tag_count => scalar(@tags),
+            notes     => \@notes,
+        },
+    );
+    spew('notes/tags/index.html', $tags_index);
+
+    for my $tag (keys %tag_notes) {
+        my $tag_page = $xslate->render(
+            'notes-tag.tt' => {
+                tag   => $tag,
+                notes => [ grep { $tag_notes{$tag}{$_->{slug}} } @notes ],
+            },
+        );
+        spew("notes/tags/$tag.html", $tag_page);
+    }
 
     return @notes;
 }
