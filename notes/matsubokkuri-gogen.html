@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>Tauri - Notes - 64p.org</title>
+    <title>松ぼっくりの「ぼっくり」の語源 - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/highlight.js@11/styles/github.min.css" media="(prefers-color-scheme: light)">
@@ -25,7 +25,7 @@
                                     <li><a href="/notes/yusura-ume.html">ユスラウメ(梅桃)</a></li>
                                     <li><a href="/notes/welcome.html">Notesコーナーへようこそ</a></li>
                                     <li><a href="/notes/wails.html">Wails</a></li>
-                                    <li><a href="/notes/tauri.html" class="active">Tauri</a></li>
+                                    <li><a href="/notes/tauri.html">Tauri</a></li>
                                     <li><a href="/notes/tableau.html">Tableau</a></li>
                                     <li><a href="/notes/solaris.html">Solaris / illumos</a></li>
                                     <li><a href="/notes/snoop.html">snoop</a></li>
@@ -40,7 +40,7 @@
                                     <li><a href="/notes/ngrep.html">ngrep (network grep)</a></li>
                                     <li><a href="/notes/network-doctor.html">Network Doctor (netdoc)</a></li>
                                     <li><a href="/notes/miidera-gomimushi.html">ミイデラゴミムシ</a></li>
-                                    <li><a href="/notes/matsubokkuri-gogen.html">松ぼっくりの「ぼっくり」の語源</a></li>
+                                    <li><a href="/notes/matsubokkuri-gogen.html" class="active">松ぼっくりの「ぼっくり」の語源</a></li>
                                     <li><a href="/notes/lefthook.html">lefthook</a></li>
                                     <li><a href="/notes/kyoka-vs-tanka.html">狂歌と短歌の違い</a></li>
                                     <li><a href="/notes/harmonyos.html">HarmonyOSとは</a></li>
@@ -68,68 +68,32 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>Tauri</h1>
+                <h1>松ぼっくりの「ぼっくり」の語源</h1>
 
-<p>Rustバックエンドとネイティブ(OS標準)WebViewを組み合わせてクロスプラットフォームのデスクトップ／モバイルアプリを作れるフレームワーク。 <a class="note-tag" href="/notes/tags/rust.html">#rust</a> <a class="note-tag" href="/notes/tags/tauri.html">#tauri</a></p>
+<p>「まつぼっくり」の「ぼっくり」は「ふぐり」（陰嚢）が転じたもの、という説が有力。松かさの丸い房が垂れ下がった形が陰嚢に似ていることから、もともと「松ふぐり」と呼ばれていたのが訛って「まつぼっくり」になったとされる。</p>
 
-<h2>概要</h2>
+<p>もとは北関東・江戸あたりの方言で、江戸時代から明治初期にかけて江戸弁が標準語化していく過程で全国に広まった。</p>
 
-<ul>
-<li>GitHub: <a href="https://github.com/tauri-apps/tauri">tauri-apps/tauri</a> — 約110,000スター、3,900フォーク</li>
-<li>運営: Tauri Programme（Commons Conservancy傘下、持続的なOSSコミュニティとして運営）</li>
-<li>ライセンス: MIT / Apache-2.0 デュアル</li>
-<li>対応OS: Windows 7+、macOS 10.15+、Linux、iOS/iPadOS 9+、Android 7+</li>
-</ul>
-
-
-<h2>アーキテクチャ</h2>
+<h2>正式名称・地方名</h2>
 
 <ul>
-<li><strong>WRY</strong>: プラットフォームごとのWebView(macOS/iOS: WKWebView、Windows: WebView2、Linux: WebKitGTK)を抽象化するライブラリ</li>
-<li><strong>TAO</strong>: <code>winit</code>をフォークしたウィンドウ管理ライブラリ(メニューバー・システムトレイ機能を追加)</li>
-<li>Rustコアと WebView間はメッセージパッシングで通信する設計</li>
+<li>学術的・標準語的な呼び方は「松かさ」（松笠・松傘）。</li>
+<li>関西地方では「ちちり」「ちちりん」と呼ぶ地域もある。</li>
 </ul>
 
-
-<h2>セキュリティモデル</h2>
-
-<p>WebViewはデフォルトでOS機能に一切アクセスできず、<code>capabilities</code>/<code>permissions</code>という明示的な許可リストを与える設計になっている。<a href="/notes/wails.html">Wails</a>など類似ツールとの比較でもこの点がよく特徴として挙げられる。</p>
-
-<h2>沿革・バージョン</h2>
-
-<ul>
-<li>2022年6月: v1.0リリース</li>
-<li>2024年2月: v2 Beta(iOS/Androidのモバイル対応が追加)</li>
-<li>2024年10月2日: v2 安定版リリース。単一のRust+JSコードベースでデスクトップ・モバイル5プラットフォームを統合</li>
-<li>2026年8月時点で2.11系(2.11.5が2026-07-01リリース)</li>
-</ul>
-
-
-<h2>類似ツールとの比較</h2>
-
-<p><a href="/notes/electron.html">Electron</a>がフル Chromium を同梱するのに対し、TauriはOSネイティブWebViewを使うことでバイナリサイズを大幅に削減する(READMEでは「Electronより95%小さいバイナリ」と謳う)。バックエンドをGoで書く<a href="/notes/wails.html">Wails</a>とは、OSネイティブWebViewを使うという設計思想は共通しつつ、Rust製である点と上記capabilitiesによるセキュリティモデルが異なる。</p>
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://github.com/tauri-apps/tauri">GitHub - tauri-apps/tauri</a></li>
-<li><a href="https://v2.tauri.app/concept/architecture/">Tauri Architecture</a></li>
-<li><a href="https://v2.tauri.app/blog/tauri-20/">Tauri 2.0 Stable Release</a></li>
-<li><a href="https://en.wikipedia.org/wiki/Tauri_(software_framework">Tauri (software framework) - Wikipedia</a>)</li>
+<li><a href="https://manabu-biology.com/archives/%E3%80%8C%E6%9D%BE%E3%81%BC%E3%81%A3%E3%81%8F%E3%82%8A%E3%80%8D%E3%81%AE%E8%AA%9E%E6%BA%90%E3%81%AF%E3%80%8C%E6%9D%BE%E3%81%B5%E3%81%90%E3%82%8A%EF%BC%88%E6%9D%BE%E9%99%B0%E5%9A%A2%EF%BC%89%E3%80%8D.html">「松ぼっくり」の語源は「松ふぐり（松陰嚢）」 | ねこでもわかる生物学</a></li>
+<li><a href="https://radichubu.jp/kibun/contents/id=39386">まつぼっくりの「ぼっくり」、実は口に出すのが恥ずかしくなる意味だった！ | RadiChubu</a></li>
+<li><a href="https://www.excite.co.jp/news/article/E1321442724026/">君は松ぼっくりの「ぼっくり」の意味を知っているか - エキサイトニュース</a></li>
 </ul>
 
 
-                                <div class="notes-backlinks">
-                    <h2>🔗 リンクされているノート</h2>
-                    <ul>
-                                            <li><a href="/notes/electron.html">Electron</a></li>
-                                            <li><a href="/notes/wails.html">Wails</a></li>
-                    
-                    </ul>
-                </div>
                                 <div class="notes-meta">
                     <span>作成日: 2026-08-09</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=Tauri&url=https%3A%2F%2F64p.org%2Fnotes%2Ftauri.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=%E6%9D%BE%E3%81%BC%E3%81%A3%E3%81%8F%E3%82%8A%E3%81%AE%E3%80%8C%E3%81%BC%E3%81%A3%E3%81%8F%E3%82%8A%E3%80%8D%E3%81%AE%E8%AA%9E%E6%BA%90&url=https%3A%2F%2F64p.org%2Fnotes%2Fmatsubokkuri-gogen.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">
