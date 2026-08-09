@@ -52,14 +52,24 @@
                         <li><a href="http://qrcode.64p.org/">QRCode</a></li>
                     </ul>
                 </div>
+                <div class="col-lg-4">
+                    <h2>ブログ セレクション</h2>
+                    <ul>
+                      <li><a href="https://blog.64p.org/entry/2025/01/03/105446">vim plugins, i'm using</a></li>
+                      <li><a href="https://blog.64p.org/entry/2024/12/31/043605">Best buy, 2024</a></li>
+                      <li><a href="https://blog.64p.org/entry/2024/10/17/004158">mac aspps, i'm using</a></li>
+                        <li><a href="https://blog.64p.org/">blog.64p.org &rarr;</a></li>
+                    </ul>
+                </div>
             </div>
             <div class="row">
                 <div class="col-lg-4">
                     <h2>Notes</h2>
                     <ul>
-                      <li><a href="https://blog.64p.org/entry/2025/01/03/105446">vim plugins, i'm using</a></li>
-                      <li><a href="https://blog.64p.org/entry/2024/12/31/043605">Best buy, 2024</a></li>
-                      <li><a href="https://blog.64p.org/entry/2024/10/17/004158">mac aspps, i'm using</a></li>
+                    [% FOR note IN notes -%]
+                        <li><a href="[% note.link %]">[% note.title %]</a></li>
+                    [% END %]
+                        <li><a href="/notes/">もっと見る &rarr;</a></li>
                     </ul>
                 </div>
                 <div class="col-lg-4">
