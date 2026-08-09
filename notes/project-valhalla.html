@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>BPF (Berkeley Packet Filter) - Notes - 64p.org</title>
+    <title>Project Valhalla - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/highlight.js@11/styles/github.min.css" media="(prefers-color-scheme: light)">
@@ -35,7 +35,7 @@
                                     <li><a href="/notes/rust-gui-libraries.html">Rust GUI ライブラリ一覧</a></li>
                                     <li><a href="/notes/roam-research.html">Roam Research</a></li>
                                     <li><a href="/notes/raku-rakudo-perl6.html">Raku / Rakudo / Perl 6</a></li>
-                                    <li><a href="/notes/project-valhalla.html">Project Valhalla</a></li>
+                                    <li><a href="/notes/project-valhalla.html" class="active">Project Valhalla</a></li>
                                     <li><a href="/notes/project-glasswing.html">Project Glasswing</a></li>
                                     <li><a href="/notes/polinky-triangle-secret.html">ポリンキーの「三角形の秘密」</a></li>
                                     <li><a href="/notes/openssf.html">OpenSSF (Open Source Security Foundation)</a></li>
@@ -69,7 +69,7 @@
                                     <li><a href="/notes/claude-model-tiers.html">Claudeのモデル階層(Opus / Sonnet / Haiku / Fable)の違い</a></li>
                                     <li><a href="/notes/carnivorous-plants.html">食虫植物</a></li>
                                     <li><a href="/notes/burp-suite.html">Burp Suite</a></li>
-                                    <li><a href="/notes/bpf.html" class="active">BPF (Berkeley Packet Filter)</a></li>
+                                    <li><a href="/notes/bpf.html">BPF (Berkeley Packet Filter)</a></li>
                                     <li><a href="/notes/architecture-decision-record.html">ADR(Architecture Decision Record)</a></li>
                                     <li><a href="/notes/apache-parquet.html">Apache Parquet</a></li>
                                     <li><a href="/notes/apache-arrow.html">Apache Arrow</a></li>
@@ -83,60 +83,47 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>BPF (Berkeley Packet Filter)</h1>
+                <h1>Project Valhalla</h1>
 
-<p>OSカーネル内でパケットのフィルタリング・キャプチャを行うための仕組み。もともとは「小さな仮想マシン」として設計され、現在は拡張版のeBPFがカーネル拡張全般に使われる巨大なエコシステムに育っている。 <a class="note-tag" href="/notes/tags/networking.html">#networking</a> <a class="note-tag" href="/notes/tags/linux.html">#linux</a> <a class="note-tag" href="/notes/tags/kernel.html">#kernel</a></p>
+<p>Javaのオブジェクトモデルを拡張するOpenJDKプロジェクト。オブジェクト指向の抽象化とプリミティブ型のパフォーマンス特性を組み合わせることを目標とする。</p>
 
-<h2>歴史</h2>
+<h2>背景</h2>
+
+<p>従来のJavaでは、オブジェクトは常に参照型(ヒープに確保され、ポインタ経由でアクセスされる)だった。Project Valhallaはここに<strong>値型(value type)</strong>を導入し、プリミティブ型並みの性能(インライン化・ボクシング回避)を持つオブジェクトを作れるようにする。</p>
+
+<h2>JEP 401 (Value Classes and Objects)</h2>
+
+<p>Project Valhallaの中核となるJEP。</p>
 
 <ul>
-<li>1992年12月、Lawrence Berkeley LaboratoryのSteven McCanneとVan Jacobsonが開発</li>
-<li>論文 &ldquo;The BSD Packet Filter: A New Architecture for User-level Packet Capture&rdquo; が元になっている</li>
+<li>プレビュー機能として <strong>JDK 28</strong> (2027年3月予定)でOpenJDK本流に統合される見込み(2026年6月時点)</li>
+<li>変更規模は197,000行以上、1,816ファイルに及ぶ大規模なもの</li>
+<li>プレビュー機能のためデフォルトでは無効(オプトインが必要)</li>
 </ul>
 
 
-<h2>仕組み(classic BPF)</h2>
+<h2>タイムライン</h2>
 
 <ul>
-<li>ユーザー空間のプロセスが「どのパケットを受け取りたいか」を指定するフィルタプログラムを、カーネル内の小さな仮想マシン上で実行する</li>
-<li>アキュムレータ1個・インデックスレジスタ1個を持つシンプルな32bit仮想マシン</li>
-<li><code>tcpdump</code>や<a href="/notes/ngrep.html">ngrep (network grep)</a>の<code>port 80</code>のようなフィルタ構文はこのBPFにコンパイルされて実行される</li>
+<li>現行の最新版: JDK 26</li>
+<li>JDK 27: 2026年9月予定</li>
+<li>JDK 28: 2027年3月予定(JEP 401プレビュー搭載見込み)</li>
 </ul>
 
-
-<h2>eBPF (extended BPF)</h2>
-
-<ul>
-<li>Linux 3.18(2014年)以降で導入された拡張版。64bitレジスタを10個持ち、パケットフィルタ以外の汎用的な用途にも対応</li>
-<li>カーネルソースコードを変更せず、<strong>検証器(Verifier)</strong>が「無限ループしない」「メモリ外アクセスがない」ことを静的に検証した上で、JITコンパイルしてネイティブ並みの速度で安全に実行する</li>
-<li>用途はネットワーキング(Ciliumの高性能ロードバランシング)、オブザーバビリティ(<code>bpftrace</code>、<code>bcc</code>による低オーバーヘッドのトレーシング)、セキュリティ(実行時監視)など多岐にわたる</li>
-<li>Microsoftも Windows へのeBPFサポートを進めており、Linux固有の技術ではなくなりつつある</li>
-</ul>
-
-
-<h2>まとめ</h2>
-
-<p>「BPF」と言った場合、文脈によって①<code>tcpdump</code>/ngrepのフィルタ構文の元になった古典的なパケットフィルタ仮想マシン(cBPF)、②カーネル拡張基盤として肥大化した現代のeBPF、のどちらを指すか変わってくる、という点が押さえどころ。</p>
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://en.wikipedia.org/wiki/Berkeley_Packet_Filter">Berkeley Packet Filter - Wikipedia</a></li>
-<li><a href="https://ebpf.io/what-is-ebpf/">What is eBPF? - ebpf.io</a></li>
+<li><a href="https://openjdk.org/projects/valhalla/">Project Valhalla — OpenJDK公式</a></li>
+<li><a href="https://www.theregister.com/devops/2026/06/15/javas-project-valhalla-finally-lands-a-preview-in-jdk-28/5255557">Java&rsquo;s Project Valhalla finally lands a preview in JDK 28 — The Register</a></li>
+<li><a href="https://inside.java/2026/01/08/newscast-104/">Java&rsquo;s Plans for 2026 - Inside Java Newscast #104</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Project_Valhalla_(Java_language">Project Valhalla (Java language) - Wikipedia</a>)</li>
 </ul>
 
 
-                                <div class="notes-backlinks">
-                    <h2>🔗 リンクされているノート</h2>
-                    <ul>
-                                            <li><a href="/notes/ngrep.html">ngrep (network grep)</a></li>
-                                            <li><a href="/notes/snoop.html">snoop</a></li>
-                    
-                    </ul>
-                </div>
                                 <div class="notes-meta">
                     <span>作成日: 2026-08-09</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=BPF%20%28Berkeley%20Packet%20Filter%29&url=https%3A%2F%2F64p.org%2Fnotes%2Fbpf.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=Project%20Valhalla&url=https%3A%2F%2F64p.org%2Fnotes%2Fproject-valhalla.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">
