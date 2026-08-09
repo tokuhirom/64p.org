@@ -26,6 +26,7 @@
                                     <li><a href="/notes/wireguard.html">WireGuard</a></li>
                                     <li><a href="/notes/welcome.html">Notesコーナーへようこそ</a></li>
                                     <li><a href="/notes/wails.html">Wails</a></li>
+                                    <li><a href="/notes/thompson-construction.html">Thompson construction</a></li>
                                     <li><a href="/notes/tauri.html">Tauri</a></li>
                                     <li><a href="/notes/tableau.html">Tableau</a></li>
                                     <li><a href="/notes/solaris.html">Solaris / illumos</a></li>
@@ -38,6 +39,7 @@
                                     <li><a href="/notes/rust-gui-libraries.html">Rust GUI ライブラリ一覧</a></li>
                                     <li><a href="/notes/roam-research.html">Roam Research</a></li>
                                     <li><a href="/notes/regex-engine-backtracking-vs-nfa.html" class="active">正規表現エンジンの実装方式: バックトラッキング型とNFA/DFA型</a></li>
+                                    <li><a href="/notes/redos.html">ReDoS (Regular Expression Denial of Service)</a></li>
                                     <li><a href="/notes/raku-rakudo-perl6.html">Raku / Rakudo / Perl 6</a></li>
                                     <li><a href="/notes/project-valhalla.html">Project Valhalla</a></li>
                                     <li><a href="/notes/project-panama.html">Project Panama</a></li>
@@ -110,11 +112,11 @@
 
 <h2>バックトラッキング型</h2>
 
-<p>Henry Spencerが先駆けとなり、Perl・PCRE・Pythonなどに広く採用された方式。深さ優先探索でマッチを試み、失敗したら直前の状態に戻ってやり直す（バックトラック）。後方参照(backreference)や先読み・後読み(lookaround)など表現力の高い構文を実装しやすい一方、パターンと入力の組み合わせによっては指数関数的に時間がかかる「catastrophic backtracking」（ReDoSの原因）を起こしうる。</p>
+<p>Henry Spencerが先駆けとなり、Perl・PCRE・Pythonなどに広く採用された方式。深さ優先探索でマッチを試み、失敗したら直前の状態に戻ってやり直す（バックトラック）。後方参照(backreference)や先読み・後読み(lookaround)など表現力の高い構文を実装しやすい一方、パターンと入力の組み合わせによっては指数関数的に時間がかかる「catastrophic backtracking」（<a href="/notes/redos.html">ReDoS</a>の原因）を起こしうる。</p>
 
 <h2>NFA/DFA型（Thompson construction系）</h2>
 
-<p>Ken Thompsonが考案したNFA構築法（Thompson construction）に基づき、NFAをDFAに変換するか、NFAを並行シミュレートすることでマッチングを行う方式。RE2、Rustの<code>regex</code>クレート、Goの<code>regexp</code>パッケージなどが採用している。後方参照や汎用lookaroundは表現できないというトレードオフと引き換えに、入力サイズに対して線形時間でのマッチングを保証できる（ReDoSが原理的に起こらない）。</p>
+<p>Ken Thompsonが考案したNFA構築法（<a href="/notes/thompson-construction.html">Thompson construction</a>）に基づき、NFAをDFAに変換するか、NFAを並行シミュレートすることでマッチングを行う方式。RE2、Rustの<code>regex</code>クレート、Goの<code>regexp</code>パッケージなどが採用している。後方参照や汎用lookaroundは表現できないというトレードオフと引き換えに、入力サイズに対して線形時間でのマッチングを保証できる（ReDoSが原理的に起こらない）。</p>
 
 <h2>Perl 5とRakuの場合</h2>
 
@@ -139,6 +141,8 @@
                     <h2>🔗 リンクされているノート</h2>
                     <ul>
                                             <li><a href="/notes/raku-rakudo-perl6.html">Raku / Rakudo / Perl 6</a></li>
+                                            <li><a href="/notes/redos.html">ReDoS (Regular Expression Denial of Service)</a></li>
+                                            <li><a href="/notes/thompson-construction.html">Thompson construction</a></li>
                     
                     </ul>
                 </div>

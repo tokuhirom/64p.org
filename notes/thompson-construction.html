@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>Apache Parquet - Notes - 64p.org</title>
+    <title>Thompson construction - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/highlight.js@11/styles/github.min.css" media="(prefers-color-scheme: light)">
@@ -26,7 +26,7 @@
                                     <li><a href="/notes/wireguard.html">WireGuard</a></li>
                                     <li><a href="/notes/welcome.html">Notesコーナーへようこそ</a></li>
                                     <li><a href="/notes/wails.html">Wails</a></li>
-                                    <li><a href="/notes/thompson-construction.html">Thompson construction</a></li>
+                                    <li><a href="/notes/thompson-construction.html" class="active">Thompson construction</a></li>
                                     <li><a href="/notes/tauri.html">Tauri</a></li>
                                     <li><a href="/notes/tableau.html">Tableau</a></li>
                                     <li><a href="/notes/solaris.html">Solaris / illumos</a></li>
@@ -94,7 +94,7 @@
                                     <li><a href="/notes/burp-suite.html">Burp Suite</a></li>
                                     <li><a href="/notes/bpf.html">BPF (Berkeley Packet Filter)</a></li>
                                     <li><a href="/notes/architecture-decision-record.html">ADR(Architecture Decision Record)</a></li>
-                                    <li><a href="/notes/apache-parquet.html" class="active">Apache Parquet</a></li>
+                                    <li><a href="/notes/apache-parquet.html">Apache Parquet</a></li>
                                     <li><a href="/notes/apache-arrow.html">Apache Arrow</a></li>
                 
                 </ul>
@@ -106,43 +106,46 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>Apache Parquet</h1>
+                <h1>Thompson construction</h1>
 
-<p>ディスク永続化用の、オープンソースの列指向(カラムナー)ファイルフォーマット。<a href="/notes/apache-arrow.html">Apache Arrow</a>と対比されることが多く、「Arrowはメモリ上、Parquetはディスク上」という関係にある。</p>
+<p>Ken Thompsonが考案した、正規表現を等価なNFA（非決定性有限オートマトン）に変換するアルゴリズム。McNaughton–Yamada–Thompsonアルゴリズムとも呼ばれる。<a href="/notes/regex-engine-backtracking-vs-nfa.html">NFA/DFA型の正規表現エンジン</a>の理論的基盤になっている。</p>
 
-<h2>特徴</h2>
+<h2>仕組み</h2>
+
+<p>ボトムアップに構築する。正規表現の部分式ごとに小さなNFAをまず作り、それらを結合して全体のNFAを組み立てる。基本となるNFAは4種類。</p>
 
 <ul>
-<li><strong>列指向ストレージ</strong>: CSVやJSONのような行指向フォーマットと異なり、同じ列の値をディスク上に連続して配置する。</li>
-<li><strong>高い圧縮率</strong>: 同じ型のデータをまとめて持つため、列ごとに異なるエンコード/圧縮アルゴリズムを適用でき、CSV/JSONより高い圧縮率を実現する。</li>
-<li><strong>カラムプルーニング</strong>: クエリに必要な列だけを読み込むことでI/Oを削減する。</li>
-<li><strong>述語プッシュダウン(predicate pushdown)</strong>: データ読み込み前にフィルタ条件を適用し、不要な読み込みを避ける。</li>
+<li>1文字とのマッチ（単純な遷移）</li>
+<li>連接（concatenation、例: <code>ab</code>）</li>
+<li>選択（alternation、例: <code>a|b</code>）</li>
+<li>Kleeneスター（例: <code>a*</code>）</li>
 </ul>
 
 
-<h2>用途・エコシステム</h2>
+<h2>意義</h2>
 
-<p>Apache Hadoop, Apache Spark, Apache Drill, Presto などの分散処理基盤で広く使われている、分析ワークロード向けのフォーマット。</p>
+<p>理論的には「正規表現とNFAは同じ言語（正規言語）を受理する」ことの証明の一部を成す。実用上は、テキスト処理ツールが正規表現で検索パターンを記述する一方、コンピュータ上での実行にはNFAの方が適しているため、Thompson constructionで正規表現をNFAに変換し、そのNFAをシミュレートする（あるいはさらにDFA化する）ことで、正規表現の長さと入力文字列の長さに対して線形の実行時間を持つパターンマッチングが実現できる。</p>
+
+<p><a class="note-tag" href="/notes/tags/regex.html">#regex</a></p>
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://parquet.apache.org/">Parquet公式サイト</a></li>
-<li><a href="https://www.databricks.com/blog/what-is-parquet">What is Parquet? | Databricks</a></li>
-<li><a href="https://www.ibm.com/think/topics/parquet">What is Apache Parquet? | IBM</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Thompson's_construction">Thompson&rsquo;s construction - Wikipedia</a></li>
+<li><a href="https://medium.com/swlh/visualizing-thompsons-construction-algorithm-for-nfas-step-by-step-f92ef378581b">Visualizing Thompson&rsquo;s Construction Algorithm for NFAs, step-by-step | Medium</a></li>
 </ul>
 
 
                                 <div class="notes-backlinks">
                     <h2>🔗 リンクされているノート</h2>
                     <ul>
-                                            <li><a href="/notes/apache-arrow.html">Apache Arrow</a></li>
+                                            <li><a href="/notes/regex-engine-backtracking-vs-nfa.html">正規表現エンジンの実装方式: バックトラッキング型とNFA/DFA型</a></li>
                     
                     </ul>
                 </div>
                                 <div class="notes-meta">
                     <span>作成日: 2026-08-09</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=Apache%20Parquet&url=https%3A%2F%2F64p.org%2Fnotes%2Fapache-parquet.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=Thompson%20construction&url=https%3A%2F%2F64p.org%2Fnotes%2Fthompson-construction.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">

@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>Apache Parquet - Notes - 64p.org</title>
+    <title>ReDoS (Regular Expression Denial of Service) - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/highlight.js@11/styles/github.min.css" media="(prefers-color-scheme: light)">
@@ -39,7 +39,7 @@
                                     <li><a href="/notes/rust-gui-libraries.html">Rust GUI ライブラリ一覧</a></li>
                                     <li><a href="/notes/roam-research.html">Roam Research</a></li>
                                     <li><a href="/notes/regex-engine-backtracking-vs-nfa.html">正規表現エンジンの実装方式: バックトラッキング型とNFA/DFA型</a></li>
-                                    <li><a href="/notes/redos.html">ReDoS (Regular Expression Denial of Service)</a></li>
+                                    <li><a href="/notes/redos.html" class="active">ReDoS (Regular Expression Denial of Service)</a></li>
                                     <li><a href="/notes/raku-rakudo-perl6.html">Raku / Rakudo / Perl 6</a></li>
                                     <li><a href="/notes/project-valhalla.html">Project Valhalla</a></li>
                                     <li><a href="/notes/project-panama.html">Project Panama</a></li>
@@ -94,7 +94,7 @@
                                     <li><a href="/notes/burp-suite.html">Burp Suite</a></li>
                                     <li><a href="/notes/bpf.html">BPF (Berkeley Packet Filter)</a></li>
                                     <li><a href="/notes/architecture-decision-record.html">ADR(Architecture Decision Record)</a></li>
-                                    <li><a href="/notes/apache-parquet.html" class="active">Apache Parquet</a></li>
+                                    <li><a href="/notes/apache-parquet.html">Apache Parquet</a></li>
                                     <li><a href="/notes/apache-arrow.html">Apache Arrow</a></li>
                 
                 </ul>
@@ -106,43 +106,46 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>Apache Parquet</h1>
+                <h1>ReDoS (Regular Expression Denial of Service)</h1>
 
-<p>ディスク永続化用の、オープンソースの列指向(カラムナー)ファイルフォーマット。<a href="/notes/apache-arrow.html">Apache Arrow</a>と対比されることが多く、「Arrowはメモリ上、Parquetはディスク上」という関係にある。</p>
+<p><a href="/notes/regex-engine-backtracking-vs-nfa.html">バックトラッキング型</a>の正規表現エンジンが持つ脆弱性。細工された入力文字列を与えることで、エンジンに指数関数的な時間がかかる探索（catastrophic backtracking）をさせ、CPUリソースを占有させるサービス拒否(DoS)攻撃。</p>
 
-<h2>特徴</h2>
+<h2>発生条件</h2>
 
-<ul>
-<li><strong>列指向ストレージ</strong>: CSVやJSONのような行指向フォーマットと異なり、同じ列の値をディスク上に連続して配置する。</li>
-<li><strong>高い圧縮率</strong>: 同じ型のデータをまとめて持つため、列ごとに異なるエンコード/圧縮アルゴリズムを適用でき、CSV/JSONより高い圧縮率を実現する。</li>
-<li><strong>カラムプルーニング</strong>: クエリに必要な列だけを読み込むことでI/Oを削減する。</li>
-<li><strong>述語プッシュダウン(predicate pushdown)</strong>: データ読み込み前にフィルタ条件を適用し、不要な読み込みを避ける。</li>
-</ul>
+<p>ある部分式が別の部分式を含み、それぞれに<code>*</code>・<code>+</code>・<code>*?</code>・<code>+?</code>・<code>{...}</code>のような量指定子が掛かっている場合に起こりやすい。</p>
 
+<h2>典型例: <code>(a+)+$</code></h2>
 
-<h2>用途・エコシステム</h2>
+<p><code>(a+)+$</code>という正規表現に、<code>"a"</code>を30個並べたあと非マッチな文字（例: <code>!</code>）を続けた入力を与えると、外側の<code>+</code>と内側の<code>+</code>の間で「aの並びをどう分割するか」の組み合わせが2<sup>30</sup>（約10億）通り試され、実質的にハングする。</p>
 
-<p>Apache Hadoop, Apache Spark, Apache Drill, Presto などの分散処理基盤で広く使われている、分析ワークロード向けのフォーマット。</p>
+<h2>実例と影響</h2>
+
+<p>Node.jsのようなシングルスレッドのイベントループを持つ環境では、ReDoSでスレッドが占有されるとイベントループ全体がブロックされ、他の処理が一切進まなくなる。httplib2ライブラリが、悪意あるHTTPヘッダー内の長い空白文字列によってcatastrophic backtrackingを起こしフリーズした実例が報告されている。</p>
+
+<h2>対策</h2>
+
+<p><a href="/notes/regex-engine-backtracking-vs-nfa.html">NFA/DFA型</a>のエンジン（RE2、Rustの<code>regex</code>クレートなど）は原理的にReDoSが起こらないため、信頼できない入力を正規表現にかける場合の対策として採用されることがある。</p>
+
+<p><a class="note-tag" href="/notes/tags/regex.html">#regex</a> <a class="note-tag" href="/notes/tags/security.html">#security</a></p>
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://parquet.apache.org/">Parquet公式サイト</a></li>
-<li><a href="https://www.databricks.com/blog/what-is-parquet">What is Parquet? | Databricks</a></li>
-<li><a href="https://www.ibm.com/think/topics/parquet">What is Apache Parquet? | IBM</a></li>
+<li><a href="https://owasp.org/www-community/attacks/Regular_expression_Denial_of_Service_-_ReDoS">Regular expression Denial of Service - ReDoS | OWASP Foundation</a></li>
+<li><a href="https://snyk.io/blog/redos-and-catastrophic-backtracking/">Regular Expression Denial of Service (ReDoS) and Catastrophic Backtracking | Snyk</a></li>
 </ul>
 
 
                                 <div class="notes-backlinks">
                     <h2>🔗 リンクされているノート</h2>
                     <ul>
-                                            <li><a href="/notes/apache-arrow.html">Apache Arrow</a></li>
+                                            <li><a href="/notes/regex-engine-backtracking-vs-nfa.html">正規表現エンジンの実装方式: バックトラッキング型とNFA/DFA型</a></li>
                     
                     </ul>
                 </div>
                                 <div class="notes-meta">
                     <span>作成日: 2026-08-09</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=Apache%20Parquet&url=https%3A%2F%2F64p.org%2Fnotes%2Fapache-parquet.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=ReDoS%20%28Regular%20Expression%20Denial%20of%20Service%29&url=https%3A%2F%2F64p.org%2Fnotes%2Fredos.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">

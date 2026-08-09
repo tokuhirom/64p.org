@@ -8,11 +8,11 @@ updated: 2026-08-09
 
 ## バックトラッキング型
 
-Henry Spencerが先駆けとなり、Perl・PCRE・Pythonなどに広く採用された方式。深さ優先探索でマッチを試み、失敗したら直前の状態に戻ってやり直す（バックトラック）。後方参照(backreference)や先読み・後読み(lookaround)など表現力の高い構文を実装しやすい一方、パターンと入力の組み合わせによっては指数関数的に時間がかかる「catastrophic backtracking」（ReDoSの原因）を起こしうる。
+Henry Spencerが先駆けとなり、Perl・PCRE・Pythonなどに広く採用された方式。深さ優先探索でマッチを試み、失敗したら直前の状態に戻ってやり直す（バックトラック）。後方参照(backreference)や先読み・後読み(lookaround)など表現力の高い構文を実装しやすい一方、パターンと入力の組み合わせによっては指数関数的に時間がかかる「catastrophic backtracking」（[[redos|ReDoS]]の原因）を起こしうる。
 
 ## NFA/DFA型（Thompson construction系）
 
-Ken Thompsonが考案したNFA構築法（Thompson construction）に基づき、NFAをDFAに変換するか、NFAを並行シミュレートすることでマッチングを行う方式。RE2、Rustの`regex`クレート、Goの`regexp`パッケージなどが採用している。後方参照や汎用lookaroundは表現できないというトレードオフと引き換えに、入力サイズに対して線形時間でのマッチングを保証できる（ReDoSが原理的に起こらない）。
+Ken Thompsonが考案したNFA構築法（[[thompson-construction|Thompson construction]]）に基づき、NFAをDFAに変換するか、NFAを並行シミュレートすることでマッチングを行う方式。RE2、Rustの`regex`クレート、Goの`regexp`パッケージなどが採用している。後方参照や汎用lookaroundは表現できないというトレードオフと引き換えに、入力サイズに対して線形時間でのマッチングを保証できる（ReDoSが原理的に起こらない）。
 
 ## Perl 5とRakuの場合
 
