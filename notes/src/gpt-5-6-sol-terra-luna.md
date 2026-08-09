@@ -37,7 +37,7 @@ updated: 2026-08-09
 
 ## 関連
 
-Anthropic Claudeも[[claude-model-tiers|同様のティア構成(Opus/Sonnet/Haiku/Fable)]]を採用している。
+Anthropic Claudeも[[claude-model-tiers|同様のティア構成(Opus/Sonnet/Haiku/Fable)]]を採用している。[[openrouter]]のようなアグリゲーターを使うと、各社のモデルを同じインターフェースで横断的に使い分けられる。
 
 ## 出典
 
