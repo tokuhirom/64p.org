@@ -1,3 +1,8 @@
+---
+created: 2026-08-09
+updated: 2026-08-09
+---
+
 # Claudeのモデル階層(Opus / Sonnet / Haiku / Fable)の違い
 
 #claude #anthropic #llm

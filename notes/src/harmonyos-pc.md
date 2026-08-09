@@ -1,3 +1,8 @@
+---
+created: 2026-08-09
+updated: 2026-08-09
+---
+
 # HarmonyOS PC版（鴻蒙電脳）
 
 [[harmonyos]]のスマホ版で進んでいる脱Android・脱Google路線を、そのままPCに持ち込んだHuaweiの独自OS搭載ノートPCシリーズ。

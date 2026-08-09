@@ -1,0 +1,5 @@
+pre-commit:
+  commands:
+    notes-dates:
+      glob: "notes/src/*.md"
+      run: perl update-note-dates.pl {staged_files}

@@ -15,7 +15,7 @@
                 <p class="notes-meta"><a href="/notes/tags/">&larr; タグ一覧へ</a></p>
                 <ul class="notes-index-list">
                 [% FOR note IN notes -%]
-                    <li><a href="[% note.link %]">[% note.title %]</a><time>[% note.mtime.strftime('%Y-%m-%d') %]</time></li>
+                    <li><a href="[% note.link %]">[% note.title %]</a><time>[% note.updated %]</time></li>
                 [% END %]
                 </ul>
             </article>
