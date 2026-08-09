@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>松ぼっくりの「ぼっくり」の語源 - Notes - 64p.org</title>
+    <title>DDD (Domain-Driven Design / ドメイン駆動設計) - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/highlight.js@11/styles/github.min.css" media="(prefers-color-scheme: light)">
@@ -64,7 +64,7 @@
                                     <li><a href="/notes/moc.html">MOC (Map of Content)</a></li>
                                     <li><a href="/notes/miidera-gomimushi.html">ミイデラゴミムシ</a></li>
                                     <li><a href="/notes/metasploit.html">Metasploit</a></li>
-                                    <li><a href="/notes/matsubokkuri-gogen.html" class="active">松ぼっくりの「ぼっくり」の語源</a></li>
+                                    <li><a href="/notes/matsubokkuri-gogen.html">松ぼっくりの「ぼっくり」の語源</a></li>
                                     <li><a href="/notes/marp.html">Marp</a></li>
                                     <li><a href="/notes/markdown-presentation-tools.html">Markdownベースのプレゼンテーションツール</a></li>
                                     <li><a href="/notes/lyt.html">LYT (Linking Your Thinking)</a></li>
@@ -93,7 +93,7 @@
                                     <li><a href="/notes/elf-origin.html">エルフという概念の起源</a></li>
                                     <li><a href="/notes/electron.html">Electron</a></li>
                                     <li><a href="/notes/edge-manifest-v3.html">Microsoft Edge、拡張機能をManifest V3へ完全移行</a></li>
-                                    <li><a href="/notes/domain-driven-design.html">DDD (Domain-Driven Design / ドメイン駆動設計)</a></li>
+                                    <li><a href="/notes/domain-driven-design.html" class="active">DDD (Domain-Driven Design / ドメイン駆動設計)</a></li>
                                     <li><a href="/notes/devsecops.html">DevSecOps</a></li>
                                     <li><a href="/notes/deck-k1low.html">deck (k1LoW)</a></li>
                                     <li><a href="/notes/dangouzaka-yurai.html">談合坂の地名由来</a></li>
@@ -117,32 +117,79 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>松ぼっくりの「ぼっくり」の語源</h1>
+                <h1>DDD (Domain-Driven Design / ドメイン駆動設計)</h1>
 
-<p>「まつぼっくり」の「ぼっくり」は「ふぐり」（陰嚢）が転じたもの、という説が有力。松かさの丸い房が垂れ下がった形が陰嚢に似ていることから、もともと「松ふぐり」と呼ばれていたのが訛って「まつぼっくり」になったとされる。 <a class="note-tag" href="/notes/tags/etymology.html">#etymology</a></p>
+<p><a class="note-tag" href="/notes/tags/software-engineering.html">#software-engineering</a></p>
 
-<p>もとは北関東・江戸あたりの方言で、江戸時代から明治初期にかけて江戸弁が標準語化していく過程で全国に広まった。</p>
+<p>2003年にEric Evansが著書『Domain-Driven Design: Tackling Complexity in the Heart of Software』で提唱したソフトウェア設計手法。複雑な業務ドメインを扱うソフトウェア開発において、技術的な複雑さよりも「ドメイン（業務領域）そのものの理解」に焦点を当てて設計する、という考え方が核。</p>
 
-<h2>正式名称・地方名</h2>
+<p>Evans自身による2014年のリファレンス定義では、DDDとは以下を行うアプローチとされている。</p>
+
+<ol>
+<li>コアドメイン（事業の核心部分）に集中する</li>
+<li>ドメインの専門家とソフトウェア開発者が協働してモデルを探求する</li>
+<li>明示的に境界づけられたコンテキスト内で「ユビキタス言語」を話す</li>
+</ol>
+
+
+<h2>ユビキタス言語 (Ubiquitous Language)</h2>
+
+<p>開発者・ドメイン専門家・ステークホルダー全員が共有する語彙。議論・ドキュメント・コードすべてで同じ用語を使うことで、認識のズレを防ぐ。</p>
+
+<h2>境界づけられたコンテキスト (Bounded Context)</h2>
+
+<p>Martin Fowlerが「DDDの戦略的設計の中心パターン」と位置づける概念。大きなドメインモデルを、それぞれ独自のユビキタス言語が通用する論理的な境界（コンテキスト）に分割する。「境界」とは要するに<strong>「同じ単語が同じ意味で通用する範囲」</strong>のこと。この境界は技術的な都合よりも、組織や人間のコミュニケーションが自然に区切れる場所（部署の境目など）に沿って引くべきだとされる。</p>
+
+<h3>具体例: 電力会社の「メーター」</h3>
+
+<p>Fowlerが挙げている例。ある電力会社では「メーター(meter)」という同じ単語が部署によって全く違う意味で使われていた。</p>
 
 <ul>
-<li>学術的・標準語的な呼び方は「松かさ」（松笠・松傘）。</li>
-<li>関西地方では「ちちり」「ちちりん」と呼ぶ地域もある。</li>
+<li><strong>送電部門</strong>: 送電網と設置場所の接続点</li>
+<li><strong>顧客管理部門</strong>: 送電網と顧客の契約上の接続点</li>
+<li><strong>設備保守部門</strong>: 壊れたら交換できる物理的な機器そのもの</li>
 </ul>
 
+
+<p>日常会話では「大体同じようなもの」で済むが、これを1つのソフトウェアの中で「Meter」という1つのクラス・1つのテーブルに無理やり統一しようとすると破綻する。保守部門が「このMeterを交換」と言った瞬間に、顧客管理部門の契約データとの整合性がおかしくなる、といった具合。DDDでは、こうした部門ごとの意味の違いを1つのモデルに押し込めず、<strong>別々のBounded Contextとして設計し、必要な箇所だけ変換・連携する</strong>アプローチを取る。</p>
+
+<h2>戦術的な構成要素（実装パターン）</h2>
+
+<ul>
+<li><strong>Entity（エンティティ）</strong>: 属性が変わっても持続する「identity（同一性）」で識別されるオブジェクト（例: 顧客）</li>
+<li><strong>Value Object（値オブジェクト）</strong>: identityではなく属性そのもので特徴づけられ、基本的にimmutable（例: 金額、住所）</li>
+<li><strong>Aggregate（集約）</strong>: 関連するEntity/Value Objectをまとめた単位。外部からのアクセスは必ず<strong>Aggregate Root</strong>という代表エンティティ経由に限定し、整合性を担保する</li>
+<li><strong>Domain Event（ドメインイベント）</strong>: ドメイン内で起きた重要な出来事を表す</li>
+</ul>
+
+
+<h2>位置づけ</h2>
+
+<ul>
+<li>OOP（オブジェクト指向）とは親和性が高く、Entity/Value ObjectはOOPのクラスのインスタンスとみなせる</li>
+<li>マイクロサービスアーキテクチャとも相性がよく、Bounded Contextがサービス分割の単位の指針になることが多い</li>
+<li>CQRSやイベントソーシングと組み合わせられることも多いが、DDD自体に必須ではない</li>
+</ul>
+
+
+<h2>批判・限界</h2>
+
+<p>複雑なドメインには有効だが、学習コストが高く、ドメイン専門家との継続的な協働を必要とするため、シンプルなアプリケーションにはオーバースペックとされる。</p>
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://manabu-biology.com/archives/%E3%80%8C%E6%9D%BE%E3%81%BC%E3%81%A3%E3%81%8F%E3%82%8A%E3%80%8D%E3%81%AE%E8%AA%9E%E6%BA%90%E3%81%AF%E3%80%8C%E6%9D%BE%E3%81%B5%E3%81%90%E3%82%8A%EF%BC%88%E6%9D%BE%E9%99%B0%E5%9A%A2%EF%BC%89%E3%80%8D.html">「松ぼっくり」の語源は「松ふぐり（松陰嚢）」 | ねこでもわかる生物学</a></li>
-<li><a href="https://radichubu.jp/kibun/contents/id=39386">まつぼっくりの「ぼっくり」、実は口に出すのが恥ずかしくなる意味だった！ | RadiChubu</a></li>
-<li><a href="https://www.excite.co.jp/news/article/E1321442724026/">君は松ぼっくりの「ぼっくり」の意味を知っているか - エキサイトニュース</a></li>
+<li><a href="https://www.domainlanguage.com/ddd/">Domain-Driven Design Reference (domainlanguage.com, Eric Evans)</a></li>
+<li><a href="https://ddd.academy/blog/what-is-ddd-by-eric-evans">What is DDD, by Eric Evans</a></li>
+<li><a href="https://redis.io/glossary/domain-driven-design-ddd/">Domain-Driven Design (DDD) | Redis Glossary</a></li>
+<li><a href="https://martinfowler.com/bliki/BoundedContext.html">bliki: Bounded Context (Martin Fowler)</a></li>
+<li><a href="https://martinfowler.com/bliki/DDD_Aggregate.html">bliki: DDD_Aggregate (Martin Fowler)</a></li>
 </ul>
 
 
                                 <div class="notes-meta">
                     <span>作成日: 2026-08-09</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=%E6%9D%BE%E3%81%BC%E3%81%A3%E3%81%8F%E3%82%8A%E3%81%AE%E3%80%8C%E3%81%BC%E3%81%A3%E3%81%8F%E3%82%8A%E3%80%8D%E3%81%AE%E8%AA%9E%E6%BA%90&url=https%3A%2F%2F64p.org%2Fnotes%2Fmatsubokkuri-gogen.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=DDD%20%28Domain-Driven%20Design%20%2F%20%E3%83%89%E3%83%A1%E3%82%A4%E3%83%B3%E9%A7%86%E5%8B%95%E8%A8%AD%E8%A8%88%29&url=https%3A%2F%2F64p.org%2Fnotes%2Fdomain-driven-design.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">
