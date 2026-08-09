@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>談合坂の地名由来 - Notes - 64p.org</title>
+    <title>LXD - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/highlight.js@11/styles/github.min.css" media="(prefers-color-scheme: light)">
@@ -66,7 +66,7 @@
                                     <li><a href="/notes/marp.html">Marp</a></li>
                                     <li><a href="/notes/markdown-presentation-tools.html">Markdownベースのプレゼンテーションツール</a></li>
                                     <li><a href="/notes/lyt.html">LYT (Linking Your Thinking)</a></li>
-                                    <li><a href="/notes/lxd.html">LXD</a></li>
+                                    <li><a href="/notes/lxd.html" class="active">LXD</a></li>
                                     <li><a href="/notes/lxc.html">LXC (Linux Containers)</a></li>
                                     <li><a href="/notes/literature-notes.html">文献ノート (Literature Notes)</a></li>
                                     <li><a href="/notes/lefthook.html">lefthook</a></li>
@@ -92,7 +92,7 @@
                                     <li><a href="/notes/electron.html">Electron</a></li>
                                     <li><a href="/notes/edge-manifest-v3.html">Microsoft Edge、拡張機能をManifest V3へ完全移行</a></li>
                                     <li><a href="/notes/deck-k1low.html">deck (k1LoW)</a></li>
-                                    <li><a href="/notes/dangouzaka-yurai.html" class="active">談合坂の地名由来</a></li>
+                                    <li><a href="/notes/dangouzaka-yurai.html">談合坂の地名由来</a></li>
                                     <li><a href="/notes/craft-beer.html">クラフトビール</a></li>
                                     <li><a href="/notes/claude-model-tiers.html">Claudeのモデル階層(Opus / Sonnet / Haiku / Fable)の違い</a></li>
                                     <li><a href="/notes/carnivorous-plants.html">食虫植物</a></li>
@@ -111,57 +111,44 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>談合坂の地名由来</h1>
+                <h1>LXD</h1>
 
-<p>中央自動車道の「談合坂サービスエリア」で有名な、山梨県上野原市の地名「談合坂」の由来を軽く調べた。諸説あって一つに決まっていない。 <a class="note-tag" href="/notes/tags/etymology.html">#etymology</a></p>
+<p><a href="/notes/lxc.html">LXC</a>をベースにした、Canonical(Ubuntu開発元)によるシステムコンテナ・仮想マシンの統合管理システム。 <a class="note-tag" href="/notes/tags/linux.html">#linux</a></p>
 
-<h2>説1: 談合（話し合い）した場所説</h2>
-
-<p>文字通り「談合＝相談・話し合いをした場所」という説。具体的には、</p>
+<h2>特徴</h2>
 
 <ul>
-<li>戦国時代、武田氏と北条氏がこのあたりで和議・婚儀の調停交渉をした</li>
-<li>近隣の村の農民たちの寄り合い（談合）の場だった</li>
+<li>「システムコンテナ」と「仮想マシン」の2種類のインスタンスをサポートする。システムコンテナはホストカーネルの機能を使って仮想的なOS環境をシミュレートするのに対し、仮想マシンはホストのハードウェアを使いつつカーネル自体は仮想マシン側が提供する。</li>
+<li>単一アプリケーションの実行に特化したDockerの「アプリケーションコンテナ」とは異なり、より完全なLinuxシステムを1つのコンテナ内で動かす用途に向く。</li>
+<li>シンプルなREST APIを中心に構築されており、単一マシンから大規模クラスタまでスケール可能。</li>
+<li>スナップショットのイメージ化・別ホストへのライブマイグレーション・コンテナごとのCPU/メモリ/IO負荷制限など、運用向けの機能を備える。</li>
 </ul>
 
 
-<p>のどちらか、あるいは両方が背景にあるとされる。ただし後述の通り、当て字の可能性が高く後付けの説明という見方もある。</p>
+<h2>Incusとの関係</h2>
 
-<h2>説2: 団子坂が訛った説（有力）</h2>
-
-<p>江戸後期（1814年完成）の甲斐国志という甲斐国の地誌に、上大野村の枝郷として「団子坂」の記載がある。この「団子坂」が転じて「談合坂」の字が当てられるようになった、という説。「だんござか」という音がまずあって、それに漢字を当てる過程で「団子」「談合」両方の表記が生まれた、という理解に近い。</p>
-
-<h2>説3: 桃太郎伝説とのこじつけ</h2>
-
-<p>このあたりには「犬目」「鳥沢」「猿橋」という地名が実在し、犬・キジ・猿が揃う。そこに「談合坂＝団子坂」を「団子をあげた場所」として組み合わせ、桃太郎伝説の舞台とする話がある。ただし後付けの地名解釈として紹介されているものが多く、史実として裏付けられているわけではなさそう。</p>
-
-<h2>説4: 地形由来の「段処（だんこ）」説</h2>
-
-<p>「談合」「団子」はどちらも当て字で、元々は「段になった場所」を意味する地形由来の地名「だんこ」であり、「こ」は場所を表す接尾辞、という説。類例として九段坂（東京・九段下）、談合峠（山口県）、談合峰（新潟・福島県境）、談合山（新潟県魚沼市）などが挙げられている。この説だと武田・北条の談合話も団子屋伝説も後付けの俗説ということになる。</p>
-
-<h2>まとめ</h2>
-
-<p>一次資料に近いのは『甲斐国志』の「団子坂」表記で、そこから「談合坂」への転訛というのが比較的有力そう。ただ「だんご」自体が地形由来という説もあり、確定的な由来は不明というのが実情っぽい。</p>
+<p>2023年、CanonicalがLXDの全コントリビューターにCLA(Contributor License Agreement)署名を要求し、LXDをLinux Containersプロジェクトの傘下から引き離して自社管理下に置いた。これを受けて、コミュニティ主導のフォークとして<a href="/notes/incus.html">Incus</a>が立ち上げられた。</p>
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://www.njg.co.jp/column/column-28472/">談合坂の由来 – 日本実業出版社</a>（甲斐国志の団子坂記載について）</li>
-<li><a href="https://baba72885.exblog.jp/6706855/">談合坂の地名由来と団子地名 | 目からウロコの地名由来</a>（「段処(だんこ)」説）</li>
-<li><a href="https://detail.chiebukuro.yahoo.co.jp/qa/question_detail/q126773847">山梨にある、"談合坂"という地名の由来はなんですか？ - Yahoo!知恵袋</a></li>
+<li><a href="https://canonical.com/lxd">LXD | Canonical</a></li>
+<li><a href="https://github.com/canonical/lxd">GitHub - canonical/lxd: Powerful system container and virtual machine manager</a></li>
+<li><a href="https://canonical.com/lxd/docs/latest/explanation/instances/">Containers and VMs - LXD documentation</a></li>
 </ul>
 
 
                                 <div class="notes-backlinks">
                     <h2>🔗 リンクされているノート</h2>
                     <ul>
-                                            <li><a href="/notes/welcome.html">Notesコーナーへようこそ</a></li>
+                                            <li><a href="/notes/incus.html">Incus</a></li>
+                                            <li><a href="/notes/lxc.html">LXC (Linux Containers)</a></li>
                     
                     </ul>
                 </div>
                                 <div class="notes-meta">
                     <span>作成日: 2026-08-09</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=%E8%AB%87%E5%90%88%E5%9D%82%E3%81%AE%E5%9C%B0%E5%90%8D%E7%94%B1%E6%9D%A5&url=https%3A%2F%2F64p.org%2Fnotes%2Fdangouzaka-yurai.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=LXD&url=https%3A%2F%2F64p.org%2Fnotes%2Flxd.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">
