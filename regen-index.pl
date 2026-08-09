@@ -184,6 +184,13 @@ sub regen {
             push @protected, $1;
             "\x01$#protected\x02";
         }gse;
+        # A bare x.com/twitter.com status URL sitting alone on its own line
+        # becomes a live embed via X's official widgets.js, which fetches
+        # the actual post content client-side from the URL in the <a href>.
+        $note->{mkdn} =~ s{^(https?://(?:x\.com|twitter\.com)/\S+/status/\d+\S*)\s*$}{
+            $note->{has_tweet}++;
+            qq{\n<blockquote class="twitter-tweet"><a href="$1"></a></blockquote>\n};
+        }gme;
         $note->{mkdn} =~ s{\[\[([\w\-]+)(?:\|([^\]]+))?\]\]}{
             my ($target, $label) = ($1, $2);
             if (exists $title_by_slug{$target}) {
@@ -224,6 +231,7 @@ sub regen {
             slug      => $slug,
             created   => $_->{created},
             updated   => $_->{updated},
+            has_tweet_embed => $_->{has_tweet} ? 1 : 0,
             backlinks => [
                 map { +{ title => $title_by_slug{$_}, link => "/notes/$_.html" } }
                 sort { $title_by_slug{$a} cmp $title_by_slug{$b} }
