@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>Go GUI ライブラリ一覧 - Notes - 64p.org</title>
+    <title>Zettelkasten - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/highlight.js@11/styles/github.min.css" media="(prefers-color-scheme: light)">
@@ -19,7 +19,7 @@
             <a class="notes-tags-link" href="/notes/tags/">🏷️ タグ一覧</a>
             <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
             <ul class="notes-nav">
-                            <li><a href="/notes/zettelkasten.html">Zettelkasten</a></li>
+                            <li><a href="/notes/zettelkasten.html" class="active">Zettelkasten</a></li>
                             <li><a href="/notes/welcome.html">Notesコーナーへようこそ</a></li>
                             <li><a href="/notes/wails.html">Wails</a></li>
                             <li><a href="/notes/tauri.html">Tauri</a></li>
@@ -41,7 +41,7 @@
                             <li><a href="/notes/hacker-news.html">Hacker News (HN) について</a></li>
                             <li><a href="/notes/gpui.html">GPUI</a></li>
                             <li><a href="/notes/gpt-5-6-sol-terra-luna.html">GPT-5.6のSol / Terra / Lunaの違い</a></li>
-                            <li><a href="/notes/go-gui-libraries.html" class="active">Go GUI ライブラリ一覧</a></li>
+                            <li><a href="/notes/go-gui-libraries.html">Go GUI ライブラリ一覧</a></li>
                             <li><a href="/notes/freya.html">Freya (freyaui.dev) — Rust製クロスプラットフォームGUIライブラリ</a></li>
                             <li><a href="/notes/evergreen-notes.html">エバーグリーンノート (Evergreen Notes)</a></li>
                             <li><a href="/notes/electron.html">Electron</a></li>
@@ -59,127 +59,48 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>Go GUI ライブラリ一覧</h1>
+                <h1>Zettelkasten</h1>
 
-<p>Go言語のGUIライブラリ・フレームワークをまとめておく。<a href="/notes/rust-gui-libraries.html">Rust版</a>の対比として作成。Web技術を使うハイブリッド型は<a href="/notes/wails.html">Wails</a>に個別ノートがあるのでそちらを参照。 <a class="note-tag" href="/notes/tags/go.html">#go</a> <a class="note-tag" href="/notes/tags/gui.html">#gui</a></p>
+<p>ドイツ語で「スリップボックス」を意味する個人知識管理システム。個々のメモ(Zettel、独: &ldquo;紙片&rdquo;)をカード単位で記録し、相互にリンクして育てていく手法。 <a class="note-tag" href="/notes/tags/zettelkasten.html">#zettelkasten</a> <a class="note-tag" href="/notes/tags/note-taking.html">#note-taking</a></p>
 
-<h2>比較表</h2>
+<h2>基本的な仕組み</h2>
 
-<table>
-<thead>
-<tr>
-<th> 名前 </th>
-<th> 開発元 </th>
-<th> スター数 </th>
-<th> レンダリング方式 </th>
-<th> 対応プラットフォーム </th>
-<th> ライセンス </th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td> <a href="https://github.com/fyne-io/fyne">Fyne</a> </td>
-<td> fyne-io </td>
-<td> 28.6k </td>
-<td> Material Design風、独自レンダラー </td>
-<td> Windows/macOS/Linux/BSD/Android/iOS </td>
-<td> BSD-3-Clause </td>
-</tr>
-<tr>
-<td> <a href="https://github.com/gioui/gio">Gio</a> </td>
-<td> Elias Naur / gioui </td>
-<td> 2.2k(GitHubミラー) </td>
-<td> GPUベースのimmediate mode </td>
-<td> Android/iOS/macOS/Linux/FreeBSD/OpenBSD/Windows/Web(実験的) </td>
-<td> 記載あり(詳細未確認) </td>
-</tr>
-<tr>
-<td> <a href="https://github.com/AllenDang/giu">Giu</a> </td>
-<td> AllenDang </td>
-<td> 2.8k </td>
-<td> Dear ImGui(cimgui-go)ベースのimmediate mode </td>
-<td> Windows/macOS/Linux/Raspberry Pi </td>
-<td> MIT </td>
-</tr>
-<tr>
-<td> <a href="https://github.com/lxn/walk">Walk</a> </td>
-<td> lxn </td>
-<td> 7.1k </td>
-<td> Windows API直接ラップ </td>
-<td> Windows専用 </td>
-<td> BSD-3-Clause </td>
-</tr>
-<tr>
-<td> <a href="https://github.com/gotk3/gotk3">gotk3</a> </td>
-<td> gotk3 </td>
-<td> 2.2k </td>
-<td> GTK3バインディング </td>
-<td> 主にLinux(GTK3が動く環境) </td>
-<td> ISC </td>
-</tr>
-<tr>
-<td> <a href="/notes/wails.html">Wails</a> </td>
-<td> wailsapp </td>
-<td> 約35.7k </td>
-<td> OSネイティブWebView(Web技術) </td>
-<td> Windows/macOS/Linux </td>
-<td> MIT </td>
-</tr>
-</tbody>
-</table>
+<ul>
+<li><strong>カード形式</strong> — 1枚のカードに1つのアイデア・概念だけを書く</li>
+<li><strong>一意の識別子</strong> — 階層的な番号付け(Folgezettel)により、既存カードの間に新しいカードを挿入できる</li>
+<li><strong>相互リンク</strong> — タグや参照によってカード同士を結びつけ、フォルダによる分類ではなくネットワーク状に知識を蓄積する</li>
+</ul>
 
 
-<p>※スター数は調査時点(2026年8月)のスナップショット。</p>
+<h2>ニクラス・ルーマンの実践</h2>
 
-<h2>各ライブラリの補足</h2>
+<p>ドイツの社会学者ニクラス・ルーマン(1927–1998)が最も有名な実践者。1952〜53年から研究のためのZettelkastenを構築し始め、最終的に約9万枚のインデックスカードに達した。この蓄積を元に、約50冊の著作と550本の論文を執筆した。</p>
 
-<h3>Fyne</h3>
+<h2>現代への影響</h2>
 
-<p>Material Designに着想を得た独自レンダラーを持つツールキット。デスクトップとモバイルを単一コードベースでカバーし、GoのGUIライブラリの中では最もスター数が多く事実上のデファクトに近い。ビルドにはCコンパイラが必要。</p>
+<p>1980年代、このカードファイルの概念は「ハイパーテキスト」ソフトウェアのメタファーとなり、その後Wikiの発明にも影響を与えた。現代のデジタルノートツール(Obsidian、Roam Research、The Archive、Zettlrなど)の多くが、双方向リンクという形でZettelkastenの原則を実装している。</p>
 
-<h3>Gio</h3>
+<h2>関連する現代の概念</h2>
 
-<p>immediate mode設計でGPUベースのレンダリングを行う。開発は元々<a href="https://git.sr.ht/~eliasnaur/gio">Sourcehut</a>上で行われており、GitHubはミラー。モバイル対応が手厚く、Android/iOSをネイティブにターゲットできる点が特徴。</p>
-
-<h3>Giu</h3>
-
-<p>Dear ImGuiのGoバインディング(cimgui-go)上に構築されたimmediate mode GUI。実行ファイルサイズの小ささ(UPX圧縮後3MB以下)や低CPU使用率を売りにしている。</p>
-
-<h3>Walk</h3>
-
-<p>&ldquo;Windows Application Library Kit"の略。Windows API・WPF系の思想をベースにしたWindows専用ライブラリ。クロスプラットフォームではない点で他と用途が異なる。</p>
-
-<h3>gotk3</h3>
-
-<p>GTK3の薄いバインディング。GoのGCとGObjectの参照カウントを橋渡しする設計。GNOME系デスクトップ環境に馴染むアプリを作る場合の選択肢。</p>
-
-<h3>Wails</h3>
-
-<p>ネイティブGUIツールキットではなく、GoバックエンドとOSネイティブWebView(WebKit/WebView2/WebKitGTK)を組み合わせたハイブリッド型。詳細は<a href="/notes/wails.html">Wails</a>を参照。</p>
+<p>Andy Matuschakが提唱する<a href="/notes/evergreen-notes.html">エバーグリーンノート</a>は、Zettelkastenの「原子性」「密度の高いリンク」といった発想を直接引き継いだ現代的な再解釈。<code>64p.org</code>の<code>/notes/</code>コーナー自体も、<code>[[...]]</code>によるリンクとタグでノート同士を繋ぐという点で、Zettelkasten的な設計を採用している。</p>
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://blog.logrocket.com/best-gui-frameworks-go/">Best GUI frameworks for Go - LogRocket Blog</a></li>
-<li><a href="https://github.com/go-graphics/go-gui-projects">go-graphics/go-gui-projects - GitHub</a></li>
-<li><a href="https://github.com/fyne-io/fyne">fyne-io/fyne - GitHub</a></li>
-<li><a href="https://github.com/gioui/gio">gioui/gio - GitHub</a></li>
-<li><a href="https://github.com/AllenDang/giu">AllenDang/giu - GitHub</a></li>
-<li><a href="https://github.com/lxn/walk">lxn/walk - GitHub</a></li>
-<li><a href="https://github.com/gotk3/gotk3">gotk3/gotk3 - GitHub</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Zettelkasten">Zettelkasten - Wikipedia</a></li>
 </ul>
 
 
                                 <div class="notes-backlinks">
                     <h2>🔗 リンクされているノート</h2>
                     <ul>
-                                            <li><a href="/notes/rust-gui-libraries.html">Rust GUI ライブラリ一覧</a></li>
+                                            <li><a href="/notes/evergreen-notes.html">エバーグリーンノート (Evergreen Notes)</a></li>
                     
                     </ul>
                 </div>
                                 <div class="notes-meta">
                     <span>作成日: 2026-08-09</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=Go%20GUI%20%E3%83%A9%E3%82%A4%E3%83%96%E3%83%A9%E3%83%AA%E4%B8%80%E8%A6%A7&url=https%3A%2F%2F64p.org%2Fnotes%2Fgo-gui-libraries.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=Zettelkasten&url=https%3A%2F%2F64p.org%2Fnotes%2Fzettelkasten.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">
