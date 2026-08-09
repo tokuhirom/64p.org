@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>ポリンキーの「三角形の秘密」 - Notes - 64p.org</title>
+    <title>Project Amber - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/highlight.js@11/styles/github.min.css" media="(prefers-color-scheme: light)">
@@ -37,8 +37,8 @@
                                     <li><a href="/notes/raku-rakudo-perl6.html">Raku / Rakudo / Perl 6</a></li>
                                     <li><a href="/notes/project-valhalla.html">Project Valhalla</a></li>
                                     <li><a href="/notes/project-glasswing.html">Project Glasswing</a></li>
-                                    <li><a href="/notes/project-amber.html">Project Amber</a></li>
-                                    <li><a href="/notes/polinky-triangle-secret.html" class="active">ポリンキーの「三角形の秘密」</a></li>
+                                    <li><a href="/notes/project-amber.html" class="active">Project Amber</a></li>
+                                    <li><a href="/notes/polinky-triangle-secret.html">ポリンキーの「三角形の秘密」</a></li>
                                     <li><a href="/notes/openssf.html">OpenSSF (Open Source Security Foundation)</a></li>
                                     <li><a href="/notes/openrouter.html">OpenRouter</a></li>
                                     <li><a href="/notes/obsidian.html">Obsidian</a></li>
@@ -84,46 +84,44 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>ポリンキーの「三角形の秘密」</h1>
+                <h1>Project Amber</h1>
 
-<p><a class="note-tag" href="/notes/tags/pop-culture.html">#pop-culture</a></p>
+<p>OpenJDKの、プロダクティビティ志向の小規模な言語機能を探求・育成するプロジェクト。Compiler Groupがスポンサー。</p>
 
-<p>湖池屋のスナック菓子「ポリンキー」(1990年発売)にまつわる、伝説のCMキャッチコピー。</p>
+<p>構文の簡潔化・ボイラープレート削減・可読性向上など軽量な言語機能追加を担当する。JVM/オブジェクトモデルの大規模な拡張を扱う<a href="/notes/project-valhalla.html">Project Valhalla</a>とは役割が異なる。</p>
 
-<h2>「秘密」の正体</h2>
+<h2>目的</h2>
 
-<p>CMソングの歌詞は「♪ポリンキー ポリンキー 三角形の秘密はね 教えてあげないよ、ジャン♪」というもので、発売から35年以上経った今も公式には明かされていない、というのがこの話題のオチ。湖池屋自身も公式に秘密を明かさないことをずっと貫いており、これ自体が意図的なマーケティング戦略として続いている。</p>
+<p>より簡潔な構文、ボイラープレートの削減、可読性・記述性の向上を通じてJavaをより効率的で快適な言語にすること。</p>
 
-<h2>有識者による考察(非公式)</h2>
-
-<p>オモコロの記事で数学者・柳谷晃氏が考察したところによると、製造効率の観点から以下のような仮説が立てられている。</p>
+<h2>これまでに実現した主な機能</h2>
 
 <ul>
-<li>もともと穴の空いた菱形の生地を作り、60°の角度で等間隔にカット</li>
-<li>それを折りたたんで正三角形にし、真ん中だけ油を塗ってくっつかないようにして揚げる</li>
-<li>菱形から正三角形にする工程が製造コスト上もっとも効率的だったのではないか</li>
+<li><code>var</code> によるローカル変数の型推論 (Java 10)</li>
+<li>ラムダ式の暗黙的型パラメータでの <code>var</code> 使用 (Java 11)</li>
+<li>Java 12〜22にかけて、switch式の拡張、パターンマッチングの改善など多数の機能を継続的に導入</li>
 </ul>
 
-
-<p>正三角形という形自体も、3本の線対称軸を持つことから「高貴で清潔、美味しそう」な印象を与える効果があるとも言及されている。</p>
-
-<h2>最近の動き(2025年)</h2>
-
-<p>発売35周年を記念して初代CM「ポリンキー劇場」を完全再現した新CMが放送された。「ミステリーオブポリンキー」という関連動画も公開されたが、この時も公式な「秘密」は明言されていない。</p>
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://netatopi.jp/article/1000383.html">ポリンキー ポリンキー 三角形の秘密はね♪～伝説のCM「ポリンキー劇場」の最新作公開！ - ネタとぴ</a></li>
-<li><a href="https://omocoro.jp/kiji/74695/">【ポリンキー】三角形の秘密を数学者とガチで解きにいった時の話 | オモコロ</a></li>
-<li><a href="https://www.nikkan-gendai.com/articles/view/money/288246">湖池屋「ポリンキー」の"三角形のヒミツ"は解決できるか？｜日刊ゲンダイDIGITAL</a></li>
-<li><a href="https://prtimes.jp/main/html/rd/p/000001512.000003039.html">社会現象を巻き起こした伝説のCMが、令和の時代に完全再現で復活！ | 株式会社湖池屋プレスリリース</a></li>
+<li><a href="https://openjdk.org/projects/amber/">Project Amber — OpenJDK公式</a></li>
+<li><a href="https://www.baeldung.com/java-project-amber">Introduction to Project Amber | Baeldung</a></li>
+<li><a href="https://neha-sardana.medium.com/exploring-project-ambers-key-enhancements-from-java-12-to-java-22-0b290def4f9e">Exploring Project Amber&rsquo;s Key Enhancements: From Java 12 to Java 22 | Medium</a></li>
 </ul>
 
 
+                                <div class="notes-backlinks">
+                    <h2>🔗 リンクされているノート</h2>
+                    <ul>
+                                            <li><a href="/notes/project-valhalla.html">Project Valhalla</a></li>
+                    
+                    </ul>
+                </div>
                                 <div class="notes-meta">
                     <span>作成日: 2026-08-09</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=%E3%83%9D%E3%83%AA%E3%83%B3%E3%82%AD%E3%83%BC%E3%81%AE%E3%80%8C%E4%B8%89%E8%A7%92%E5%BD%A2%E3%81%AE%E7%A7%98%E5%AF%86%E3%80%8D&url=https%3A%2F%2F64p.org%2Fnotes%2Fpolinky-triangle-secret.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=Project%20Amber&url=https%3A%2F%2F64p.org%2Fnotes%2Fproject-amber.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">
