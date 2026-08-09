@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>正規表現エンジンの実装方式: バックトラッキング型とNFA/DFA型 - Notes - 64p.org</title>
+    <title>Agent Plugins - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/highlight.js@11/styles/github.min.css" media="(prefers-color-scheme: light)">
@@ -40,7 +40,7 @@
                                     <li><a href="/notes/sakpilot.html">SakPilot</a></li>
                                     <li><a href="/notes/rust-gui-libraries.html">Rust GUI ライブラリ一覧</a></li>
                                     <li><a href="/notes/roam-research.html">Roam Research</a></li>
-                                    <li><a href="/notes/regex-engine-backtracking-vs-nfa.html" class="active">正規表現エンジンの実装方式: バックトラッキング型とNFA/DFA型</a></li>
+                                    <li><a href="/notes/regex-engine-backtracking-vs-nfa.html">正規表現エンジンの実装方式: バックトラッキング型とNFA/DFA型</a></li>
                                     <li><a href="/notes/redos.html">ReDoS (Regular Expression Denial of Service)</a></li>
                                     <li><a href="/notes/raku-rakudo-perl6.html">Raku / Rakudo / Perl 6</a></li>
                                     <li><a href="/notes/project-valhalla.html">Project Valhalla</a></li>
@@ -107,7 +107,7 @@
                                     <li><a href="/notes/architecture-decision-record.html">ADR(Architecture Decision Record)</a></li>
                                     <li><a href="/notes/apache-parquet.html">Apache Parquet</a></li>
                                     <li><a href="/notes/apache-arrow.html">Apache Arrow</a></li>
-                                    <li><a href="/notes/agent-plugins.html">Agent Plugins</a></li>
+                                    <li><a href="/notes/agent-plugins.html" class="active">Agent Plugins</a></li>
                 
                 </ul>
                 <div class="notes-sidebar-footer">
@@ -118,49 +118,64 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>正規表現エンジンの実装方式: バックトラッキング型とNFA/DFA型</h1>
+                <h1>Agent Plugins</h1>
 
-<p>正規表現エンジンの実装は大きく2系統に分かれる。どちらを採用するかで、表現力とマッチング速度の保証がトレードオフになる。</p>
+<p><a class="note-tag" href="/notes/tags/llm.html">#llm</a> <a class="note-tag" href="/notes/tags/mcp.html">#mcp</a></p>
 
-<h2>バックトラッキング型</h2>
+<p>2026年8月6〜8日にVercel・OpenAI・Amazon・Cursor・Microsoftが共同で発表した、AIエージェント向けの、パッケージのオープンでベンダー中立な仕様(v1.0.0)。その後Googleもコアメンテナーとして参画し、Linux Foundation傘下のAgentic AI Foundationが承認した。</p>
 
-<p>Henry Spencerが先駆けとなり、Perl・PCRE・Pythonなどに広く採用された方式。深さ優先探索でマッチを試み、失敗したら直前の状態に戻ってやり直す（バックトラック）。後方参照(backreference)や先読み・後読み(lookaround)など表現力の高い構文を実装しやすい一方、パターンと入力の組み合わせによっては指数関数的に時間がかかる「catastrophic backtracking」（<a href="/notes/redos.html">ReDoS</a>の原因）を起こしうる。</p>
+<h2>解決する課題</h2>
 
-<h2>NFA/DFA型（Thompson construction系）</h2>
+<p>各AIエージェントクライアント(Claude、ChatGPT、Cursorなど)ごとに、Skill・MCPサーバーのディレクトリ構造やマニフェスト形式がバラバラだったため、同じツールを複数プラットフォーム向けに個別メンテナンスする「fork and drift」状態が発生していた。Agent Pluginsはこれを1つの標準パッケージ形式に統一する。</p>
 
-<p>Ken Thompsonが考案したNFA構築法（<a href="/notes/thompson-construction.html">Thompson construction</a>）に基づき、NFAをDFAに変換するか、NFAを並行シミュレートすることでマッチングを行う方式。RE2、Rustの<code>regex</code>クレート、Goの<code>regexp</code>パッケージなどが採用している。後方参照や汎用lookaroundは表現できないというトレードオフと引き換えに、入力サイズに対して線形時間でのマッチングを保証できる（ReDoSが原理的に起こらない）。</p>
+<h2>パッケージの中身</h2>
 
-<h2>Perl 5とRakuの場合</h2>
+<p>Next.jsに着想を得た「ファイルシステム＝設定」のアプローチを採用している。</p>
 
 <ul>
-<li><strong>Perl 5</strong>: バックトラッキング型。表現力は高いが、書き方次第でReDoSの温床になりうる。</li>
-<li><strong><a href="/notes/raku-rakudo-perl6.html">Raku</a></strong>: 文法的にはPerlの血統を継ぐバックトラッキング型のエンジンだが、grammarの<code>token</code>/<code>rule</code>宣言子は暗黙に<code>:ratchet</code>(<code>:r</code>)修飾子を持ち、一度マッチした箇所へのバックトラックを禁止する。フルバックトラック可能な<code>regex</code>宣言子と、バックトラックなしで高速・失敗も早い<code>token</code>/<code>rule</code>を書き分けられる設計になっており、Perl 5と比べてバックトラック起因の性能問題を抑えやすい。</li>
+<li><strong><code>plugin.json</code></strong>: schemaとnameだけを含む最小限のコアマニフェスト</li>
+<li><strong><code>skills/</code>ディレクトリ</strong>: 再利用可能なタスク指示・リソース(Agent Skills)</li>
+<li><strong><code>mcp.json</code></strong>: MCPサーバーの接続設定(transport typeを明示)</li>
+<li><strong><code>com.example.client/</code>のような拡張ネームスペース</strong>: 特定クライアント固有の非ポータブルな追加設定用</li>
 </ul>
 
 
-<p><a class="note-tag" href="/notes/tags/regex.html">#regex</a> <a class="note-tag" href="/notes/tags/raku.html">#raku</a> <a class="note-tag" href="/notes/tags/perl.html">#perl</a></p>
+<h2>対応クライアント</h2>
+
+<p>VS Code, Cursor, GitHub Copilot, ChatGPT, Codex, Kiroの6クライアントが対応表明。Claude/AnthropicはこのコンソーシアムのメンテナーにもGoogle同様の対応クライアントにも名前が挙がっていない(Claude Codeは既に独自のplugin/skill機構を持っている)。</p>
+
+<h2>あえて定義していないこと</h2>
+
+<p>v1はパッケージ「形式」だけに範囲を絞っており、以下は各クライアントの裁量に委ねられている。</p>
+
+<ul>
+<li>インストール方法・配布プロトコル</li>
+<li>パーミッションモデル・サンドボックス化</li>
+<li>信頼検証・セキュリティ</li>
+</ul>
+
+
+<h2>業界内の議論</h2>
+
+<p>「skillsにMCPを付随させるべきか、MCPサーバー側にskillsを内包させるべきか(Skills Over MCP)」という代替アプローチも存在し、業界としてまだ一つのやり方に収束していない、という指摘もある。</p>
+
+<h2>補足</h2>
+
+<p>発表からまだ数日しか経っていない速報的な内容のため、今後仕様や対応クライアントの状況が変わる可能性がある。</p>
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://news.ycombinator.com/item?id=10210133">Perl&rsquo;s regex engine uses a non-deterministic finite automata [NFA] - Hacker News</a></li>
-<li><a href="https://github.com/Raku/old-design-docs/blob/master/S05-regex.pod">old-design-docs/S05-regex.pod at master · Raku/old-design-docs</a></li>
-<li><a href="https://docs.raku.org/language/grammars">Grammars | Raku Documentation</a></li>
+<li><a href="https://developers.googleblog.com/agent-plugins-package-your-skills-tools-and-more/">Agent Plugins package your skills, tools, and more - Google Developers Blog</a></li>
+<li><a href="https://cybernews.com/ai-news/agent-plugin-standard-openai-google-amazon/">&ldquo;Agent Plugins&rdquo; standard might make devs' lives easier - Cybernews</a></li>
+<li><a href="https://www.devclass.com/devops/2026/08/08/ai-titans-to-tidy-agent-frontier-with-plugin-prescription/5285044">AI titans to tidy agent frontier with plugin prescription - DevClass</a></li>
+<li><a href="https://finance.biggo.com/news/287756f7-b7bb-4921-8ed7-85c509161fa6">Amazon, Microsoft, OpenAI Ship Agent Plugins 1.0 - BigGo Finance</a></li>
 </ul>
 
 
-                                <div class="notes-backlinks">
-                    <h2>🔗 リンクされているノート</h2>
-                    <ul>
-                                            <li><a href="/notes/raku-rakudo-perl6.html">Raku / Rakudo / Perl 6</a></li>
-                                            <li><a href="/notes/redos.html">ReDoS (Regular Expression Denial of Service)</a></li>
-                                            <li><a href="/notes/thompson-construction.html">Thompson construction</a></li>
-                    
-                    </ul>
-                </div>
                                 <div class="notes-meta">
                     <span>作成日: 2026-08-09</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=%E6%AD%A3%E8%A6%8F%E8%A1%A8%E7%8F%BE%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%B3%E3%81%AE%E5%AE%9F%E8%A3%85%E6%96%B9%E5%BC%8F%3A%20%E3%83%90%E3%83%83%E3%82%AF%E3%83%88%E3%83%A9%E3%83%83%E3%82%AD%E3%83%B3%E3%82%B0%E5%9E%8B%E3%81%A8NFA%2FDFA%E5%9E%8B&url=https%3A%2F%2F64p.org%2Fnotes%2Fregex-engine-backtracking-vs-nfa.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=Agent%20Plugins&url=https%3A%2F%2F64p.org%2Fnotes%2Fagent-plugins.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">
