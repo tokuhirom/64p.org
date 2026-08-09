@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>HarmonyOS PC版（鴻蒙電脳） - Notes - 64p.org</title>
+    <title>BPF (Berkeley Packet Filter) - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/highlight.js@11/styles/github.min.css" media="(prefers-color-scheme: light)">
@@ -34,7 +34,7 @@
                             <li><a href="/notes/lefthook.html">lefthook</a></li>
                             <li><a href="/notes/kyoka-vs-tanka.html">狂歌と短歌の違い</a></li>
                             <li><a href="/notes/harmonyos.html">HarmonyOSとは</a></li>
-                            <li><a href="/notes/harmonyos-pc.html" class="active">HarmonyOS PC版（鴻蒙電脳）</a></li>
+                            <li><a href="/notes/harmonyos-pc.html">HarmonyOS PC版（鴻蒙電脳）</a></li>
                             <li><a href="/notes/hacker-news.html">Hacker News (HN) について</a></li>
                             <li><a href="/notes/gpui.html">GPUI</a></li>
                             <li><a href="/notes/gpt-5-6-sol-terra-luna.html">GPT-5.6のSol / Terra / Lunaの違い</a></li>
@@ -46,7 +46,7 @@
                             <li><a href="/notes/dangouzaka-yurai.html">談合坂の地名由来</a></li>
                             <li><a href="/notes/claude-model-tiers.html">Claudeのモデル階層(Opus / Sonnet / Haiku / Fable)の違い</a></li>
                             <li><a href="/notes/carnivorous-plants.html">食虫植物</a></li>
-                            <li><a href="/notes/bpf.html">BPF (Berkeley Packet Filter)</a></li>
+                            <li><a href="/notes/bpf.html" class="active">BPF (Berkeley Packet Filter)</a></li>
             
             </ul>
             <div class="notes-sidebar-footer">
@@ -56,59 +56,59 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>HarmonyOS PC版（鴻蒙電脳）</h1>
+                <h1>BPF (Berkeley Packet Filter)</h1>
 
-<p><a href="/notes/harmonyos.html">HarmonyOSとは</a>のスマホ版で進んでいる脱Android・脱Google路線を、そのままPCに持ち込んだHuaweiの独自OS搭載ノートPCシリーズ。</p>
+<p>OSカーネル内でパケットのフィルタリング・キャプチャを行うための仕組み。もともとは「小さな仮想マシン」として設計され、現在は拡張版のeBPFがカーネル拡張全般に使われる巨大なエコシステムに育っている。 <a class="note-tag" href="/notes/tags/networking.html">#networking</a> <a class="note-tag" href="/notes/tags/linux.html">#linux</a> <a class="note-tag" href="/notes/tags/kernel.html">#kernel</a></p>
 
-<h2>概要</h2>
+<h2>歴史</h2>
 
 <ul>
-<li>2025年5月、成都でHarmonyOS 5搭載のPCシリーズとして発表された。</li>
-<li>ラインナップは、オフィス向けの「MateBook Pro」と、折りたたみ画面の「MateBook Fold」の2系統。</li>
-<li>UIはWindowsに近いレイアウトになっており、乗り換えの学習コストを下げる作りになっている。</li>
+<li>1992年12月、Lawrence Berkeley LaboratoryのSteven McCanneとVan Jacobsonが開発</li>
+<li>論文 &ldquo;The BSD Packet Filter: A New Architecture for User-level Packet Capture&rdquo; が元になっている</li>
 </ul>
 
 
-<h2>x86アプリ互換</h2>
-
-<p>「Oseasy」という仮想化レイヤーを内蔵し、x86アプリの9割程度を動かせるとされる。体感としてはARM版Windows PCに近いという評もある。</p>
-
-<h2>インストール制限</h2>
-
-<p>既存PCへの後乗せインストールはできない。新規発売機に工場出荷時からプリインストールされる形でのみ提供され、ISOイメージなどは配布されていない。</p>
-
-<h2>MateBook Fold 非凡大師（Ultimate Design）</h2>
-
-<p>シリーズのフラッグシップ機。</p>
+<h2>仕組み(classic BPF)</h2>
 
 <ul>
-<li>18インチの折りたたみOLEDディスプレイ。展開すると大画面ワークスペース、折りたたむと13インチ相当のコンパクト機になる。</li>
-<li>独自プロセッサ「Kirin X90 Plus」搭載。重量1.16kg。</li>
-<li>新型「HUAWEI M-Pen 3」スタイラスに対応し、折りたたみ時は分割画面での筆記、展開時は大画面での創作が可能。</li>
-<li><a href="/notes/harmonyos.html">HarmonyOSとは</a>の「多デバイス協同」機能（スマホ・タブレットとのシームレス連携）を全面に押し出したハイエンド機。価格は24,999元（税別）から。</li>
+<li>ユーザー空間のプロセスが「どのパケットを受け取りたいか」を指定するフィルタプログラムを、カーネル内の小さな仮想マシン上で実行する</li>
+<li>アキュムレータ1個・インデックスレジスタ1個を持つシンプルな32bit仮想マシン</li>
+<li><code>tcpdump</code>や<a href="/notes/ngrep.html">ngrep (network grep)</a>の<code>port 80</code>のようなフィルタ構文はこのBPFにコンパイルされて実行される</li>
 </ul>
 
+
+<h2>eBPF (extended BPF)</h2>
+
+<ul>
+<li>Linux 3.18(2014年)以降で導入された拡張版。64bitレジスタを10個持ち、パケットフィルタ以外の汎用的な用途にも対応</li>
+<li>カーネルソースコードを変更せず、<strong>検証器(Verifier)</strong>が「無限ループしない」「メモリ外アクセスがない」ことを静的に検証した上で、JITコンパイルしてネイティブ並みの速度で安全に実行する</li>
+<li>用途はネットワーキング(Ciliumの高性能ロードバランシング)、オブザーバビリティ(<code>bpftrace</code>、<code>bcc</code>による低オーバーヘッドのトレーシング)、セキュリティ(実行時監視)など多岐にわたる</li>
+<li>Microsoftも Windows へのeBPFサポートを進めており、Linux固有の技術ではなくなりつつある</li>
+</ul>
+
+
+<h2>まとめ</h2>
+
+<p>「BPF」と言った場合、文脈によって①<code>tcpdump</code>/ngrepのフィルタ構文の元になった古典的なパケットフィルタ仮想マシン(cBPF)、②カーネル拡張基盤として肥大化した現代のeBPF、のどちらを指すか変わってくる、という点が押さえどころ。</p>
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://consumer.huawei.com/cn/harmonyos-computer/harmonyos-5/">鸿蒙电脑 - HarmonyOS 5（Huawei公式）</a></li>
-<li><a href="https://consumer.huawei.com/cn/harmonyos-computer/matebook-fold-ultimate-design/">HUAWEI MateBook Fold 非凡大師（Huawei公式）</a></li>
-<li><a href="https://technews.tw/2025/05/20/harmonyos-pc/">華為掰了 Windows，發表自研電腦作業系統跨出關鍵一步 | TechNews</a></li>
-<li><a href="https://unwire.hk/2025/05/11/harmonyos-pc/software/">鴻蒙 PC 版不能裝於 Windows 電腦 只限預載新機使用</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Berkeley_Packet_Filter">Berkeley Packet Filter - Wikipedia</a></li>
+<li><a href="https://ebpf.io/what-is-ebpf/">What is eBPF? - ebpf.io</a></li>
 </ul>
 
 
                                 <div class="notes-backlinks">
                     <h2>🔗 リンクされているノート</h2>
                     <ul>
-                                            <li><a href="/notes/harmonyos.html">HarmonyOSとは</a></li>
+                                            <li><a href="/notes/ngrep.html">ngrep (network grep)</a></li>
                     
                     </ul>
                 </div>
                                 <div class="notes-meta">
                     <span>作成日: 2026-08-09</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=HarmonyOS%20PC%E7%89%88%EF%BC%88%E9%B4%BB%E8%92%99%E9%9B%BB%E8%84%B3%EF%BC%89&url=https%3A%2F%2F64p.org%2Fnotes%2Fharmonyos-pc.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=BPF%20%28Berkeley%20Packet%20Filter%29&url=https%3A%2F%2F64p.org%2Fnotes%2Fbpf.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">

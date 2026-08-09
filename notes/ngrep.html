@@ -46,6 +46,7 @@
                             <li><a href="/notes/dangouzaka-yurai.html">談合坂の地名由来</a></li>
                             <li><a href="/notes/claude-model-tiers.html">Claudeのモデル階層(Opus / Sonnet / Haiku / Fable)の違い</a></li>
                             <li><a href="/notes/carnivorous-plants.html">食虫植物</a></li>
+                            <li><a href="/notes/bpf.html">BPF (Berkeley Packet Filter)</a></li>
             
             </ul>
             <div class="notes-sidebar-footer">
@@ -65,7 +66,7 @@
 <li>名前の通り「grep + network」。pcapライブラリでパケットをキャプチャし、GNU regexライブラリで正規表現マッチングを行う</li>
 <li><code>tcpdump</code>（パケットキャプチャ）と<code>grep</code>（テキスト検索）の中間に位置するツール、というのがよくある説明</li>
 <li>TCP/UDP/ICMPを、Ethernet/PPP/SLIP/FDDI/nullインターフェース越しに解析可能</li>
-<li><code>tcpdump</code>や<code>snoop</code>と同様のBPFフィルタ構文が使える</li>
+<li><code>tcpdump</code>や<code>snoop</code>と同様の<a href="/notes/bpf.html">BPF</a>フィルタ構文が使える</li>
 </ul>
 
 
@@ -148,7 +149,7 @@ ngrep -I /tmp/dns.dump
 </table>
 
 
-<p>フィルタ部分(<code>port 80</code>など)は<code>tcpdump</code>と同じBPF構文が使える。</p>
+<p>フィルタ部分(<code>port 80</code>など)は<code>tcpdump</code>と同じ<a href="/notes/bpf.html">BPF</a>構文が使える。</p>
 
 <h2>出典</h2>
 
@@ -159,6 +160,13 @@ ngrep -I /tmp/dns.dump
 </ul>
 
 
+                                <div class="notes-backlinks">
+                    <h2>🔗 リンクされているノート</h2>
+                    <ul>
+                                            <li><a href="/notes/bpf.html">BPF (Berkeley Packet Filter)</a></li>
+                    
+                    </ul>
+                </div>
                                 <div class="notes-meta">
                     <span>作成日: 2026-08-09</span>
                     <a class="share-x" href="https://twitter.com/intent/tweet?text=ngrep%20%28network%20grep%29&url=https%3A%2F%2F64p.org%2Fnotes%2Fngrep.html" target="_blank" rel="noopener">𝕏 で共有</a>
