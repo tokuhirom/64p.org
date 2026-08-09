@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>Tableau - Notes - 64p.org</title>
+    <title>Microsoft Edge、拡張機能をManifest V3へ完全移行 - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/highlight.js@11/styles/github.min.css" media="(prefers-color-scheme: light)">
@@ -21,7 +21,7 @@
             <ul class="notes-nav">
                             <li><a href="/notes/welcome.html">Notesコーナーへようこそ</a></li>
                             <li><a href="/notes/wails.html">Wails</a></li>
-                            <li><a href="/notes/tableau.html" class="active">Tableau</a></li>
+                            <li><a href="/notes/tableau.html">Tableau</a></li>
                             <li><a href="/notes/sakpilot.html">SakPilot</a></li>
                             <li><a href="/notes/raku-rakudo-perl6.html">Raku / Rakudo / Perl 6</a></li>
                             <li><a href="/notes/project-glasswing.html">Project Glasswing</a></li>
@@ -33,7 +33,7 @@
                             <li><a href="/notes/harmonyos-pc.html">HarmonyOS PC版（鴻蒙電脳）</a></li>
                             <li><a href="/notes/gpui.html">GPUI</a></li>
                             <li><a href="/notes/gpt-5-6-sol-terra-luna.html">GPT-5.6のSol / Terra / Lunaの違い</a></li>
-                            <li><a href="/notes/edge-manifest-v3.html">Microsoft Edge、拡張機能をManifest V3へ完全移行</a></li>
+                            <li><a href="/notes/edge-manifest-v3.html" class="active">Microsoft Edge、拡張機能をManifest V3へ完全移行</a></li>
                             <li><a href="/notes/dangouzaka-yurai.html">談合坂の地名由来</a></li>
                             <li><a href="/notes/claude-model-tiers.html">Claudeのモデル階層(Opus / Sonnet / Haiku / Fable)の違い</a></li>
                             <li><a href="/notes/carnivorous-plants.html">食虫植物</a></li>
@@ -46,47 +46,44 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>Tableau</h1>
+                <h1>Microsoft Edge、拡張機能をManifest V3へ完全移行</h1>
 
-<p><a class="note-tag" href="/notes/tags/bi.html">#bi</a> <a class="note-tag" href="/notes/tags/dataviz.html">#dataviz</a></p>
+<p><a class="note-tag" href="/notes/tags/browser.html">#browser</a> <a class="note-tag" href="/notes/tags/extensions.html">#extensions</a></p>
 
-<p>Stanford大学のスピンオフとして2003年1月に、Chris Stolte、Christian Chabot、Pat Hanrahanの3人が創業したBI(ビジネスインテリジェンス)・データ可視化ツール。ドラッグ&amp;ドロップ操作だけで直感的にデータを分析・グラフ化でき、専門知識がなくてもインタラクティブなダッシュボードを作れる点で広く使われている。</p>
+<p><a href="https://blogs.windows.com/msedgedev/2026/08/07/moving-the-microsoft-edge-extensions-ecosystem-forward-with-manifest-version-3/">Edgeチームのブログ記事</a>(2026年8月7日付)で、Edge拡張機能のManifest V2(MV2)を廃止しManifest V3(MV3)へ完全移行する方針とスケジュールが発表された。</p>
 
-<h2>中核技術</h2>
-
-<p>独自特許技術の<strong>VizQL</strong>(Visualization Query Language)。1999〜2002年の学術研究をもとに開発され、ドラッグ&amp;ドロップ操作を裏側でデータクエリに変換し、その結果をインタラクティブなグラフとして描画する仕組み。</p>
-
-<h2>沿革</h2>
-
-<p>2013年5月にニューヨーク証券取引所へ上場(ティッカー: DATA)。2019年6月にSalesforceが買収を発表し、同年8月に約157億ドルで買収完了(当時Salesforce史上最大の買収)。以降Salesforceの完全子会社として、独立ブランドのまま運営が続いている。</p>
-
-<h2>2026年現在の主な機能</h2>
+<h2>MV2廃止のスケジュール</h2>
 
 <ul>
-<li><strong>Tableau Pulse</strong>: AIがユーザーごとに重要な指標を自動要約し、SlackやメールにKPIの変化を配信する。</li>
-<li><strong>Tableau Agent</strong>: 会話型アシスタントとしてデータ探索・可視化作成・インサイト発見を支援する。</li>
-<li>エディションはStandard/Enterprise/Cloud+/Tableau+の4段階。Tableau Cloudの料金目安はViewer 1,800円/Explorer 5,040円/Creator 9,000円(1ユーザー月額、年間契約)。</li>
+<li><strong>2026年8月</strong>: 一般ユーザー向けにMV2廃止を開始。ユーザーには段階的に通知され、MV3版への移行を促す。</li>
+<li><strong>2026年末</strong>: 一般ユーザー向け移行を完了させる目標。</li>
+<li><strong>2027年初頭</strong>: エンタープライズ環境での廃止を開始。</li>
 </ul>
 
 
-<h2>位置づけ</h2>
+<h2>エコシステムの現状</h2>
 
-<p>Power BI(Microsoft)、Looker Studio(Google)などと並ぶ主要BIツールの一つで、全社的なデータ分析やアドホック分析を重視する中〜大企業に向いているとされる。</p>
+<p>利用数上位のMV2拡張機能のうち95%以上がすでにMV3へ移行済み。意味のある利用数を持つMV2拡張は58個のみで、そのうちMV3版が未提供なのはわずか3個。</p>
+
+<h2>開発者への呼びかけ</h2>
+
+<p>未移行の開発者はMicrosoft Partner Center経由で速やかにアップデートを提出するよう求められている。Edgeチームは移行支援も提供予定。</p>
+
+<h2>Chromeとの比較</h2>
+
+<p>Chromeは一足先にMV2廃止を進めており、2024年6月から警告表示を開始、同年10月からstable版でMV2拡張をデフォルト無効化、2026年8月31日にChromeウェブストアから残存MV2拡張を完全削除する予定。EdgeはChromiumベースであるため、概ねこの流れを追う形になっている。</p>
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://www.tableau.com/why-tableau/what-is-tableau">What Is Tableau? - Tableau</a></li>
-<li><a href="https://www.salesforce.com/news/press-releases/2019/08/01/salesforce-completes-acquisition-of-tableau/">Salesforce Completes Acquisition of Tableau - Salesforce</a></li>
-<li><a href="https://www.tableau.com/blog/analyzing-history-tableau-innovation">Analyzing the history of Tableau innovation</a></li>
-<li><a href="https://www.sora-michi.co.jp/blog/7329">Tableauとは？できること・料金・Power BI/Looker Studioとの違い【2026年最新】</a></li>
-<li><a href="https://www.principle-c.com/column/bi-tools-comparison-ai-2026/">【2026年最新】AI時代のBIツール選び - Tableau・Power BI</a></li>
+<li><a href="https://blogs.windows.com/msedgedev/2026/08/07/moving-the-microsoft-edge-extensions-ecosystem-forward-with-manifest-version-3/">Moving the Microsoft Edge extensions ecosystem forward with Manifest Version 3</a></li>
+<li><a href="https://developer.chrome.com/docs/extensions/develop/migrate/mv2-deprecation-timeline">Manifest V2 support timeline - Chrome for Developers</a></li>
 </ul>
 
 
                                 <div class="notes-meta">
                     <span>作成日: 2026-08-09</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=Tableau&url=https%3A%2F%2F64p.org%2Fnotes%2Ftableau.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=Microsoft%20Edge%E3%80%81%E6%8B%A1%E5%BC%B5%E6%A9%9F%E8%83%BD%E3%82%92Manifest%20V3%E3%81%B8%E5%AE%8C%E5%85%A8%E7%A7%BB%E8%A1%8C&url=https%3A%2F%2F64p.org%2Fnotes%2Fedge-manifest-v3.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">
