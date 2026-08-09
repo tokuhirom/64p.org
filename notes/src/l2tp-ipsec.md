@@ -21,6 +21,11 @@ L2TP単体では通信内容が平文で流れるため、実運用ではIPsec(�
 
 ## 弱点と後継
 
-NATトラバーサル(NAT越え)がやや不安定になりがちで、ファイアウォールでUDPポートがブロックされると接続できないことがある。近年はより高速・シンプルな #wireguard や、TCPも使える #openvpn 、IKEv2/IPsecへの移行が進んでいる。
+NATトラバーサル(NAT越え)がやや不安定になりがちで、ファイアウォールでUDPポートがブロックされると接続できないことがある。近年はより高速・シンプルな[[wireguard|WireGuard]]や、TCPも使える #openvpn 、IKEv2/IPsecへの移行が進んでいる。
+
+## 出典
+
+- [Determining the Correct Ports for IPSec/L2TP | Baeldung on Linux](https://www.baeldung.com/linux/ipsec-lt2p-ports)
+- [What are Ports Used for IPsec? - zenarmor.com](https://www.zenarmor.com/docs/network-basics/what-are-ports-used-for-ipsec)
 
 #vpn #ipsec #networking
