@@ -18,7 +18,7 @@ updated: 2026-08-09
 
 ## 現代への影響
 
-1980年代、このカードファイルの概念は「ハイパーテキスト」ソフトウェアのメタファーとなり、その後Wikiの発明にも影響を与えた。現代のデジタルノートツール([[obsidian|Obsidian]]、Roam Research、The Archive、Zettlrなど)の多くが、双方向リンクという形でZettelkastenの原則を実装している。
+1980年代、このカードファイルの概念は「ハイパーテキスト」ソフトウェアのメタファーとなり、その後Wikiの発明にも影響を与えた。現代のデジタルノートツール([[obsidian|Obsidian]]、[[roam-research|Roam Research]]、The Archive、Zettlrなど)の多くが、双方向リンクという形でZettelkastenの原則を実装している。
 
 ## 関連する現代の概念
 
