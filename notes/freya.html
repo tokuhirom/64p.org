@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>Microsoft Edge、拡張機能をManifest V3へ完全移行 - Notes - 64p.org</title>
+    <title>Freya (freyaui.dev) — Rust製クロスプラットフォームGUIライブラリ - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/highlight.js@11/styles/github.min.css" media="(prefers-color-scheme: light)">
@@ -34,8 +34,8 @@
                             <li><a href="/notes/hacker-news.html">Hacker News (HN) について</a></li>
                             <li><a href="/notes/gpui.html">GPUI</a></li>
                             <li><a href="/notes/gpt-5-6-sol-terra-luna.html">GPT-5.6のSol / Terra / Lunaの違い</a></li>
-                            <li><a href="/notes/freya.html">Freya (freyaui.dev) — Rust製クロスプラットフォームGUIライブラリ</a></li>
-                            <li><a href="/notes/edge-manifest-v3.html" class="active">Microsoft Edge、拡張機能をManifest V3へ完全移行</a></li>
+                            <li><a href="/notes/freya.html" class="active">Freya (freyaui.dev) — Rust製クロスプラットフォームGUIライブラリ</a></li>
+                            <li><a href="/notes/edge-manifest-v3.html">Microsoft Edge、拡張機能をManifest V3へ完全移行</a></li>
                             <li><a href="/notes/dangouzaka-yurai.html">談合坂の地名由来</a></li>
                             <li><a href="/notes/claude-model-tiers.html">Claudeのモデル階層(Opus / Sonnet / Haiku / Fable)の違い</a></li>
                             <li><a href="/notes/carnivorous-plants.html">食虫植物</a></li>
@@ -48,44 +48,57 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>Microsoft Edge、拡張機能をManifest V3へ完全移行</h1>
+                <h1>Freya (freyaui.dev) — Rust製クロスプラットフォームGUIライブラリ</h1>
 
-<p><a class="note-tag" href="/notes/tags/browser.html">#browser</a> <a class="note-tag" href="/notes/tags/extensions.html">#extensions</a></p>
+<p>Rustでクロスプラットフォームのネイティブ（非Web）GUIアプリを作れるライブラリ。 <a class="note-tag" href="/notes/tags/rust.html">#rust</a> <a class="note-tag" href="/notes/tags/gui.html">#gui</a></p>
 
-<p><a href="https://blogs.windows.com/msedgedev/2026/08/07/moving-the-microsoft-edge-extensions-ecosystem-forward-with-manifest-version-3/">Edgeチームのブログ記事</a>(2026年8月7日付)で、Edge拡張機能のManifest V2(MV2)を廃止しManifest V3(MV3)へ完全移行する方針とスケジュールが発表された。</p>
-
-<h2>MV2廃止のスケジュール</h2>
+<h2>概要</h2>
 
 <ul>
-<li><strong>2026年8月</strong>: 一般ユーザー向けにMV2廃止を開始。ユーザーには段階的に通知され、MV3版への移行を促す。</li>
-<li><strong>2026年末</strong>: 一般ユーザー向け移行を完了させる目標。</li>
-<li><strong>2027年初頭</strong>: エンタープライズ環境での廃止を開始。</li>
+<li>公式サイト: <a href="https://freyaui.dev/">https://freyaui.dev/</a></li>
+<li>GitHub: <a href="https://github.com/marc2332/freya">https://github.com/marc2332/freya</a> （約3,000スター、活発に開発中）</li>
+<li>作者: marc2332 (Marc Espín)</li>
+<li>ライセンス: MIT</li>
+<li>レンダリングエンジンは <strong>Skia</strong></li>
 </ul>
 
 
-<h2>エコシステムの現状</h2>
+<h2>Dioxusとの関係</h2>
 
-<p>利用数上位のMV2拡張機能のうち95%以上がすでにMV3へ移行済み。意味のある利用数を持つMV2拡張は58個のみで、そのうちMV3版が未提供なのはわずか3個。</p>
+<ul>
+<li>v0.1〜0.3は <a href="https://dioxuslabs.com/">Dioxus</a> のコア機能をベースに実装されていた</li>
+<li>v0.4以降は独自のリアクティブコアに置き換え、Dioxusから部分的にインスパイアされつつも独立した実装になっている</li>
+</ul>
 
-<h2>開発者への呼びかけ</h2>
 
-<p>未移行の開発者はMicrosoft Partner Center経由で速やかにアップデートを提出するよう求められている。Edgeチームは移行支援も提供予定。</p>
+<h2>主な機能</h2>
 
-<h2>Chromeとの比較</h2>
+<ul>
+<li>Button、Switch、Slider、Calendar、ColorPickerなど豊富な組み込みコンポーネント</li>
+<li>色・サイズ・位置などに対応したスムーズなアニメーション</li>
+<li>カーソル管理・テキスト選択付きのリッチテキスト編集</li>
+<li>Ropeベースの編集とtree-sitterによるシンタックスハイライトを備えたコードエディタ</li>
+<li>マルチページ対応のルーティング</li>
+<li>WebView埋め込み、PTY対応のターミナル機能</li>
+<li>コンポーネントをリアルタイム検査できる開発者ツール</li>
+</ul>
 
-<p>Chromeは一足先にMV2廃止を進めており、2024年6月から警告表示を開始、同年10月からstable版でMV2拡張をデフォルト無効化、2026年8月31日にChromeウェブストアから残存MV2拡張を完全削除する予定。EdgeはChromiumベースであるため、概ねこの流れを追う形になっている。</p>
+
+<h2>所感</h2>
+
+<p>同じRust製ネイティブGUIという文脈では <a href="/notes/gpui.html">GPUI</a>（Zed製、GPU駆動）とも比較対象になる。Freyaはコードエディタ・ターミナル・WebView埋め込みなど「開発者向けツールを作る」ための機能セットが特に手厚く、VSCode的なアプリケーションを作る用途に向いていそうな作り。</p>
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://blogs.windows.com/msedgedev/2026/08/07/moving-the-microsoft-edge-extensions-ecosystem-forward-with-manifest-version-3/">Moving the Microsoft Edge extensions ecosystem forward with Manifest Version 3</a></li>
-<li><a href="https://developer.chrome.com/docs/extensions/develop/migrate/mv2-deprecation-timeline">Manifest V2 support timeline - Chrome for Developers</a></li>
+<li><a href="https://freyaui.dev/">Freya - GUI Library for Rust</a></li>
+<li><a href="https://github.com/marc2332/freya">GitHub - marc2332/freya</a></li>
 </ul>
 
 
                                 <div class="notes-meta">
                     <span>作成日: 2026-08-09</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=Microsoft%20Edge%E3%80%81%E6%8B%A1%E5%BC%B5%E6%A9%9F%E8%83%BD%E3%82%92Manifest%20V3%E3%81%B8%E5%AE%8C%E5%85%A8%E7%A7%BB%E8%A1%8C&url=https%3A%2F%2F64p.org%2Fnotes%2Fedge-manifest-v3.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=Freya%20%28freyaui.dev%29%20%E2%80%94%20Rust%E8%A3%BD%E3%82%AF%E3%83%AD%E3%82%B9%E3%83%97%E3%83%A9%E3%83%83%E3%83%88%E3%83%95%E3%82%A9%E3%83%BC%E3%83%A0GUI%E3%83%A9%E3%82%A4%E3%83%96%E3%83%A9%E3%83%AA&url=https%3A%2F%2F64p.org%2Fnotes%2Ffreya.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">
