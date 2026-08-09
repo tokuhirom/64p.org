@@ -15,6 +15,7 @@
                 <a href="/notes/">📝 Notes</a>
                 <button class="theme-toggle" title="テーマ切替" aria-label="テーマ切替">◐</button>
             </div>
+            <div class="notes-sidebar-byline">by <a href="/">tokuhirom</a></div>
             <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
             <ul class="notes-nav">
                             <li><a href="/notes/welcome.html" class="active">Notesコーナーへようこそ</a></li>
@@ -61,7 +62,10 @@ find . -name '*.md' | xargs wc -l
 <pre><code class="sh">perl regen-index.pl
 </code></pre>
 
-                <div class="notes-meta">更新日: 2026-08-09</div>
+                <div class="notes-meta">
+                    更新日: 2026-08-09
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=Notes%E3%82%B3%E3%83%BC%E3%83%8A%E3%83%BC%E3%81%B8%E3%82%88%E3%81%86%E3%81%93%E3%81%9D&url=https%3A%2F%2F64p.org%2Fnotes%2Fwelcome.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                </div>
             </article>
             <footer class="notes-footer">
                 <a href="https://github.com/tokuhirom">tokuhirom</a> による調査メモです。

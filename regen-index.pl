@@ -152,6 +152,7 @@ sub regen {
             title => $title,
             body  => $html,
             link  => $link,
+            url   => "https://64p.org$link",
             file  => $file,
             mtime => scalar(localtime(stat($src)->mtime)),
         };

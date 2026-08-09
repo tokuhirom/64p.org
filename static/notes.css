@@ -105,6 +105,21 @@ body {
     color: var(--text-normal);
 }
 
+.notes-sidebar-byline {
+    padding: 0 6px;
+    margin: -8px 0 12px;
+    font-size: 12px;
+    color: var(--text-faint);
+}
+
+.notes-sidebar-byline a {
+    color: var(--text-faint);
+}
+
+.notes-sidebar-byline a:hover {
+    color: var(--link);
+}
+
 .notes-search {
     width: 100%;
     padding: 6px 10px;
@@ -258,9 +273,30 @@ body {
 }
 
 .notes-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
     color: var(--text-faint);
     font-size: 13px;
     margin-bottom: 32px;
+}
+
+.share-x {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 12px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    color: var(--text-normal) !important;
+    text-decoration: none !important;
+    font-size: 13px;
+}
+
+.share-x:hover {
+    background: var(--bg-hover);
+    border-color: var(--text-faint);
 }
 
 .notes-footer {
