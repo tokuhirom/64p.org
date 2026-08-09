@@ -26,7 +26,7 @@ Homebrew (macOS、`brew install tokuhirom/tap/sakpilot`) およびGitHub Release
 
 ## 開発体制の特徴
 
-実クラウドに接続せずに動作確認できる`mise run demo`コマンドがあり、sacloud-sdk-go同梱のIaaS fakeドライバとsakumockのシードデータでGUIをブラウザから触って確認できる仕組みがある。E2Eテスト戦略はADR(`docs/adr/0001-e2e-testing-strategy.md`)として記録されている。
+実クラウドに接続せずに動作確認できる`mise run demo`コマンドがあり、sacloud-sdk-go同梱のIaaS fakeドライバとsakumockのシードデータでGUIをブラウザから触って確認できる仕組みがある。E2Eテスト戦略は[[architecture-decision-record|ADR]](`docs/adr/0001-e2e-testing-strategy.md`)として記録されている。
 
 ## 出典
 

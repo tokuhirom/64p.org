@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>lefthook - Notes - 64p.org</title>
+    <title>ADR(Architecture Decision Record) - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/highlight.js@11/styles/github.min.css" media="(prefers-color-scheme: light)">
@@ -43,7 +43,7 @@
                                     <li><a href="/notes/miidera-gomimushi.html">ミイデラゴミムシ</a></li>
                                     <li><a href="/notes/metasploit.html">Metasploit</a></li>
                                     <li><a href="/notes/matsubokkuri-gogen.html">松ぼっくりの「ぼっくり」の語源</a></li>
-                                    <li><a href="/notes/lefthook.html" class="active">lefthook</a></li>
+                                    <li><a href="/notes/lefthook.html">lefthook</a></li>
                                     <li><a href="/notes/kyoka-vs-tanka.html">狂歌と短歌の違い</a></li>
                                     <li><a href="/notes/kotchigai-shoukan.html">間違い召喚！ 追い出されたけど上位互換スキルでらくらく生活</a></li>
                                     <li><a href="/notes/kali-nethunter.html">Kali NetHunter</a></li>
@@ -66,7 +66,7 @@
                                     <li><a href="/notes/carnivorous-plants.html">食虫植物</a></li>
                                     <li><a href="/notes/burp-suite.html">Burp Suite</a></li>
                                     <li><a href="/notes/bpf.html">BPF (Berkeley Packet Filter)</a></li>
-                                    <li><a href="/notes/architecture-decision-record.html">ADR(Architecture Decision Record)</a></li>
+                                    <li><a href="/notes/architecture-decision-record.html" class="active">ADR(Architecture Decision Record)</a></li>
                 
                 </ul>
                 <div class="notes-sidebar-footer">
@@ -77,87 +77,69 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>lefthook</h1>
+                <h1>ADR(Architecture Decision Record)</h1>
 
-<p><a class="note-tag" href="/notes/tags/git.html">#git</a> <a class="note-tag" href="/notes/tags/perl.html">#perl</a></p>
+<p><a class="note-tag" href="/notes/tags/software-engineering.html">#software-engineering</a></p>
 
-<p>Git hooks(pre-commit等)を管理するツール。このリポジトリでもnotesのfrontmatter(<code>created</code>/<code>updated</code>)自動付与のために導入している(後述)。</p>
+<p>アーキテクチャに関する意思決定とその背景・結論を記録するドキュメント。「なぜそう決めたのか」を後から追跡できるようにする目的で書かれる。</p>
 
-<h2>概要</h2>
+<h2>起源</h2>
+
+<p>2011年、Michael NygardがCognitect在籍中に発表したブログ記事「Documenting Architecture Decisions」で提唱した概念。以降ソフトウェア開発コミュニティで広く採用されている。</p>
+
+<h2>Nygard型の基本構成</h2>
+
+<p>最も広く使われているテンプレート(Nygard型)は以下の5項目で構成される。</p>
 
 <ul>
-<li>開発元は <a href="https://evilmartians.com/">Evil Martians</a>（Rails周りで有名なコンサル企業）。Go製で、単一の依存フリーバイナリとして配布される。</li>
-<li>Ruby gem、npm、Go、Python、Swift、Homebrew、各種Linuxパッケージマネージャー(deb/rpm/apk/pacman)、Wingetなど、多様なパッケージマネージャー経由でインストールできる。</li>
-<li>ライセンスはMIT。GitHub star数は8.6k程度(2026-08時点)。</li>
-<li>公式サイトのキャッチコピーは &ldquo;Fast. Powerful. Simple.&rdquo; の3語。</li>
+<li><strong>Title</strong>: タイトル</li>
+<li><strong>Status</strong>: 状態(proposed, accepted, rejected, deprecated, supersededなど)</li>
+<li><strong>Context</strong>: 意思決定に至った経緯・背景</li>
+<li><strong>Decision</strong>: 決定した内容の詳細</li>
+<li><strong>Consequences</strong>: その決定がもたらすポジティブ・ネガティブな影響</li>
 </ul>
 
 
-<h2>主な特徴</h2>
+<p>他にMADRテンプレートなど派生形式も存在する。</p>
+
+<h2>Dress Codeの事例(&ldquo;Any Decision Record"としての運用)</h2>
+
+<p><a href="https://zenn.dev/dress_code/articles/c73500ae73361c">Zenn記事</a>で紹介されている運用例。</p>
 
 <ul>
-<li><strong>設定はYAML1枚</strong>: リポジトリルートの<code>lefthook.yml</code>にhook名(<code>pre-commit</code>, <code>commit-msg</code>, <code>pre-push</code>など)ごとにコマンドを書く。</li>
-<li><strong>並列実行</strong>: 複数のジョブ(lintやtestなど)を並列で走らせて高速化できる。</li>
-<li><strong>glob/ファイルフィルタ</strong>: <code>glob: "*.rb"</code>のように、変更されたファイルの種類ごとにコマンドを分けて実行できる。ステージされたファイルのみ(<code>{staged_files}</code>)、変更ファイル全体(<code>{all_files}</code>)などをプレースホルダで渡せる。</li>
-<li><strong>Docker対応</strong>: コマンドをDockerコンテナ内で実行することも可能。</li>
-<li><strong>単一バイナリ</strong>: Node.jsやRubyのランタイムに依存しない(Huskyのようにnpmパッケージとして入れることもできるが、本体はGo製バイナリ)。</li>
+<li>&ldquo;A"を「Architecture」ではなく<strong>「Any」</strong>と読み替え、領域・大小を問わずあらゆる意思決定を残す運用にしている。</li>
+<li>意思決定を「システムを再構築するための事実」と位置づけ、データレイヤーのイベント、コードレイヤーの仕様と並ぶ、アーキテクチャレイヤーの源泉として扱う3層構造で考えている。</li>
+<li>フォーマットは「文脈(判断当時の経緯)と結論さえ書けば成立する」ようあえて緩くしている。</li>
+<li>記録例: 「イベント処理の技術選定」「クラウドコスト削減戦略」「ライブラリアップグレードの影響調査」「コードレビューのプロセス定義」など、技術選定に限らず組織的合意(例: 「Approveはバグがないことの保証ではなく、一緒に対応する意思表示」)も記録する。</li>
+<li>運用: Notionデータベースに一元集約し、フォルダ分類は最小限にして検索はNotion AIに任せる。週次の読み合わせで全員が確認し、「共有がないことを異常と見なす」文化で継続を促進。議事録の要約をAIで下書きにするなど、読み書きのハードルを下げる工夫もしている。</li>
+<li>蓄積ペース: チームエンジニア15名で1年半で450本超。2025年半ばから月50〜60本ペースに加速。</li>
+<li>課題: 古くなったADRが更新されにくい、仕様との境界が曖昧になることがある、著者への短期的なリターンが見えにくい、という点が挙げられている。</li>
 </ul>
 
 
-<h2>Huskyなど類似ツールとの違い</h2>
+<h2>関連</h2>
 
-<ul>
-<li>npmエコシステム限定の<a href="https://typicode.github.io/husky/">Husky</a>と違い、言語非依存で使える。</li>
-<li><code>pre-commit</code>(Pythonのpre-commit framework)と比較されることが多いが、lefthookは設定がYAML1枚で完結し、並列実行やDocker実行など「速度」寄りの機能を前面に出しているのが特徴。</li>
-</ul>
-
-
-<h2>このリポジトリでの使い方</h2>
-
-<p><code>mise.toml</code>でバージョン固定して導入している。</p>
-
-<pre><code class="toml">[tools]
-lefthook = "2.1.10"
-</code></pre>
-
-
-
-<pre><code class="sh">mise install
-mise exec -- lefthook install
-</code></pre>
-
-<p><code>lefthook.yml</code>の設定:</p>
-
-<pre><code class="yaml">pre-commit:
-  commands:
-    notes-dates:
-      glob: "notes/src/*.md"
-      run: perl update-note-dates.pl {staged_files}
-</code></pre>
-
-<p><code>notes/src/*.md</code>がステージされたときだけ<code>update-note-dates.pl</code>を実行し、以下を行っている。</p>
-
-<ol>
-<li>新規ノートなら<code>created</code>/<code>updated</code>、既存ノートなら<code>updated</code>のみをYAML frontmatterに書き込む。</li>
-<li><code>regen-index.pl</code>を実行してHTMLを再生成。</li>
-<li>生成物(<code>notes/</code>, <code>index.html</code>, <code>talks/index.html</code>)を<code>git add</code>してコミットに含める。</li>
-</ol>
-
-
-<p>ファイルのmtimeには依存せず、frontmatter自体を正として日付を管理している。新規clone時やCI環境ではmtimeが信用できない(checkout時刻になってしまう)ため、この設計にしている。</p>
+<p><a href="/notes/sakpilot.html">SakPilot</a>でもE2Eテスト戦略がADR(<code>docs/adr/0001-e2e-testing-strategy.md</code>)として記録されている。</p>
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://lefthook.dev/">Lefthook 公式サイト</a></li>
-<li><a href="https://github.com/evilmartians/lefthook">evilmartians/lefthook - GitHub</a></li>
-<li><a href="https://dev.to/recca0120/ditch-husky-speed-up-git-hooks-with-lefthook-hkm">Ditch Husky: Speed Up Git Hooks with Lefthook - DEV Community</a></li>
+<li><a href="https://zenn.dev/dress_code/articles/c73500ae73361c">ADRを"Any"にしてみたら意外とうまくいった話 - Zenn</a></li>
+<li><a href="https://github.com/jamesmh/architecture_decision_record/blob/master/adr_template_by_michael_nygard.md">architecture_decision_record/adr_template_by_michael_nygard.md - GitHub</a></li>
+<li><a href="https://adr.github.io/">Architectural Decision Records (ADRs)</a></li>
 </ul>
 
 
+                                <div class="notes-backlinks">
+                    <h2>🔗 リンクされているノート</h2>
+                    <ul>
+                                            <li><a href="/notes/sakpilot.html">SakPilot</a></li>
+                    
+                    </ul>
+                </div>
                                 <div class="notes-meta">
                     <span>作成日: 2026-08-09</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=lefthook&url=https%3A%2F%2F64p.org%2Fnotes%2Flefthook.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=ADR%28Architecture%20Decision%20Record%29&url=https%3A%2F%2F64p.org%2Fnotes%2Farchitecture-decision-record.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">
