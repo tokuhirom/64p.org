@@ -8,7 +8,7 @@ updated: 2026-08-09
 
 ## 提唱者と背景
 
-Nick Miloが提唱した概念で、彼が2020年に体系化した個人知識管理フレームワーク「LYT (Linking Your Thinking)」の中心的な構成要素のひとつ。MilaはObsidianの初期ベータテスターの一人で、LYTの実践キット「Ideaverse」を公開している。
+Nick Miloが提唱した概念で、彼が2020年に体系化した個人知識管理フレームワーク「[[lyt|LYT (Linking Your Thinking)]]」の中心的な構成要素のひとつ。Nick MiloはObsidianの初期ベータテスターの一人で、LYTの実践キット「Ideaverse」を公開している。
 
 ## フォルダ分類との違い
 
