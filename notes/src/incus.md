@@ -18,6 +18,20 @@ updated: 2026-08-09
 - CLAを伴わない、完全にコミュニティ主導のオープンソースプロジェクト(Apache 2.0ライセンス)。
 - Debian stable、Fedora、openSUSE、NixOSなど各種ディストリビューションに既に取り込まれている。
 
+## 開発の活発さ([[lxd|LXD]]との比較)
+
+GitHub APIで両リポジトリを比較(2026-08-09時点)。
+
+| 指標 | Incus (`lxc/incus`) | LXD (`canonical/lxd`) |
+|---|---|---|
+| Stars | 5,882 | 4,809 |
+| Forks | 472 | 1,036 |
+| Open issues | 46 | 409 |
+| 過去90日のコミット数 | 約1,951 | 約1,917 |
+| コントリビューター数(概算) | 約597 | 約479 |
+
+コミット数そのものはほぼ拮抗しているが、open issuesの滞留数はLXDの方が大きく、コントリビューター数・starsではIncusがやや上回る。リリース体制も異なり、Incusは単一のメインライン(7.x系)を月1ペースで継続リリースするのに対し、LXDは4.0/5.0/5.21など複数バージョン系列を並行メンテしている。
+
 ## 出典
 
 - [Linux Containers - Incus - Introduction](https://linuxcontainers.org/incus/)

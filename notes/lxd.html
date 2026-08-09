@@ -129,6 +129,50 @@
 
 <p>2023年、CanonicalがLXDの全コントリビューターにCLA(Contributor License Agreement)署名を要求し、LXDをLinux Containersプロジェクトの傘下から引き離して自社管理下に置いた。これを受けて、コミュニティ主導のフォークとして<a href="/notes/incus.html">Incus</a>が立ち上げられた。</p>
 
+<h2>開発の活発さ(<a href="/notes/incus.html">Incus</a>との比較)</h2>
+
+<p>GitHub APIで両リポジトリを比較(2026-08-09時点)。</p>
+
+<table>
+<thead>
+<tr>
+<th> 指標 </th>
+<th> Incus (<code>lxc/incus</code>) </th>
+<th> LXD (<code>canonical/lxd</code>) </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td> Stars </td>
+<td> 5,882 </td>
+<td> 4,809 </td>
+</tr>
+<tr>
+<td> Forks </td>
+<td> 472 </td>
+<td> 1,036 </td>
+</tr>
+<tr>
+<td> Open issues </td>
+<td> 46 </td>
+<td> 409 </td>
+</tr>
+<tr>
+<td> 過去90日のコミット数 </td>
+<td> 約1,951 </td>
+<td> 約1,917 </td>
+</tr>
+<tr>
+<td> コントリビューター数(概算) </td>
+<td> 約597 </td>
+<td> 約479 </td>
+</tr>
+</tbody>
+</table>
+
+
+<p>コミット数そのものはほぼ拮抗しているが、open issuesの滞留数はLXDの方が大きく、コントリビューター数・starsではIncusがやや上回る。リリース体制も異なり、Incusは単一のメインライン(7.x系)を月1ペースで継続リリースするのに対し、LXDは4.0/5.0/5.21など複数バージョン系列を並行メンテしている。</p>
+
 <h2>出典</h2>
 
 <ul>

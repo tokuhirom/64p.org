@@ -17,6 +17,20 @@ updated: 2026-08-09
 
 2023年、CanonicalがLXDの全コントリビューターにCLA(Contributor License Agreement)署名を要求し、LXDをLinux Containersプロジェクトの傘下から引き離して自社管理下に置いた。これを受けて、コミュニティ主導のフォークとして[[incus|Incus]]が立ち上げられた。
 
+## 開発の活発さ([[incus|Incus]]との比較)
+
+GitHub APIで両リポジトリを比較(2026-08-09時点)。
+
+| 指標 | Incus (`lxc/incus`) | LXD (`canonical/lxd`) |
+|---|---|---|
+| Stars | 5,882 | 4,809 |
+| Forks | 472 | 1,036 |
+| Open issues | 46 | 409 |
+| 過去90日のコミット数 | 約1,951 | 約1,917 |
+| コントリビューター数(概算) | 約597 | 約479 |
+
+コミット数そのものはほぼ拮抗しているが、open issuesの滞留数はLXDの方が大きく、コントリビューター数・starsではIncusがやや上回る。リリース体制も異なり、Incusは単一のメインライン(7.x系)を月1ペースで継続リリースするのに対し、LXDは4.0/5.0/5.21など複数バージョン系列を並行メンテしている。
+
 ## 出典
 
 - [LXD | Canonical](https://canonical.com/lxd)
