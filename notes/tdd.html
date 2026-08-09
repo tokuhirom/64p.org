@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>OpenJDKの主要プロジェクト - Notes - 64p.org</title>
+    <title>TDD (Test-Driven Development / テスト駆動開発) - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/highlight.js@11/styles/github.min.css" media="(prefers-color-scheme: light)">
@@ -27,7 +27,7 @@
                                     <li><a href="/notes/welcome.html">Notesコーナーへようこそ</a></li>
                                     <li><a href="/notes/wails.html">Wails</a></li>
                                     <li><a href="/notes/thompson-construction.html">Thompson construction</a></li>
-                                    <li><a href="/notes/tdd.html">TDD (Test-Driven Development / テスト駆動開発)</a></li>
+                                    <li><a href="/notes/tdd.html" class="active">TDD (Test-Driven Development / テスト駆動開発)</a></li>
                                     <li><a href="/notes/tauri.html">Tauri</a></li>
                                     <li><a href="/notes/tableau.html">Tableau</a></li>
                                     <li><a href="/notes/system76.html">System76</a></li>
@@ -57,7 +57,7 @@
                                     <li><a href="/notes/permanent-notes.html">パーマネントノート (Permanent Notes)</a></li>
                                     <li><a href="/notes/openssf.html">OpenSSF (Open Source Security Foundation)</a></li>
                                     <li><a href="/notes/openrouter.html">OpenRouter</a></li>
-                                    <li><a href="/notes/openjdk-projects.html" class="active">OpenJDKの主要プロジェクト</a></li>
+                                    <li><a href="/notes/openjdk-projects.html">OpenJDKの主要プロジェクト</a></li>
                                     <li><a href="/notes/obsidian.html">Obsidian</a></li>
                                     <li><a href="/notes/nushell.html">Nushell</a></li>
                                     <li><a href="/notes/ngrep.html">ngrep (network grep)</a></li>
@@ -119,32 +119,90 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>OpenJDKの主要プロジェクト</h1>
+                <h1>TDD (Test-Driven Development / テスト駆動開発)</h1>
 
-<p>OpenJDKでは、JDK本体の開発とは別に、特定のテーマを掘り下げる「プロジェクト」がいくつも並行して進んでいる。それぞれ担当領域が異なり、実装された機能はJEPとしてJDKにマージされていく。</p>
+<p><a class="note-tag" href="/notes/tags/software-engineering.html">#software-engineering</a> <a class="note-tag" href="/notes/tags/testing.html">#testing</a></p>
 
-<h2>一覧</h2>
+<p>1990年代後半、Kent BeckがExtreme Programmingの一部として考案した開発手法。2003年の著書『Test-Driven Development: By Example』で体系化された。</p>
+
+<h2>Kent Beck自身による「Canon TDD」(2023年12月, 原典の再定義)</h2>
+
+<p>Kent Beckは2023年、自身のニュースレター「Tidy First?」に<a href="https://newsletter.kentbeck.com/p/canon-tdd">「Canon TDD」</a>という記事を書いた。理由は「TDDではないものを批判する人があまりに多いから」(&ldquo;If you&rsquo;re going to critique something, critique the actual thing&rdquo; — 批判するなら本物を批判せよ)。全員がこう書くべきという処方箋ではなく、TDDが実際に何であるかを定義し直した文章。</p>
+
+<p>Beckが示す<strong>カノニカルな5ステップ</strong>:</p>
+
+<ol>
+<li><strong>Test List</strong>: 実装の詳細には触れず、対応すべき振る舞いのバリエーション・エッジケースを一覧化する</li>
+<li><strong>Write One Test</strong>: リストから1つだけ選び、setup・invocation・assertionを備えた具体的で実行可能なテストを1つ書く（インターフェース設計の意思決定はここで発生する）</li>
+<li><strong>Make It Pass</strong>: そのテストと、これまでの全テストが通るようにコードを変更する。途中で見つかった新しいケースはリストに追加する</li>
+<li><strong>Optionally Refactor</strong>: テストが通っている状態で、任意で実装の設計を改善する</li>
+<li><strong>Repeat</strong>: リストが空になるまで2〜4を繰り返す</li>
+</ol>
+
+
+<p>ゴールは「今まで動いていたものは動き続ける。新しい振る舞いは期待通り動く。システムは次の変更に備えられた状態になる」こと。</p>
+
+<h2>Martin Fowlerによる整理(bliki)</h2>
+
+<p>3ステップの<strong>Red-Green-Refactor</strong>として説明される。「①次に追加したい機能のテストを書く → ②テストが通るまで実装コードを書く → ③新旧コード両方をリファクタリングして構造を整える」。効用は2つ。</p>
 
 <ul>
-<li><a href="/notes/project-amber.html">Project Amber</a> — プロダクティビティ志向の言語機能(<code>var</code>、switch式、パターンマッチングなど)</li>
-<li><a href="/notes/project-valhalla.html">Project Valhalla</a> — オブジェクトモデルの拡張(値型によるプリミティブ並みの性能)</li>
-<li><a href="/notes/project-loom.html">Project Loom</a> — 軽量並行処理(仮想スレッド、構造化並行性)</li>
-<li><a href="/notes/project-panama.html">Project Panama</a> — 外部関数・外部データ連携(Foreign Function &amp; Memory API、jextract)</li>
-<li><a href="/notes/project-leyden.html">Project Leyden</a> — 起動時間・ウォームアップ時間の改善(AOTキャッシュ)</li>
-<li><a href="/notes/project-babylon.html">Project Babylon</a> — 外部プログラミングモデル(SQL、GPU等)へのJavaの拡張(コードリフレクション)</li>
+<li>テストが先にあるので必然的にSelfTestingCode(自己テスト可能なコード)になる</li>
+<li>テストを先に設計することで、インターフェースと実装の分離を強制される(良い設計の要素)</li>
 </ul>
 
+
+<p>Fowlerが挙げる典型的な失敗は「リファクタリングのステップを省略すること」。省くとテストはあってもコードは汚いままの断片の寄せ集めになる。</p>
+
+<h2>t-wada(和田卓人)氏によるCanon TDDの日本語訳・解説</h2>
+
+<p>t-wada氏はBeckの"Canon TDD"を翻訳し、<a href="https://t-wada.hatenablog.jp/entry/canon-tdd-by-kent-beck">「【翻訳】テスト駆動開発の定義」</a>として自身のブログで公開した。その中で強調しているのが<strong>「意味の希釈(semantic diffusion)」</strong>によってTDDの意味が曖昧になってしまった、という指摘。「テストを先に書くこと」「事前にたくさんテストを書いておくこと」という理解は誤解であり、TDDは<strong>「明確な開始条件と終了条件を持つプログラミングのワークフロー」</strong>であるとしている。</p>
+
+<p>さらにt-wada氏は3つの近接概念を明確に区別する。</p>
+
+<table>
+<thead>
+<tr>
+<th> 概念 </th>
+<th> 内容 </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td> 自動テスト (Automated Testing) </td>
+<td> テストコードを書くこと(タイミングは問わない) </td>
+</tr>
+<tr>
+<td> テストファーストプログラミング (Test-First) </td>
+<td> 実装前にテストを書くこと </td>
+</tr>
+<tr>
+<td> テスト駆動開発 (TDD) </td>
+<td> 意図的な設計分析を含む、上記5ステップ全体のワークフロー </td>
+</tr>
+</tbody>
+</table>
+
+
+<p>t-wada氏は、世間で語られる「TDDのメリット」の多くは実は「自動テスト」そのものの効能であり、TDD固有の効能ではない、と指摘している点が重要。</p>
+
+<h2><a href="/notes/architecture-decision-record.html">ADR(Architecture Decision Record)</a>との関係</h2>
+
+<p><a href="/notes/sakpilot.html">SakPilot</a>ではE2Eテスト戦略がADR(<code>docs/adr/0001-e2e-testing-strategy.md</code>)として記録されている例がある。TDD自体はADRとは独立した実装ワークフローの話だが、テスト戦略の意思決定をADRとして残す、という運用は両者を組み合わせた例と言える。</p>
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://dev.java/future/innovation/">Java Innovation Projects - Dev.java</a></li>
+<li><a href="https://newsletter.kentbeck.com/p/canon-tdd">Canon TDD - by Kent Beck (newsletter.kentbeck.com)</a></li>
+<li><a href="https://www.martinfowler.com/bliki/TestDrivenDevelopment.html">Test Driven Development - Martin Fowler&rsquo;s bliki</a></li>
+<li><a href="https://t-wada.hatenablog.jp/entry/canon-tdd-by-kent-beck">【翻訳】テスト駆動開発の定義 - t-wadaのブログ</a></li>
+<li><a href="https://stanislaw.github.io/2016-01-25-notes-on-test-driven-development-by-example-by-kent-beck.html">Notes on &ldquo;Test-Driven Development by Example&rdquo; by Kent Beck</a></li>
 </ul>
 
 
                                 <div class="notes-meta">
                     <span>作成日: 2026-08-09</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=OpenJDK%E3%81%AE%E4%B8%BB%E8%A6%81%E3%83%97%E3%83%AD%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88&url=https%3A%2F%2F64p.org%2Fnotes%2Fopenjdk-projects.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=TDD%20%28Test-Driven%20Development%20%2F%20%E3%83%86%E3%82%B9%E3%83%88%E9%A7%86%E5%8B%95%E9%96%8B%E7%99%BA%29&url=https%3A%2F%2F64p.org%2Fnotes%2Ftdd.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">
