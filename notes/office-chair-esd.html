@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>今治タオル - Notes - 64p.org</title>
+    <title>オフィスチェアの静電気によるPCモニター暗転問題 - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/highlight.js@11/styles/github.min.css" media="(prefers-color-scheme: light)">
@@ -58,7 +58,7 @@
                                     <li><a href="/notes/openssf.html">OpenSSF (Open Source Security Foundation)</a></li>
                                     <li><a href="/notes/openrouter.html">OpenRouter</a></li>
                                     <li><a href="/notes/openjdk-projects.html">OpenJDKの主要プロジェクト</a></li>
-                                    <li><a href="/notes/office-chair-esd.html">オフィスチェアの静電気によるPCモニター暗転問題</a></li>
+                                    <li><a href="/notes/office-chair-esd.html" class="active">オフィスチェアの静電気によるPCモニター暗転問題</a></li>
                                     <li><a href="/notes/obsidian.html">Obsidian</a></li>
                                     <li><a href="/notes/nushell.html">Nushell</a></li>
                                     <li><a href="/notes/ngrep.html">ngrep (network grep)</a></li>
@@ -81,7 +81,7 @@
                                     <li><a href="/notes/kali-linux.html">Kali Linux</a></li>
                                     <li><a href="/notes/japan-fountain-pen-manufacturers.html">日本の万年筆メーカー</a></li>
                                     <li><a href="/notes/incus.html">Incus</a></li>
-                                    <li><a href="/notes/imabari-towel.html" class="active">今治タオル</a></li>
+                                    <li><a href="/notes/imabari-towel.html">今治タオル</a></li>
                                     <li><a href="/notes/harmonyos.html">HarmonyOSとは</a></li>
                                     <li><a href="/notes/harmonyos-pc.html">HarmonyOS PC版（鴻蒙電脳）</a></li>
                                     <li><a href="/notes/hacker-news.html">Hacker News (HN) について</a></li>
@@ -120,51 +120,43 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>今治タオル</h1>
+                <h1>オフィスチェアの静電気によるPCモニター暗転問題</h1>
 
-<p><a class="note-tag" href="/notes/tags/geography.html">#geography</a> <a class="note-tag" href="/notes/tags/industry.html">#industry</a></p>
+<p><a class="note-tag" href="/notes/tags/hardware.html">#hardware</a> <a class="note-tag" href="/notes/tags/trivia.html">#trivia</a></p>
 
-<p>愛媛県今治市が日本最大の産地となっているタオルブランド。地理的要因・歴史的経緯・ブランド戦略の3つが重なって現在の地位を築いている。</p>
+<p>ガスシリンダー式のオフィスチェアに座る/立つ動作がきっかけで静電気放電(ESD)が発生し、それが電磁干渉(EMI)スパイクとしてビデオケーブルに乗り、モニター側の同期が一瞬失われて画面が真っ暗になる現象。</p>
 
-<h2>地理的要因(水と気候)</h2>
+<h2>メカニズム</h2>
 
-<ul>
-<li>石鎚山系の高縄山系を源流とする蒼社川の伏流水に恵まれており、不純物が少ない軟水のため、綿の白度を安定させ、綿本来の柔らかさを引き出せる。</li>
-<li>瀬戸内海に面し晴天が多く穏やかな気候で、タオル生産に適した環境。</li>
-<li>江戸時代から綿業・織物業の産地としての基盤があり、藩もこれを奨励していた。</li>
-</ul>
+<p>椅子のクッション内部の素材と、近くにあるボルトやガスシリンダーなどの金属部品との組み合わせで静電気が発生する。「クッション→金属部品の隙間→静電気放電→ビデオケーブルへのEMI→同期喪失→画面暗転」という連鎖。</p>
 
+<h2>出典: Doug Smithの1993年の論文</h2>
 
-<h2>歴史</h2>
+<p>元AT&amp;T LabsのDoug Smithが1993年に発表した論文が元ネタ。ESD対策済みを謳う椅子でも約3分の1でこの現象が発生することを突き止めた。従来のESD対策手法ではこの現象を防げないことも確認している。</p>
 
-<ul>
-<li><strong>1894年(明治27年)</strong>、阿部平助が大阪・泉州でタオル製造を学び、今治で国内初のタオル製造を開始した。「今治タオルの父」と呼ばれる。</li>
-<li><strong>1960年</strong>、今治発祥の「タオルケット」が大ヒットし、大阪を抜いて生産量日本一の産地になった。</li>
-</ul>
+<h2>空港での目撃談</h2>
 
+<p>Smithは深夜2時頃、この現象で空港の航空管制機器がダウンするのを目撃したと述べている。もっと混雑する時間帯だったら深刻な事態になっていた可能性がある、とのこと。</p>
 
-<h2>産地崩壊の危機とブランド化による復活</h2>
+<h2>簡易診断法</h2>
 
-<p>1980年代後半以降、中国製の安価なタオルの輸入が激増し、バブル崩壊も重なって今治の生産は壊滅的な打撃を受けた。全盛期500社以上あったメーカーが230社まで減少した。</p>
+<p>AMラジオを雑音(ノイズ)の周波数に合わせて椅子の下に置き、座る/立つ際にパチパチという音が入るかどうかで、その椅子がESDを発生させているか判定できる。</p>
 
-<p>危機感を持った業界が今治商工会議所・四国タオル工業組合・今治市と連携し、国の「JAPANブランド育成支援事業」の認定を受けてブランディングプロジェクトを開始。2006年、クリエイティブディレクターに佐藤可士和を起用し、赤・青・白で「i」を象ったロゴを制定した。</p>
+<h2>経緯</h2>
 
-<p>吸水力の「5秒ルール」を含む全12項目の品質基準をクリアした製品だけがブランドロゴを使用できる認定制度を構築し、産地全体で品質を担保しながら「高品質の証」としてブランド価値を再構築した。</p>
+<p>2020年頃、SNSで「立ち上がるとモニターが一瞬暗転する」動画がバイラルになった際、The Registerがこの1993年の論文を引いて解説した。</p>
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://www.ikeuchi.org/magazine/imabaritowel/">今治タオルとは？｜IKEUCHI ORGANIC</a></li>
-<li><a href="https://fujitaka.co.jp/column/254/">今治タオルのルーツをたどる | 藤高タオル</a></li>
-<li><a href="https://www.worldtowel.jp/towel-textbook/rekishi-1/">佐藤可士和が生んだ今治タオルの歴史と誕生秘話！ | ワールドタオル</a></li>
-<li><a href="https://we-ll.com/blogs/knowledge/220429">「今治タオル」という産地ブランド 佐藤可士和のディレクションと再生プロジェクト | WELL</a></li>
-<li><a href="https://izc.or.jp/sangyo1.html">今治タオル | 今治地域地場産業振興センター</a></li>
+<li><a href="https://www.theregister.com/2020/01/09/office_chair_emissions/">Blame of thrones: Those viral vids of PC monitors going blank when people stand up? Static electricity from chairs - The Register</a></li>
+<li><a href="https://ogitaka.com/2023/05/12/static-electricity-problem-in-office-chairs/">オフィスチェアの静電気によりPCモニターが真っ暗になる問題</a></li>
 </ul>
 
 
                                 <div class="notes-meta">
                     <span>作成日: 2026-08-09</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=%E4%BB%8A%E6%B2%BB%E3%82%BF%E3%82%AA%E3%83%AB&url=https%3A%2F%2F64p.org%2Fnotes%2Fimabari-towel.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=%E3%82%AA%E3%83%95%E3%82%A3%E3%82%B9%E3%83%81%E3%82%A7%E3%82%A2%E3%81%AE%E9%9D%99%E9%9B%BB%E6%B0%97%E3%81%AB%E3%82%88%E3%82%8BPC%E3%83%A2%E3%83%8B%E3%82%BF%E3%83%BC%E6%9A%97%E8%BB%A2%E5%95%8F%E9%A1%8C&url=https%3A%2F%2F64p.org%2Fnotes%2Foffice-chair-esd.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">
