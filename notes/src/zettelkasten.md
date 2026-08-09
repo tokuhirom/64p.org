@@ -18,7 +18,7 @@ updated: 2026-08-09
 
 ## ノートの処理フロー
 
-Sönke Ahrensは著書『How to Take Smart Notes』で、Zettelkasten実践におけるノートを「フリートノート」「文献ノート」「[[permanent-notes|パーマネントノート]]」の3種類に整理している。最終的にZettelkasten本体に恒久保存され、他ノートとリンクされるのはパーマネントノートのみ。
+Sönke Ahrensは著書『How to Take Smart Notes』で、Zettelkasten実践におけるノートを[[fleeting-notes|フリートノート]]・[[literature-notes|文献ノート]]・[[permanent-notes|パーマネントノート]]の3種類に整理している。最終的にZettelkasten本体に恒久保存され、他ノートとリンクされるのはパーマネントノートのみ。
 
 ## 現代への影響
 
