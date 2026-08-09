@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>食虫植物 - Notes - 64p.org</title>
+    <title>snoop - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/highlight.js@11/styles/github.min.css" media="(prefers-color-scheme: light)">
@@ -23,7 +23,7 @@
                             <li><a href="/notes/wails.html">Wails</a></li>
                             <li><a href="/notes/tauri.html">Tauri</a></li>
                             <li><a href="/notes/tableau.html">Tableau</a></li>
-                            <li><a href="/notes/snoop.html">snoop</a></li>
+                            <li><a href="/notes/snoop.html" class="active">snoop</a></li>
                             <li><a href="/notes/skia.html">Skia</a></li>
                             <li><a href="/notes/sakpilot.html">SakPilot</a></li>
                             <li><a href="/notes/rust-gui-libraries.html">Rust GUI ライブラリ一覧</a></li>
@@ -46,7 +46,7 @@
                             <li><a href="/notes/edge-manifest-v3.html">Microsoft Edge、拡張機能をManifest V3へ完全移行</a></li>
                             <li><a href="/notes/dangouzaka-yurai.html">談合坂の地名由来</a></li>
                             <li><a href="/notes/claude-model-tiers.html">Claudeのモデル階層(Opus / Sonnet / Haiku / Fable)の違い</a></li>
-                            <li><a href="/notes/carnivorous-plants.html" class="active">食虫植物</a></li>
+                            <li><a href="/notes/carnivorous-plants.html">食虫植物</a></li>
                             <li><a href="/notes/bpf.html">BPF (Berkeley Packet Filter)</a></li>
             
             </ul>
@@ -57,52 +57,46 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>食虫植物</h1>
+                <h1>snoop</h1>
 
-<p><a class="note-tag" href="/notes/tags/biology.html">#biology</a> <a class="note-tag" href="/notes/tags/botany.html">#botany</a></p>
+<p>Sun Microsystems製の<strong>Solaris</strong>(SunOS)に標準搭載されているコマンドラインのパケットキャプチャ・解析ツール。 <a class="note-tag" href="/notes/tags/networking.html">#networking</a> <a class="note-tag" href="/notes/tags/solaris.html">#solaris</a> <a class="note-tag" href="/notes/tags/cli.html">#cli</a></p>
 
-<p>昆虫などの小動物を捕らえ、消化・吸収して栄養源(主に窒素・リンなど)にする植物。世界に800種以上が知られる。湿地・沼地・岩場・貧栄養の酸性土壌など、根から養分を十分に得られない環境に適応するために進化したと考えられている。</p>
+<h2>概要</h2>
 
-<h2>進化的背景</h2>
-
-<p>食虫性(carnivory)は単一の起源ではなく、少なくとも6目13科20属で、9500万〜190万年前の間に11回以上独立に進化した(多系統)。もともと植物の防御機構(病原体対抗タンパク質、PR蛋白質)だった仕組みが、根からの養分吸収に関わる遺伝子を捕虫器官に転用する形で「食虫」機能へ発展したとされる。消化酵素にはリン酸分解酵素・プロテアーゼ・ペプチダーゼ・エステラーゼ・キチナーゼなどが使われる。</p>
-
-<h2>捕虫方式は主に4タイプ</h2>
-
-<ol>
-<li><strong>粘着式</strong>(モウセンゴケなど): 葉表面の腺毛から粘液を出し、虫を絡めとって葉を巻き込む。</li>
-<li><strong>落とし穴式</strong>(ウツボカズラ/サラセニアなど): 筒状の袋に虫を匂いで誘い込み、滑落させて底の消化液で分解する。</li>
-<li><strong>わな式</strong>(ハエトリソウ): 二枚貝状の葉が虫を挟み込んで閉じる。</li>
-<li><strong>吸い込み式</strong>(タヌキモなど): 水中の捕虫嚢が数ミリ秒という高速で開き、水ごと獲物を吸い込む。</li>
-</ol>
+<ul>
+<li>SunOS 5.x(Solaris 2.x以降)に標準同梱、Solaris 10で安定版に</li>
+<li>機能的には<code>tcpdump</code>や<a href="/notes/ngrep.html">ngrep (network grep)</a>と同じ立ち位置(Wireshark/TSharkのSolaris版に近い)</li>
+<li>パケットをキャプチャしてリアルタイム表示するか、ファイルに保存できる</li>
+</ul>
 
 
-<h2>ハエトリソウの「数える」仕組み</h2>
+<h2>ファイル形式</h2>
 
-<p>ハエトリソウ(<em>Dionaea muscipula</em>)の葉の内側には6本の感覚毛があり、1回触れるとその細胞でカルシウムイオン濃度が上昇し、遠くへは伝わらない小さな電気シグナル(受容器電位)が起きるだけになる。20〜30秒以内に2回目触れるとカルシウムイオン濃度がさらに積み上がって閾値を超え、動物の神経に似た「活動電位」が葉全体に伝わって閉じる。刺激が続くと(だいたい5回程度)消化液分泌・栄養吸収プログラムが本格的に始動する。1回だけの接触では閉じないため、雨粒などによる誤作動を避けられる仕組みになっている。</p>
+<p>snoopが保存するキャプチャファイル形式は <strong>RFC 1761</strong> として標準化されており、Wireshark/TSharkも読み込み対応している(<code>tcpdump</code>のpcap形式とは別系統)。</p>
 
-<h2>タヌキモの吸い込みトラップ</h2>
+<h2>位置づけ</h2>
 
-<p>タヌキモ(<em>Utricularia</em>)の水中の捕虫嚢は、内部が常に真空(陰圧)に保たれている。入口の感覚毛にミジンコやボウフラなどが触れると弁が瞬時に開き、水ごと数ミリ秒で獲物を吸い込む。植物界でも屈指の高速な動きとして知られる。</p>
+<p>Solaris環境における<code>tcpdump</code>相当のツール。<a href="/notes/ngrep.html">ngrep (network grep)</a>のノートで触れた「<code>tcpdump</code>や<code>snoop</code>と同様の<a href="/notes/bpf.html">BPF</a>フィルタ構文が使える」という記述の通り、フィルタ指定の文法もBPF系に準拠している。</p>
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://aminaflyers.amina-co.jp/list/detail/1188">食虫植物は虫しか食べない？食虫植物を徹底解説！</a></li>
-<li><a href="https://flyplants.com/basic/">食虫植物ってどんなもの？捕虫方法と代表的な種類</a></li>
-<li><a href="https://www.hus.ac.jp/hokukadai-jiten/detail/7a89f72de52e621ceb334966aecaa9572c1fc105-18545/">食虫植物はなぜ生まれた？肉食に進化した理由と過程とは｜北海道科学大学</a></li>
-<li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8389183/">Recent ecophysiological, biochemical and evolutional insights into plant carnivory - PMC</a></li>
-<li><a href="https://news.mynavi.jp/techplus/article/20251002-3508377/">食虫植物ハエトリソウが虫の接触を感じる"触覚"メカニズムとは？</a></li>
-<li><a href="https://www.nibb.ac.jp/press/2020/10/06.html">プレスリリース - 食虫植物ハエトリソウの記憶の仕組みを解明 - 基礎生物学研究所</a></li>
-<li><a href="https://flyplants.com/basic/suikomi/">吸い込み式のわなをもつ食虫植物を解説</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Snoop_(software">Snoop (software) - Wikipedia</a>)</li>
+<li><a href="https://wiki.wireshark.org/snoop">snoop - Wireshark Wiki</a></li>
+<li><a href="https://docs.oracle.com/cd/E23824_01/html/821-1453/gexkw.html">Monitoring Packet Transfers With the snoop Command - Oracle</a></li>
 </ul>
 
 
-<p>関連: <a href="/notes/miidera-gomimushi.html">ミイデラゴミムシ</a></p>
-
+                                <div class="notes-backlinks">
+                    <h2>🔗 リンクされているノート</h2>
+                    <ul>
+                                            <li><a href="/notes/ngrep.html">ngrep (network grep)</a></li>
+                    
+                    </ul>
+                </div>
                                 <div class="notes-meta">
                     <span>作成日: 2026-08-09</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=%E9%A3%9F%E8%99%AB%E6%A4%8D%E7%89%A9&url=https%3A%2F%2F64p.org%2Fnotes%2Fcarnivorous-plants.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=snoop&url=https%3A%2F%2F64p.org%2Fnotes%2Fsnoop.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">

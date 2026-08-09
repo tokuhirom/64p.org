@@ -11,7 +11,7 @@ updated: 2026-08-09
 - 名前の通り「grep + network」。pcapライブラリでパケットをキャプチャし、GNU regexライブラリで正規表現マッチングを行う
 - `tcpdump`（パケットキャプチャ）と`grep`（テキスト検索）の中間に位置するツール、というのがよくある説明
 - TCP/UDP/ICMPを、Ethernet/PPP/SLIP/FDDI/nullインターフェース越しに解析可能
-- `tcpdump`や`snoop`と同様の[[bpf|BPF]]フィルタ構文が使える
+- `tcpdump`や[[snoop]]と同様の[[bpf|BPF]]フィルタ構文が使える
 
 `tcpdump`が「パケットの構造」を見るのに強い一方、ngrepは「ペイロード内の特定の文字列パターン」を探すのに向いている、という住み分け。
 
