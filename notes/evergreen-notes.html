@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>HarmonyOSとは - Notes - 64p.org</title>
+    <title>エバーグリーンノート (Evergreen Notes) - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/highlight.js@11/styles/github.min.css" media="(prefers-color-scheme: light)">
@@ -32,14 +32,14 @@
                             <li><a href="/notes/miidera-gomimushi.html">ミイデラゴミムシ</a></li>
                             <li><a href="/notes/lefthook.html">lefthook</a></li>
                             <li><a href="/notes/kyoka-vs-tanka.html">狂歌と短歌の違い</a></li>
-                            <li><a href="/notes/harmonyos.html" class="active">HarmonyOSとは</a></li>
+                            <li><a href="/notes/harmonyos.html">HarmonyOSとは</a></li>
                             <li><a href="/notes/harmonyos-pc.html">HarmonyOS PC版（鴻蒙電脳）</a></li>
                             <li><a href="/notes/hacker-news.html">Hacker News (HN) について</a></li>
                             <li><a href="/notes/gpui.html">GPUI</a></li>
                             <li><a href="/notes/gpt-5-6-sol-terra-luna.html">GPT-5.6のSol / Terra / Lunaの違い</a></li>
                             <li><a href="/notes/go-gui-libraries.html">Go GUI ライブラリ一覧</a></li>
                             <li><a href="/notes/freya.html">Freya (freyaui.dev) — Rust製クロスプラットフォームGUIライブラリ</a></li>
-                            <li><a href="/notes/evergreen-notes.html">エバーグリーンノート (Evergreen Notes)</a></li>
+                            <li><a href="/notes/evergreen-notes.html" class="active">エバーグリーンノート (Evergreen Notes)</a></li>
                             <li><a href="/notes/electron.html">Electron</a></li>
                             <li><a href="/notes/edge-manifest-v3.html">Microsoft Edge、拡張機能をManifest V3へ完全移行</a></li>
                             <li><a href="/notes/dangouzaka-yurai.html">談合坂の地名由来</a></li>
@@ -54,55 +54,45 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>HarmonyOSとは</h1>
+                <h1>エバーグリーンノート (Evergreen Notes)</h1>
 
-<p>Huawei（華為技術）が開発しているOS。当初はIoT機器向けだったが、現在はスマホ・タブレット・車載機器、さらに<a href="/notes/harmonyos-pc.html">HarmonyOS PC版（鴻蒙電脳）</a>まで幅広いデバイスに展開されている。</p>
+<p>「作っては使い捨てる一時的なメモ」ではなく、時間をかけて育て、複数のプロジェクトを横断して使い続けるノートのこと。 <a class="note-tag" href="/notes/tags/zettelkasten.html">#zettelkasten</a> <a class="note-tag" href="/notes/tags/note-taking.html">#note-taking</a></p>
 
-<h2>背景</h2>
+<h2>提唱者</h2>
 
-<ul>
-<li>開発自体は2012年頃から始まり、2019年に「HarmonyOS」として正式発表された。</li>
-<li>米国の対中制裁でGoogleのAndroidサービス（GMS）が使えなくなったことを受けて、Huaweiが自社スマホ向けの代替OSとして本格展開した。</li>
-</ul>
+<p><strong>Andy Matuschak</strong>（Khan Academyの元CTOで、思考ツール研究者）が自身のノートサイト上で提唱している概念。</p>
 
+<h2>5つの基本原則</h2>
 
-<h2>分散OSという設計思想</h2>
-
-<p>マイクロカーネルベースの「分散OS」を謳っており、異なる種類のデバイス間でシームレスに連携・リソースを共有できることを狙って設計されている。</p>
-
-<p>オープンソース版（OpenHarmony）は、金融・教育・医療・工業・交通など幅広い産業のデジタル基盤としても採用が進んでいる。</p>
-
-<h2>HarmonyOS NEXT（2024年〜）という転換点</h2>
-
-<ul>
-<li>2024年発表の「HarmonyOS NEXT」から、それまでベースにしていたAndroid由来のAOSP（Android Open Source Project）コードとLinuxカーネルを置き換え、独自カーネルのみで動くOSになった。</li>
-<li>Androidアプリはそのままでは動かなくなり、開発者はHarmonyOS向けに書き直す必要がある。AndroidやiOSに次ぐ「第3のモバイルOS」という位置づけで語られることが多い。</li>
-<li>中国国内でのHuaweiスマホ・タブレット向けが主戦場で、中国市場でのAndroid/Google依存脱却という狙いも大きい。</li>
-</ul>
+<ol>
+<li><strong>原子性 (atomic)</strong> — 1ノート1概念。粒度を細かくするほど、リンクの密度を上げられる</li>
+<li><strong>概念指向 (concept-oriented)</strong> — 出来事や文献の要約ではなく、概念そのものを中心に書く</li>
+<li><strong>密度の高いリンク (densely linked)</strong> — 書いた／更新した後、関連する既存ノートを探してリンクし、「なぜ関係するのか」を一文で書く。この作業自体が洞察を生む</li>
+<li><strong>連想的オントロジーを優先</strong> — フォルダによる階層分類より、ノート同士の関連付けを重視</li>
+<li><strong>自分のために書く</strong> — 読者を想定せず、まず自分の思考のために書く</li>
+</ol>
 
 
-<p>この「脱Android・脱Google」路線は、PC版である<a href="/notes/harmonyos-pc.html">HarmonyOS PC版（鴻蒙電脳）</a>でも同じ方向性で展開されている。</p>
+<h2>Zettelkastenとの関係</h2>
+
+<p>ニクラス・ルーマンの <strong>Zettelkasten</strong>（カード式ノート法）に強く影響を受けた考え方で、「原子性」「密度の高いリンク」はZettelkastenの発想を直接引き継いでいる。Zettelkasten実践者のSönke Ahrensは「ノートの取り方を改善することが目的ではなく、思考そのものを改善することが目的だ」と述べており、この考え方はエバーグリーンノートの哲学とも一致する。</p>
+
+<h2>このサイトとの関連</h2>
+
+<p><code>64p.org</code>の<code>/notes/</code>コーナーは、1トピック1ファイル、<code>[[...]]</code>による密なリンク、フォルダではなくタグ・リンクによる関連付けという構成になっており、実質的にエバーグリーンノート／Zettelkasten方式のノートシステムだと言える。</p>
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://project.nikkeibp.co.jp/bpi/atcl/column/19/013000696/">オープンソース「HarmonyOS」 多くの産業でデジタル基盤構築｜日経BP 総合研究所</a></li>
-<li><a href="https://gihyo.jp/article/2024/12/android-weekly-topics-241205">HarmonyOSはAndroidフリーになりHarmonyOS NEXTへ | gihyo.jp</a></li>
-<li><a href="https://gihyo.jp/article/2024/02/android-weekly-topics-240201">脱Android、Huaweiが独自OS「HarmonyOS NEXT」を発表 | gihyo.jp</a></li>
-<li><a href="https://en.wikipedia.org/wiki/HarmonyOS_NEXT">HarmonyOS 5 (NEXT) - Wikipedia</a></li>
+<li><a href="https://notes.andymatuschak.org/Evergreen_notes">Evergreen notes - Andy Matuschak</a></li>
+<li><a href="https://notes.andymatuschak.org/zNUaiGAXp21eorsER1Jm9yU">Evergreen notes should be atomic</a></li>
+<li><a href="https://fabric.so/learn/evergreen-notes">Evergreen notes: a complete guide - Fabric</a></li>
 </ul>
 
 
-                                <div class="notes-backlinks">
-                    <h2>🔗 リンクされているノート</h2>
-                    <ul>
-                                            <li><a href="/notes/harmonyos-pc.html">HarmonyOS PC版（鴻蒙電脳）</a></li>
-                    
-                    </ul>
-                </div>
                                 <div class="notes-meta">
                     <span>作成日: 2026-08-09</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=HarmonyOS%E3%81%A8%E3%81%AF&url=https%3A%2F%2F64p.org%2Fnotes%2Fharmonyos.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=%E3%82%A8%E3%83%90%E3%83%BC%E3%82%B0%E3%83%AA%E3%83%BC%E3%83%B3%E3%83%8E%E3%83%BC%E3%83%88%20%28Evergreen%20Notes%29&url=https%3A%2F%2F64p.org%2Fnotes%2Fevergreen-notes.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">
