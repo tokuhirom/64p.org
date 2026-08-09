@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>Notesコーナーへようこそ - Notes - 64p.org</title>
+    <title>ngrep (network grep) - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/highlight.js@11/styles/github.min.css" media="(prefers-color-scheme: light)">
@@ -19,7 +19,7 @@
             <a class="notes-tags-link" href="/notes/tags/">🏷️ タグ一覧</a>
             <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
             <ul class="notes-nav">
-                            <li><a href="/notes/welcome.html" class="active">Notesコーナーへようこそ</a></li>
+                            <li><a href="/notes/welcome.html">Notesコーナーへようこそ</a></li>
                             <li><a href="/notes/wails.html">Wails</a></li>
                             <li><a href="/notes/tauri.html">Tauri</a></li>
                             <li><a href="/notes/tableau.html">Tableau</a></li>
@@ -29,7 +29,7 @@
                             <li><a href="/notes/raku-rakudo-perl6.html">Raku / Rakudo / Perl 6</a></li>
                             <li><a href="/notes/project-glasswing.html">Project Glasswing</a></li>
                             <li><a href="/notes/openssf.html">OpenSSF (Open Source Security Foundation)</a></li>
-                            <li><a href="/notes/ngrep.html">ngrep (network grep)</a></li>
+                            <li><a href="/notes/ngrep.html" class="active">ngrep (network grep)</a></li>
                             <li><a href="/notes/miidera-gomimushi.html">ミイデラゴミムシ</a></li>
                             <li><a href="/notes/lefthook.html">lefthook</a></li>
                             <li><a href="/notes/kyoka-vs-tanka.html">狂歌と短歌の違い</a></li>
@@ -55,49 +55,113 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>Notesコーナーへようこそ</h1>
+                <h1>ngrep (network grep)</h1>
 
-<p>ちょっと調べたこと、AIに調査してもらった結果、忘れたくないスニペットなどを気軽に書き残しておく場所です。</p>
+<p><code>grep</code>のようなパターンマッチングをネットワークパケットに対して行えるコマンドラインツール。 <a class="note-tag" href="/notes/tags/networking.html">#networking</a> <a class="note-tag" href="/notes/tags/cli.html">#cli</a></p>
 
-<p><a href="https://blog.64p.org/">ブログ</a>はもう少しちゃんとした記事向けで、こちらはメモ書き程度のラフなものを想定しています。</p>
+<h2>概要</h2>
 
-<h2>コードブロックの例</h2>
+<ul>
+<li>名前の通り「grep + network」。pcapライブラリでパケットをキャプチャし、GNU regexライブラリで正規表現マッチングを行う</li>
+<li><code>tcpdump</code>（パケットキャプチャ）と<code>grep</code>（テキスト検索）の中間に位置するツール、というのがよくある説明</li>
+<li>TCP/UDP/ICMPを、Ethernet/PPP/SLIP/FDDI/nullインターフェース越しに解析可能</li>
+<li><code>tcpdump</code>や<code>snoop</code>と同様のBPFフィルタ構文が使える</li>
+</ul>
 
-<p>コードスニペットはシンタックスハイライト付きで表示されます。</p>
 
-<pre><code class="perl">use strict;
-use warnings;
+<p><code>tcpdump</code>が「パケットの構造」を見るのに強い一方、ngrepは「ペイロード内の特定の文字列パターン」を探すのに向いている、という住み分け。</p>
 
-sub greet {
-    my ($name) = @_;
-    return "Hello, $name!";
-}
+<h2>チートシート</h2>
 
-print greet("world"), "\n";
+<pre><code class="sh"># デフォルトインターフェースでポート80(HTTP)を監視
+ngrep port 80
+
+# 全インターフェースを対象にする(-d any)
+ngrep -d any port 25
+
+# 特定文字列を含むパケットだけに絞り込む(syslogでerrorを検索)
+ngrep -d any 'error' port syslog
+
+# 単語マッチング+大文字小文字を区別しない(FTPのuser/passを監視)
+ngrep -wi -d any 'user|pass' port 21
+
+# 行単位で表示してヘッダを見やすく整形(HTTP向け)
+ngrep -W byline port 80
+
+# 16進数パターンでバイナリデータを検索
+ngrep -xX '0xc5d5e5f55666768696a6b6c6d6e6' port 80
+
+# キャプチャ結果をpcapファイルに保存(タイムスタンプ付き)
+ngrep -O /tmp/dns.dump -T port domain
+
+# 保存したpcapファイルを後から検索
+ngrep -I /tmp/dns.dump
 </code></pre>
 
+<p>主なオプション:</p>
+
+<table>
+<thead>
+<tr>
+<th> オプション </th>
+<th> 意味 </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td> <code>-d &lt;iface&gt;</code> </td>
+<td> キャプチャするインターフェース指定(<code>any</code>で全インターフェース) </td>
+</tr>
+<tr>
+<td> <code>-i</code> </td>
+<td> 大文字小文字を区別しない </td>
+</tr>
+<tr>
+<td> <code>-w</code> </td>
+<td> 単語単位でマッチング </td>
+</tr>
+<tr>
+<td> <code>-x</code> </td>
+<td> 16進数ダンプも表示 </td>
+</tr>
+<tr>
+<td> <code>-X</code> </td>
+<td> 16進数パターンでマッチング </td>
+</tr>
+<tr>
+<td> <code>-W byline</code> </td>
+<td> 出力を行単位に整形 </td>
+</tr>
+<tr>
+<td> <code>-O &lt;file&gt;</code> </td>
+<td> キャプチャ結果をpcapファイルに保存 </td>
+</tr>
+<tr>
+<td> <code>-I &lt;file&gt;</code> </td>
+<td> 保存済みpcapファイルを読み込んで検索 </td>
+</tr>
+<tr>
+<td> <code>-T</code> </td>
+<td> タイムスタンプを表示 </td>
+</tr>
+</tbody>
+</table>
 
 
-<pre><code class="bash"># ちょっとしたシェルのワンライナー
-find . -name '*.md' | xargs wc -l
-</code></pre>
+<p>フィルタ部分(<code>port 80</code>など)は<code>tcpdump</code>と同じBPF構文が使える。</p>
 
-<h2>新しいノートの追加方法</h2>
+<h2>出典</h2>
 
-<p><code>notes/src/</code> 配下にMarkdownファイルを追加します。1行目がタイトルになります（<code># タイトル</code> でもプレーンテキストでもOK）。追加したら以下を実行します。</p>
+<ul>
+<li><a href="https://linux.die.net/man/8/ngrep">ngrep(8): network grep - Linux man page</a></li>
+<li><a href="https://ngrep.sourceforge.net/usage.html">ngrep - network grep</a></li>
+<li><a href="https://linuxhint.com/how-to-use-ngrep/">What is ngrep and How to Use It? - Linux Hint</a></li>
+</ul>
 
-<pre><code class="sh">perl regen-index.pl
-</code></pre>
-
-<h2>ノート同士のリンク</h2>
-
-<p>1トピック1ファイルを基本に、<code>[[ファイル名]]</code>と書くと他のノートにリンクできます。例えば<a href="/notes/dangouzaka-yurai.html">談合坂の地名由来</a>のように書くと、そのノートのタイトルでリンクが張られます。表示テキストを変えたい場合は<code>[[dangouzaka-yurai|地名の話]]</code>のように<code>|</code>区切りで指定できます。</p>
-
-<p>リンクされた側のノートには、どのノートからリンクされているかが自動で「🔗 リンクされているノート」として表示されます（バックリンク）。存在しないファイル名を指定するとビルド時に警告が出ます。</p>
 
                                 <div class="notes-meta">
                     <span>作成日: 2026-08-09</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=Notes%E3%82%B3%E3%83%BC%E3%83%8A%E3%83%BC%E3%81%B8%E3%82%88%E3%81%86%E3%81%93%E3%81%9D&url=https%3A%2F%2F64p.org%2Fnotes%2Fwelcome.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=ngrep%20%28network%20grep%29&url=https%3A%2F%2F64p.org%2Fnotes%2Fngrep.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">
