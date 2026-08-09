@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>OpenSSF (Open Source Security Foundation) - Notes - 64p.org</title>
+    <title>COSMIC (デスクトップ環境) - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/highlight.js@11/styles/github.min.css" media="(prefers-color-scheme: light)">
@@ -54,7 +54,7 @@
                                     <li><a href="/notes/pop-os.html">Pop!_OS</a></li>
                                     <li><a href="/notes/polinky-triangle-secret.html">ポリンキーの「三角形の秘密」</a></li>
                                     <li><a href="/notes/permanent-notes.html">パーマネントノート (Permanent Notes)</a></li>
-                                    <li><a href="/notes/openssf.html" class="active">OpenSSF (Open Source Security Foundation)</a></li>
+                                    <li><a href="/notes/openssf.html">OpenSSF (Open Source Security Foundation)</a></li>
                                     <li><a href="/notes/openrouter.html">OpenRouter</a></li>
                                     <li><a href="/notes/openjdk-projects.html">OpenJDKの主要プロジェクト</a></li>
                                     <li><a href="/notes/obsidian.html">Obsidian</a></li>
@@ -96,7 +96,7 @@
                                     <li><a href="/notes/deck-k1low.html">deck (k1LoW)</a></li>
                                     <li><a href="/notes/dangouzaka-yurai.html">談合坂の地名由来</a></li>
                                     <li><a href="/notes/craft-beer.html">クラフトビール</a></li>
-                                    <li><a href="/notes/cosmic-desktop.html">COSMIC (デスクトップ環境)</a></li>
+                                    <li><a href="/notes/cosmic-desktop.html" class="active">COSMIC (デスクトップ環境)</a></li>
                                     <li><a href="/notes/coreboot.html">coreboot</a></li>
                                     <li><a href="/notes/claude-model-tiers.html">Claudeのモデル階層(Opus / Sonnet / Haiku / Fable)の違い</a></li>
                                     <li><a href="/notes/carnivorous-plants.html">食虫植物</a></li>
@@ -115,49 +115,51 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>OpenSSF (Open Source Security Foundation)</h1>
+                <h1>COSMIC (デスクトップ環境)</h1>
 
-<p><a class="note-tag" href="/notes/tags/security.html">#security</a> <a class="note-tag" href="/notes/tags/oss.html">#oss</a></p>
+<p><a href="/notes/system76.html">System76</a>が開発する、Rustで書かれたWaylandネイティブのデスクトップ環境。Component-Oriented System for Integrated Modular Computingの略。 <a class="note-tag" href="/notes/tags/linux.html">#linux</a> <a class="note-tag" href="/notes/tags/rust.html">#rust</a></p>
 
-<p>Linux Foundation傘下の非営利団体で、オープンソースソフトウェアのセキュリティ向上を目的とした業界横断の連携組織。2020年8月、Linux Foundationの前身プロジェクト「Core Infrastructure Initiative」の後継として設立された。</p>
-
-<p><a href="/notes/project-glasswing.html">Project Glasswing</a>でAnthropicが寄付した先の一つ(Linux Foundation経由でAlpha-Omega/OpenSSFに250万ドル)。</p>
-
-<h2>規模</h2>
-
-<p>現在116のメンバー企業が参加、本拠地はサンフランシスコ。10のワーキンググループでセキュリティ関連の取り組みを実施している。2021年にBrian Behlendorfが初代総長に就任し、2023年からはOmkhar Arasaratnamが総長、Behlendorfは技術部門トップ(CTO)に転任した。</p>
-
-<h2>代表的なプロジェクト</h2>
+<h2>特徴</h2>
 
 <ul>
-<li><strong>Sigstore</strong>: ソフトウェアのコード署名・検証サービス。</li>
-<li><strong>Alpha-Omega</strong>: サプライチェーンセキュリティ改善のための大規模プロジェクト。</li>
-<li><strong>Scorecard</strong>: OSSプロジェクトのセキュリティ健全性を機械的にスコア化するツール群。</li>
+<li>Rustで一から書かれたWaylandコンポジタで、コアパッケージ・アプリケーション・<code>libcosmic</code>などの基盤ライブラリを含めて約27コンポーネントに分割された、モジュラーで組み合わせ可能な設計。コンポーネント単位での置き換え・拡張が可能。</li>
+<li>パフォーマンス向上とフリーズ低減を狙っており、自動タイリング機能なども備える。</li>
 </ul>
 
 
-<h2>活動</h2>
+<h2>配布状況</h2>
 
-<p>2022年5月には「Open Source Software Security Mobilization Plan」で3000万ドルの資金調達を達成するなど、業界大手(Google, Microsoft, AWS等)が連携してOSSのセキュリティ基盤強化に投資する枠組みとして機能している。</p>
+<p><a href="/notes/pop-os.html">Pop!_OS</a> 24.04 LTS以降にネイティブ搭載されるほか、Arch、Fedora、NixOS、openSUSE Tumbleweed、Gentoo、CachyOS、Garuda、Enterprise Linux 9/10、postmarketOS、Slackware.uk、AerynOSなど幅広いディストリビューションでサポートされている。</p>
+
+<h2>開発状況(2026年)</h2>
+
+<ul>
+<li>COSMIC Epoch 1.3.0でフロストガラス風の視覚効果、AMD/Intel/NVIDIA各GPUに対応したGPUモニタリング機能強化、Waylandプロトコル準拠の改善などが追加された。</li>
+<li>COSMIC Epoch 1.4.0が2026-07-22にリリースされ、ゲームのフルスクリーンモード対応やフラクショナルスケーリング時のポインタ精度など、<code>cosmic-comp</code>に対する13件の安定性修正が行われた。</li>
+<li>ロードマップとして、複数PC間でアプリ・デスクトップ設定・dotfilesをエンドツーエンド暗号化で同期する「COSMIC Sync」が2026年内に計画されている。</li>
+</ul>
+
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://en.wikipedia.org/wiki/Open_Source_Security_Foundation">Open Source Security Foundation - Wikipedia</a></li>
-<li><a href="https://www.linuxfoundation.org/blog/blog/open-source-security-foundation-openssf-reflection-and-future">Open Source Security Foundation (OpenSSF): Reflection and Future - Linux Foundation</a></li>
+<li><a href="https://en.wikipedia.org/wiki/COSMIC_desktop">COSMIC desktop - Wikipedia</a></li>
+<li><a href="https://www.linuxcompatible.org/story/cosmic-13-released-system76s-rust-linux-desktop-gains-frosted-glass-and-gpu-tools/">COSMIC 1.3 Released: System76&rsquo;s Rust Linux Desktop Gains Frosted Glass and GPU Tools</a></li>
+<li><a href="https://www.linuxcompatible.org/story/system76-releases-cosmic-epoch-140-with-stability-fixes-and-compositor-updates/">System76 Releases COSMIC Epoch 1.4.0 with Stability Fixes and Compositor Updates</a></li>
 </ul>
 
 
                                 <div class="notes-backlinks">
                     <h2>🔗 リンクされているノート</h2>
                     <ul>
-                                            <li><a href="/notes/project-glasswing.html">Project Glasswing</a></li>
+                                            <li><a href="/notes/pop-os.html">Pop!_OS</a></li>
+                                            <li><a href="/notes/system76.html">System76</a></li>
                     
                     </ul>
                 </div>
                                 <div class="notes-meta">
                     <span>作成日: 2026-08-09</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=OpenSSF%20%28Open%20Source%20Security%20Foundation%29&url=https%3A%2F%2F64p.org%2Fnotes%2Fopenssf.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=COSMIC%20%28%E3%83%87%E3%82%B9%E3%82%AF%E3%83%88%E3%83%83%E3%83%97%E7%92%B0%E5%A2%83%29&url=https%3A%2F%2F64p.org%2Fnotes%2Fcosmic-desktop.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">

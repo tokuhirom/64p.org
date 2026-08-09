@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>OpenSSF (Open Source Security Foundation) - Notes - 64p.org</title>
+    <title>coreboot - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/highlight.js@11/styles/github.min.css" media="(prefers-color-scheme: light)">
@@ -54,7 +54,7 @@
                                     <li><a href="/notes/pop-os.html">Pop!_OS</a></li>
                                     <li><a href="/notes/polinky-triangle-secret.html">ポリンキーの「三角形の秘密」</a></li>
                                     <li><a href="/notes/permanent-notes.html">パーマネントノート (Permanent Notes)</a></li>
-                                    <li><a href="/notes/openssf.html" class="active">OpenSSF (Open Source Security Foundation)</a></li>
+                                    <li><a href="/notes/openssf.html">OpenSSF (Open Source Security Foundation)</a></li>
                                     <li><a href="/notes/openrouter.html">OpenRouter</a></li>
                                     <li><a href="/notes/openjdk-projects.html">OpenJDKの主要プロジェクト</a></li>
                                     <li><a href="/notes/obsidian.html">Obsidian</a></li>
@@ -97,7 +97,7 @@
                                     <li><a href="/notes/dangouzaka-yurai.html">談合坂の地名由来</a></li>
                                     <li><a href="/notes/craft-beer.html">クラフトビール</a></li>
                                     <li><a href="/notes/cosmic-desktop.html">COSMIC (デスクトップ環境)</a></li>
-                                    <li><a href="/notes/coreboot.html">coreboot</a></li>
+                                    <li><a href="/notes/coreboot.html" class="active">coreboot</a></li>
                                     <li><a href="/notes/claude-model-tiers.html">Claudeのモデル階層(Opus / Sonnet / Haiku / Fable)の違い</a></li>
                                     <li><a href="/notes/carnivorous-plants.html">食虫植物</a></li>
                                     <li><a href="/notes/burp-suite.html">Burp Suite</a></li>
@@ -115,49 +115,47 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>OpenSSF (Open Source Security Foundation)</h1>
+                <h1>coreboot</h1>
 
-<p><a class="note-tag" href="/notes/tags/security.html">#security</a> <a class="note-tag" href="/notes/tags/oss.html">#oss</a></p>
+<p>BIOS/UEFIを置き換える、オープンソースのファームウェアプロジェクト。旧称LinuxBIOS。1999年に初リリース、当初の開発者にはRonald G. Minnich、Eric Biedermanらが名を連ねる。 <a class="note-tag" href="/notes/tags/linux.html">#linux</a> <a class="note-tag" href="/notes/tags/kernel.html">#kernel</a></p>
 
-<p>Linux Foundation傘下の非営利団体で、オープンソースソフトウェアのセキュリティ向上を目的とした業界横断の連携組織。2020年8月、Linux Foundationの前身プロジェクト「Core Infrastructure Initiative」の後継として設立された。</p>
-
-<p><a href="/notes/project-glasswing.html">Project Glasswing</a>でAnthropicが寄付した先の一つ(Linux Foundation経由でAlpha-Omega/OpenSSFに250万ドル)。</p>
-
-<h2>規模</h2>
-
-<p>現在116のメンバー企業が参加、本拠地はサンフランシスコ。10のワーキンググループでセキュリティ関連の取り組みを実施している。2021年にBrian Behlendorfが初代総長に就任し、2023年からはOmkhar Arasaratnamが総長、Behlendorfは技術部門トップ(CTO)に転任した。</p>
-
-<h2>代表的なプロジェクト</h2>
+<h2>設計思想</h2>
 
 <ul>
-<li><strong>Sigstore</strong>: ソフトウェアのコード署名・検証サービス。</li>
-<li><strong>Alpha-Omega</strong>: サプライチェーンセキュリティ改善のための大規模プロジェクト。</li>
-<li><strong>Scorecard</strong>: OSSプロジェクトのセキュリティ健全性を機械的にスコア化するツール群。</li>
+<li>起動速度・セキュリティ・柔軟性に強くフォーカスした「BIOS/UEFIの置き換え」を標榜し、バックドアや'80年代からの不要なコードを排除してできる限り高速にOSを起動することを目指す。</li>
+<li>デスクトップ・ノートPCでは1秒未満、サーバーでは数分単位の起動時間短縮を実現できるとされる。</li>
+<li>もともとはノード数千台規模のスーパーコンピュータ向けに設計されたが、デスクトップ・ヘッドレスサーバー・ノートPC・タブレット・IoTデバイスまで幅広く動作する。</li>
+<li>ソースコードは他のOSSと同様に検査・学習・改変が可能。</li>
 </ul>
 
 
-<h2>活動</h2>
+<h2>技術詳細</h2>
 
-<p>2022年5月には「Open Source Software Security Mobilization Plan」で3000万ドルの資金調達を達成するなど、業界大手(Google, Microsoft, AWS等)が連携してOSSのセキュリティ基盤強化に投資する枠組みとして機能している。</p>
+<p>主にC言語(約1%はアセンブリ、オプションでSPARK)で書かれており、IA-32・x86-64・ARMv7・ARMv8・RISC-V・POWER8など複数のプラットフォームをサポートする。Linuxカーネル開発に携わるエンジニアも多く関わっている。</p>
+
+<h2>採用例</h2>
+
+<p><a href="/notes/system76.html">System76</a>は一部のノートPCでcorebootを採用し、自社でも関連リポジトリをGitHubで公開している。</p>
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://en.wikipedia.org/wiki/Open_Source_Security_Foundation">Open Source Security Foundation - Wikipedia</a></li>
-<li><a href="https://www.linuxfoundation.org/blog/blog/open-source-security-foundation-openssf-reflection-and-future">Open Source Security Foundation (OpenSSF): Reflection and Future - Linux Foundation</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Coreboot">Coreboot - Wikipedia</a></li>
+<li><a href="https://www.coreboot.org/end_users.html">coreboot for end users</a></li>
+<li><a href="https://opensource.com/article/19/11/coreboot-system76-laptops">System76 introduces laptops with open source BIOS coreboot | Opensource.com</a></li>
 </ul>
 
 
                                 <div class="notes-backlinks">
                     <h2>🔗 リンクされているノート</h2>
                     <ul>
-                                            <li><a href="/notes/project-glasswing.html">Project Glasswing</a></li>
+                                            <li><a href="/notes/system76.html">System76</a></li>
                     
                     </ul>
                 </div>
                                 <div class="notes-meta">
                     <span>作成日: 2026-08-09</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=OpenSSF%20%28Open%20Source%20Security%20Foundation%29&url=https%3A%2F%2F64p.org%2Fnotes%2Fopenssf.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=coreboot&url=https%3A%2F%2F64p.org%2Fnotes%2Fcoreboot.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">
