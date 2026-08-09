@@ -38,5 +38,8 @@
     <script src="//cdn.jsdelivr.net/npm/highlight.js@11/lib/highlight.min.js"></script>
     <script>hljs.highlightAll();</script>
     <script src="/static/notes.js"></script>
+[%- IF has_tweet_embed %]
+    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+    [%- END %]
 </body>
 </html>
