@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>Project Valhalla - Notes - 64p.org</title>
+    <title>System76 - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/highlight.js@11/styles/github.min.css" media="(prefers-color-scheme: light)">
@@ -29,7 +29,7 @@
                                     <li><a href="/notes/thompson-construction.html">Thompson construction</a></li>
                                     <li><a href="/notes/tauri.html">Tauri</a></li>
                                     <li><a href="/notes/tableau.html">Tableau</a></li>
-                                    <li><a href="/notes/system76.html">System76</a></li>
+                                    <li><a href="/notes/system76.html" class="active">System76</a></li>
                                     <li><a href="/notes/solaris.html">Solaris / illumos</a></li>
                                     <li><a href="/notes/snoop.html">snoop</a></li>
                                     <li><a href="/notes/slidev.html">Slidev</a></li>
@@ -43,7 +43,7 @@
                                     <li><a href="/notes/regex-engine-backtracking-vs-nfa.html">正規表現エンジンの実装方式: バックトラッキング型とNFA/DFA型</a></li>
                                     <li><a href="/notes/redos.html">ReDoS (Regular Expression Denial of Service)</a></li>
                                     <li><a href="/notes/raku-rakudo-perl6.html">Raku / Rakudo / Perl 6</a></li>
-                                    <li><a href="/notes/project-valhalla.html" class="active">Project Valhalla</a></li>
+                                    <li><a href="/notes/project-valhalla.html">Project Valhalla</a></li>
                                     <li><a href="/notes/project-panama.html">Project Panama</a></li>
                                     <li><a href="/notes/project-notes.html">プロジェクトノート (Project Notes)</a></li>
                                     <li><a href="/notes/project-loom.html">Project Loom</a></li>
@@ -112,55 +112,43 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>Project Valhalla</h1>
+                <h1>System76</h1>
 
-<p>Javaのオブジェクトモデルを拡張するOpenJDKプロジェクト。オブジェクト指向の抽象化とプリミティブ型のパフォーマンス特性を組み合わせることを目標とする。構文の簡潔化など軽量な言語機能を扱う<a href="/notes/project-amber.html">Project Amber</a>とは役割が異なる。</p>
+<p>Linuxに特化したコンピュータメーカー。2005年、Carl Richellが「地下室に1,500ドル」だけで創業(ベンチャーキャピタルなし)。米コロラド州デンバーに拠点・工場を持つ。 <a class="note-tag" href="/notes/tags/linux.html">#linux</a></p>
 
-<h2>背景</h2>
-
-<p>従来のJavaでは、オブジェクトは常に参照型(ヒープに確保され、ポインタ経由でアクセスされる)だった。Project Valhallaはここに<strong>値型(value type)</strong>を導入し、プリミティブ型並みの性能(インライン化・ボクシング回避)を持つオブジェクトを作れるようにする。</p>
-
-<h2>JEP 401 (Value Classes and Objects)</h2>
-
-<p>Project Valhallaの中核となるJEP。</p>
+<h2>製品</h2>
 
 <ul>
-<li>プレビュー機能として <strong>JDK 28</strong> (2027年3月予定)でOpenJDK本流に統合される見込み(2026年6月時点)</li>
-<li>変更規模は197,000行以上、1,816ファイルに及ぶ大規模なもの</li>
-<li>プレビュー機能のためデフォルトでは無効(オプトインが必要)</li>
+<li>デスクトップ「Thelio」シリーズ、ミニPC「Meerkat」、各種ノートPC、ラックマウントサーバーなどをデンバーで設計・製造している。</li>
+<li>2026年はThelioデスクトップファミリーを刷新した新デザイン世代の始まりとされ、Thelio MiraやThelio Majorなどの新モデルを投入。</li>
 </ul>
 
 
-<h2>タイムライン</h2>
+<h2>ハードウェア〜デスクトップ環境までのフルスタック展開</h2>
+
+<p>「ハードウェア・ファームウェア・OS・デスクトップ環境まで一貫して手がける唯一のオープンソースコンピューティング企業」を標榜している。</p>
 
 <ul>
-<li>現行の最新版: JDK 26</li>
-<li>JDK 27: 2026年9月予定</li>
-<li>JDK 28: 2027年3月予定(JEP 401プレビュー搭載見込み)</li>
+<li><strong>オープンファームウェア</strong>: 一部のノートPCでオープンソースBIOSであるcoreboot(オープンファームウェアプロジェクト)を採用し、自社でもcoreboot関連リポジトリ・firmware-openなどをGitHubで公開している。</li>
+<li><strong>Pop!_OS</strong>: Ubuntuベースの自社Linuxディストリビューション。自社製コンピュータに標準搭載されるが、他のPCにも単体でインストール可能。AMD/NVIDIA両GPUをフルサポートし、フルディスク暗号化・ユーザーデータ非収集などを特徴とする。</li>
+<li><strong>COSMIC</strong>: Rustで一から書き直された、Pop!_OS向けの自社デスクトップ環境。「モジュラーで組み合わせ可能」な設計を掲げ、コンポーネント単位での置き換え・拡張ができる。パフォーマンス向上とフリーズ低減を狙っている。</li>
 </ul>
 
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://openjdk.org/projects/valhalla/">Project Valhalla — OpenJDK公式</a></li>
-<li><a href="https://www.theregister.com/devops/2026/06/15/javas-project-valhalla-finally-lands-a-preview-in-jdk-28/5255557">Java&rsquo;s Project Valhalla finally lands a preview in JDK 28 — The Register</a></li>
-<li><a href="https://inside.java/2026/01/08/newscast-104/">Java&rsquo;s Plans for 2026 - Inside Java Newscast #104</a></li>
-<li><a href="https://en.wikipedia.org/wiki/Project_Valhalla_(Java_language">Project Valhalla (Java language) - Wikipedia</a>)</li>
+<li><a href="https://en.wikipedia.org/wiki/System76">System76 - Wikipedia</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Pop!_OS">Pop!_OS - Wikipedia</a></li>
+<li><a href="https://en.wikipedia.org/wiki/COSMIC_desktop">COSMIC desktop - Wikipedia</a></li>
+<li><a href="https://www.theregister.com/personal-tech/2026/06/17/system76-boss-reckons-he-can-liberate-the-entire-pc-stack-just-give-him-another-15-years/5255258">System76 boss reckons he can liberate the entire PC stack&hellip; - The Register</a></li>
+<li><a href="https://opensource.com/article/19/11/coreboot-system76-laptops">System76 introduces laptops with open source BIOS coreboot | Opensource.com</a></li>
 </ul>
 
 
-                                <div class="notes-backlinks">
-                    <h2>🔗 リンクされているノート</h2>
-                    <ul>
-                                            <li><a href="/notes/openjdk-projects.html">OpenJDKの主要プロジェクト</a></li>
-                                            <li><a href="/notes/project-amber.html">Project Amber</a></li>
-                    
-                    </ul>
-                </div>
                                 <div class="notes-meta">
                     <span>作成日: 2026-08-09</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=Project%20Valhalla&url=https%3A%2F%2F64p.org%2Fnotes%2Fproject-valhalla.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=System76&url=https%3A%2F%2F64p.org%2Fnotes%2Fsystem76.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">
