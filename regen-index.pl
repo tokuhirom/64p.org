@@ -157,7 +157,7 @@ sub regen {
             $created //= $fallback;
             $updated //= $fallback;
         }
-        my ($title) = ($mkdn =~ /\A#?\s*(.+?)\n/);
+        my ($title) = ($mkdn =~ /\A\s*#?\s*(.+?)\n/);
         (my $slug = $src) =~ s!^notes/src/!!;
         $slug =~ s/\.md$//;
         +{
