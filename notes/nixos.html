@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>Project Panama - Notes - 64p.org</title>
+    <title>NixOS - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/highlight.js@11/styles/github.min.css" media="(prefers-color-scheme: light)">
@@ -22,7 +22,7 @@
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
                                     <li><a href="/notes/nixpkgs-core-team-disbanded.html">Nixpkgs Core Teamの解散(2026年8月)</a></li>
-                                    <li><a href="/notes/nixos.html">NixOS</a></li>
+                                    <li><a href="/notes/nixos.html" class="active">NixOS</a></li>
                                     <li><a href="/notes/nix.html">Nix</a></li>
                                     <li><a href="/notes/incus.html">Incus</a></li>
                                     <li><a href="/notes/cosmic-desktop.html">COSMIC (デスクトップ環境)</a></li>
@@ -62,7 +62,7 @@
                                     <li><a href="/notes/lxc.html">LXC (Linux Containers)</a></li>
                                     <li><a href="/notes/nushell.html">Nushell</a></li>
                                     <li><a href="/notes/simd.html">SIMD</a></li>
-                                    <li><a href="/notes/project-panama.html" class="active">Project Panama</a></li>
+                                    <li><a href="/notes/project-panama.html">Project Panama</a></li>
                                     <li><a href="/notes/apache-arrow.html">Apache Arrow</a></li>
                                     <li><a href="/notes/thompson-construction.html">Thompson construction</a></li>
                                     <li><a href="/notes/regex-engine-backtracking-vs-nfa.html">正規表現エンジンの実装方式: バックトラッキング型とNFA/DFA型</a></li>
@@ -144,49 +144,36 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>Project Panama</h1>
+                <h1>NixOS</h1>
 
-<p>Javaとネイティブコードの連携を改善するOpenJDKプロジェクト。中核はForeign Function &amp; Memory (FFM) API。</p>
+<p><a href="/notes/nix.html">Nix</a>をパッケージマネージャーとして採用したLinuxディストリビューション。システムパッケージも含め、全てNixpkgsのパッケージ定義から構築される。設定ファイル(Nix言語で記述)から宣言的にシステム全体を構成できるのが特徴。</p>
 
-<h2>Foreign Function &amp; Memory (FFM) API</h2>
+<h2>Nixとの関係</h2>
 
-<p>Javaプログラムからネイティブ関数を呼び出し、ネイティブメモリを直接管理できるAPI。従来のJava Native Interface (JNI)より安全かつ効率的にこれらの操作を行える。</p>
+<p>Nix言語で書かれたパッケージ定義がNixpkgsに集約され、その上でNixOSはNixpkgsのパッケージを活用してLinuxシステムを構築する、という階層構造になっている。</p>
 
-<ul>
-<li>JDK 19でプレビュー導入</li>
-<li>JDK 22で正式機能化(2024年3月)</li>
-</ul>
-
-
-<h2>jextract</h2>
-
-<p>Cのヘッダファイル(<code>.h</code>)をパースし、FFM APIを使ったJavaコードを自動生成するコマンドラインツール。ネイティブライブラリのヘッダで記述された関数・構造体へアクセスするためのJavaバインディングを生成する用途で、FFM APIと組み合わせて使われることが多い。2026年もjextractの改善が計画されている。</p>
-
-<h2>関連: Vector API</h2>
-
-<p><a href="/notes/simd.html">SIMD</a>命令を活用したベクトル演算をJavaから扱うためのAPI。Panamaの一部として開発が進められており、JDK 26で11回目のインキュベーションを迎える予定。</p>
+<p><a class="note-tag" href="/notes/tags/nix.html">#nix</a> <a class="note-tag" href="/notes/tags/linux.html">#linux</a></p>
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://medium.com/@kaustubh.saha/java-foreign-function-memory-api-project-panama-ebbc29f5daaf">Java Foreign Function &amp; Memory API (Project Panama) | Medium</a></li>
-<li><a href="https://inside.java/2020/10/06/jextract/">Project Panama and jextract - Inside.java</a></li>
-<li><a href="https://www.baeldung.com/java-project-panama">Guide to Java Project Panama | Baeldung</a></li>
-<li><a href="https://dev.java/future/innovation/">Java Innovation Projects - Dev.java</a></li>
+<li><a href="https://zenn.dev/asa1984/articles/nixos-is-the-best">NixOSで最強のLinuxデスクトップを作ろう - Zenn</a></li>
+<li><a href="https://ja.wikipedia.org/wiki/Nix_(%E3%83%91%E3%83%83%E3%82%B1%E3%83%BC%E3%82%B8%E7%AE%A1%E7%90%86%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0">Nix (パッケージ管理システム) - Wikipedia</a>)</li>
 </ul>
 
 
                                 <div class="notes-backlinks">
                     <h2>🔗 リンクされているノート</h2>
                     <ul>
-                                            <li><a href="/notes/openjdk-projects.html">OpenJDKの主要プロジェクト</a></li>
-                                            <li><a href="/notes/simd.html">SIMD</a></li>
+                                            <li><a href="/notes/cosmic-desktop.html">COSMIC (デスクトップ環境)</a></li>
+                                            <li><a href="/notes/incus.html">Incus</a></li>
+                                            <li><a href="/notes/nix.html">Nix</a></li>
                     
                     </ul>
                 </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-09 21:23 / 更新日時: 2026-08-09 22:22</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=Project%20Panama&url=https%3A%2F%2F64p.org%2Fnotes%2Fproject-panama.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <span>作成日時: 2026-08-10 16:57 / 更新日時: 2026-08-10 16:57</span>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=NixOS&url=https%3A%2F%2F64p.org%2Fnotes%2Fnixos.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">

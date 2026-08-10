@@ -1,6 +1,6 @@
 ---
 created: 2026-08-09 22:30
-updated: 2026-08-09 22:44
+updated: 2026-08-10 16:57
 ---
 # Incus
 
@@ -16,7 +16,7 @@ updated: 2026-08-09 22:44
 ## 特徴
 
 - CLAを伴わない、完全にコミュニティ主導のオープンソースプロジェクト(Apache 2.0ライセンス)。
-- Debian stable、Fedora、openSUSE、NixOSなど各種ディストリビューションに既に取り込まれている。
+- Debian stable、Fedora、openSUSE、[[nixos|NixOS]]など各種ディストリビューションに既に取り込まれている。
 
 ## 開発の活発さ([[lxd|LXD]]との比較)
 

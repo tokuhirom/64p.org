@@ -1,6 +1,6 @@
 ---
 created: 2026-08-09 22:48
-updated: 2026-08-09 22:48
+updated: 2026-08-10 16:57
 ---
 # COSMIC (デスクトップ環境)
 
@@ -13,7 +13,7 @@ updated: 2026-08-09 22:48
 
 ## 配布状況
 
-[[pop-os|Pop!_OS]] 24.04 LTS以降にネイティブ搭載されるほか、Arch、Fedora、NixOS、openSUSE Tumbleweed、Gentoo、CachyOS、Garuda、Enterprise Linux 9/10、postmarketOS、Slackware.uk、AerynOSなど幅広いディストリビューションでサポートされている。
+[[pop-os|Pop!_OS]] 24.04 LTS以降にネイティブ搭載されるほか、Arch、Fedora、[[nixos|NixOS]]、openSUSE Tumbleweed、Gentoo、CachyOS、Garuda、Enterprise Linux 9/10、postmarketOS、Slackware.uk、AerynOSなど幅広いディストリビューションでサポートされている。
 
 ## 開発状況(2026年)
 
