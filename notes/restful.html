@@ -22,6 +22,7 @@
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
                                     <li><a href="/notes/restful.html" class="active">RESTful（REST: Representational State Transfer）</a></li>
+                                    <li><a href="/notes/hateoas.html">HATEOAS（Hypermedia As The Engine Of Application State）</a></li>
                                     <li><a href="/notes/lxd.html">LXD</a></li>
                                     <li><a href="/notes/yagni.html">YAGNI（You Aren&#39;t Gonna Need It）</a></li>
                                     <li><a href="/notes/extreme-programming.html">エクストリームプログラミング（XP）</a></li>
@@ -233,7 +234,7 @@
 <li>リソースの識別</li>
 <li>表現を通じたリソースの操作</li>
 <li>自己記述的メッセージ</li>
-<li><strong>アプリケーション状態のエンジンとしてのハイパーメディア（HATEOAS）</strong></li>
+<li><strong><a href="/notes/hateoas.html">アプリケーション状態のエンジンとしてのハイパーメディア（HATEOAS）</a></strong></li>
 </ul>
 </li>
 <li><strong>Layered System（階層化システム）</strong> — &ldquo;each component cannot &lsquo;see&rsquo; beyond the immediate layer"。プロキシ・キャッシュなど中間層を可能にする。</li>
@@ -241,14 +242,14 @@
 </ol>
 
 
-<h2>FieldingによるHATEOASの強い主張（2008年のブログ記事）</h2>
+<h2>Fieldingによる<a href="/notes/hateoas.html">HATEOAS</a>の強い主張（2008年のブログ記事）</h2>
 
 <p>Fieldingは2008年、"REST APIs must be hypertext-driven" という記事で、世間の「REST API」を名乗るものの多くが単なるRPCに過ぎないと批判した。</p>
 
 <ul>
 <li>真のREST APIは「アプリケーション状態のエンジンがハイパーテキストによって駆動される」必要があり、これが欠けていればRESTfulとは呼べないと明言。</li>
 <li>固定的なリソース名・階層構造を仕様書などの帯域外情報で定義し、URI構造自体に意味を持たせるAPIは、クライアント・サーバ間を過度に結合させてしまう問題があると指摘。</li>
-<li>HATEOASにより、クライアントは事前知識なしにレスポンス内のリンク（アフォーダンス）から次の操作を判断でき、サーバ側の内部実装変更がクライアントに影響しない、長期的な進化可能性を実現できると主張している。</li>
+<li><a href="/notes/hateoas.html">HATEOAS</a>により、クライアントは事前知識なしにレスポンス内のリンク（アフォーダンス）から次の操作を判断でき、サーバ側の内部実装変更がクライアントに影響しない、長期的な進化可能性を実現できると主張している。</li>
 </ul>
 
 
@@ -266,12 +267,13 @@
                                 <div class="notes-backlinks">
                     <h2>🔗 リンクされているノート</h2>
                     <ul>
+                                            <li><a href="/notes/hateoas.html">HATEOAS（Hypermedia As The Engine Of Application State）</a></li>
                                             <li><a href="/notes/lxd.html">LXD</a></li>
                     
                     </ul>
                 </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-11 08:07 / 更新日時: 2026-08-11 08:07</span>
+                    <span>作成日時: 2026-08-11 08:07 / 更新日時: 2026-08-11 08:09</span>
                     <a class="share-x" href="https://twitter.com/intent/tweet?text=RESTful%EF%BC%88REST%3A%20Representational%20State%20Transfer%EF%BC%89&url=https%3A%2F%2F64p.org%2Fnotes%2Frestful.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>

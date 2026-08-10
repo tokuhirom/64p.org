@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>COSMIC (デスクトップ環境) - Notes - 64p.org</title>
+    <title>HATEOAS（Hypermedia As The Engine Of Application State） - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/highlight.js@11/styles/github.min.css" media="(prefers-color-scheme: light)">
@@ -22,7 +22,7 @@
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
                                     <li><a href="/notes/restful.html">RESTful（REST: Representational State Transfer）</a></li>
-                                    <li><a href="/notes/hateoas.html">HATEOAS（Hypermedia As The Engine Of Application State）</a></li>
+                                    <li><a href="/notes/hateoas.html" class="active">HATEOAS（Hypermedia As The Engine Of Application State）</a></li>
                                     <li><a href="/notes/lxd.html">LXD</a></li>
                                     <li><a href="/notes/yagni.html">YAGNI（You Aren&#39;t Gonna Need It）</a></li>
                                     <li><a href="/notes/extreme-programming.html">エクストリームプログラミング（XP）</a></li>
@@ -103,7 +103,7 @@
                                     <li><a href="/notes/nixos.html">NixOS</a></li>
                                     <li><a href="/notes/nix.html">Nix</a></li>
                                     <li><a href="/notes/incus.html">Incus</a></li>
-                                    <li><a href="/notes/cosmic-desktop.html" class="active">COSMIC (デスクトップ環境)</a></li>
+                                    <li><a href="/notes/cosmic-desktop.html">COSMIC (デスクトップ環境)</a></li>
                                     <li><a href="/notes/wireguard.html">WireGuard</a></li>
                                     <li><a href="/notes/tailscale.html">Tailscale</a></li>
                                     <li><a href="/notes/nat.html">NAT (Network Address Translation)</a></li>
@@ -218,51 +218,57 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>COSMIC (デスクトップ環境)</h1>
+                <h1>HATEOAS（Hypermedia As The Engine Of Application State）</h1>
 
-<p><a href="/notes/system76.html">System76</a>が開発する、Rustで書かれたWaylandネイティブのデスクトップ環境。Component-Oriented System for Integrated Modular Computingの略。 <a class="note-tag" href="/notes/tags/linux.html">#linux</a> <a class="note-tag" href="/notes/tags/rust.html">#rust</a></p>
+<p><a href="/notes/restful.html">REST</a>の4つの「統一インターフェース制約」のうち最後の1つ。Roy Fieldingの2000年の博士論文で初めて言及された。</p>
 
-<h2>特徴</h2>
+<h2>原典での定義</h2>
+
+<p>論文セクション5.1.5（Uniform Interface）で、REST全体を定義する4つのインターフェース制約の一つとして登場する。</p>
+
+<blockquote><p>&ldquo;REST is defined by four interface constraints: identification of resources; manipulation of resources through representations; self-descriptive messages; and, hypermedia as the engine of application state.&rdquo;</p></blockquote>
+
+<p>つまり、クライアントは事前に固定されたAPI仕様書やURI構造の知識に頼るのではなく、サーバーから返されるレスポンス（ハイパーメディア＝リンクなど）そのものから、次に取りうる操作（アフォーダンス）を発見しながら進んでいくべき、という制約。</p>
+
+<h2>Richardson Maturity Model（成熟度モデル）とHATEOAS</h2>
+
+<p>HATEOASを段階的な指標として整理したのが、Leonard Richardson（書籍 <em>&ldquo;RESTful Web Services&rdquo;</em> の共著者）。2008年11月20日、QCon San Franciscoでの講演 <em>&ldquo;Justice Will Take Us Millions Of Intricate Moves&rdquo;</em> の第3幕（Act 3）で発表した「成熟度ヒューリスティック」が原型。</p>
 
 <ul>
-<li>Rustで一から書かれたWaylandコンポジタで、コアパッケージ・アプリケーション・<code>libcosmic</code>などの基盤ライブラリを含めて約27コンポーネントに分割された、モジュラーで組み合わせ可能な設計。コンポーネント単位での置き換え・拡張が可能。</li>
-<li>パフォーマンス向上とフリーズ低減を狙っており、自動タイリング機能なども備える。</li>
+<li><strong>Level 0</strong>: 単一のエンドポイントにPOSTだけを投げるRPCスタイル</li>
+<li><strong>Level 1</strong>: リソースごとにURIを分ける</li>
+<li><strong>Level 2</strong>: HTTPメソッド（GET/POST/PUT/DELETE等）を正しく使い分ける</li>
+<li><strong>Level 3</strong>: HATEOAS対応。レスポンスにハイパーメディアリンクを含み、クライアントが動的に次のアクションを発見できる（このモデルの最上位段階）</li>
 </ul>
 
 
-<h2>配布状況</h2>
+<h2>Fieldingによる軽視への批判</h2>
 
-<p><a href="/notes/pop-os.html">Pop!_OS</a> 24.04 LTS以降にネイティブ搭載されるほか、Arch、Fedora、<a href="/notes/nixos.html">NixOS</a>、openSUSE Tumbleweed、Gentoo、CachyOS、Garuda、Enterprise Linux 9/10、postmarketOS、Slackware.uk、AerynOSなど幅広いディストリビューションでサポートされている。</p>
-
-<h2>開発状況(2026年)</h2>
-
-<ul>
-<li>COSMIC Epoch 1.3.0でフロストガラス風の視覚効果、AMD/Intel/NVIDIA各GPUに対応したGPUモニタリング機能強化、Waylandプロトコル準拠の改善などが追加された。</li>
-<li>COSMIC Epoch 1.4.0が2026-07-22にリリースされ、ゲームのフルスクリーンモード対応やフラクショナルスケーリング時のポインタ精度など、<code>cosmic-comp</code>に対する13件の安定性修正が行われた。</li>
-<li>ロードマップとして、複数PC間でアプリ・デスクトップ設定・dotfilesをエンドツーエンド暗号化で同期する「COSMIC Sync」が2026年内に計画されている。</li>
-</ul>
-
+<p>Fieldingは2008年、"REST APIs must be hypertext-driven" という記事で、世に「REST API」を名乗るものの多くがHATEOASを欠いた単なるRPCに過ぎないと批判している。固定的なリソース名・階層構造を仕様書などの帯域外情報で定義し、URI構造自体に意味を持たせるAPIは、クライアント・サーバ間を過度に結合させてしまう問題があると指摘した。</p>
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://en.wikipedia.org/wiki/COSMIC_desktop">COSMIC desktop - Wikipedia</a></li>
-<li><a href="https://www.linuxcompatible.org/story/cosmic-13-released-system76s-rust-linux-desktop-gains-frosted-glass-and-gpu-tools/">COSMIC 1.3 Released: System76&rsquo;s Rust Linux Desktop Gains Frosted Glass and GPU Tools</a></li>
-<li><a href="https://www.linuxcompatible.org/story/system76-releases-cosmic-epoch-140-with-stability-fixes-and-compositor-updates/">System76 Releases COSMIC Epoch 1.4.0 with Stability Fixes and Compositor Updates</a></li>
+<li><a href="https://roy.gbiv.com/pubs/dissertation/rest_arch_style.htm">Fielding Dissertation: Chapter 5 - Representational State Transfer (REST)</a></li>
+<li><a href="https://www.crummy.com/writing/speaking/2008-QCon/">Justice Will Take Us Millions Of Intricate Moves - Leonard Richardson (crummy.com, 2008 QCon)</a></li>
+<li><a href="https://martinfowler.com/articles/richardsonMaturityModel.html">Richardson Maturity Model - Martin Fowler</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Richardson_Maturity_Model">Richardson Maturity Model - Wikipedia (English)</a></li>
+<li><a href="https://roy.gbiv.com/untangled/2008/rest-apis-must-be-hypertext-driven">REST APIs must be hypertext-driven - Roy Fielding&rsquo;s blog (2008)</a></li>
 </ul>
 
+
+<p><a class="note-tag" href="/notes/tags/software-engineering.html">#software-engineering</a> <a class="note-tag" href="/notes/tags/protocol.html">#protocol</a></p>
 
                                 <div class="notes-backlinks">
                     <h2>🔗 リンクされているノート</h2>
                     <ul>
-                                            <li><a href="/notes/pop-os.html">Pop!_OS</a></li>
-                                            <li><a href="/notes/system76.html">System76</a></li>
+                                            <li><a href="/notes/restful.html">RESTful（REST: Representational State Transfer）</a></li>
                     
                     </ul>
                 </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-09 22:48 / 更新日時: 2026-08-10 16:57</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=COSMIC%20%28%E3%83%87%E3%82%B9%E3%82%AF%E3%83%88%E3%83%83%E3%83%97%E7%92%B0%E5%A2%83%29&url=https%3A%2F%2F64p.org%2Fnotes%2Fcosmic-desktop.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <span>作成日時: 2026-08-11 08:09 / 更新日時: 2026-08-11 08:09</span>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=HATEOAS%EF%BC%88Hypermedia%20As%20The%20Engine%20Of%20Application%20State%EF%BC%89&url=https%3A%2F%2F64p.org%2Fnotes%2Fhateoas.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">
