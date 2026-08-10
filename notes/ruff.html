@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>Electron - Notes - 64p.org</title>
+    <title>Ruff - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/highlight.js@11/styles/github.min.css" media="(prefers-color-scheme: light)">
@@ -21,7 +21,7 @@
                 <a class="notes-tags-link" href="/notes/tags/">🏷️ タグ一覧</a>
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
-                                    <li><a href="/notes/ruff.html">Ruff</a></li>
+                                    <li><a href="/notes/ruff.html" class="active">Ruff</a></li>
                                     <li><a href="/notes/semaphore.html">セマフォ</a></li>
                                     <li><a href="/notes/mutex.html">ミューテックス(mutex)</a></li>
                                     <li><a href="/notes/xinu.html">Xinu</a></li>
@@ -138,7 +138,7 @@
                                     <li><a href="/notes/bpf.html">BPF (Berkeley Packet Filter)</a></li>
                                     <li><a href="/notes/wails.html">Wails</a></li>
                                     <li><a href="/notes/tauri.html">Tauri</a></li>
-                                    <li><a href="/notes/electron.html" class="active">Electron</a></li>
+                                    <li><a href="/notes/electron.html">Electron</a></li>
                                     <li><a href="/notes/skia.html">Skia</a></li>
                                     <li><a href="/notes/rust-gui-libraries.html">Rust GUI ライブラリ一覧</a></li>
                                     <li><a href="/notes/go-gui-libraries.html">Go GUI ライブラリ一覧</a></li>
@@ -165,60 +165,38 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>Electron</h1>
+                <h1>Ruff</h1>
 
-<p>ChromiumとNode.jsを組み合わせて、Web技術(JavaScript/HTML/CSS)だけでクロスプラットフォームのデスクトップアプリを作れるフレームワーク。 <a class="note-tag" href="/notes/tags/electron.html">#electron</a> <a class="note-tag" href="/notes/tags/javascript.html">#javascript</a></p>
+<p>Rustで書かれた、非常に高速なPython用リンター兼コードフォーマッター。Astral社(パッケージマネージャ<code>uv</code>と同じ開発元)が開発している。 <a class="note-tag" href="/notes/tags/python.html">#python</a> <a class="note-tag" href="/notes/tags/rust.html">#rust</a></p>
 
-<h2>概要</h2>
-
-<ul>
-<li>GitHub: <a href="https://github.com/electron/electron">electron/electron</a> — 約122.4kスター、17.4kフォーク</li>
-<li>ライセンス: MIT(OpenJS Foundation傘下のプロジェクト)</li>
-<li>対応OS: macOS(Ventura+, Intel/Apple Silicon)、Windows(10+, x64/arm64)、Linux(x64/arm64)</li>
-</ul>
-
-
-<h2>アーキテクチャ</h2>
-
-<p>Node.jsとChromiumを1バイナリに同梱し、Webアプリと同じ書き方でOSのネイティブ機能(ファイルシステム、メニュー、通知など)にアクセスできるようにする設計。<a href="/notes/tauri.html">Tauri</a>や<a href="/notes/wails.html">Wails</a>がOSネイティブWebViewを使うのとは対照的に、レンダリングエンジン自体を丸ごと同梱するため、バイナリサイズ・メモリ使用量は大きくなる。</p>
-
-<h2>沿革</h2>
+<h2>特徴</h2>
 
 <ul>
-<li>2013年、GitHubのエンジニア Cheng Zhao が、エディタAtomをクロスプラットフォームで作るために開発(当初の名前は"Atom Shell")</li>
-<li>2014年5月、AtomおよびAtom ShellがMITライセンスでオープンソース化</li>
-<li>2015年4月、"Atom Shell"から<strong>Electron</strong>に改称</li>
+<li>既存のリンター(Flake8など)やフォーマッター(Blackなど)と比べて10〜100倍高速</li>
+<li>Flake8、Black、isort、pyupgrade、pydocstyleなど複数ツールの機能を1つのスタンドアロンバイナリに統合しており、これらの多くに対するドロップイン置き換えを目指している</li>
+<li>900以上の組み込みルールを持ち、flake8-bugbearなど人気のFlake8プラグインをネイティブに再実装している</li>
+<li>ランタイム依存のないスタンドアロンバイナリとして配布されるため、インストールが速くバージョン競合の心配もない</li>
+<li>設定は<code>pyproject.toml</code>、<code>ruff.toml</code>、<code>.ruff.toml</code>で行う</li>
 </ul>
 
-
-<h2>著名な採用アプリ</h2>
-
-<p>Visual Studio Code、Slack、GitKraken、WebTorrentなど(初期採用者を含む)。</p>
 
 <h2>位置づけ</h2>
 
-<p>デスクトップアプリをWeb技術で作る「元祖」的存在で、エコシステム・実績が最も豊富。一方でバイナリサイズやメモリ使用量の大きさが、<a href="/notes/tauri.html">Tauri</a>・<a href="/notes/wails.html">Wails</a>など軽量な後発フレームワークが生まれる動機になっている。</p>
+<p>Lintと整形(フォーマット)を1つのCLIに統合した、高性能なPython開発ツール。</p>
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://github.com/electron/electron">GitHub - electron/electron</a></li>
-<li><a href="https://www.electronjs.org/blog/10-years-of-electron">10 years of Electron - Electron Blog</a></li>
-<li><a href="https://en.wikipedia.org/wiki/Electron_(software_framework">Electron (software framework) - Wikipedia</a>)</li>
+<li><a href="https://github.com/astral-sh/ruff">GitHub - astral-sh/ruff</a></li>
+<li><a href="https://docs.astral.sh/ruff/">Ruff - Astral Docs</a></li>
+<li><a href="https://realpython.com/ruff-python/">Ruff: A Modern Python Linter for Error-Free and Maintainable Code – Real Python</a></li>
+<li><a href="https://docs.astral.sh/ruff/formatter/">The Ruff Formatter - Astral Docs</a></li>
 </ul>
 
 
-                                <div class="notes-backlinks">
-                    <h2>🔗 リンクされているノート</h2>
-                    <ul>
-                                            <li><a href="/notes/tauri.html">Tauri</a></li>
-                                            <li><a href="/notes/wails.html">Wails</a></li>
-                    
-                    </ul>
-                </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-09 16:15 / 更新日時: 2026-08-09 16:15</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=Electron&url=https%3A%2F%2F64p.org%2Fnotes%2Felectron.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <span>作成日時: 2026-08-10 19:14 / 更新日時: 2026-08-10 19:14</span>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=Ruff&url=https%3A%2F%2F64p.org%2Fnotes%2Fruff.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">
