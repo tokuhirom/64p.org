@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>Incus - Notes - 64p.org</title>
+    <title>Scala - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/highlight.js@11/styles/github.min.css" media="(prefers-color-scheme: light)">
@@ -22,7 +22,7 @@
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
                                     <li><a href="/notes/scala3.html">Scala 3</a></li>
-                                    <li><a href="/notes/scala.html">Scala</a></li>
+                                    <li><a href="/notes/scala.html" class="active">Scala</a></li>
                                     <li><a href="/notes/currying.html">Currying(カリー化)</a></li>
                                     <li><a href="/notes/herdr.html">herdr</a></li>
                                     <li><a href="/notes/herdr-browser.html">herdr-browser</a></li>
@@ -49,7 +49,7 @@
                                     <li><a href="/notes/cosmic-desktop.html">COSMIC (デスクトップ環境)</a></li>
                                     <li><a href="/notes/coreboot.html">coreboot</a></li>
                                     <li><a href="/notes/lxd.html">LXD</a></li>
-                                    <li><a href="/notes/incus.html" class="active">Incus</a></li>
+                                    <li><a href="/notes/incus.html">Incus</a></li>
                                     <li><a href="/notes/lxc.html">LXC (Linux Containers)</a></li>
                                     <li><a href="/notes/nushell.html">Nushell</a></li>
                                     <li><a href="/notes/simd.html">SIMD</a></li>
@@ -137,93 +137,46 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>Incus</h1>
+                <h1>Scala</h1>
 
-<p><a href="/notes/lxc.html">LXC</a>(コンテナ)とQEMU(仮想マシン)の両方を統一的に扱えるマネージャー/ハイパーバイザー。<a href="/notes/lxd.html">LXD</a>から分岐(フォーク)したプロジェクト。 <a class="note-tag" href="/notes/tags/linux.html">#linux</a></p>
-
-<h2>LXDからのフォークの経緯</h2>
-
-<ul>
-<li>LXDはStéphane Graberによって作られ、長年Linux Containersプロジェクトの一部として開発されてきた。</li>
-<li>2023年、CanonicalがLXDの全コントリビューターに対し、Canonicalへコード全権を譲渡するCLA(Contributor License Agreement)への署名を要求し、LXDをLinux Containers傘下から引き離して自社の管理下に置いた。</li>
-<li>これを受けて、SUSE所属の開発者Aleksa SaraiがLXDの元リード開発者の支援を得て、LXDのフォークとして2023年8月にIncusを立ち上げた。</li>
-<li>2023年8月7日にLinux Containersプロジェクトの正式メンバーとなり、2023年10月に最初のリリース(0.1)、2024年4月4日に長期サポート版(6.0 LTS)がリリースされた。</li>
-</ul>
-
+<p>スイス連邦工科大学ローザンヌ校(EPFL)のMartin Oderskyが設計し、2003年にリリースされたプログラミング言語。</p>
 
 <h2>特徴</h2>
 
 <ul>
-<li>CLAを伴わない、完全にコミュニティ主導のオープンソースプロジェクト(Apache 2.0ライセンス)。</li>
-<li>Debian stable、Fedora、openSUSE、NixOSなど各種ディストリビューションに既に取り込まれている。</li>
+<li>オブジェクト指向と関数型プログラミングの両パラダイムを自然に組み合わせられるマルチパラダイム言語</li>
+<li>JavaVirtual Machine(JVM)上で動作するJVM言語で、Javaのライブラリ資産をほぼそのまま利用できる</li>
+<li>Oderskyがjavac(Javaのコンパイラコマンド)の開発にも関わっていた経緯があり、Javaとの互換性を重視して設計されている</li>
+<li>型推論やラムダ式などにより、Javaと比べて簡潔で読みやすいコードを書ける</li>
 </ul>
 
 
-<h2>開発の活発さ(<a href="/notes/lxd.html">LXD</a>との比較)</h2>
+<p><a href="/notes/currying.html">Currying(カリー化)</a>のような関数型プログラミングの技法もサポートしている。</p>
 
-<p>GitHub APIで両リポジトリを比較(2026-08-09時点)。</p>
+<p>最新の動向は<a href="/notes/scala3.html">Scala 3</a>を参照。</p>
 
-<table>
-<thead>
-<tr>
-<th> 指標 </th>
-<th> Incus (<code>lxc/incus</code>) </th>
-<th> LXD (<code>canonical/lxd</code>) </th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td> Stars </td>
-<td> 5,882 </td>
-<td> 4,809 </td>
-</tr>
-<tr>
-<td> Forks </td>
-<td> 472 </td>
-<td> 1,036 </td>
-</tr>
-<tr>
-<td> Open issues </td>
-<td> 46 </td>
-<td> 409 </td>
-</tr>
-<tr>
-<td> 過去90日のコミット数 </td>
-<td> 約1,951 </td>
-<td> 約1,917 </td>
-</tr>
-<tr>
-<td> コントリビューター数(概算) </td>
-<td> 約597 </td>
-<td> 約479 </td>
-</tr>
-</tbody>
-</table>
-
-
-<p>コミット数そのものはほぼ拮抗しているが、open issuesの滞留数はLXDの方が大きく、コントリビューター数・starsではIncusがやや上回る。リリース体制も異なり、Incusは単一のメインライン(7.x系)を月1ペースで継続リリースするのに対し、LXDは4.0/5.0/5.21など複数バージョン系列を並行メンテしている。</p>
+<p><a class="note-tag" href="/notes/tags/functional-programming.html">#functional-programming</a></p>
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://linuxcontainers.org/incus/">Linux Containers - Incus - Introduction</a></li>
-<li><a href="https://www.phoronix.com/news/Linux-Containers-LXD-Incus">Linux Containers Forks LXD Project As &ldquo;Incus&rdquo; - Phoronix</a></li>
-<li><a href="https://linuxiac.com/incus-project-lxd-fork/">Incus Project: A Breakaway from Canonical&rsquo;s LXD</a></li>
-<li><a href="https://github.com/lxc/incus">GitHub - lxc/incus</a></li>
+<li><a href="https://scala-text.github.io/scala_text/introduction-to-scala.html">Scalaとは · Scala研修テキスト</a></li>
+<li><a href="https://sites.google.com/site/scalajp/home/documentation/introduction">プログラミング言語Scala 日本語情報サイト - Scalaの紹介</a></li>
+<li><a href="https://freelance.techcareer.jp/articles/wp/skills/scala/detail/1765/">Scalaの歴史について丁寧に分かりやすく解説 - テクフリ</a></li>
 </ul>
 
 
                                 <div class="notes-backlinks">
                     <h2>🔗 リンクされているノート</h2>
                     <ul>
-                                            <li><a href="/notes/lxc.html">LXC (Linux Containers)</a></li>
-                                            <li><a href="/notes/lxd.html">LXD</a></li>
+                                            <li><a href="/notes/currying.html">Currying(カリー化)</a></li>
+                                            <li><a href="/notes/scala3.html">Scala 3</a></li>
                     
                     </ul>
                 </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-09 22:30 / 更新日時: 2026-08-09 22:44</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=Incus&url=https%3A%2F%2F64p.org%2Fnotes%2Fincus.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <span>作成日時: 2026-08-10 16:36 / 更新日時: 2026-08-10 16:36</span>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=Scala&url=https%3A%2F%2F64p.org%2Fnotes%2Fscala.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">
