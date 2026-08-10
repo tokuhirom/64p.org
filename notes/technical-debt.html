@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>Apache Parquet - Notes - 64p.org</title>
+    <title>技術的負債（Technical Debt） - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/highlight.js@11/styles/github.min.css" media="(prefers-color-scheme: light)">
@@ -21,7 +21,7 @@
                 <a class="notes-tags-link" href="/notes/tags/">🏷️ タグ一覧</a>
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
-                                    <li><a href="/notes/technical-debt.html">技術的負債（Technical Debt）</a></li>
+                                    <li><a href="/notes/technical-debt.html" class="active">技術的負債（Technical Debt）</a></li>
                                     <li><a href="/notes/bourbon-confectionery.html">ブルボン（株式会社ブルボン）</a></li>
                                     <li><a href="/notes/wdic.html">通信用語の基礎知識（WDIC）</a></li>
                                     <li><a href="/notes/websockify.html">websockify</a></li>
@@ -154,7 +154,7 @@
                                     <li><a href="/notes/openjdk-projects.html">OpenJDKの主要プロジェクト</a></li>
                                     <li><a href="/notes/project-valhalla.html">Project Valhalla</a></li>
                                     <li><a href="/notes/project-amber.html">Project Amber</a></li>
-                                    <li><a href="/notes/apache-parquet.html" class="active">Apache Parquet</a></li>
+                                    <li><a href="/notes/apache-parquet.html">Apache Parquet</a></li>
                                     <li><a href="/notes/polinky-triangle-secret.html">ポリンキーの「三角形の秘密」</a></li>
                                     <li><a href="/notes/shokudai-ookonnyaku.html">ショクダイオオコンニャク</a></li>
                                     <li><a href="/notes/imabari-towel.html">今治タオル</a></li>
@@ -211,43 +211,53 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>Apache Parquet</h1>
+                <h1>技術的負債（Technical Debt）</h1>
 
-<p>ディスク永続化用の、オープンソースの列指向(カラムナー)ファイルフォーマット。<a href="/notes/apache-arrow.html">Apache Arrow</a>と対比されることが多く、「Arrowはメモリ上、Parquetはディスク上」という関係にある。</p>
+<p>ソフトウェア開発において、短期的な速度を優先した実装判断が、将来の開発速度を低下させる形で「借金」のように積み重なっていくことを表すメタファー。生みの親はWard Cunningham（Wikiの発明者、アジャイルマニフェスト共著者の一人）。</p>
 
-<h2>特徴</h2>
+<h2>原典1: 1992年のOOPSLA論文</h2>
+
+<p>論文タイトルは <em>&ldquo;The WyCash Portfolio Management System&rdquo;</em>（OOPSLA &lsquo;92 Experience Report）。CunninghamがSmalltalkで開発していた金融アプリケーションについて、非技術者の経営層にリファクタリングの必要性を説明するために書かれた。</p>
+
+<blockquote><p>&ldquo;Shipping first time code is like going into debt. A little debt speeds development so long as it is paid back promptly with a rewrite.&rdquo;
+（初回リリースのコードを出荷することは借金をするようなものだ。少額の借金は、書き直しという形ですぐに返済される限り、開発を加速させる）</p>
+
+<p>&ldquo;Every minute spent on not-quite-right code counts as interest on that debt.&rdquo;
+（完全に正しくないコードに費やされる時間は、その借金の利子として積み重なっていく）</p>
+
+<p>&ldquo;Entire engineering organizations can be brought to a stand-still under the debt load of an unconsolidated implementation&rdquo;
+（整理されていない実装の負債が積み重なると、エンジニアリング組織全体が停滞しうる）</p></blockquote>
+
+<h2>原典2: Ward自身による後年の補足解説</h2>
+
+<p>Cunninghamは後年、このメタファーが誤解されがちだと述べている。多くの人が「技術的負債＝後で直すつもりで質の低いコードを書くこと」と誤解しているが、彼の本来の意図はそれとは異なる。</p>
 
 <ul>
-<li><strong>列指向ストレージ</strong>: CSVやJSONのような行指向フォーマットと異なり、同じ列の値をディスク上に連続して配置する。</li>
-<li><strong>高い圧縮率</strong>: 同じ型のデータをまとめて持つため、列ごとに異なるエンコード/圧縮アルゴリズムを適用でき、CSV/JSONより高い圧縮率を実現する。</li>
-<li><strong>カラムプルーニング</strong>: クエリに必要な列だけを読み込むことでI/Oを削減する。</li>
-<li><strong>述語プッシュダウン(predicate pushdown)</strong>: データ読み込み前にフィルタ条件を適用し、不要な読み込みを避ける。</li>
+<li>本来のポイントは「その時点での自分たちの理解（ドメイン理解）を反映したコードを書くこと」にある。開発初期はドメインへの理解が不完全なまま実装せざるを得ず、その「理解と実装のズレ」自体が負債である、という考え方。</li>
+<li>負債には<strong>元本（principal）</strong>と<strong>利子（interest）</strong>があり、元本は「その決定を後で置き換えるのにかかるコスト」、利子は「置き換えるまでの間、他の機能開発が受け続ける速度低下」を指す。</li>
+<li>質の悪いコードを書くこと自体を正当化するメタファーではなく、あくまで「リファクタリング可能な程度にきれいなコード」であることが前提。これが彼の言う「エクストリーム・プログラミングの中核」だとしている。</li>
 </ul>
 
 
-<h2>用途・エコシステム</h2>
+<h2>補足: 後の展開</h2>
 
-<p>Apache Hadoop, Apache Spark, Apache Drill, Presto などの分散処理基盤で広く使われている、分析ワークロード向けのフォーマット。</p>
+<p>このメタファーはMartin Fowlerが「技術的負債の四象限（無自覚×怠慢 / 意図的×怠慢 / 無自覚×慎重 / 意図的×慎重）」として整理し直すなど、後年さまざまな形で拡張・再解釈され、現在の一般的な用法（「あえて質を落として素早くリリースする」というニュアンス）に広がっていった経緯がある。</p>
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://parquet.apache.org/">Parquet公式サイト</a></li>
-<li><a href="https://www.databricks.com/blog/what-is-parquet">What is Parquet? | Databricks</a></li>
-<li><a href="https://www.ibm.com/think/topics/parquet">What is Apache Parquet? | IBM</a></li>
+<li><a href="http://c2.com/doc/oopsla92.html">Experience Report — The WyCash Portfolio Management System (Ward Cunningham, OOPSLA &lsquo;92)</a></li>
+<li><a href="https://cmdev.com/papers/debt-metaphor/">Ward Explains Debt Metaphor - Crater Moon Development</a></li>
+<li><a href="https://martinfowler.com/bliki/TechnicalDebt.html">bliki: Technical Debt - Martin Fowler</a></li>
+<li><a href="https://agilealliance.org/introduction-to-the-technical-debt-concept/">Introduction to the Technical Debt Concept | Agile Alliance</a></li>
 </ul>
 
 
-                                <div class="notes-backlinks">
-                    <h2>🔗 リンクされているノート</h2>
-                    <ul>
-                                            <li><a href="/notes/apache-arrow.html">Apache Arrow</a></li>
-                    
-                    </ul>
-                </div>
+<p><a class="note-tag" href="/notes/tags/software-engineering.html">#software-engineering</a> <a class="note-tag" href="/notes/tags/agile.html">#agile</a></p>
+
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-09 21:14 / 更新日時: 2026-08-09 21:14</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=Apache%20Parquet&url=https%3A%2F%2F64p.org%2Fnotes%2Fapache-parquet.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <span>作成日時: 2026-08-11 07:50 / 更新日時: 2026-08-11 07:50</span>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=%E6%8A%80%E8%A1%93%E7%9A%84%E8%B2%A0%E5%82%B5%EF%BC%88Technical%20Debt%EF%BC%89&url=https%3A%2F%2F64p.org%2Fnotes%2Ftechnical-debt.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">
