@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>チキンライス(日本の洋食) - Notes - 64p.org</title>
+    <title>AIO Launcher - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/highlight.js@11/styles/github.min.css" media="(prefers-color-scheme: light)">
@@ -21,7 +21,7 @@
                 <a class="notes-tags-link" href="/notes/tags/">🏷️ タグ一覧</a>
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
-                                    <li><a href="/notes/aio-launcher.html">AIO Launcher</a></li>
+                                    <li><a href="/notes/aio-launcher.html" class="active">AIO Launcher</a></li>
                                     <li><a href="/notes/tetravalent-element.html">4価元素・14族元素</a></li>
                                     <li><a href="/notes/pn-junction.html">PN接合</a></li>
                                     <li><a href="/notes/peltier-element.html">ペルチェ素子</a></li>
@@ -39,7 +39,7 @@
                                     <li><a href="/notes/semaphore.html">セマフォ</a></li>
                                     <li><a href="/notes/mutex.html">ミューテックス(mutex)</a></li>
                                     <li><a href="/notes/xinu.html">Xinu</a></li>
-                                    <li><a href="/notes/chicken-rice-japan.html" class="active">チキンライス(日本の洋食)</a></li>
+                                    <li><a href="/notes/chicken-rice-japan.html">チキンライス(日本の洋食)</a></li>
                                     <li><a href="/notes/chicken-rice-hainanese.html">海南鶏飯(シンガポール式チキンライス)</a></li>
                                     <li><a href="/notes/podman.html">Podman</a></li>
                                     <li><a href="/notes/ruriboshi-kamikiri.html">ルリボシカミキリ</a></li>
@@ -179,40 +179,58 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>チキンライス(日本の洋食)</h1>
+                <h1>AIO Launcher</h1>
 
-<p>ケチャップで味付けした鶏肉入り炊き込みご飯・炒めご飯。日本独自に発展した洋食のひとつ。オムライスの中身としても定着している。 <a class="note-tag" href="/notes/tags/food-culture.html">#food-culture</a> <a class="note-tag" href="/notes/tags/japan.html">#japan</a></p>
+<p>Android向けのホームランチャーアプリ(開発元: execbit、パッケージ名 <code>ru.execbit.aiolauncher</code>)。 <a class="note-tag" href="/notes/tags/android.html">#android</a></p>
 
-<h2>起源</h2>
+<h2>コンセプト</h2>
 
-<p>1888年(明治21年)出版の洋食レシピ本に「ライスチキン」という料理が登場する。炊いたご飯をサフランで色付けし、調理した鶏肉を添えるもので、当時イギリスで「鶏肉のピラウ」と呼ばれていた料理に相当する。</p>
+<p>ホーム画面がアイコン羅列ではなく、<strong>ウィジェットのリスト</strong>で構成される(iOSの左側の「今日」画面に近い形式)。縦スワイプで複数ウィジェットを一覧できる。</p>
 
-<h2>サフランからケチャップへ</h2>
+<h2>特徴</h2>
 
-<p>サフランは非常に高価な香辛料のため、各地に伝播する過程で安価な着色料に置き換えられていった。日本では明治時代にトマトの栽培が盛んになったことを受け、着色にトマト(後にケチャップ)を使うようになり、現在のケチャップ味のチキンライスが生まれた。ケチャップは明治41年にカゴメが日本で初めて発売しており、その普及がチキンライスの定着を後押しした。</p>
+<ul>
+<li>内蔵ウィジェットが30種類以上あり、天気、通知、メッセンジャー、音楽再生コントロール、頻繁に使うアプリ、連絡先、テンキー、タイマー、メール、メモ、タスク、ニュース、カレンダー、為替レート、システムモニターなどをホーム画面上に直接表示できる</li>
+<li>Android標準ウィジェットにも対応</li>
+<li><strong>Luaスクリプト</strong>でウィジェットや検索結果を自作・拡張できる(v4.0以降)。スクリプト集は<a href="https://github.com/zobnin/aiolauncher_scripts">GitHub (zobnin/aiolauncher_scripts)</a>で公開されている(ランチャー本体はオープンソースではない)</li>
+<li>Tasker連携で日常タスクの自動化が可能</li>
+<li>強力な検索機能で、Web・アプリ・連絡先・ウィジェットを一箇所から横断検索できる</li>
+<li>ChatGPT統合(サブスクリプション機能)で、アプリの自動分類や検索結果への応答なども可能</li>
+</ul>
 
-<h2><a href="/notes/chicken-rice-hainanese.html">海南鶏飯(シンガポール式チキンライス)</a>との違い</h2>
 
-<p>同じ「チキンライス」という名称でも、シンガポール・タイ・マレーシアなどで食べられる<a href="/notes/chicken-rice-hainanese.html">海南鶏飯系のチキンライス</a>とは別物。あちらはゆで鶏とその茹で汁で炊いた米を組み合わせた料理で、ケチャップは使わない。</p>
+<h2>料金</h2>
+
+<p>本体は基本無料(フリーミアム)。ChatGPT統合など一部機能はサブスクリプション。</p>
+
+<h2>過去のブログ記事での評価</h2>
+
+<p>2022年6月に<a href="https://blog.64p.org/entry/2022/06/20/040944">「AIO Launcher がライフチェンジングだった件」</a>で取り上げた。以下の点を高く評価している。</p>
+
+<ul>
+<li>通知がホーム画面に直接表示される点</li>
+<li>複数ウィジェットを縦スワイプで一覧できる操作性</li>
+<li>折りたたみ式端末でも画面崩れが起きない安定性</li>
+<li>フローティングSearchボタン長押しで設定にアクセスできる簡潔さ</li>
+</ul>
+
+
+<p>日本語非対応という制約はありつつも「ほんとにオススメ」と結論づけている。</p>
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://ameblo.jp/tukuhae/entry-12313233790.html">チキンライスの歴史 | 月映日記</a></li>
-<li><a href="https://nlab.itmedia.co.jp/cont/articles/3369590/">なぜ「チキンライス」にはトマトやケチャップを使うの？ 意外と知らない歴史を解説 | ねとらぼ</a></li>
+<li><a href="https://applion.jp/android/app/ru.execbit.aiolauncher/">「AIO Launcher」 - Androidアプリ - APPLION</a></li>
+<li><a href="https://play.google.com/store/apps/details?id=ru.execbit.aiolauncher&amp;hl=en_US">AIO Launcher - Google Play のアプリ</a></li>
+<li><a href="https://github.com/zobnin/aiolauncher_scripts">GitHub - zobnin/aiolauncher_scripts</a></li>
+<li><a href="https://www.androidauthority.com/aio-launcher-3607681/">This Android launcher goes all in on widgets | Android Authority</a></li>
+<li><a href="https://blog.64p.org/entry/2022/06/20/040944">AIO Launcher がライフチェンジングだった件 - Blog</a></li>
 </ul>
 
 
-                                <div class="notes-backlinks">
-                    <h2>🔗 リンクされているノート</h2>
-                    <ul>
-                                            <li><a href="/notes/chicken-rice-hainanese.html">海南鶏飯(シンガポール式チキンライス)</a></li>
-                    
-                    </ul>
-                </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-10 18:54 / 更新日時: 2026-08-10 18:54</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=%E3%83%81%E3%82%AD%E3%83%B3%E3%83%A9%E3%82%A4%E3%82%B9%28%E6%97%A5%E6%9C%AC%E3%81%AE%E6%B4%8B%E9%A3%9F%29&url=https%3A%2F%2F64p.org%2Fnotes%2Fchicken-rice-japan.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <span>作成日時: 2026-08-10 20:34 / 更新日時: 2026-08-10 20:34</span>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=AIO%20Launcher&url=https%3A%2F%2F64p.org%2Fnotes%2Faio-launcher.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">
