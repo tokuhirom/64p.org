@@ -23,6 +23,8 @@
                 <ul class="notes-nav">
                                     <li><a href="/notes/wireguard.html">WireGuard</a></li>
                                     <li><a href="/notes/tailscale.html" class="active">Tailscale</a></li>
+                                    <li><a href="/notes/nat.html">NAT (Network Address Translation)</a></li>
+                                    <li><a href="/notes/l2tp-ipsec.html">L2TP/IPsec</a></li>
                                     <li><a href="/notes/jetkvm.html">JetKVM</a></li>
                                     <li><a href="/notes/scala.html">Scala</a></li>
                                     <li><a href="/notes/kotlin.html">Kotlin</a></li>
@@ -72,7 +74,6 @@
                                     <li><a href="/notes/fleeting-notes.html">フリートノート (Fleeting Notes)</a></li>
                                     <li><a href="/notes/markdown-presentation-tools.html">Markdownベースのプレゼンテーションツール</a></li>
                                     <li><a href="/notes/japan-fountain-pen-manufacturers.html">日本の万年筆メーカー</a></li>
-                                    <li><a href="/notes/l2tp-ipsec.html">L2TP/IPsec</a></li>
                                     <li><a href="/notes/sendai-gyutan.html">仙台牛タンの発祥</a></li>
                                     <li><a href="/notes/deck-k1low.html">deck (k1LoW)</a></li>
                                     <li><a href="/notes/slidev.html">Slidev</a></li>
@@ -149,7 +150,7 @@
 <ul>
 <li>ベース層はオープンソースVPNプロトコル<a href="/notes/wireguard.html">WireGuard</a>(Goによるユーザースペース実装)</li>
 <li>自分の所有する端末のみで構成される<strong>peer-to-peer mesh network</strong>を作り、複数端末が必要に応じて中継しながら複数経路を取りうる構成になる</li>
-<li><strong>NAT traversal</strong>: STUNによる発見、Discoプロトコルによるピア間発見、複数経路の中から最速のものを選ぶレース戦略などを組み合わせ、ポート開放なしに直接のP2P接続を優先的に確立する</li>
+<li><strong><a href="/notes/nat.html">NAT</a> traversal</strong>: STUNによる発見、Discoプロトコルによるピア間発見、複数経路の中から最速のものを選ぶレース戦略などを組み合わせ、ポート開放なしに直接のP2P接続を優先的に確立する</li>
 <li><strong>DERP (Designated Encrypted Relay for Packets)</strong>: symmetric NATやキャリアグレードNAT、制限の厳しいファイアウォールなどでP2P直接接続ができない場合のフォールバックとして、HTTPS経由でWireGuard暗号化パケットを中継する暗号化リレーサーバー群。DERPサーバー自体は復号を行わず、暗号文をそのまま中継するだけなのでエンドツーエンド暗号化は保たれる</li>
 <li><strong>MagicDNS</strong>: 各ノードに安定したホスト名を割り当てる機能</li>
 </ul>
@@ -175,12 +176,13 @@
                                 <div class="notes-backlinks">
                     <h2>🔗 リンクされているノート</h2>
                     <ul>
+                                            <li><a href="/notes/nat.html">NAT (Network Address Translation)</a></li>
                                             <li><a href="/notes/wireguard.html">WireGuard</a></li>
                     
                     </ul>
                 </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-10 16:44 / 更新日時: 2026-08-10 16:44</span>
+                    <span>作成日時: 2026-08-10 16:44 / 更新日時: 2026-08-10 16:49</span>
                     <a class="share-x" href="https://twitter.com/intent/tweet?text=Tailscale&url=https%3A%2F%2F64p.org%2Fnotes%2Ftailscale.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>

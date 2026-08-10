@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>Zettelkasten - Notes - 64p.org</title>
+    <title>NAT (Network Address Translation) - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/highlight.js@11/styles/github.min.css" media="(prefers-color-scheme: light)">
@@ -23,7 +23,7 @@
                 <ul class="notes-nav">
                                     <li><a href="/notes/wireguard.html">WireGuard</a></li>
                                     <li><a href="/notes/tailscale.html">Tailscale</a></li>
-                                    <li><a href="/notes/nat.html">NAT (Network Address Translation)</a></li>
+                                    <li><a href="/notes/nat.html" class="active">NAT (Network Address Translation)</a></li>
                                     <li><a href="/notes/l2tp-ipsec.html">L2TP/IPsec</a></li>
                                     <li><a href="/notes/jetkvm.html">JetKVM</a></li>
                                     <li><a href="/notes/scala.html">Scala</a></li>
@@ -69,7 +69,7 @@
                                     <li><a href="/notes/moc.html">MOC (Map of Content)</a></li>
                                     <li><a href="/notes/lyt.html">LYT (Linking Your Thinking)</a></li>
                                     <li><a href="/notes/literature-notes.html">文献ノート (Literature Notes)</a></li>
-                                    <li><a href="/notes/zettelkasten.html" class="active">Zettelkasten</a></li>
+                                    <li><a href="/notes/zettelkasten.html">Zettelkasten</a></li>
                                     <li><a href="/notes/permanent-notes.html">パーマネントノート (Permanent Notes)</a></li>
                                     <li><a href="/notes/fleeting-notes.html">フリートノート (Fleeting Notes)</a></li>
                                     <li><a href="/notes/markdown-presentation-tools.html">Markdownベースのプレゼンテーションツール</a></li>
@@ -141,58 +141,56 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>Zettelkasten</h1>
+                <h1>NAT (Network Address Translation)</h1>
 
-<p>ドイツ語で「スリップボックス」を意味する個人知識管理システム。個々のメモ(Zettel、独: &ldquo;紙片&rdquo;)をカード単位で記録し、相互にリンクして育てていく手法。 <a class="note-tag" href="/notes/tags/zettelkasten.html">#zettelkasten</a> <a class="note-tag" href="/notes/tags/note-taking.html">#note-taking</a></p>
+<p>インターネットプロトコルによるネットワークにおいて、パケットヘッダに含まれるIPアドレスを別のIPアドレスに変換する技術。家庭用・業務用を問わず、インターネット接続用のルーターや無線LANアクセスポイントで標準的に使われている。</p>
 
-<h2>基本的な仕組み</h2>
+<h2>仕組み</h2>
+
+<p>NATは「NATテーブル」を持ち、変換前後のIPアドレスの対応を記録する。これにより戻ってきたパケットを、元のリクエスト元に正しく返却できる。</p>
+
+<h2>種類</h2>
 
 <ul>
-<li><strong>カード形式</strong> — 1枚のカードに1つのアイデア・概念だけを書く</li>
-<li><strong>一意の識別子</strong> — 階層的な番号付け(Folgezettel)により、既存カードの間に新しいカードを挿入できる</li>
-<li><strong>相互リンク</strong> — タグや参照によってカード同士を結びつけ、フォルダによる分類ではなくネットワーク状に知識を蓄積する</li>
+<li><strong>Source NAT</strong> / <strong>Destination NAT</strong>の2種類に大別される</li>
+<li>IPアドレスに加えてポート番号も変換するものは<strong>NAPT</strong>(Network Address Port Translation。IPマスカレードとも呼ばれる)と呼ぶ</li>
+<li>STUNプロトコルによる分類では、<strong>Full Cone NAT</strong>・<strong>Restricted Cone NAT</strong>・<strong>Port Restricted Cone NAT</strong>・<strong>Symmetric NAT</strong>の4種類がある</li>
 </ul>
 
 
-<h2>ニクラス・ルーマンの実践</h2>
+<h2>NAT越え(NAT traversal)</h2>
 
-<p>ドイツの社会学者ニクラス・ルーマン(1927–1998)が最も有名な実践者。1952〜53年から研究のためのZettelkastenを構築し始め、最終的に約9万枚のインデックスカードに達した。この蓄積を元に、約50冊の著作と550本の論文を執筆した。</p>
+<p>NAT配下の端末同士がP2P通信する際の課題。TCPは3ウェイハンドシェイクの都合上hole punchingができないためUDPが使われる(UDP hole punching)。ポートをランダムに割り当てる<strong>Symmetric NAT</strong>は特に通過が難しく、その場合はサーバー中継が確実な手段となる。</p>
 
-<h2>ノートの処理フロー</h2>
+<p><a href="/notes/tailscale.html">Tailscale</a>はSTUNによる発見やDiscoプロトコル、レース戦略などを組み合わせて直接P2P接続を優先的に確立し、Symmetric NATなどでどうしても直接接続できない場合は<a href="/notes/wireguard.html">WireGuard</a>の暗号化パケットをそのまま中継する専用リレーサーバー(DERP)にフォールバックする。</p>
 
-<p>Sönke Ahrensは著書『How to Take Smart Notes』で、Zettelkasten実践におけるノートを<a href="/notes/fleeting-notes.html">フリートノート</a>・<a href="/notes/literature-notes.html">文献ノート</a>・<a href="/notes/permanent-notes.html">パーマネントノート</a>の3種類に整理している。最終的にZettelkasten本体に恒久保存され、他ノートとリンクされるのはパーマネントノートのみ。</p>
+<p><a href="/notes/l2tp-ipsec.html">L2TP/IPsec</a>はNAT越え(NAT-T)がやや不安定になりがちで、ファイアウォールでUDPポートがブロックされると接続できないことがある。</p>
 
-<h2>現代への影響</h2>
-
-<p>1980年代、このカードファイルの概念は「ハイパーテキスト」ソフトウェアのメタファーとなり、その後Wikiの発明にも影響を与えた。現代のデジタルノートツール(<a href="/notes/obsidian.html">Obsidian</a>、<a href="/notes/roam-research.html">Roam Research</a>、The Archive、Zettlrなど)の多くが、双方向リンクという形でZettelkastenの原則を実装している。</p>
-
-<h2>関連する現代の概念</h2>
-
-<p>Andy Matuschakが提唱する<a href="/notes/evergreen-notes.html">エバーグリーンノート</a>は、Zettelkastenの「原子性」「密度の高いリンク」といった発想を直接引き継いだ現代的な再解釈。<code>64p.org</code>の<code>/notes/</code>コーナー自体も、<code>[[...]]</code>によるリンクとタグでノート同士を繋ぐという点で、Zettelkasten的な設計を採用している。</p>
+<p><a class="note-tag" href="/notes/tags/networking.html">#networking</a></p>
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://en.wikipedia.org/wiki/Zettelkasten">Zettelkasten - Wikipedia</a></li>
+<li><a href="https://ja.wikipedia.org/wiki/%E3%83%8D%E3%83%83%E3%83%88%E3%83%AF%E3%83%BC%E3%82%AF%E3%82%A2%E3%83%89%E3%83%AC%E3%82%B9%E5%A4%89%E6%8F%9B">ネットワークアドレス変換 - Wikipedia</a></li>
+<li><a href="https://baremetal.jp/blog/2023/09/08/1298/">NATとは？アドレス変換の仕組みや必要性、NAPTとの違いを解説 - baremetal blog</a></li>
+<li><a href="https://www.checkpoint.com/jp/cyber-hub/network-security/what-is-network-address-translation-nat/">ネットワーク アドレス変換 (NAT) とは - チェック・ポイント・ソフトウェア</a></li>
+<li><a href="https://kuniiskywalker.github.io/2020/05/15/NAT%E3%82%92%E8%B6%8A%E3%81%88%E3%82%8D/">NATを越えろ - くるむテックブログ</a></li>
+<li><a href="https://tech-blog.cerevo.com/adventcalendar2016/advent24/">NAT Traversalって知ってますか - Cerevo TechBlog</a></li>
 </ul>
 
 
                                 <div class="notes-backlinks">
                     <h2>🔗 リンクされているノート</h2>
                     <ul>
-                                            <li><a href="/notes/lyt.html">LYT (Linking Your Thinking)</a></li>
-                                            <li><a href="/notes/moc.html">MOC (Map of Content)</a></li>
-                                            <li><a href="/notes/obsidian.html">Obsidian</a></li>
-                                            <li><a href="/notes/evergreen-notes.html">エバーグリーンノート (Evergreen Notes)</a></li>
-                                            <li><a href="/notes/permanent-notes.html">パーマネントノート (Permanent Notes)</a></li>
-                                            <li><a href="/notes/fleeting-notes.html">フリートノート (Fleeting Notes)</a></li>
-                                            <li><a href="/notes/project-notes.html">プロジェクトノート (Project Notes)</a></li>
+                                            <li><a href="/notes/l2tp-ipsec.html">L2TP/IPsec</a></li>
+                                            <li><a href="/notes/tailscale.html">Tailscale</a></li>
+                                            <li><a href="/notes/wireguard.html">WireGuard</a></li>
                     
                     </ul>
                 </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-09 16:27 / 更新日時: 2026-08-09 22:07</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=Zettelkasten&url=https%3A%2F%2F64p.org%2Fnotes%2Fzettelkasten.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <span>作成日時: 2026-08-10 16:49 / 更新日時: 2026-08-10 16:49</span>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=NAT%20%28Network%20Address%20Translation%29&url=https%3A%2F%2F64p.org%2Fnotes%2Fnat.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">
