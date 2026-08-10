@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>塩水意麺（鹽水意麵） - Notes - 64p.org</title>
+    <title>ペルチェ素子 - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/highlight.js@11/styles/github.min.css" media="(prefers-color-scheme: light)">
@@ -21,7 +21,7 @@
                 <a class="notes-tags-link" href="/notes/tags/">🏷️ タグ一覧</a>
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
-                                    <li><a href="/notes/peltier-element.html">ペルチェ素子</a></li>
+                                    <li><a href="/notes/peltier-element.html" class="active">ペルチェ素子</a></li>
                                     <li><a href="/notes/tortilla.html">トルティーヤ</a></li>
                                     <li><a href="/notes/old-el-paso.html">オールドエルパソ(Old El Paso)</a></li>
                                     <li><a href="/notes/don-tacos.html">ドンタコス</a></li>
@@ -73,7 +73,7 @@
                                     <li><a href="/notes/harmonyos.html">HarmonyOSとは</a></li>
                                     <li><a href="/notes/national-museum-of-nature-and-science.html">国立科学博物館</a></li>
                                     <li><a href="/notes/futabasaurus-suzukii.html">フタバスズキリュウ（Futabasaurus suzukii）</a></li>
-                                    <li><a href="/notes/yanshui-yimian.html" class="active">塩水意麺（鹽水意麵）</a></li>
+                                    <li><a href="/notes/yanshui-yimian.html">塩水意麺（鹽水意麵）</a></li>
                                     <li><a href="/notes/apple-secure-enclave.html">Secure Enclave</a></li>
                                     <li><a href="/notes/electric-eel.html">デンキウナギ</a></li>
                                     <li><a href="/notes/peter-pan.html">ピーター・パン</a></li>
@@ -174,52 +174,54 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>塩水意麺（鹽水意麵）</h1>
+                <h1>ペルチェ素子</h1>
 
-<p><a class="note-tag" href="/notes/tags/taiwan.html">#taiwan</a> <a class="note-tag" href="/notes/tags/noodle.html">#noodle</a></p>
+<p>電流を流すと片面が冷え、反対面が発熱する半導体デバイス。「ペルチェ効果」という熱電現象を利用している。 <a class="note-tag" href="/notes/tags/electronics.html">#electronics</a> <a class="note-tag" href="/notes/tags/hardware.html">#hardware</a></p>
 
-<p>台南市塩水区(旧・塩水鎮)発祥とされる台湾の伝統的な卵麺。小麦粉に水を一切加えず、鴨卵(または鶏卵)だけを練り込んで作る平打ちの縮れ麺。</p>
+<h2>仕組み</h2>
 
-<h2>製法の特徴</h2>
+<p>P型半導体とN型半導体を接合し、そこに直流電流を流すことで熱が移動する。</p>
 
 <ul>
-<li>水を使わず卵の水分だけで生地を練るため、コシが強く独特の香りが出るとされる。</li>
-<li>台南市街の一般的な「意麺」は麺を油で揚げて乾燥させるが、塩水の意麺は油で揚げず天日干しで乾燥させる点が異なる。</li>
+<li>電流を流すと、素子の片面が吸熱(低温側)、反対面が発熱(高温側)となり、両面に温度差が生じる</li>
+<li>吸熱側から発熱側へ熱が汲み上げられる形で移動する</li>
 </ul>
 
 
-<h2>名前の由来</h2>
+<h2>特徴</h2>
 
-<p>麺を手作業でこねる際に力を込めると「噫(イー)」という声が出たことから、「力麺」が転じて「意麺」と呼ばれるようになった、という説がある。</p>
-
-<h2>起源(諸説あり)</h2>
-
-<ol>
-<li>鄭成功軍に同行した福州の職人が製法を台南塩水に伝えた(明鄭時代)</li>
-<li>清朝・同治年間に陳萬美が興した「萬美商行」が発祥</li>
-<li>1923年、福建・福州から移住した黄忠亮という職人が始めた</li>
-</ol>
+<ul>
+<li>電流の極性を反転させると、吸熱面と発熱面が入れ替わる(冷却/加熱の切り替えが可能)</li>
+<li>電流の大きさに比例して熱移動量をコントロールできる</li>
+<li>フロン等の冷媒を使わないため環境負荷が低い</li>
+<li>可動部品がないため、振動・騒音がなく、応答性が良い</li>
+<li>通常の冷媒式冷却(コンプレッサー方式)に比べてエネルギー効率が劣るため、大きな冷却能力が必要な用途には不向き</li>
+</ul>
 
 
-<p>いずれも伝承レベルで、確定した史料はないよう。300年以上の歴史があるとも言われる。</p>
+<h2>用途</h2>
 
-<h2>実食</h2>
+<ul>
+<li>PCのCPU冷却</li>
+<li>飲料缶や小型冷却ボックスの冷却</li>
+<li>センサ周辺の温度調整</li>
+<li>熱量が小さく、限られた範囲の冷却が必要な用途全般</li>
+</ul>
 
-<p>2026-08-10、上野の<a href="https://tabelog.com/tokyo/A1311/A131101/13245970/">騒豆花 上野店</a>で食べた。赤いきつね・緑のたぬきのカップ麺を思わせる平べったい幅広の麺で、なかなか美味しかった。</p>
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://news.mynavi.jp/article/20230619-2707792/">台湾南部の伝統麺「塩水意麺(エンスイイーメン)」とは? 騒豆花で発売 | マイナビニュース</a></li>
-<li><a href="https://ameblo.jp/taipei-grace/entry-12904704103.html">台南塩水麺とは？ | 台北人のおいしい台湾国際結婚ライフ</a></li>
-<li><a href="https://ja.wikipedia.org/wiki/%E6%84%8F%E9%BA%BA">意麺 - Wikipedia</a></li>
-<li><a href="https://zh.wikipedia.org/zh-tw/%E9%B9%BD%E6%B0%B4%E6%84%8F%E9%BA%B5">鹽水意麵 - 維基百科，自由的百科全書</a></li>
+<li><a href="https://www.buhindana.co.jp/page/terakoya/peltier_element/">ペルチェ素子とは|BuhinDana</a></li>
+<li><a href="https://www.matsusada.co.jp/column/peltier_module.html">電子冷熱とは？ペルチェ素子の原理と活用方法の解説｜松定プレシジョン</a></li>
+<li><a href="https://www.simotec.co.jp/technical/thermal/peltier-element/">ペルチェ素子とは | 下西技研工業 SIMOTEC</a></li>
+<li><a href="https://jp.rs-online.com/web/content/discovery/ideas-and-advice/peltier-module-5-diy">ペルチェ素子とは？仕組み・危険性とDIYの5つの基本｜RSコンポーネンツ</a></li>
 </ul>
 
 
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-10 12:02 / 更新日時: 2026-08-10 12:02</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=%E5%A1%A9%E6%B0%B4%E6%84%8F%E9%BA%BA%EF%BC%88%E9%B9%BD%E6%B0%B4%E6%84%8F%E9%BA%B5%EF%BC%89&url=https%3A%2F%2F64p.org%2Fnotes%2Fyanshui-yimian.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <span>作成日時: 2026-08-10 20:20 / 更新日時: 2026-08-10 20:20</span>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=%E3%83%9A%E3%83%AB%E3%83%81%E3%82%A7%E7%B4%A0%E5%AD%90&url=https%3A%2F%2F64p.org%2Fnotes%2Fpeltier-element.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">
