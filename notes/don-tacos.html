@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>SIMD - Notes - 64p.org</title>
+    <title>ドンタコス - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/highlight.js@11/styles/github.min.css" media="(prefers-color-scheme: light)">
@@ -21,7 +21,7 @@
                 <a class="notes-tags-link" href="/notes/tags/">🏷️ タグ一覧</a>
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
-                                    <li><a href="/notes/don-tacos.html">ドンタコス</a></li>
+                                    <li><a href="/notes/don-tacos.html" class="active">ドンタコス</a></li>
                                     <li><a href="/notes/rta.html">RTA(Real Time Attack)</a></li>
                                     <li><a href="/notes/rta-in-japan.html">RTA in Japan(RiJ)</a></li>
                                     <li><a href="/notes/prettier.html">Prettier</a></li>
@@ -89,7 +89,7 @@
                                     <li><a href="/notes/lxd.html">LXD</a></li>
                                     <li><a href="/notes/lxc.html">LXC (Linux Containers)</a></li>
                                     <li><a href="/notes/nushell.html">Nushell</a></li>
-                                    <li><a href="/notes/simd.html" class="active">SIMD</a></li>
+                                    <li><a href="/notes/simd.html">SIMD</a></li>
                                     <li><a href="/notes/project-panama.html">Project Panama</a></li>
                                     <li><a href="/notes/apache-arrow.html">Apache Arrow</a></li>
                                     <li><a href="/notes/thompson-construction.html">Thompson construction</a></li>
@@ -171,48 +171,40 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>SIMD</h1>
+                <h1>ドンタコス</h1>
 
-<p>Single Instruction, Multiple Data の略。1つの命令で複数のデータ要素に対して同時に同じ演算を行う並列処理方式。 <a class="note-tag" href="/notes/tags/simd.html">#simd</a></p>
+<p>湖池屋が製造販売するトルティーヤチップス。タコスをモチーフにしたスナック菓子で、トウモロコシを植物油で揚げて作られている。 <a class="note-tag" href="/notes/tags/pop-culture.html">#pop-culture</a></p>
 
-<h2>仕組み</h2>
-
-<p>通常のスカラー演算は「1命令で1データ」を処理するのに対し、SIMDは専用のベクトルレジスタを使い、まとめて複数データを処理する。例えば256bitのベクトルレジスタなら、32bit浮動小数点数8個や16bit整数16個を一度に格納・演算できる。</p>
-
-<h2>用途</h2>
-
-<p>画像処理・科学技術計算・マルチメディア処理など、大量データに同じ処理を繰り返すデータ並列なワークロードで大きな性能向上をもたらす。</p>
-
-<h2>主な実装</h2>
+<h2>概要</h2>
 
 <ul>
-<li>x86: SSE (Streaming SIMD Extensions) / AVX</li>
-<li>ARM: NEON</li>
+<li>1994年発売、30年以上続くロングセラー商品</li>
+<li>主に京都府南丹市の湖池屋京都工場で製造</li>
+<li>フレーバー展開: 「絶品チリタコス味」「焼きとうもろこし味」「ブラックペッパー味」「ペッパーソルト味」「ホットミートソース味」など多数</li>
 </ul>
 
 
-<p><a href="/notes/apache-arrow.html">Apache Arrow</a>は連続したメモリレイアウトのカラムナーフォーマットのため、SIMDによるベクトル化演算と相性が良い。また<a href="/notes/project-panama.html">Project Panama</a>のVector APIは、SIMD命令を活用したベクトル演算をJavaから扱うためのAPI。</p>
+<h2>ドリトスとの比較</h2>
+
+<p>同じくトウモロコシ由来のトルティーヤチップスである「ドリトス」(フリトレー/ペプシコ系)とよく比較される、日本のスナック菓子界の代表格の一つ。</p>
+
+<h2>湖池屋の他の看板商品</h2>
+
+<p>同じ湖池屋のロングセラースナックとしては、<a href="/notes/polinky-triangle-secret.html">「三角形の秘密」で知られるポリンキー</a>もある。</p>
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://antao-almada.medium.com/single-instruction-multiple-data-simd-in-net-393b8cf9a90">Single Instruction, Multiple Data (SIMD) in .NET | Medium</a></li>
-<li><a href="https://www.studysmarter.co.uk/explanations/computer-science/computer-organisation-and-architecture/simd/">SIMD: Definition, Techniques &amp; Examples | StudySmarter</a></li>
-<li><a href="https://www.ituonline.com/tech-definitions/what-is-single-instruction-multiple-data-simd/">What Is Single Instruction, Multiple Data (SIMD)? | ITU Online</a></li>
+<li><a href="https://ja.wikipedia.org/wiki/%E3%83%89%E3%83%B3%E3%82%BF%E3%82%B3%E3%82%B9">ドンタコス - Wikipedia</a></li>
+<li><a href="https://kotobank.jp/word/%E3%81%A9%E3%82%93%E3%81%9F%E3%81%93%E3%81%99-726503">ドンタコスとは？ 意味や使い方 - コトバンク</a></li>
+<li><a href="https://glassbyglass039.com/is-don-tacos-sold-out/">ドンタコス販売終了の誤解はなぜ？リニューアル後の新フレーバーや30周年を迎えた現在の状況</a></li>
+<li><a href="https://note.com/major_donkey618/n/n7d96751e2c87">ドンタコスとドリトス。タコススナック界の二大エース。どこが違う？比較してみた。</a></li>
 </ul>
 
 
-                                <div class="notes-backlinks">
-                    <h2>🔗 リンクされているノート</h2>
-                    <ul>
-                                            <li><a href="/notes/apache-arrow.html">Apache Arrow</a></li>
-                                            <li><a href="/notes/project-panama.html">Project Panama</a></li>
-                    
-                    </ul>
-                </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-09 22:22 / 更新日時: 2026-08-09 22:22</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=SIMD&url=https%3A%2F%2F64p.org%2Fnotes%2Fsimd.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <span>作成日時: 2026-08-10 19:49 / 更新日時: 2026-08-10 19:49</span>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=%E3%83%89%E3%83%B3%E3%82%BF%E3%82%B3%E3%82%B9&url=https%3A%2F%2F64p.org%2Fnotes%2Fdon-tacos.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">
