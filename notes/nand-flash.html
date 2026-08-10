@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>デンキウナギ - Notes - 64p.org</title>
+    <title>NAND型フラッシュメモリ - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/highlight.js@11/styles/github.min.css" media="(prefers-color-scheme: light)">
@@ -22,7 +22,7 @@
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
                                     <li><a href="/notes/nand-gate.html">NANDゲート</a></li>
-                                    <li><a href="/notes/nand-flash.html">NAND型フラッシュメモリ</a></li>
+                                    <li><a href="/notes/nand-flash.html" class="active">NAND型フラッシュメモリ</a></li>
                                     <li><a href="/notes/morse-code.html">モールス信号(モールス符号)</a></li>
                                     <li><a href="/notes/oshidashi-filing.html">超整理法(押し出しファイリング)</a></li>
                                     <li><a href="/notes/one-pocket-principle.html">ポケット一つ原則</a></li>
@@ -96,7 +96,7 @@
                                     <li><a href="/notes/futabasaurus-suzukii.html">フタバスズキリュウ（Futabasaurus suzukii）</a></li>
                                     <li><a href="/notes/yanshui-yimian.html">塩水意麺（鹽水意麵）</a></li>
                                     <li><a href="/notes/apple-secure-enclave.html">Secure Enclave</a></li>
-                                    <li><a href="/notes/electric-eel.html" class="active">デンキウナギ</a></li>
+                                    <li><a href="/notes/electric-eel.html">デンキウナギ</a></li>
                                     <li><a href="/notes/peter-pan.html">ピーター・パン</a></li>
                                     <li><a href="/notes/peter-pan-syndrome.html">ピーターパン症候群</a></li>
                                     <li><a href="/notes/kuribayashi-satoshi.html">栗林慧</a></li>
@@ -195,48 +195,44 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>デンキウナギ</h1>
+                <h1>NAND型フラッシュメモリ</h1>
 
-<p>南米のアマゾン川・オリノコ川流域に生息する強い電気を発生させる淡水魚。</p>
+<p>半導体メモリの一種。単に「NAND」と略して呼ばれることも多い。 <a class="note-tag" href="/notes/tags/electronics.html">#electronics</a> <a class="note-tag" href="/notes/tags/storage.html">#storage</a></p>
 
-<h2>分類 — 実は「ウナギ」ではない</h2>
+<p>セルを直列に接続する回路構造が<a href="/notes/nand-gate.html">NANDゲート</a>に似ていることが名前の由来。</p>
 
-<p>名前に「ウナギ」と付くが、ウナギ目（Anguilliformes）とは近縁ではない。分類上はデンキウナギ目という独立したグループに属し、これはナマズ目と姉妹群の関係にあり、コイ目のカラシン類に近い骨鰾上目（こつひょうじょうもく）というグループに含まれる。姿がウナギに似ているための通称にすぎない。</p>
-
-<p>従来1種とされてきたが、2019年に形態・分子遺伝学的解析により3種に再分類された（<em>Electrophorus electricus</em>、<em>E. varii</em>、<em>E. voltai</em>）。このうち<em>E. voltai</em>は最大860Vという、生物として知られる中で最も強い放電を発生させることが確認されている。</p>
-
-<h2>発電の仕組み</h2>
-
-<p>体の後方約80%を占める尾部に、筋肉細胞が変化した「発電細胞（electrocyte）」が電池を直列につないだように並ぶ構造を持つ。3つの発電器官を使い分けている。</p>
+<h2>特徴</h2>
 
 <ul>
-<li>メイン発電器官: 300V超（最大860V）の高電圧を捕食・防御用に発生。</li>
-<li>ハンター器官: 約10Vの低電圧を、獲物の位置探知（電気定位）やコミュニケーションに使用。</li>
-<li>サックス器官: 約30Vの中電圧（機能は未解明な部分もある）。</li>
+<li>電気的にデータを読み書きする不揮発性メモリで、物理的に駆動する部品がないため、故障しにくい</li>
+<li>回路構成がシンプルなため、NOR型フラッシュメモリと比べて回路規模を小さくでき、安価に大容量化しやすい</li>
+<li>書き込み・消去速度も高速</li>
 </ul>
 
 
-<p>原理としては、神経系と同じイオン濃度勾配（イオンチャネル・イオン輸送体）を利用して電気を発生させている。</p>
+<h2>用途</h2>
 
-<h2>生態・捕食</h2>
-
-<p>夜行性で、昼間は物陰に潜み、夜になると活動して小魚・カエル・甲殻類などを捕食する。獲物に電気ショックを与えて瞬時に麻痺させてから捕らえる。</p>
-
-<h1>生物</h1>
+<p>SSD、USBメモリ、スマートフォンのストレージなど、身近なデバイスに広く使われている。</p>
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://ja.wikipedia.org/wiki/%E3%83%87%E3%83%B3%E3%82%AD%E3%82%A6%E3%83%8A%E3%82%AE">デンキウナギ - Wikipedia</a></li>
-<li><a href="https://ja.wikipedia.org/wiki/%E3%83%87%E3%83%B3%E3%82%AD%E3%82%A6%E3%83%8A%E3%82%AE%E7%9B%AE">デンキウナギ目 - Wikipedia</a></li>
-<li><a href="https://www.nature.com/articles/s41467-019-11690-z">Unexpected species diversity in electric eels | Nature Communications</a></li>
-<li><a href="https://www.forbes.com/sites/scotttravers/2026/04/28/meet-the-eel-that-generates-800v---a-biologist-explains-how-it-doesnt-electrocute-itself/">Meet The Eel That Generates 800V | Forbes</a></li>
+<li><a href="https://www.pro.logitec.co.jp/column/u20220330.html">SSDに使われている「NAND」とは？ フラッシュメモリの基礎知識</a></li>
+<li><a href="https://www.kioxia.com/ja-jp/rd/technology/nand-flash.html">NAND型フラッシュメモリとは | KIOXIA</a></li>
+<li><a href="https://www.iodata.jp/column/storage/028/index.htm">NAND型フラッシュメモリーとは？主な種類と高品質スティックSSDを紹介 | アイオーデータ I-O DATA</a></li>
 </ul>
 
 
+                                <div class="notes-backlinks">
+                    <h2>🔗 リンクされているノート</h2>
+                    <ul>
+                                            <li><a href="/notes/nand-gate.html">NANDゲート</a></li>
+                    
+                    </ul>
+                </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-10 00:49 / 更新日時: 2026-08-10 00:49</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=%E3%83%87%E3%83%B3%E3%82%AD%E3%82%A6%E3%83%8A%E3%82%AE&url=https%3A%2F%2F64p.org%2Fnotes%2Felectric-eel.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <span>作成日時: 2026-08-10 23:14 / 更新日時: 2026-08-10 23:14</span>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=NAND%E5%9E%8B%E3%83%95%E3%83%A9%E3%83%83%E3%82%B7%E3%83%A5%E3%83%A1%E3%83%A2%E3%83%AA&url=https%3A%2F%2F64p.org%2Fnotes%2Fnand-flash.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">
