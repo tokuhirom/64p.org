@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>LXD - Notes - 64p.org</title>
+    <title>iptables - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/highlight.js@11/styles/github.min.css" media="(prefers-color-scheme: light)">
@@ -22,7 +22,7 @@
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
                                     <li><a href="/notes/ufw.html">ufw</a></li>
-                                    <li><a href="/notes/iptables.html">iptables</a></li>
+                                    <li><a href="/notes/iptables.html" class="active">iptables</a></li>
                                     <li><a href="/notes/vllm.html">vLLM</a></li>
                                     <li><a href="/notes/acm-icpc.html">ACM-ICPC</a></li>
                                     <li><a href="/notes/hack-the-box.html">Hack The Box</a></li>
@@ -101,7 +101,7 @@
                                     <li><a href="/notes/system76.html">System76</a></li>
                                     <li><a href="/notes/pop-os.html">Pop!_OS</a></li>
                                     <li><a href="/notes/coreboot.html">coreboot</a></li>
-                                    <li><a href="/notes/lxd.html" class="active">LXD</a></li>
+                                    <li><a href="/notes/lxd.html">LXD</a></li>
                                     <li><a href="/notes/lxc.html">LXC (Linux Containers)</a></li>
                                     <li><a href="/notes/nushell.html">Nushell</a></li>
                                     <li><a href="/notes/simd.html">SIMD</a></li>
@@ -186,89 +186,56 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>LXD</h1>
+                <h1>iptables</h1>
 
-<p><a href="/notes/lxc.html">LXC</a>をベースにした、Canonical(Ubuntu開発元)によるシステムコンテナ・仮想マシンの統合管理システム。 <a class="note-tag" href="/notes/tags/linux.html">#linux</a></p>
+<p>Linuxカーネルのパケットフィルタリング機能「Netfilter」を操作するためのコマンドラインツール。パケットフィルタリングやNAT(アドレス変換)などのパケット転送制御を、ルールベースで設定できる。 <a class="note-tag" href="/notes/tags/linux.html">#linux</a> <a class="note-tag" href="/notes/tags/security.html">#security</a></p>
 
-<h2>特徴</h2>
+<h2>仕組み</h2>
+
+<p>ルールは「テーブル」と「チェーン」の組み合わせで指定する。</p>
+
+<p><strong>テーブル(table)</strong> — 機能ごとに用意されている</p>
 
 <ul>
-<li>「システムコンテナ」と「仮想マシン」の2種類のインスタンスをサポートする。システムコンテナはホストカーネルの機能を使って仮想的なOS環境をシミュレートするのに対し、仮想マシンはホストのハードウェアを使いつつカーネル自体は仮想マシン側が提供する。</li>
-<li>単一アプリケーションの実行に特化したDockerの「アプリケーションコンテナ」とは異なり、より完全なLinuxシステムを1つのコンテナ内で動かす用途に向く。</li>
-<li>シンプルなREST APIを中心に構築されており、単一マシンから大規模クラスタまでスケール可能。</li>
-<li>スナップショットのイメージ化・別ホストへのライブマイグレーション・コンテナごとのCPU/メモリ/IO負荷制限など、運用向けの機能を備える。</li>
+<li><code>filter</code> — パケットフィルタ(通過の許可/拒否)</li>
+<li><code>nat</code> — アドレス変換</li>
+<li><code>mangle</code> — 特殊なパケット処理(ヘッダの書き換えなど)</li>
 </ul>
 
 
-<h2>Incusとの関係</h2>
+<p><strong>チェーン(chain)</strong> — パケットが通過する処理段階を表す</p>
 
-<p>2023年、CanonicalがLXDの全コントリビューターにCLA(Contributor License Agreement)署名を要求し、LXDをLinux Containersプロジェクトの傘下から引き離して自社管理下に置いた。これを受けて、コミュニティ主導のフォークとして<a href="/notes/incus.html">Incus</a>が立ち上げられた。</p>
-
-<h2>開発の活発さ(<a href="/notes/incus.html">Incus</a>との比較)</h2>
-
-<p>GitHub APIで両リポジトリを比較(2026-08-09時点)。</p>
-
-<table>
-<thead>
-<tr>
-<th> 指標 </th>
-<th> Incus (<code>lxc/incus</code>) </th>
-<th> LXD (<code>canonical/lxd</code>) </th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td> Stars </td>
-<td> 5,882 </td>
-<td> 4,809 </td>
-</tr>
-<tr>
-<td> Forks </td>
-<td> 472 </td>
-<td> 1,036 </td>
-</tr>
-<tr>
-<td> Open issues </td>
-<td> 46 </td>
-<td> 409 </td>
-</tr>
-<tr>
-<td> 過去90日のコミット数 </td>
-<td> 約1,951 </td>
-<td> 約1,917 </td>
-</tr>
-<tr>
-<td> コントリビューター数(概算) </td>
-<td> 約597 </td>
-<td> 約479 </td>
-</tr>
-</tbody>
-</table>
+<ul>
+<li><code>INPUT</code> — ローカルシステムに入ってくるパケットを処理</li>
+<li><code>OUTPUT</code> — システムから外部に送信されるパケットを処理</li>
+<li><code>FORWARD</code> — システムを経由して転送されるパケットを処理</li>
+</ul>
 
 
-<p>コミット数そのものはほぼ拮抗しているが、open issuesの滞留数はLXDの方が大きく、コントリビューター数・starsではIncusがやや上回る。リリース体制も異なり、Incusは単一のメインライン(7.x系)を月1ペースで継続リリースするのに対し、LXDは4.0/5.0/5.21など複数バージョン系列を並行メンテしている。</p>
+<h2><a href="/notes/ufw.html">ufw</a>との関係</h2>
+
+<p><a href="/notes/ufw.html">ufw</a>はこのiptables(Netfilter)を直接操作する代わりに、シンプルなコマンドで同等の設定ができるようにしたフロントエンドツール。</p>
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://canonical.com/lxd">LXD | Canonical</a></li>
-<li><a href="https://github.com/canonical/lxd">GitHub - canonical/lxd: Powerful system container and virtual machine manager</a></li>
-<li><a href="https://canonical.com/lxd/docs/latest/explanation/instances/">Containers and VMs - LXD documentation</a></li>
+<li><a href="https://e-words.jp/w/iptables%E3%82%B3%E3%83%9E%E3%83%B3%E3%83%89.html">iptablesコマンドとは - IT用語辞典 e-Words</a></li>
+<li><a href="https://christina04.hatenablog.com/entry/iptables-outline">iptablesの仕組みを図解 - Carpe Diem</a></li>
+<li><a href="https://tech-blog.rakus.co.jp/entry/20220301/iptables">iptables まとめ【Linux ファイアウォール】 - RAKUS Developers Blog</a></li>
+<li><a href="https://koanacademy.jp/iptables">iptablesの概要 | KoANアカデミー</a></li>
 </ul>
 
 
                                 <div class="notes-backlinks">
                     <h2>🔗 リンクされているノート</h2>
                     <ul>
-                                            <li><a href="/notes/incus.html">Incus</a></li>
-                                            <li><a href="/notes/lxc.html">LXC (Linux Containers)</a></li>
-                                            <li><a href="/notes/podman.html">Podman</a></li>
+                                            <li><a href="/notes/ufw.html">ufw</a></li>
                     
                     </ul>
                 </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-09 22:30 / 更新日時: 2026-08-09 22:44</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=LXD&url=https%3A%2F%2F64p.org%2Fnotes%2Flxd.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <span>作成日時: 2026-08-10 21:20 / 更新日時: 2026-08-10 21:20</span>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=iptables&url=https%3A%2F%2F64p.org%2Fnotes%2Fiptables.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">
