@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>Marp - Notes - 64p.org</title>
+    <title>Prettier - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/highlight.js@11/styles/github.min.css" media="(prefers-color-scheme: light)">
@@ -23,7 +23,7 @@
                 <ul class="notes-nav">
                                     <li><a href="/notes/rta.html">RTA(Real Time Attack)</a></li>
                                     <li><a href="/notes/rta-in-japan.html">RTA in Japan(RiJ)</a></li>
-                                    <li><a href="/notes/prettier.html">Prettier</a></li>
+                                    <li><a href="/notes/prettier.html" class="active">Prettier</a></li>
                                     <li><a href="/notes/oxc.html">Oxc(Oxidation Compiler)</a></li>
                                     <li><a href="/notes/biome.html">Biome</a></li>
                                     <li><a href="/notes/ruff.html">Ruff</a></li>
@@ -106,7 +106,7 @@
                                     <li><a href="/notes/sendai-gyutan.html">仙台牛タンの発祥</a></li>
                                     <li><a href="/notes/deck-k1low.html">deck (k1LoW)</a></li>
                                     <li><a href="/notes/slidev.html">Slidev</a></li>
-                                    <li><a href="/notes/marp.html" class="active">Marp</a></li>
+                                    <li><a href="/notes/marp.html">Marp</a></li>
                                     <li><a href="/notes/project-loom.html">Project Loom</a></li>
                                     <li><a href="/notes/project-leyden.html">Project Leyden</a></li>
                                     <li><a href="/notes/project-babylon.html">Project Babylon</a></li>
@@ -170,56 +170,46 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>Marp</h1>
+                <h1>Prettier</h1>
 
-<p>Markdown Presentation Ecosystemの略。CommonMark準拠のMarkdownに<code>---</code>区切りを加えた記法でスライドを書けるツール群。コア部分はMarpitというHTML/CSSスライド生成フレームワークで、プラグインによる機能拡張が可能。MITライセンスのOSS。</p>
+<p>JavaScript/TypeScriptを中心に、HTML・CSS・JSON・Markdown・YAMLなど幅広い言語に対応するコードフォーマッター(自動整形ツール)。 <a class="note-tag" href="/notes/tags/javascript.html">#javascript</a></p>
 
-<p><a class="note-tag" href="/notes/tags/marp.html">#marp</a> <a class="note-tag" href="/notes/tags/presentation.html">#presentation</a> <a class="note-tag" href="/notes/tags/markdown.html">#markdown</a></p>
+<h2>オピニオン型という設計思想</h2>
 
-<h2>ツール構成</h2>
+<p>ESLintのように何十個ものルールを個別に選ぶ必要がなく、設定項目を最小限にして「いい感じ」に整形してくれるよう設計されている。保存時に自動でルールに沿ってコードを書き換える。</p>
 
-<ul>
-<li><strong>Marp CLI</strong>: MarkdownをPDF/HTML/PPTX/画像に変換するコンバータ</li>
-<li><strong>Marp for VS Code</strong>: VS Code拡張機能。エディタ内でプレビューしながら編集できる</li>
-<li><strong>Marp Core</strong>: レンダリングエンジン本体</li>
-</ul>
+<h2>導入</h2>
 
+<p><code>npm install --save-dev prettier</code> でインストールし、<code>npx prettier --write .</code> で整形を実行する。</p>
 
-<h2>特徴</h2>
+<h2>利点</h2>
 
-<ul>
-<li><strong>フォーマット間の再現性を重視</strong>: PDF/PPTX/HTMLに変換しても見た目が変わらないように設計されている</li>
-<li>画像配置・数式・自動スケーリングなどの拡張構文をサポート</li>
-<li>テーマはCSSで定義する</li>
-</ul>
+<p>開発者ごとのコードスタイルのバラつきをなくし、コードレビューで「インデントが」といったスタイルに関する議論が発生しなくなる。</p>
 
+<h2>新世代ツールとの関係</h2>
 
-<h2><a href="/notes/slidev.html">Slidev</a>との違い</h2>
-
-<p><a href="/notes/slidev.html">Slidev</a>がVue.jsベースのWebアプリとして動き、ライブコーディング（Monaco Editor埋め込み）やVueコンポーネント埋め込みなど「インタラクティブなWebスライド」寄りなのに対し、Marpは<strong>VS Code拡張やCLIでの変換に軸足</strong>があり、静的なPDF/PPTX/HTML出力の再現性を重視している。よりシンプルで軽量な用途（VS Code上でサクッと書いて即PDF化、など）に向く。</p>
+<p><a href="/notes/biome.html">Biome</a>や<a href="/notes/oxc.html">Oxc</a>など、Rust製の高速な後発ツールが「Prettier比で何倍高速」と比較対象にする、業界標準的な既存フォーマッターという位置づけになっている。</p>
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://marp.app/">Marp 公式サイト</a></li>
-<li><a href="https://github.com/marp-team/marp/blob/main/website/docs/introduction/whats-marp.md">What&rsquo;s Marp | GitHub</a></li>
-<li><a href="https://github.com/marp-team/marp">github.com/marp-team/marp</a></li>
+<li><a href="https://www.issoh.co.jp/tech/details/3354/">Prettierとは？意味・読み方・使い方・設定・ESLintとの違い</a></li>
+<li><a href="https://qiita.com/Junpei_Takagi/items/3983cc735e71ea3917fd">コードフォーマッター「Prettier」を初心者にも分かりやすく解説 - Qiita</a></li>
+<li><a href="https://ics.media/entry/17030/">Prettierの導入方法 - フロントエンド開発で必須のコード整形ツール - ICS MEDIA</a></li>
 </ul>
 
 
                                 <div class="notes-backlinks">
                     <h2>🔗 リンクされているノート</h2>
                     <ul>
-                                            <li><a href="/notes/moc.html">MOC (Map of Content)</a></li>
-                                            <li><a href="/notes/markdown-presentation-tools.html">Markdownベースのプレゼンテーションツール</a></li>
-                                            <li><a href="/notes/slidev.html">Slidev</a></li>
-                                            <li><a href="/notes/deck-k1low.html">deck (k1LoW)</a></li>
+                                            <li><a href="/notes/biome.html">Biome</a></li>
+                                            <li><a href="/notes/oxc.html">Oxc(Oxidation Compiler)</a></li>
                     
                     </ul>
                 </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-09 21:30 / 更新日時: 2026-08-09 21:30</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=Marp&url=https%3A%2F%2F64p.org%2Fnotes%2Fmarp.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <span>作成日時: 2026-08-10 19:42 / 更新日時: 2026-08-10 19:42</span>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=Prettier&url=https%3A%2F%2F64p.org%2Fnotes%2Fprettier.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">

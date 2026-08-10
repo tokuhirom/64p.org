@@ -1,6 +1,6 @@
 ---
 created: 2026-08-10 19:19
-updated: 2026-08-10 19:32
+updated: 2026-08-10 19:42
 ---
 # Oxc(Oxidation Compiler)
 
@@ -18,6 +18,8 @@ Rustで書かれた、JavaScript/TypeScript向けの高性能ツール群(ツー
 - リンター(Oxlint): ESLintの50〜100倍高速
 - トランスフォーマー: Babelの40倍高速
 - ミニファイア: Terser相当の圧縮率をより高速に実現
+
+フォーマッター(oxfmt)は[[prettier|Prettier]]の置き換えを志向している。
 
 ## アーキテクチャ
 

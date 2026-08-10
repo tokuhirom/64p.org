@@ -1,6 +1,6 @@
 ---
 created: 2026-08-10 19:32
-updated: 2026-08-10 19:32
+updated: 2026-08-10 19:42
 ---
 # Biome
 
@@ -8,14 +8,14 @@ Rustで書かれた、Web(JavaScript/TypeScript/JSX/TSX/JSON/HTML/CSS/GraphQL)�
 
 ## 機能
 
-- **フォーマッター**: Prettierと97%互換の高速フォーマッター
+- **フォーマッター**: [[prettier|Prettier]]と97%互換の高速フォーマッター
 - **リンター**: ESLint・TypeScript-ESLint由来の517ルールを搭載した高性能リンター
 
-ESLint・Prettierのドロップイン置き換えを狙って設計されており、Node.jsを必要とせず単体で動作する。CLIおよびLSP経由で利用可能。
+ESLint・[[prettier|Prettier]]のドロップイン置き換えを狙って設計されており、Node.jsを必要とせず単体で動作する。CLIおよびLSP経由で利用可能。
 
 ## 性能
 
-ESLint比で最大15倍高速なlint、Prettier比で最大35倍高速な整形を謳う。最新のBiome v2(コードネーム"Biotype")では、TypeScriptコンパイラに依存しない型認識(type-aware)のlintルールを初めて実現した。
+ESLint比で最大15倍高速なlint、[[prettier|Prettier]]比で最大35倍高速な整形を謳う。最新のBiome v2(コードネーム"Biotype")では、TypeScriptコンパイラに依存しない型認識(type-aware)のlintルールを初めて実現した。
 
 ## 前身: Rome
 
