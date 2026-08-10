@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>lefthook - Notes - 64p.org</title>
+    <title>Ward Cunningham - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/highlight.js@11/styles/github.min.css" media="(prefers-color-scheme: light)">
@@ -21,7 +21,7 @@
                 <a class="notes-tags-link" href="/notes/tags/">🏷️ タグ一覧</a>
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
-                                    <li><a href="/notes/ward-cunningham.html">Ward Cunningham</a></li>
+                                    <li><a href="/notes/ward-cunningham.html" class="active">Ward Cunningham</a></li>
                                     <li><a href="/notes/technical-debt.html">技術的負債（Technical Debt）</a></li>
                                     <li><a href="/notes/technical-debt-quadrant.html">技術的負債の四象限（Technical Debt Quadrant）</a></li>
                                     <li><a href="/notes/bourbon-confectionery.html">ブルボン（株式会社ブルボン）</a></li>
@@ -199,7 +199,7 @@
                                     <li><a href="/notes/openssf.html">OpenSSF (Open Source Security Foundation)</a></li>
                                     <li><a href="/notes/carnivorous-plants.html">食虫植物</a></li>
                                     <li><a href="/notes/miidera-gomimushi.html">ミイデラゴミムシ</a></li>
-                                    <li><a href="/notes/lefthook.html" class="active">lefthook</a></li>
+                                    <li><a href="/notes/lefthook.html">lefthook</a></li>
                                     <li><a href="/notes/welcome.html">Notesコーナーへようこそ</a></li>
                                     <li><a href="/notes/kyoka-vs-tanka.html">狂歌と短歌の違い</a></li>
                                     <li><a href="/notes/harmonyos-pc.html">HarmonyOS PC版（鴻蒙電脳）</a></li>
@@ -213,87 +213,51 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>lefthook</h1>
+                <h1>Ward Cunningham</h1>
 
-<p><a class="note-tag" href="/notes/tags/git.html">#git</a> <a class="note-tag" href="/notes/tags/perl.html">#perl</a></p>
+<p>ソフトウェア開発者。世界初のWiki「WikiWikiWeb」の発明者として知られ、<a href="/notes/technical-debt.html">技術的負債</a>のメタファーを考案した人物でもある。</p>
 
-<p>Git hooks(pre-commit等)を管理するツール。このリポジトリでもnotesのfrontmatter(<code>created</code>/<code>updated</code>)自動付与のために導入している(後述)。</p>
-
-<h2>概要</h2>
+<h2>経歴</h2>
 
 <ul>
-<li>開発元は <a href="https://evilmartians.com/">Evil Martians</a>（Rails周りで有名なコンサル企業）。Go製で、単一の依存フリーバイナリとして配布される。</li>
-<li>Ruby gem、npm、Go、Python、Swift、Homebrew、各種Linuxパッケージマネージャー(deb/rpm/apk/pacman)、Wingetなど、多様なパッケージマネージャー経由でインストールできる。</li>
-<li>ライセンスはMIT。GitHub star数は8.6k程度(2026-08時点)。</li>
-<li>公式サイトのキャッチコピーは &ldquo;Fast. Powerful. Simple.&rdquo; の3語。</li>
+<li>1949年5月26日生まれ。パデュー大学で学際工学の学士号、同大学でコンピュータサイエンスの修士号を取得。</li>
+<li>卒業後、1978年から1987年までTektronixでエンジニアとして勤務。</li>
+<li>1989年、オレゴン州ポートランドを拠点とするソフトウェアコンサルティング会社Cunningham &amp; Cunningham, Inc.を共同設立。</li>
 </ul>
 
 
-<h2>主な特徴</h2>
+<h2>主な功績</h2>
 
 <ul>
-<li><strong>設定はYAML1枚</strong>: リポジトリルートの<code>lefthook.yml</code>にhook名(<code>pre-commit</code>, <code>commit-msg</code>, <code>pre-push</code>など)ごとにコマンドを書く。</li>
-<li><strong>並列実行</strong>: 複数のジョブ(lintやtestなど)を並列で走らせて高速化できる。</li>
-<li><strong>glob/ファイルフィルタ</strong>: <code>glob: "*.rb"</code>のように、変更されたファイルの種類ごとにコマンドを分けて実行できる。ステージされたファイルのみ(<code>{staged_files}</code>)、変更ファイル全体(<code>{all_files}</code>)などをプレースホルダで渡せる。</li>
-<li><strong>Docker対応</strong>: コマンドをDockerコンテナ内で実行することも可能。</li>
-<li><strong>単一バイナリ</strong>: Node.jsやRubyのランタイムに依存しない(Huskyのようにnpmパッケージとして入れることもできるが、本体はGo製バイナリ)。</li>
+<li>Kent Beckとともにソフトウェアデザインパターンおよび<a href="/notes/tdd.html">CRCカード</a>の開拓に携わった。</li>
+<li>1994年にWikiWikiWebのコーディングを開始し、1995年3月25日にPortland Pattern Repositoryのアドオンとしてc2.comに設置。これが世界初のWiki（ユーザーが編集可能なWebサイト）とされる。</li>
+<li><a href="/notes/technical-debt.html">技術的負債（Technical Debt）</a>のメタファーを1992年のOOPSLA論文で考案。</li>
+<li>エクストリーム・プログラミングの種をまいた人物の一人ともされる。</li>
+<li>2001年、「アジャイルソフトウェア開発宣言」の共著者として署名。</li>
 </ul>
 
-
-<h2>Huskyなど類似ツールとの違い</h2>
-
-<ul>
-<li>npmエコシステム限定の<a href="https://typicode.github.io/husky/">Husky</a>と違い、言語非依存で使える。</li>
-<li><code>pre-commit</code>(Pythonのpre-commit framework)と比較されることが多いが、lefthookは設定がYAML1枚で完結し、並列実行やDocker実行など「速度」寄りの機能を前面に出しているのが特徴。</li>
-</ul>
-
-
-<h2>このリポジトリでの使い方</h2>
-
-<p><code>mise.toml</code>でバージョン固定して導入している。</p>
-
-<pre><code class="toml">[tools]
-lefthook = "2.1.10"
-</code></pre>
-
-
-
-<pre><code class="sh">mise install
-mise exec -- lefthook install
-</code></pre>
-
-<p><code>lefthook.yml</code>の設定:</p>
-
-<pre><code class="yaml">pre-commit:
-  commands:
-    notes-dates:
-      glob: "notes/src/*.md"
-      run: perl update-note-dates.pl {staged_files}
-</code></pre>
-
-<p><code>notes/src/*.md</code>がステージされたときだけ<code>update-note-dates.pl</code>を実行し、以下を行っている。</p>
-
-<ol>
-<li>新規ノートなら<code>created</code>/<code>updated</code>、既存ノートなら<code>updated</code>のみをYAML frontmatterに書き込む。</li>
-<li><code>regen-index.pl</code>を実行してHTMLを再生成。</li>
-<li>生成物(<code>notes/</code>, <code>index.html</code>, <code>talks/index.html</code>)を<code>git add</code>してコミットに含める。</li>
-</ol>
-
-
-<p>ファイルのmtimeには依存せず、frontmatter自体を正として日付を管理している。新規clone時やCI環境ではmtimeが信用できない(checkout時刻になってしまう)ため、この設計にしている。</p>
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://lefthook.dev/">Lefthook 公式サイト</a></li>
-<li><a href="https://github.com/evilmartians/lefthook">evilmartians/lefthook - GitHub</a></li>
-<li><a href="https://dev.to/recca0120/ditch-husky-speed-up-git-hooks-with-lefthook-hkm">Ditch Husky: Speed Up Git Hooks with Lefthook - DEV Community</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Ward_Cunningham">Ward Cunningham - Wikipedia (English)</a></li>
+<li><a href="https://en.wikipedia.org/wiki/WikiWikiWeb">WikiWikiWeb - Wikipedia (English)</a></li>
+<li><a href="https://handwiki.org/wiki/Biography:Ward_Cunningham">Biography:Ward Cunningham - HandWiki</a></li>
 </ul>
 
 
+<p><a class="note-tag" href="/notes/tags/software-engineering.html">#software-engineering</a> <a class="note-tag" href="/notes/tags/agile.html">#agile</a> <a class="note-tag" href="/notes/tags/person.html">#person</a></p>
+
+                                <div class="notes-backlinks">
+                    <h2>🔗 リンクされているノート</h2>
+                    <ul>
+                                            <li><a href="/notes/technical-debt.html">技術的負債（Technical Debt）</a></li>
+                    
+                    </ul>
+                </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-09 14:17 / 更新日時: 2026-08-09 14:17</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=lefthook&url=https%3A%2F%2F64p.org%2Fnotes%2Flefthook.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <span>作成日時: 2026-08-11 07:53 / 更新日時: 2026-08-11 07:53</span>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=Ward%20Cunningham&url=https%3A%2F%2F64p.org%2Fnotes%2Fward-cunningham.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">

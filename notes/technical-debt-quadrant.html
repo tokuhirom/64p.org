@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>lefthook - Notes - 64p.org</title>
+    <title>技術的負債の四象限（Technical Debt Quadrant） - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/highlight.js@11/styles/github.min.css" media="(prefers-color-scheme: light)">
@@ -23,7 +23,7 @@
                 <ul class="notes-nav">
                                     <li><a href="/notes/ward-cunningham.html">Ward Cunningham</a></li>
                                     <li><a href="/notes/technical-debt.html">技術的負債（Technical Debt）</a></li>
-                                    <li><a href="/notes/technical-debt-quadrant.html">技術的負債の四象限（Technical Debt Quadrant）</a></li>
+                                    <li><a href="/notes/technical-debt-quadrant.html" class="active">技術的負債の四象限（Technical Debt Quadrant）</a></li>
                                     <li><a href="/notes/bourbon-confectionery.html">ブルボン（株式会社ブルボン）</a></li>
                                     <li><a href="/notes/wdic.html">通信用語の基礎知識（WDIC）</a></li>
                                     <li><a href="/notes/websockify.html">websockify</a></li>
@@ -199,7 +199,7 @@
                                     <li><a href="/notes/openssf.html">OpenSSF (Open Source Security Foundation)</a></li>
                                     <li><a href="/notes/carnivorous-plants.html">食虫植物</a></li>
                                     <li><a href="/notes/miidera-gomimushi.html">ミイデラゴミムシ</a></li>
-                                    <li><a href="/notes/lefthook.html" class="active">lefthook</a></li>
+                                    <li><a href="/notes/lefthook.html">lefthook</a></li>
                                     <li><a href="/notes/welcome.html">Notesコーナーへようこそ</a></li>
                                     <li><a href="/notes/kyoka-vs-tanka.html">狂歌と短歌の違い</a></li>
                                     <li><a href="/notes/harmonyos-pc.html">HarmonyOS PC版（鴻蒙電脳）</a></li>
@@ -213,87 +213,51 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>lefthook</h1>
+                <h1>技術的負債の四象限（Technical Debt Quadrant）</h1>
 
-<p><a class="note-tag" href="/notes/tags/git.html">#git</a> <a class="note-tag" href="/notes/tags/perl.html">#perl</a></p>
+<p>Martin Fowlerが提唱した、<a href="/notes/technical-debt.html">技術的負債</a>を分類するためのフレームワーク。負債の性質を「reckless/prudent（無謀／慎重）」と「deliberate/inadvertent（意図的／無意識的）」という2つの軸で整理する。</p>
 
-<p>Git hooks(pre-commit等)を管理するツール。このリポジトリでもnotesのfrontmatter(<code>created</code>/<code>updated</code>)自動付与のために導入している(後述)。</p>
-
-<h2>概要</h2>
+<h2>2つの軸</h2>
 
 <ul>
-<li>開発元は <a href="https://evilmartians.com/">Evil Martians</a>（Rails周りで有名なコンサル企業）。Go製で、単一の依存フリーバイナリとして配布される。</li>
-<li>Ruby gem、npm、Go、Python、Swift、Homebrew、各種Linuxパッケージマネージャー(deb/rpm/apk/pacman)、Wingetなど、多様なパッケージマネージャー経由でインストールできる。</li>
-<li>ライセンスはMIT。GitHub star数は8.6k程度(2026-08時点)。</li>
-<li>公式サイトのキャッチコピーは &ldquo;Fast. Powerful. Simple.&rdquo; の3語。</li>
+<li><strong>Reckless（無謀）vs Prudent（慎重）</strong>：無謀な負債は利息負担が大きく返済に長期間を要する設計上の欠陥。慎重な負債は、短期的な利益（リリース達成など）と長期的な返済コストを天秤にかけた上での判断。</li>
+<li><strong>Deliberate（意図的）vs Inadvertent（無意識的）</strong>：意図的な負債はチームが負債の存在を認識し、返済タイミングも検討している状態。無意識的な負債はチームが設計の欠陥そのものに気づいていない状態。</li>
 </ul>
 
 
-<h2>主な特徴</h2>
-
-<ul>
-<li><strong>設定はYAML1枚</strong>: リポジトリルートの<code>lefthook.yml</code>にhook名(<code>pre-commit</code>, <code>commit-msg</code>, <code>pre-push</code>など)ごとにコマンドを書く。</li>
-<li><strong>並列実行</strong>: 複数のジョブ(lintやtestなど)を並列で走らせて高速化できる。</li>
-<li><strong>glob/ファイルフィルタ</strong>: <code>glob: "*.rb"</code>のように、変更されたファイルの種類ごとにコマンドを分けて実行できる。ステージされたファイルのみ(<code>{staged_files}</code>)、変更ファイル全体(<code>{all_files}</code>)などをプレースホルダで渡せる。</li>
-<li><strong>Docker対応</strong>: コマンドをDockerコンテナ内で実行することも可能。</li>
-<li><strong>単一バイナリ</strong>: Node.jsやRubyのランタイムに依存しない(Huskyのようにnpmパッケージとして入れることもできるが、本体はGo製バイナリ)。</li>
-</ul>
-
-
-<h2>Huskyなど類似ツールとの違い</h2>
-
-<ul>
-<li>npmエコシステム限定の<a href="https://typicode.github.io/husky/">Husky</a>と違い、言語非依存で使える。</li>
-<li><code>pre-commit</code>(Pythonのpre-commit framework)と比較されることが多いが、lefthookは設定がYAML1枚で完結し、並列実行やDocker実行など「速度」寄りの機能を前面に出しているのが特徴。</li>
-</ul>
-
-
-<h2>このリポジトリでの使い方</h2>
-
-<p><code>mise.toml</code>でバージョン固定して導入している。</p>
-
-<pre><code class="toml">[tools]
-lefthook = "2.1.10"
-</code></pre>
-
-
-
-<pre><code class="sh">mise install
-mise exec -- lefthook install
-</code></pre>
-
-<p><code>lefthook.yml</code>の設定:</p>
-
-<pre><code class="yaml">pre-commit:
-  commands:
-    notes-dates:
-      glob: "notes/src/*.md"
-      run: perl update-note-dates.pl {staged_files}
-</code></pre>
-
-<p><code>notes/src/*.md</code>がステージされたときだけ<code>update-note-dates.pl</code>を実行し、以下を行っている。</p>
+<h2>4つの象限</h2>
 
 <ol>
-<li>新規ノートなら<code>created</code>/<code>updated</code>、既存ノートなら<code>updated</code>のみをYAML frontmatterに書き込む。</li>
-<li><code>regen-index.pl</code>を実行してHTMLを再生成。</li>
-<li>生成物(<code>notes/</code>, <code>index.html</code>, <code>talks/index.html</code>)を<code>git add</code>してコミットに含める。</li>
+<li><strong>Reckless-Deliberate</strong>: 品質より速度を優先する意識的な選択。通常は悪い判断とされる。</li>
+<li><strong>Reckless-Inadvertent</strong>: 設計実践の知識がないまま作られた混乱したコード。</li>
+<li><strong>Prudent-Deliberate</strong>: 戦略的な負債取得。短期的なリリースを実現するための計算された判断。</li>
+<li><strong>Prudent-Inadvertent</strong>: 優秀なチームであっても開発を進める中で学習した結果、後から気づく避けられない負債。</li>
 </ol>
 
 
-<p>ファイルのmtimeには依存せず、frontmatter自体を正として日付を管理している。新規clone時やCI環境ではmtimeが信用できない(checkout時刻になってしまう)ため、この設計にしている。</p>
+<h2>位置づけ</h2>
+
+<p>Fowlerはこの図を用いて、負債比喩を経営層・管理職に説明しやすくすることを意図した。特に「優秀なチームであっても必ず負債が発生する」という現実を示し、計画的な返済の必要性を強調している。</p>
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://lefthook.dev/">Lefthook 公式サイト</a></li>
-<li><a href="https://github.com/evilmartians/lefthook">evilmartians/lefthook - GitHub</a></li>
-<li><a href="https://dev.to/recca0120/ditch-husky-speed-up-git-hooks-with-lefthook-hkm">Ditch Husky: Speed Up Git Hooks with Lefthook - DEV Community</a></li>
+<li><a href="https://martinfowler.com/bliki/TechnicalDebtQuadrant.html">bliki: Technical Debt Quadrant - Martin Fowler</a></li>
 </ul>
 
 
+<p><a class="note-tag" href="/notes/tags/software-engineering.html">#software-engineering</a> <a class="note-tag" href="/notes/tags/agile.html">#agile</a></p>
+
+                                <div class="notes-backlinks">
+                    <h2>🔗 リンクされているノート</h2>
+                    <ul>
+                                            <li><a href="/notes/technical-debt.html">技術的負債（Technical Debt）</a></li>
+                    
+                    </ul>
+                </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-09 14:17 / 更新日時: 2026-08-09 14:17</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=lefthook&url=https%3A%2F%2F64p.org%2Fnotes%2Flefthook.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <span>作成日時: 2026-08-11 07:53 / 更新日時: 2026-08-11 07:53</span>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=%E6%8A%80%E8%A1%93%E7%9A%84%E8%B2%A0%E5%82%B5%E3%81%AE%E5%9B%9B%E8%B1%A1%E9%99%90%EF%BC%88Technical%20Debt%20Quadrant%EF%BC%89&url=https%3A%2F%2F64p.org%2Fnotes%2Ftechnical-debt-quadrant.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">
