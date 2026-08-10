@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>GPUI - Notes - 64p.org</title>
+    <title>五等分の花嫁 - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/highlight.js@11/styles/github.min.css" media="(prefers-color-scheme: light)">
@@ -21,7 +21,7 @@
                 <a class="notes-tags-link" href="/notes/tags/">🏷️ タグ一覧</a>
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
-                                    <li><a href="/notes/gotoubun-no-hanayome.html">五等分の花嫁</a></li>
+                                    <li><a href="/notes/gotoubun-no-hanayome.html" class="active">五等分の花嫁</a></li>
                                     <li><a href="/notes/kappa-yokai.html">河童（かっぱ）</a></li>
                                     <li><a href="/notes/restful.html">RESTful（REST: Representational State Transfer）</a></li>
                                     <li><a href="/notes/hateoas.html">HATEOAS（Hypermedia As The Engine Of Application State）</a></li>
@@ -201,7 +201,7 @@
                                     <li><a href="/notes/hacker-news.html">Hacker News (HN) について</a></li>
                                     <li><a href="/notes/edge-manifest-v3.html">Microsoft Edge、拡張機能をManifest V3へ完全移行</a></li>
                                     <li><a href="/notes/tableau.html">Tableau</a></li>
-                                    <li><a href="/notes/gpui.html" class="active">GPUI</a></li>
+                                    <li><a href="/notes/gpui.html">GPUI</a></li>
                                     <li><a href="/notes/project-glasswing.html">Project Glasswing</a></li>
                                     <li><a href="/notes/openssf.html">OpenSSF (Open Source Security Foundation)</a></li>
                                     <li><a href="/notes/carnivorous-plants.html">食虫植物</a></li>
@@ -220,60 +220,46 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>GPUI</h1>
+                <h1>五等分の花嫁</h1>
 
-<p><a class="note-tag" href="/notes/tags/rust.html">#rust</a></p>
+<p>春場ねぎによる漫画作品。「週刊少年マガジン」2017年8号に読み切り掲載後、読者アンケートの反響を受けて2017年36・37合併号から2020年12号まで連載。全14巻で完結。</p>
 
-<p>コードエディタ<a href="https://zed.dev/">Zed</a>の開発元(Zed Industries)が作った、Rust製のGPUアクセラレーションGUIフレームワーク。バージョン0.2.2、ライセンスApache-2.0。immediate modeとretained modeのハイブリッド設計。まだpre-1.0で開発中で、バージョン間で破壊的変更が頻繁に入る。</p>
+<h2>あらすじ</h2>
 
-<h2>設計の特徴</h2>
+<p>貧乏な生活を送る高校2年生・上杉風太郎のもとに好条件の家庭教師アルバイトの話が舞い込むが、教え子は同級生の五つ子（一花・二乃・三玖・四葉・五月）。全員美少女だが「落第寸前」「勉強嫌い」の問題児で、最初の課題は姉妹からの信頼を勝ち取ることだった、というラブコメディ。</p>
 
-<p>macOSはMetal、WindowsはDirectWriteなど、プラットフォーム固有の技術でレンダリングをGPUに直接投げ、120FPSを目標にした高フレームレートを狙う。以下の三層構造で構成されている。</p>
+<h2>実績</h2>
 
 <ul>
-<li>エンティティによる状態管理</li>
-<li><code>Render</code>トレイトによる宣言的UI(View)</li>
-<li>低レベルな命令型UI(Element)制御</li>
+<li>2020年2月時点で単行本累計発行部数1000万部突破。2026年5月時点では2000万部を突破。</li>
+<li>2019年5月、第43回講談社漫画賞少年部門を受賞。</li>
+<li>2019年にアニメ化（2期まで放送）。</li>
 </ul>
 
 
-<h2>Zedとの関係</h2>
+<h2>最終回（花嫁の相手）</h2>
 
-<p>元々Zed内部の一部として開発されていたが、現在はスタンドアロンのクレートとしてcrates.ioに公開されており、音楽プレイヤー・動画編集ツール・ファイルエクスプローラ・AIコーディングターミナルなど、Zed以外のアプリでも採用が広がっている(GitHubの<a href="https://github.com/zed-industries/awesome-gpui">awesome-gpui</a>にまとめられている)。Zed本体のGitHub Starsは約88,300。</p>
+<p>風太郎が選んだ花嫁は四葉。他の姉妹と異なり、四葉だけは「他の姉妹の想いを守りたい」「自分は引くべき」と自分の感情を繰り返し抑えてきたキャラクターで、その自己犠牲的な恋が結末に繋がったとされる。完結後の物語を描いた映画『映画 五等分の花嫁∗』では、大人になった風太郎と五つ子の新婚旅行エピソードが描かれた。</p>
 
-<h2>外部利用者向け開発の位置づけ</h2>
+<h2>自分の読書メモ</h2>
 
-<p>Zedメンテナーのmaxdeviantは<a href="https://github.com/zed-industries/zed/discussions/9877">GitHub Discussion #9877</a>(2024年)で、「UIクレートは現状Zed専用で、汎用ライブラリとして切り出す具体的な計画は今のところない」と述べている。</p>
-
-<p>2026年2月頃の<a href="https://github.com/zed-industries/zed/discussions/30515">GitHub Discussion #30515「Please extract GPUI」</a>等では、GPUI本流の開発がZed外部ユーザーのニーズを優先しない方向にあり、Zed本体で直接使わないコード(トレイ対応やWayland周りのタッチイベント対応など)はアップストリームにマージされにくくなっていることが議論されている。Zed開発者自身が、Zed本体で不要な機能追加はコミュニティフォークの<a href="https://github.com/gpui-ce/gpui-ce">gpui-ce</a>(GPUI Community Edition)への提出を案内するようになっている。gpui-ceのフォーク作成者(iamnbutler)は、GPUIがZedのニーズに特化して作られているため、Zed Industriesがコミュニティ専用の作業に工数を割くのを正当化するのは難しい、という実務的な理由を説明している。ただしgpui-ce自体も、PR#1マージ後にメンテナー対応が滞りがちという指摘もある。</p>
+<p>14巻（最終巻）まで読了済み。</p>
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://crates.io/crates/gpui">gpui - crates.io</a></li>
-<li><a href="https://github.com/zed-industries/zed/tree/main/crates/gpui">zed/crates/gpui - GitHub</a></li>
-<li><a href="https://beckmoulton.medium.com/gpui-a-technical-overview-of-the-high-performance-rust-ui-framework-powering-zed-ac65975cda9f">GPUI: A Technical Overview - Medium</a></li>
-<li><a href="https://zed.dev/blog/gpui-2-on-preview">GPUI 2 is now in production — Zed&rsquo;s Blog</a></li>
-<li><a href="https://github.com/zed-industries/awesome-gpui">awesome-gpui - GitHub</a></li>
-<li><a href="https://github.com/zed-industries/zed/discussions/9877">Discussion about UI crate · Discussion #9877</a></li>
-<li><a href="https://github.com/zed-industries/zed/discussions/30515">Please extract GPUI · Discussion #30515</a></li>
-<li><a href="https://github.com/zed-industries/zed/discussions/20140">GPUI wish list · Discussion #20140</a></li>
-<li><a href="https://github.com/gpui-ce/gpui-ce">gpui-ce/gpui-ce - GitHub</a></li>
-<li><a href="https://news.ycombinator.com/item?id=47003569">Zed also stopped GPUI development for&hellip; - Hacker News</a></li>
+<li><a href="https://ja.wikipedia.org/wiki/%E4%BA%94%E7%AD%89%E5%88%86%E3%81%AE%E8%8A%B1%E5%AB%81">五等分の花嫁 - Wikipedia</a></li>
+<li><a href="https://alu.jp/series/%E4%BA%94%E7%AD%89%E5%88%86%E3%81%AE%E8%8A%B1%E5%AB%81">五等分の花嫁の作品概要、あらすじ、登場人物紹介、豆知識など | アル</a></li>
+<li><a href="https://ciatr.jp/topics/316458">漫画『五等分の花嫁』最終回をネタバレ解説！ - ciatr</a></li>
+<li><a href="https://manga-love.net/archives/21234">『五等分の花嫁』累計発行部数！コミックス全１４巻の累計は？</a></li>
 </ul>
 
 
-                                <div class="notes-backlinks">
-                    <h2>🔗 リンクされているノート</h2>
-                    <ul>
-                                            <li><a href="/notes/freya.html">Freya (freyaui.dev) — Rust製クロスプラットフォームGUIライブラリ</a></li>
-                                            <li><a href="/notes/rust-gui-libraries.html">Rust GUI ライブラリ一覧</a></li>
-                    
-                    </ul>
-                </div>
+<p><a class="note-tag" href="/notes/tags/manga.html">#manga</a></p>
+
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-09 15:29 / 更新日時: 2026-08-09 15:29</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=GPUI&url=https%3A%2F%2F64p.org%2Fnotes%2Fgpui.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <span>作成日時: 2026-08-11 08:17 / 更新日時: 2026-08-11 08:17</span>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=%E4%BA%94%E7%AD%89%E5%88%86%E3%81%AE%E8%8A%B1%E5%AB%81&url=https%3A%2F%2F64p.org%2Fnotes%2Fgotoubun-no-hanayome.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">
