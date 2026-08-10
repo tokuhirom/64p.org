@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>NixOS - Notes - 64p.org</title>
+    <title>エクストリームプログラミング（XP） - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/highlight.js@11/styles/github.min.css" media="(prefers-color-scheme: light)">
@@ -24,7 +24,7 @@
                                     <li><a href="/notes/ward-cunningham.html">Ward Cunningham</a></li>
                                     <li><a href="/notes/technical-debt.html">技術的負債（Technical Debt）</a></li>
                                     <li><a href="/notes/tdd.html">TDD (Test-Driven Development / テスト駆動開発)</a></li>
-                                    <li><a href="/notes/extreme-programming.html">エクストリームプログラミング（XP）</a></li>
+                                    <li><a href="/notes/extreme-programming.html" class="active">エクストリームプログラミング（XP）</a></li>
                                     <li><a href="/notes/agile-manifesto.html">アジャイルソフトウェア開発宣言（Manifesto for Agile Software Development）</a></li>
                                     <li><a href="/notes/technical-debt-quadrant.html">技術的負債の四象限（Technical Debt Quadrant）</a></li>
                                     <li><a href="/notes/bourbon-confectionery.html">ブルボン（株式会社ブルボン）</a></li>
@@ -96,7 +96,7 @@
                                     <li><a href="/notes/neon.html">Neon</a></li>
                                     <li><a href="/notes/dgx-spark.html">NVIDIA DGX Spark</a></li>
                                     <li><a href="/notes/nixpkgs-core-team-disbanded.html">Nixpkgs Core Teamの解散(2026年8月)</a></li>
-                                    <li><a href="/notes/nixos.html" class="active">NixOS</a></li>
+                                    <li><a href="/notes/nixos.html">NixOS</a></li>
                                     <li><a href="/notes/nix.html">Nix</a></li>
                                     <li><a href="/notes/incus.html">Incus</a></li>
                                     <li><a href="/notes/cosmic-desktop.html">COSMIC (デスクトップ環境)</a></li>
@@ -215,36 +215,73 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>NixOS</h1>
+                <h1>エクストリームプログラミング（XP）</h1>
 
-<p><a href="/notes/nix.html">Nix</a>をパッケージマネージャーとして採用したLinuxディストリビューション。システムパッケージも含め、全てNixpkgsのパッケージ定義から構築される。設定ファイル(Nix言語で記述)から宣言的にシステム全体を構成できるのが特徴。</p>
+<p>ソフトウェア開発手法の一つ。技術的な卓越性と、人と人との良好な関係の両方が成功に不可欠だとする考え方に立つ。</p>
 
-<h2>Nixとの関係</h2>
+<h2>起源</h2>
 
-<p>Nix言語で書かれたパッケージ定義がNixpkgsに集約され、その上でNixOSはNixpkgsのパッケージを活用してLinuxシステムを構築する、という階層構造になっている。</p>
+<ul>
+<li>1996年、Kent Beckがクライスラー社の給与計算プロジェクト「<strong>Chrysler Comprehensive Compensation System（C3）</strong>」のリーダーに就任。当時プロジェクトは給与計算を一件も処理できていない状態だった。</li>
+<li>システムはSmalltalkとGemStoneで構築。Beckは開発手法を洗練させ、1997年にはシステムが稼働し約1万人分の給与処理を開始した。</li>
+<li>1999年10月、Beckは <em>&ldquo;Extreme Programming Explained&rdquo;</em> を出版し、XPを方法論として体系化。</li>
+<li>プロジェクト自体は、より大きな範囲の給与計算を扱う方向で継続する予定だったが、1999年に新規開発が停止した（2000年のDaimler-Benzによる買収に伴いプロジェクトが終了したとする記述もある）。</li>
+</ul>
 
-<p><a class="note-tag" href="/notes/tags/nix.html">#nix</a> <a class="note-tag" href="/notes/tags/linux.html">#linux</a></p>
+
+<h2>3人の創始者</h2>
+
+<p>1996年頃のXP創始者として、Kent Beck・<a href="/notes/ward-cunningham.html">Ward Cunningham</a>・Ron Jeffriesの3人が位置づけられている。Ward CunninghamとBeckは以前からの頻繁な協力者で、開発手法の提案・実装を共同で進めた。XPの概念は、Cunninghamが発明したWiki「WikiWikiWeb」上での議論を通じて広まっていった。</p>
+
+<h2>5つの価値</h2>
+
+<ol>
+<li><strong>コミュニケーション</strong> — チーム内での共有認識構築</li>
+<li><strong>シンプリシティ</strong> — &ldquo;You aren&rsquo;t gonna need it"（YAGNI）</li>
+<li><strong>フィードバック</strong> — システム・顧客・チームからの多面的な反応</li>
+<li><strong>勇気</strong> — リファクタリングや陳腐化したコードの削除を実行する勇気</li>
+<li><strong>尊重（Respect）</strong> — チームメンバー間の相互尊重（第2版で追加された価値）</li>
+</ol>
+
+
+<h2>12のプラクティス（4分類）</h2>
+
+<ul>
+<li><strong>細かいスケールでのフィードバック</strong>：ペアプログラミング、計画ゲーム、<a href="/notes/tdd.html">テスト駆動開発</a></li>
+<li><strong>継続的プロセス</strong>：継続的インテグレーション、リファクタリング、小規模リリース</li>
+<li><strong>共有理解</strong>：コーディング標準、集団的コード所有権、シンプル設計</li>
+<li><strong>プログラマの福利</strong>：持続可能なペース</li>
+</ul>
+
+
+<h2><a href="/notes/technical-debt.html">技術的負債（Technical Debt）</a>との関わり</h2>
+
+<p>Ward Cunninghamは自身が考案した技術的負債のメタファーについて、「リファクタリング可能な程度にきれいなコードであること」がXPの中核だと述べており、両者は密接に結びついている概念。</p>
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://zenn.dev/asa1984/articles/nixos-is-the-best">NixOSで最強のLinuxデスクトップを作ろう - Zenn</a></li>
-<li><a href="https://ja.wikipedia.org/wiki/Nix_(%E3%83%91%E3%83%83%E3%82%B1%E3%83%BC%E3%82%B8%E7%AE%A1%E7%90%86%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0">Nix (パッケージ管理システム) - Wikipedia</a>)</li>
+<li><a href="https://en.wikipedia.org/wiki/Extreme_programming">Extreme programming - Wikipedia (English)</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Chrysler_Comprehensive_Compensation_System">Chrysler Comprehensive Compensation System - Wikipedia (English)</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Ron_Jeffries">Ron Jeffries - Wikipedia (English)</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Kent_Beck">Kent Beck - Wikipedia (English)</a></li>
 </ul>
 
+
+<p><a class="note-tag" href="/notes/tags/software-engineering.html">#software-engineering</a> <a class="note-tag" href="/notes/tags/agile.html">#agile</a></p>
 
                                 <div class="notes-backlinks">
                     <h2>🔗 リンクされているノート</h2>
                     <ul>
-                                            <li><a href="/notes/cosmic-desktop.html">COSMIC (デスクトップ環境)</a></li>
-                                            <li><a href="/notes/incus.html">Incus</a></li>
-                                            <li><a href="/notes/nix.html">Nix</a></li>
+                                            <li><a href="/notes/tdd.html">TDD (Test-Driven Development / テスト駆動開発)</a></li>
+                                            <li><a href="/notes/ward-cunningham.html">Ward Cunningham</a></li>
+                                            <li><a href="/notes/technical-debt.html">技術的負債（Technical Debt）</a></li>
                     
                     </ul>
                 </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-10 16:57 / 更新日時: 2026-08-10 16:57</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=NixOS&url=https%3A%2F%2F64p.org%2Fnotes%2Fnixos.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <span>作成日時: 2026-08-11 08:02 / 更新日時: 2026-08-11 08:02</span>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=%E3%82%A8%E3%82%AF%E3%82%B9%E3%83%88%E3%83%AA%E3%83%BC%E3%83%A0%E3%83%97%E3%83%AD%E3%82%B0%E3%83%A9%E3%83%9F%E3%83%B3%E3%82%B0%EF%BC%88XP%EF%BC%89&url=https%3A%2F%2F64p.org%2Fnotes%2Fextreme-programming.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">

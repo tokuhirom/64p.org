@@ -1,12 +1,12 @@
 ---
 created: 2026-08-09 23:30
-updated: 2026-08-09 23:30
+updated: 2026-08-11 08:02
 ---
 # TDD (Test-Driven Development / テスト駆動開発)
 
 #software-engineering #testing
 
-1990年代後半、Kent BeckがExtreme Programmingの一部として考案した開発手法。2003年の著書『Test-Driven Development: By Example』で体系化された。
+1990年代後半、Kent Beckが[[extreme-programming|Extreme Programming]]の一部として考案した開発手法。2003年の著書『Test-Driven Development: By Example』で体系化された。
 
 ## Kent Beck自身による「Canon TDD」(2023年12月, 原典の再定義)
 

@@ -1,6 +1,6 @@
 ---
 created: 2026-08-11 07:53
-updated: 2026-08-11 07:55
+updated: 2026-08-11 08:02
 ---
 # Ward Cunningham
 
@@ -17,7 +17,7 @@ updated: 2026-08-11 07:55
 - Kent Beckとともにソフトウェアデザインパターンおよび[[tdd|CRCカード]]の開拓に携わった。
 - 1994年にWikiWikiWebのコーディングを開始し、1995年3月25日にPortland Pattern Repositoryのアドオンとしてc2.comに設置。これが世界初のWiki（ユーザーが編集可能なWebサイト）とされる。
 - [[technical-debt]]のメタファーを1992年のOOPSLA論文で考案。
-- エクストリーム・プログラミングの種をまいた人物の一人ともされる。
+- [[extreme-programming|エクストリーム・プログラミング]]の創始者の一人（Kent Beck・Ron Jeffriesとともに）。
 - 2001年、[[agile-manifesto|アジャイルソフトウェア開発宣言]]の共著者として署名。
 
 ## 出典
