@@ -1,6 +1,6 @@
 ---
 created: 2026-08-11 07:39
-updated: 2026-08-11 07:39
+updated: 2026-08-11 07:41
 ---
 # websockify
 
@@ -8,7 +8,7 @@ WebSocket ⇔ TCP のプロキシ／ブリッジ。ブラウザがWebSocket経�
 
 ## 存在理由
 
-- ブラウザはセキュリティ制約上、HTTP/HTTPSかWebSocketでしか外向き接続を確立できない。一方、標準的なVNCサーバーはポート5900+（[[rfb]]プロトコル）でTCPソケット通信を行う。
+- [[browser-raw-tcp-restriction|ブラウザはセキュリティ制約上、生のTCP/UDPソケットを直接開けない]]ため、HTTP/HTTPSかWebSocketでしか外向き接続を確立できない。一方、標準的なVNCサーバーはポート5900+（[[rfb]]プロトコル）でTCPソケット通信を行う。
 - websockifyはこの間を仲介するプロトコル変換役として動作し、noVNCクライアントからのWebSocket接続を受け付け、TCPソケット経由でVNCサーバーへデータを転送する。
 - 重要な点として、websockify自身はVNCプロトコルのデータをパース・改変せず、WebSocketフレームとTCPストリームの間でバイト列を単純に中継するだけ。
 

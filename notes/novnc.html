@@ -23,6 +23,7 @@
                 <ul class="notes-nav">
                                     <li><a href="/notes/websockify.html">websockify</a></li>
                                     <li><a href="/notes/novnc.html" class="active">noVNC</a></li>
+                                    <li><a href="/notes/browser-raw-tcp-restriction.html">ブラウザの生TCP/UDPソケット制限</a></li>
                                     <li><a href="/notes/vnc.html">VNC</a></li>
                                     <li><a href="/notes/rfb.html">RFB（Remote Framebuffer）プロトコル</a></li>
                                     <li><a href="/notes/midi.html">MIDI</a></li>
@@ -216,7 +217,7 @@
 <ul>
 <li>中核は「Core VNC/RFB」コンポーネントで、RFBプロトコルの状態機械（ステートマシン）をすべて内包している。</li>
 <li>画面描画にはHTML5 Canvasを使う。</li>
-<li>ブラウザは生のTCPソケットを直接扱えないため、WebSocketを介してRFBプロトコルをやり取りする。サーバー側のVNCが素のTCPしか話さない場合は、<a href="/notes/websockify.html">websockify</a>（WebSocket⇔TCPのプロキシ／ブリッジ）を挟んでnoVNCと接続する構成が一般的（VNCサーバー自体がWebSocketに対応していれば不要）。</li>
+<li><a href="/notes/browser-raw-tcp-restriction.html">ブラウザは生のTCPソケットを直接扱えない</a>ため、WebSocketを介してRFBプロトコルをやり取りする。サーバー側のVNCが素のTCPしか話さない場合は、<a href="/notes/websockify.html">websockify</a>（WebSocket⇔TCPのプロキシ／ブリッジ）を挟んでnoVNCと接続する構成が一般的（VNCサーバー自体がWebSocketに対応していれば不要）。</li>
 </ul>
 
 
@@ -240,11 +241,12 @@
                     <ul>
                                             <li><a href="/notes/rfb.html">RFB（Remote Framebuffer）プロトコル</a></li>
                                             <li><a href="/notes/websockify.html">websockify</a></li>
+                                            <li><a href="/notes/browser-raw-tcp-restriction.html">ブラウザの生TCP/UDPソケット制限</a></li>
                     
                     </ul>
                 </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-11 07:38 / 更新日時: 2026-08-11 07:39</span>
+                    <span>作成日時: 2026-08-11 07:38 / 更新日時: 2026-08-11 07:41</span>
                     <a class="share-x" href="https://twitter.com/intent/tweet?text=noVNC&url=https%3A%2F%2F64p.org%2Fnotes%2Fnovnc.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>

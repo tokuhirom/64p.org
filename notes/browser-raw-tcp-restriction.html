@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>Project Babylon - Notes - 64p.org</title>
+    <title>ブラウザの生TCP/UDPソケット制限 - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/highlight.js@11/styles/github.min.css" media="(prefers-color-scheme: light)">
@@ -23,7 +23,7 @@
                 <ul class="notes-nav">
                                     <li><a href="/notes/websockify.html">websockify</a></li>
                                     <li><a href="/notes/novnc.html">noVNC</a></li>
-                                    <li><a href="/notes/browser-raw-tcp-restriction.html">ブラウザの生TCP/UDPソケット制限</a></li>
+                                    <li><a href="/notes/browser-raw-tcp-restriction.html" class="active">ブラウザの生TCP/UDPソケット制限</a></li>
                                     <li><a href="/notes/vnc.html">VNC</a></li>
                                     <li><a href="/notes/rfb.html">RFB（Remote Framebuffer）プロトコル</a></li>
                                     <li><a href="/notes/midi.html">MIDI</a></li>
@@ -147,7 +147,7 @@
                                     <li><a href="/notes/marp.html">Marp</a></li>
                                     <li><a href="/notes/project-loom.html">Project Loom</a></li>
                                     <li><a href="/notes/project-leyden.html">Project Leyden</a></li>
-                                    <li><a href="/notes/project-babylon.html" class="active">Project Babylon</a></li>
+                                    <li><a href="/notes/project-babylon.html">Project Babylon</a></li>
                                     <li><a href="/notes/openjdk-projects.html">OpenJDKの主要プロジェクト</a></li>
                                     <li><a href="/notes/project-valhalla.html">Project Valhalla</a></li>
                                     <li><a href="/notes/project-amber.html">Project Amber</a></li>
@@ -208,41 +208,42 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>Project Babylon</h1>
+                <h1>ブラウザの生TCP/UDPソケット制限</h1>
 
-<p>Javaの適用範囲をSQL、微分可能プログラミング、機械学習モデル、GPUといった外部プログラミングモデルへ拡張することを目指すOpenJDKプロジェクト。「コードリフレクション(code reflection)」というリフレクティブプログラミングの拡張によって実現する。</p>
+<p>一般的なWebページ（通常のブラウザタブで開くサイト）は、悪用防止のため生のTCP/UDPソケットを直接開くことができない。<code>WebSocket</code>・<code>fetch</code>・<code>WebRTC</code>といった標準のWeb通信APIは、この制約を前提に意図的に設計されている。</p>
 
-<h2>コードリフレクション</h2>
+<p>これが<a href="/notes/websockify.html">websockify</a>のようなWebSocket⇔TCPブリッジが必要とされる理由そのものであり、<a href="/notes/novnc.html">noVNC</a>が<a href="/notes/rfb.html">RFB（Remote Framebuffer）プロトコル</a>サーバーへ直接ではなくWebSocket経由で接続する構成を取る背景にもなっている。</p>
 
-<p>通常のJavaリフレクションは、実行時にクラスのフィールド・メソッド・アノテーションを調べられるが、メソッド内部で実際に何をしているかまでは分からない。<code>@CodeReflection</code> アノテーションを付けたメソッドは、バイトコードより上位の、プログラマが書いたコードに近いモデル(構造・型情報を保持し変換しやすい形)を生成する。</p>
+<h2>例外：Direct Sockets API</h2>
 
-<h2>GPUプログラミングでの用途</h2>
+<p>ChromeなどでTCP/UDPソケットを直接開ける「<strong>Direct Sockets API</strong>」が開発されている。ただしこれは「<strong>Isolated Web Apps（IWA）</strong>」という特別なアプリ形態限定の機能で、通常のブラウザタブで開く一般的なWebサイトには公開されていない。悪用リスクが高いため、厳格なCSPやクロスオリジン分離などの追加セキュリティ条件を満たすIWAでのみ有効化される。</p>
 
-<p>コードリフレクションを使うと、JavaプログラムをシンボリックなJava中間表現に落とし込んだ上でCUDAやOpenCLのような外部モデルへ変換できる。これにより、Javaで書いたコードを異なるプラットフォーム上で実行可能にする。</p>
+<h2>将来的な動き：WebTransport</h2>
 
-<h2>HAT (Heterogeneous Accelerator Toolkit)</h2>
-
-<p>Javaコードをオフロードし、GPUなど現代的なハードウェアアクセラレータ上へディスパッチできるようにする並列プログラミングフレームワーク。コードリフレクションを活用したGPUプログラミングモデルとしてJavaライブラリの形で実装されている。</p>
+<p>HTTP/3（QUIC）ベースの新しい多重化通信API「WebTransport」の標準化も進行中（W3Cで2026年内にCandidate Recommendation入りを目指している段階）。ただしこれも任意の生TCPを喋れるようにするものではなく、QUIC/HTTP3上の多重化トランスポートという位置づけ。</p>
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://openjdk.org/projects/babylon/">Project Babylon — OpenJDK公式</a></li>
-<li><a href="https://www.javacodegeeks.com/2026/04/project-babylon-code-reflection-and-what-it-means-for-ml-on-the-jvm.html">Project Babylon: Code Reflection and What It Means for ML on the JVM | Java Code Geeks</a></li>
-<li><a href="https://openjdk.org/projects/babylon/articles/hat-matmul/hat-matmul">Optimizing GPU Programs from Java using Babylon and HAT</a></li>
+<li><a href="https://wicg.github.io/direct-sockets/docs/explainer.html">direct-sockets | Direct Sockets API for the web platform</a></li>
+<li><a href="https://developer.chrome.com/docs/iwa/direct-sockets">Direct Sockets | Isolated Web Apps (IWA) | Chrome for Developers</a></li>
+<li><a href="https://groups.google.com/a/chromium.org/g/blink-dev/c/5R0P_aYBWQI">Intent to Ship: Direct Sockets API</a></li>
 </ul>
 
+
+<p><a class="note-tag" href="/notes/tags/protocol.html">#protocol</a> <a class="note-tag" href="/notes/tags/browser.html">#browser</a></p>
 
                                 <div class="notes-backlinks">
                     <h2>🔗 リンクされているノート</h2>
                     <ul>
-                                            <li><a href="/notes/openjdk-projects.html">OpenJDKの主要プロジェクト</a></li>
+                                            <li><a href="/notes/novnc.html">noVNC</a></li>
+                                            <li><a href="/notes/websockify.html">websockify</a></li>
                     
                     </ul>
                 </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-09 21:23 / 更新日時: 2026-08-09 21:23</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=Project%20Babylon&url=https%3A%2F%2F64p.org%2Fnotes%2Fproject-babylon.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <span>作成日時: 2026-08-11 07:41 / 更新日時: 2026-08-11 07:41</span>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=%E3%83%96%E3%83%A9%E3%82%A6%E3%82%B6%E3%81%AE%E7%94%9FTCP%2FUDP%E3%82%BD%E3%82%B1%E3%83%83%E3%83%88%E5%88%B6%E9%99%90&url=https%3A%2F%2F64p.org%2Fnotes%2Fbrowser-raw-tcp-restriction.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">
