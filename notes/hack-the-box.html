@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>ミイデラゴミムシ - Notes - 64p.org</title>
+    <title>Hack The Box - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/highlight.js@11/styles/github.min.css" media="(prefers-color-scheme: light)">
@@ -21,7 +21,7 @@
                 <a class="notes-tags-link" href="/notes/tags/">🏷️ タグ一覧</a>
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
-                                    <li><a href="/notes/hack-the-box.html">Hack The Box</a></li>
+                                    <li><a href="/notes/hack-the-box.html" class="active">Hack The Box</a></li>
                                     <li><a href="/notes/luajit.html">LuaJIT</a></li>
                                     <li><a href="/notes/lua.html">Lua</a></li>
                                     <li><a href="/notes/aio-launcher.html">AIO Launcher</a></li>
@@ -167,7 +167,7 @@
                                     <li><a href="/notes/project-glasswing.html">Project Glasswing</a></li>
                                     <li><a href="/notes/openssf.html">OpenSSF (Open Source Security Foundation)</a></li>
                                     <li><a href="/notes/carnivorous-plants.html">食虫植物</a></li>
-                                    <li><a href="/notes/miidera-gomimushi.html" class="active">ミイデラゴミムシ</a></li>
+                                    <li><a href="/notes/miidera-gomimushi.html">ミイデラゴミムシ</a></li>
                                     <li><a href="/notes/lefthook.html">lefthook</a></li>
                                     <li><a href="/notes/welcome.html">Notesコーナーへようこそ</a></li>
                                     <li><a href="/notes/kyoka-vs-tanka.html">狂歌と短歌の違い</a></li>
@@ -182,68 +182,49 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>ミイデラゴミムシ</h1>
+                <h1>Hack The Box</h1>
 
-<p><a class="note-tag" href="/notes/tags/biology.html">#biology</a> <a class="note-tag" href="/notes/tags/insect.html">#insect</a></p>
+<p>サイバーセキュリティのスキル向上を目的とした、オンラインの実践学習プラットフォーム。ペネトレーションテスト(侵入テスト)や倫理的ハッキングの技術を、実際の攻撃・防御を模した環境で体験しながら学べる。 <a class="note-tag" href="/notes/tags/security.html">#security</a></p>
 
-<p>高温ガスを噴射して身を守る甲虫。いわゆる「ボンバルディアビートル(bombardier beetle)」の一種で、学名は<em>Pheropsophus jessoensis</em>。</p>
-
-<h2>分類・形態</h2>
-
-<p>コウチュウ目オサムシ上科ホソクビゴミムシ科。体長約1.5〜1.8cm。黄褐色の地に黒(褐色)の斑紋があり、鞘翅に9本の縦筋がある、ゴミムシ類としては大型で派手な見た目。</p>
-
-<h2>ガス防御の仕組み</h2>
-
-<p>捕まえたり刺激すると、腹部末端から「プッ」という音とともに100℃以上のガスを爆発的に噴射する。腹部内でハイドロキノンと過酸化水素を別々の貯蔵庫に溜めておき、攻撃を受けた瞬間に両者を混合・酵素反応させることでベンゾキノンと水蒸気を高温高圧で噴出する仕組み。俗称は「ヘッピリムシ(屁放り虫)」。</p>
-
-<h2>名前の由来</h2>
-
-<p>「ミイデラ」は滋賀県大津市の三井寺(園城寺)に由来するという説がある。三井寺の円満院門跡に、鳥羽僧正筆とされる絵巻物「放屁合戦」が伝わっており、これにちなんで「三井寺歩行虫」と名付けられたのではないかと考えられている。</p>
-
-<h2>生態</h2>
+<h2>仕組み</h2>
 
 <ul>
-<li>1齢幼虫はケラ(オケラ)の卵しか食べないという極端に特殊な食性を持つ。土中でケラの卵塊に入り込んで育つ。</li>
-<li>成虫は夜行性で、小昆虫やミミズ、動物の死骸などを捕食する(ひどく腐敗したものは避ける)。</li>
-<li>市街地から低山地にかけての湿った場所に多い。分布は北海道から奄美大島、朝鮮半島、中国まで。</li>
-<li>出現期は4〜10月、産卵は6月中旬〜7月下旬。</li>
+<li>仮想環境上に用意された脆弱な<strong>マシン(サーバー)</strong>に実際に侵入し、隠された<strong>Flag</strong>(目標データ)を取得することがゴール</li>
+<li>難易度は初心者向けの「Starting Point」から、超上級者向けの「Pro Labs」まで幅広く用意されている</li>
+<li>マシン攻略の実績に応じてポイントが付与され、ポイントに応じたランク(称号)が与えられる、ゲーミフィケーション的な要素がある</li>
 </ul>
 
 
-<h2>カエルに食べられても生きて脱出する</h2>
-
-<p>杉浦真治氏らの研究(2018年, <em>Biology Letters</em>)によると、ヒキガエル類に丸呑みされたミイデラゴミムシは、胃の中でも例のガスを噴射し、カエルに嘔吐させて生きたまま脱出することが確認されている。</p>
+<h2>主なコンテンツ</h2>
 
 <ul>
-<li>ニホンヒキガエルでは約34.8%、渓流性のタゴガエルに近縁な種では約57.1%が嘔吐した。</li>
-<li>脱出までの時間は12〜107分。</li>
-<li>吐き出された個体は全て生存・活動していた。</li>
-<li>体が大きい個体ほど脱出成功率が高い傾向があった。</li>
+<li><strong>Labs</strong> — 脆弱な仮想マシンへの侵入練習(実践的なペネトレーションテストのトレーニング)</li>
+<li><strong>HTB Academy</strong> — 体系的なセキュリティ学習コンテンツ(座学寄り)</li>
+<li>個人向けだけでなく、企業のセキュリティ人材育成用途でも利用されている</li>
 </ul>
 
+
+<h2>料金</h2>
+
+<p>無料プランと有料(サブスクリプション)プランがあり、有料プランではより多くのマシンやコンテンツにアクセスできる。</p>
+
+<h2>関連</h2>
+
+<p>侵入テストの実践では<a href="/notes/kali-linux.html">Kali Linux</a>や<a href="/notes/metasploit.html">Metasploit</a>のようなツールがよく使われる。</p>
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://ja.wikipedia.org/wiki/%E3%83%9F%E3%82%A4%E3%83%87%E3%83%A9%E3%82%B4%E3%83%9F%E3%83%A0%E3%82%B7">ミイデラゴミムシ - Wikipedia</a></li>
-<li><a href="https://ki-nokon.com/miideragomimusi-donnnakonntyuu/">ミイデラゴミムシの生態・豆知識9選 - 生き物ネット</a></li>
-<li><a href="https://en.wikipedia.org/wiki/Pheropsophus_jessoensis">Pheropsophus jessoensis - Wikipedia (en)</a></li>
-<li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC5830659/">Successful escape of bombardier beetles from predator digestive systems - PMC</a></li>
-<li><a href="https://kotobank.jp/word/%E4%B8%89%E4%BA%95%E5%AF%BA%E6%AD%A9%E8%A1%8C%E8%99%AB-637032">三井寺歩行虫(ミイデラゴミムシ)とは？ - コトバンク</a></li>
-<li><a href="https://togetter.com/li/1767971">「へ〜」ミイデラゴミムシの名前の由来は「放屁合戦」 - Togetter</a></li>
+<li><a href="https://hakuhakublog.tech/hack-the-box/">Hack The Boxとは？料金やHTB Academyも解説 - セキュリティエンジニアへの道しるべ</a></li>
+<li><a href="https://hack-lab-256.com/hack-the-box-starter/1640/">Hack The Boxの始め方｜無料と有料プラン・LabsとAcademyの違いを徹底比較</a></li>
+<li><a href="https://jpn.nec.com/cybersecurity/blog/200619/index.html">トレーニングコンテンツ：「Hack The Box」を触り始めてみた: NECセキュリティブログ</a></li>
+<li><a href="https://jp.security.ntt/insights_resources/tech_blog/102hdvh/">HACK THE BOX を利用したスキル研鑽について | NTTセキュリティ・ジャパン</a></li>
 </ul>
 
 
-                                <div class="notes-backlinks">
-                    <h2>🔗 リンクされているノート</h2>
-                    <ul>
-                                            <li><a href="/notes/carnivorous-plants.html">食虫植物</a></li>
-                    
-                    </ul>
-                </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-09 14:29 / 更新日時: 2026-08-09 14:29</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=%E3%83%9F%E3%82%A4%E3%83%87%E3%83%A9%E3%82%B4%E3%83%9F%E3%83%A0%E3%82%B7&url=https%3A%2F%2F64p.org%2Fnotes%2Fmiidera-gomimushi.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <span>作成日時: 2026-08-10 20:41 / 更新日時: 2026-08-10 20:41</span>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=Hack%20The%20Box&url=https%3A%2F%2F64p.org%2Fnotes%2Fhack-the-box.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">
