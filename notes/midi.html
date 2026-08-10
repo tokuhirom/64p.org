@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>仙台牛タンの発祥 - Notes - 64p.org</title>
+    <title>MIDI - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/highlight.js@11/styles/github.min.css" media="(prefers-color-scheme: light)">
@@ -21,7 +21,7 @@
                 <a class="notes-tags-link" href="/notes/tags/">🏷️ タグ一覧</a>
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
-                                    <li><a href="/notes/midi.html">MIDI</a></li>
+                                    <li><a href="/notes/midi.html" class="active">MIDI</a></li>
                                     <li><a href="/notes/famimimidi.html">ふぁみみみっでぃ</a></li>
                                     <li><a href="/notes/chiikawa.html">ちいかわ（なんか小さくてかわいいやつ）</a></li>
                                     <li><a href="/notes/ojousama-teihen-dungeon-haishinsha.html">お嬢様系底辺ダンジョン配信者、迷惑系をボコったらバズって伝説になってますわ！？</a></li>
@@ -136,7 +136,7 @@
                                     <li><a href="/notes/fleeting-notes.html">フリートノート (Fleeting Notes)</a></li>
                                     <li><a href="/notes/markdown-presentation-tools.html">Markdownベースのプレゼンテーションツール</a></li>
                                     <li><a href="/notes/japan-fountain-pen-manufacturers.html">日本の万年筆メーカー</a></li>
-                                    <li><a href="/notes/sendai-gyutan.html" class="active">仙台牛タンの発祥</a></li>
+                                    <li><a href="/notes/sendai-gyutan.html">仙台牛タンの発祥</a></li>
                                     <li><a href="/notes/deck-k1low.html">deck (k1LoW)</a></li>
                                     <li><a href="/notes/slidev.html">Slidev</a></li>
                                     <li><a href="/notes/marp.html">Marp</a></li>
@@ -203,41 +203,58 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>仙台牛タンの発祥</h1>
+                <h1>MIDI</h1>
 
-<p>仙台名物「牛タン焼き」は、昭和23年(1948年)頃、山形出身の調理師・佐野啓四郎氏が仙台で開いた店「太助」が起源とされる。</p>
+<p>Musical Instrument Digital Interface。電子楽器・コンピュータ・音楽機材同士が演奏情報をやり取りするための通信規格。演奏情報（ノートオン/ノートオフ、ピッチ、タイミングなど）を送り、受信側は自身の音源で音を鳴らす仕組みで、音声波形そのものは送らない。</p>
 
-<p><a class="note-tag" href="/notes/tags/sendai.html">#sendai</a> <a class="note-tag" href="/notes/tags/gyutan.html">#gyutan</a> <a class="note-tag" href="/notes/tags/food-culture.html">#food-culture</a></p>
-
-<h2>発祥の経緯</h2>
-
-<p>洋食屋を営む友人からタンシチューを勧められ、その味に感銘を受けたのがきっかけ。「焼き料理は調理法が簡単な分すぐ模倣される」という悩みを抱えていた佐野氏は、当時洋食の素材だった牛タンに目をつけた。牛タンを日本人の口に合うよう、切り込みを入れて塩を振り熟成させる独自の調理法を2年がかりで確立し、「牛タン焼き」として提供を始めた。</p>
-
-<h2>「GHQ・進駐軍の残り物」説について</h2>
-
-<p>牛タンの起源としてよく語られる「米軍が牛肉のうち食べない部位（タン・テール）を廃棄していたのを日本人が活用した」という説は、複数の情報源では否定されている。当時の進駐軍は米国本土で解体済みの牛肉を輸入していたため、そもそも牛タンが大量に余っていた事実はなく、佐野氏はむしろ宮城・山形の各地の屠畜場を回って牛タンを買い集めていた、というのが実情とされる。</p>
-
-<h2>全国区の名物になった経緯</h2>
+<h2>歴史</h2>
 
 <ul>
-<li>昭和40〜50年代に専門店が増え、「仙台名物」と謳われ始める</li>
-<li>昭和57年(1982年)の東北新幹線開業で観光客が急増し、これが普及を後押しした</li>
-<li>平成以降、土産品化も進みさらに定着した</li>
+<li>1981年に規格が起草され、1982年にYamaha・Roland・Korg・Kawai・Sequential Circuits・Oberheimの6社によって発表された。</li>
+<li>開発の中心人物はSequential CircuitsのDave Smithと、RolandのIkutaro Kakehashi（梯郁太郎）。異なるメーカーのシンセサイザー同士が通信できる共通プロトコルとして考案された。</li>
+<li>MIDI以前は、メーカーが異なるデジタルピアノ・シンセサイザー・ドラムマシン同士は互いに通信できなかった。</li>
+<li>1983年のWinter NAMM Showで、Sequential CircuitsのProphet-600とRolandのJP-6を接続した実演が行われ、初めて公に披露された。</li>
 </ul>
 
+
+<h2>技術仕様（MIDI 1.0）</h2>
+
+<ul>
+<li>転送速度は31.25kbps（31250bps）。</li>
+<li>非同期シリアル通信で、スタート1ビット・データ8ビット・ストップ1ビットの構成。</li>
+<li>チャンネル数はステータスバイトの下位4ビットで表現するため16チャンネル（0〜15）。</li>
+<li>物理コネクタは5ピンDINコネクタ、電気的には5mAのカレントループ方式。</li>
+<li>標準化団体はMIDI Manufacturers Association（MMA）と、日本側は一般社団法人音楽電子事業協会（AMEI）のMIDI規格委員会。</li>
+</ul>
+
+
+<h2>関連</h2>
+
+<p><a href="/notes/famimimidi.html">ふぁみみみっでぃ</a>はファミコンをMIDI音源として動作させる自作ハードウェアで、MIDI経由でファミコン内蔵音源を制御する応用例。</p>
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://sendaigyutanshinkoukai.jp/sendai-gyuutan-about/">仙台名物牛たんについて｜仙台牛たん振興会</a></li>
-<li><a href="https://www.gyutown.com/about/history.htm">仙台牛タンの歴史｜仙台牛タウン</a></li>
-<li><a href="https://niku-miyabi.com/news/ox-tongue-history/">なぜ、仙台は牛タンが名物となったのか｜肉のみやび</a></li>
+<li><a href="https://midi.org/midi-history-chapter-6-midi-begins-1981-1983">MIDI History Chapter 6-MIDI Begins 1981-1983 – MIDI.org</a></li>
+<li><a href="https://www.mixonline.com/technology/1983-dave-smith-sequential-circuits-midi-specification-383642">1983 Dave Smith, Sequential Circuits MIDI Specification</a></li>
+<li><a href="https://www.wdic.org/w/CUL/MIDI">MIDI ‐ 通信用語の基礎知識</a></li>
+<li><a href="https://amei.or.jp/midistandardcommittee/MIDIspcj.html">MIDI1.0規格書 - AMEI</a></li>
+<li><a href="https://kotobank.jp/word/midi-3172241">MIDI(ミディ)とは？ - コトバンク</a></li>
 </ul>
 
 
+<p><a class="note-tag" href="/notes/tags/music.html">#music</a> <a class="note-tag" href="/notes/tags/hardware.html">#hardware</a> <a class="note-tag" href="/notes/tags/protocol.html">#protocol</a></p>
+
+                                <div class="notes-backlinks">
+                    <h2>🔗 リンクされているノート</h2>
+                    <ul>
+                                            <li><a href="/notes/famimimidi.html">ふぁみみみっでぃ</a></li>
+                    
+                    </ul>
+                </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-09 21:48 / 更新日時: 2026-08-09 21:48</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=%E4%BB%99%E5%8F%B0%E7%89%9B%E3%82%BF%E3%83%B3%E3%81%AE%E7%99%BA%E7%A5%A5&url=https%3A%2F%2F64p.org%2Fnotes%2Fsendai-gyutan.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <span>作成日時: 2026-08-11 07:34 / 更新日時: 2026-08-11 07:34</span>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=MIDI&url=https%3A%2F%2F64p.org%2Fnotes%2Fmidi.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">
