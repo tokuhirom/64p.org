@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>Hacker News (HN) について - Notes - 64p.org</title>
+    <title>herdr-browser - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/highlight.js@11/styles/github.min.css" media="(prefers-color-scheme: light)">
@@ -22,7 +22,7 @@
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
                                     <li><a href="/notes/herdr.html">herdr</a></li>
-                                    <li><a href="/notes/herdr-browser.html">herdr-browser</a></li>
+                                    <li><a href="/notes/herdr-browser.html" class="active">herdr-browser</a></li>
                                     <li><a href="/notes/byod.html">BYOD (Bring Your Own Device)</a></li>
                                     <li><a href="/notes/obon-yasumi.html">お盆休み</a></li>
                                     <li><a href="/notes/harmonyos.html">HarmonyOSとは</a></li>
@@ -112,7 +112,7 @@
                                     <li><a href="/notes/rust-gui-libraries.html">Rust GUI ライブラリ一覧</a></li>
                                     <li><a href="/notes/go-gui-libraries.html">Go GUI ライブラリ一覧</a></li>
                                     <li><a href="/notes/freya.html">Freya (freyaui.dev) — Rust製クロスプラットフォームGUIライブラリ</a></li>
-                                    <li><a href="/notes/hacker-news.html" class="active">Hacker News (HN) について</a></li>
+                                    <li><a href="/notes/hacker-news.html">Hacker News (HN) について</a></li>
                                     <li><a href="/notes/edge-manifest-v3.html">Microsoft Edge、拡張機能をManifest V3へ完全移行</a></li>
                                     <li><a href="/notes/tableau.html">Tableau</a></li>
                                     <li><a href="/notes/gpui.html">GPUI</a></li>
@@ -134,41 +134,49 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>Hacker News (HN) について</h1>
+                <h1>herdr-browser</h1>
 
-<p>スタートアップアクセラレーター <strong>Y Combinator</strong> が運営するソーシャルニュースサイト。 <a class="note-tag" href="/notes/tags/startup.html">#startup</a> <a class="note-tag" href="/notes/tags/tech-news.html">#tech-news</a></p>
-
-<h2>概要</h2>
-
-<ul>
-<li>URL: <a href="https://news.ycombinator.com/">https://news.ycombinator.com/</a></li>
-<li>2007年、Y Combinatorの共同創業者 Paul Graham が開始</li>
-<li>プログラミング・スタートアップ・テクノロジー全般に関するリンク投稿と議論の場</li>
-<li>Redditに似た仕組みで、ユーザーが投稿したリンクをupvote/downvoteし、スコアの高いものがトップページに表示される</li>
-</ul>
-
+<p><a href="/notes/herdr.html">herdr</a>のペイン内に本物のChromiumビューをレンダリングし、Chrome DevTools Protocol (CDP) 経由で操作できるようにするHerdrプラグイン。</p>
 
 <h2>特徴</h2>
 
 <ul>
-<li>UIは装飾のないシンプルなテキストベース</li>
-<li>エンジニア・起業家コミュニティへの影響力が強く、プロダクトがHNのトップページに載ると急激なアクセス増加を招くことがある（"Hacker News effect" と呼ばれる）</li>
-<li>コメント欄の議論の質が比較的高いことで知られる</li>
-<li>YC投資先スタートアップによる &ldquo;Show HN&rdquo; 投稿など、YC自体のプロモーション・採用活動の場としても機能している</li>
+<li>本物のChromiumのスクリーンキャストをペイン内にライブストリーミングし、スクロール・クリック・ホバー・ズーム・タブ切り替えが可能</li>
+<li>クライアント接続中もペインは完全にインタラクティブなままで、クリックやスクロール、タイピングなどは自動化クライアント（Playwrightなど）が見ているのと同じターゲットに対して作用する。エージェントの実行中に人間が介入して操作を奪い、また戻すこともできる</li>
+<li>localhostへのリンクをCtrl-クリックすると、コードの隣にブラウザが開く。Playwrightなど任意のCDPツールをそこに向けて、エージェントがブラウザを操作する様子を見ながら必要に応じてマウスを奪える</li>
+<li>Herdrセッションごとに専用の永続プロファイルを持つ別プロセスのheadless Chromiumを起動する</li>
 </ul>
 
+
+<p>Herdr開発元(herdrdev)のX投稿でも「みんなHerdrにブラウザが欲しいと言い続けていた」と言及されており、ユーザー要望から生まれた機能。実装は<code>ogulcancelik/herdr-browser</code>のほか、<code>StructuPath/herdr-browser</code>という派生実装も存在する。</p>
+
+<h2><a href="/notes/herdr.html">herdr</a>の中での位置づけ</h2>
+
+<p>herdr本体はターミナルマルチプレクサとしてエージェントのPTYを束ねる役割に徹しており、ブラウザ操作の可視化はherdr-browserというプラグインとして別途提供されている。</p>
+
+<p><a class="note-tag" href="/notes/tags/claude-code.html">#claude-code</a> <a class="note-tag" href="/notes/tags/tmux.html">#tmux</a></p>
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://news.ycombinator.com/">Hacker News</a></li>
-<li><a href="https://en.wikipedia.org/wiki/Hacker_News">Hacker News - Wikipedia</a></li>
+<li><a href="https://github.com/ogulcancelik/herdr-browser">GitHub - ogulcancelik/herdr-browser</a></li>
+<li><a href="https://github.com/StructuPath/herdr-browser">GitHub - StructuPath/herdr-browser</a></li>
+<li><a href="https://x.com/herdrdev/status/2081790556804411782">people kept asking for a browser in herdr - x.com/herdrdev</a></li>
+<li><a href="https://deepwiki.com/ogulcancelik/herdr-browser/1.1-getting-started-and-configuration">Getting Started &amp; Configuration | ogulcancelik/herdr-browser | DeepWiki</a></li>
+<li><a href="https://herdr.dev/docs/plugins/">Plugins | herdr</a></li>
 </ul>
 
 
+                                <div class="notes-backlinks">
+                    <h2>🔗 リンクされているノート</h2>
+                    <ul>
+                                            <li><a href="/notes/herdr.html">herdr</a></li>
+                    
+                    </ul>
+                </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-09 15:50 / 更新日時: 2026-08-09 15:50</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=Hacker%20News%20%28HN%29%20%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6&url=https%3A%2F%2F64p.org%2Fnotes%2Fhacker-news.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <span>作成日時: 2026-08-10 15:21 / 更新日時: 2026-08-10 15:21</span>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=herdr-browser&url=https%3A%2F%2F64p.org%2Fnotes%2Fherdr-browser.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">
