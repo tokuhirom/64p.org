@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>Raku / Rakudo / Perl 6 - Notes - 64p.org</title>
+    <title>忠犬ハチ公の剥製 - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/highlight.js@11/styles/github.min.css" media="(prefers-color-scheme: light)">
@@ -22,7 +22,7 @@
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
                                     <li><a href="/notes/national-museum-of-nature-and-science.html">国立科学博物館</a></li>
-                                    <li><a href="/notes/hachiko-hakusei.html">忠犬ハチ公の剥製</a></li>
+                                    <li><a href="/notes/hachiko-hakusei.html" class="active">忠犬ハチ公の剥製</a></li>
                                     <li><a href="/notes/apache-druid.html">Apache Druid</a></li>
                                     <li><a href="/notes/cagliostro-no-shiro.html">ルパン三世 カリオストロの城</a></li>
                                     <li><a href="/notes/nand-gate.html">NANDゲート</a></li>
@@ -63,7 +63,7 @@
                                     <li><a href="/notes/chicken-rice-hainanese.html">海南鶏飯(シンガポール式チキンライス)</a></li>
                                     <li><a href="/notes/podman.html">Podman</a></li>
                                     <li><a href="/notes/ruriboshi-kamikiri.html">ルリボシカミキリ</a></li>
-                                    <li><a href="/notes/raku-rakudo-perl6.html" class="active">Raku / Rakudo / Perl 6</a></li>
+                                    <li><a href="/notes/raku-rakudo-perl6.html">Raku / Rakudo / Perl 6</a></li>
                                     <li><a href="/notes/cro.html">Cro</a></li>
                                     <li><a href="/notes/sqlite-fts5.html">FTS5（SQLite）</a></li>
                                     <li><a href="/notes/sqlite-fts3.html">FTS3（SQLite）</a></li>
@@ -198,108 +198,41 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>Raku / Rakudo / Perl 6</h1>
+                <h1>忠犬ハチ公の剥製</h1>
 
-<p><a class="note-tag" href="/notes/tags/raku.html">#raku</a> <a class="note-tag" href="/notes/tags/rust.html">#rust</a> <a class="note-tag" href="/notes/tags/perl.html">#perl</a></p>
+<p>渋谷駅前の銅像で知られる忠犬ハチ公の剥製標本。<a href="/notes/national-museum-of-nature-and-science.html">国立科学博物館</a>の日本館2階北翼に展示されている。 <a class="note-tag" href="/notes/tags/japan.html">#japan</a></p>
 
-<h2>概要と関係性</h2>
+<h2>経緯</h2>
 
-<ul>
-<li><strong>Perl 6</strong>: 2000年にLarry Wallが発表した、Perl 5を置き換える新言語の開発コードネーム。</li>
-<li><strong>Raku</strong>: Perl 6の現在の正式名称。2019年10月に改名された。</li>
-<li><strong>Rakudo</strong>: Rakuの主要実装（コンパイラ）。「Raku」という名称自体もRakudoに由来する（後述）。</li>
-</ul>
+<p>ハチが亡くなった後、東京帝国大学で病理解剖が行われた。遺体は当時の東京科学博物館(現・国立科学博物館)の剥製製作室に運ばれ、坂本福司とその弟子・本田晋によって剥製化された。</p>
 
+<h2>展示</h2>
 
-<p>つまり「Raku」＝言語仕様の名前、「Rakudo」＝それを実装したコンパイラ、という関係。</p>
+<p>日本館2階北翼、日本人と関わりの深い動物を紹介するコーナーで、秋田犬の貴重な標本として展示されている。国立科学博物館の公式X(Twitter)アカウントでも「思っていたよりも大きい…と驚かれる方も多いです」と紹介されており、実際の大きさに驚く来場者が多いことで知られる。</p>
 
-<h2>歴史</h2>
+<h2>訪問記録</h2>
 
-<ul>
-<li>2000年7月19日、Larry Wallが「State of the Onion 2000」で、Perlの「historical warts（歴史的なイボ）」を取り除く新言語構想を発表。「easy things should stay easy, hard things should get easier」を方針に掲げた。</li>
-<li>コミュニティから361件のRFC（Request for Comments）を募り、それをもとに設計文書「Apocalypses」を作成するという開発プロセスを取った。</li>
-<li>2015年12月25日（クリスマス）、Perl 6 v1.0（通称「6.c / Christmas」）がリリース。</li>
-<li>Perl 6はPerl 5との後方互換性を目指さず、「fix the language rather than fix the user」という思想で言語仕様を根本から作り直した。この設計思想の違いから両者は事実上の別言語となり、2019年10月に「Perl 6」から「Raku」への改名が正式決定された（Larry Wall本人も承認）。
-
-<ul>
-<li>「Raku」という名前は、実装であるRakudoに由来し、Rakudoは日本語の「駱駝道（らくだどう、Way of the Camel）」の短縮形。camelはPerlのマスコット（ラクダ本 = Camel Book）にちなむ。</li>
-</ul>
-</li>
-</ul>
-
-
-<h2>Rakudoとその実装コンポーネント</h2>
-
-<ul>
-<li><strong>Rakudo</strong>は現在Rakuの唯一のアクティブな実装。GitHub: <code>rakudo/rakudo</code>。</li>
-<li><strong>MoarVM</strong>（Metamodel On A Runtime）: Rakudo向けに開発された専用VM。JITコンパイルや型特化などの最適化を持つ、レジスタベースのバイトコードインタプリタ。現在ほとんどのRakuユーザーがこのバックエンドを使用。</li>
-<li><strong>NQP</strong>（Not Quite Perl 6）: RakudoとMoarVMの間の中間言語・コンパイラツールチェーン。Rakudo自体もNQPを使って実装されている（自己ホスト的な構造）。</li>
-<li>他にJVM、JavaScriptバックエンドも存在するが、MoarVMが主流。</li>
-</ul>
-
-
-<h2>言語機能の特徴</h2>
-
-<ul>
-<li><strong>Gradual typing</strong>: 動的型付けをベースに、任意で静的型注釈を追加できる。</li>
-<li><strong>Grammar（文法）</strong>: Perlの正規表現を拡張した「rules」により、PEGやANTLR相当のパーサーを言語内蔵で書ける。エンジンの実装方式は<a href="/notes/regex-engine-backtracking-vs-nfa.html">バックトラッキング型とNFA/DFA型</a>を参照。</li>
-<li><strong>マルチディスパッチ</strong>: 同名関数を引数の型・値でオーバーロードできる（例: <code>multi fact(0) { 1 }</code>）。</li>
-<li><strong>Sigil不変性</strong>: <code>@</code>, <code>$</code>などのシジルが変数アクセス時に変化しない設計で、複雑なデータ構造を簡潔に扱える。</li>
-<li><strong>遅延評価</strong>: <code>0..Inf</code>のような無限リストも安全に扱える。</li>
-<li><strong>Roles</strong>: クラス継承ではなく合成（composition）でコードを再利用する仕組み（Rubyのmixin相当）。</li>
-</ul>
-
-
-<h2>現在の状況</h2>
-
-<ul>
-<li>最新の安定版言語仕様は6.d「Diwali」（2020年10月24日リリース）。</li>
-<li>「公式実装」という概念はなく、公式テストスイートに合格すれば「Raku」を名乗れる、という仕様ベースの認定方式。</li>
-<li>開発はGitHub、IRC、メーリングリストで継続中。</li>
-</ul>
-
-
-<h2>エコシステム</h2>
-
-<p>Webサービス構築用のライブラリ群として<a href="/notes/cro.html">Cro</a>がある。</p>
-
-<h2>mutsu — 自作のRaku実装</h2>
-
-<p>Rust製のRakuインタプリタ「<a href="https://github.com/tokuhirom/mutsu">mutsu</a>」を自分（tokuhirom）で開発している。</p>
-
-<ul>
-<li>Rakuソースをパース→AST→バイトコードにコンパイルし、自作VM上で実行するアーキテクチャ（bytecode VM）。</li>
-<li>公式テストスイート <a href="https://github.com/Raku/roast">Roast</a> の1,464ファイル中1,433ファイルをパスする水準（開発が速く進んでいるため変動する）。</li>
-<li>クラス・ロール・継承、多重ディスパッチ、grammar/regex、gather/take、Promise（<code>start</code>/<code>await</code>）、enum、subset型、MAINサブによるCLI引数パースなど、主要機能を幅広くサポート。</li>
-<li>Zefパッケージマネージャを<code>mzef</code>として同梱し、mise・Docker・ソースビルドでインストール可能。</li>
-<li>サイト（<a href="https://tokuhirom.github.io/mutsu/">tokuhirom.github.io/mutsu</a>）はWebAssembly化したmutsu自身で動いており、チュートリアルやプレイグラウンドを提供している。</li>
-<li>まだ本番用途には非推奨（not yet suitable for production use）。RakuASTは未完成、コンパイル時診断の一部が未実装など既知の制限あり。</li>
-</ul>
-
+<p>2026-08-10、実際に見た。思っていたより大きかった。</p>
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://en.wikipedia.org/wiki/Raku_(programming_language">Raku (programming language) - Wikipedia</a>)</li>
-<li><a href="https://developers.slashdot.org/story/19/10/12/2134246/larry-wall-approves-re-naming-perl-6-to-raku">Larry Wall Approves Re-Naming Perl 6 To Raku - Slashdot</a></li>
-<li><a href="https://en.wikipedia.org/wiki/Rakudo">Rakudo - Wikipedia</a></li>
-<li><a href="https://www.moarvm.org/">MoarVM - A VM for NQP and Rakudo</a></li>
-<li><a href="https://github.com/rakudo/rakudo">GitHub - rakudo/rakudo</a></li>
-<li><a href="https://github.com/tokuhirom/mutsu">GitHub - tokuhirom/mutsu</a></li>
+<li><a href="https://x.com/museum_kahaku/status/1909395810670031081">かはく【国立科学博物館公式】 on X</a></li>
+<li><a href="https://ja.wikipedia.org/wiki/%E5%BF%A0%E7%8A%AC%E3%83%8F%E3%83%81%E5%85%AC">忠犬ハチ公 - Wikipedia</a></li>
+<li><a href="https://www.mirainoshitenclassic.com/2018/05/o_21.html">忠犬ハチ公の今は？国立科学博物館に剥製になっている？？</a></li>
 </ul>
 
 
                                 <div class="notes-backlinks">
                     <h2>🔗 リンクされているノート</h2>
                     <ul>
-                                            <li><a href="/notes/cro.html">Cro</a></li>
-                                            <li><a href="/notes/regex-engine-backtracking-vs-nfa.html">正規表現エンジンの実装方式: バックトラッキング型とNFA/DFA型</a></li>
+                                            <li><a href="/notes/national-museum-of-nature-and-science.html">国立科学博物館</a></li>
                     
                     </ul>
                 </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-09 13:26 / 更新日時: 2026-08-10 18:09</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=Raku%20%2F%20Rakudo%20%2F%20Perl%206&url=https%3A%2F%2F64p.org%2Fnotes%2Fraku-rakudo-perl6.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <span>作成日時: 2026-08-10 23:38 / 更新日時: 2026-08-10 23:38</span>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=%E5%BF%A0%E7%8A%AC%E3%83%8F%E3%83%81%E5%85%AC%E3%81%AE%E5%89%A5%E8%A3%BD&url=https%3A%2F%2F64p.org%2Fnotes%2Fhachiko-hakusei.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">
