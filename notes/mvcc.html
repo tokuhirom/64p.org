@@ -21,8 +21,10 @@
                 <a class="notes-tags-link" href="/notes/tags/">🏷️ タグ一覧</a>
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
-                                    <li><a href="/notes/postgresql.html">PostgreSQL</a></li>
+                                    <li><a href="/notes/vacuum.html">VACUUM</a></li>
+                                    <li><a href="/notes/transaction-isolation-levels.html">トランザクション分離レベル</a></li>
                                     <li><a href="/notes/mvcc.html" class="active">MVCC</a></li>
+                                    <li><a href="/notes/postgresql.html">PostgreSQL</a></li>
                                     <li><a href="/notes/pgvector.html">pgvector</a></li>
                                     <li><a href="/notes/hnsw.html">HNSW</a></li>
                                     <li><a href="/notes/neon.html">Neon</a></li>
@@ -168,7 +170,7 @@
 
 <p>トランザクションは自分が開始した時点のスナップショットに基づいて、どの行バージョンが「見える」かを判定する。これにより読み取りが書き込みをブロックせず、書き込みも読み取りをブロックしない。</p>
 
-<h2>VACUUMとの関係</h2>
+<h2><a href="/notes/vacuum.html">VACUUM</a>との関係</h2>
 
 <p>UPDATE/DELETEで発生した不要行（dead tuple）は物理的にはすぐ削除されないため、そのまま放置するとテーブルが肥大化（bloat）する。この不要行を回収するのが<code>VACUUM</code>コマンドで、いわばガベージコレクションの役割を果たす。</p>
 
@@ -176,7 +178,7 @@
 
 <p>OracleやMySQLはundoログを使い、コミット前の変更を退避しておいて必要に応じて過去のバージョンを再構築する方式を取るのに対し、PostgreSQLはすべての行バージョンをテーブルのデータ構造そのものの中に保持する点が異なる。</p>
 
-<h2>トランザクション分離レベルとの関係</h2>
+<h2><a href="/notes/transaction-isolation-levels.html">トランザクション分離レベル</a>との関係</h2>
 
 <p><code>Read Committed</code>と<code>Repeatable Read</code>はどちらも同じスナップショット判定方式を使うが、<code>Read Committed</code>はSQL文を実行するたびにスナップショットを取り直すのに対し、<code>Repeatable Read</code>はトランザクション開始時に取った一つのスナップショットを最後まで使い続ける、という違いがある。</p>
 
@@ -195,11 +197,13 @@
                     <h2>🔗 リンクされているノート</h2>
                     <ul>
                                             <li><a href="/notes/postgresql.html">PostgreSQL</a></li>
+                                            <li><a href="/notes/vacuum.html">VACUUM</a></li>
+                                            <li><a href="/notes/transaction-isolation-levels.html">トランザクション分離レベル</a></li>
                     
                     </ul>
                 </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-10 17:15 / 更新日時: 2026-08-10 17:15</span>
+                    <span>作成日時: 2026-08-10 17:15 / 更新日時: 2026-08-10 17:20</span>
                     <a class="share-x" href="https://twitter.com/intent/tweet?text=MVCC&url=https%3A%2F%2F64p.org%2Fnotes%2Fmvcc.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>

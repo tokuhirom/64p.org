@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>Metasploit - Notes - 64p.org</title>
+    <title>トランザクション分離レベル - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/highlight.js@11/styles/github.min.css" media="(prefers-color-scheme: light)">
@@ -22,7 +22,7 @@
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
                                     <li><a href="/notes/vacuum.html">VACUUM</a></li>
-                                    <li><a href="/notes/transaction-isolation-levels.html">トランザクション分離レベル</a></li>
+                                    <li><a href="/notes/transaction-isolation-levels.html" class="active">トランザクション分離レベル</a></li>
                                     <li><a href="/notes/mvcc.html">MVCC</a></li>
                                     <li><a href="/notes/postgresql.html">PostgreSQL</a></li>
                                     <li><a href="/notes/pgvector.html">pgvector</a></li>
@@ -105,7 +105,7 @@
                                     <li><a href="/notes/burp-suite.html">Burp Suite</a></li>
                                     <li><a href="/notes/craft-beer.html">クラフトビール</a></li>
                                     <li><a href="/notes/kali-nethunter.html">Kali NetHunter</a></li>
-                                    <li><a href="/notes/metasploit.html" class="active">Metasploit</a></li>
+                                    <li><a href="/notes/metasploit.html">Metasploit</a></li>
                                     <li><a href="/notes/kotchigai-shoukan.html">間違い召喚！ 追い出されたけど上位互換スキルでらくらく生活</a></li>
                                     <li><a href="/notes/openrouter.html">OpenRouter</a></li>
                                     <li><a href="/notes/gpt-5-6-sol-terra-luna.html">GPT-5.6のSol / Terra / Lunaの違い</a></li>
@@ -152,66 +152,51 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>Metasploit</h1>
+                <h1>トランザクション分離レベル</h1>
 
-<p><a class="note-tag" href="/notes/tags/security.html">#security</a></p>
+<p>複数のトランザクションが同時に実行されたとき、互いの変更がどこまで見えるかを定める設定。SQL標準では4段階定義されているが、<a href="/notes/postgresql.html">PostgreSQL</a>は3段階（Read Committed / Repeatable Read / Serializable）を実装しており、いずれも内部的には<a href="/notes/mvcc.html">MVCC</a>のスナップショット機構で実現されている。</p>
 
-<p>オープンソースの侵入テスト(ペネトレーションテスト)フレームワーク。<a href="/notes/kali-linux.html">Kali Linux</a>にもプリインストールされている定番セキュリティツールの一つ。</p>
+<p><a class="note-tag" href="/notes/tags/database.html">#database</a> <a class="note-tag" href="/notes/tags/postgresql.html">#postgresql</a> <a class="note-tag" href="/notes/tags/transaction.html">#transaction</a></p>
 
-<h2>基本情報</h2>
+<h2>Read Committed（デフォルト）</h2>
 
-<ul>
-<li>開発者: H. D. Moore(2003年に創設)</li>
-<li>開発元: Rapid7(2009年に買収、現在も所有・管理)</li>
-<li>実装言語: Ruby(当初はPerl、2007年までにRubyで書き直された)</li>
-</ul>
+<p>トランザクション内の各SQL文が、その文を実行した時点でコミット済みのデータだけを見る。文が実行されるたびにスナップショットを取り直すため、同じトランザクション内でも文ごとに見えるデータが変わりうる。</p>
 
+<h2>Repeatable Read</h2>
 
-<h2>何をするツールか</h2>
+<p>Read Committedと違い、トランザクション内で最初にSQL文を実行した時点のスナップショットを、トランザクションが終わるまで使い続ける。これによりダーティリード・非再現リードは防げるが、PostgreSQLのMVCC実装の性質上、限定的なファントムリードは起こりうる。</p>
 
-<p>セキュリティ専門家・研究者・攻撃者が、脆弱性の発見・検証・攻撃シミュレーションを行うためのツール。「攻撃コードを書いて実行する」までの一連の作業を効率化するフレームワークで、<code>msfconsole</code> というCUIツールから操作するのが一般的。</p>
+<h2>Serializable</h2>
 
-<h2>主な構成要素</h2>
+<p>最も厳格な分離レベル。すべてのコミット済みトランザクションを、あたかも一つずつ順番に（serialに）実行したかのように振る舞わせる。PostgreSQLの実装はSerializable Snapshot Isolation（SSI）と呼ばれ、既知の異常動作すべてに耐性を持つことを目指している。</p>
 
-<ul>
-<li><strong>Exploit</strong>: バグを突いて対象システムに侵入するコード(2,000以上を実装)</li>
-<li><strong>Payload</strong>: 侵入成功後に対象システム上で実行されるコード(592以上)</li>
-<li><strong>Auxiliary modules</strong>: スキャン・ファジング・スニッフィングなど補助機能を提供するモジュール群</li>
-</ul>
+<h2>MySQL（InnoDB）との違い</h2>
 
+<p>デフォルトの分離レベルが異なる。PostgreSQLはRead Committedがデフォルトなのに対し、MySQLのInnoDBはRepeatable Readがデフォルト。設計思想の違いとして、MySQLは初期状態からより強い分離レベルを提供する方向、PostgreSQLはより高い並行性を優先する方向とされる。</p>
 
-<h2>エディション</h2>
-
-<ul>
-<li><strong>無料版(Open Source Edition)</strong>: Ruby実装のモジュラー構成、1,500以上の組み込みexploitを含む</li>
-<li><strong>Pro版(商用)</strong>: Quick Start Wizard、ソーシャルエンジニアリング、Webアプリテスト、VPNピボッティングなど高度な機能を追加(旧Community版・Express版は廃止済み)</li>
-</ul>
-
-
-<h2>最新動向</h2>
-
-<p>安定版は6.4.131(2026年5月リリース)。4,000超のエクスプロイトモジュールを収録している。</p>
+<p>ファントムリードへの対処方法も異なる。PostgreSQLはMVCCのスナップショット機構だけでファントムリードに対処するため、Repeatable Readでも限定的にファントムリードが起こりうる。一方InnoDBのRepeatable Readは、MVCCに加えてgap lock・next-key lockという行間ロックを併用しており、多くのケースでファントムリードそのものを防いでいる。つまり同じ「Repeatable Read」という名前でも、内部の実現方法（ロックの有無）が異なる点に注意が必要。</p>
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://en.wikipedia.org/wiki/Metasploit">Metasploit - Wikipedia</a></li>
-<li><a href="https://www.rapid7.com/products/metasploit/">Metasploit: ペネトレーションテスト・ソフトウェア | Rapid7</a></li>
-<li><a href="https://www.eccouncil.org/cybersecurity-exchange/ethical-hacking/metasploit-framework-guide/">What is Metasploit Framework? A Step-by-Step Guide (2026)</a></li>
+<li><a href="https://www.postgresql.org/docs/current/transaction-iso.html">PostgreSQL: Documentation: 18: 13.2. Transaction Isolation</a></li>
+<li><a href="https://www.thenile.dev/blog/transaction-isolation-postgres">Transaction Isolation in Postgres, explained</a></li>
+<li><a href="https://www.mydbops.com/blog/postgresql-transaction-isolation-levels-guide">PostgreSQL Transaction Isolation Levels &amp; MVCC | Mydbops</a></li>
+<li><a href="https://postgresql.verite.pro/blog/2020/02/14/isolation-repeatable-read-postgresql-mysql.html">Isolation Repeatable Read in PostgreSQL versus MySQL</a></li>
+<li><a href="https://dev.mysql.com/doc/refman/8.4/en/innodb-transaction-isolation-levels.html">MySQL 8.4 Reference Manual :: 17.7.2.1 Transaction Isolation Levels</a></li>
 </ul>
 
 
                                 <div class="notes-backlinks">
                     <h2>🔗 リンクされているノート</h2>
                     <ul>
-                                            <li><a href="/notes/kali-linux.html">Kali Linux</a></li>
-                                            <li><a href="/notes/kali-nethunter.html">Kali NetHunter</a></li>
+                                            <li><a href="/notes/mvcc.html">MVCC</a></li>
                     
                     </ul>
                 </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-09 17:48 / 更新日時: 2026-08-09 17:48</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=Metasploit&url=https%3A%2F%2F64p.org%2Fnotes%2Fmetasploit.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <span>作成日時: 2026-08-10 17:20 / 更新日時: 2026-08-10 17:20</span>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=%E3%83%88%E3%83%A9%E3%83%B3%E3%82%B6%E3%82%AF%E3%82%B7%E3%83%A7%E3%83%B3%E5%88%86%E9%9B%A2%E3%83%AC%E3%83%99%E3%83%AB&url=https%3A%2F%2F64p.org%2Fnotes%2Ftransaction-isolation-levels.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">
