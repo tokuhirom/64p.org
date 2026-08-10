@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>MVCC - Notes - 64p.org</title>
+    <title>LuaJIT - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/highlight.js@11/styles/github.min.css" media="(prefers-color-scheme: light)">
@@ -21,7 +21,7 @@
                 <a class="notes-tags-link" href="/notes/tags/">🏷️ タグ一覧</a>
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
-                                    <li><a href="/notes/luajit.html">LuaJIT</a></li>
+                                    <li><a href="/notes/luajit.html" class="active">LuaJIT</a></li>
                                     <li><a href="/notes/lua.html">Lua</a></li>
                                     <li><a href="/notes/aio-launcher.html">AIO Launcher</a></li>
                                     <li><a href="/notes/tetravalent-element.html">4価元素・14族元素</a></li>
@@ -52,7 +52,7 @@
                                     <li><a href="/notes/sqlite.html">SQLite</a></li>
                                     <li><a href="/notes/transaction-isolation-levels.html">トランザクション分離レベル</a></li>
                                     <li><a href="/notes/mysql.html">MySQL</a></li>
-                                    <li><a href="/notes/mvcc.html" class="active">MVCC</a></li>
+                                    <li><a href="/notes/mvcc.html">MVCC</a></li>
                                     <li><a href="/notes/vacuum.html">VACUUM</a></li>
                                     <li><a href="/notes/postgresql.html">PostgreSQL</a></li>
                                     <li><a href="/notes/pgvector.html">pgvector</a></li>
@@ -181,60 +181,42 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>MVCC</h1>
+                <h1>LuaJIT</h1>
 
-<p>Multi-Version Concurrency Control（多version同時実行制御）の略。<a href="/notes/postgresql.html">PostgreSQL</a>が採用している並行処理制御の仕組みで、行に対する読み書きの際にロックで衝突を防ぐのではなく、行の複数バージョンを保持することで実現している。</p>
+<p><a href="/notes/lua.html">Lua</a>のJIT(Just-In-Time)コンパイラ実装。プログラム実行時にマシン語へコンパイルすることで、本家のバイトコードインタプリタより大幅に高速に動作する。 <a class="note-tag" href="/notes/tags/programming-language.html">#programming-language</a></p>
 
-<p><a class="note-tag" href="/notes/tags/database.html">#database</a> <a class="note-tag" href="/notes/tags/concurrency.html">#concurrency</a> <a class="note-tag" href="/notes/tags/postgresql.html">#postgresql</a></p>
-
-<h2>基本的な仕組み</h2>
-
-<p>行を更新（UPDATE）するとき、PostgreSQLはその場で行を書き換えるのではなく、新しいバージョンの行を作成し、古いバージョンは「不要（dead tuple）」として残す。削除（DELETE）も同様に、物理的にはすぐ消さず不要マークを付けるだけ。各行には以下の情報が持たせてある。</p>
+<h2>特徴</h2>
 
 <ul>
-<li><strong>xmin</strong>: その行バージョンを挿入したトランザクションのID</li>
-<li><strong>xmax</strong>: その行バージョンを削除（または更新で無効化）したトランザクションのID</li>
+<li>Trace JIT方式を採用しており、最も高速なTrace JIT実装の一つとされる</li>
+<li>動的型付け言語でありながら、静的単一代入(SSA)などを使った高度な最適化により、Javaに近い実行速度を出せる</li>
+<li>FFI(Foreign Function Interface)機能を持ち、Cライブラリを直接呼び出せる</li>
+<li>低メモリ使用量</li>
 </ul>
 
 
-<p>トランザクションは自分が開始した時点のスナップショットに基づいて、どの行バージョンが「見える」かを判定する。これにより読み取りが書き込みをブロックせず、書き込みも読み取りをブロックしない。</p>
+<h2>Luaとの速度差</h2>
 
-<h2><a href="/notes/vacuum.html">VACUUM</a>との関係</h2>
-
-<p>UPDATE/DELETEで発生した不要行（dead tuple）は物理的にはすぐ削除されないため、そのまま放置するとテーブルが肥大化（bloat）する。この不要行を回収するのが<code>VACUUM</code>コマンドで、いわばガベージコレクションの役割を果たす。</p>
-
-<h2>他DBとの違い</h2>
-
-<p>Oracleや<a href="/notes/mysql.html">MySQL</a>はundoログを使い、コミット前の変更を退避しておいて必要に応じて過去のバージョンを再構築する方式を取るのに対し、PostgreSQLはすべての行バージョンをテーブルのデータ構造そのものの中に保持する点が異なる。</p>
-
-<h2><a href="/notes/transaction-isolation-levels.html">トランザクション分離レベル</a>との関係</h2>
-
-<p><code>Read Committed</code>と<code>Repeatable Read</code>はどちらも同じスナップショット判定方式を使うが、<code>Read Committed</code>はSQL文を実行するたびにスナップショットを取り直すのに対し、<code>Repeatable Read</code>はトランザクション開始時に取った一つのスナップショットを最後まで使い続ける、という違いがある。</p>
+<p>1から10億までの総和を求める計算をLua 5.2とLuaJITで比較した例では、Lua 5.2が21秒、LuaJITが2秒(約10倍高速)という結果が報告されている。</p>
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://www.geeksforgeeks.org/postgresql/multiversion-concurrency-control-mvcc-in-postgresql/">Multiversion Concurrency Control (MVCC) in PostgreSQL - GeeksforGeeks</a></li>
-<li><a href="https://devcenter.heroku.com/articles/postgresql-concurrency">PostgreSQL Concurrency with MVCC | Heroku Dev Center</a></li>
-<li><a href="https://masahikosawada.github.io/2021/12/22/MVCC-and-GC-in-PostgreSQL/">PostgreSQLのMVCCとガベージコレクション（Vacuum）</a></li>
-<li><a href="https://www.nminoru.jp/~nminoru/postgresql/pg-transaction-mvcc-snapshot.html">PostgreSQL のトランザクション &amp; MVCC &amp; スナップショットの仕組み</a></li>
-<li><a href="https://cloud.google.com/blog/ja/products/databases/deep-dive-into-postgresql-vacuum-garbage-collector?hl=ja">Cloud SQL for PostgreSQL - VACUUM について深く掘り下げる</a></li>
+<li><a href="https://api7.ai/ja/blog/apisix-chooses-luajit">LuaJITとは何か？APISIXがLuaJITを選ぶ理由 - API7.ai</a></li>
+<li><a href="https://codehero.jp/luajit">よくある「luajit」の質問 | Code Hero</a></li>
 </ul>
 
 
                                 <div class="notes-backlinks">
                     <h2>🔗 リンクされているノート</h2>
                     <ul>
-                                            <li><a href="/notes/mysql.html">MySQL</a></li>
-                                            <li><a href="/notes/postgresql.html">PostgreSQL</a></li>
-                                            <li><a href="/notes/vacuum.html">VACUUM</a></li>
-                                            <li><a href="/notes/transaction-isolation-levels.html">トランザクション分離レベル</a></li>
+                                            <li><a href="/notes/lua.html">Lua</a></li>
                     
                     </ul>
                 </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-10 17:15 / 更新日時: 2026-08-10 17:21</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=MVCC&url=https%3A%2F%2F64p.org%2Fnotes%2Fmvcc.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <span>作成日時: 2026-08-10 20:37 / 更新日時: 2026-08-10 20:37</span>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=LuaJIT&url=https%3A%2F%2F64p.org%2Fnotes%2Fluajit.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">
