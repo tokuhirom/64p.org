@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>デンキウナギ - Notes - 64p.org</title>
+    <title>HNSW - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/highlight.js@11/styles/github.min.css" media="(prefers-color-scheme: light)">
@@ -22,7 +22,7 @@
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
                                     <li><a href="/notes/pgvector.html">pgvector</a></li>
-                                    <li><a href="/notes/hnsw.html">HNSW</a></li>
+                                    <li><a href="/notes/hnsw.html" class="active">HNSW</a></li>
                                     <li><a href="/notes/postgresql.html">PostgreSQL</a></li>
                                     <li><a href="/notes/neon.html">Neon</a></li>
                                     <li><a href="/notes/dgx-spark.html">NVIDIA DGX Spark</a></li>
@@ -49,7 +49,7 @@
                                     <li><a href="/notes/futabasaurus-suzukii.html">フタバスズキリュウ（Futabasaurus suzukii）</a></li>
                                     <li><a href="/notes/yanshui-yimian.html">塩水意麺（鹽水意麵）</a></li>
                                     <li><a href="/notes/apple-secure-enclave.html">Secure Enclave</a></li>
-                                    <li><a href="/notes/electric-eel.html" class="active">デンキウナギ</a></li>
+                                    <li><a href="/notes/electric-eel.html">デンキウナギ</a></li>
                                     <li><a href="/notes/peter-pan.html">ピーター・パン</a></li>
                                     <li><a href="/notes/peter-pan-syndrome.html">ピーターパン症候群</a></li>
                                     <li><a href="/notes/kuribayashi-satoshi.html">栗林慧</a></li>
@@ -149,48 +149,57 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>デンキウナギ</h1>
+                <h1>HNSW</h1>
 
-<p>南米のアマゾン川・オリノコ川流域に生息する強い電気を発生させる淡水魚。</p>
+<p>Hierarchical Navigable Small World の略。高次元ベクトルに対する近似最近傍探索（ANN: Approximate Nearest Neighbor Search）アルゴリズムのひとつ。2016年にYu MalkovとDmitry Yashuninが発表した論文「Efficient and Robust Approximate Nearest Neighbor Search Using Hierarchical Navigable Small World Graphs」（2018年にIEEE TPAMI誌掲載）が元になっている。<a href="/notes/pgvector.html">pgvector</a>が対応するインデックス方式の一つ。</p>
 
-<h2>分類 — 実は「ウナギ」ではない</h2>
+<p><a class="note-tag" href="/notes/tags/vector-search.html">#vector-search</a> <a class="note-tag" href="/notes/tags/algorithm.html">#algorithm</a> <a class="note-tag" href="/notes/tags/ann.html">#ann</a></p>
 
-<p>名前に「ウナギ」と付くが、ウナギ目（Anguilliformes）とは近縁ではない。分類上はデンキウナギ目という独立したグループに属し、これはナマズ目と姉妹群の関係にあり、コイ目のカラシン類に近い骨鰾上目（こつひょうじょうもく）というグループに含まれる。姿がウナギに似ているための通称にすぎない。</p>
+<h2>仕組み</h2>
 
-<p>従来1種とされてきたが、2019年に形態・分子遺伝学的解析により3種に再分類された（<em>Electrophorus electricus</em>、<em>E. varii</em>、<em>E. voltai</em>）。このうち<em>E. voltai</em>は最大860Vという、生物として知られる中で最も強い放電を発生させることが確認されている。</p>
-
-<h2>発電の仕組み</h2>
-
-<p>体の後方約80%を占める尾部に、筋肉細胞が変化した「発電細胞（electrocyte）」が電池を直列につないだように並ぶ構造を持つ。3つの発電器官を使い分けている。</p>
+<p>グラフベースの手法で、2つのアイデアを組み合わせている。</p>
 
 <ul>
-<li>メイン発電器官: 300V超（最大860V）の高電圧を捕食・防御用に発生。</li>
-<li>ハンター器官: 約10Vの低電圧を、獲物の位置探知（電気定位）やコミュニケーションに使用。</li>
-<li>サックス器官: 約30Vの中電圧（機能は未解明な部分もある）。</li>
+<li><strong>Navigable Small World</strong>: 各点が近い点同士で接続されたグラフ構造。</li>
+<li><strong>階層（Hierarchical）</strong>: 探索を高速化するためのレイヤー構造。</li>
 </ul>
 
 
-<p>原理としては、神経系と同じイオン濃度勾配（イオンチャネル・イオン輸送体）を利用して電気を発生させている。</p>
+<p>下位レイヤーには全ベクトルが含まれ近傍同士が密に接続される一方、上位レイヤーに行くほどノード数が少なくなり、遠くの領域へ素早く移動するための「ハイウェイ」として機能する。検索時は最上層のエントリーポイントから始まり、クエリベクトルに近い方向へ貪欲に降りていくことで、全件比較なしに高速に近傍を見つけられる。</p>
 
-<h2>生態・捕食</h2>
+<h2>主なパラメータ</h2>
 
-<p>夜行性で、昼間は物陰に潜み、夜になると活動して小魚・カエル・甲殻類などを捕食する。獲物に電気ショックを与えて瞬時に麻痺させてから捕らえる。</p>
+<ul>
+<li><strong>M</strong>: 各ノードが持つ接続数の上限（推奨値はおおむね5〜48程度）。大きいほど精度（リコール率）は上がるがメモリ消費も増える。</li>
+<li><strong>ef_construction</strong>: インデックス構築時に探索する近傍候補の幅。大きいほど構築品質は上がるが構築時間が伸びる。</li>
+</ul>
 
-<h1>生物</h1>
+
+<h2>IVFFlatとの違い</h2>
+
+<p>学習ステップが不要で、空のテーブルからでもインデックスを作成しデータ追加とともに段階的に構築できる。精度・速度のバランスが良い一方、構築負荷はIVFFlatより大きい。</p>
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://ja.wikipedia.org/wiki/%E3%83%87%E3%83%B3%E3%82%AD%E3%82%A6%E3%83%8A%E3%82%AE">デンキウナギ - Wikipedia</a></li>
-<li><a href="https://ja.wikipedia.org/wiki/%E3%83%87%E3%83%B3%E3%82%AD%E3%82%A6%E3%83%8A%E3%82%AE%E7%9B%AE">デンキウナギ目 - Wikipedia</a></li>
-<li><a href="https://www.nature.com/articles/s41467-019-11690-z">Unexpected species diversity in electric eels | Nature Communications</a></li>
-<li><a href="https://www.forbes.com/sites/scotttravers/2026/04/28/meet-the-eel-that-generates-800v---a-biologist-explains-how-it-doesnt-electrocute-itself/">Meet The Eel That Generates 800V | Forbes</a></li>
+<li><a href="https://www.mongodb.com/resources/basics/hierarchical-navigable-small-world">What is a Hierarchical Navigable Small World | MongoDB</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Hierarchical_navigable_small_world">Hierarchical navigable small world - Wikipedia</a></li>
+<li><a href="https://zilliz.com/learn/hierarchical-navigable-small-worlds-HNSW">Understanding Hierarchical Navigable Small Worlds (HNSW) - Zilliz Learn</a></li>
+<li><a href="https://www.pinecone.io/learn/series/faiss/hnsw/">Hierarchical Navigable Small Worlds (HNSW) | Pinecone</a></li>
+<li><a href="https://krunalkanojiya.com/blog/hnsw-algorithm-explained">HNSW Algorithm Explained: Diagrams + Tuning (2026)</a></li>
 </ul>
 
 
+                                <div class="notes-backlinks">
+                    <h2>🔗 リンクされているノート</h2>
+                    <ul>
+                                            <li><a href="/notes/pgvector.html">pgvector</a></li>
+                    
+                    </ul>
+                </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-10 00:49 / 更新日時: 2026-08-10 00:49</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=%E3%83%87%E3%83%B3%E3%82%AD%E3%82%A6%E3%83%8A%E3%82%AE&url=https%3A%2F%2F64p.org%2Fnotes%2Felectric-eel.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <span>作成日時: 2026-08-10 17:13 / 更新日時: 2026-08-10 17:13</span>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=HNSW&url=https%3A%2F%2F64p.org%2Fnotes%2Fhnsw.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">
