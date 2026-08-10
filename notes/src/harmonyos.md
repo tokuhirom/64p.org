@@ -1,6 +1,6 @@
 ---
 created: 2026-08-09 12:33
-updated: 2026-08-09 14:11
+updated: 2026-08-10 14:33
 ---
 
 # HarmonyOSとは
@@ -21,7 +21,8 @@ Huawei（華為技術）が開発しているOS。当初はIoT機器向けだっ
 ## HarmonyOS NEXT（2024年〜）という転換点
 
 - 2024年発表の「HarmonyOS NEXT」から、それまでベースにしていたAndroid由来のAOSP（Android Open Source Project）コードとLinuxカーネルを置き換え、独自カーネルのみで動くOSになった。
-- Androidアプリはそのままでは動かなくなり、開発者はHarmonyOS向けに書き直す必要がある。AndroidやiOSに次ぐ「第3のモバイルOS」という位置づけで語られることが多い。
+- HarmonyOS 4以前はAndroid Runtime（ART）互換レイヤーを内蔵しておりAPKをそのまま/移植して動かせていたが、NEXTではARTごと廃止されAPKのインストール自体が弾かれるようになった。Androidアプリはそのままでは動かなくなり、開発者はHarmonyOS向けに書き直す必要がある。AndroidやiOSに次ぐ「第3のモバイルOS」という位置づけで語られることが多い。
+- Huaweiは移行支援として「卓易通（Zhuoyi Tong）」という互換ツールを提供しているが、すべてのAndroidアプリが完璧に動くわけではないとされる。
 - 中国国内でのHuaweiスマホ・タブレット向けが主戦場で、中国市場でのAndroid/Google依存脱却という狙いも大きい。
 
 この「脱Android・脱Google」路線は、PC版である[[harmonyos-pc]]でも同じ方向性で展開されている。
@@ -32,3 +33,5 @@ Huawei（華為技術）が開発しているOS。当初はIoT機器向けだっ
 - [HarmonyOSはAndroidフリーになりHarmonyOS NEXTへ | gihyo.jp](https://gihyo.jp/article/2024/12/android-weekly-topics-241205)
 - [脱Android、Huaweiが独自OS「HarmonyOS NEXT」を発表 | gihyo.jp](https://gihyo.jp/article/2024/02/android-weekly-topics-240201)
 - [HarmonyOS 5 (NEXT) - Wikipedia](https://en.wikipedia.org/wiki/HarmonyOS_NEXT)
+- [The Complete Guide to HarmonyOS NEXT](https://appinchina.co/the-complete-guide-to-harmonyos-next/)
+- [华为鸿蒙NEXT全线自研，不再兼容安卓软件 | 腾讯云开发者社区](https://cloud.tencent.cn/developer/article/2476822)
