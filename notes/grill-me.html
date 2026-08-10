@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>SakPilot - Notes - 64p.org</title>
+    <title>grill-me - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/highlight.js@11/styles/github.min.css" media="(prefers-color-scheme: light)">
@@ -21,7 +21,7 @@
                 <a class="notes-tags-link" href="/notes/tags/">🏷️ タグ一覧</a>
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
-                                    <li><a href="/notes/grill-me.html">grill-me</a></li>
+                                    <li><a href="/notes/grill-me.html" class="active">grill-me</a></li>
                                     <li><a href="/notes/jinro.html">人狼(人狼ゲーム)</a></li>
                                     <li><a href="/notes/buchigire-reijou.html">ブチ切れ令嬢は報復を誓いました。</a></li>
                                     <li><a href="/notes/ufw.html">ufw</a></li>
@@ -136,7 +136,7 @@
                                     <li><a href="/notes/polinky-triangle-secret.html">ポリンキーの「三角形の秘密」</a></li>
                                     <li><a href="/notes/shokudai-ookonnyaku.html">ショクダイオオコンニャク</a></li>
                                     <li><a href="/notes/imabari-towel.html">今治タオル</a></li>
-                                    <li><a href="/notes/sakpilot.html" class="active">SakPilot</a></li>
+                                    <li><a href="/notes/sakpilot.html">SakPilot</a></li>
                                     <li><a href="/notes/architecture-decision-record.html">ADR(Architecture Decision Record)</a></li>
                                     <li><a href="/notes/kali-linux.html">Kali Linux</a></li>
                                     <li><a href="/notes/burp-suite.html">Burp Suite</a></li>
@@ -189,54 +189,40 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>SakPilot</h1>
+                <h1>grill-me</h1>
 
-<p><a class="note-tag" href="/notes/tags/go.html">#go</a> <a class="note-tag" href="/notes/tags/typescript.html">#typescript</a> <a class="note-tag" href="/notes/tags/wails.html">#wails</a></p>
+<p>Claude Code用の<a href="/notes/agent-plugins.html">Agent Skill</a>の一つ。Matt Pocock氏が開発し、「Skills For Real Engineers」に含まれるスキル。 <a class="note-tag" href="/notes/tags/claude-code.html">#claude-code</a></p>
 
-<p>「さくらのクラウド」用の非公式(サードパーティ製)デスクトップクライアント。<a href="https://github.com/tokuhirom/sakpilot">https://github.com/tokuhirom/sakpilot</a> で個人開発中。GUI操作でさくらのクラウドの各種リソースを管理できる。CLI版として別プロジェクトの<a href="https://github.com/tokuhirom/sact">sact</a>がある。</p>
+<h2>仕組み</h2>
 
-<h2>技術スタック</h2>
+<p>わずか数行の指示文で構成されるシンプルなスキルで、AIに対して「あらゆる側面について徹底的に質問を投げかけ、設計の意思決定ツリーを枝分かれの先まで辿り、各質問に推奨回答も提示する」よう指示する。曖昧な計画・設計案から、隠れた前提や未決定事項をあぶり出し、実装可能なレベルまで詰めていくのが狙い。</p>
 
-<p>Go 1.25+ (バックエンド) + TypeScript(フロントエンド)を、<a href="https://wails.io/">Wails</a> v2で束ねてデスクトップアプリ化している。Wailsは、Goで書いたバックエンドとWeb技術(HTML/CSS/JS)のフロントエンドを組み合わせてクロスプラットフォームのデスクトップアプリを作れるフレームワーク。GitHub上の言語比率はTypeScriptが最大で、Go、NSIS(Windowsインストーラ)、CSSなどが続く。作成日は2026-01-16、2026-08-09時点でstar数3。</p>
-
-<h2>主な機能</h2>
+<h2>使い方</h2>
 
 <ul>
-<li>usacloudプロファイル(<code>~/.usacloud/</code>)の読み込み・作成・編集・削除、認証情報検証</li>
-<li>ゾーン依存リソース: サーバー・ディスク・アーカイブ・データベース・スイッチ・パケットフィルタ・ProxyLB(エンハンスドロードバランサ)・AppRun(専有タイプ)の一覧・操作</li>
-<li>グローバルリソース: DNSゾーン・SSL証明書・GSLB・シンプル監視・エンハンスドデータベース・コンテナレジストリ・KMS鍵・AppRun(共有タイプ)・請求情報・オブジェクトストレージ</li>
-<li>監視スイート: ログ・メトリクス・トレース一覧、Prometheus形式でのメトリクスクエリ</li>
-<li>プロファイル/シークレットはOSキーチェーン(keyring)に保存</li>
+<li><code>/grill-me</code> コマンドを使い、ざっくりした要件やアイデアを渡す</li>
+<li>AIが一度に1つずつ質問を投げかけ、選択肢とAIのおすすめ回答を提示する</li>
+<li>ユーザーが回答を重ねていくことで要件・設計が固まっていく(対話は通常15〜24往復程度)</li>
+<li>コード自体から分かることはAIが自分でコードベースを調べて済ませ、人間には聞かない</li>
 </ul>
 
 
-<h2>配布</h2>
+<h2>特徴</h2>
 
-<p>Homebrew (macOS、<code>brew install tokuhirom/tap/sakpilot</code>) およびGitHub ReleasesでmacOS/Windows/Linuxバイナリを配布。macOSビルドは非署名のため初回起動時にセキュリティ警告が出る。</p>
-
-<h2>開発体制の特徴</h2>
-
-<p>実クラウドに接続せずに動作確認できる<code>mise run demo</code>コマンドがあり、sacloud-sdk-go同梱のIaaS fakeドライバとsakumockのシードデータでGUIをブラウザから触って確認できる仕組みがある。E2Eテスト戦略はADR(<code>docs/adr/0001-e2e-testing-strategy.md</code>)として記録されている。</p>
+<p>通常のPlanモード(計画→実装の一方向)と違い、AIとの対話を通じて段階的に計画を構築していく感覚に近い。対話履歴自体がそのまま実装計画となり、シームレスに実装フェーズへ移行できる。</p>
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://github.com/tokuhirom/sakpilot">tokuhirom/sakpilot - GitHub</a>(README.mdより)</li>
+<li><a href="https://zenn.dev/ryonakae/articles/8783c6b3ead2cb">grill-me スキルがめちゃ良いので布教したい - Zenn</a></li>
+<li><a href="https://lobehub.com/ja/skills/svyatov-agent-toolkit-grill-me">grill-me | Skills Marketplace · LobeHub</a></li>
+<li><a href="https://agentskillsfinder.com/skills/grill-me">grill-me のインストールと使い方 - Agent Skills Finder</a></li>
 </ul>
 
 
-                                <div class="notes-backlinks">
-                    <h2>🔗 リンクされているノート</h2>
-                    <ul>
-                                            <li><a href="/notes/architecture-decision-record.html">ADR(Architecture Decision Record)</a></li>
-                                            <li><a href="/notes/tdd.html">TDD (Test-Driven Development / テスト駆動開発)</a></li>
-                                            <li><a href="/notes/wails.html">Wails</a></li>
-                    
-                    </ul>
-                </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-09 14:52 / 更新日時: 2026-08-09 18:08</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=SakPilot&url=https%3A%2F%2F64p.org%2Fnotes%2Fsakpilot.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <span>作成日時: 2026-08-10 22:46 / 更新日時: 2026-08-10 22:46</span>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=grill-me&url=https%3A%2F%2F64p.org%2Fnotes%2Fgrill-me.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">
