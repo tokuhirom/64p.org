@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>Project Glasswing - Notes - 64p.org</title>
+    <title>ピクミン（Pikmin） - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/highlight.js@11/styles/github.min.css" media="(prefers-color-scheme: light)">
@@ -22,7 +22,7 @@
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
                                     <li><a href="/notes/shigeru-miyamoto.html">宮本茂</a></li>
-                                    <li><a href="/notes/pikmin.html">ピクミン（Pikmin）</a></li>
+                                    <li><a href="/notes/pikmin.html" class="active">ピクミン（Pikmin）</a></li>
                                     <li><a href="/notes/universal-vs-nintendo-lawsuit.html">Universal City Studios, Inc. v. Nintendo Co., Ltd.</a></li>
                                     <li><a href="/notes/radar-scope.html">Radar Scope</a></li>
                                     <li><a href="/notes/mario.html">マリオ</a></li>
@@ -212,7 +212,7 @@
                                     <li><a href="/notes/edge-manifest-v3.html">Microsoft Edge、拡張機能をManifest V3へ完全移行</a></li>
                                     <li><a href="/notes/tableau.html">Tableau</a></li>
                                     <li><a href="/notes/gpui.html">GPUI</a></li>
-                                    <li><a href="/notes/project-glasswing.html" class="active">Project Glasswing</a></li>
+                                    <li><a href="/notes/project-glasswing.html">Project Glasswing</a></li>
                                     <li><a href="/notes/openssf.html">OpenSSF (Open Source Security Foundation)</a></li>
                                     <li><a href="/notes/carnivorous-plants.html">食虫植物</a></li>
                                     <li><a href="/notes/miidera-gomimushi.html">ミイデラゴミムシ</a></li>
@@ -230,51 +230,54 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>Project Glasswing</h1>
+                <h1>ピクミン（Pikmin）</h1>
 
-<p><a class="note-tag" href="/notes/tags/anthropic.html">#anthropic</a> <a class="note-tag" href="/notes/tags/claude.html">#claude</a> <a class="note-tag" href="/notes/tags/security.html">#security</a></p>
+<p>任天堂が2001年にニンテンドーゲームキューブ向けに発売したストラテジーゲーム。デザイナーは<a href="/notes/shigeru-miyamoto.html">宮本茂</a>。日本では2001年10月26日発売。</p>
 
-<p>Anthropicが2026年4月7日に開始した、AIのセキュリティ能力を「防御側」に先んじて使わせるための業界連携イニシアティブ。フロンティア級AIモデルがすでに人間トップクラスの専門家を上回るレベルで脆弱性の発見・悪用能力を持つに至ったという認識のもと、悪用側に先んじて重要なオープンソースソフトウェアの長年隠れていた脆弱性を見つけて修正することを目的としている。</p>
-
-<h2>使用モデル</h2>
-
-<p>未リリースのフロンティアモデル「Claude Mythos Preview」を使用。セキュリティ関連ベンチマーク「CyberGym」で83.1%のスコアを達成しており、前世代モデルの66.6%から大きく向上している(Claudeのモデル階層全般については<a href="/notes/claude-model-tiers.html">Claudeのモデル階層(Opus / Sonnet / Haiku / Fable)の違い</a>を参照)。</p>
-
-<h2>参加組織</h2>
-
-<p>AWS、Apple、Broadcom、Cisco、CrowdStrike、Google、JPMorganChase、Linux Foundation、Microsoft、NVIDIA、Palo Alto Networksなど12の主要パートナーに加え、40以上の組織が早期アクセスを得ている。</p>
-
-<h2>成果</h2>
-
-<p>OpenBSD(27年間未発見)、FFmpeg(16年間未発見)、Linuxカーネルなど、主要OS・主要ブラウザを含む重要ソフトウェア群から数千件規模の高〜重大深刻度の脆弱性を発見した。</p>
-
-<h2>Anthropicの支援</h2>
+<h2>ゲームシステム</h2>
 
 <ul>
-<li>防御的セキュリティ研究向けに1億ドル相当のモデルクレジットを提供。</li>
-<li>オープンソースセキュリティ団体へ計400万ドルを寄付(Linux Foundation経由で<a href="/notes/openssf.html">OpenSSF (Open Source Security Foundation)</a>傘下のAlpha-Omegaに250万ドル、Apache Software Foundationに150万ドル)。</li>
+<li>プレイヤーは30日以内に、不時着した宇宙船の部品を回収しなければならない。ゲーム内の1日は実時間で約13分。</li>
+<li>集めた部品数（全30個中、必須は25個）に応じてエンディングが分岐する。</li>
+<li>「ピクミン」と呼ばれる植物型の小さな生物を最大100体まで引き連れ、色ごとに異なる能力を使い分けて障害を突破する（赤は耐火性・高い戦闘力、黄色はより高く投げられ爆発物を運べる、青は水中でも生存できる）。</li>
+<li>主人公は宇宙船が不時着したオリマー船長。</li>
 </ul>
 
+
+<h2>開発経緯</h2>
+
+<ul>
+<li>技術的な土台は、複数キャラクターを同時制御する技術デモ「Super Mario 128」に由来する。</li>
+<li>ビジュアルスタイルはティム・バートン作品からの影響を受けているとされる。</li>
+<li>宮本茂は「小さな生物の群れが、自分たちの村を守りながら村を成長させ拡大させようとしている様子を見られたら素敵だ」という着想を出発点にしたと説明しており、これがガーデニングへの関心の高まりから来たものだとも言われる。開発初期段階では植物型生物という発想自体はまだなく、2体のキャラクターから徐々に数を増やしていく仕組みの企画は「Adam and Eve」という仮題で呼ばれていた。</li>
+</ul>
+
+
+<h2>シリーズ展開</h2>
+
+<p>続編として『ピクミン2』（2004年）が発売され、以降シリーズとして展開している。</p>
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://www.anthropic.com/glasswing">Project Glasswing: Securing critical software for the AI era \ Anthropic</a></li>
-<li><a href="https://www.anthropic.com/research/glasswing-initial-update">Project Glasswing: An initial update \ Anthropic</a></li>
-<li><a href="https://www.mindstudio.ai/blog/what-is-project-glasswing-anthropic-claude-mythos">What Is Project Glasswing? - MindStudio</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Pikmin_(video_game">Pikmin (video game) - Wikipedia (English)</a>)</li>
+<li><a href="https://www.nintendolife.com/news/2013/07/feature_a_brief_history_of_pikmin">A Brief History of Pikmin - Nintendo Life</a></li>
+<li><a href="https://theboar.org/2020/05/the-history-of-pikmin/">Concept to console: the history of &lsquo;Pikmin&rsquo; - The Boar</a></li>
 </ul>
 
+
+<p><a class="note-tag" href="/notes/tags/nintendo.html">#nintendo</a> <a class="note-tag" href="/notes/tags/game.html">#game</a></p>
 
                                 <div class="notes-backlinks">
                     <h2>🔗 リンクされているノート</h2>
                     <ul>
-                                            <li><a href="/notes/openssf.html">OpenSSF (Open Source Security Foundation)</a></li>
+                                            <li><a href="/notes/shigeru-miyamoto.html">宮本茂</a></li>
                     
                     </ul>
                 </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-09 14:46 / 更新日時: 2026-08-09 14:47</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=Project%20Glasswing&url=https%3A%2F%2F64p.org%2Fnotes%2Fproject-glasswing.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <span>作成日時: 2026-08-11 08:44 / 更新日時: 2026-08-11 08:44</span>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=%E3%83%94%E3%82%AF%E3%83%9F%E3%83%B3%EF%BC%88Pikmin%EF%BC%89&url=https%3A%2F%2F64p.org%2Fnotes%2Fpikmin.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">
