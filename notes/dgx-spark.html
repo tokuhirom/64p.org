@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>Marp - Notes - 64p.org</title>
+    <title>NVIDIA DGX Spark - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/highlight.js@11/styles/github.min.css" media="(prefers-color-scheme: light)">
@@ -21,7 +21,7 @@
                 <a class="notes-tags-link" href="/notes/tags/">🏷️ タグ一覧</a>
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
-                                    <li><a href="/notes/dgx-spark.html">NVIDIA DGX Spark</a></li>
+                                    <li><a href="/notes/dgx-spark.html" class="active">NVIDIA DGX Spark</a></li>
                                     <li><a href="/notes/nixpkgs-core-team-disbanded.html">Nixpkgs Core Teamの解散(2026年8月)</a></li>
                                     <li><a href="/notes/nixos.html">NixOS</a></li>
                                     <li><a href="/notes/nix.html">Nix</a></li>
@@ -81,7 +81,7 @@
                                     <li><a href="/notes/sendai-gyutan.html">仙台牛タンの発祥</a></li>
                                     <li><a href="/notes/deck-k1low.html">deck (k1LoW)</a></li>
                                     <li><a href="/notes/slidev.html">Slidev</a></li>
-                                    <li><a href="/notes/marp.html" class="active">Marp</a></li>
+                                    <li><a href="/notes/marp.html">Marp</a></li>
                                     <li><a href="/notes/project-loom.html">Project Loom</a></li>
                                     <li><a href="/notes/project-leyden.html">Project Leyden</a></li>
                                     <li><a href="/notes/project-babylon.html">Project Babylon</a></li>
@@ -145,56 +145,43 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>Marp</h1>
+                <h1>NVIDIA DGX Spark</h1>
 
-<p>Markdown Presentation Ecosystemの略。CommonMark準拠のMarkdownに<code>---</code>区切りを加えた記法でスライドを書けるツール群。コア部分はMarpitというHTML/CSSスライド生成フレームワークで、プラグインによる機能拡張が可能。MITライセンスのOSS。</p>
+<p>2025年10月に発表・発売された、NVIDIAの「パーソナルAIスーパーコンピューター」と称されるコンパクトなデスクトップ型AI開発システム。生成AI・大規模言語モデル・AIエージェントの開発・推論・検証をデスクトップ環境で行うためのマシン。</p>
 
-<p><a class="note-tag" href="/notes/tags/marp.html">#marp</a> <a class="note-tag" href="/notes/tags/presentation.html">#presentation</a> <a class="note-tag" href="/notes/tags/markdown.html">#markdown</a></p>
-
-<h2>ツール構成</h2>
+<h2>主要スペック</h2>
 
 <ul>
-<li><strong>Marp CLI</strong>: MarkdownをPDF/HTML/PPTX/画像に変換するコンバータ</li>
-<li><strong>Marp for VS Code</strong>: VS Code拡張機能。エディタ内でプレビューしながら編集できる</li>
-<li><strong>Marp Core</strong>: レンダリングエンジン本体</li>
+<li><strong>プロセッサ</strong>: NVIDIA GB10 Grace Blackwell Superchip</li>
+<li><strong>メモリ</strong>: 128GBの統合メモリ</li>
+<li><strong>AI演算性能</strong>: 1 PetaFLOPの並列スループット</li>
+<li><strong>対応モデル</strong>: 最大2000億パラメーターの大規模生成AIモデルに対応。2台を接続すると最大4050億パラメータのモデルにも対応可能</li>
+<li><strong>サイズ</strong>: 150mm×150mm×50.5mm、重量約1.2kg</li>
+<li><strong>ネットワーク</strong>: NVIDIA ConnectX-7 SmartNIC搭載。10GbE(RJ-45)を標準装備し、2台間の高速接続にも使われる</li>
+<li><strong>OS</strong>: UbuntuベースのDGX OSをプリインストール。CUDA・PyTorch・Ollama・NVIDIA NIMなどがすぐ使える状態で提供される</li>
 </ul>
 
 
-<h2>特徴</h2>
+<h2>位置づけ</h2>
 
-<ul>
-<li><strong>フォーマット間の再現性を重視</strong>: PDF/PPTX/HTMLに変換しても見た目が変わらないように設計されている</li>
-<li>画像配置・数式・自動スケーリングなどの拡張構文をサポート</li>
-<li>テーマはCSSで定義する</li>
-</ul>
+<p>大規模なローカルメモリと強力なAI演算力により、クラウドのトークン生成リソースへの依存を減らせる。省電力・コンパクトな設計で、常時稼働のエージェントワークロードをデスクトップから実行できる点が特徴。</p>
 
-
-<h2><a href="/notes/slidev.html">Slidev</a>との違い</h2>
-
-<p><a href="/notes/slidev.html">Slidev</a>がVue.jsベースのWebアプリとして動き、ライブコーディング（Monaco Editor埋め込み）やVueコンポーネント埋め込みなど「インタラクティブなWebスライド」寄りなのに対し、Marpは<strong>VS Code拡張やCLIでの変換に軸足</strong>があり、静的なPDF/PPTX/HTML出力の再現性を重視している。よりシンプルで軽量な用途（VS Code上でサクッと書いて即PDF化、など）に向く。</p>
+<p><a class="note-tag" href="/notes/tags/nvidia.html">#nvidia</a> <a class="note-tag" href="/notes/tags/ai.html">#ai</a> <a class="note-tag" href="/notes/tags/hardware.html">#hardware</a></p>
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://marp.app/">Marp 公式サイト</a></li>
-<li><a href="https://github.com/marp-team/marp/blob/main/website/docs/introduction/whats-marp.md">What&rsquo;s Marp | GitHub</a></li>
-<li><a href="https://github.com/marp-team/marp">github.com/marp-team/marp</a></li>
+<li><a href="https://www.nvidia.com/en-us/products/workstations/dgx-spark/">NVIDIA DGX Spark: デスク上の AI スーパーコンピューター</a></li>
+<li><a href="https://ryoyo-gpu.jp/media/column/a20">NVIDIA DGX Sparkとは？～超小型スパコンの誕生秘話～ - リョーサン菱洋</a></li>
+<li><a href="https://onprem.gbase.ai/blog/nvidia-dgx-spark-toha-2/">NVIDIA DGX Spark とは？仕様・性能・企業AI活用を徹底解説 - GBaseOnPrem</a></li>
+<li><a href="https://licensecounter.jp/engineer-voice/blog/articles/20251030_dgx_spark.html">DGX Sparkを実際に開封してセットアップしてみた - C&amp;S ENGINEER VOICE</a></li>
+<li><a href="https://tm-co.co.jp/glossary/nvidia-dgx-spark/">NVIDIA DGX Spark | T&amp;Mコーポレーション</a></li>
 </ul>
 
 
-                                <div class="notes-backlinks">
-                    <h2>🔗 リンクされているノート</h2>
-                    <ul>
-                                            <li><a href="/notes/moc.html">MOC (Map of Content)</a></li>
-                                            <li><a href="/notes/markdown-presentation-tools.html">Markdownベースのプレゼンテーションツール</a></li>
-                                            <li><a href="/notes/slidev.html">Slidev</a></li>
-                                            <li><a href="/notes/deck-k1low.html">deck (k1LoW)</a></li>
-                    
-                    </ul>
-                </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-09 21:30 / 更新日時: 2026-08-09 21:30</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=Marp&url=https%3A%2F%2F64p.org%2Fnotes%2Fmarp.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <span>作成日時: 2026-08-10 17:02 / 更新日時: 2026-08-10 17:02</span>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=NVIDIA%20DGX%20Spark&url=https%3A%2F%2F64p.org%2Fnotes%2Fdgx-spark.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">
