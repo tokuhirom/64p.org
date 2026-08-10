@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>Kali NetHunter - Notes - 64p.org</title>
+    <title>Cro - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/highlight.js@11/styles/github.min.css" media="(prefers-color-scheme: light)">
@@ -22,7 +22,7 @@
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
                                     <li><a href="/notes/raku-rakudo-perl6.html">Raku / Rakudo / Perl 6</a></li>
-                                    <li><a href="/notes/cro.html">Cro</a></li>
+                                    <li><a href="/notes/cro.html" class="active">Cro</a></li>
                                     <li><a href="/notes/sqlite-fts5.html">FTS5（SQLite）</a></li>
                                     <li><a href="/notes/sqlite-fts3.html">FTS3（SQLite）</a></li>
                                     <li><a href="/notes/sqlite.html">SQLite</a></li>
@@ -109,7 +109,7 @@
                                     <li><a href="/notes/kali-linux.html">Kali Linux</a></li>
                                     <li><a href="/notes/burp-suite.html">Burp Suite</a></li>
                                     <li><a href="/notes/craft-beer.html">クラフトビール</a></li>
-                                    <li><a href="/notes/kali-nethunter.html" class="active">Kali NetHunter</a></li>
+                                    <li><a href="/notes/kali-nethunter.html">Kali NetHunter</a></li>
                                     <li><a href="/notes/metasploit.html">Metasploit</a></li>
                                     <li><a href="/notes/kotchigai-shoukan.html">間違い召喚！ 追い出されたけど上位互換スキルでらくらく生活</a></li>
                                     <li><a href="/notes/openrouter.html">OpenRouter</a></li>
@@ -157,75 +157,47 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>Kali NetHunter</h1>
+                <h1>Cro</h1>
 
-<p><a class="note-tag" href="/notes/tags/security.html">#security</a> <a class="note-tag" href="/notes/tags/linux.html">#linux</a></p>
+<p><a href="/notes/raku-rakudo-perl6.html">Raku</a>でリアクティブな分散システム・Webサービスを構築するためのライブラリ群。単一の「フレームワーク」というより、必要な部分だけ組み合わせて使えるツールキット群として設計されている。公式サイトは「elegant reactive services in Raku」と謳っている。MoarVMおよびRakudoコンパイラのアーキテクトでもあるJonathan Worthingtonが作者。</p>
 
-<p>Android端末向けのペネトレーションテストプラットフォーム。<a href="/notes/kali-linux.html">Kali Linux</a>と同じOffensive Security(現OffSec)が開発した、オープンソースのAndroid用ペンテスト環境。</p>
+<p><a class="note-tag" href="/notes/tags/raku.html">#raku</a> <a class="note-tag" href="/notes/tags/web-framework.html">#web-framework</a></p>
 
-<h2>構成要素</h2>
+<h2>アーキテクチャ</h2>
+
+<p>Cro の中核にあるのは、Rakuの<code>Supply</code>（非同期リアクティブストリーム）を使って実装された「非同期パイプライン」という概念。HTTPリクエスト処理などをこのパイプラインの合成として組み立てる。高レベルAPIで簡単なことは簡単に、パイプラインの合成で難しいことも可能にする、というPerl由来の設計思想（"easy things easy, hard things possible"）を踏襲している。</p>
+
+<h2>主な機能</h2>
 
 <ul>
-<li><strong>Kaliコンテナ</strong>: Linuxのセキュリティツール一式を含むチルート環境</li>
-<li><strong>NetHunter App Store</strong>: ペンテスト/フォレンジック用Androidアプリのカタログ</li>
-<li><strong>Android専用クライアントアプリ</strong>: App Storeの管理・操作用</li>
-<li><strong>KeX(Desktop Experience)</strong>: HDMI出力やワイヤレス画面キャストでフルのLinuxデスクトップセッションを利用できる機能</li>
+<li>HTTP（HTTPS、HTTP/2.0を含む）、WebSocketのサポート</li>
+<li>ルーティング機能</li>
+<li><code>Cro::WebApp</code>によるテンプレート機能</li>
+<li><code>cro</code>コマンドラインツールによる開発用サーバー起動・テストの支援</li>
 </ul>
 
-
-<h2>3つのエディション</h2>
-
-<table>
-<thead>
-<tr>
-<th> エディション </th>
-<th> 要件 </th>
-<th> 対応機能 </th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td> Rootless </td>
-<td> root不要 </td>
-<td> App Store、Kali CLI、KeX </td>
-</tr>
-<tr>
-<td> Lite </td>
-<td> Magiskによるroot必須 </td>
-<td> 上記 + <a href="/notes/metasploit.html">Metasploit</a> DB、NetHunter App </td>
-</tr>
-<tr>
-<td> NetHunter(フル版) </td>
-<td> root + カスタムカーネル必須 </td>
-<td> 全機能(Wi-Fi注入、HIDキーボード攻撃、BadUSB、Evil AP MANA攻撃など) </td>
-</tr>
-</tbody>
-</table>
-
-
-<h2>対応デバイス</h2>
-
-<p>GitLabリポジトリ上に250以上のカーネルが110以上のデバイス向けに存在する。公式イメージは四半期ごとにダウンロードページで公開されている。Nexus・OnePlusなど一部機種でフル機能に対応。</p>
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://www.kali.org/docs/nethunter/">Kali NetHunter | Kali Linux Documentation</a></li>
-<li><a href="https://store.nethunter.com/">Kali NetHunter App Store - Android App Repository for Penetraton Testing and Forensics</a></li>
-<li><a href="https://www.linux.com/news/kali-linux-nethunter-30-android-mobile-penetration-testing-platform-out-now/">Kali Linux NetHunter 3.0 Android Mobile Penetration Testing Platform Out Now - Linux.com</a></li>
+<li><a href="https://cro.raku.org/">Cro - elegant reactive services in Raku</a></li>
+<li><a href="http://cro.raku.org/docs/intro/getstarted">Cro - Getting started with Cro</a></li>
+<li><a href="https://cro.raku.org/docs">Cro - Cro documentation</a></li>
+<li><a href="https://raku-advent.blog/2019/12/02/crud-cro-http-tutorial/">Day 2 – CRUD with Cro::HTTP, a tutorial – Raku Advent Calendar</a></li>
+<li><a href="https://raku.land/cpan:JNTHN">Raku Land - Jonathan Worthington</a></li>
 </ul>
 
 
                                 <div class="notes-backlinks">
                     <h2>🔗 リンクされているノート</h2>
                     <ul>
-                                            <li><a href="/notes/kali-linux.html">Kali Linux</a></li>
+                                            <li><a href="/notes/raku-rakudo-perl6.html">Raku / Rakudo / Perl 6</a></li>
                     
                     </ul>
                 </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-09 17:51 / 更新日時: 2026-08-09 17:51</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=Kali%20NetHunter&url=https%3A%2F%2F64p.org%2Fnotes%2Fkali-nethunter.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <span>作成日時: 2026-08-10 18:09 / 更新日時: 2026-08-10 18:09</span>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=Cro&url=https%3A%2F%2F64p.org%2Fnotes%2Fcro.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">
