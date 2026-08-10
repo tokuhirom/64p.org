@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>パーマネントノート (Permanent Notes) - Notes - 64p.org</title>
+    <title>Currying(カリー化) - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/highlight.js@11/styles/github.min.css" media="(prefers-color-scheme: light)">
@@ -21,7 +21,7 @@
                 <a class="notes-tags-link" href="/notes/tags/">🏷️ タグ一覧</a>
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
-                                    <li><a href="/notes/currying.html">Currying(カリー化)</a></li>
+                                    <li><a href="/notes/currying.html" class="active">Currying(カリー化)</a></li>
                                     <li><a href="/notes/herdr.html">herdr</a></li>
                                     <li><a href="/notes/herdr-browser.html">herdr-browser</a></li>
                                     <li><a href="/notes/byod.html">BYOD (Bring Your Own Device)</a></li>
@@ -62,7 +62,7 @@
                                     <li><a href="/notes/lyt.html">LYT (Linking Your Thinking)</a></li>
                                     <li><a href="/notes/literature-notes.html">文献ノート (Literature Notes)</a></li>
                                     <li><a href="/notes/zettelkasten.html">Zettelkasten</a></li>
-                                    <li><a href="/notes/permanent-notes.html" class="active">パーマネントノート (Permanent Notes)</a></li>
+                                    <li><a href="/notes/permanent-notes.html">パーマネントノート (Permanent Notes)</a></li>
                                     <li><a href="/notes/fleeting-notes.html">フリートノート (Fleeting Notes)</a></li>
                                     <li><a href="/notes/markdown-presentation-tools.html">Markdownベースのプレゼンテーションツール</a></li>
                                     <li><a href="/notes/japan-fountain-pen-manufacturers.html">日本の万年筆メーカー</a></li>
@@ -135,50 +135,37 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>パーマネントノート (Permanent Notes)</h1>
+                <h1>Currying(カリー化)</h1>
 
-<p>Sönke Ahrensの著書『How to Take Smart Notes』で整理された、<a href="/notes/zettelkasten.html">Zettelkasten</a>実践におけるノートの最終形態。フリートノートや文献ノートを毎日見直し、そこから得たアイデアを「将来の自分が文脈なしで読んでも理解できる、独立した文章」として自分の言葉で書き直したもの。Zettelkastenに恒久的に保存され、既存ノートと相互リンクされていく。</p>
+<p>複数の引数を受け取る関数を、「1つの引数を受け取って関数を返す関数」の連鎖に変換する手法。例えば<code>add(1, 2)</code>のように2つの引数を一度に受け取る関数を、<code>add(1)(2)</code>のように引数を1つずつ渡していく形に変換すること。</p>
 
-<h2>3種類のノートとワークフロー</h2>
+<h2>定義</h2>
 
-<p>Ahrensのシステムでは、ノートを以下の3種類に分け、この順に処理する。</p>
+<p>複数の引数をとる関数を、「もとの関数の最初の引数」を受け取り、戻り値として「もとの関数の残りの引数を取って結果を返す関数」を返すような関数に変換すること。</p>
 
-<ol>
-<li><a href="/notes/fleeting-notes.html">フリートノート</a> — 思いついたことをとりあえず書き留めるだけの、使い捨て前提の短いメモ</li>
-<li><a href="/notes/literature-notes.html">文献ノート</a> — 読んだ文献の要点を、引用のコピペではなく自分の言葉で書いたメモ</li>
-<li><strong>パーマネントノート (permanent notes)</strong> — 1と2を毎日レビューし、そこから抽出したアイデアを1ノート1概念で書き直し、Zettelkasten本体に追加する</li>
-</ol>
+<h2>由来</h2>
 
+<p>論理学者ハスケル・カリー(Haskell Curry)にちなんでクリストファー・ストレイチーが命名したが、実際に考案したのはMoses SchönfinkelとGottlob Frege。</p>
 
-<p>フリートノート・文献ノートはあくまで中間生成物であり、最終的にパーマネントノートへ変換されなかったものは（Ahrensの想定では）破棄してよい。</p>
+<h2>用途</h2>
 
-<h2>エバーグリーンノートとの対応</h2>
+<p>Haskell、Scala、JavaScriptなど関数型プログラミングの文脈でよく使われる技法で、部分適用(一部の引数だけ先に渡して新しい関数を作ること)と組み合わせて使われることが多い。</p>
 
-<p>Andy Matuschakの<a href="/notes/evergreen-notes.html">エバーグリーンノート</a>は、この「パーマネントノート」の思想（原子性・自分の言葉で書く・既存ノートとリンクする）を直接引き継いでいる。<code>64p.org</code>の<code>/notes/</code>コーナーで書いているノートも、実質的にはこのパーマネントノートに相当する。</p>
-
-<p><a class="note-tag" href="/notes/tags/zettelkasten.html">#zettelkasten</a> <a class="note-tag" href="/notes/tags/note-taking.html">#note-taking</a></p>
+<p><a class="note-tag" href="/notes/tags/functional-programming.html">#functional-programming</a></p>
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://zettelkasten.de/posts/concepts-sohnke-ahrens-explained/">From Fleeting Notes to Project Notes – Concepts of &ldquo;How to Take Smart Notes&rdquo; by Sönke Ahrens • Zettelkasten Method</a></li>
-<li><a href="https://writing.bobdoto.computer/what-is-a-permanent-note-correcting-some-common-misunderstandings/">What is a Permanent Note? (Correcting Some Common Misunderstandings) – Bob Doto</a></li>
+<li><a href="https://ja.wikipedia.org/wiki/%E3%82%AB%E3%83%AA%E3%83%BC%E5%8C%96">カリー化 - Wikipedia</a></li>
+<li><a href="https://ja.wikibooks.org/wiki/%E3%83%97%E3%83%AD%E3%82%B0%E3%83%A9%E3%83%9F%E3%83%B3%E3%82%B0/%E3%82%AB%E3%83%AA%E3%83%BC%E5%8C%96">プログラミング/カリー化 - Wikibooks</a></li>
+<li><a href="https://zenn.dev/luma/articles/introduction-currying-and-partial-apply">カリー化と部分適用 - Zenn</a></li>
+<li><a href="https://ja.javascript.info/currying-partials">カリー化 - JavaScript.info</a></li>
 </ul>
 
 
-                                <div class="notes-backlinks">
-                    <h2>🔗 リンクされているノート</h2>
-                    <ul>
-                                            <li><a href="/notes/zettelkasten.html">Zettelkasten</a></li>
-                                            <li><a href="/notes/fleeting-notes.html">フリートノート (Fleeting Notes)</a></li>
-                                            <li><a href="/notes/project-notes.html">プロジェクトノート (Project Notes)</a></li>
-                                            <li><a href="/notes/literature-notes.html">文献ノート (Literature Notes)</a></li>
-                    
-                    </ul>
-                </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-09 22:05 / 更新日時: 2026-08-09 22:07</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=%E3%83%91%E3%83%BC%E3%83%9E%E3%83%8D%E3%83%B3%E3%83%88%E3%83%8E%E3%83%BC%E3%83%88%20%28Permanent%20Notes%29&url=https%3A%2F%2F64p.org%2Fnotes%2Fpermanent-notes.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <span>作成日時: 2026-08-10 15:29 / 更新日時: 2026-08-10 15:29</span>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=Currying%28%E3%82%AB%E3%83%AA%E3%83%BC%E5%8C%96%29&url=https%3A%2F%2F64p.org%2Fnotes%2Fcurrying.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">
