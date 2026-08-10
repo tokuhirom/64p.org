@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>deck (k1LoW) - Notes - 64p.org</title>
+    <title>Apache Druid - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/highlight.js@11/styles/github.min.css" media="(prefers-color-scheme: light)">
@@ -21,7 +21,7 @@
                 <a class="notes-tags-link" href="/notes/tags/">🏷️ タグ一覧</a>
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
-                                    <li><a href="/notes/apache-druid.html">Apache Druid</a></li>
+                                    <li><a href="/notes/apache-druid.html" class="active">Apache Druid</a></li>
                                     <li><a href="/notes/cagliostro-no-shiro.html">ルパン三世 カリオストロの城</a></li>
                                     <li><a href="/notes/nand-gate.html">NANDゲート</a></li>
                                     <li><a href="/notes/nand-flash.html">NAND型フラッシュメモリ</a></li>
@@ -131,7 +131,7 @@
                                     <li><a href="/notes/markdown-presentation-tools.html">Markdownベースのプレゼンテーションツール</a></li>
                                     <li><a href="/notes/japan-fountain-pen-manufacturers.html">日本の万年筆メーカー</a></li>
                                     <li><a href="/notes/sendai-gyutan.html">仙台牛タンの発祥</a></li>
-                                    <li><a href="/notes/deck-k1low.html" class="active">deck (k1LoW)</a></li>
+                                    <li><a href="/notes/deck-k1low.html">deck (k1LoW)</a></li>
                                     <li><a href="/notes/slidev.html">Slidev</a></li>
                                     <li><a href="/notes/marp.html">Marp</a></li>
                                     <li><a href="/notes/project-loom.html">Project Loom</a></li>
@@ -197,44 +197,56 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>deck (k1LoW)</h1>
+                <h1>Apache Druid</h1>
 
-<p>k1LoW氏が開発した、MarkdownからGoogle Slidesを生成・更新するCLIツール。Go言語製、MITライセンス。</p>
+<p>リアルタイム分散分析用のデータベース。大規模なストリーミングデータの取り込みと、低レイテンシなOLAPクエリ・インタラクティブ分析を実現することに特化している。 <a class="note-tag" href="/notes/tags/database.html">#database</a> <a class="note-tag" href="/notes/tags/olap.html">#olap</a></p>
 
-<p><a class="note-tag" href="/notes/tags/deck.html">#deck</a> <a class="note-tag" href="/notes/tags/presentation.html">#presentation</a> <a class="note-tag" href="/notes/tags/markdown.html">#markdown</a> <a class="note-tag" href="/notes/tags/google-slides.html">#google-slides</a> <a class="note-tag" href="/notes/tags/go.html">#go</a></p>
+<h2>開発の経緯</h2>
+
+<p>2011年から開発が始まり、現在はApache Software Foundationのライセンス下でオープンソースとして開発が続いている(Apacheトップレベルプロジェクト)。</p>
 
 <h2>特徴</h2>
 
 <ul>
-<li><strong>コンテンツとデザインの分離</strong>: Markdownでコンテンツを書き、デザイン(テーマ・レイアウト)はGoogle Slides側で管理する</li>
-<li><strong>ワークフロー</strong>: <code>deck new</code>でプレゼンテーションIDを取得 → Markdownで編集 → <code>deck apply</code>でGoogle Slidesに反映 → <code>deck open</code>でブラウザ表示</li>
-<li><strong>ウォッチモード</strong>: ファイル変更を自動監視し、即座にGoogle Slidesへ反映</li>
-<li>対応記法: CommonMark + GitHub Flavored Markdown（太字・斜体・コード・リスト・表・画像・ブロッククォート・HTMLインライン要素など）</li>
+<li>列指向(カラムナー)のデータストアで、必要な列だけを高速に検索できる</li>
+<li>分散型アーキテクチャで、1秒未満のクエリ応答時間を実現</li>
+<li>1日に数兆件規模のイベント処理が可能なスケーラビリティ</li>
+<li>データの自動集計、ペタバイト級データへの対応、高可用性</li>
+<li>ダウンタイムなしの継続運用やデータレプリケーションを前提とした設計</li>
 </ul>
 
 
-<h2><a href="/notes/markdown-presentation-tools.html">Markdownベースのプレゼンテーションツール</a>の中での位置づけ</h2>
+<h2>アーキテクチャ(3層構成)</h2>
 
-<p><a href="/notes/slidev.html">Slidev</a>や<a href="/notes/marp.html">Marp</a>がHTML/PDF/PPTXなど自己完結した出力を生成するのに対し、deckは<strong>既存のGoogle SlidesというGUIプラットフォームにMarkdownで内容を流し込む</strong>という異なるアプローチを取る。共同編集やコメント機能などGoogle Slidesのエコシステムをそのまま使いたい場合に向く。</p>
+<ul>
+<li><strong>データノード層</strong>: Middle Manager/IndexerがKafkaなどからデータを取り込み、処理後に「セグメント」としてディープストレージ(S3・GCSなど)に保存。Historicalノードがディープストレージからセグメントを自ノードのディスクに展開して保持する</li>
+<li><strong>クエリノード層</strong>: RouterとBrokerがクエリを受け付け、各ノードの結果をマージして返却する</li>
+<li><strong>管理層</strong>: CoordinatorとZooKeeperがメタデータやタスクの管理を担う</li>
+</ul>
+
+
+<h2>ユースケース</h2>
+
+<p>Webやモバイルの行動分析、不正検知、ネットワークパフォーマンス監視、サーバーメトリクス監視、ビジネスインテリジェンス/OLAPなど、大量のイベントデータをリアルタイムに解析する用途に向いている。</p>
+
+<h2>開発状況(2026年8月時点)</h2>
+
+<p>活発に開発が続いている。v37.0.0が2026年5月8日にリリースされ、29人のコントリビューターによる255件以上の新機能・バグ修正・パフォーマンス改善が含まれた。直前のv36.0.0は2026年2月9日リリースで、数ヶ月おきのペースでメジャーバージョンがリリースされ続けている。</p>
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://github.com/k1LoW/deck">GitHub - k1LoW/deck</a></li>
+<li><a href="https://findy-tools.io/products/druid/597">Druidとは？機能や特徴・製品の概要まとめ - Findy Tools</a></li>
+<li><a href="https://kentakozuka.com/post/%E5%A4%A7%E8%A6%8F%E6%A8%A1%E3%83%87%E3%83%BC%E3%82%BF%E5%88%86%E6%9E%90db-druid/">大規模データ分析DB Druid | Kenta Kozuka</a></li>
+<li><a href="https://ex-ture.com/blog/2020/02/19/lets-try-apache-druid/">爆速データウェアハウスなApache Druidを試す</a></li>
+<li><a href="https://druid.apache.org/downloads/">Download | Apache® Druid</a></li>
+<li><a href="https://github.com/apache/druid/releases">Releases · apache/druid - GitHub</a></li>
 </ul>
 
 
-                                <div class="notes-backlinks">
-                    <h2>🔗 リンクされているノート</h2>
-                    <ul>
-                                            <li><a href="/notes/moc.html">MOC (Map of Content)</a></li>
-                                            <li><a href="/notes/markdown-presentation-tools.html">Markdownベースのプレゼンテーションツール</a></li>
-                    
-                    </ul>
-                </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-09 21:37 / 更新日時: 2026-08-09 21:37</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=deck%20%28k1LoW%29&url=https%3A%2F%2F64p.org%2Fnotes%2Fdeck-k1low.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <span>作成日時: 2026-08-10 23:33 / 更新日時: 2026-08-10 23:33</span>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=Apache%20Druid&url=https%3A%2F%2F64p.org%2Fnotes%2Fapache-druid.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">
