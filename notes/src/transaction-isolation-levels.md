@@ -1,6 +1,6 @@
 ---
 created: 2026-08-10 17:20
-updated: 2026-08-10 17:20
+updated: 2026-08-10 17:21
 ---
 # トランザクション分離レベル
 
@@ -20,7 +20,7 @@ Read Committedと違い、トランザクション内で最初にSQL文を実行
 
 最も厳格な分離レベル。すべてのコミット済みトランザクションを、あたかも一つずつ順番に（serialに）実行したかのように振る舞わせる。PostgreSQLの実装はSerializable Snapshot Isolation（SSI）と呼ばれ、既知の異常動作すべてに耐性を持つことを目指している。
 
-## MySQL（InnoDB）との違い
+## [[mysql|MySQL]]（InnoDB）との違い
 
 デフォルトの分離レベルが異なる。PostgreSQLはRead Committedがデフォルトなのに対し、MySQLのInnoDBはRepeatable Readがデフォルト。設計思想の違いとして、MySQLは初期状態からより強い分離レベルを提供する方向、PostgreSQLはより高い並行性を優先する方向とされる。
 

@@ -21,9 +21,10 @@
                 <a class="notes-tags-link" href="/notes/tags/">🏷️ タグ一覧</a>
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
-                                    <li><a href="/notes/vacuum.html">VACUUM</a></li>
                                     <li><a href="/notes/transaction-isolation-levels.html">トランザクション分離レベル</a></li>
+                                    <li><a href="/notes/mysql.html">MySQL</a></li>
                                     <li><a href="/notes/mvcc.html" class="active">MVCC</a></li>
+                                    <li><a href="/notes/vacuum.html">VACUUM</a></li>
                                     <li><a href="/notes/postgresql.html">PostgreSQL</a></li>
                                     <li><a href="/notes/pgvector.html">pgvector</a></li>
                                     <li><a href="/notes/hnsw.html">HNSW</a></li>
@@ -176,7 +177,7 @@
 
 <h2>他DBとの違い</h2>
 
-<p>OracleやMySQLはundoログを使い、コミット前の変更を退避しておいて必要に応じて過去のバージョンを再構築する方式を取るのに対し、PostgreSQLはすべての行バージョンをテーブルのデータ構造そのものの中に保持する点が異なる。</p>
+<p>Oracleや<a href="/notes/mysql.html">MySQL</a>はundoログを使い、コミット前の変更を退避しておいて必要に応じて過去のバージョンを再構築する方式を取るのに対し、PostgreSQLはすべての行バージョンをテーブルのデータ構造そのものの中に保持する点が異なる。</p>
 
 <h2><a href="/notes/transaction-isolation-levels.html">トランザクション分離レベル</a>との関係</h2>
 
@@ -196,6 +197,7 @@
                                 <div class="notes-backlinks">
                     <h2>🔗 リンクされているノート</h2>
                     <ul>
+                                            <li><a href="/notes/mysql.html">MySQL</a></li>
                                             <li><a href="/notes/postgresql.html">PostgreSQL</a></li>
                                             <li><a href="/notes/vacuum.html">VACUUM</a></li>
                                             <li><a href="/notes/transaction-isolation-levels.html">トランザクション分離レベル</a></li>
@@ -203,7 +205,7 @@
                     </ul>
                 </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-10 17:15 / 更新日時: 2026-08-10 17:20</span>
+                    <span>作成日時: 2026-08-10 17:15 / 更新日時: 2026-08-10 17:21</span>
                     <a class="share-x" href="https://twitter.com/intent/tweet?text=MVCC&url=https%3A%2F%2F64p.org%2Fnotes%2Fmvcc.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>

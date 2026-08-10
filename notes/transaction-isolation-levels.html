@@ -21,9 +21,10 @@
                 <a class="notes-tags-link" href="/notes/tags/">🏷️ タグ一覧</a>
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
-                                    <li><a href="/notes/vacuum.html">VACUUM</a></li>
                                     <li><a href="/notes/transaction-isolation-levels.html" class="active">トランザクション分離レベル</a></li>
+                                    <li><a href="/notes/mysql.html">MySQL</a></li>
                                     <li><a href="/notes/mvcc.html">MVCC</a></li>
+                                    <li><a href="/notes/vacuum.html">VACUUM</a></li>
                                     <li><a href="/notes/postgresql.html">PostgreSQL</a></li>
                                     <li><a href="/notes/pgvector.html">pgvector</a></li>
                                     <li><a href="/notes/hnsw.html">HNSW</a></li>
@@ -170,7 +171,7 @@
 
 <p>最も厳格な分離レベル。すべてのコミット済みトランザクションを、あたかも一つずつ順番に（serialに）実行したかのように振る舞わせる。PostgreSQLの実装はSerializable Snapshot Isolation（SSI）と呼ばれ、既知の異常動作すべてに耐性を持つことを目指している。</p>
 
-<h2>MySQL（InnoDB）との違い</h2>
+<h2><a href="/notes/mysql.html">MySQL</a>（InnoDB）との違い</h2>
 
 <p>デフォルトの分離レベルが異なる。PostgreSQLはRead Committedがデフォルトなのに対し、MySQLのInnoDBはRepeatable Readがデフォルト。設計思想の違いとして、MySQLは初期状態からより強い分離レベルを提供する方向、PostgreSQLはより高い並行性を優先する方向とされる。</p>
 
@@ -191,11 +192,12 @@
                     <h2>🔗 リンクされているノート</h2>
                     <ul>
                                             <li><a href="/notes/mvcc.html">MVCC</a></li>
+                                            <li><a href="/notes/mysql.html">MySQL</a></li>
                     
                     </ul>
                 </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-10 17:20 / 更新日時: 2026-08-10 17:20</span>
+                    <span>作成日時: 2026-08-10 17:20 / 更新日時: 2026-08-10 17:21</span>
                     <a class="share-x" href="https://twitter.com/intent/tweet?text=%E3%83%88%E3%83%A9%E3%83%B3%E3%82%B6%E3%82%AF%E3%82%B7%E3%83%A7%E3%83%B3%E5%88%86%E9%9B%A2%E3%83%AC%E3%83%99%E3%83%AB&url=https%3A%2F%2F64p.org%2Fnotes%2Ftransaction-isolation-levels.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
