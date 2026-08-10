@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>Project Loom - Notes - 64p.org</title>
+    <title>SQLite - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/highlight.js@11/styles/github.min.css" media="(prefers-color-scheme: light)">
@@ -21,7 +21,7 @@
                 <a class="notes-tags-link" href="/notes/tags/">🏷️ タグ一覧</a>
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
-                                    <li><a href="/notes/sqlite.html">SQLite</a></li>
+                                    <li><a href="/notes/sqlite.html" class="active">SQLite</a></li>
                                     <li><a href="/notes/transaction-isolation-levels.html">トランザクション分離レベル</a></li>
                                     <li><a href="/notes/mysql.html">MySQL</a></li>
                                     <li><a href="/notes/mvcc.html">MVCC</a></li>
@@ -91,7 +91,7 @@
                                     <li><a href="/notes/deck-k1low.html">deck (k1LoW)</a></li>
                                     <li><a href="/notes/slidev.html">Slidev</a></li>
                                     <li><a href="/notes/marp.html">Marp</a></li>
-                                    <li><a href="/notes/project-loom.html" class="active">Project Loom</a></li>
+                                    <li><a href="/notes/project-loom.html">Project Loom</a></li>
                                     <li><a href="/notes/project-leyden.html">Project Leyden</a></li>
                                     <li><a href="/notes/project-babylon.html">Project Babylon</a></li>
                                     <li><a href="/notes/openjdk-projects.html">OpenJDKの主要プロジェクト</a></li>
@@ -154,49 +154,43 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>Project Loom</h1>
+                <h1>SQLite</h1>
 
-<p>Javaの軽量並行処理を実現するOpenJDKプロジェクト。仮想スレッド(virtual threads)と構造化並行性(structured concurrency)が中核。</p>
+<p>C言語で実装された軽量・組み込み型のSQLデータベースエンジン。D. Richard Hippにより2000年に開発され、ソースコードはパブリックドメインで公開されており誰でも無償・無制限に利用できる。</p>
 
-<h2>仮想スレッド(Virtual Threads)</h2>
+<p><a class="note-tag" href="/notes/tags/database.html">#database</a> <a class="note-tag" href="/notes/tags/rdbms.html">#rdbms</a> <a class="note-tag" href="/notes/tags/sql.html">#sql</a> <a class="note-tag" href="/notes/tags/embedded.html">#embedded</a></p>
 
-<p>OSスレッドに紐付かない軽量なスレッド。JVMが管理し、スレッド・パー・リクエストのプログラミングスタイルをOSスレッドの制約なしに実現できる。スループットに影響を与えずに数百万の仮想スレッドを生成できる。基盤にはContinuations(実行フローの中断・再開を可能にする低レベル機構)がある。</p>
+<h2>アーキテクチャ</h2>
 
-<ul>
-<li>JDK 19でプレビュー導入(JEP 425)</li>
-<li>JDK 21で正式機能化</li>
-</ul>
+<p>「サーバーレスデータベース」とも呼ばれ、<a href="/notes/postgresql.html">PostgreSQL</a>や<a href="/notes/mysql.html">MySQL</a>のような独立したサーバープロセスを必要とせず、ライブラリとしてアプリケーションに直接組み込んで使う。データベース全体が単一のファイルに格納される。モバイルアプリ、デスクトップアプリ、IoTデバイス、組み込みシステムなど幅広い環境で使われており、Androidデバイスには標準搭載されている。推定4兆以上のインスタンスが世界で稼働しているとされる。</p>
 
+<h2>型システム</h2>
 
-<h2>構造化並行性(Structured Concurrency)</h2>
+<p>SQLiteは動的型付けを採用しており、宣言した列の型は「ヒント」に過ぎず、実際にはどんな型の値でも格納できる。値は内部的にNULL・INTEGER・REAL・TEXT・BLOBの5つの「ストレージクラス」のいずれかで保持され、宣言型に基づいて「型親和性（type affinity）」が決まり、挿入時に自動的な型変換が行われる。型名の部分文字列マッチングで親和性を決めており、たとえば型名に"INT"が含まれればINTEGER親和性、"CHAR"/&ldquo;CLOB&rdquo;/&ldquo;TEXT"が含まれればTEXT親和性になる（<code>VARCHAR(255)</code>のような括弧内の数値は無視される）。</p>
 
-<p><code>StructuredTaskScope</code> を通じて提供される、協調タスク(多くの場合は仮想スレッド)をサブタスクの集合として一括で管理するAPI。スレッド間の親子関係を捉えたスレッドダンプ(構造化された観測性)も提供する。</p>
+<h2>同時書き込みの制限</h2>
 
-<ul>
-<li>JDK 19でプレビュー導入(JEP 428)</li>
-<li>Java 25で刷新、2026年(JDK 26)も小さな変更でプレビュー継続</li>
-</ul>
+<p>書き込みロックの方式として、従来のロールバックジャーナル方式に加えてWAL（Write-Ahead Logging）モードをサポートする。WALモードにすると複数の読み取りと単一の書き込みが同時に動作できるようになり、読み取りブロッキングが改善される。ただし書き込み自体は基本的に直列化されるため、高い並列書き込み負荷には向かない。</p>
 
+<h2>互換性方針</h2>
+
+<p>データベースファイル形式は安定しており異なるプラットフォーム間でも利用可能で、開発チームは少なくとも2050年までこのファイル形式を読み書きできる状態を維持すると宣言している。</p>
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://developer.okta.com/blog/2022/08/26/state-of-java-project-loom">What the Heck Is Project Loom for Java? | Okta Developer</a></li>
-<li><a href="https://rockthejvm.com/articles/structured-concurrency-in-java">Project Loom: Structured Concurrency in Java | Rock the JVM</a></li>
-<li><a href="https://dev.java/future/innovation/">Java Innovation Projects - Dev.java</a></li>
+<li><a href="https://meetsmore.com/products/sqlite">SQLite（エスキューライト）とは？ | ミツモア</a></li>
+<li><a href="https://techmania.jp/blog/sqlite/">SQLiteとは？特徴・メリット・使い方・他のDBとの違いを解説 | TechMania</a></li>
+<li><a href="https://ja.wikipedia.org/wiki/%E3%83%AA%E3%83%81%E3%83%A3%E3%83%BC%E3%83%89%E3%83%BB%E3%83%92%E3%83%83%E3%83%97">リチャード・ヒップ - Wikipedia</a></li>
+<li><a href="https://qiita.com/Choco0602/items/f2153b936416414ccd6a">Webアプリには必須!! WALモードについて &lt;a class=&ldquo;note-tag&rdquo; href=&ldquo;/notes/tags/sql.html&rdquo;>#sql</a> - Qiita</a></li>
+<li><a href="https://kawasin73.hatenablog.com/entry/2023/09/09/200342">SQLite のおもしろ仕様 (1) : データ型 - kawasin73のブログ</a></li>
+<li><a href="https://qiita.com/ko1nksm/items/87d27a287e1b6005d11c">利用者は数十億人！？ SQLiteはどこが凄いデータベース管理システムなのか調べてみた &lt;a class=&ldquo;note-tag&rdquo; href=&ldquo;/notes/tags/shellscript.html&rdquo;>#shellscript</a> - Qiita</a></li>
 </ul>
 
 
-                                <div class="notes-backlinks">
-                    <h2>🔗 リンクされているノート</h2>
-                    <ul>
-                                            <li><a href="/notes/openjdk-projects.html">OpenJDKの主要プロジェクト</a></li>
-                    
-                    </ul>
-                </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-09 21:23 / 更新日時: 2026-08-09 21:23</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=Project%20Loom&url=https%3A%2F%2F64p.org%2Fnotes%2Fproject-loom.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <span>作成日時: 2026-08-10 17:23 / 更新日時: 2026-08-10 17:23</span>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=SQLite&url=https%3A%2F%2F64p.org%2Fnotes%2Fsqlite.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">
