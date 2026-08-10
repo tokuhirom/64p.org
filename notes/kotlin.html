@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>Nushell - Notes - 64p.org</title>
+    <title>Kotlin - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/highlight.js@11/styles/github.min.css" media="(prefers-color-scheme: light)">
@@ -22,7 +22,7 @@
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
                                     <li><a href="/notes/scala.html">Scala</a></li>
-                                    <li><a href="/notes/kotlin.html">Kotlin</a></li>
+                                    <li><a href="/notes/kotlin.html" class="active">Kotlin</a></li>
                                     <li><a href="/notes/scala3.html">Scala 3</a></li>
                                     <li><a href="/notes/currying.html">Currying(カリー化)</a></li>
                                     <li><a href="/notes/herdr.html">herdr</a></li>
@@ -52,7 +52,7 @@
                                     <li><a href="/notes/lxd.html">LXD</a></li>
                                     <li><a href="/notes/incus.html">Incus</a></li>
                                     <li><a href="/notes/lxc.html">LXC (Linux Containers)</a></li>
-                                    <li><a href="/notes/nushell.html" class="active">Nushell</a></li>
+                                    <li><a href="/notes/nushell.html">Nushell</a></li>
                                     <li><a href="/notes/simd.html">SIMD</a></li>
                                     <li><a href="/notes/project-panama.html">Project Panama</a></li>
                                     <li><a href="/notes/apache-arrow.html">Apache Arrow</a></li>
@@ -138,33 +138,51 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>Nushell</h1>
+                <h1>Kotlin</h1>
 
-<p>コマンドの出力を単なるテキストではなく構造化データ(テーブル・レコード等)として扱う、Rust製のモダンなクロスプラットフォームシェル。<code>nu</code>と略される。 <a class="note-tag" href="/notes/tags/shell.html">#shell</a> <a class="note-tag" href="/notes/tags/rust.html">#rust</a></p>
+<p>JetBrainsが開発したプログラミング言語。2012年2月にオープンソースとして公開された。<a href="/notes/scala.html">Scala</a>と同じくJVM(Java仮想マシン)上で動作するオブジェクト指向言語で、Javaとの完全な相互運用性を持つ。</p>
 
 <h2>特徴</h2>
 
 <ul>
-<li>全てのコマンド出力を配列・テーブル・レコード・数値・真偽値などの型付きデータとして扱い、パイプラインでフィルタ・ソート・変換操作を組み合わせやすくしている。</li>
-<li>JSON/CSV/SQL/Excelなどのフォーマットを扱うビルトインコマンドを備える。</li>
-<li>PowerShellのように「構造化シェル」に分類される(bash/zshなどのテキストベースシェルとの対比)。</li>
-<li>従来のUnixシェル哲学(シンプルなコマンドをパイプで繋ぐ)を踏襲しつつ、型システムや関数型言語的な概念を取り入れており、リッチなプログラミング言語とフル機能シェルを一体化したものと位置づけられている。</li>
-<li>Windows/macOS/Linuxに対応。</li>
+<li>モバイル・Web・サーバーサイド・デスクトップ・組み込みまで対応する高い多用途性</li>
+<li>独学で習得する開発者が多く、学習しやすい言語とされる</li>
+<li><strong>Null安全性(Null Safety)</strong>: 型システムでnull許容型/非許容型を区別し、NullPointerExceptionをコンパイル時に防ぐ設計。参照型はデフォルトでnullを持てない</li>
+<li><strong>コルーチン(Coroutines)</strong>: Androidにおける非同期処理の推奨手段。メインスレッドをブロックせず長時間実行タスクを扱える並行処理パターン</li>
 </ul>
 
+
+<h2>JetBrainsとの関係</h2>
+
+<p>JetBrainsは実用性と相互運用性を重視した設計方針のもと、「優れたツール」となることを目指してKotlinを開発した。</p>
+
+<h2>Androidとの関係</h2>
+
+<p>Android公式言語のひとつであり、2026年現在もAndroidアプリ開発の主要言語であり続けている。</p>
+
+<p><a class="note-tag" href="/notes/tags/jvm.html">#jvm</a></p>
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://www.nushell.sh/ja/book/">はじめに | Nushell (公式ドキュメント)</a></li>
-<li><a href="https://www.issoh.co.jp/tech/details/10198/">Nushellとは？特徴・インストール・基本コマンドを解説【入門】</a></li>
-<li><a href="https://github.com/nushell/nushell">GitHub - nushell/nushell: A new type of shell</a></li>
+<li><a href="https://www.jetbrains.com/ja-jp/lp/devecosystem-2022/kotlin/">Kotlin プログラミング - JetBrains</a></li>
+<li><a href="https://rightcode.co.jp/blogs/34920">IntelliJ IDEAとkotlinを送り出したJetBrains創業物語</a></li>
+<li><a href="https://pe-bank.jp/guide/skill/0916-02/">Kotlinとは？特徴・メリット・デメリット・Javaとの違い</a></li>
+<li><a href="https://developer.android.com/kotlin/coroutines">Android での Kotlin コルーチン | Android デベロッパー</a></li>
+<li><a href="https://atmarkit.itmedia.co.jp/ait/articles/1803/15/news012.html">「null安全」とは - ＠IT</a></li>
 </ul>
 
 
+                                <div class="notes-backlinks">
+                    <h2>🔗 リンクされているノート</h2>
+                    <ul>
+                                            <li><a href="/notes/scala.html">Scala</a></li>
+                    
+                    </ul>
+                </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-09 22:24 / 更新日時: 2026-08-09 22:24</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=Nushell&url=https%3A%2F%2F64p.org%2Fnotes%2Fnushell.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <span>作成日時: 2026-08-10 16:40 / 更新日時: 2026-08-10 16:40</span>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=Kotlin&url=https%3A%2F%2F64p.org%2Fnotes%2Fkotlin.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">

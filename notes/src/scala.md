@@ -1,6 +1,6 @@
 ---
 created: 2026-08-10 16:36
-updated: 2026-08-10 16:36
+updated: 2026-08-10 16:40
 ---
 # Scala
 
@@ -15,9 +15,9 @@ updated: 2026-08-10 16:36
 
 [[currying]]のような関数型プログラミングの技法もサポートしている。
 
-最新の動向は[[scala3|Scala 3]]を参照。
+最新の動向は[[scala3|Scala 3]]を参照。同じJVM言語には[[kotlin|Kotlin]]がある。
 
-#functional-programming
+#functional-programming #jvm
 
 ## 出典
 
