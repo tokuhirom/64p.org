@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>deck (k1LoW) - Notes - 64p.org</title>
+    <title>FTS3（SQLite） - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/highlight.js@11/styles/github.min.css" media="(prefers-color-scheme: light)">
@@ -22,7 +22,7 @@
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
                                     <li><a href="/notes/sqlite.html">SQLite</a></li>
-                                    <li><a href="/notes/sqlite-fts3.html">FTS3（SQLite）</a></li>
+                                    <li><a href="/notes/sqlite-fts3.html" class="active">FTS3（SQLite）</a></li>
                                     <li><a href="/notes/transaction-isolation-levels.html">トランザクション分離レベル</a></li>
                                     <li><a href="/notes/mysql.html">MySQL</a></li>
                                     <li><a href="/notes/mvcc.html">MVCC</a></li>
@@ -89,7 +89,7 @@
                                     <li><a href="/notes/markdown-presentation-tools.html">Markdownベースのプレゼンテーションツール</a></li>
                                     <li><a href="/notes/japan-fountain-pen-manufacturers.html">日本の万年筆メーカー</a></li>
                                     <li><a href="/notes/sendai-gyutan.html">仙台牛タンの発祥</a></li>
-                                    <li><a href="/notes/deck-k1low.html" class="active">deck (k1LoW)</a></li>
+                                    <li><a href="/notes/deck-k1low.html">deck (k1LoW)</a></li>
                                     <li><a href="/notes/slidev.html">Slidev</a></li>
                                     <li><a href="/notes/marp.html">Marp</a></li>
                                     <li><a href="/notes/project-loom.html">Project Loom</a></li>
@@ -155,44 +155,45 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>deck (k1LoW)</h1>
+                <h1>FTS3（SQLite）</h1>
 
-<p>k1LoW氏が開発した、MarkdownからGoogle Slidesを生成・更新するCLIツール。Go言語製、MITライセンス。</p>
+<p><a href="/notes/sqlite.html">SQLite</a>の全文検索機能を提供する仮想テーブルモジュール。<code>CREATE VIRTUAL TABLE ... USING fts3(...)</code>のように仮想テーブルとして定義し、通常のテーブルと同様にSQLで検索できる。SQLiteのソース配布に標準で含まれる全文検索モジュール群（FTS3/FTS4/FTS5）のうち最初に導入されたバージョン。</p>
 
-<p><a class="note-tag" href="/notes/tags/deck.html">#deck</a> <a class="note-tag" href="/notes/tags/presentation.html">#presentation</a> <a class="note-tag" href="/notes/tags/markdown.html">#markdown</a> <a class="note-tag" href="/notes/tags/google-slides.html">#google-slides</a> <a class="note-tag" href="/notes/tags/go.html">#go</a></p>
+<p><a class="note-tag" href="/notes/tags/sqlite.html">#sqlite</a> <a class="note-tag" href="/notes/tags/database.html">#database</a> <a class="note-tag" href="/notes/tags/full-text-search.html">#full-text-search</a></p>
 
-<h2>特徴</h2>
+<h2>仕組み</h2>
 
-<ul>
-<li><strong>コンテンツとデザインの分離</strong>: Markdownでコンテンツを書き、デザイン(テーマ・レイアウト)はGoogle Slides側で管理する</li>
-<li><strong>ワークフロー</strong>: <code>deck new</code>でプレゼンテーションIDを取得 → Markdownで編集 → <code>deck apply</code>でGoogle Slidesに反映 → <code>deck open</code>でブラウザ表示</li>
-<li><strong>ウォッチモード</strong>: ファイル変更を自動監視し、即座にGoogle Slidesへ反映</li>
-<li>対応記法: CommonMark + GitHub Flavored Markdown（太字・斜体・コード・リスト・表・画像・ブロッククォート・HTMLインライン要素など）</li>
-</ul>
+<p>トークナイザ（tokenizer）が文章を単語などのトークンに分割し、それをもとにインデックスを構築する。<code>CREATE VIRTUAL TABLE</code>文の中でトークナイザを指定できる。</p>
 
+<h2>制限事項</h2>
 
-<h2><a href="/notes/markdown-presentation-tools.html">Markdownベースのプレゼンテーションツール</a>の中での位置づけ</h2>
+<p>単語単位の前方一致・完全一致検索にしか対応していない。標準のトークナイザは空白区切りを前提としているため、単語の区切りが明示されない日本語のような言語ではそのままでは実用的な検索ができない（トークナイザの工夫で改善は可能）。</p>
 
-<p><a href="/notes/slidev.html">Slidev</a>や<a href="/notes/marp.html">Marp</a>がHTML/PDF/PPTXなど自己完結した出力を生成するのに対し、deckは<strong>既存のGoogle SlidesというGUIプラットフォームにMarkdownで内容を流し込む</strong>という異なるアプローチを取る。共同編集やコメント機能などGoogle Slidesのエコシステムをそのまま使いたい場合に向く。</p>
+<h2>FTS4・FTS5との違い</h2>
+
+<p>FTS3の後継として<strong>FTS4</strong>（データ圧縮オプションやcontentlessテーブルなどの改善）、さらに<strong>FTS5</strong>（モジュール設計の刷新、FTS3/4とはSQL構文がやや異なる、<code>ORDER BY</code>でのrelevancy（関連度）スコアリングに対応）が追加されている。FTSモジュールは性能改善が継続的に行われているため、新しいバージョンを使う場合はFTS5が推奨される。</p>
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://github.com/k1LoW/deck">GitHub - k1LoW/deck</a></li>
+<li><a href="https://qiita.com/AsladaGSX/items/2bb743d1d8b19cec6cbc">Sqlite で全文検索 &lt;a class=&ldquo;note-tag&rdquo; href=&ldquo;/notes/tags/sqlite3.html&rdquo;>#sqlite3</a> - Qiita</a></li>
+<li><a href="https://www.koeki-prj.org/~yuuji/2025/s4/06/sqlite-fts.html">Part 6 - Full Text Search Extensions</a></li>
+<li><a href="https://zenn.dev/stockdatalab/articles/20251010_tech_fts5">SQLite検索が遅い？LIKEの限界とFTS5で高速化する方法</a></li>
+<li><a href="https://srbrnote.work/archives/5846">【Python】SQLite で日本語を全文検索するコード例【N-Gram, FTS4/FTS5】 | シラベルノート</a></li>
+<li><a href="https://celtislab.net/archives/20160531/sqlite3-fts-tutorial/3/">SQLite3 (PDO) を使った全文検索 (FTS) 入門 – セルティスラボ</a></li>
 </ul>
 
 
                                 <div class="notes-backlinks">
                     <h2>🔗 リンクされているノート</h2>
                     <ul>
-                                            <li><a href="/notes/moc.html">MOC (Map of Content)</a></li>
-                                            <li><a href="/notes/markdown-presentation-tools.html">Markdownベースのプレゼンテーションツール</a></li>
+                                            <li><a href="/notes/sqlite.html">SQLite</a></li>
                     
                     </ul>
                 </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-09 21:37 / 更新日時: 2026-08-09 21:37</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=deck%20%28k1LoW%29&url=https%3A%2F%2F64p.org%2Fnotes%2Fdeck-k1low.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <span>作成日時: 2026-08-10 17:26 / 更新日時: 2026-08-10 17:26</span>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=FTS3%EF%BC%88SQLite%EF%BC%89&url=https%3A%2F%2F64p.org%2Fnotes%2Fsqlite-fts3.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">
