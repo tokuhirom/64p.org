@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>herdr - Notes - 64p.org</title>
+    <title>FTS5（SQLite） - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/highlight.js@11/styles/github.min.css" media="(prefers-color-scheme: light)">
@@ -22,7 +22,7 @@
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
                                     <li><a href="/notes/sqlite.html">SQLite</a></li>
-                                    <li><a href="/notes/sqlite-fts5.html">FTS5（SQLite）</a></li>
+                                    <li><a href="/notes/sqlite-fts5.html" class="active">FTS5（SQLite）</a></li>
                                     <li><a href="/notes/sqlite-fts3.html">FTS3（SQLite）</a></li>
                                     <li><a href="/notes/transaction-isolation-levels.html">トランザクション分離レベル</a></li>
                                     <li><a href="/notes/mysql.html">MySQL</a></li>
@@ -47,7 +47,7 @@
                                     <li><a href="/notes/kotlin.html">Kotlin</a></li>
                                     <li><a href="/notes/scala3.html">Scala 3</a></li>
                                     <li><a href="/notes/currying.html">Currying(カリー化)</a></li>
-                                    <li><a href="/notes/herdr.html" class="active">herdr</a></li>
+                                    <li><a href="/notes/herdr.html">herdr</a></li>
                                     <li><a href="/notes/herdr-browser.html">herdr-browser</a></li>
                                     <li><a href="/notes/byod.html">BYOD (Bring Your Own Device)</a></li>
                                     <li><a href="/notes/obon-yasumi.html">お盆休み</a></li>
@@ -156,48 +156,49 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>herdr</h1>
+                <h1>FTS5（SQLite）</h1>
 
-<p>複数のAIコーディングエージェント（Claude Code、Codex、OpenCodeなど）を1つのターミナルからまとめて管理するRust製のターミナルマルチプレクサ。「one terminal for the whole herd」がモットーで、「herd(群れ)」が名前の由来。</p>
+<p><a href="/notes/sqlite.html">SQLite</a>の全文検索用仮想テーブルモジュールの最新版。<a href="/notes/sqlite-fts3.html">FTS3</a>/FTS4の後継として設計が刷新されており、SQL構文にも違いがある。</p>
 
-<h2>特徴</h2>
+<p><a class="note-tag" href="/notes/tags/sqlite.html">#sqlite</a> <a class="note-tag" href="/notes/tags/database.html">#database</a> <a class="note-tag" href="/notes/tags/full-text-search.html">#full-text-search</a></p>
 
-<ul>
-<li>tmuxライクな操作感で、デフォルトのキーバインドもtmuxと同一</li>
-<li>主要なターミナルベースAIエージェントを追加設定なしで自動検出</li>
-<li>サイドバーに各エージェントの状態(作業中・アイドル・入力待ちなど)が一覧表示され、複数エージェントの並行実行状況を一目で把握できる</li>
-<li>単一バイナリで配布される軽量なツール</li>
-<li>2026年3月にリリース</li>
-</ul>
+<h2>BM25によるランキング</h2>
 
+<p>FTS5は<code>rank</code>という隠しカラムを公開しており、<code>ORDER BY rank</code>とするだけでBM25スコア（値が小さいほど関連度が高い）による関連度順ソートができる。BM25の計算に使う定数<code>k1</code>・<code>b</code>はそれぞれ1.2・0.75に固定されている。この関連度ランキングはFTS3/FTS4にはなかった機能。</p>
 
-<p>複数のAIコーディングエージェントを並行稼働させる際に「今どのエージェントが何をしているか分からない」という課題を、tmuxを拡張する形で解決するツール。</p>
+<h2>external content / contentless テーブル</h2>
 
-<p>ブラウザをペイン内に表示する<a href="/notes/herdr-browser.html">herdr-browser</a>というプラグインも存在する。</p>
+<p><code>content</code>オプションで、元のテキストを別テーブルに持たせる「external contentテーブル」（<code>content='posts'</code>のように指定、本文の二重保存を避けられる）や、本文を一切保持しない「contentlessテーブル」（<code>content=''</code>、検索はできるが元テキストの取得はできず、rowidだけを返す）を構成できる。</p>
 
-<p><a class="note-tag" href="/notes/tags/claude-code.html">#claude-code</a> <a class="note-tag" href="/notes/tags/tmux.html">#tmux</a></p>
+<h2>トークナイザ</h2>
+
+<p>組み込みトークナイザとして<code>unicode61</code>（デフォルト）、<code>ascii</code>、<code>porter</code>、<code>trigram</code>がある。デフォルトの<code>unicode61</code>は空白区切りを前提とするため英語向けで、単語の区切りが明示されない日本語には不向き。<code>trigram</code>トークナイザを使うと3文字の連続部分文字列単位でのマッチングができ、完全な単語でなくても任意の文字列にマッチできるようになる（ただし3文字未満の文字列はどの行にもマッチしないという制約がある）。日本語（CJK）検索では、ラテン文字部分は<code>unicode61</code>、CJK部分は<code>trigram</code>を使い分けるハイブリッド戦略が実用的とされる。</p>
+
+<h2>FTS3/FTS4との違い</h2>
+
+<p><a href="/notes/sqlite-fts3.html">FTS3</a>のノートで触れた通り、FTS3/FTS4は単語単位の前方一致・完全一致にしか対応せず関連度ランキングも持たないのに対し、FTS5はモジュール設計が刷新され、SQL構文もやや異なる（例: プレフィックス検索は<code>MATCH</code>演算子内で<code>term*</code>のように書く）。</p>
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://blog.techscore.com/entry/2026/08/03/080000">herdr を使いこなす: 複数 AI エージェントの連携から自作プラグインまで - TECHSCORE BLOG</a></li>
-<li><a href="https://qiita.com/takish/items/5ef1eeee97e6e48404e3">herdr 入門：AIエージェントを束ねるマルチプレクサ - Qiita</a></li>
-<li><a href="https://zenn.dev/studypocket/articles/herdr-ai-agent-multiplexer">AIエージェント時代のターミナルマルチプレクサ「herdr」にtmuxから乗り換えた - Zenn</a></li>
-<li><a href="https://note.com/kazu_t/n/nb4958baf3290">【2026年7月版】AIエージェント多重化ターミナル「Herdr」を触ってみた - note</a></li>
-<li><a href="https://blog-dry.com/entry/2026/06/30/234346">AIエージェント時代のターミナルマルチプレクサ「Herdr」を使う - Don&rsquo;t Repeat Yourself</a></li>
+<li><a href="https://www.sqlite.org/fts5.html">SQLite FTS5 Extension（公式ドキュメント）</a></li>
+<li><a href="https://coddy.tech/docs/sqlite/full-text-search">SQLite Full-Text Search: FTS5 Virtual Tables and MATCH</a></li>
+<li><a href="https://zenn.dev/kanseilink/articles/kanseilink-fts5-trigram-cjk-20260507?locale=en">Full-text CJK Search with SQLite FTS5: Trigram Tokenizer and Hybrid Strategy</a></li>
+<li><a href="https://audrey.feldroy.com/articles/2025-01-13-SQLite-FTS5-Tokenizers-unicode61-and-ascii">SQLite FTS5 Tokenizers: unicode61 and ascii</a></li>
 </ul>
 
 
                                 <div class="notes-backlinks">
                     <h2>🔗 リンクされているノート</h2>
                     <ul>
-                                            <li><a href="/notes/herdr-browser.html">herdr-browser</a></li>
+                                            <li><a href="/notes/sqlite-fts3.html">FTS3（SQLite）</a></li>
+                                            <li><a href="/notes/sqlite.html">SQLite</a></li>
                     
                     </ul>
                 </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-10 15:18 / 更新日時: 2026-08-10 15:21</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=herdr&url=https%3A%2F%2F64p.org%2Fnotes%2Fherdr.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <span>作成日時: 2026-08-10 17:29 / 更新日時: 2026-08-10 17:29</span>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=FTS5%EF%BC%88SQLite%EF%BC%89&url=https%3A%2F%2F64p.org%2Fnotes%2Fsqlite-fts5.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">
