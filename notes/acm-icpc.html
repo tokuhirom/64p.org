@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>食虫植物 - Notes - 64p.org</title>
+    <title>ACM-ICPC - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/highlight.js@11/styles/github.min.css" media="(prefers-color-scheme: light)">
@@ -21,7 +21,7 @@
                 <a class="notes-tags-link" href="/notes/tags/">🏷️ タグ一覧</a>
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
-                                    <li><a href="/notes/acm-icpc.html">ACM-ICPC</a></li>
+                                    <li><a href="/notes/acm-icpc.html" class="active">ACM-ICPC</a></li>
                                     <li><a href="/notes/hack-the-box.html">Hack The Box</a></li>
                                     <li><a href="/notes/luajit.html">LuaJIT</a></li>
                                     <li><a href="/notes/lua.html">Lua</a></li>
@@ -167,7 +167,7 @@
                                     <li><a href="/notes/gpui.html">GPUI</a></li>
                                     <li><a href="/notes/project-glasswing.html">Project Glasswing</a></li>
                                     <li><a href="/notes/openssf.html">OpenSSF (Open Source Security Foundation)</a></li>
-                                    <li><a href="/notes/carnivorous-plants.html" class="active">食虫植物</a></li>
+                                    <li><a href="/notes/carnivorous-plants.html">食虫植物</a></li>
                                     <li><a href="/notes/miidera-gomimushi.html">ミイデラゴミムシ</a></li>
                                     <li><a href="/notes/lefthook.html">lefthook</a></li>
                                     <li><a href="/notes/welcome.html">Notesコーナーへようこそ</a></li>
@@ -183,52 +183,41 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>食虫植物</h1>
+                <h1>ACM-ICPC</h1>
 
-<p><a class="note-tag" href="/notes/tags/biology.html">#biology</a> <a class="note-tag" href="/notes/tags/botany.html">#botany</a></p>
+<p>正式名称は「ACM国際大学対抗プログラミングコンテスト」(ACM International Collegiate Programming Contest)。世界最大級の、大学生を対象とした勝ち抜き型の競技プログラミングコンテスト。 <a class="note-tag" href="/notes/tags/competitive-programming.html">#competitive-programming</a></p>
 
-<p>昆虫などの小動物を捕らえ、消化・吸収して栄養源(主に窒素・リンなど)にする植物。世界に800種以上が知られる。湿地・沼地・岩場・貧栄養の酸性土壌など、根から養分を十分に得られない環境に適応するために進化したと考えられている。</p>
+<h2>歴史</h2>
 
-<h2>進化的背景</h2>
+<p>1970年、テキサスA&amp;M大学で開催されたコンテストが起源。1977年にACM主催の決勝大会として現在の形の原型が始まった。1997年にIBMがスポンサーに付くと参加数が急増し、2007年には1821大学・6700チームが参加する規模にまで成長した。</p>
 
-<p>食虫性(carnivory)は単一の起源ではなく、少なくとも6目13科20属で、9500万〜190万年前の間に11回以上独立に進化した(多系統)。もともと植物の防御機構(病原体対抗タンパク質、PR蛋白質)だった仕組みが、根からの養分吸収に関わる遺伝子を捕虫器官に転用する形で「食虫」機能へ発展したとされる。消化酵素にはリン酸分解酵素・プロテアーゼ・ペプチダーゼ・エステラーゼ・キチナーゼなどが使われる。</p>
+<h2>競技形式</h2>
 
-<h2>捕虫方式は主に4タイプ</h2>
+<ul>
+<li><strong>チーム構成</strong>: 3人1組。大学入学から5年以内(特定条件下は6年)の大学生に参加資格が限定される</li>
+<li><strong>コンピュータ</strong>: チームに割り当てられるのは1台のみ。3人で1台のPCを共有しながら問題を解くため、優れたチームワークと時間配分が勝敗を分ける</li>
+<li><strong>問題数・制限時間</strong>: 5時間で8〜12問(通常10問前後)を解く</li>
+<li><strong>使用言語</strong>: C、C++、Javaのいずれかでプログラムを提出。テストデータで自動採点され、不正解なら再提出できる(ただしペナルティが付く)</li>
+<li><strong>順位決定</strong>: 正解数が多いチームが上位。同点の場合は、コンテスト開始からの経過時間に不正解1回につき20分を加算した合計時間の少なさで順位が決まる</li>
+</ul>
 
-<ol>
-<li><strong>粘着式</strong>(モウセンゴケなど): 葉表面の腺毛から粘液を出し、虫を絡めとって葉を巻き込む。</li>
-<li><strong>落とし穴式</strong>(ウツボカズラ/サラセニアなど): 筒状の袋に虫を匂いで誘い込み、滑落させて底の消化液で分解する。</li>
-<li><strong>わな式</strong>(ハエトリソウ): 二枚貝状の葉が虫を挟み込んで閉じる。</li>
-<li><strong>吸い込み式</strong>(タヌキモなど): 水中の捕虫嚢が数ミリ秒という高速で開き、水ごと獲物を吸い込む。</li>
-</ol>
 
+<h2>大会構造</h2>
 
-<h2>ハエトリソウの「数える」仕組み</h2>
-
-<p>ハエトリソウ(<em>Dionaea muscipula</em>)の葉の内側には6本の感覚毛があり、1回触れるとその細胞でカルシウムイオン濃度が上昇し、遠くへは伝わらない小さな電気シグナル(受容器電位)が起きるだけになる。20〜30秒以内に2回目触れるとカルシウムイオン濃度がさらに積み上がって閾値を超え、動物の神経に似た「活動電位」が葉全体に伝わって閉じる。刺激が続くと(だいたい5回程度)消化液分泌・栄養吸収プログラムが本格的に始動する。1回だけの接触では閉じないため、雨粒などによる誤作動を避けられる仕組みになっている。</p>
-
-<h2>タヌキモの吸い込みトラップ</h2>
-
-<p>タヌキモ(<em>Utricularia</em>)の水中の捕虫嚢は、内部が常に真空(陰圧)に保たれている。入口の感覚毛にミジンコやボウフラなどが触れると弁が瞬時に開き、水ごと数ミリ秒で獲物を吸い込む。植物界でも屈指の高速な動きとして知られる。</p>
+<p>大学内のローカルコンテスト → 地区予選大会 → 世界大会、という段階構成。世界大会には1大学から1チームのみ出場でき、個人の出場は最大2回までに制限される。</p>
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://aminaflyers.amina-co.jp/list/detail/1188">食虫植物は虫しか食べない？食虫植物を徹底解説！</a></li>
-<li><a href="https://flyplants.com/basic/">食虫植物ってどんなもの？捕虫方法と代表的な種類</a></li>
-<li><a href="https://www.hus.ac.jp/hokukadai-jiten/detail/7a89f72de52e621ceb334966aecaa9572c1fc105-18545/">食虫植物はなぜ生まれた？肉食に進化した理由と過程とは｜北海道科学大学</a></li>
-<li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8389183/">Recent ecophysiological, biochemical and evolutional insights into plant carnivory - PMC</a></li>
-<li><a href="https://news.mynavi.jp/techplus/article/20251002-3508377/">食虫植物ハエトリソウが虫の接触を感じる"触覚"メカニズムとは？</a></li>
-<li><a href="https://www.nibb.ac.jp/press/2020/10/06.html">プレスリリース - 食虫植物ハエトリソウの記憶の仕組みを解明 - 基礎生物学研究所</a></li>
-<li><a href="https://flyplants.com/basic/suikomi/">吸い込み式のわなをもつ食虫植物を解説</a></li>
+<li><a href="https://ja.wikipedia.org/wiki/ACM%E5%9B%BD%E9%9A%9B%E5%A4%A7%E5%AD%A6%E5%AF%BE%E6%8A%97%E3%83%97%E3%83%AD%E3%82%B0%E3%83%A9%E3%83%9F%E3%83%B3%E3%82%B0%E3%82%B3%E3%83%B3%E3%83%86%E3%82%B9%E3%83%88">ACM国際大学対抗プログラミングコンテスト - Wikipedia</a></li>
+<li><a href="https://u-aizu.ac.jp/stories/icpc.html">世界最大級の国際大学対抗プログラミングコンテスト ICPC</a></li>
+<li><a href="https://icpc.jp/">ICPC Japan</a></li>
 </ul>
 
 
-<p>関連: <a href="/notes/miidera-gomimushi.html">ミイデラゴミムシ</a></p>
-
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-09 14:38 / 更新日時: 2026-08-09 14:38</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=%E9%A3%9F%E8%99%AB%E6%A4%8D%E7%89%A9&url=https%3A%2F%2F64p.org%2Fnotes%2Fcarnivorous-plants.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <span>作成日時: 2026-08-10 20:44 / 更新日時: 2026-08-10 20:44</span>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=ACM-ICPC&url=https%3A%2F%2F64p.org%2Fnotes%2Facm-icpc.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">
