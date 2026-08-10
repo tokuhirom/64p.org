@@ -1,0 +1,209 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>PostgreSQL - Notes - 64p.org</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/static/notes.css">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/highlight.js@11/styles/github.min.css" media="(prefers-color-scheme: light)">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/highlight.js@11/styles/github-dark.min.css" media="(prefers-color-scheme: dark)">
+</head>
+<body>
+    <div class="notes-layout">
+        <nav class="notes-sidebar">
+            <div class="notes-sidebar-header">
+                <a href="/notes/">📝 Notes</a>
+                <button class="theme-toggle" title="テーマ切替" aria-label="テーマ切替">◐</button>
+            </div>
+            <div class="notes-sidebar-byline">by <a href="/">tokuhirom</a></div>
+            <button class="notes-sidebar-toggle" aria-expanded="false">ノート一覧を開く ▾</button>
+            <div class="notes-sidebar-body">
+                <a class="notes-tags-link" href="/notes/tags/">🏷️ タグ一覧</a>
+                <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
+                <ul class="notes-nav">
+                                    <li><a href="/notes/postgresql.html" class="active">PostgreSQL</a></li>
+                                    <li><a href="/notes/pgvector.html">pgvector</a></li>
+                                    <li><a href="/notes/neon.html">Neon</a></li>
+                                    <li><a href="/notes/dgx-spark.html">NVIDIA DGX Spark</a></li>
+                                    <li><a href="/notes/nixpkgs-core-team-disbanded.html">Nixpkgs Core Teamの解散(2026年8月)</a></li>
+                                    <li><a href="/notes/nixos.html">NixOS</a></li>
+                                    <li><a href="/notes/nix.html">Nix</a></li>
+                                    <li><a href="/notes/incus.html">Incus</a></li>
+                                    <li><a href="/notes/cosmic-desktop.html">COSMIC (デスクトップ環境)</a></li>
+                                    <li><a href="/notes/wireguard.html">WireGuard</a></li>
+                                    <li><a href="/notes/tailscale.html">Tailscale</a></li>
+                                    <li><a href="/notes/nat.html">NAT (Network Address Translation)</a></li>
+                                    <li><a href="/notes/l2tp-ipsec.html">L2TP/IPsec</a></li>
+                                    <li><a href="/notes/jetkvm.html">JetKVM</a></li>
+                                    <li><a href="/notes/scala.html">Scala</a></li>
+                                    <li><a href="/notes/kotlin.html">Kotlin</a></li>
+                                    <li><a href="/notes/scala3.html">Scala 3</a></li>
+                                    <li><a href="/notes/currying.html">Currying(カリー化)</a></li>
+                                    <li><a href="/notes/herdr.html">herdr</a></li>
+                                    <li><a href="/notes/herdr-browser.html">herdr-browser</a></li>
+                                    <li><a href="/notes/byod.html">BYOD (Bring Your Own Device)</a></li>
+                                    <li><a href="/notes/obon-yasumi.html">お盆休み</a></li>
+                                    <li><a href="/notes/harmonyos.html">HarmonyOSとは</a></li>
+                                    <li><a href="/notes/national-museum-of-nature-and-science.html">国立科学博物館</a></li>
+                                    <li><a href="/notes/futabasaurus-suzukii.html">フタバスズキリュウ（Futabasaurus suzukii）</a></li>
+                                    <li><a href="/notes/yanshui-yimian.html">塩水意麺（鹽水意麵）</a></li>
+                                    <li><a href="/notes/apple-secure-enclave.html">Secure Enclave</a></li>
+                                    <li><a href="/notes/electric-eel.html">デンキウナギ</a></li>
+                                    <li><a href="/notes/peter-pan.html">ピーター・パン</a></li>
+                                    <li><a href="/notes/peter-pan-syndrome.html">ピーターパン症候群</a></li>
+                                    <li><a href="/notes/kuribayashi-satoshi.html">栗林慧</a></li>
+                                    <li><a href="/notes/sphinx-greek-mythology.html">ギリシア神話のスフィンクス</a></li>
+                                    <li><a href="/notes/great-sphinx-of-giza.html">ギザの大スフィンクス</a></li>
+                                    <li><a href="/notes/office-chair-esd.html">オフィスチェアの静電気によるPCモニター暗転問題</a></li>
+                                    <li><a href="/notes/tdd.html">TDD (Test-Driven Development / テスト駆動開発)</a></li>
+                                    <li><a href="/notes/agent-plugins.html">Agent Plugins</a></li>
+                                    <li><a href="/notes/domain-driven-design.html">DDD (Domain-Driven Design / ドメイン駆動設計)</a></li>
+                                    <li><a href="/notes/devsecops.html">DevSecOps</a></li>
+                                    <li><a href="/notes/system76.html">System76</a></li>
+                                    <li><a href="/notes/pop-os.html">Pop!_OS</a></li>
+                                    <li><a href="/notes/coreboot.html">coreboot</a></li>
+                                    <li><a href="/notes/lxd.html">LXD</a></li>
+                                    <li><a href="/notes/lxc.html">LXC (Linux Containers)</a></li>
+                                    <li><a href="/notes/nushell.html">Nushell</a></li>
+                                    <li><a href="/notes/simd.html">SIMD</a></li>
+                                    <li><a href="/notes/project-panama.html">Project Panama</a></li>
+                                    <li><a href="/notes/apache-arrow.html">Apache Arrow</a></li>
+                                    <li><a href="/notes/thompson-construction.html">Thompson construction</a></li>
+                                    <li><a href="/notes/regex-engine-backtracking-vs-nfa.html">正規表現エンジンの実装方式: バックトラッキング型とNFA/DFA型</a></li>
+                                    <li><a href="/notes/redos.html">ReDoS (Regular Expression Denial of Service)</a></li>
+                                    <li><a href="/notes/raku-rakudo-perl6.html">Raku / Rakudo / Perl 6</a></li>
+                                    <li><a href="/notes/project-notes.html">プロジェクトノート (Project Notes)</a></li>
+                                    <li><a href="/notes/moc.html">MOC (Map of Content)</a></li>
+                                    <li><a href="/notes/lyt.html">LYT (Linking Your Thinking)</a></li>
+                                    <li><a href="/notes/literature-notes.html">文献ノート (Literature Notes)</a></li>
+                                    <li><a href="/notes/zettelkasten.html">Zettelkasten</a></li>
+                                    <li><a href="/notes/permanent-notes.html">パーマネントノート (Permanent Notes)</a></li>
+                                    <li><a href="/notes/fleeting-notes.html">フリートノート (Fleeting Notes)</a></li>
+                                    <li><a href="/notes/markdown-presentation-tools.html">Markdownベースのプレゼンテーションツール</a></li>
+                                    <li><a href="/notes/japan-fountain-pen-manufacturers.html">日本の万年筆メーカー</a></li>
+                                    <li><a href="/notes/sendai-gyutan.html">仙台牛タンの発祥</a></li>
+                                    <li><a href="/notes/deck-k1low.html">deck (k1LoW)</a></li>
+                                    <li><a href="/notes/slidev.html">Slidev</a></li>
+                                    <li><a href="/notes/marp.html">Marp</a></li>
+                                    <li><a href="/notes/project-loom.html">Project Loom</a></li>
+                                    <li><a href="/notes/project-leyden.html">Project Leyden</a></li>
+                                    <li><a href="/notes/project-babylon.html">Project Babylon</a></li>
+                                    <li><a href="/notes/openjdk-projects.html">OpenJDKの主要プロジェクト</a></li>
+                                    <li><a href="/notes/project-valhalla.html">Project Valhalla</a></li>
+                                    <li><a href="/notes/project-amber.html">Project Amber</a></li>
+                                    <li><a href="/notes/apache-parquet.html">Apache Parquet</a></li>
+                                    <li><a href="/notes/polinky-triangle-secret.html">ポリンキーの「三角形の秘密」</a></li>
+                                    <li><a href="/notes/shokudai-ookonnyaku.html">ショクダイオオコンニャク</a></li>
+                                    <li><a href="/notes/imabari-towel.html">今治タオル</a></li>
+                                    <li><a href="/notes/sakpilot.html">SakPilot</a></li>
+                                    <li><a href="/notes/architecture-decision-record.html">ADR(Architecture Decision Record)</a></li>
+                                    <li><a href="/notes/kali-linux.html">Kali Linux</a></li>
+                                    <li><a href="/notes/burp-suite.html">Burp Suite</a></li>
+                                    <li><a href="/notes/craft-beer.html">クラフトビール</a></li>
+                                    <li><a href="/notes/kali-nethunter.html">Kali NetHunter</a></li>
+                                    <li><a href="/notes/metasploit.html">Metasploit</a></li>
+                                    <li><a href="/notes/kotchigai-shoukan.html">間違い召喚！ 追い出されたけど上位互換スキルでらくらく生活</a></li>
+                                    <li><a href="/notes/openrouter.html">OpenRouter</a></li>
+                                    <li><a href="/notes/gpt-5-6-sol-terra-luna.html">GPT-5.6のSol / Terra / Lunaの違い</a></li>
+                                    <li><a href="/notes/claude-model-tiers.html">Claudeのモデル階層(Opus / Sonnet / Haiku / Fable)の違い</a></li>
+                                    <li><a href="/notes/elf-origin.html">エルフという概念の起源</a></li>
+                                    <li><a href="/notes/matsubokkuri-gogen.html">松ぼっくりの「ぼっくり」の語源</a></li>
+                                    <li><a href="/notes/dangouzaka-yurai.html">談合坂の地名由来</a></li>
+                                    <li><a href="/notes/hackathon-coding-agent-skills.html">ハッカソンでのコーディングエージェント向けスキル活用</a></li>
+                                    <li><a href="/notes/network-doctor.html">Network Doctor (netdoc)</a></li>
+                                    <li><a href="/notes/yusura-ume.html">ユスラウメ(梅桃)</a></li>
+                                    <li><a href="/notes/roam-research.html">Roam Research</a></li>
+                                    <li><a href="/notes/obsidian.html">Obsidian</a></li>
+                                    <li><a href="/notes/evergreen-notes.html">エバーグリーンノート (Evergreen Notes)</a></li>
+                                    <li><a href="/notes/solaris.html">Solaris / illumos</a></li>
+                                    <li><a href="/notes/snoop.html">snoop</a></li>
+                                    <li><a href="/notes/ngrep.html">ngrep (network grep)</a></li>
+                                    <li><a href="/notes/bpf.html">BPF (Berkeley Packet Filter)</a></li>
+                                    <li><a href="/notes/wails.html">Wails</a></li>
+                                    <li><a href="/notes/tauri.html">Tauri</a></li>
+                                    <li><a href="/notes/electron.html">Electron</a></li>
+                                    <li><a href="/notes/skia.html">Skia</a></li>
+                                    <li><a href="/notes/rust-gui-libraries.html">Rust GUI ライブラリ一覧</a></li>
+                                    <li><a href="/notes/go-gui-libraries.html">Go GUI ライブラリ一覧</a></li>
+                                    <li><a href="/notes/freya.html">Freya (freyaui.dev) — Rust製クロスプラットフォームGUIライブラリ</a></li>
+                                    <li><a href="/notes/hacker-news.html">Hacker News (HN) について</a></li>
+                                    <li><a href="/notes/edge-manifest-v3.html">Microsoft Edge、拡張機能をManifest V3へ完全移行</a></li>
+                                    <li><a href="/notes/tableau.html">Tableau</a></li>
+                                    <li><a href="/notes/gpui.html">GPUI</a></li>
+                                    <li><a href="/notes/project-glasswing.html">Project Glasswing</a></li>
+                                    <li><a href="/notes/openssf.html">OpenSSF (Open Source Security Foundation)</a></li>
+                                    <li><a href="/notes/carnivorous-plants.html">食虫植物</a></li>
+                                    <li><a href="/notes/miidera-gomimushi.html">ミイデラゴミムシ</a></li>
+                                    <li><a href="/notes/lefthook.html">lefthook</a></li>
+                                    <li><a href="/notes/welcome.html">Notesコーナーへようこそ</a></li>
+                                    <li><a href="/notes/kyoka-vs-tanka.html">狂歌と短歌の違い</a></li>
+                                    <li><a href="/notes/harmonyos-pc.html">HarmonyOS PC版（鴻蒙電脳）</a></li>
+                
+                </ul>
+                <div class="notes-sidebar-footer">
+                    <a href="/">&larr; 64p.org トップへ</a>
+                </div>
+            </div>
+        </nav>
+
+        <main class="notes-main">
+            <article class="notes-content">
+                <h1>PostgreSQL</h1>
+
+<p>オープンソースのRDBMS（リレーショナルデータベース管理システム）。ルーツは1986年にカリフォルニア大学バークレー校で始まった研究プロジェクト（POSTGRES）で、1996年に現在の名称「PostgreSQL」として公開された。ライセンスはBSD系の緩いライセンス（PostgreSQL License）で、商用利用も無償・無制限。</p>
+
+<p><a class="note-tag" href="/notes/tags/database.html">#database</a> <a class="note-tag" href="/notes/tags/rdbms.html">#rdbms</a> <a class="note-tag" href="/notes/tags/sql.html">#sql</a></p>
+
+<h2>特徴</h2>
+
+<ul>
+<li><strong>高度なSQL標準準拠</strong>: ウィンドウ関数、CTE（共通テーブル式）、再帰クエリなどをサポート。</li>
+<li><strong>豊富なデータ型</strong>: JSONB型、配列型、RANGE型など。</li>
+<li><strong>MVCC（Multi-Version Concurrency Control）</strong>: 複数トランザクションが同時に読み書きしてもロック競合が起きにくい仕組みで、高並列環境に強い。</li>
+<li><strong>拡張性</strong>: プラガブルなインデックス方式や独自データ型・関数を拡張機能として追加できる。地理情報を扱うPostGIS、ベクトル検索を可能にする<a href="/notes/pgvector.html">pgvector</a>などが代表例。</li>
+</ul>
+
+
+<h2>クラウド上での利用</h2>
+
+<p>商用DBに引けを取らない機能を無償で使える点から、企業の基幹システム・金融システム・政府機関でも採用されている。近年はPostgreSQL互換のマネージドクラウドサービスも増えており、<a href="/notes/neon.html">Neon</a>のようにサーバーレス・従量課金で提供するものもある。</p>
+
+<h2>最新動向</h2>
+
+<p>2025年9月25日にメジャーバージョン<strong>PostgreSQL 18</strong>がリリースされた。新しいI/Oサブシステムによりストレージ読み込み性能が最大3倍向上したほか、仮想生成列、<code>uuidv7()</code>関数、OAuth 2.0認証サポートなどが追加された。2026年2月時点の最新パッチは18.2（他に17.8/16.12/15.16/14.21も並行メンテナンス中）。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://data-analyst.weblabo.jp/postgresql-introduction/">PostgreSQLが最強のデータベースである理由</a></li>
+<li><a href="https://azure.microsoft.com/ja-jp/resources/cloud-computing-dictionary/what-is-postgresql">PostgreSQL とは？| Microsoft Azure</a></li>
+<li><a href="https://www.postgresql.jp/node/485">PostgreSQL 18 がリリースされました | 日本PostgreSQLユーザ会</a></li>
+<li><a href="https://thinkit.co.jp/news/38971">「PostgreSQL 18.2/17.8/16.12/15.16/14.21」リリース</a></li>
+<li><a href="https://tane-creative.co.jp/column/6367/">【2026年2月版】PostgreSQLのバージョン情報とサポート期限</a></li>
+</ul>
+
+
+                                <div class="notes-backlinks">
+                    <h2>🔗 リンクされているノート</h2>
+                    <ul>
+                                            <li><a href="/notes/neon.html">Neon</a></li>
+                                            <li><a href="/notes/pgvector.html">pgvector</a></li>
+                    
+                    </ul>
+                </div>
+                                <div class="notes-meta">
+                    <span>作成日時: 2026-08-10 17:10 / 更新日時: 2026-08-10 17:10</span>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=PostgreSQL&url=https%3A%2F%2F64p.org%2Fnotes%2Fpostgresql.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                </div>
+            </article>
+            <footer class="notes-footer">
+                <a href="https://github.com/tokuhirom">tokuhirom</a> による調査メモです。
+                個人的な調査メモであり、正確な記述に努めていますが正確性を保証するものではなく、所属する団体を代表する見解でもありません。
+            </footer>
+        </main>
+    </div>
+    <script src="//cdn.jsdelivr.net/npm/highlight.js@11/lib/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+    <script src="/static/notes.js"></script>
+</body>
+</html>
