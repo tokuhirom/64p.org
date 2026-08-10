@@ -1,6 +1,6 @@
 ---
 created: 2026-08-11 07:38
-updated: 2026-08-11 07:38
+updated: 2026-08-11 07:39
 ---
 # noVNC
 
@@ -10,7 +10,7 @@ HTML5（JavaScript・Canvas API・WebSocket）で実装された、ブラウザ�
 
 - 中核は「Core VNC/RFB」コンポーネントで、RFBプロトコルの状態機械（ステートマシン）をすべて内包している。
 - 画面描画にはHTML5 Canvasを使う。
-- ブラウザは生のTCPソケットを直接扱えないため、WebSocketを介してRFBプロトコルをやり取りする。サーバー側のVNCが素のTCPしか話さない場合は、**websockify**（WebSocket⇔TCPのプロキシ／ブリッジ）を挟んでnoVNCと接続する構成が一般的（VNCサーバー自体がWebSocketに対応していれば不要）。
+- ブラウザは生のTCPソケットを直接扱えないため、WebSocketを介してRFBプロトコルをやり取りする。サーバー側のVNCが素のTCPしか話さない場合は、[[websockify]]（WebSocket⇔TCPのプロキシ／ブリッジ）を挟んでnoVNCと接続する構成が一般的（VNCサーバー自体がWebSocketに対応していれば不要）。
 
 ## 採用例
 
