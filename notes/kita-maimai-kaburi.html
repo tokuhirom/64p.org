@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>Network Doctor (netdoc) - Notes - 64p.org</title>
+    <title>キタマイマイカブリ - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/highlight.js@11/styles/github.min.css" media="(prefers-color-scheme: light)">
@@ -21,7 +21,7 @@
                 <a class="notes-tags-link" href="/notes/tags/">🏷️ タグ一覧</a>
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
-                                    <li><a href="/notes/kita-maimai-kaburi.html">キタマイマイカブリ</a></li>
+                                    <li><a href="/notes/kita-maimai-kaburi.html" class="active">キタマイマイカブリ</a></li>
                                     <li><a href="/notes/gekkan-shoujo-nozaki-kun.html">月刊少女野崎くん</a></li>
                                     <li><a href="/notes/gotoubun-no-hanayome.html">五等分の花嫁</a></li>
                                     <li><a href="/notes/kappa-yokai.html">河童（かっぱ）</a></li>
@@ -184,7 +184,7 @@
                                     <li><a href="/notes/matsubokkuri-gogen.html">松ぼっくりの「ぼっくり」の語源</a></li>
                                     <li><a href="/notes/dangouzaka-yurai.html">談合坂の地名由来</a></li>
                                     <li><a href="/notes/hackathon-coding-agent-skills.html">ハッカソンでのコーディングエージェント向けスキル活用</a></li>
-                                    <li><a href="/notes/network-doctor.html" class="active">Network Doctor (netdoc)</a></li>
+                                    <li><a href="/notes/network-doctor.html">Network Doctor (netdoc)</a></li>
                                     <li><a href="/notes/yusura-ume.html">ユスラウメ(梅桃)</a></li>
                                     <li><a href="/notes/roam-research.html">Roam Research</a></li>
                                     <li><a href="/notes/obsidian.html">Obsidian</a></li>
@@ -222,63 +222,51 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>Network Doctor (netdoc)</h1>
+                <h1>キタマイマイカブリ</h1>
 
-<p><a href="https://github.com/heymaikol/network-doctor">heymaikol/network-doctor</a> — Go製のクロスプラットフォーム対応ネットワーク診断TUIツール。コマンド名は<code>netdoc</code>。</p>
+<p>日本固有種の甲虫「マイマイカブリ（<em>Damaster blaptoides</em>、オサムシ科オサムシ亜科）」の亜種の一つ。学名は <em>D. b. viridipennis</em>。</p>
 
-<h2>コンセプト</h2>
-
-<p>「接続がどこで破綻しているか」を、DNS → TCP → TLS → HTTP → プロキシの各層で切り分けて特定する。単なる<code>ping</code>や<code>dig</code>の出力ではなく、「ネットワークの問題かサービス側の問題か」を実用的に診断するのが狙い。</p>
-
-<h2>技術スタック</h2>
+<h2>マイマイカブリ全体の特徴</h2>
 
 <ul>
-<li>Go 1.25+</li>
-<li>Bubble Tea / Bubbles / Lip Gloss（TUIフレームワーク一式）</li>
-<li>Linux / macOS / Windows ネイティブバイナリ対応</li>
+<li>体長3〜7cm。頭部と前胸部が前方に細長く伸びた、「細長いヒョウタンに長い触角と脚が生えたような」独特の体形を持つ。</li>
+<li>この体形は、カタツムリの殻の中に頭を突っ込んで捕食するための適応と考えられている。成虫・幼虫とも地面を徘徊してカタツムリを探し、見つけると大顎で軟体部に咬みつき、消化液を注入して溶けた身を食べる。</li>
+<li>飛行能力を持たないため、地域ごとに独自の分化が進み、日本国内（北海道〜屋久島）で複数の亜種に分かれている。</li>
 </ul>
 
 
-<h2>主な機能</h2>
+<h2>キタマイマイカブリの特徴</h2>
 
 <ul>
-<li>依存関係グラフに基づく複数の独立診断、結果は5段階評価（✓ Pass / ! Warn / ✗ Fail / ⊘ Skip / – N/A）</li>
-<li>ルート権限なしで動作（パスMTUチェックも含む）</li>
-<li>ドリルダウンツール（ping、traceroute、mtr、nmap、ssh等）呼び出し</li>
-<li>LANスキャン・ネットワークマップ表示、SSHログイン機能</li>
-<li><code>--watch</code>モードで5秒間隔の継続監視</li>
-<li>出力はTUI / JSON / NDJSON（watch時）に対応</li>
+<li>分布域は東北地方北部。</li>
+<li>頭部と前胸は金属光沢のある紫色、前翅は金属光沢のある緑色を帯びる。</li>
+<li>北海道に分布する近縁亜種「エゾマイマイカブリ」と近い関係にある（エゾマイマイカブリは頭部・前胸背面が金属光沢のある緑色）。</li>
 </ul>
 
 
-<h2>インストール</h2>
+<h2>他の亜種との位置づけ</h2>
 
-<p>Scoop（Windows）、Homebrew（macOS）、COPR（Fedora）、<code>.deb</code>/<code>.rpm</code>/<code>.apk</code>、<code>go install</code>など各種パッケージマネージャに対応。</p>
+<ul>
+<li><strong>エゾマイマイカブリ</strong> — 北海道産</li>
+<li><strong>キタマイマイカブリ</strong> — 東北地方北部</li>
+<li><strong>コアオマイマイカブリ</strong> — 東北地方南部</li>
+<li><strong>基亜種（ホンマイマイカブリ）</strong> — 西日本</li>
+</ul>
 
-<h2>使用例</h2>
-
-<pre><code class="bash">netdoc github.com           # DNS → TCP → TLS → HTTP 診断
-netdoc github.com:22        # SSH パスとバナー診断
-netdoc --watch host         # 間欠的障害の追跡
-netdoc --json host          # スクリプト向けの構造化レポート
-</code></pre>
-
-<h2>その他</h2>
-
-<p>GitHub上で156スター、560コミット。ライセンスはGPLv3以上。</p>
-
-<p><a class="note-tag" href="/notes/tags/go.html">#go</a> <a class="note-tag" href="/notes/tags/tui.html">#tui</a> <a class="note-tag" href="/notes/tags/network.html">#network</a> <a class="note-tag" href="/notes/tags/cli.html">#cli</a></p>
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://github.com/heymaikol/network-doctor">heymaikol/network-doctor - GitHub</a></li>
+<li><a href="https://ja.wikipedia.org/wiki/%E3%83%9E%E3%82%A4%E3%83%9E%E3%82%A4%E3%82%AB%E3%83%96%E3%83%AA">マイマイカブリ - Wikipedia</a></li>
+<li><a href="https://www.honda.co.jp/outdoor/knowledge/adventure/picture-book/maimaikaburi/">マイマイカブリの生態や観察のポイント - Hondaキャンプ</a></li>
 </ul>
 
 
+<p><a class="note-tag" href="/notes/tags/insect.html">#insect</a> <a class="note-tag" href="/notes/tags/biology.html">#biology</a></p>
+
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-09 16:56 / 更新日時: 2026-08-09 16:56</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=Network%20Doctor%20%28netdoc%29&url=https%3A%2F%2F64p.org%2Fnotes%2Fnetwork-doctor.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <span>作成日時: 2026-08-11 08:27 / 更新日時: 2026-08-11 08:27</span>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=%E3%82%AD%E3%82%BF%E3%83%9E%E3%82%A4%E3%83%9E%E3%82%A4%E3%82%AB%E3%83%96%E3%83%AA&url=https%3A%2F%2F64p.org%2Fnotes%2Fkita-maimai-kaburi.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">
