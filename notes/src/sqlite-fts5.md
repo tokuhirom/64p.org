@@ -39,6 +39,6 @@ FTS5は`rank`という隠しカラムを公開しており、`ORDER BY rank`と�
 - [SQLite Full-Text Search: FTS5 Virtual Tables and MATCH](https://coddy.tech/docs/sqlite/full-text-search)
 - [Full-text CJK Search with SQLite FTS5: Trigram Tokenizer and Hybrid Strategy](https://zenn.dev/kanseilink/articles/kanseilink-fts5-trigram-cjk-20260507?locale=en)
 - [SQLite FTS5 Tokenizers: unicode61 and ascii](https://audrey.feldroy.com/articles/2025-01-13-SQLite-FTS5-Tokenizers-unicode61-and-ascii)
-- [SQLiteを使ってAndroid端末内でお手軽に日本語全文検索する #SQLite3 - Qiita](https://qiita.com/shikato/items/512db7bf051eddb84600)
+- [SQLiteを使ってAndroid端末内でお手軽に日本語全文検索する - Qiita](https://qiita.com/shikato/items/512db7bf051eddb84600)
 - [SQLite FTS : trigram tokenizerでunigram＆bigram検索までサポート](https://www.space-i.com/post-blog/sqlite-fts-trigram-tokenizer%E3%81%A7unigram%EF%BC%86bigram%E6%A4%9C%E7%B4%A2%E3%81%BE%E3%81%A7%E3%82%B5%E3%83%9D%E3%83%BC%E3%83%88-%E6%97%A5%E6%9C%AC%E8%AA%9E%E5%85%A8%E6%96%87%E6%A4%9C%E7%B4%A2/)
 - [【Python】SQLite で日本語を全文検索するコード例【N-Gram, FTS4/FTS5】 | シラベルノート](https://srbrnote.work/archives/5846)

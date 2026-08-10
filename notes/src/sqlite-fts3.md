@@ -1,6 +1,6 @@
 ---
 created: 2026-08-10 17:26
-updated: 2026-08-10 17:29
+updated: 2026-08-10 17:50
 ---
 # FTS3（SQLite）
 
@@ -22,7 +22,7 @@ FTS3の後継として**FTS4**（データ圧縮オプションやcontentlessテ
 
 ## 出典
 
-- [Sqlite で全文検索 #SQLite3 - Qiita](https://qiita.com/AsladaGSX/items/2bb743d1d8b19cec6cbc)
+- [Sqlite で全文検索 - Qiita](https://qiita.com/AsladaGSX/items/2bb743d1d8b19cec6cbc)
 - [Part 6 - Full Text Search Extensions](https://www.koeki-prj.org/~yuuji/2025/s4/06/sqlite-fts.html)
 - [SQLite検索が遅い？LIKEの限界とFTS5で高速化する方法](https://zenn.dev/stockdatalab/articles/20251010_tech_fts5)
 - [【Python】SQLite で日本語を全文検索するコード例【N-Gram, FTS4/FTS5】 | シラベルノート](https://srbrnote.work/archives/5846)
