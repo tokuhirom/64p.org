@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>LXD - Notes - 64p.org</title>
+    <title>フタバスズキリュウ（Futabasaurus suzukii） - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/highlight.js@11/styles/github.min.css" media="(prefers-color-scheme: light)">
@@ -21,7 +21,7 @@
                 <a class="notes-tags-link" href="/notes/tags/">🏷️ タグ一覧</a>
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
-                                    <li><a href="/notes/futabasaurus-suzukii.html">フタバスズキリュウ（Futabasaurus suzukii）</a></li>
+                                    <li><a href="/notes/futabasaurus-suzukii.html" class="active">フタバスズキリュウ（Futabasaurus suzukii）</a></li>
                                     <li><a href="/notes/yanshui-yimian.html">塩水意麺（鹽水意麵）</a></li>
                                     <li><a href="/notes/apple-secure-enclave.html">Secure Enclave</a></li>
                                     <li><a href="/notes/electric-eel.html">デンキウナギ</a></li>
@@ -39,7 +39,7 @@
                                     <li><a href="/notes/pop-os.html">Pop!_OS</a></li>
                                     <li><a href="/notes/cosmic-desktop.html">COSMIC (デスクトップ環境)</a></li>
                                     <li><a href="/notes/coreboot.html">coreboot</a></li>
-                                    <li><a href="/notes/lxd.html" class="active">LXD</a></li>
+                                    <li><a href="/notes/lxd.html">LXD</a></li>
                                     <li><a href="/notes/incus.html">Incus</a></li>
                                     <li><a href="/notes/lxc.html">LXC (Linux Containers)</a></li>
                                     <li><a href="/notes/nushell.html">Nushell</a></li>
@@ -129,88 +129,49 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>LXD</h1>
+                <h1>フタバスズキリュウ（Futabasaurus suzukii）</h1>
 
-<p><a href="/notes/lxc.html">LXC</a>をベースにした、Canonical(Ubuntu開発元)によるシステムコンテナ・仮想マシンの統合管理システム。 <a class="note-tag" href="/notes/tags/linux.html">#linux</a></p>
+<p><a class="note-tag" href="/notes/tags/paleontology.html">#paleontology</a> <a class="note-tag" href="/notes/tags/dinosaur.html">#dinosaur</a> <a class="note-tag" href="/notes/tags/japan.html">#japan</a></p>
 
-<h2>特徴</h2>
+<p>後期白亜紀（約8500万年前、サントニアン期）に日本近海に生息していた首長竜(プレシオサウルス類)。分類上は爬虫綱・双弓亜綱・鰭竜類・首長竜目・エラスモサウルス科に属する。</p>
 
-<ul>
-<li>「システムコンテナ」と「仮想マシン」の2種類のインスタンスをサポートする。システムコンテナはホストカーネルの機能を使って仮想的なOS環境をシミュレートするのに対し、仮想マシンはホストのハードウェアを使いつつカーネル自体は仮想マシン側が提供する。</li>
-<li>単一アプリケーションの実行に特化したDockerの「アプリケーションコンテナ」とは異なり、より完全なLinuxシステムを1つのコンテナ内で動かす用途に向く。</li>
-<li>シンプルなREST APIを中心に構築されており、単一マシンから大規模クラスタまでスケール可能。</li>
-<li>スナップショットのイメージ化・別ホストへのライブマイグレーション・コンテナごとのCPU/メモリ/IO負荷制限など、運用向けの機能を備える。</li>
-</ul>
+<h2>発見の経緯</h2>
 
+<p>1968年10月、福島県いわき市の双葉層群という地層で、当時高校生だった鈴木直氏が発見した。名前は発見地の地層名「双葉」と発見者の姓「鈴木」を組み合わせたもの。</p>
 
-<h2>Incusとの関係</h2>
+<p>首を除く全身の約70%に相当する骨格がほぼ完全な形で保存されていた、非常に稀な標本(模式標本番号NSM PV15025)。</p>
 
-<p>2023年、CanonicalがLXDの全コントリビューターにCLA(Contributor License Agreement)署名を要求し、LXDをLinux Containersプロジェクトの傘下から引き離して自社管理下に置いた。これを受けて、コミュニティ主導のフォークとして<a href="/notes/incus.html">Incus</a>が立ち上げられた。</p>
+<h2>学術的な意義</h2>
 
-<h2>開発の活発さ(<a href="/notes/incus.html">Incus</a>との比較)</h2>
+<p>比較対象となる標本が少なかったため長らく新種と断定できずにいたが、発見から38年後の2006年、国立科学博物館の研究チームによりようやく新属新種として正式記載された。</p>
 
-<p>GitHub APIで両リポジトリを比較(2026-08-09時点)。</p>
+<p>日本国内で初めて化石が発見された首長竜であり、日本産のプレシオサウルス類として唯一学術的に有効な分類群とされる。それまで「日本列島は大陸に比べて面積が小さく、首長竜や恐竜のような中生代の大型爬虫類の化石は出ない」と考えられていた定説を覆し、以後日本各地でのアマチュア・専門家による化石発掘が盛んになるきっかけとなった。</p>
 
-<table>
-<thead>
-<tr>
-<th> 指標 </th>
-<th> Incus (<code>lxc/incus</code>) </th>
-<th> LXD (<code>canonical/lxd</code>) </th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td> Stars </td>
-<td> 5,882 </td>
-<td> 4,809 </td>
-</tr>
-<tr>
-<td> Forks </td>
-<td> 472 </td>
-<td> 1,036 </td>
-</tr>
-<tr>
-<td> Open issues </td>
-<td> 46 </td>
-<td> 409 </td>
-</tr>
-<tr>
-<td> 過去90日のコミット数 </td>
-<td> 約1,951 </td>
-<td> 約1,917 </td>
-</tr>
-<tr>
-<td> コントリビューター数(概算) </td>
-<td> 約597 </td>
-<td> 約479 </td>
-</tr>
-</tbody>
-</table>
+<h2>形態的特徴</h2>
 
+<p>全長は推定約7メートル(文献によっては6.4〜9.2m、体重3〜4トンとの推定もあり)。目と鼻の間の距離が離れている、脛骨が長い、鎖骨と間鎖骨の接合部の形状、などが識別点。</p>
 
-<p>コミット数そのものはほぼ拮抗しているが、open issuesの滞留数はLXDの方が大きく、コントリビューター数・starsではIncusがやや上回る。リリース体制も異なり、Incusは単一のメインライン(7.x系)を月1ペースで継続リリースするのに対し、LXDは4.0/5.0/5.21など複数バージョン系列を並行メンテしている。</p>
+<h2>展示・その他</h2>
+
+<p>模式標本は国立科学博物館(東京)に保管、化石のレプリカはいわき市石炭・化石館に展示されている。</p>
+
+<p>1980年公開の映画『ドラえもん のび太の恐竜』にも登場し、「ピー助」という名でのび太に育てられる元ネタになったとされる。</p>
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://canonical.com/lxd">LXD | Canonical</a></li>
-<li><a href="https://github.com/canonical/lxd">GitHub - canonical/lxd: Powerful system container and virtual machine manager</a></li>
-<li><a href="https://canonical.com/lxd/docs/latest/explanation/instances/">Containers and VMs - LXD documentation</a></li>
+<li><a href="https://ja.wikipedia.org/wiki/%E3%83%95%E3%82%BF%E3%83%90%E3%82%B9%E3%82%BA%E3%82%AD%E3%83%AA%E3%83%A5%E3%82%A6">フタバスズキリュウ - Wikipedia</a></li>
+<li><a href="https://www.kyokyo-u.ac.jp/library/kuelibnews202107.pdf">フタバスズキリュウとは、中生代に生きた海生爬虫類で… | 京都教育大学附属図書館</a></li>
+<li><a href="https://iwaki-museum.com/3d/5/">フタバサウルス・スズキイ（フタバスズキリュウ）｜いわきデジタルミュージアム</a></li>
+<li><a href="https://dinosaurmuseum.jp/en/dinosaur/futabasaurus-suzukii/">Futabasaurus | Dino Encyclopedia</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Futabasaurus">Futabasaurus — Wikipedia (English)</a></li>
+<li><a href="https://www.gbif.org/species/8484327">Futabasaurus suzukii Sato, Hasegawa &amp; Manabe, 2006 — GBIF</a></li>
 </ul>
 
 
-                                <div class="notes-backlinks">
-                    <h2>🔗 リンクされているノート</h2>
-                    <ul>
-                                            <li><a href="/notes/incus.html">Incus</a></li>
-                                            <li><a href="/notes/lxc.html">LXC (Linux Containers)</a></li>
-                    
-                    </ul>
-                </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-09 22:30 / 更新日時: 2026-08-09 22:44</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=LXD&url=https%3A%2F%2F64p.org%2Fnotes%2Flxd.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <span>作成日時: 2026-08-10 12:31 / 更新日時: 2026-08-10 12:31</span>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=%E3%83%95%E3%82%BF%E3%83%90%E3%82%B9%E3%82%BA%E3%82%AD%E3%83%AA%E3%83%A5%E3%82%A6%EF%BC%88Futabasaurus%20suzukii%EF%BC%89&url=https%3A%2F%2F64p.org%2Fnotes%2Ffutabasaurus-suzukii.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">
