@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>ミューテックス(mutex) - Notes - 64p.org</title>
+    <title>超整理法(押し出しファイリング) - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/highlight.js@11/styles/github.min.css" media="(prefers-color-scheme: light)">
@@ -21,7 +21,7 @@
                 <a class="notes-tags-link" href="/notes/tags/">🏷️ タグ一覧</a>
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
-                                    <li><a href="/notes/oshidashi-filing.html">超整理法(押し出しファイリング)</a></li>
+                                    <li><a href="/notes/oshidashi-filing.html" class="active">超整理法(押し出しファイリング)</a></li>
                                     <li><a href="/notes/one-pocket-principle.html">ポケット一つ原則</a></li>
                                     <li><a href="/notes/yumei-vtuber-no-ani.html">有名VTuberの兄だけど、何故か俺が有名になっていた</a></li>
                                     <li><a href="/notes/grill-me.html">grill-me</a></li>
@@ -50,7 +50,7 @@
                                     <li><a href="/notes/biome.html">Biome</a></li>
                                     <li><a href="/notes/ruff.html">Ruff</a></li>
                                     <li><a href="/notes/semaphore.html">セマフォ</a></li>
-                                    <li><a href="/notes/mutex.html" class="active">ミューテックス(mutex)</a></li>
+                                    <li><a href="/notes/mutex.html">ミューテックス(mutex)</a></li>
                                     <li><a href="/notes/xinu.html">Xinu</a></li>
                                     <li><a href="/notes/chicken-rice-japan.html">チキンライス(日本の洋食)</a></li>
                                     <li><a href="/notes/chicken-rice-hainanese.html">海南鶏飯(シンガポール式チキンライス)</a></li>
@@ -192,37 +192,52 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>ミューテックス(mutex)</h1>
+                <h1>超整理法(押し出しファイリング)</h1>
 
-<p>mutual exclusion(相互排他)の略。クリティカルセクション(共有資源を扱う処理区間)に、同時に1つのタスク/スレッドしか入れないようにする排他制御・同期機構。 <a class="note-tag" href="/notes/tags/concurrency.html">#concurrency</a> <a class="note-tag" href="/notes/tags/kernel.html">#kernel</a></p>
+<p>経済学者・野口悠紀雄が提唱した書類整理法。著書『「超」整理法―情報検索と発想の新システム』(1993年、中央公論社)で発表された。 <a class="note-tag" href="/notes/tags/productivity.html">#productivity</a></p>
 
-<h2><a href="/notes/semaphore.html">セマフォ</a>との違い: 所有権</h2>
+<h2>基本思想</h2>
 
-<p><a href="/notes/semaphore.html">セマフォ</a>は複数タスクが同時にクリティカルセクションに入ることを許容できるカウンタ機構で、ロックする側とアンロックする側が別のスレッドであっても構わない。</p>
+<p>「分類はムダ」という考えが根底にある。従来のような案件別・テーマ別のフォルダ分類をせず、書類を時間軸順(アクセス順)に並べるだけにする。</p>
 
-<p>一方ミューテックスには「所有者」の概念がある。ロックをかけたスレッドだけがそのロックを解除(アンロック)できる。この所有権の有無が、ミューテックスとセマフォを区別する最も重要な違い。</p>
+<h2>具体的なやり方(押し出しファイリング)</h2>
 
-<p>資源数が1のセマフォ(バイナリセマフォ)は動作としてはミューテックスに近いが、所有権を持たない点で厳密には異なる。</p>
+<ul>
+<li>書類をひとまとまりごとに、日付と内容を書いた角型二号の封筒に入れる</li>
+<li>本棚などに一定の区画を確保し、封筒を右から左へ順に並べていく</li>
+<li>新しく作った封筒、および使った(参照した)封筒は必ず左端に入れ直す</li>
+<li>使わなかった封筒は時間の経過とともに自然と右へ押し出されていく</li>
+<li>収納場所がいっぱいになったら、右端(＝最も長く使われていない=最も古い)から捨てる</li>
+</ul>
+
+
+<h2>原理</h2>
+
+<p>結果として、よく使うファイルは常に左側に集中する。これは、直近アクセスしたものを先頭に戻すことで探索時間全体を短縮するLRU(Least Recently Used)の考え方を発展させたものとされ、コンピュータのキャッシュアルゴリズムと同じ原理の応用と言える。書類管理にかかる精神的・時間的コストを大幅に削減できるとされる。</p>
+
+<h2><a href="/notes/one-pocket-principle.html">ポケット一つ原則</a>との関係</h2>
+
+<p>同じ野口悠紀雄が同著で提唱した整理原則。押し出しファイリングは「時間軸で並べる」という具体的な手法、ポケット一つ原則は「置き場所を一つに限定する」という上位の原則にあたる。</p>
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://ja.wikipedia.org/wiki/%E3%83%9F%E3%83%A5%E3%83%BC%E3%83%86%E3%83%83%E3%82%AF%E3%82%B9">ミューテックス - Wikipedia</a></li>
-<li><a href="https://qiita.com/gts/items/3aa525a98d5529246af1">セマフォとミューテックスの違いを丁寧に解説 - Qiita</a></li>
-<li><a href="https://tonkun-tech.com/semaphore-mutex/">セマフォとミューテックスの動作と違い｜とんくんソフトウェア技術部</a></li>
+<li><a href="https://ja.wikipedia.org/wiki/%E6%8A%BC%E3%81%97%E5%87%BA%E3%81%97%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AA%E3%83%B3%E3%82%B0">押し出しファイリング - Wikipedia</a></li>
+<li><a href="https://note.com/yukionoguchi/n/ne624b54a5c9d">押し出しファイリングの思想：LRUとMTF｜野口悠紀雄</a></li>
+<li><a href="https://ameblo.jp/mezaone28/entry-11873943583.html">『野口 悠紀雄 著 「超」整理法』の押し出しファイリングを続けて24年 | 教えてミリー</a></li>
 </ul>
 
 
                                 <div class="notes-backlinks">
                     <h2>🔗 リンクされているノート</h2>
                     <ul>
-                                            <li><a href="/notes/semaphore.html">セマフォ</a></li>
+                                            <li><a href="/notes/one-pocket-principle.html">ポケット一つ原則</a></li>
                     
                     </ul>
                 </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-10 19:08 / 更新日時: 2026-08-10 19:08</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=%E3%83%9F%E3%83%A5%E3%83%BC%E3%83%86%E3%83%83%E3%82%AF%E3%82%B9%28mutex%29&url=https%3A%2F%2F64p.org%2Fnotes%2Fmutex.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <span>作成日時: 2026-08-10 23:05 / 更新日時: 2026-08-10 23:05</span>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=%E8%B6%85%E6%95%B4%E7%90%86%E6%B3%95%28%E6%8A%BC%E3%81%97%E5%87%BA%E3%81%97%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AA%E3%83%B3%E3%82%B0%29&url=https%3A%2F%2F64p.org%2Fnotes%2Foshidashi-filing.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">
