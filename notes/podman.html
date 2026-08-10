@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>VACUUM - Notes - 64p.org</title>
+    <title>Podman - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/highlight.js@11/styles/github.min.css" media="(prefers-color-scheme: light)">
@@ -21,7 +21,7 @@
                 <a class="notes-tags-link" href="/notes/tags/">🏷️ タグ一覧</a>
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
-                                    <li><a href="/notes/podman.html">Podman</a></li>
+                                    <li><a href="/notes/podman.html" class="active">Podman</a></li>
                                     <li><a href="/notes/ruriboshi-kamikiri.html">ルリボシカミキリ</a></li>
                                     <li><a href="/notes/raku-rakudo-perl6.html">Raku / Rakudo / Perl 6</a></li>
                                     <li><a href="/notes/cro.html">Cro</a></li>
@@ -31,7 +31,7 @@
                                     <li><a href="/notes/transaction-isolation-levels.html">トランザクション分離レベル</a></li>
                                     <li><a href="/notes/mysql.html">MySQL</a></li>
                                     <li><a href="/notes/mvcc.html">MVCC</a></li>
-                                    <li><a href="/notes/vacuum.html" class="active">VACUUM</a></li>
+                                    <li><a href="/notes/vacuum.html">VACUUM</a></li>
                                     <li><a href="/notes/postgresql.html">PostgreSQL</a></li>
                                     <li><a href="/notes/pgvector.html">pgvector</a></li>
                                     <li><a href="/notes/hnsw.html">HNSW</a></li>
@@ -159,51 +159,42 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>VACUUM</h1>
+                <h1>Podman</h1>
 
-<p><a href="/notes/postgresql.html">PostgreSQL</a>で、<a href="/notes/mvcc.html">MVCC</a>によりUPDATE/DELETEで発生した不要行（dead tuple）を回収するコマンド。物理削除されずに残った不要行を掃除する、ガベージコレクションに相当する役割を持つ。</p>
+<p>Red Hatが開発したオープンソースのコンテナ管理ツール。Dockerと互換のCLIを持ちながら、内部の設計は大きく異なる。 <a class="note-tag" href="/notes/tags/container.html">#container</a> <a class="note-tag" href="/notes/tags/linux.html">#linux</a></p>
 
-<p><a class="note-tag" href="/notes/tags/database.html">#database</a> <a class="note-tag" href="/notes/tags/postgresql.html">#postgresql</a> <a class="note-tag" href="/notes/tags/vacuum.html">#vacuum</a></p>
+<h2>デーモンレス</h2>
 
-<h2>役割</h2>
+<p>Docker Engineのような常駐デーモンを持たず、各コマンドが独立したプロセスとしてfork/execされる。デーモンが単一障害点・攻撃対象になりにくい。</p>
 
-<p>VACUUMが担う主な役割は以下の3つ。</p>
+<h2>rootless対応</h2>
 
-<ul>
-<li><strong>不要行の回収</strong>: dead tupleが占有していた領域を再利用可能にする。放置するとテーブルが肥大化（bloat）する。</li>
-<li><strong>FREEZE（凍結）</strong>: 古いタプルのXID（トランザクションID）を<code>FrozenTransactionId</code>という特別な値に書き換える。凍結されたタプルはどのトランザクションから見ても「確定した非常に古いデータ」として扱われる。</li>
-<li><strong>統計情報の更新</strong>: <code>ANALYZE</code>と組み合わせてクエリプランナ用の統計情報を最新化する。</li>
-</ul>
+<p>root権限なしで一般ユーザーとしてコンテナを起動できる。Dockerも後付けでrootlessモードを持つが、Podmanは標準でこの動作をサポートする。</p>
 
+<h2>Pod単位の管理</h2>
 
-<h2>AUTOVACUUM</h2>
+<p>Kubernetesの「Pod」と同様に、複数コンテナをまとめて同一のネットワーク名前空間・リソースを共有させる単位として扱える。Dockerには標準でこの概念がなく、Docker Composeが近い役割を担う。</p>
 
-<p>VACUUMはユーザーが意識しなくても、バックグラウンドで動く<code>autovacuum</code>によって更新頻度に応じて自動実行される。</p>
+<h2>Dockerとの互換性</h2>
 
-<h2>トランザクションID周回問題</h2>
+<p>OCI(Open Containers Initiative)準拠のコンテナ・イメージ仕様に従っており、Dockerイメージともそのまま互換性がある。<code>alias docker=podman</code>とするだけでDockerコマンドの多くがそのまま使える。</p>
 
-<p>PostgreSQLのXIDは有限のため、FREEZEせずに放置するとXIDが一周（wraparound）してデータが不可視になるおそれがある。これを防ぐため、<code>autovacuum_freeze_max_age</code>パラメータでテーブルの<code>relfrozenxid</code>の最大経過トランザクション数を制限しており、これを超えると強制的にVACUUMが走る。この「周回防止自動VACUUM」は、通常のautovacuum機能が明示的に無効化されていても動作する。</p>
+<h2><a href="/notes/lxc.html">LXC</a>/<a href="/notes/lxd.html">LXD</a>系との違い</h2>
+
+<p>LXC/LXDが「システムコンテナ」(initプロセスから丸ごと1つのOS環境を動かす用途)を志向するのに対し、Podmanは Docker 同様、単一アプリケーションの実行に特化した「アプリケーションコンテナ」を扱う。</p>
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://note.com/teijikaeri_dba/n/n79bdc4765b68">PostgreSQL VACUUMの3つの重要機能とは？｜定時帰りのDBA</a></li>
-<li><a href="https://qiita.com/U_ikki/items/111694ba5296b0f553bd">周回防止自動VACUUMについて改めて調べてみる &lt;a class=&ldquo;note-tag&rdquo; href=&ldquo;/notes/tags/postgresql.html&rdquo;>#postgresql</a> - Qiita</a></li>
-<li><a href="https://www.fujitsu.com/jp/products/software/resources/feature-stories/postgres/article-index/vacuum-tuning/">運用トラブルを防止するVACUUMのチューニング ～XID/MXID周回問題と性能影響を防ぐ～ | 富士通</a></li>
-<li><a href="https://postgresqlco.nf/doc/ja/param/autovacuum_freeze_max_age/">PostgreSQL ドキュメンテーション: autovacuum_freeze_max_age パラメータ</a></li>
+<li><a href="https://www.redhat.com/en/topics/containers/what-is-podman">Podman とは？をわかりやすく解説 (Red Hat)</a></li>
+<li><a href="https://qiita.com/arinko_arintyu/items/10465fa0765f70e77b12">Podman使ってみた &amp; Dockerとの違いは？ - Qiita</a></li>
+<li><a href="https://zenn.dev/goal_a/articles/430d4f70328027">Podmanの導入 ~ Dockerとの比較を添えて ~</a></li>
 </ul>
 
 
-                                <div class="notes-backlinks">
-                    <h2>🔗 リンクされているノート</h2>
-                    <ul>
-                                            <li><a href="/notes/mvcc.html">MVCC</a></li>
-                    
-                    </ul>
-                </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-10 17:20 / 更新日時: 2026-08-10 17:20</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=VACUUM&url=https%3A%2F%2F64p.org%2Fnotes%2Fvacuum.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <span>作成日時: 2026-08-10 18:36 / 更新日時: 2026-08-10 18:36</span>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=Podman&url=https%3A%2F%2F64p.org%2Fnotes%2Fpodman.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">
