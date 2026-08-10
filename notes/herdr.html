@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>Notesコーナーへようこそ - Notes - 64p.org</title>
+    <title>herdr - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/highlight.js@11/styles/github.min.css" media="(prefers-color-scheme: light)">
@@ -21,7 +21,7 @@
                 <a class="notes-tags-link" href="/notes/tags/">🏷️ タグ一覧</a>
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
-                                    <li><a href="/notes/herdr.html">herdr</a></li>
+                                    <li><a href="/notes/herdr.html" class="active">herdr</a></li>
                                     <li><a href="/notes/byod.html">BYOD (Bring Your Own Device)</a></li>
                                     <li><a href="/notes/obon-yasumi.html">お盆休み</a></li>
                                     <li><a href="/notes/harmonyos.html">HarmonyOSとは</a></li>
@@ -120,7 +120,7 @@
                                     <li><a href="/notes/carnivorous-plants.html">食虫植物</a></li>
                                     <li><a href="/notes/miidera-gomimushi.html">ミイデラゴミムシ</a></li>
                                     <li><a href="/notes/lefthook.html">lefthook</a></li>
-                                    <li><a href="/notes/welcome.html" class="active">Notesコーナーへようこそ</a></li>
+                                    <li><a href="/notes/welcome.html">Notesコーナーへようこそ</a></li>
                                     <li><a href="/notes/kyoka-vs-tanka.html">狂歌と短歌の違い</a></li>
                                     <li><a href="/notes/harmonyos-pc.html">HarmonyOS PC版（鴻蒙電脳）</a></li>
                 
@@ -133,49 +133,39 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>Notesコーナーへようこそ</h1>
+                <h1>herdr</h1>
 
-<p>ちょっと調べたこと、AIに調査してもらった結果、忘れたくないスニペットなどを気軽に書き残しておく場所です。</p>
+<p>複数のAIコーディングエージェント（Claude Code、Codex、OpenCodeなど）を1つのターミナルからまとめて管理するRust製のターミナルマルチプレクサ。「one terminal for the whole herd」がモットーで、「herd(群れ)」が名前の由来。</p>
 
-<p><a href="https://blog.64p.org/">ブログ</a>はもう少しちゃんとした記事向けで、こちらはメモ書き程度のラフなものを想定しています。</p>
+<h2>特徴</h2>
 
-<h2>コードブロックの例</h2>
-
-<p>コードスニペットはシンタックスハイライト付きで表示されます。</p>
-
-<pre><code class="perl">use strict;
-use warnings;
-
-sub greet {
-    my ($name) = @_;
-    return "Hello, $name!";
-}
-
-print greet("world"), "\n";
-</code></pre>
+<ul>
+<li>tmuxライクな操作感で、デフォルトのキーバインドもtmuxと同一</li>
+<li>主要なターミナルベースAIエージェントを追加設定なしで自動検出</li>
+<li>サイドバーに各エージェントの状態(作業中・アイドル・入力待ちなど)が一覧表示され、複数エージェントの並行実行状況を一目で把握できる</li>
+<li>単一バイナリで配布される軽量なツール</li>
+<li>2026年3月にリリース</li>
+</ul>
 
 
+<p>複数のAIコーディングエージェントを並行稼働させる際に「今どのエージェントが何をしているか分からない」という課題を、tmuxを拡張する形で解決するツール。</p>
 
-<pre><code class="bash"># ちょっとしたシェルのワンライナー
-find . -name '*.md' | xargs wc -l
-</code></pre>
+<p><a class="note-tag" href="/notes/tags/claude-code.html">#claude-code</a> <a class="note-tag" href="/notes/tags/tmux.html">#tmux</a></p>
 
-<h2>新しいノートの追加方法</h2>
+<h2>出典</h2>
 
-<p><code>notes/src/</code> 配下にMarkdownファイルを追加します。1行目がタイトルになります（<code># タイトル</code> でもプレーンテキストでもOK）。追加したら以下を実行します。</p>
+<ul>
+<li><a href="https://blog.techscore.com/entry/2026/08/03/080000">herdr を使いこなす: 複数 AI エージェントの連携から自作プラグインまで - TECHSCORE BLOG</a></li>
+<li><a href="https://qiita.com/takish/items/5ef1eeee97e6e48404e3">herdr 入門：AIエージェントを束ねるマルチプレクサ - Qiita</a></li>
+<li><a href="https://zenn.dev/studypocket/articles/herdr-ai-agent-multiplexer">AIエージェント時代のターミナルマルチプレクサ「herdr」にtmuxから乗り換えた - Zenn</a></li>
+<li><a href="https://note.com/kazu_t/n/nb4958baf3290">【2026年7月版】AIエージェント多重化ターミナル「Herdr」を触ってみた - note</a></li>
+<li><a href="https://blog-dry.com/entry/2026/06/30/234346">AIエージェント時代のターミナルマルチプレクサ「Herdr」を使う - Don&rsquo;t Repeat Yourself</a></li>
+</ul>
 
-<pre><code class="sh">perl regen-index.pl
-</code></pre>
-
-<h2>ノート同士のリンク</h2>
-
-<p>1トピック1ファイルを基本に、<code>[[ファイル名]]</code>と書くと他のノートにリンクできます。例えば<a href="/notes/dangouzaka-yurai.html">談合坂の地名由来</a>のように書くと、そのノートのタイトルでリンクが張られます。表示テキストを変えたい場合は<code>[[dangouzaka-yurai|地名の話]]</code>のように<code>|</code>区切りで指定できます。</p>
-
-<p>リンクされた側のノートには、どのノートからリンクされているかが自動で「🔗 リンクされているノート」として表示されます（バックリンク）。存在しないファイル名を指定するとビルド時に警告が出ます。</p>
 
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-09 10:54 / 更新日時: 2026-08-09 14:11</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=Notes%E3%82%B3%E3%83%BC%E3%83%8A%E3%83%BC%E3%81%B8%E3%82%88%E3%81%86%E3%81%93%E3%81%9D&url=https%3A%2F%2F64p.org%2Fnotes%2Fwelcome.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <span>作成日時: 2026-08-10 15:18 / 更新日時: 2026-08-10 15:18</span>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=herdr&url=https%3A%2F%2F64p.org%2Fnotes%2Fherdr.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">
