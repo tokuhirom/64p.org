@@ -21,8 +21,8 @@
                 <a class="notes-tags-link" href="/notes/tags/">🏷️ タグ一覧</a>
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
-                                    <li><a href="/notes/sqlite.html">SQLite</a></li>
                                     <li><a href="/notes/sqlite-fts5.html" class="active">FTS5（SQLite）</a></li>
+                                    <li><a href="/notes/sqlite.html">SQLite</a></li>
                                     <li><a href="/notes/sqlite-fts3.html">FTS3（SQLite）</a></li>
                                     <li><a href="/notes/transaction-isolation-levels.html">トランザクション分離レベル</a></li>
                                     <li><a href="/notes/mysql.html">MySQL</a></li>
@@ -174,6 +174,18 @@
 
 <p>組み込みトークナイザとして<code>unicode61</code>（デフォルト）、<code>ascii</code>、<code>porter</code>、<code>trigram</code>がある。デフォルトの<code>unicode61</code>は空白区切りを前提とするため英語向けで、単語の区切りが明示されない日本語には不向き。<code>trigram</code>トークナイザを使うと3文字の連続部分文字列単位でのマッチングができ、完全な単語でなくても任意の文字列にマッチできるようになる（ただし3文字未満の文字列はどの行にもマッチしないという制約がある）。日本語（CJK）検索では、ラテン文字部分は<code>unicode61</code>、CJK部分は<code>trigram</code>を使い分けるハイブリッド戦略が実用的とされる。</p>
 
+<h2>日本語対応の選択肢: N-gramと形態素解析</h2>
+
+<p>日本語のように単語の区切りが明示されない言語では、<code>unicode61</code>のような空白区切り前提のトークナイザはそのままでは使えない。主なアプローチは2つ。</p>
+
+<ul>
+<li><strong>N-gram（trigramトークナイザなど）</strong>: 意味のある単語に分割せず、機械的にN文字ずつの部分文字列に区切ってトークン化する。単語の切れ目を解析する必要がないのが利点だが、意味のない部分文字列にもヒットするノイズ（false positive）が発生しやすく、インデックスサイズも単語ベースより大きくなりがち。</li>
+<li><strong>形態素解析（MeCabなど）</strong>: 事前にMeCabのような形態素解析エンジンでテキストを単語単位に分割してからFTSに投入する。精度は高いが、外部の解析エンジンへの依存が増える。</li>
+</ul>
+
+
+<p>日本語（CJK）検索では、ラテン文字部分は<code>unicode61</code>、CJK部分は<code>trigram</code>を使い分けるハイブリッド戦略も実用的とされる。</p>
+
 <h2>FTS3/FTS4との違い</h2>
 
 <p><a href="/notes/sqlite-fts3.html">FTS3</a>のノートで触れた通り、FTS3/FTS4は単語単位の前方一致・完全一致にしか対応せず関連度ランキングも持たないのに対し、FTS5はモジュール設計が刷新され、SQL構文もやや異なる（例: プレフィックス検索は<code>MATCH</code>演算子内で<code>term*</code>のように書く）。</p>
@@ -185,6 +197,9 @@
 <li><a href="https://coddy.tech/docs/sqlite/full-text-search">SQLite Full-Text Search: FTS5 Virtual Tables and MATCH</a></li>
 <li><a href="https://zenn.dev/kanseilink/articles/kanseilink-fts5-trigram-cjk-20260507?locale=en">Full-text CJK Search with SQLite FTS5: Trigram Tokenizer and Hybrid Strategy</a></li>
 <li><a href="https://audrey.feldroy.com/articles/2025-01-13-SQLite-FTS5-Tokenizers-unicode61-and-ascii">SQLite FTS5 Tokenizers: unicode61 and ascii</a></li>
+<li><a href="https://qiita.com/shikato/items/512db7bf051eddb84600">SQLiteを使ってAndroid端末内でお手軽に日本語全文検索する &lt;a class=&ldquo;note-tag&rdquo; href=&ldquo;/notes/tags/sqlite3.html&rdquo;>#sqlite3</a> - Qiita</a></li>
+<li><a href="https://www.space-i.com/post-blog/sqlite-fts-trigram-tokenizer%E3%81%A7unigram%EF%BC%86bigram%E6%A4%9C%E7%B4%A2%E3%81%BE%E3%81%A7%E3%82%B5%E3%83%9D%E3%83%BC%E3%83%88-%E6%97%A5%E6%9C%AC%E8%AA%9E%E5%85%A8%E6%96%87%E6%A4%9C%E7%B4%A2/">SQLite FTS : trigram tokenizerでunigram＆bigram検索までサポート</a></li>
+<li><a href="https://srbrnote.work/archives/5846">【Python】SQLite で日本語を全文検索するコード例【N-Gram, FTS4/FTS5】 | シラベルノート</a></li>
 </ul>
 
 
@@ -197,7 +212,7 @@
                     </ul>
                 </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-10 17:29 / 更新日時: 2026-08-10 17:29</span>
+                    <span>作成日時: 2026-08-10 17:29 / 更新日時: 2026-08-10 17:50</span>
                     <a class="share-x" href="https://twitter.com/intent/tweet?text=FTS5%EF%BC%88SQLite%EF%BC%89&url=https%3A%2F%2F64p.org%2Fnotes%2Fsqlite-fts5.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
