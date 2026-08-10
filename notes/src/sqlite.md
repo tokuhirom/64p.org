@@ -1,6 +1,6 @@
 ---
 created: 2026-08-10 17:23
-updated: 2026-08-10 17:23
+updated: 2026-08-10 17:24
 ---
 # SQLite
 
@@ -31,4 +31,4 @@ SQLiteは動的型付けを採用しており、宣言した列の型は「ヒ�
 - [リチャード・ヒップ - Wikipedia](https://ja.wikipedia.org/wiki/%E3%83%AA%E3%83%81%E3%83%A3%E3%83%BC%E3%83%89%E3%83%BB%E3%83%92%E3%83%83%E3%83%97)
 - [Webアプリには必須!! WALモードについて #SQL - Qiita](https://qiita.com/Choco0602/items/f2153b936416414ccd6a)
 - [SQLite のおもしろ仕様 (1) : データ型 - kawasin73のブログ](https://kawasin73.hatenablog.com/entry/2023/09/09/200342)
-- [利用者は数十億人！？ SQLiteはどこが凄いデータベース管理システムなのか調べてみた #ShellScript - Qiita](https://qiita.com/ko1nksm/items/87d27a287e1b6005d11c)
+- [利用者は数十億人！？ SQLiteはどこが凄いデータベース管理システムなのか調べてみた - Qiita](https://qiita.com/ko1nksm/items/87d27a287e1b6005d11c)
