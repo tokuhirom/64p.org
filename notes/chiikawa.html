@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>Solaris / illumos - Notes - 64p.org</title>
+    <title>ちいかわ（なんか小さくてかわいいやつ） - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/highlight.js@11/styles/github.min.css" media="(prefers-color-scheme: light)">
@@ -21,7 +21,7 @@
                 <a class="notes-tags-link" href="/notes/tags/">🏷️ タグ一覧</a>
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
-                                    <li><a href="/notes/chiikawa.html">ちいかわ（なんか小さくてかわいいやつ）</a></li>
+                                    <li><a href="/notes/chiikawa.html" class="active">ちいかわ（なんか小さくてかわいいやつ）</a></li>
                                     <li><a href="/notes/ojousama-teihen-dungeon-haishinsha.html">お嬢様系底辺ダンジョン配信者、迷惑系をボコったらバズって伝説になってますわ！？</a></li>
                                     <li><a href="/notes/dungeon-haishin-genre.html">ダンジョン配信(ジャンル)</a></li>
                                     <li><a href="/notes/national-museum-of-nature-and-science.html">国立科学博物館</a></li>
@@ -168,7 +168,7 @@
                                     <li><a href="/notes/roam-research.html">Roam Research</a></li>
                                     <li><a href="/notes/obsidian.html">Obsidian</a></li>
                                     <li><a href="/notes/evergreen-notes.html">エバーグリーンノート (Evergreen Notes)</a></li>
-                                    <li><a href="/notes/solaris.html" class="active">Solaris / illumos</a></li>
+                                    <li><a href="/notes/solaris.html">Solaris / illumos</a></li>
                                     <li><a href="/notes/snoop.html">snoop</a></li>
                                     <li><a href="/notes/ngrep.html">ngrep (network grep)</a></li>
                                     <li><a href="/notes/bpf.html">BPF (Berkeley Packet Filter)</a></li>
@@ -201,59 +201,43 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>Solaris / illumos</h1>
+                <h1>ちいかわ（なんか小さくてかわいいやつ）</h1>
 
-<p><strong>Oracle Solaris</strong>(商用・プロプライエタリ)と、<strong>illumos</strong>(OpenSolarisの後継オープンソースプロジェクト)の2系統に分かれて、どちらも現在進行形で開発が続いている。 <a class="note-tag" href="/notes/tags/solaris.html">#solaris</a> <a class="note-tag" href="/notes/tags/unix.html">#unix</a></p>
+<p>イラストレーター・ナガノによる漫画作品。「なんか小さくてかわいいやつ」の略で「ちいかわ」。</p>
 
-<h2>Oracle Solaris(商用版)</h2>
+<h2>成立の経緯</h2>
 
 <ul>
-<li>最新版は Solaris 11.4 SRU92(2026年4月21日リリース)で、SRU(月次更新)ベースで継続的にアップデートされている</li>
-<li>サポート期限: Solaris 11.4は2031年11月まで、Solaris 10は2027年1月まで延長</li>
-<li>2026年3月には開発者・FOSSコミュニティ向けに Solaris Common Build Environment (CBE) も公開されている</li>
+<li>作者が「こういう生き方をしたい」という願望から生まれたキャラクターイラストが原点。</li>
+<li>2017年頃からTwitter（現X）上で不定期に掲載を開始。</li>
+<li>2020年1月、「ちいかわ」公式アカウントを開設して本格連載開始。</li>
+<li>2021年2月、講談社より単行本第1巻刊行（掲載誌はモーニング）。</li>
+<li>2022年6月、「日本キャラクター大賞2022」でグランプリを受賞。</li>
 </ul>
 
 
-<h2>OpenSolaris → illumos</h2>
+<h2>作風</h2>
 
-<ul>
-<li>Sun時代のオープンソースプロジェクト「OpenSolaris」自体は、2010年にOracleがSunを買収した後に打ち切られた</li>
-<li>それに反発した開発者たちが <strong>illumos</strong> としてフォーク。2012年にillumos Foundationが501&copy;6として法人化され、コミュニティ主導で継続開発中</li>
-<li>ZFS、DTrace、Solaris Zonesといった目玉機能を引き継いでいる</li>
-<li>Oracle Solaris 11自体もOpenSolarisからのプロプライエタリフォークだが、illumosとはこの10年近くで実装がかなり乖離している</li>
-</ul>
+<p>主人公「ちいかわ」をはじめ、「ハチワレ」「うさぎ」など二頭身のかわいらしいキャラクターたちが登場し、日常でおいしいものを食べたり友達と遊んだりする一方で、「討伐」や「労働（ちいかわ検定）」といった過酷な要素も同居する。可愛さと不穏さ・切なさが同居する作風が特徴とされる。</p>
 
+<h2>キャラクター</h2>
 
-<h2>illumosディストリビューション</h2>
-
-<p>illumosを元にしたディストリビューションも活発。<strong>OpenIndiana</strong> は「Hipster 2026.04」を2026年5月5日にリリースしており、他にもOmniOS、SmartOS、Tribblixなどが存在する。</p>
-
-<h2>まとめ</h2>
-
-<p>「OpenSolarisという名前のプロジェクト」自体はもう存在しないが、その血筋は<strong>Oracle Solaris</strong>(商用)と<strong>illumos系</strong>(OSS)の2系統に分かれて、どちらも2026年現在生きている。</p>
-
-<p><a href="/notes/snoop.html">snoop</a>など、64p.orgのnotesで言及したSolaris標準ツール群は現行のOracle Solarisにも引き続き搭載されている。</p>
+<p>「モモンガ」は白い体とふわふわの尻尾を持つ見た目に反して、口が悪く他人の物を取ろうとするなど図太い性格として描かれる。2025年10月公開の「まじかるちいかわスペシャルムービー」では、モモンガが「でかつよ」に変身する場面が描かれた。</p>
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://www.oracle.com/solaris/technologies/releases.html">Solaris Operating System - Releases (Oracle)</a></li>
-<li><a href="https://en.wikipedia.org/wiki/Oracle_Solaris">Oracle Solaris - Wikipedia</a></li>
-<li><a href="https://www.illumos.org/docs/about/faq/">FAQ - illumos</a></li>
-<li><a href="https://en.wikipedia.org/wiki/OpenIndiana">OpenIndiana - Wikipedia</a></li>
+<li><a href="https://ja.wikipedia.org/wiki/%E3%81%A1%E3%81%84%E3%81%8B%E3%82%8F_%E3%81%AA%E3%82%93%E3%81%8B%E5%B0%8F%E3%81%95%E3%81%8F%E3%81%A6%E3%81%8B%E3%82%8F%E3%81%84%E3%81%84%E3%82%84%E3%81%A4">ちいかわ なんか小さくてかわいいやつ - Wikipedia</a></li>
+<li><a href="https://morning.kodansha.co.jp/c/chiikawa.html">ちいかわ なんか小さくてかわいいやつ - モーニング公式サイト</a></li>
+<li><a href="https://dic.pixiv.net/a/%E3%83%A2%E3%83%A2%E3%83%B3%E3%82%AC%28%E3%81%A1%E3%81%84%E3%81%8B%E3%82%8F%29">モモンガ(ちいかわ)とは【ピクシブ百科事典】</a></li>
 </ul>
 
 
-                                <div class="notes-backlinks">
-                    <h2>🔗 リンクされているノート</h2>
-                    <ul>
-                                            <li><a href="/notes/snoop.html">snoop</a></li>
-                    
-                    </ul>
-                </div>
+<p><a class="note-tag" href="/notes/tags/manga.html">#manga</a></p>
+
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-09 16:26 / 更新日時: 2026-08-09 16:26</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=Solaris%20%2F%20illumos&url=https%3A%2F%2F64p.org%2Fnotes%2Fsolaris.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <span>作成日時: 2026-08-11 07:30 / 更新日時: 2026-08-11 07:30</span>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=%E3%81%A1%E3%81%84%E3%81%8B%E3%82%8F%EF%BC%88%E3%81%AA%E3%82%93%E3%81%8B%E5%B0%8F%E3%81%95%E3%81%8F%E3%81%A6%E3%81%8B%E3%82%8F%E3%81%84%E3%81%84%E3%82%84%E3%81%A4%EF%BC%89&url=https%3A%2F%2F64p.org%2Fnotes%2Fchiikawa.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">
