@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>フタバスズキリュウ（Futabasaurus suzukii） - Notes - 64p.org</title>
+    <title>Tailscale - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/highlight.js@11/styles/github.min.css" media="(prefers-color-scheme: light)">
@@ -22,7 +22,7 @@
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
                                     <li><a href="/notes/wireguard.html">WireGuard</a></li>
-                                    <li><a href="/notes/tailscale.html">Tailscale</a></li>
+                                    <li><a href="/notes/tailscale.html" class="active">Tailscale</a></li>
                                     <li><a href="/notes/jetkvm.html">JetKVM</a></li>
                                     <li><a href="/notes/scala.html">Scala</a></li>
                                     <li><a href="/notes/kotlin.html">Kotlin</a></li>
@@ -34,7 +34,7 @@
                                     <li><a href="/notes/obon-yasumi.html">お盆休み</a></li>
                                     <li><a href="/notes/harmonyos.html">HarmonyOSとは</a></li>
                                     <li><a href="/notes/national-museum-of-nature-and-science.html">国立科学博物館</a></li>
-                                    <li><a href="/notes/futabasaurus-suzukii.html" class="active">フタバスズキリュウ（Futabasaurus suzukii）</a></li>
+                                    <li><a href="/notes/futabasaurus-suzukii.html">フタバスズキリュウ（Futabasaurus suzukii）</a></li>
                                     <li><a href="/notes/yanshui-yimian.html">塩水意麺（鹽水意麵）</a></li>
                                     <li><a href="/notes/apple-secure-enclave.html">Secure Enclave</a></li>
                                     <li><a href="/notes/electric-eel.html">デンキウナギ</a></li>
@@ -140,56 +140,48 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>フタバスズキリュウ（Futabasaurus suzukii）</h1>
+                <h1>Tailscale</h1>
 
-<p><a class="note-tag" href="/notes/tags/paleontology.html">#paleontology</a> <a class="note-tag" href="/notes/tags/dinosaur.html">#dinosaur</a> <a class="note-tag" href="/notes/tags/japan.html">#japan</a></p>
+<p>離れた場所にあるデバイス同士を1つの仮想プライベートネットワーク(<strong>tailnet</strong>と呼ばれる)にまとめ、それぞれに固定の内部IPアドレスを割り当てて相互接続するサービス。ルーターのポート開放が不要で、グローバルIPを持たない環境でも接続できる点が、従来の手組みVPNとの大きな違い。</p>
 
-<p>後期白亜紀（約8500万年前、サントニアン期）に日本近海に生息していた首長竜(プレシオサウルス類)。分類上は爬虫綱・双弓亜綱・鰭竜類・首長竜目・エラスモサウルス科に属する。</p>
+<h2>仕組み</h2>
 
-<h2>発見の経緯</h2>
+<ul>
+<li>ベース層はオープンソースVPNプロトコル<a href="/notes/wireguard.html">WireGuard</a>(Goによるユーザースペース実装)</li>
+<li>自分の所有する端末のみで構成される<strong>peer-to-peer mesh network</strong>を作り、複数端末が必要に応じて中継しながら複数経路を取りうる構成になる</li>
+<li><strong>NAT traversal</strong>: STUNによる発見、Discoプロトコルによるピア間発見、複数経路の中から最速のものを選ぶレース戦略などを組み合わせ、ポート開放なしに直接のP2P接続を優先的に確立する</li>
+<li><strong>DERP (Designated Encrypted Relay for Packets)</strong>: symmetric NATやキャリアグレードNAT、制限の厳しいファイアウォールなどでP2P直接接続ができない場合のフォールバックとして、HTTPS経由でWireGuard暗号化パケットを中継する暗号化リレーサーバー群。DERPサーバー自体は復号を行わず、暗号文をそのまま中継するだけなのでエンドツーエンド暗号化は保たれる</li>
+<li><strong>MagicDNS</strong>: 各ノードに安定したホスト名を割り当てる機能</li>
+</ul>
 
-<p>1968年10月、福島県いわき市の双葉層群という地層で、当時高校生だった鈴木直氏が発見した。名前は発見地の地層名「双葉」と発見者の姓「鈴木」を組み合わせたもの。</p>
 
-<p>首を除く全身の約70%に相当する骨格がほぼ完全な形で保存されていた、非常に稀な標本(模式標本番号NSM PV15025)。</p>
+<h2><a href="/notes/wireguard.html">WireGuard</a>との関係</h2>
 
-<h2>学術的な意義</h2>
+<p>TailscaleはWireGuardプロトコルをそのまま使いつつ、鍵配布・NAT越え・DNSなど「WireGuardを手組みで使う際に面倒な部分」をコーディネーションサーバーとクライアントソフトウェアで肩代わりするサービス。WireGuard自体はプロトコル/実装であり、鍵交換やNAT越えの仕組みは利用者側で構築する必要がある。</p>
 
-<p>比較対象となる標本が少なかったため長らく新種と断定できずにいたが、発見から38年後の2006年、<a href="/notes/national-museum-of-nature-and-science.html">国立科学博物館</a>の研究チームによりようやく新属新種として正式記載された。</p>
-
-<p>日本国内で初めて化石が発見された首長竜であり、日本産のプレシオサウルス類として唯一学術的に有効な分類群とされる。それまで「日本列島は大陸に比べて面積が小さく、首長竜や恐竜のような中生代の大型爬虫類の化石は出ない」と考えられていた定説を覆し、以後日本各地でのアマチュア・専門家による化石発掘が盛んになるきっかけとなった。</p>
-
-<h2>形態的特徴</h2>
-
-<p>全長は推定約7メートル(文献によっては6.4〜9.2m、体重3〜4トンとの推定もあり)。目と鼻の間の距離が離れている、脛骨が長い、鎖骨と間鎖骨の接合部の形状、などが識別点。</p>
-
-<h2>展示・その他</h2>
-
-<p>模式標本は<a href="/notes/national-museum-of-nature-and-science.html">国立科学博物館</a>(東京)に保管、化石のレプリカはいわき市石炭・化石館に展示されている。</p>
-
-<p>1980年公開の映画『ドラえもん のび太の恐竜』にも登場し、「ピー助」という名でのび太に育てられる元ネタになったとされる。</p>
+<p><a class="note-tag" href="/notes/tags/vpn.html">#vpn</a> <a class="note-tag" href="/notes/tags/networking.html">#networking</a></p>
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://ja.wikipedia.org/wiki/%E3%83%95%E3%82%BF%E3%83%90%E3%82%B9%E3%82%BA%E3%82%AD%E3%83%AA%E3%83%A5%E3%82%A6">フタバスズキリュウ - Wikipedia</a></li>
-<li><a href="https://www.kyokyo-u.ac.jp/library/kuelibnews202107.pdf">フタバスズキリュウとは、中生代に生きた海生爬虫類で… | 京都教育大学附属図書館</a></li>
-<li><a href="https://iwaki-museum.com/3d/5/">フタバサウルス・スズキイ（フタバスズキリュウ）｜いわきデジタルミュージアム</a></li>
-<li><a href="https://dinosaurmuseum.jp/en/dinosaur/futabasaurus-suzukii/">Futabasaurus | Dino Encyclopedia</a></li>
-<li><a href="https://en.wikipedia.org/wiki/Futabasaurus">Futabasaurus — Wikipedia (English)</a></li>
-<li><a href="https://www.gbif.org/species/8484327">Futabasaurus suzukii Sato, Hasegawa &amp; Manabe, 2006 — GBIF</a></li>
+<li><a href="https://zenn.dev/digeon/articles/tailscale-remote-access-mechanism">Tailscaleの仕組みから学ぶネットワークの基本 - Zenn</a></li>
+<li><a href="https://www.issoh.co.jp/tech/details/5403/">Tailscaleの安全性を解説 - issoh</a></li>
+<li><a href="https://tailscale.com/kb/1504/encryption">Tailscale encryption · Tailscale Docs</a></li>
+<li><a href="https://tailscale.com/blog/nat-traversal-improvements-pt-1">How Tailscale is improving NAT traversal (part 1)</a></li>
+<li><a href="https://tailscale.com/docs/reference/derp-servers">DERP servers · Tailscale Docs</a></li>
 </ul>
 
 
                                 <div class="notes-backlinks">
                     <h2>🔗 リンクされているノート</h2>
                     <ul>
-                                            <li><a href="/notes/national-museum-of-nature-and-science.html">国立科学博物館</a></li>
+                                            <li><a href="/notes/wireguard.html">WireGuard</a></li>
                     
                     </ul>
                 </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-10 12:31 / 更新日時: 2026-08-10 12:43</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=%E3%83%95%E3%82%BF%E3%83%90%E3%82%B9%E3%82%BA%E3%82%AD%E3%83%AA%E3%83%A5%E3%82%A6%EF%BC%88Futabasaurus%20suzukii%EF%BC%89&url=https%3A%2F%2F64p.org%2Fnotes%2Ffutabasaurus-suzukii.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <span>作成日時: 2026-08-10 16:44 / 更新日時: 2026-08-10 16:44</span>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=Tailscale&url=https%3A%2F%2F64p.org%2Fnotes%2Ftailscale.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">
