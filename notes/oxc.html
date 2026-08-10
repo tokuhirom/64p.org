@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>ルリボシカミキリ - Notes - 64p.org</title>
+    <title>Oxc(Oxidation Compiler) - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/highlight.js@11/styles/github.min.css" media="(prefers-color-scheme: light)">
@@ -22,14 +22,14 @@
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
                                     <li><a href="/notes/ruff.html">Ruff</a></li>
-                                    <li><a href="/notes/oxc.html">Oxc(Oxidation Compiler)</a></li>
+                                    <li><a href="/notes/oxc.html" class="active">Oxc(Oxidation Compiler)</a></li>
                                     <li><a href="/notes/semaphore.html">セマフォ</a></li>
                                     <li><a href="/notes/mutex.html">ミューテックス(mutex)</a></li>
                                     <li><a href="/notes/xinu.html">Xinu</a></li>
                                     <li><a href="/notes/chicken-rice-japan.html">チキンライス(日本の洋食)</a></li>
                                     <li><a href="/notes/chicken-rice-hainanese.html">海南鶏飯(シンガポール式チキンライス)</a></li>
                                     <li><a href="/notes/podman.html">Podman</a></li>
-                                    <li><a href="/notes/ruriboshi-kamikiri.html" class="active">ルリボシカミキリ</a></li>
+                                    <li><a href="/notes/ruriboshi-kamikiri.html">ルリボシカミキリ</a></li>
                                     <li><a href="/notes/raku-rakudo-perl6.html">Raku / Rakudo / Perl 6</a></li>
                                     <li><a href="/notes/cro.html">Cro</a></li>
                                     <li><a href="/notes/sqlite-fts5.html">FTS5（SQLite）</a></li>
@@ -166,41 +166,53 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>ルリボシカミキリ</h1>
+                <h1>Oxc(Oxidation Compiler)</h1>
 
-<p><a class="note-tag" href="/notes/tags/biology.html">#biology</a> <a class="note-tag" href="/notes/tags/insect.html">#insect</a></p>
+<p>Rustで書かれた、JavaScript/TypeScript向けの高性能ツール群(ツールチェーン)。VoidZero社(Vue.js作者Evan You氏が設立)が掲げる「統一された高性能JSツールチェーン」構想の一部。 <a class="note-tag" href="/notes/tags/javascript.html">#javascript</a> <a class="note-tag" href="/notes/tags/rust.html">#rust</a></p>
 
-<p>鮮やかな瑠璃色(青色)の体色を持つカミキリムシ科の甲虫。日本固有種。学名は<em>Rosalia batesi</em>。</p>
+<h2>構成要素</h2>
 
-<h2>分類・形態</h2>
+<p>パーサー、リンター(oxlint)、フォーマッター(oxfmt)、トランスフォーマー、ミニファイアなどからなり、パース・モジュール解決・lint・整形・変換・圧縮までを一通りカバーする。</p>
 
-<p>コウチュウ目カミキリムシ科。体長16〜30mm。瑠璃色の体色に複数の黒い斑紋が入るのが特徴で、「甲虫の宝石」とも呼ばれる。この青い体色は生きている間だけのもので、死後に紫外線に晒され続けると赤褐色に変色し元には戻らない。タマムシなどのような構造色によるものかどうかは出典間で見解が分かれており、はっきりしていない。</p>
+<h2>性能</h2>
 
-<h2>生態</h2>
+<p>既存ツール比で3〜100倍高速と謳っている。</p>
 
 <ul>
-<li>主な生息地はブナを中心とした天然林。寄主となる広葉樹が残っていれば、比較的標高の低い地域でも見られる。</li>
-<li>分布は日本全土、活動時期は7〜9月。</li>
-<li>日差しの強い日中に広葉樹の伐採木や立枯れに飛来し、活発に歩き回る。</li>
-<li>成虫は古木をかじって産卵し、幼虫は朽木を食べて成長する。</li>
+<li>パーサー: SWCの3倍高速</li>
+<li>リンター(Oxlint): ESLintの50〜100倍高速</li>
+<li>トランスフォーマー: Babelの40倍高速</li>
+<li>ミニファイア: Terser相当の圧縮率をより高速に実現</li>
 </ul>
 
+
+<h2>アーキテクチャ</h2>
+
+<p>各コンポーネントは独立した個別ツールとして利用可能。例えばOxlintだけを採用し、他のコンポーネントは使わないという導入もできる。</p>
+
+<h2><a href="/notes/ruff.html">Ruff</a>との類似性</h2>
+
+<p>Rust製・高速・複数の既存ツールを1つに統合するという思想面で、Python向けの<a href="/notes/ruff.html">Ruff</a>と似た立ち位置にある。対象言語エコシステムは異なる。</p>
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://ja.wikipedia.org/wiki/%E3%83%AB%E3%83%AA%E3%83%9C%E3%82%B7%E3%82%AB%E3%83%9F%E3%82%AD%E3%83%AA">ルリボシカミキリ - Wikipedia</a></li>
-<li><a href="https://atact.jp/cerambycidae/ruriboshi/">ルリボシカミキリ (Rosalia batesi) | 自然図鑑 生態写真 動画</a></li>
-<li><a href="https://jnol.jp/rosalia/">ルリボシカミキリ。青く美しい日本固有種。生息地やエサなどのレポート。あつ森で話題になった珍しい虫| 山川自然研究所</a></li>
-<li><a href="https://www.zukan.earth/descriptions/1/858081">ルリボシカミキリとは - 生態や形態の特徴解説 - ZUKAN(図鑑)</a></li>
-<li><a href="https://smallzoo.net/ruriboshikamikiri">ルリボシカミキリ〜採取、生息場所、生態、死ぬと色が変わる</a></li>
-<li><a href="https://detail.chiebukuro.yahoo.co.jp/qa/question_detail/q10224823155">ルリボシカミキリを死後も青く保存する技術はあるのですか？ - Yahoo!知恵袋</a></li>
+<li><a href="https://oxc.rs/docs/guide/what-is-oxc.html">What is Oxc? | The JavaScript Oxidation Compiler</a></li>
+<li><a href="https://github.com/oxc-project/oxc">GitHub - oxc-project/oxc</a></li>
+<li><a href="https://alisoueidan.com/blog/oxc-rust-powered-next-gen-javascript-tooling">OXC JavaScript Tooling: 100x Faster Rust-Based Development Tools</a></li>
 </ul>
 
 
+                                <div class="notes-backlinks">
+                    <h2>🔗 リンクされているノート</h2>
+                    <ul>
+                                            <li><a href="/notes/ruff.html">Ruff</a></li>
+                    
+                    </ul>
+                </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-10 18:27 / 更新日時: 2026-08-10 18:27</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=%E3%83%AB%E3%83%AA%E3%83%9C%E3%82%B7%E3%82%AB%E3%83%9F%E3%82%AD%E3%83%AA&url=https%3A%2F%2F64p.org%2Fnotes%2Fruriboshi-kamikiri.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <span>作成日時: 2026-08-10 19:19 / 更新日時: 2026-08-10 19:19</span>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=Oxc%28Oxidation%20Compiler%29&url=https%3A%2F%2F64p.org%2Fnotes%2Foxc.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">
