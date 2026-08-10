@@ -21,9 +21,10 @@
                 <a class="notes-tags-link" href="/notes/tags/">🏷️ タグ一覧</a>
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
+                                    <li><a href="/notes/postgresql.html" class="active">PostgreSQL</a></li>
+                                    <li><a href="/notes/mvcc.html">MVCC</a></li>
                                     <li><a href="/notes/pgvector.html">pgvector</a></li>
                                     <li><a href="/notes/hnsw.html">HNSW</a></li>
-                                    <li><a href="/notes/postgresql.html" class="active">PostgreSQL</a></li>
                                     <li><a href="/notes/neon.html">Neon</a></li>
                                     <li><a href="/notes/dgx-spark.html">NVIDIA DGX Spark</a></li>
                                     <li><a href="/notes/nixpkgs-core-team-disbanded.html">Nixpkgs Core Teamの解散(2026年8月)</a></li>
@@ -160,7 +161,7 @@
 <ul>
 <li><strong>高度なSQL標準準拠</strong>: ウィンドウ関数、CTE（共通テーブル式）、再帰クエリなどをサポート。</li>
 <li><strong>豊富なデータ型</strong>: JSONB型、配列型、RANGE型など。</li>
-<li><strong>MVCC（Multi-Version Concurrency Control）</strong>: 複数トランザクションが同時に読み書きしてもロック競合が起きにくい仕組みで、高並列環境に強い。</li>
+<li><strong><a href="/notes/mvcc.html">MVCC</a>（Multi-Version Concurrency Control）</strong>: 複数トランザクションが同時に読み書きしてもロック競合が起きにくい仕組みで、高並列環境に強い。</li>
 <li><strong>拡張性</strong>: プラガブルなインデックス方式や独自データ型・関数を拡張機能として追加できる。地理情報を扱うPostGIS、ベクトル検索を可能にする<a href="/notes/pgvector.html">pgvector</a>などが代表例。</li>
 </ul>
 
@@ -187,13 +188,14 @@
                                 <div class="notes-backlinks">
                     <h2>🔗 リンクされているノート</h2>
                     <ul>
+                                            <li><a href="/notes/mvcc.html">MVCC</a></li>
                                             <li><a href="/notes/neon.html">Neon</a></li>
                                             <li><a href="/notes/pgvector.html">pgvector</a></li>
                     
                     </ul>
                 </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-10 17:10 / 更新日時: 2026-08-10 17:10</span>
+                    <span>作成日時: 2026-08-10 17:10 / 更新日時: 2026-08-10 17:15</span>
                     <a class="share-x" href="https://twitter.com/intent/tweet?text=PostgreSQL&url=https%3A%2F%2F64p.org%2Fnotes%2Fpostgresql.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
