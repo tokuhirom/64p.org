@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>Raku / Rakudo / Perl 6 - Notes - 64p.org</title>
+    <title>Nixpkgs Core Teamの解散(2026年8月) - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/highlight.js@11/styles/github.min.css" media="(prefers-color-scheme: light)">
@@ -21,7 +21,7 @@
                 <a class="notes-tags-link" href="/notes/tags/">🏷️ タグ一覧</a>
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
-                                    <li><a href="/notes/nixpkgs-core-team-disbanded.html">Nixpkgs Core Teamの解散(2026年8月)</a></li>
+                                    <li><a href="/notes/nixpkgs-core-team-disbanded.html" class="active">Nixpkgs Core Teamの解散(2026年8月)</a></li>
                                     <li><a href="/notes/wireguard.html">WireGuard</a></li>
                                     <li><a href="/notes/tailscale.html">Tailscale</a></li>
                                     <li><a href="/notes/nat.html">NAT (Network Address Translation)</a></li>
@@ -65,7 +65,7 @@
                                     <li><a href="/notes/thompson-construction.html">Thompson construction</a></li>
                                     <li><a href="/notes/regex-engine-backtracking-vs-nfa.html">正規表現エンジンの実装方式: バックトラッキング型とNFA/DFA型</a></li>
                                     <li><a href="/notes/redos.html">ReDoS (Regular Expression Denial of Service)</a></li>
-                                    <li><a href="/notes/raku-rakudo-perl6.html" class="active">Raku / Rakudo / Perl 6</a></li>
+                                    <li><a href="/notes/raku-rakudo-perl6.html">Raku / Rakudo / Perl 6</a></li>
                                     <li><a href="/notes/project-notes.html">プロジェクトノート (Project Notes)</a></li>
                                     <li><a href="/notes/moc.html">MOC (Map of Content)</a></li>
                                     <li><a href="/notes/lyt.html">LYT (Linking Your Thinking)</a></li>
@@ -142,103 +142,57 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>Raku / Rakudo / Perl 6</h1>
+                <h1>Nixpkgs Core Teamの解散(2026年8月)</h1>
 
-<p><a class="note-tag" href="/notes/tags/raku.html">#raku</a> <a class="note-tag" href="/notes/tags/rust.html">#rust</a> <a class="note-tag" href="/notes/tags/perl.html">#perl</a></p>
+<p>Nixpkgs Core Team(2名体制)が、10ヶ月間の活動を経て解散を発表した。ガバナンス役割が持続的な技術作業やメンバーの健康と両立できないと判断したため。</p>
 
-<h2>概要と関係性</h2>
+<h2>経緯</h2>
 
 <ul>
-<li><strong>Perl 6</strong>: 2000年にLarry Wallが発表した、Perl 5を置き換える新言語の開発コードネーム。</li>
-<li><strong>Raku</strong>: Perl 6の現在の正式名称。2019年10月に改名された。</li>
-<li><strong>Rakudo</strong>: Rakuの主要実装（コンパイラ）。「Raku」という名称自体もRakudoに由来する（後述）。</li>
+<li>2025年9月、10万パッケージ規模のNixpkgsリポジトリに技術的リーダーシップを提供するために2名体制で発足</li>
+<li>2026年5月には創設メンバーの1人が離脱し、公にヘルプを求めたが応募者は現れなかった(最終的に1名のみ応募)</li>
+<li>以降、最小人数体制での運営を強いられていた</li>
 </ul>
 
 
-<p>つまり「Raku」＝言語仕様の名前、「Rakudo」＝それを実装したコンパイラ、という関係。</p>
-
-<h2>歴史</h2>
+<h2>解散理由</h2>
 
 <ul>
-<li>2000年7月19日、Larry Wallが「State of the Onion 2000」で、Perlの「historical warts（歴史的なイボ）」を取り除く新言語構想を発表。「easy things should stay easy, hard things should get easier」を方針に掲げた。</li>
-<li>コミュニティから361件のRFC（Request for Comments）を募り、それをもとに設計文書「Apocalypses」を作成するという開発プロセスを取った。</li>
-<li>2015年12月25日（クリスマス）、Perl 6 v1.0（通称「6.c / Christmas」）がリリース。</li>
-<li>Perl 6はPerl 5との後方互換性を目指さず、「fix the language rather than fix the user」という思想で言語仕様を根本から作り直した。この設計思想の違いから両者は事実上の別言語となり、2019年10月に「Perl 6」から「Raku」への改名が正式決定された（Larry Wall本人も承認）。
-
-<ul>
-<li>「Raku」という名前は、実装であるRakudoに由来し、Rakudoは日本語の「駱駝道（らくだどう、Way of the Camel）」の短縮形。camelはPerlのマスコット（ラクダ本 = Camel Book）にちなむ。</li>
-</ul>
-</li>
+<li>持続不可能な業務負荷とメンバーの健康への負担</li>
+<li>上位組織であるSteering Committee(SC)との関係悪化 — 「不要なマイクロマネジメント」「慢性的なコミュニケーション不足」、SCが定款で想定されている権限委譲の感覚を持ち合わせていないという指摘</li>
 </ul>
 
 
-<h2>Rakudoとその実装コンポーネント</h2>
+<h2>在任中の実績</h2>
 
 <ul>
-<li><strong>Rakudo</strong>は現在Rakuの唯一のアクティブな実装。GitHub: <code>rakudo/rakudo</code>。</li>
-<li><strong>MoarVM</strong>（Metamodel On A Runtime）: Rakudo向けに開発された専用VM。JITコンパイルや型特化などの最適化を持つ、レジスタベースのバイトコードインタプリタ。現在ほとんどのRakuユーザーがこのバックエンドを使用。</li>
-<li><strong>NQP</strong>（Not Quite Perl 6）: RakudoとMoarVMの間の中間言語・コンパイラツールチェーン。Rakudo自体もNQPを使って実装されている（自己ホスト的な構造）。</li>
-<li>他にJVM、JavaScriptバックエンドも存在するが、MoarVMが主流。</li>
+<li>19名の新規committerをオンボーディングする委員会デリゲートプロセスの改革</li>
+<li>merge botの機能拡張によるメンテナーの自律性向上</li>
+<li>GitHubとの関係修復(スポンサード Enterprise Cloud アップグレードの獲得)</li>
+<li>GitHubセキュリティアドバイザリのトリアージ対応</li>
+<li>AI・自動化に関する初期ポリシーの策定</li>
 </ul>
 
 
-<h2>言語機能の特徴</h2>
+<h2>今後への影響</h2>
 
-<ul>
-<li><strong>Gradual typing</strong>: 動的型付けをベースに、任意で静的型注釈を追加できる。</li>
-<li><strong>Grammar（文法）</strong>: Perlの正規表現を拡張した「rules」により、PEGやANTLR相当のパーサーを言語内蔵で書ける。エンジンの実装方式は<a href="/notes/regex-engine-backtracking-vs-nfa.html">バックトラッキング型とNFA/DFA型</a>を参照。</li>
-<li><strong>マルチディスパッチ</strong>: 同名関数を引数の型・値でオーバーロードできる（例: <code>multi fact(0) { 1 }</code>）。</li>
-<li><strong>Sigil不変性</strong>: <code>@</code>, <code>$</code>などのシジルが変数アクセス時に変化しない設計で、複雑なデータ構造を簡潔に扱える。</li>
-<li><strong>遅延評価</strong>: <code>0..Inf</code>のような無限リストも安全に扱える。</li>
-<li><strong>Roles</strong>: クラス継承ではなく合成（composition）でコードを再利用する仕組み（Rubyのmixin相当）。</li>
-</ul>
+<p>チーム自身の説明では「今日何かが壊れるわけではない」とのこと。Nixpkgsリポジトリの運営自体は継続し、オンボーディングされた19名のcommitterも引き続き活動する。ガバナンスの最終権限はSteering Committeeに戻る形。</p>
 
-
-<h2>現在の状況</h2>
-
-<ul>
-<li>最新の安定版言語仕様は6.d「Diwali」（2020年10月24日リリース）。</li>
-<li>「公式実装」という概念はなく、公式テストスイートに合格すれば「Raku」を名乗れる、という仕様ベースの認定方式。</li>
-<li>開発はGitHub、IRC、メーリングリストで継続中。</li>
-</ul>
-
-
-<h2>mutsu — 自作のRaku実装</h2>
-
-<p>Rust製のRakuインタプリタ「<a href="https://github.com/tokuhirom/mutsu">mutsu</a>」を自分（tokuhirom）で開発している。</p>
-
-<ul>
-<li>Rakuソースをパース→AST→バイトコードにコンパイルし、自作VM上で実行するアーキテクチャ（bytecode VM）。</li>
-<li>公式テストスイート <a href="https://github.com/Raku/roast">Roast</a> の1,464ファイル中1,433ファイルをパスする水準（開発が速く進んでいるため変動する）。</li>
-<li>クラス・ロール・継承、多重ディスパッチ、grammar/regex、gather/take、Promise（<code>start</code>/<code>await</code>）、enum、subset型、MAINサブによるCLI引数パースなど、主要機能を幅広くサポート。</li>
-<li>Zefパッケージマネージャを<code>mzef</code>として同梱し、mise・Docker・ソースビルドでインストール可能。</li>
-<li>サイト（<a href="https://tokuhirom.github.io/mutsu/">tokuhirom.github.io/mutsu</a>）はWebAssembly化したmutsu自身で動いており、チュートリアルやプレイグラウンドを提供している。</li>
-<li>まだ本番用途には非推奨（not yet suitable for production use）。RakuASTは未完成、コンパイル時診断の一部が未実装など既知の制限あり。</li>
-</ul>
-
+<p><a class="note-tag" href="/notes/tags/opensource.html">#opensource</a> <a class="note-tag" href="/notes/tags/governance.html">#governance</a></p>
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://en.wikipedia.org/wiki/Raku_(programming_language">Raku (programming language) - Wikipedia</a>)</li>
-<li><a href="https://developers.slashdot.org/story/19/10/12/2134246/larry-wall-approves-re-naming-perl-6-to-raku">Larry Wall Approves Re-Naming Perl 6 To Raku - Slashdot</a></li>
-<li><a href="https://en.wikipedia.org/wiki/Rakudo">Rakudo - Wikipedia</a></li>
-<li><a href="https://www.moarvm.org/">MoarVM - A VM for NQP and Rakudo</a></li>
-<li><a href="https://github.com/rakudo/rakudo">GitHub - rakudo/rakudo</a></li>
-<li><a href="https://github.com/tokuhirom/mutsu">GitHub - tokuhirom/mutsu</a></li>
+<li><a href="https://discourse.nixos.org/t/the-nixpkgs-core-team-has-disbanded/79413">The Nixpkgs core team has disbanded - NixOS Discourse</a></li>
+<li><a href="https://freenode.net/article/nixpkgs-core-team-disbands-after-10-months">Nixpkgs core team disbands after 10 months · freenode</a></li>
+<li><a href="https://linuxiac.com/nixpkgs-core-team-dissolves-leaving-governance-duties-without-a-direct-owner/">Nixpkgs Core Team Dissolves, Leaving Governance Duties Without a Direct Owner - linuxiac</a></li>
+<li><a href="https://lobste.rs/s/9cv8me/nixpkgs_core_team_has_disbanded">The Nixpkgs core team has disbanded | Lobsters</a></li>
 </ul>
 
 
-                                <div class="notes-backlinks">
-                    <h2>🔗 リンクされているノート</h2>
-                    <ul>
-                                            <li><a href="/notes/regex-engine-backtracking-vs-nfa.html">正規表現エンジンの実装方式: バックトラッキング型とNFA/DFA型</a></li>
-                    
-                    </ul>
-                </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-09 13:26 / 更新日時: 2026-08-09 22:15</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=Raku%20%2F%20Rakudo%20%2F%20Perl%206&url=https%3A%2F%2F64p.org%2Fnotes%2Fraku-rakudo-perl6.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <span>作成日時: 2026-08-10 16:55 / 更新日時: 2026-08-10 16:55</span>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=Nixpkgs%20Core%20Team%E3%81%AE%E8%A7%A3%E6%95%A3%282026%E5%B9%B48%E6%9C%88%29&url=https%3A%2F%2F64p.org%2Fnotes%2Fnixpkgs-core-team-disbanded.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">
