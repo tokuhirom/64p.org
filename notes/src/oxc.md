@@ -1,6 +1,6 @@
 ---
 created: 2026-08-10 19:19
-updated: 2026-08-10 19:19
+updated: 2026-08-10 19:32
 ---
 # Oxc(Oxidation Compiler)
 
@@ -26,6 +26,10 @@ Rustで書かれた、JavaScript/TypeScript向けの高性能ツール群(ツー
 ## [[ruff|Ruff]]との類似性
 
 Rust製・高速・複数の既存ツールを1つに統合するという思想面で、Python向けの[[ruff|Ruff]]と似た立ち位置にある。対象言語エコシステムは異なる。
+
+## [[biome|Biome]]との関係
+
+同じくRust製・JS/TS向けオールインワンツールである[[biome|Biome]]とは競合関係にある。Biomeは既存プロジェクト(Rome)のフォークという系譜を持つ点で、ゼロから作られたOxcとは出自が異なる。
 
 ## 出典
 
