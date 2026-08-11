@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>OpenSSF (Open Source Security Foundation) - Notes - 64p.org</title>
+    <title>LSM (Linux Security Modules) フレームワーク - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/highlight.js@11/styles/github.min.css" media="(prefers-color-scheme: light)">
@@ -22,7 +22,7 @@
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
                                     <li><a href="/notes/yama-lsm.html">Yama (Yama LSM)</a></li>
-                                    <li><a href="/notes/linux-security-modules.html">LSM (Linux Security Modules) フレームワーク</a></li>
+                                    <li><a href="/notes/linux-security-modules.html" class="active">LSM (Linux Security Modules) フレームワーク</a></li>
                                     <li><a href="/notes/grsecurity.html">grsecurity</a></li>
                                     <li><a href="/notes/seijosama-no-omake.html">「聖女様のオマケ」と呼ばれたけど、わたしはオマケではないようです。</a></li>
                                     <li><a href="/notes/sunzi.html">孫子</a></li>
@@ -250,7 +250,7 @@
                                     <li><a href="/notes/tableau.html">Tableau</a></li>
                                     <li><a href="/notes/gpui.html">GPUI</a></li>
                                     <li><a href="/notes/project-glasswing.html">Project Glasswing</a></li>
-                                    <li><a href="/notes/openssf.html" class="active">OpenSSF (Open Source Security Foundation)</a></li>
+                                    <li><a href="/notes/openssf.html">OpenSSF (Open Source Security Foundation)</a></li>
                                     <li><a href="/notes/carnivorous-plants.html">食虫植物</a></li>
                                     <li><a href="/notes/miidera-gomimushi.html">ミイデラゴミムシ</a></li>
                                     <li><a href="/notes/lefthook.html">lefthook</a></li>
@@ -267,49 +267,53 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>OpenSSF (Open Source Security Foundation)</h1>
+                <h1>LSM (Linux Security Modules) フレームワーク</h1>
 
-<p><a class="note-tag" href="/notes/tags/security.html">#security</a> <a class="note-tag" href="/notes/tags/oss.html">#oss</a></p>
+<p>Linuxカーネルのセキュリティ上重要な箇所（ファイルオープン・ネットワーク接続確立・capabilityチェックなど）にフックを配置し、そのフック関数が許可を返した場合にのみ操作を成功させる、というカーネル内フレームワーク。個々のセキュリティモジュールがこれらのフックにハンドラを登録して動作する。</p>
 
-<p>Linux Foundation傘下の非営利団体で、オープンソースソフトウェアのセキュリティ向上を目的とした業界横断の連携組織。2020年8月、Linux Foundationの前身プロジェクト「Core Infrastructure Initiative」の後継として設立された。</p>
+<p><a href="/notes/yama-lsm.html">Yama</a>や<a href="/notes/grsecurity.html">grsecurity</a>（これは非マージのパッチセット）のような、カーネル本体を直接改造しないセキュリティ拡張機構の土台になっている。</p>
 
-<p><a href="/notes/project-glasswing.html">Project Glasswing</a>でAnthropicが寄付した先の一つ(Linux Foundation経由でAlpha-Omega/OpenSSFに250万ドル)。</p>
+<h2>経緯</h2>
 
-<h2>規模</h2>
+<p>2001年3月、NSA（米国家安全保障局）がLinux Kernel Summitで「SELinux」（柔軟できめ細かい強制アクセス制御をLinuxカーネルに実装したもの）を発表した。SELinuxは元々独自のカーネルパッチとして実装されていたが、汎用的なフレームワークが必要とされ、WireX社が中心となりLSMプロジェクトが始まった。Immunix・SELinux・SGI・Janusといった複数のセキュリティプロジェクトや、Greg Kroah-HartmanやJames Morrisらが共同で開発した。</p>
 
-<p>現在116のメンバー企業が参加、本拠地はサンフランシスコ。10のワーキンググループでセキュリティ関連の取り組みを実施している。2021年にBrian Behlendorfが初代総長に就任し、2023年からはOmkhar Arasaratnamが総長、Behlendorfは技術部門トップ(CTO)に転任した。</p>
+<h2>代表的な実装</h2>
 
-<h2>代表的なプロジェクト</h2>
+<p>SELinux・AppArmor・Smack・TOMOYOなどが独立したLSM実装として存在する。多くはMAC（強制アクセス制御）ポリシーの実施エンジンを共有する。<a href="/notes/yama-lsm.html">Yama</a>のようにptrace制限に特化した狭い機能のLSMもある。</p>
+
+<h2>スタッキング（複数LSMの同時利用）</h2>
+
+<p>Linuxの歴史の大半において、主要なセキュリティ判断（「exclusive」フック）を担うLSMは同時に1つしかロードできず、<code>CONFIG_DEFAULT_SECURITY</code>というビルド時設定でこれを制御していた。Linuxカーネル4.15以降、限定的な形でLSMスタッキングがサポートされるようになった。</p>
 
 <ul>
-<li><strong>Sigstore</strong>: ソフトウェアのコード署名・検証サービス。</li>
-<li><strong>Alpha-Omega</strong>: サプライチェーンセキュリティ改善のための大規模プロジェクト。</li>
-<li><strong>Scorecard</strong>: OSSプロジェクトのセキュリティ健全性を機械的にスコア化するツール群。</li>
+<li><strong>スタック可能</strong>: IMA・EVMのようなintegrity系モジュールや、capabilities・Yamaのようなcapability系モジュールは、exclusiveなセキュリティモジュールと重ねて使える</li>
+<li><strong>exclusive（排他的）</strong>: AppArmorとSELinuxは、ほとんどのアクセス制御判断において互いに排他的。どちらか一方だけが主要なLSMになれる</li>
 </ul>
 
 
-<h2>活動</h2>
-
-<p>2022年5月には「Open Source Software Security Mobilization Plan」で3000万ドルの資金調達を達成するなど、業界大手(Google, Microsoft, AWS等)が連携してOSSのセキュリティ基盤強化に投資する枠組みとして機能している。</p>
+<p><a class="note-tag" href="/notes/tags/kernel.html">#kernel</a> <a class="note-tag" href="/notes/tags/linux.html">#linux</a> <a class="note-tag" href="/notes/tags/security.html">#security</a></p>
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://en.wikipedia.org/wiki/Open_Source_Security_Foundation">Open Source Security Foundation - Wikipedia</a></li>
-<li><a href="https://www.linuxfoundation.org/blog/blog/open-source-security-foundation-openssf-reflection-and-future">Open Source Security Foundation (OpenSSF): Reflection and Future - Linux Foundation</a></li>
+<li><a href="https://docs.kernel.org/security/lsm.html">Linux Security Modules: General Security Hooks for Linux — The Linux Kernel documentation</a></li>
+<li><a href="https://github.com/kubearmor/KubeArmor/wiki/Introduction-to-Linux-Security-Modules-(LSMs">Introduction to Linux Security Modules (LSMs) - KubeArmor Wiki</a>)</li>
+<li><a href="https://lwn.net/Articles/804906/">LSM stacking and the future [LWN.net]</a></li>
+<li><a href="https://lwn.net/Articles/970070/">A change in direction for security-module stacking? [LWN.net]</a></li>
 </ul>
 
 
                                 <div class="notes-backlinks">
                     <h2>🔗 リンクされているノート</h2>
                     <ul>
-                                            <li><a href="/notes/project-glasswing.html">Project Glasswing</a></li>
+                                            <li><a href="/notes/yama-lsm.html">Yama (Yama LSM)</a></li>
+                                            <li><a href="/notes/grsecurity.html">grsecurity</a></li>
                     
                     </ul>
                 </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-09 14:47 / 更新日時: 2026-08-09 14:47</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=OpenSSF%20%28Open%20Source%20Security%20Foundation%29&url=https%3A%2F%2F64p.org%2Fnotes%2Fopenssf.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <span>作成日時: 2026-08-11 16:46 / 更新日時: 2026-08-11 16:46</span>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=LSM%20%28Linux%20Security%20Modules%29%20%E3%83%95%E3%83%AC%E3%83%BC%E3%83%A0%E3%83%AF%E3%83%BC%E3%82%AF&url=https%3A%2F%2F64p.org%2Fnotes%2Flinux-security-modules.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">

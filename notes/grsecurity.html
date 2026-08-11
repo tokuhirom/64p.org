@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>OpenSSF (Open Source Security Foundation) - Notes - 64p.org</title>
+    <title>grsecurity - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/highlight.js@11/styles/github.min.css" media="(prefers-color-scheme: light)">
@@ -23,7 +23,7 @@
                 <ul class="notes-nav">
                                     <li><a href="/notes/yama-lsm.html">Yama (Yama LSM)</a></li>
                                     <li><a href="/notes/linux-security-modules.html">LSM (Linux Security Modules) フレームワーク</a></li>
-                                    <li><a href="/notes/grsecurity.html">grsecurity</a></li>
+                                    <li><a href="/notes/grsecurity.html" class="active">grsecurity</a></li>
                                     <li><a href="/notes/seijosama-no-omake.html">「聖女様のオマケ」と呼ばれたけど、わたしはオマケではないようです。</a></li>
                                     <li><a href="/notes/sunzi.html">孫子</a></li>
                                     <li><a href="/notes/erlang.html">Erlang</a></li>
@@ -250,7 +250,7 @@
                                     <li><a href="/notes/tableau.html">Tableau</a></li>
                                     <li><a href="/notes/gpui.html">GPUI</a></li>
                                     <li><a href="/notes/project-glasswing.html">Project Glasswing</a></li>
-                                    <li><a href="/notes/openssf.html" class="active">OpenSSF (Open Source Security Foundation)</a></li>
+                                    <li><a href="/notes/openssf.html">OpenSSF (Open Source Security Foundation)</a></li>
                                     <li><a href="/notes/carnivorous-plants.html">食虫植物</a></li>
                                     <li><a href="/notes/miidera-gomimushi.html">ミイデラゴミムシ</a></li>
                                     <li><a href="/notes/lefthook.html">lefthook</a></li>
@@ -267,49 +267,35 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>OpenSSF (Open Source Security Foundation)</h1>
+                <h1>grsecurity</h1>
 
-<p><a class="note-tag" href="/notes/tags/security.html">#security</a> <a class="note-tag" href="/notes/tags/oss.html">#oss</a></p>
+<p>Linuxカーネル向けのセキュリティ強化パッチセット。メモリ保護機能「PaX」を内包し、<a href="/notes/yama-lsm.html">Yama</a>のptrace制限ロジックの元にもなった「子プロセスのみ」制限など、後にメインラインカーネルへ個別に取り込まれた機能を多数含んでいた。<a href="/notes/linux-security-modules.html">LSMフレームワーク</a>を使う実装ではなく、カーネル本体に直接パッチを当てる方式である点が異なる。</p>
 
-<p>Linux Foundation傘下の非営利団体で、オープンソースソフトウェアのセキュリティ向上を目的とした業界横断の連携組織。2020年8月、Linux Foundationの前身プロジェクト「Core Infrastructure Initiative」の後継として設立された。</p>
+<h2>経緯</h2>
 
-<p><a href="/notes/project-glasswing.html">Project Glasswing</a>でAnthropicが寄付した先の一つ(Linux Foundation経由でAlpha-Omega/OpenSSFに250万ドル)。</p>
+<p>2003年頃から開発・公開されてきたが、2015年8月にPaXが無償公開を終了し、2017年4月26日を最後に公開パッチの提供が終了した。以降はgrsecurityの商用サブスクライバー向けにのみ、最新カーネルに追従する形でパッチが提供されている。ライセンスはGPLv2のため、それまでに公開された最後の公開パッチをコミュニティが引き続き利用・改変・再配布すること自体は可能。</p>
 
-<h2>規模</h2>
-
-<p>現在116のメンバー企業が参加、本拠地はサンフランシスコ。10のワーキンググループでセキュリティ関連の取り組みを実施している。2021年にBrian Behlendorfが初代総長に就任し、2023年からはOmkhar Arasaratnamが総長、Behlendorfは技術部門トップ(CTO)に転任した。</p>
-
-<h2>代表的なプロジェクト</h2>
-
-<ul>
-<li><strong>Sigstore</strong>: ソフトウェアのコード署名・検証サービス。</li>
-<li><strong>Alpha-Omega</strong>: サプライチェーンセキュリティ改善のための大規模プロジェクト。</li>
-<li><strong>Scorecard</strong>: OSSプロジェクトのセキュリティ健全性を機械的にスコア化するツール群。</li>
-</ul>
-
-
-<h2>活動</h2>
-
-<p>2022年5月には「Open Source Software Security Mobilization Plan」で3000万ドルの資金調達を達成するなど、業界大手(Google, Microsoft, AWS等)が連携してOSSのセキュリティ基盤強化に投資する枠組みとして機能している。</p>
+<p><a class="note-tag" href="/notes/tags/kernel.html">#kernel</a> <a class="note-tag" href="/notes/tags/linux.html">#linux</a> <a class="note-tag" href="/notes/tags/security.html">#security</a></p>
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://en.wikipedia.org/wiki/Open_Source_Security_Foundation">Open Source Security Foundation - Wikipedia</a></li>
-<li><a href="https://www.linuxfoundation.org/blog/blog/open-source-security-foundation-openssf-reflection-and-future">Open Source Security Foundation (OpenSSF): Reflection and Future - Linux Foundation</a></li>
+<li><a href="https://grsecurity.net/passing_the_baton_faq">Passing the Baton: FAQ - grsecurity</a></li>
+<li><a href="https://grsecurity.net/faq">grsecurity - FAQ</a></li>
 </ul>
 
 
                                 <div class="notes-backlinks">
                     <h2>🔗 リンクされているノート</h2>
                     <ul>
-                                            <li><a href="/notes/project-glasswing.html">Project Glasswing</a></li>
+                                            <li><a href="/notes/linux-security-modules.html">LSM (Linux Security Modules) フレームワーク</a></li>
+                                            <li><a href="/notes/yama-lsm.html">Yama (Yama LSM)</a></li>
                     
                     </ul>
                 </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-09 14:47 / 更新日時: 2026-08-09 14:47</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=OpenSSF%20%28Open%20Source%20Security%20Foundation%29&url=https%3A%2F%2F64p.org%2Fnotes%2Fopenssf.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <span>作成日時: 2026-08-11 16:46 / 更新日時: 2026-08-11 16:46</span>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=grsecurity&url=https%3A%2F%2F64p.org%2Fnotes%2Fgrsecurity.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">

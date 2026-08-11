@@ -22,6 +22,8 @@
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
                                     <li><a href="/notes/yama-lsm.html" class="active">Yama (Yama LSM)</a></li>
+                                    <li><a href="/notes/linux-security-modules.html">LSM (Linux Security Modules) フレームワーク</a></li>
+                                    <li><a href="/notes/grsecurity.html">grsecurity</a></li>
                                     <li><a href="/notes/seijosama-no-omake.html">「聖女様のオマケ」と呼ばれたけど、わたしはオマケではないようです。</a></li>
                                     <li><a href="/notes/sunzi.html">孫子</a></li>
                                     <li><a href="/notes/erlang.html">Erlang</a></li>
@@ -267,7 +269,7 @@
             <article class="notes-content">
                 <h1>Yama (Yama LSM)</h1>
 
-<p>Linuxカーネルの LSM (Linux Security Module) フレームワーク向けの実装の一つ。Kees Cookが開発し、2010〜2011年頃にパッチが提出された。symlink/hardlink保護やptrace制限など、以前からOpenwallやgrsecurityといった別配布・パッチセットで個別に存在していたDAC（Discretionary Access Control）強化機能を、メインラインカーネルに統合する形でまとめたモジュール。ptraceの制限ロジックは元々grsecurityの「子プロセスのみ」制限がベースになっている。</p>
+<p>Linuxカーネルの<a href="/notes/linux-security-modules.html">LSM</a> (Linux Security Module) フレームワーク向けの実装の一つ。Kees Cookが開発し、2010〜2011年頃にパッチが提出された。symlink/hardlink保護やptrace制限など、以前からOpenwallや<a href="/notes/grsecurity.html">grsecurity</a>といった別配布・パッチセットで個別に存在していたDAC（Discretionary Access Control）強化機能を、メインラインカーネルに統合する形でまとめたモジュール。ptraceの制限ロジックは元々grsecurityの「子プロセスのみ」制限がベースになっている。</p>
 
 <h2>主な目的: ptraceの制限</h2>
 
@@ -300,8 +302,16 @@
 </ul>
 
 
+                                <div class="notes-backlinks">
+                    <h2>🔗 リンクされているノート</h2>
+                    <ul>
+                                            <li><a href="/notes/linux-security-modules.html">LSM (Linux Security Modules) フレームワーク</a></li>
+                                            <li><a href="/notes/grsecurity.html">grsecurity</a></li>
+                    
+                    </ul>
+                </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-11 16:42 / 更新日時: 2026-08-11 16:42</span>
+                    <span>作成日時: 2026-08-11 16:42 / 更新日時: 2026-08-11 16:46</span>
                     <a class="share-x" href="https://twitter.com/intent/tweet?text=Yama%20%28Yama%20LSM%29&url=https%3A%2F%2F64p.org%2Fnotes%2Fyama-lsm.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>

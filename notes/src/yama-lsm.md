@@ -1,10 +1,10 @@
 ---
 created: 2026-08-11 16:42
-updated: 2026-08-11 16:42
+updated: 2026-08-11 16:46
 ---
 # Yama (Yama LSM)
 
-Linuxカーネルの LSM (Linux Security Module) フレームワーク向けの実装の一つ。Kees Cookが開発し、2010〜2011年頃にパッチが提出された。symlink/hardlink保護やptrace制限など、以前からOpenwallやgrsecurityといった別配布・パッチセットで個別に存在していたDAC（Discretionary Access Control）強化機能を、メインラインカーネルに統合する形でまとめたモジュール。ptraceの制限ロジックは元々grsecurityの「子プロセスのみ」制限がベースになっている。
+Linuxカーネルの[[linux-security-modules|LSM]] (Linux Security Module) フレームワーク向けの実装の一つ。Kees Cookが開発し、2010〜2011年頃にパッチが提出された。symlink/hardlink保護やptrace制限など、以前からOpenwallや[[grsecurity]]といった別配布・パッチセットで個別に存在していたDAC（Discretionary Access Control）強化機能を、メインラインカーネルに統合する形でまとめたモジュール。ptraceの制限ロジックは元々grsecurityの「子プロセスのみ」制限がベースになっている。
 
 ## 主な目的: ptraceの制限
 
