@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>Freya (freyaui.dev) — Rust製クロスプラットフォームGUIライブラリ - Notes - 64p.org</title>
+    <title>hunk(AIエージェント向けCLI diffビューア) - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/highlight.js@11/styles/github.min.css" media="(prefers-color-scheme: light)">
@@ -21,7 +21,7 @@
                 <a class="notes-tags-link" href="/notes/tags/">🏷️ タグ一覧</a>
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
-                                    <li><a href="/notes/hunk-cli.html">hunk(AIエージェント向けCLI diffビューア)</a></li>
+                                    <li><a href="/notes/hunk-cli.html" class="active">hunk(AIエージェント向けCLI diffビューア)</a></li>
                                     <li><a href="/notes/guillain-barre-syndrome.html">ギラン・バレー症候群(Guillain-Barré Syndrome, GBS)</a></li>
                                     <li><a href="/notes/profile-guided-optimization.html">Profile-Guided Optimization (PGO)</a></li>
                                     <li><a href="/notes/linux-perf.html">perf(Linuxパフォーマンス解析ツール)</a></li>
@@ -244,7 +244,7 @@
                                     <li><a href="/notes/skia.html">Skia</a></li>
                                     <li><a href="/notes/rust-gui-libraries.html">Rust GUI ライブラリ一覧</a></li>
                                     <li><a href="/notes/go-gui-libraries.html">Go GUI ライブラリ一覧</a></li>
-                                    <li><a href="/notes/freya.html" class="active">Freya (freyaui.dev) — Rust製クロスプラットフォームGUIライブラリ</a></li>
+                                    <li><a href="/notes/freya.html">Freya (freyaui.dev) — Rust製クロスプラットフォームGUIライブラリ</a></li>
                                     <li><a href="/notes/hacker-news.html">Hacker News (HN) について</a></li>
                                     <li><a href="/notes/edge-manifest-v3.html">Microsoft Edge、拡張機能をManifest V3へ完全移行</a></li>
                                     <li><a href="/notes/tableau.html">Tableau</a></li>
@@ -267,65 +267,58 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>Freya (freyaui.dev) — Rust製クロスプラットフォームGUIライブラリ</h1>
+                <h1>hunk(AIエージェント向けCLI diffビューア)</h1>
 
-<p>Rustでクロスプラットフォームのネイティブ（非Web）GUIアプリを作れるライブラリ。 <a class="note-tag" href="/notes/tags/rust.html">#rust</a> <a class="note-tag" href="/notes/tags/gui.html">#gui</a></p>
+<p>modem-dev製の、ターミナル上で動くdiffビューア(TUI)。「Review-first terminal diff viewer for agentic coders」と銘打たれており、Claude Codeのようなコーディングエージェントが生成する差分をレビューするために作られている。</p>
 
-<h2>概要</h2>
+<h2>背景にある問題意識</h2>
 
-<ul>
-<li>公式サイト: <a href="https://freyaui.dev/">https://freyaui.dev/</a></li>
-<li>GitHub: <a href="https://github.com/marc2332/freya">https://github.com/marc2332/freya</a> （約3,000スター、活発に開発中）</li>
-<li>作者: marc2332 (Marc Espín)</li>
-<li>ライセンス: MIT</li>
-<li>レンダリングエンジンは <strong>Skia</strong></li>
-</ul>
-
-
-<h2>Dioxusとの関係</h2>
-
-<ul>
-<li>v0.1〜0.3は <a href="https://dioxuslabs.com/">Dioxus</a> のコア機能をベースに実装されていた</li>
-<li>v0.4以降は独自のリアクティブコアに置き換え、Dioxusから部分的にインスパイアされつつも独立した実装になっている</li>
-</ul>
-
+<p>コーディングエージェントは人間より大きな差分を、より速いサイクルで生成する。その結果、変更の文脈がチャットログ側に流れてしまい、diff単体からは意図が読み取りにくくなる。hunkは「レビューを主作業にする」ことを狙ったツールで、変更セット全体を上から下へ連続して読めるナビゲーション可能なビューに、エージェントの残した文脈を突き合わせて表示する。</p>
 
 <h2>主な機能</h2>
 
 <ul>
-<li>Button、Switch、Slider、Calendar、ColorPickerなど豊富な組み込みコンポーネント</li>
-<li>色・サイズ・位置などに対応したスムーズなアニメーション</li>
-<li>カーソル管理・テキスト選択付きのリッチテキスト編集</li>
-<li>Ropeベースの編集とtree-sitterによるシンタックスハイライトを備えたコードエディタ</li>
-<li>マルチページ対応のルーティング</li>
-<li>WebView埋め込み、PTY対応のターミナル機能</li>
-<li>コンポーネントをリアルタイム検査できる開発者ツール</li>
+<li>git diff・パッチファイル・2ファイル比較を、シンタックスハイライト付き・split/unified切替可能なフルスクリーンTUIでレンダリング。</li>
+<li>複数ファイルにまたがる変更をサイドバー順に上から下へ連続して読める「レビューストリーム」形式。1ファイルずつ切り替える従来のpager型diffツールとは異なる。</li>
+<li>エージェントがサイドカーファイルに残した注釈(要約・根拠・作成者)を、該当hunkの直上にインラインで表示できる。</li>
+<li>watchモード: ファイルの変更を検知してライブ更新。</li>
+<li>Git/Jujutsu/Sapling に対応。jj・Sapling環境では自動検出してネイティブのrevsetを使う。</li>
 </ul>
 
 
-<h2>所感</h2>
+<h2>インストールと基本コマンド</h2>
 
-<p>同じRust製ネイティブGUIという文脈では <a href="/notes/gpui.html">GPUI</a>（Zed製、GPU駆動）とも比較対象になる。Freyaはコードエディタ・ターミナル・WebView埋め込みなど「開発者向けツールを作る」ための機能セットが特に手厚く、VSCode的なアプリケーションを作る用途に向いていそうな作り。</p>
+<pre><code class="sh">npm i -g hunkdiff   # Node.js 18+
+# もしくは
+brew install hunk
+</code></pre>
+
+<ul>
+<li><code>hunk diff</code>: 現在のリポジトリの変更(未追跡ファイル含む)をレビュー</li>
+<li><code>hunk show</code>: 直近のコミットをレビュー</li>
+<li><code>hunk --version</code>: バージョン表示</li>
+</ul>
+
+
+<h2>「hunk」という用語について</h2>
+
+<p>そもそも diff における hunk とは、変更箇所(追加/削除された行)とその前後の文脈行をまとめた1ブロックを指す一般的な用語。unified diff形式では <code>@@ -1,3 +1,4 @@</code> のようなヘッダーで各hunkが区切られる。<code>git add -p</code> などのhunk単位での対話的操作もこの単位に基づく。ツール名の「hunk」はこの用語に由来する。</p>
+
+<p><a class="note-tag" href="/notes/tags/cli.html">#cli</a> <a class="note-tag" href="/notes/tags/git.html">#git</a> <a class="note-tag" href="/notes/tags/ai-agent.html">#ai-agent</a></p>
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://freyaui.dev/">Freya - GUI Library for Rust</a></li>
-<li><a href="https://github.com/marc2332/freya">GitHub - marc2332/freya</a></li>
+<li><a href="https://github.com/modem-dev/hunk">GitHub - modem-dev/hunk</a></li>
+<li><a href="https://www.hunk.dev/">hunk — review-first terminal diff viewer</a></li>
+<li><a href="https://www.hunk.dev/docs/start/install/">Install | hunk</a></li>
+<li><a href="https://deepwiki.com/modem-dev/hunk/1.1-getting-started">Getting Started | modem-dev/hunk | DeepWiki</a></li>
 </ul>
 
 
-                                <div class="notes-backlinks">
-                    <h2>🔗 リンクされているノート</h2>
-                    <ul>
-                                            <li><a href="/notes/rust-gui-libraries.html">Rust GUI ライブラリ一覧</a></li>
-                                            <li><a href="/notes/skia.html">Skia</a></li>
-                    
-                    </ul>
-                </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-09 15:59 / 更新日時: 2026-08-09 15:59</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=Freya%20%28freyaui.dev%29%20%E2%80%94%20Rust%E8%A3%BD%E3%82%AF%E3%83%AD%E3%82%B9%E3%83%97%E3%83%A9%E3%83%83%E3%83%88%E3%83%95%E3%82%A9%E3%83%BC%E3%83%A0GUI%E3%83%A9%E3%82%A4%E3%83%96%E3%83%A9%E3%83%AA&url=https%3A%2F%2F64p.org%2Fnotes%2Ffreya.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <span>作成日時: 2026-08-12 08:17 / 更新日時: 2026-08-12 08:17</span>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=hunk%28AI%E3%82%A8%E3%83%BC%E3%82%B8%E3%82%A7%E3%83%B3%E3%83%88%E5%90%91%E3%81%91CLI%20diff%E3%83%93%E3%83%A5%E3%83%BC%E3%82%A2%29&url=https%3A%2F%2F64p.org%2Fnotes%2Fhunk-cli.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">
