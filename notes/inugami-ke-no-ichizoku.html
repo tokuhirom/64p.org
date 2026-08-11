@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>ufw - Notes - 64p.org</title>
+    <title>犬神家の一族 - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/highlight.js@11/styles/github.min.css" media="(prefers-color-scheme: light)">
@@ -21,7 +21,7 @@
                 <a class="notes-tags-link" href="/notes/tags/">🏷️ タグ一覧</a>
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
-                                    <li><a href="/notes/inugami-ke-no-ichizoku.html">犬神家の一族</a></li>
+                                    <li><a href="/notes/inugami-ke-no-ichizoku.html" class="active">犬神家の一族</a></li>
                                     <li><a href="/notes/lauren-set.html">ローレンセット</a></li>
                                     <li><a href="/notes/mos-black-angus-burger.html">モスバーガー「ブラックアンガスバーガー」</a></li>
                                     <li><a href="/notes/naisuimen-yoshoku.html">内水面養殖業（ないすいめんようしょくぎょう）</a></li>
@@ -92,7 +92,7 @@
                                     <li><a href="/notes/grill-me.html">grill-me</a></li>
                                     <li><a href="/notes/jinro.html">人狼(人狼ゲーム)</a></li>
                                     <li><a href="/notes/buchigire-reijou.html">ブチ切れ令嬢は報復を誓いました。</a></li>
-                                    <li><a href="/notes/ufw.html" class="active">ufw</a></li>
+                                    <li><a href="/notes/ufw.html">ufw</a></li>
                                     <li><a href="/notes/iptables.html">iptables</a></li>
                                     <li><a href="/notes/vllm.html">vLLM</a></li>
                                     <li><a href="/notes/acm-icpc.html">ACM-ICPC</a></li>
@@ -253,48 +253,41 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>ufw</h1>
+                <h1>犬神家の一族</h1>
 
-<p><strong>Uncomplicated Firewall</strong>の略。Debian系(Ubuntuなど)で標準的に使われるファイアウォール管理ツール。 <a class="note-tag" href="/notes/tags/linux.html">#linux</a> <a class="note-tag" href="/notes/tags/security.html">#security</a></p>
+<p>横溝正史による金田一耕助シリーズの長編推理小説。雑誌『キング』に1950年1月号から1951年5月号まで連載、1951年5月に講談社から単行本化された。</p>
 
-<h2>特徴</h2>
+<p>犬神財閥の創始者・犬神佐兵衛が残した遺言状を巡って起こる連続殺人が題材。家宝である「斧（よき）・琴（こと）・菊（きく）」になぞらえて、一族の人間が次々に殺害されていく。</p>
+
+<h2>終戦直後という時代背景</h2>
+
+<p>物語の年代は作中で明示されないが、「昭和二十×年」の表記と登場人物の年齢から1949年（昭和24年）頃と推定される（1947年説を採る映像化作品もある）。</p>
+
+<p>主人公格の犬神佐清はビルマ戦線で顔に大怪我を負い、ゴムマスクを被った姿で復員した設定。この「復員」という要素がトリックの中核をなしており、同じく復員兵の青沼静馬が佐清になりすまして家に戻る、という筋書きにつながっている。</p>
+
+<p>終戦直後の混乱・通信手段の未発達（本人確認が難しい、離れた土地の消息が容易に掴めないなど）が、現代では成立しにくいすれ違いや入れ替わりを可能にしている点が、当時ならではのミステリとしての面白さになっている。</p>
+
+<h2>映像化</h2>
+
+<p>横溝作品の中でも最も映像化回数が多く、映画3本・テレビドラマ8作品が製作されている。市川崑監督による1976年公開の映画版は「日本映画の金字塔」と評されることもある。</p>
+
+<p><a class="note-tag" href="/notes/tags/mystery.html">#mystery</a> <a class="note-tag" href="/notes/tags/novel.html">#novel</a></p>
 
 <ul>
-<li>内部では強力なパケットフィルタリングエンジンである<a href="/notes/iptables.html">iptables</a>(netfilter)を利用しているが、利用者にはシンプルなコマンドラインインターフェースだけを提供する、いわば<a href="/notes/iptables.html">iptables</a>のフロントエンド</li>
-<li>複雑な<a href="/notes/iptables.html">iptables</a>のルール記述を意識せず、簡単なコマンドで本格的なパケットフィルタリングを設定できる</li>
-<li>設定ミスのリスクを減らしながら、有効化/無効化、デフォルトポリシー(拒否/許可)の設定、特定ポート・IPからのアクセス許可、ルール削除などが可能</li>
+<li><a href="https://www.amazon.co.jp/dp/4041304059?tag=tokuhirom-22">犬神家の一族 金田一耕助ファイル5 (角川文庫)</a></li>
 </ul>
 
-
-<h2>基本コマンド例</h2>
-
-<pre><code class="sh">sudo ufw enable          # 有効化
-sudo ufw disable         # 無効化
-sudo ufw default deny    # デフォルトで拒否
-sudo ufw allow 22/tcp    # SSHなど特定ポートを許可
-sudo ufw status          # ルール一覧確認
-</code></pre>
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://zenn.dev/tomoakinagahara/articles/3ef0f6ab777af5">UFW (Uncomplicated Firewall)の使い方</a></li>
-<li><a href="https://kaworu.jpn.org/security/ufw">ufw - セキュリティ</a></li>
-<li><a href="https://wiki.archlinux.jp/index.php/Uncomplicated_Firewall">Uncomplicated Firewall - ufw - ArchWiki</a></li>
-<li><a href="https://qiita.com/Termnix-IT/items/7c26348916d9c55a83cc">UFWって何？Linuxでファイアウォールをサクッと設定＆解説してみた！ - Qiita</a></li>
+<li><a href="https://ja.wikipedia.org/wiki/%E7%8A%AC%E7%A5%9E%E5%AE%B6%E3%81%AE%E4%B8%80%E6%97%8F">犬神家の一族 - Wikipedia</a></li>
 </ul>
 
 
-                                <div class="notes-backlinks">
-                    <h2>🔗 リンクされているノート</h2>
-                    <ul>
-                                            <li><a href="/notes/iptables.html">iptables</a></li>
-                    
-                    </ul>
-                </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-10 21:19 / 更新日時: 2026-08-10 21:20</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=ufw&url=https%3A%2F%2F64p.org%2Fnotes%2Fufw.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <span>作成日時: 2026-08-11 12:34 / 更新日時: 2026-08-11 12:34</span>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=%E7%8A%AC%E7%A5%9E%E5%AE%B6%E3%81%AE%E4%B8%80%E6%97%8F&url=https%3A%2F%2F64p.org%2Fnotes%2Finugami-ke-no-ichizoku.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">
