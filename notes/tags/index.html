@@ -19,6 +19,8 @@
                 <a class="notes-tags-link" href="/notes/tags/">🏷️ タグ一覧</a>
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
+                                    <li><a href="/notes/flame-graph.html">フレームグラフ(Flame Graph)</a></li>
+                                    <li><a href="/notes/async-profiler.html">async-profiler</a></li>
                                     <li><a href="/notes/linux-perf.html">perf(Linuxパフォーマンス解析ツール)</a></li>
                                     <li><a href="/notes/slang-tuxic.html">Slang::Tuxic</a></li>
                                     <li><a href="/notes/raku-slang.html">Raku の slang 機構</a></li>
@@ -261,7 +263,7 @@
         <main class="notes-main">
             <article class="notes-content">
                 <h1>🏷️ タグ一覧</h1>
-                <p class="notes-meta">161件のタグがあります。</p>
+                <p class="notes-meta">162件のタグがあります。</p>
                                 <div class="notes-tag-cloud">
                                     <a class="note-tag notes-tag-cloud-item" href="/notes/tags/security.html">#security<span class="notes-tag-count">27</span></a>
                                     <a class="note-tag notes-tag-cloud-item" href="/notes/tags/linux.html">#linux<span class="notes-tag-count">19</span></a>
@@ -302,7 +304,10 @@
                                     <a class="note-tag notes-tag-cloud-item" href="/notes/tags/concurrency.html">#concurrency<span class="notes-tag-count">3</span></a>
                                     <a class="note-tag notes-tag-cloud-item" href="/notes/tags/gui.html">#gui<span class="notes-tag-count">3</span></a>
                                     <a class="note-tag notes-tag-cloud-item" href="/notes/tags/history.html">#history<span class="notes-tag-count">3</span></a>
+                                    <a class="note-tag notes-tag-cloud-item" href="/notes/tags/jvm.html">#jvm<span class="notes-tag-count">3</span></a>
+                                    <a class="note-tag notes-tag-cloud-item" href="/notes/tags/performance.html">#performance<span class="notes-tag-count">3</span></a>
                                     <a class="note-tag notes-tag-cloud-item" href="/notes/tags/perl.html">#perl<span class="notes-tag-count">3</span></a>
+                                    <a class="note-tag notes-tag-cloud-item" href="/notes/tags/profiling.html">#profiling<span class="notes-tag-count">3</span></a>
                                     <a class="note-tag notes-tag-cloud-item" href="/notes/tags/programming-language.html">#programming-language<span class="notes-tag-count">3</span></a>
                                     <a class="note-tag notes-tag-cloud-item" href="/notes/tags/rdbms.html">#rdbms<span class="notes-tag-count">3</span></a>
                                     <a class="note-tag notes-tag-cloud-item" href="/notes/tags/sql.html">#sql<span class="notes-tag-count">3</span></a>
@@ -316,7 +321,6 @@
                                     <a class="note-tag notes-tag-cloud-item" href="/notes/tags/embedded.html">#embedded<span class="notes-tag-count">2</span></a>
                                     <a class="note-tag notes-tag-cloud-item" href="/notes/tags/full-text-search.html">#full-text-search<span class="notes-tag-count">2</span></a>
                                     <a class="note-tag notes-tag-cloud-item" href="/notes/tags/grammar.html">#grammar<span class="notes-tag-count">2</span></a>
-                                    <a class="note-tag notes-tag-cloud-item" href="/notes/tags/jvm.html">#jvm<span class="notes-tag-count">2</span></a>
                                     <a class="note-tag notes-tag-cloud-item" href="/notes/tags/moc.html">#moc<span class="notes-tag-count">2</span></a>
                                     <a class="note-tag notes-tag-cloud-item" href="/notes/tags/mythology.html">#mythology<span class="notes-tag-count">2</span></a>
                                     <a class="note-tag notes-tag-cloud-item" href="/notes/tags/nix.html">#nix<span class="notes-tag-count">2</span></a>
@@ -374,6 +378,7 @@
                                     <a class="note-tag notes-tag-cloud-item" href="/notes/tags/hono.html">#hono<span class="notes-tag-count">1</span></a>
                                     <a class="note-tag notes-tag-cloud-item" href="/notes/tags/industry.html">#industry<span class="notes-tag-count">1</span></a>
                                     <a class="note-tag notes-tag-cloud-item" href="/notes/tags/ipsec.html">#ipsec<span class="notes-tag-count">1</span></a>
+                                    <a class="note-tag notes-tag-cloud-item" href="/notes/tags/java.html">#java<span class="notes-tag-count">1</span></a>
                                     <a class="note-tag notes-tag-cloud-item" href="/notes/tags/law.html">#law<span class="notes-tag-count">1</span></a>
                                     <a class="note-tag notes-tag-cloud-item" href="/notes/tags/light-novel.html">#light-novel<span class="notes-tag-count">1</span></a>
                                     <a class="note-tag notes-tag-cloud-item" href="/notes/tags/machine-learning.html">#machine-learning<span class="notes-tag-count">1</span></a>
@@ -395,9 +400,7 @@
                                     <a class="note-tag notes-tag-cloud-item" href="/notes/tags/operating-system.html">#operating-system<span class="notes-tag-count">1</span></a>
                                     <a class="note-tag notes-tag-cloud-item" href="/notes/tags/oss.html">#oss<span class="notes-tag-count">1</span></a>
                                     <a class="note-tag notes-tag-cloud-item" href="/notes/tags/paleontology.html">#paleontology<span class="notes-tag-count">1</span></a>
-                                    <a class="note-tag notes-tag-cloud-item" href="/notes/tags/performance.html">#performance<span class="notes-tag-count">1</span></a>
                                     <a class="note-tag notes-tag-cloud-item" href="/notes/tags/plant.html">#plant<span class="notes-tag-count">1</span></a>
-                                    <a class="note-tag notes-tag-cloud-item" href="/notes/tags/profiling.html">#profiling<span class="notes-tag-count">1</span></a>
                                     <a class="note-tag notes-tag-cloud-item" href="/notes/tags/python.html">#python<span class="notes-tag-count">1</span></a>
                                     <a class="note-tag notes-tag-cloud-item" href="/notes/tags/sake.html">#sake<span class="notes-tag-count">1</span></a>
                                     <a class="note-tag notes-tag-cloud-item" href="/notes/tags/self-hosting.html">#self-hosting<span class="notes-tag-count">1</span></a>

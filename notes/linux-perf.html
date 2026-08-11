@@ -21,6 +21,8 @@
                 <a class="notes-tags-link" href="/notes/tags/">🏷️ タグ一覧</a>
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
+                                    <li><a href="/notes/flame-graph.html">フレームグラフ(Flame Graph)</a></li>
+                                    <li><a href="/notes/async-profiler.html">async-profiler</a></li>
                                     <li><a href="/notes/linux-perf.html" class="active">perf(Linuxパフォーマンス解析ツール)</a></li>
                                     <li><a href="/notes/slang-tuxic.html">Slang::Tuxic</a></li>
                                     <li><a href="/notes/raku-slang.html">Raku の slang 機構</a></li>
@@ -288,7 +290,7 @@ perf report
 
 <h2>フレームグラフとの連携</h2>
 
-<p><code>perf record</code>/<code>perf report</code>で得たスタックトレースは、Brendan Greggの<strong>フレームグラフ</strong>の入力データとしてよく使われる。複数サンプルに共通するコールパスを折り畳んで表示することで、ボトルネックを直感的に可視化できる。</p>
+<p><code>perf record</code>/<code>perf report</code>で得たスタックトレースは、Brendan Greggの<a href="/notes/flame-graph.html">フレームグラフ</a>の入力データとしてよく使われる。複数サンプルに共通するコールパスを折り畳んで表示することで、ボトルネックを直感的に可視化できる。</p>
 
 <p><a class="note-tag" href="/notes/tags/linux.html">#linux</a> <a class="note-tag" href="/notes/tags/performance.html">#performance</a> <a class="note-tag" href="/notes/tags/profiling.html">#profiling</a></p>
 
@@ -301,6 +303,14 @@ perf report
 </ul>
 
 
+                                <div class="notes-backlinks">
+                    <h2>🔗 リンクされているノート</h2>
+                    <ul>
+                                            <li><a href="/notes/async-profiler.html">async-profiler</a></li>
+                                            <li><a href="/notes/flame-graph.html">フレームグラフ(Flame Graph)</a></li>
+                    
+                    </ul>
+                </div>
                                 <div class="notes-meta">
                     <span>作成日時: 2026-08-11 22:28 / 更新日時: 2026-08-11 22:28</span>
                     <a class="share-x" href="https://twitter.com/intent/tweet?text=perf%28Linux%E3%83%91%E3%83%95%E3%82%A9%E3%83%BC%E3%83%9E%E3%83%B3%E3%82%B9%E8%A7%A3%E6%9E%90%E3%83%84%E3%83%BC%E3%83%AB%29&url=https%3A%2F%2F64p.org%2Fnotes%2Flinux-perf.html" target="_blank" rel="noopener">𝕏 で共有</a>
