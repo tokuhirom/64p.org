@@ -1,6 +1,6 @@
 ---
 created: 2026-08-09 22:15
-updated: 2026-08-09 22:16
+updated: 2026-08-11 18:58
 ---
 # 正規表現エンジンの実装方式: バックトラッキング型とNFA/DFA型
 
@@ -17,7 +17,7 @@ Ken Thompsonが考案したNFA構築法（[[thompson-construction|Thompson const
 ## Perl 5とRakuの場合
 
 - **Perl 5**: バックトラッキング型。表現力は高いが、書き方次第でReDoSの温床になりうる。
-- **[[raku-rakudo-perl6|Raku]]**: 文法的にはPerlの血統を継ぐバックトラッキング型のエンジンだが、grammarの`token`/`rule`宣言子は暗黙に`:ratchet`(`:r`)修飾子を持ち、一度マッチした箇所へのバックトラックを禁止する。フルバックトラック可能な`regex`宣言子と、バックトラックなしで高速・失敗も早い`token`/`rule`を書き分けられる設計になっており、Perl 5と比べてバックトラック起因の性能問題を抑えやすい。
+- **[[raku-rakudo-perl6|Raku]]**: 文法的にはPerlの血統を継ぐバックトラッキング型のエンジンだが、grammarの`token`/`rule`宣言子は暗黙に`:ratchet`(`:r`)修飾子を持ち、一度マッチした箇所へのバックトラックを禁止する。フルバックトラック可能な`regex`宣言子と、バックトラックなしで高速・失敗も早い`token`/`rule`を書き分けられる設計になっており、Perl 5と比べてバックトラック起因の性能問題を抑えやすい。分岐(`|`)の選択自体も時系列的な最初マッチではなく、[[raku-longest-token-matching|Longest Token Match(LTM)]]という宣言的なランキングルールに基づく。
 
 #regex #raku #perl
 

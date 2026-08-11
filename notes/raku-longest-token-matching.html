@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>お盆休み - Notes - 64p.org</title>
+    <title>Longest Token Match (LTM) - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/highlight.js@11/styles/github.min.css" media="(prefers-color-scheme: light)">
@@ -22,7 +22,7 @@
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
                                     <li><a href="/notes/regex-engine-backtracking-vs-nfa.html">正規表現エンジンの実装方式: バックトラッキング型とNFA/DFA型</a></li>
-                                    <li><a href="/notes/raku-longest-token-matching.html">Longest Token Match (LTM)</a></li>
+                                    <li><a href="/notes/raku-longest-token-matching.html" class="active">Longest Token Match (LTM)</a></li>
                                     <li><a href="/notes/gorilla.html">ゴリラ</a></li>
                                     <li><a href="/notes/dungeon-haishin-genre.html">ダンジョン配信(ジャンル)</a></li>
                                     <li><a href="/notes/yama-lsm.html">Yama (Yama LSM)</a></li>
@@ -162,7 +162,7 @@
                                     <li><a href="/notes/herdr.html">herdr</a></li>
                                     <li><a href="/notes/herdr-browser.html">herdr-browser</a></li>
                                     <li><a href="/notes/byod.html">BYOD (Bring Your Own Device)</a></li>
-                                    <li><a href="/notes/obon-yasumi.html" class="active">お盆休み</a></li>
+                                    <li><a href="/notes/obon-yasumi.html">お盆休み</a></li>
                                     <li><a href="/notes/harmonyos.html">HarmonyOSとは</a></li>
                                     <li><a href="/notes/futabasaurus-suzukii.html">フタバスズキリュウ（Futabasaurus suzukii）</a></li>
                                     <li><a href="/notes/yanshui-yimian.html">塩水意麺（鹽水意麵）</a></li>
@@ -259,40 +259,65 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>お盆休み</h1>
+                <h1>Longest Token Match (LTM)</h1>
 
-<p><a class="note-tag" href="/notes/tags/japan.html">#japan</a> <a class="note-tag" href="/notes/tags/holiday.html">#holiday</a></p>
+<p><a href="/notes/raku-rakudo-perl6.html">Raku</a>の正規表現/文法(grammar)における、単一パイプ<code>|</code>での分岐選択ルール。「最初にマッチした分岐」ではなく、宣言的な基準でランク付けした上で最有力候補を採用する。</p>
 
-<p>日本で8月中旬頃、祖先の霊を迎え供養する仏教行事「お盆」に合わせて設けられる休暇期間。</p>
-
-<h2>法的な位置づけ</h2>
-
-<p>お盆自体は法定の祝日ではない。多くの企業が独自に「夏季休暇」として設定しているため、休みの期間や有無は勤務先によって異なる。</p>
-
-<h2>地域差</h2>
+<h2><code>|</code> と <code>||</code> の違い</h2>
 
 <ul>
-<li>多くの地域は新暦8月13〜16日(いわゆる「月遅れ盆」)で行う。</li>
-<li>東京・神奈川・石川・静岡の一部都市部(都心部)では、新暦7月13〜16日(「7月盆」)で行う地域もある。</li>
+<li><code>|</code>: LTM(Longest Token Match)。書かれた順序に関係なく、宣言的な基準で最も有力な分岐を選ぶ。</li>
+<li><code>||</code>: 昔ながらの時系列的な選択。上から順に試し、最初にマッチした分岐をそのまま採用する(Perl 5の<code>|</code>に近い挙動)。</li>
 </ul>
 
 
-<h2>2026年の場合</h2>
+<h2>ランキングの基準</h2>
 
-<p>基本的な期間は8月13日(木)〜16日(日)。8/13・8/14は暦のうえでは平日だが、夏季休暇に設定する企業では土日と合わせて4連休になる。8月11日(火)が「山の日」で祝日のため、8月12日(水)にも休暇を取得できれば8/11(火)〜8/16(日)の最大6連休が可能。</p>
+<p>単純に「マッチした文字列が一番長い分岐が勝つ」わけではない。Rakudoでの実際のランキングは</p>
+
+<pre><code>(prefix_len desc, litlen desc, declaration index asc)
+</code></pre>
+
+<p>という順序で行われる。すなわち、</p>
+
+<ol>
+<li>宣言部(各分岐の中で曖昧さなく静的に決まる先頭部分)の長さが長い分岐を優先</li>
+<li>同点ならリテラル部分の長さが長い分岐を優先</li>
+<li>それでも同点なら、ソースコード上で先に書かれた分岐を優先</li>
+</ol>
+
+
+<p>分岐が実際にどこまでマッチするか(バックトラック込みの最終結果)ではなく、パース時点で分岐の「見込み」を評価して選ぶ、という宣言的な性質がポイント。</p>
+
+<h2>Protoルールのフラット化</h2>
+
+<p>同名の<code>rule</code>/<code>token</code>定義(protoルール)は、実行時に1つの巨大なLTMアルタネーションへと「フラット化」される。これにより、たとえば言語設計時に変数名<code>forest_density</code>が<code>for</code>ループの構文と字面上衝突しても、宣言的な最長トークンマッチで曖昧性を解消できる。</p>
+
+<h2>mutsu(Rust製Raku実装)での扱い</h2>
+
+<p><a href="/notes/raku-rakudo-perl6.html">mutsu</a>でもこのLTMランキングロジックをRakudo準拠で実装する作業が進められている(ADR-0022)。<code>|</code>を使った分岐は複数の実装経路(バックトラッキング版・単純キャプチャ版・キャプチャなしプローバー版)を持つため、それぞれでランキング基準を揃える必要がある。</p>
+
+<p><a class="note-tag" href="/notes/tags/raku.html">#raku</a> <a class="note-tag" href="/notes/tags/regex.html">#regex</a> <a class="note-tag" href="/notes/tags/grammar.html">#grammar</a></p>
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://rurubu.jp/andmore/article/25189">【2026年】お盆休みはいつからいつまで？ 最大9連休も夢じゃない！｜るるぶ&amp;more.</a></li>
-<li><a href="https://stay.rakuten.co.jp/discover/feature/obon-holiday/">【2026年版】お盆の連休、海の日、山の日はいつ？</a></li>
-<li><a href="https://www.forever-kato.co.jp/column/obon2026/">2026年（令和8年）お盆休み期間はいつからいつまで？｜株式会社加登</a></li>
+<li><a href="https://perl6advent.wordpress.com/2012/12/09/day-9-longest-token-matching/">Day 9 – Longest Token Matching | Raku Advent Calendar</a></li>
+<li><a href="https://docs.raku.org/syntax/%7C">| | Raku Documentation</a></li>
+<li><a href="https://github.com/Raku/doc/issues/1141">Mixed | and || in regexes (trap?) · Issue #1141 · Raku/doc</a></li>
 </ul>
 
 
+                                <div class="notes-backlinks">
+                    <h2>🔗 リンクされているノート</h2>
+                    <ul>
+                                            <li><a href="/notes/regex-engine-backtracking-vs-nfa.html">正規表現エンジンの実装方式: バックトラッキング型とNFA/DFA型</a></li>
+                    
+                    </ul>
+                </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-10 15:04 / 更新日時: 2026-08-10 15:04</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=%E3%81%8A%E7%9B%86%E4%BC%91%E3%81%BF&url=https%3A%2F%2F64p.org%2Fnotes%2Fobon-yasumi.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <span>作成日時: 2026-08-11 18:58 / 更新日時: 2026-08-11 18:58</span>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=Longest%20Token%20Match%20%28LTM%29&url=https%3A%2F%2F64p.org%2Fnotes%2Fraku-longest-token-matching.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">

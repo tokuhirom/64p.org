@@ -21,6 +21,8 @@
                 <a class="notes-tags-link" href="/notes/tags/">🏷️ タグ一覧</a>
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
+                                    <li><a href="/notes/regex-engine-backtracking-vs-nfa.html" class="active">正規表現エンジンの実装方式: バックトラッキング型とNFA/DFA型</a></li>
+                                    <li><a href="/notes/raku-longest-token-matching.html">Longest Token Match (LTM)</a></li>
                                     <li><a href="/notes/gorilla.html">ゴリラ</a></li>
                                     <li><a href="/notes/dungeon-haishin-genre.html">ダンジョン配信(ジャンル)</a></li>
                                     <li><a href="/notes/yama-lsm.html">Yama (Yama LSM)</a></li>
@@ -183,7 +185,6 @@
                                     <li><a href="/notes/project-panama.html">Project Panama</a></li>
                                     <li><a href="/notes/apache-arrow.html">Apache Arrow</a></li>
                                     <li><a href="/notes/thompson-construction.html">Thompson construction</a></li>
-                                    <li><a href="/notes/regex-engine-backtracking-vs-nfa.html" class="active">正規表現エンジンの実装方式: バックトラッキング型とNFA/DFA型</a></li>
                                     <li><a href="/notes/redos.html">ReDoS (Regular Expression Denial of Service)</a></li>
                                     <li><a href="/notes/project-notes.html">プロジェクトノート (Project Notes)</a></li>
                                     <li><a href="/notes/moc.html">MOC (Map of Content)</a></li>
@@ -274,7 +275,7 @@
 
 <ul>
 <li><strong>Perl 5</strong>: バックトラッキング型。表現力は高いが、書き方次第でReDoSの温床になりうる。</li>
-<li><strong><a href="/notes/raku-rakudo-perl6.html">Raku</a></strong>: 文法的にはPerlの血統を継ぐバックトラッキング型のエンジンだが、grammarの<code>token</code>/<code>rule</code>宣言子は暗黙に<code>:ratchet</code>(<code>:r</code>)修飾子を持ち、一度マッチした箇所へのバックトラックを禁止する。フルバックトラック可能な<code>regex</code>宣言子と、バックトラックなしで高速・失敗も早い<code>token</code>/<code>rule</code>を書き分けられる設計になっており、Perl 5と比べてバックトラック起因の性能問題を抑えやすい。</li>
+<li><strong><a href="/notes/raku-rakudo-perl6.html">Raku</a></strong>: 文法的にはPerlの血統を継ぐバックトラッキング型のエンジンだが、grammarの<code>token</code>/<code>rule</code>宣言子は暗黙に<code>:ratchet</code>(<code>:r</code>)修飾子を持ち、一度マッチした箇所へのバックトラックを禁止する。フルバックトラック可能な<code>regex</code>宣言子と、バックトラックなしで高速・失敗も早い<code>token</code>/<code>rule</code>を書き分けられる設計になっており、Perl 5と比べてバックトラック起因の性能問題を抑えやすい。分岐(<code>|</code>)の選択自体も時系列的な最初マッチではなく、<a href="/notes/raku-longest-token-matching.html">Longest Token Match(LTM)</a>という宣言的なランキングルールに基づく。</li>
 </ul>
 
 
@@ -299,7 +300,7 @@
                     </ul>
                 </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-09 22:15 / 更新日時: 2026-08-09 22:16</span>
+                    <span>作成日時: 2026-08-09 22:15 / 更新日時: 2026-08-11 18:58</span>
                     <a class="share-x" href="https://twitter.com/intent/tweet?text=%E6%AD%A3%E8%A6%8F%E8%A1%A8%E7%8F%BE%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%B3%E3%81%AE%E5%AE%9F%E8%A3%85%E6%96%B9%E5%BC%8F%3A%20%E3%83%90%E3%83%83%E3%82%AF%E3%83%88%E3%83%A9%E3%83%83%E3%82%AD%E3%83%B3%E3%82%B0%E5%9E%8B%E3%81%A8NFA%2FDFA%E5%9E%8B&url=https%3A%2F%2F64p.org%2Fnotes%2Fregex-engine-backtracking-vs-nfa.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
