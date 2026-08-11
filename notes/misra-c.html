@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>Notesコーナーへようこそ - Notes - 64p.org</title>
+    <title>MISRA-C - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/highlight.js@11/styles/github.min.css" media="(prefers-color-scheme: light)">
@@ -21,7 +21,7 @@
                 <a class="notes-tags-link" href="/notes/tags/">🏷️ タグ一覧</a>
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
-                                    <li><a href="/notes/misra-c.html">MISRA-C</a></li>
+                                    <li><a href="/notes/misra-c.html" class="active">MISRA-C</a></li>
                                     <li><a href="/notes/rokkasen.html">六歌仙（ろっかせん）</a></li>
                                     <li><a href="/notes/ono-no-komachi.html">小野小町</a></li>
                                     <li><a href="/notes/shinkansen-komachi-name-origin.html">新幹線「こまち」の名前の由来</a></li>
@@ -226,7 +226,7 @@
                                     <li><a href="/notes/carnivorous-plants.html">食虫植物</a></li>
                                     <li><a href="/notes/miidera-gomimushi.html">ミイデラゴミムシ</a></li>
                                     <li><a href="/notes/lefthook.html">lefthook</a></li>
-                                    <li><a href="/notes/welcome.html" class="active">Notesコーナーへようこそ</a></li>
+                                    <li><a href="/notes/welcome.html">Notesコーナーへようこそ</a></li>
                                     <li><a href="/notes/kyoka-vs-tanka.html">狂歌と短歌の違い</a></li>
                                     <li><a href="/notes/harmonyos-pc.html">HarmonyOS PC版（鴻蒙電脳）</a></li>
                 
@@ -239,49 +239,57 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>Notesコーナーへようこそ</h1>
+                <h1>MISRA-C</h1>
 
-<p>ちょっと調べたこと、AIに調査してもらった結果、忘れたくないスニペットなどを気軽に書き残しておく場所です。</p>
+<p>C言語を安全性が求められる組み込みシステムで使う際のコーディングガイドライン（サブセット規格）。MISRA（Motor Industry Software Reliability Association）が策定。</p>
 
-<p><a href="https://blog.64p.org/">ブログ</a>はもう少しちゃんとした記事向けで、こちらはメモ書き程度のラフなものを想定しています。</p>
+<h2>起源</h2>
 
-<h2>コードブロックの例</h2>
-
-<p>コードスニペットはシンタックスハイライト付きで表示されます。</p>
-
-<pre><code class="perl">use strict;
-use warnings;
-
-sub greet {
-    my ($name) = @_;
-    return "Hello, $name!";
-}
-
-print greet("world"), "\n";
-</code></pre>
+<ul>
+<li>MISRAコンソーシアム自体は1990年代初頭、英国政府の"SafeIT"プログラム（安全関連の電子システムを扱う幅広い産業を対象にした助成プログラム）内のプロジェクトとして発足。自動車の電子制御システム向け組み込みソフトウェアのガイドライン策定を目的としていた。</li>
+<li>FordとRoverが主導する形で、C言語のサブセット（コーディング標準）を作る共同開発が進められ、これが「MISRA C: Guidelines for the use of the C language in vehicle-based systems」として結実。1998年に初版が発行された。</li>
+<li>当初「MISRA」は「Motor Industry Software Reliability Association（自動車産業ソフトウェア信頼性協会）」の略だったが、現在は自動車業界に限らず幅広い分野で使われるため、この頭字語展開は使われなくなっている。2021年以降は独立非営利団体「The MISRA Consortium Limited」が運営。</li>
+</ul>
 
 
+<h2>バージョン履歴</h2>
 
-<pre><code class="bash"># ちょっとしたシェルのワンライナー
-find . -name '*.md' | xargs wc -l
-</code></pre>
+<ul>
+<li><strong>MISRA C:1998</strong>（初版） — 127ルール（必須93・推奨34）</li>
+<li><strong>MISRA C:2004</strong>（第2版） — 142ルール（必須122・推奨20）、21分野に分類</li>
+<li><strong>MISRA C:2012</strong>（第3版） — 143ルール＋16ディレクティブ。C99対応を拡張</li>
+<li><strong>MISRA C:2023</strong> — C11/C17の言語機能に対応</li>
+<li><strong>MISRA C:2025</strong> — 最新版</li>
+</ul>
 
-<h2>新しいノートの追加方法</h2>
 
-<p><code>notes/src/</code> 配下にMarkdownファイルを追加します。1行目がタイトルになります（<code># タイトル</code> でもプレーンテキストでもOK）。追加したら以下を実行します。</p>
+<h2>ルールの分類（2012年版以降）</h2>
 
-<pre><code class="sh">perl regen-index.pl
-</code></pre>
+<ul>
+<li><strong>Mandatory（強制）</strong> — 常に遵守が必要</li>
+<li><strong>Required（必須）</strong> — 正当な逸脱理由がない限り遵守が必要</li>
+<li><strong>Advisory（推奨）</strong> — 良い実装慣行だが、形式的な要求は緩やか</li>
+</ul>
 
-<h2>ノート同士のリンク</h2>
 
-<p>1トピック1ファイルを基本に、<code>[[ファイル名]]</code>と書くと他のノートにリンクできます。例えば<a href="/notes/dangouzaka-yurai.html">談合坂の地名由来</a>のように書くと、そのノートのタイトルでリンクが張られます。表示テキストを変えたい場合は<code>[[dangouzaka-yurai|地名の話]]</code>のように<code>|</code>区切りで指定できます。</p>
+<h2>適用業界の拡大</h2>
 
-<p>リンクされた側のノートには、どのノートからリンクされているかが自動で「🔗 リンクされているノート」として表示されます（バックリンク）。存在しないファイル名を指定するとビルド時に警告が出ます。</p>
+<p>当初は自動車業界向けだったが、現在は航空宇宙・医療機器・防衛・鉄道など幅広い分野の組み込みシステム開発におけるベストプラクティスとして認識されている。NASA、機能安全規格ISO 26262、AUTOSAR仕様などでも参照される。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/MISRA_C">MISRA C - Wikipedia (English)</a></li>
+<li><a href="https://misra.org.uk/a-brief-history-of-misra/">The History of MISRA - misra.org.uk</a></li>
+<li><a href="https://en.wikipedia.org/wiki/MISRA">Motor Industry Software Reliability Association - Wikipedia (English)</a></li>
+</ul>
+
+
+<p><a class="note-tag" href="/notes/tags/software-engineering.html">#software-engineering</a> <a class="note-tag" href="/notes/tags/c-language.html">#c-language</a></p>
 
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-09 10:54 / 更新日時: 2026-08-09 14:11</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=Notes%E3%82%B3%E3%83%BC%E3%83%8A%E3%83%BC%E3%81%B8%E3%82%88%E3%81%86%E3%81%93%E3%81%9D&url=https%3A%2F%2F64p.org%2Fnotes%2Fwelcome.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <span>作成日時: 2026-08-11 09:18 / 更新日時: 2026-08-11 09:18</span>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=MISRA-C&url=https%3A%2F%2F64p.org%2Fnotes%2Fmisra-c.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">
