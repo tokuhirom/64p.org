@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>Nixpkgs Core Teamの解散(2026年8月) - Notes - 64p.org</title>
+    <title>LoopHub - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/highlight.js@11/styles/github.min.css" media="(prefers-color-scheme: light)">
@@ -21,7 +21,7 @@
                 <a class="notes-tags-link" href="/notes/tags/">🏷️ タグ一覧</a>
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
-                                    <li><a href="/notes/loophub.html">LoopHub</a></li>
+                                    <li><a href="/notes/loophub.html" class="active">LoopHub</a></li>
                                     <li><a href="/notes/hunk-cli.html">hunk(AIエージェント向けCLI diffビューア)</a></li>
                                     <li><a href="/notes/guillain-barre-syndrome.html">ギラン・バレー症候群(Guillain-Barré Syndrome, GBS)</a></li>
                                     <li><a href="/notes/profile-guided-optimization.html">Profile-Guided Optimization (PGO)</a></li>
@@ -154,7 +154,7 @@
                                     <li><a href="/notes/hnsw.html">HNSW</a></li>
                                     <li><a href="/notes/neon.html">Neon</a></li>
                                     <li><a href="/notes/dgx-spark.html">NVIDIA DGX Spark</a></li>
-                                    <li><a href="/notes/nixpkgs-core-team-disbanded.html" class="active">Nixpkgs Core Teamの解散(2026年8月)</a></li>
+                                    <li><a href="/notes/nixpkgs-core-team-disbanded.html">Nixpkgs Core Teamの解散(2026年8月)</a></li>
                                     <li><a href="/notes/nixos.html">NixOS</a></li>
                                     <li><a href="/notes/nix.html">Nix</a></li>
                                     <li><a href="/notes/incus.html">Incus</a></li>
@@ -268,64 +268,56 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>Nixpkgs Core Teamの解散(2026年8月)</h1>
+                <h1>LoopHub</h1>
 
-<p><a href="/notes/nix.html">Nixpkgs</a> Core Team(2名体制)が、10ヶ月間の活動を経て解散を発表した。ガバナンス役割が持続的な技術作業やメンバーの健康と両立できないと判断したため。</p>
+<p><a href="https://github.com/jugyo">jugyo</a>氏による、ローカルマシン上のGitリポジトリ向けのGitHub風issue/PRハブ。Claude CodeやCodexなどのAIコーディングエージェントを複数タスクで並行実行し、統一UIから管理するためのツール。2026年8月に開発が始まった新しいプロジェクトで、MIT License。</p>
 
-<h2>経緯</h2>
+<h2>何をするツールか</h2>
+
+<p>Issueにタスク記述と受け入れ基準を定義し、実装エージェントとは別のエージェントセッションが検証を担当する「独立レビュー」の仕組みを持つ。実装ごとに専用のGitワークツリーで隔離し、Execute(実装) → Verify(検証) → Merge(統合)というワークフローを自動化する。データはすべてローカルのSQLiteに保存され、リモートサービスには依存しない。</p>
+
+<h2>インストールと要件</h2>
 
 <ul>
-<li>2025年9月、10万パッケージ規模のNixpkgsリポジトリに技術的リーダーシップを提供するために2名体制で発足</li>
-<li>2026年5月には創設メンバーの1人が離脱し、公にヘルプを求めたが応募者は現れなかった(最終的に1名のみ応募)</li>
-<li>以降、最小人数体制での運営を強いられていた</li>
+<li>Node.js ≥ 22.12.0、git</li>
+<li><a href="/notes/herdr.html">herdr</a>(ターミナルマルチプレクサー)</li>
+<li>コーディングエージェントCLI(<code>claude</code>、<code>codex</code>など)</li>
 </ul>
 
 
-<h2>解散理由</h2>
+<pre><code class="sh">git clone &lt;repo&gt; loophub
+cd loophub
+npm install
+npm link          # lh コマンドをPATHに配置
+lh repo add ~/work/my-project --name me/my-project
+npm run serve      # http://localhost:8730 でUI起動
+</code></pre>
+
+<h2>主なコマンド</h2>
 
 <ul>
-<li>持続不可能な業務負荷とメンバーの健康への負担</li>
-<li>上位組織であるSteering Committee(SC)との関係悪化 — 「不要なマイクロマネジメント」「慢性的なコミュニケーション不足」、SCが定款で想定されている権限委譲の感覚を持ち合わせていないという指摘</li>
+<li><code>lh issue create --title "タイトル"</code> — issue作成</li>
+<li><code>lh workflow start 1 --herdr</code> — ワークフロー開始</li>
+<li><code>lh pr merge 3</code> — PRをマージ</li>
 </ul>
 
 
-<h2>在任中の実績</h2>
+<h2>位置づけ</h2>
 
-<ul>
-<li>19名の新規committerをオンボーディングする委員会デリゲートプロセスの改革</li>
-<li>merge botの機能拡張によるメンテナーの自律性向上</li>
-<li>GitHubとの関係修復(スポンサード Enterprise Cloud アップグレードの獲得)</li>
-<li>GitHubセキュリティアドバイザリのトリアージ対応</li>
-<li>AI・自動化に関する初期ポリシーの策定</li>
-</ul>
+<p><a href="/notes/hunk-cli.html">hunk</a>が「AIエージェントの生成した差分をレビューする」側のツールであるのに対し、LoopHubは「複数のAIエージェントに並行してタスクを投げ、issue/PR運用のような形で管理する」オーケストレーション側のツール。実行状況の一覧表示という点では<a href="/notes/herdr.html">herdr</a>とも重なる領域だが、herdrがターミナルマルチプレクサとして各エージェントのペインを束ねるのに対し、LoopHubはissue/PRという開発ワークフローの単位でタスクを管理する。</p>
 
-
-<h2>今後への影響</h2>
-
-<p>チーム自身の説明では「今日何かが壊れるわけではない」とのこと。Nixpkgsリポジトリの運営自体は継続し、オンボーディングされた19名のcommitterも引き続き活動する。ガバナンスの最終権限はSteering Committeeに戻る形。</p>
-
-<p><a class="note-tag" href="/notes/tags/opensource.html">#opensource</a> <a class="note-tag" href="/notes/tags/governance.html">#governance</a></p>
+<p><a class="note-tag" href="/notes/tags/claude-code.html">#claude-code</a> <a class="note-tag" href="/notes/tags/ai-agent.html">#ai-agent</a></p>
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://discourse.nixos.org/t/the-nixpkgs-core-team-has-disbanded/79413">The Nixpkgs core team has disbanded - NixOS Discourse</a></li>
-<li><a href="https://freenode.net/article/nixpkgs-core-team-disbands-after-10-months">Nixpkgs core team disbands after 10 months · freenode</a></li>
-<li><a href="https://linuxiac.com/nixpkgs-core-team-dissolves-leaving-governance-duties-without-a-direct-owner/">Nixpkgs Core Team Dissolves, Leaving Governance Duties Without a Direct Owner - linuxiac</a></li>
-<li><a href="https://lobste.rs/s/9cv8me/nixpkgs_core_team_has_disbanded">The Nixpkgs core team has disbanded | Lobsters</a></li>
+<li><a href="https://github.com/jugyo/loophub">GitHub - jugyo/loophub</a></li>
 </ul>
 
 
-                                <div class="notes-backlinks">
-                    <h2>🔗 リンクされているノート</h2>
-                    <ul>
-                                            <li><a href="/notes/nix.html">Nix</a></li>
-                    
-                    </ul>
-                </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-10 16:55 / 更新日時: 2026-08-10 16:57</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=Nixpkgs%20Core%20Team%E3%81%AE%E8%A7%A3%E6%95%A3%282026%E5%B9%B48%E6%9C%88%29&url=https%3A%2F%2F64p.org%2Fnotes%2Fnixpkgs-core-team-disbanded.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <span>作成日時: 2026-08-12 08:22 / 更新日時: 2026-08-12 08:22</span>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=LoopHub&url=https%3A%2F%2F64p.org%2Fnotes%2Floophub.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">
