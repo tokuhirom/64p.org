@@ -21,6 +21,8 @@
                 <a class="notes-tags-link" href="/notes/tags/">🏷️ タグ一覧</a>
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
+                                    <li><a href="/notes/lxc.html" class="active">LXC (Linux Containers)</a></li>
+                                    <li><a href="/notes/cgroups.html">cgroups（control groups）</a></li>
                                     <li><a href="/notes/danmari-korogi.html">だんまりこおろぎ（原題: The Very Quiet Cricket）</a></li>
                                     <li><a href="/notes/misra-c.html">MISRA-C</a></li>
                                     <li><a href="/notes/rokkasen.html">六歌仙（ろっかせん）</a></li>
@@ -156,7 +158,6 @@
                                     <li><a href="/notes/system76.html">System76</a></li>
                                     <li><a href="/notes/pop-os.html">Pop!_OS</a></li>
                                     <li><a href="/notes/coreboot.html">coreboot</a></li>
-                                    <li><a href="/notes/lxc.html" class="active">LXC (Linux Containers)</a></li>
                                     <li><a href="/notes/nushell.html">Nushell</a></li>
                                     <li><a href="/notes/simd.html">SIMD</a></li>
                                     <li><a href="/notes/project-panama.html">Project Panama</a></li>
@@ -242,11 +243,11 @@
             <article class="notes-content">
                 <h1>LXC (Linux Containers)</h1>
 
-<p>Linuxカーネルのコンテナ機能(cgroups・namespaces)をユーザ空間から操作するためのAPI・ツール群。軽量な仮想化技術のひとつ。 <a class="note-tag" href="/notes/tags/linux.html">#linux</a> <a class="note-tag" href="/notes/tags/kernel.html">#kernel</a></p>
+<p>Linuxカーネルのコンテナ機能(<a href="/notes/cgroups.html">cgroups（control groups）</a>・namespaces)をユーザ空間から操作するためのAPI・ツール群。軽量な仮想化技術のひとつ。 <a class="note-tag" href="/notes/tags/linux.html">#linux</a> <a class="note-tag" href="/notes/tags/kernel.html">#kernel</a></p>
 
 <h2>仕組み</h2>
 
-<p>Linuxカーネルの<code>cgroups</code>(リソース制御)と<code>namespaces</code>(プロセス・ファイルシステム・IPC・ネットワークなどの隔離)を利用し、ハイパーバイザー型の仮想化より少ないオーバーヘッドでコンテナを実現する。</p>
+<p>Linuxカーネルの<a href="/notes/cgroups.html">cgroups（control groups）</a>(リソース制御)と<code>namespaces</code>(プロセス・ファイルシステム・IPC・ネットワークなどの隔離)を利用し、ハイパーバイザー型の仮想化より少ないオーバーヘッドでコンテナを実現する。</p>
 
 <h2>システムコンテナという性質</h2>
 
@@ -271,11 +272,12 @@
                                             <li><a href="/notes/incus.html">Incus</a></li>
                                             <li><a href="/notes/lxd.html">LXD</a></li>
                                             <li><a href="/notes/podman.html">Podman</a></li>
+                                            <li><a href="/notes/cgroups.html">cgroups（control groups）</a></li>
                     
                     </ul>
                 </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-09 22:27 / 更新日時: 2026-08-09 22:30</span>
+                    <span>作成日時: 2026-08-09 22:27 / 更新日時: 2026-08-11 09:41</span>
                     <a class="share-x" href="https://twitter.com/intent/tweet?text=LXC%20%28Linux%20Containers%29&url=https%3A%2F%2F64p.org%2Fnotes%2Flxc.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
