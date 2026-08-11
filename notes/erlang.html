@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>デンキウナギ - Notes - 64p.org</title>
+    <title>Erlang - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/highlight.js@11/styles/github.min.css" media="(prefers-color-scheme: light)">
@@ -21,7 +21,7 @@
                 <a class="notes-tags-link" href="/notes/tags/">🏷️ タグ一覧</a>
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
-                                    <li><a href="/notes/erlang.html">Erlang</a></li>
+                                    <li><a href="/notes/erlang.html" class="active">Erlang</a></li>
                                     <li><a href="/notes/metasploit.html">Metasploit</a></li>
                                     <li><a href="/notes/fuzzing.html">ファジング (Fuzzing)</a></li>
                                     <li><a href="/notes/burp-suite.html">Burp Suite</a></li>
@@ -168,7 +168,7 @@
                                     <li><a href="/notes/futabasaurus-suzukii.html">フタバスズキリュウ（Futabasaurus suzukii）</a></li>
                                     <li><a href="/notes/yanshui-yimian.html">塩水意麺（鹽水意麵）</a></li>
                                     <li><a href="/notes/apple-secure-enclave.html">Secure Enclave</a></li>
-                                    <li><a href="/notes/electric-eel.html" class="active">デンキウナギ</a></li>
+                                    <li><a href="/notes/electric-eel.html">デンキウナギ</a></li>
                                     <li><a href="/notes/peter-pan.html">ピーター・パン</a></li>
                                     <li><a href="/notes/peter-pan-syndrome.html">ピーターパン症候群</a></li>
                                     <li><a href="/notes/kuribayashi-satoshi.html">栗林慧</a></li>
@@ -262,48 +262,50 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>デンキウナギ</h1>
+                <h1>Erlang</h1>
 
-<p>南米のアマゾン川・オリノコ川流域に生息する強い電気を発生させる淡水魚。</p>
+<p>Ericsson社内で1986年、Joe Armstrong・Robert Virding・Mike Williamsによって開発された関数型プログラミング言語。電話交換機のソフトウェア（無停止・高信頼性が絶対条件）を作るために非公開で開発され、1998年12月にオープンソース化された。</p>
 
-<h2>分類 — 実は「ウナギ」ではない</h2>
+<h2>並行性: アクターモデル + BEAM</h2>
 
-<p>名前に「ウナギ」と付くが、ウナギ目（Anguilliformes）とは近縁ではない。分類上はデンキウナギ目という独立したグループに属し、これはナマズ目と姉妹群の関係にあり、コイ目のカラシン類に近い骨鰾上目（こつひょうじょうもく）というグループに含まれる。姿がウナギに似ているための通称にすぎない。</p>
-
-<p>従来1種とされてきたが、2019年に形態・分子遺伝学的解析により3種に再分類された（<em>Electrophorus electricus</em>、<em>E. varii</em>、<em>E. voltai</em>）。このうち<em>E. voltai</em>は最大860Vという、生物として知られる中で最も強い放電を発生させることが確認されている。</p>
-
-<h2>発電の仕組み</h2>
-
-<p>体の後方約80%を占める尾部に、筋肉細胞が変化した「発電細胞（electrocyte）」が電池を直列につないだように並ぶ構造を持つ。3つの発電器官を使い分けている。</p>
+<p>Erlangは並行処理を言語・ランタイムの根幹に組み込んでいる。</p>
 
 <ul>
-<li>メイン発電器官: 300V超（最大860V）の高電圧を捕食・防御用に発生。</li>
-<li>ハンター器官: 約10Vの低電圧を、獲物の位置探知（電気定位）やコミュニケーションに使用。</li>
-<li>サックス器官: 約30Vの中電圧（機能は未解明な部分もある）。</li>
+<li>各プロセスが「アクター」であり、プロセス間の通信はメッセージパッシングのみ。共有メモリを持たないため競合状態が起きにくい</li>
+<li>プロセスは非常に軽量で、1台のマシン上に数百万個生成できる</li>
+<li>実行系はBEAMという専用VM。ガベージコレクションはプロセス単位で個別に走り、他のプロセスの実行を止める「stop the world」が起きない</li>
 </ul>
 
 
-<p>原理としては、神経系と同じイオン濃度勾配（イオンチャネル・イオン輸送体）を利用して電気を発生させている。</p>
+<h2>耐障害性: &ldquo;Let it crash&rdquo; 哲学</h2>
 
-<h2>生態・捕食</h2>
+<p>エラーが起きたプロセス自身でエラー処理をするのではなく、あえてそのプロセスをクラッシュさせ、別のプロセス（supervisor）が検知して再起動する、という設計思想。</p>
 
-<p>夜行性で、昼間は物陰に潜み、夜になると活動して小魚・カエル・甲殻類などを捕食する。獲物に電気ショックを与えて瞬時に麻痺させてから捕らえる。</p>
+<ul>
+<li>OTP（Open Telecom Platform。Erlangの標準ライブラリ・フレームワーク群）の中核概念が「supervision tree」。worker（実際の処理を行うプロセス）とsupervisor（workerを監視し、クラッシュしたら既定の戦略で再起動するプロセス）を階層的に構成する</li>
+<li>個々のプロセスの異常がシステム全体に波及しないよう局所化する</li>
+</ul>
 
-<h1>生物</h1>
+
+<h2>実例</h2>
+
+<p>WhatsAppは2012年、従業員30人程度の体制でありながら1台のサーバーでErlangにより約220万TCPコネクションをCPU使用率38%未満で捌いたことで話題になった。</p>
+
+<p><a class="note-tag" href="/notes/tags/erlang.html">#erlang</a> <a class="note-tag" href="/notes/tags/functional-programming.html">#functional-programming</a> <a class="note-tag" href="/notes/tags/programming-language.html">#programming-language</a></p>
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://ja.wikipedia.org/wiki/%E3%83%87%E3%83%B3%E3%82%AD%E3%82%A6%E3%83%8A%E3%82%AE">デンキウナギ - Wikipedia</a></li>
-<li><a href="https://ja.wikipedia.org/wiki/%E3%83%87%E3%83%B3%E3%82%AD%E3%82%A6%E3%83%8A%E3%82%AE%E7%9B%AE">デンキウナギ目 - Wikipedia</a></li>
-<li><a href="https://www.nature.com/articles/s41467-019-11690-z">Unexpected species diversity in electric eels | Nature Communications</a></li>
-<li><a href="https://www.forbes.com/sites/scotttravers/2026/04/28/meet-the-eel-that-generates-800v---a-biologist-explains-how-it-doesnt-electrocute-itself/">Meet The Eel That Generates 800V | Forbes</a></li>
+<li><a href="https://medium.com/@rng/erlang-a-veterans-take-on-concurrency-fault-tolerance-and-scalability-adff3f96565b">Erlang: A Veteran&rsquo;s Take on Concurrency, Fault Tolerance, and Scalability | Medium</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Erlang_(programming_language">Erlang (programming language) - Wikipedia</a>)</li>
+<li><a href="https://www.erlang.org/doc/system/design_principles.html">Overview — Erlang System Documentation v29.0.4</a></li>
+<li><a href="https://www.erlang-solutions.com/blog/beam-jvm-virtual-machines-comparing-and-contrasting/">BEAM and JVM virtual machines | Concurrency</a></li>
 </ul>
 
 
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-10 00:49 / 更新日時: 2026-08-10 00:49</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=%E3%83%87%E3%83%B3%E3%82%AD%E3%82%A6%E3%83%8A%E3%82%AE&url=https%3A%2F%2F64p.org%2Fnotes%2Felectric-eel.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <span>作成日時: 2026-08-11 13:48 / 更新日時: 2026-08-11 13:48</span>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=Erlang&url=https%3A%2F%2F64p.org%2Fnotes%2Ferlang.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">
