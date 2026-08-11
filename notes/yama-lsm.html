@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>GPT-5.6のSol / Terra / Lunaの違い - Notes - 64p.org</title>
+    <title>Yama (Yama LSM) - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/highlight.js@11/styles/github.min.css" media="(prefers-color-scheme: light)">
@@ -21,7 +21,7 @@
                 <a class="notes-tags-link" href="/notes/tags/">🏷️ タグ一覧</a>
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
-                                    <li><a href="/notes/yama-lsm.html">Yama (Yama LSM)</a></li>
+                                    <li><a href="/notes/yama-lsm.html" class="active">Yama (Yama LSM)</a></li>
                                     <li><a href="/notes/seijosama-no-omake.html">「聖女様のオマケ」と呼ばれたけど、わたしはオマケではないようです。</a></li>
                                     <li><a href="/notes/sunzi.html">孫子</a></li>
                                     <li><a href="/notes/erlang.html">Erlang</a></li>
@@ -221,7 +221,7 @@
                                     <li><a href="/notes/kali-nethunter.html">Kali NetHunter</a></li>
                                     <li><a href="/notes/kotchigai-shoukan.html">間違い召喚！ 追い出されたけど上位互換スキルでらくらく生活</a></li>
                                     <li><a href="/notes/openrouter.html">OpenRouter</a></li>
-                                    <li><a href="/notes/gpt-5-6-sol-terra-luna.html" class="active">GPT-5.6のSol / Terra / Lunaの違い</a></li>
+                                    <li><a href="/notes/gpt-5-6-sol-terra-luna.html">GPT-5.6のSol / Terra / Lunaの違い</a></li>
                                     <li><a href="/notes/claude-model-tiers.html">Claudeのモデル階層(Opus / Sonnet / Haiku / Fable)の違い</a></li>
                                     <li><a href="/notes/elf-origin.html">エルフという概念の起源</a></li>
                                     <li><a href="/notes/matsubokkuri-gogen.html">松ぼっくりの「ぼっくり」の語源</a></li>
@@ -265,73 +265,44 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>GPT-5.6のSol / Terra / Lunaの違い</h1>
+                <h1>Yama (Yama LSM)</h1>
 
-<p><a class="note-tag" href="/notes/tags/gpt.html">#gpt</a> <a class="note-tag" href="/notes/tags/openai.html">#openai</a> <a class="note-tag" href="/notes/tags/llm.html">#llm</a></p>
+<p>Linuxカーネルの LSM (Linux Security Module) フレームワーク向けの実装の一つ。Kees Cookが開発し、2010〜2011年頃にパッチが提出された。symlink/hardlink保護やptrace制限など、以前からOpenwallやgrsecurityといった別配布・パッチセットで個別に存在していたDAC（Discretionary Access Control）強化機能を、メインラインカーネルに統合する形でまとめたモジュール。ptraceの制限ロジックは元々grsecurityの「子プロセスのみ」制限がベースになっている。</p>
 
-<p>2026年6月26日、OpenAIは単一モデルではなく、<strong>Sol・Terra・Luna</strong>という3階層構成の「GPT-5.6ファミリー」を発表した。名前は太陽・地球・月（cosmos）にちなんでおり、知能・速度・コストの3軸で選べるようにする狙い。</p>
+<h2>主な目的: ptraceの制限</h2>
 
-<h2>Sol（最上位ティア）</h2>
+<p>同一ユーザーが自分の任意のプロセスのメモリ・実行状態を検査できてしまう既定の挙動を制限する。あるアプリケーションが侵害された場合でも、攻撃者が同じユーザー権限の別プロセスに<code>ptrace</code>でアタッチして機密情報を抜き取ったり処理を改ざんしたりするのを防ぐのが狙い。</p>
+
+<h2>ptrace_scope の4モード</h2>
+
+<p><code>/proc/sys/kernel/yama/ptrace_scope</code>で設定する。</p>
 
 <ul>
-<li><strong>位置づけ</strong>: フロンティア（最高性能）モデル。旧GPT-5系での無印（サフィックスなし）ティアに相当。</li>
-<li><strong>用途</strong>: 複雑なコーディング、長時間セッション、高度なエージェント、セキュリティ研究など「最も難しい仕事」向け。</li>
-<li><strong>スペック</strong>: コンテキストウィンドウ約105万トークン（入力最大92.2万、出力最大12.8万）。</li>
-<li><strong>価格</strong>: 入力$5 / 出力$30（100万トークンあたり）。27.2万トークンを超える入力は全体が入力2倍・出力1.5倍の料金になる。</li>
-<li><strong>アクセス</strong>: OpenAI APIユーザー、ChatGPT Proサブスクライバー（Plusでも「High」設定までは利用可、「Extra High」「Pro」はPro/Business/Enterprise限定という情報あり）。</li>
+<li><strong>0（従来型）</strong>: dumpableであれば、同一uidの任意のプロセスに<code>PTRACE_ATTACH</code>可能</li>
+<li><strong>1（制限型、Yamaのデフォルト）</strong>: 親子関係などあらかじめ定義された関係を持つプロセスのみアタッチ可能。<code>prctl(PR_SET_PTRACER, pid, ...)</code>で明示的に許可するプロセスを指定できる。KDE・Chromium・Firefoxのクラッシュハンドラや、Wineが同種プロセス間のptraceのみ許可する用途で使用</li>
+<li><strong>2（管理者のみ）</strong>: <code>CAP_SYS_PTRACE</code>権限を持つプロセスのみ利用可能</li>
+<li><strong>3（禁止）</strong>: ptrace使用を完全禁止。この設定にすると、再起動までリバート不可</li>
 </ul>
 
 
-<h2>Terra（中位ティア）</h2>
+<h2>設定方法</h2>
 
-<ul>
-<li><strong>位置づけ</strong>: 「スイートスポット」となるバランス型。</li>
-<li><strong>用途</strong>: コンテンツ生成、カスタマーサポート、データ抽出、通常のコード補助など、大半の実務作業。</li>
-<li><strong>価格</strong>: 入力$2.50 / 出力$15 ー Solの約半額。</li>
-<li><strong>アクセス</strong>: ChatGPT Plus / Teams / Enterprise、API。</li>
-</ul>
+<p>ビルド時は<code>CONFIG_SECURITY_YAMA</code>で有効化を選択する。実行時は<code>/proc/sys/kernel/yama</code>配下のsysctlで制御し、変更には<code>CAP_SYS_PTRACE</code>が必要。</p>
 
-
-<h2>Luna（軽量・低コストティア）</h2>
-
-<ul>
-<li><strong>位置づけ</strong>: 効率最優先モデル。</li>
-<li><strong>用途</strong>: 高スループット処理、分類・ルーティング、リアルタイム補完、モデレーションなど単純作業向け。</li>
-<li><strong>価格</strong>: 入力$1 / 出力$6 ー ファミリー内最安。</li>
-<li><strong>アクセス</strong>: 全APIユーザー、ChatGPT無料ユーザーも制限付きで利用可。</li>
-</ul>
-
-
-<h2>使い分けの目安</h2>
-
-<p>基本はTerraで開始し、必要に応じてSolへ、大量処理はLunaへ、という運用が推奨されている。</p>
-
-<h2>関連</h2>
-
-<p>Anthropic Claudeも<a href="/notes/claude-model-tiers.html">同様のティア構成(Opus/Sonnet/Haiku/Fable)</a>を採用している。<a href="/notes/openrouter.html">OpenRouter</a>のようなアグリゲーターを使うと、各社のモデルを同じインターフェースで横断的に使い分けられる。</p>
+<p><a class="note-tag" href="/notes/tags/kernel.html">#kernel</a> <a class="note-tag" href="/notes/tags/linux.html">#linux</a> <a class="note-tag" href="/notes/tags/security.html">#security</a></p>
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://openai.com/index/previewing-gpt-5-6-sol/">Previewing GPT-5.6 Sol: a next-generation model | OpenAI</a></li>
-<li><a href="https://www.mindstudio.ai/blog/what-is-gpt-5-6-sol-terra-luna-explained">What Is GPT-5.6? OpenAI&rsquo;s Sol, Terra, and Luna Model Tiers Explained | MindStudio</a></li>
-<li><a href="https://developers.openai.com/api/docs/models/gpt-5.6-sol">GPT-5.6 Sol Model | OpenAI API</a></li>
-<li><a href="https://www.axios.com/2026/07/12/openai-chatgpt-work-luna-terra-sol">How to choose the right OpenAI GPT-5.6 model - Axios</a></li>
-<li><a href="https://every.to/vibe-check/gpt-5-6-sol">GPT-5.6 Sol Is Our Favorite Model to Collaborate With - Every</a></li>
+<li><a href="https://docs.kernel.org/admin-guide/LSM/Yama.html">Yama — The Linux Kernel documentation</a></li>
+<li><a href="https://linux-audit.com/protect-ptrace-processes-kernel-yama-ptrace_scope/">Protect against ptrace of processes: kernel.yama.ptrace_scope - Linux Audit</a></li>
+<li><a href="https://lwn.net/Articles/393012/">security: Yama LSM [LWN.net]</a></li>
 </ul>
 
 
-                                <div class="notes-backlinks">
-                    <h2>🔗 リンクされているノート</h2>
-                    <ul>
-                                            <li><a href="/notes/claude-model-tiers.html">Claudeのモデル階層(Opus / Sonnet / Haiku / Fable)の違い</a></li>
-                                            <li><a href="/notes/openrouter.html">OpenRouter</a></li>
-                    
-                    </ul>
-                </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-09 14:04 / 更新日時: 2026-08-09 17:38</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=GPT-5.6%E3%81%AESol%20%2F%20Terra%20%2F%20Luna%E3%81%AE%E9%81%95%E3%81%84&url=https%3A%2F%2F64p.org%2Fnotes%2Fgpt-5-6-sol-terra-luna.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <span>作成日時: 2026-08-11 16:42 / 更新日時: 2026-08-11 16:42</span>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=Yama%20%28Yama%20LSM%29&url=https%3A%2F%2F64p.org%2Fnotes%2Fyama-lsm.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">
