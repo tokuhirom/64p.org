@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>Tauri - Notes - 64p.org</title>
+    <title>ギラン・バレー症候群(Guillain-Barré Syndrome, GBS) - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/highlight.js@11/styles/github.min.css" media="(prefers-color-scheme: light)">
@@ -21,7 +21,7 @@
                 <a class="notes-tags-link" href="/notes/tags/">🏷️ タグ一覧</a>
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
-                                    <li><a href="/notes/guillain-barre-syndrome.html">ギラン・バレー症候群(Guillain-Barré Syndrome, GBS)</a></li>
+                                    <li><a href="/notes/guillain-barre-syndrome.html" class="active">ギラン・バレー症候群(Guillain-Barré Syndrome, GBS)</a></li>
                                     <li><a href="/notes/profile-guided-optimization.html">Profile-Guided Optimization (PGO)</a></li>
                                     <li><a href="/notes/linux-perf.html">perf(Linuxパフォーマンス解析ツール)</a></li>
                                     <li><a href="/notes/flame-graph.html">フレームグラフ(Flame Graph)</a></li>
@@ -238,7 +238,7 @@
                                     <li><a href="/notes/ngrep.html">ngrep (network grep)</a></li>
                                     <li><a href="/notes/bpf.html">BPF (Berkeley Packet Filter)</a></li>
                                     <li><a href="/notes/wails.html">Wails</a></li>
-                                    <li><a href="/notes/tauri.html" class="active">Tauri</a></li>
+                                    <li><a href="/notes/tauri.html">Tauri</a></li>
                                     <li><a href="/notes/electron.html">Electron</a></li>
                                     <li><a href="/notes/skia.html">Skia</a></li>
                                     <li><a href="/notes/rust-gui-libraries.html">Rust GUI ライブラリ一覧</a></li>
@@ -266,68 +266,61 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>Tauri</h1>
+                <h1>ギラン・バレー症候群(Guillain-Barré Syndrome, GBS)</h1>
 
-<p>Rustバックエンドとネイティブ(OS標準)WebViewを組み合わせてクロスプラットフォームのデスクトップ／モバイルアプリを作れるフレームワーク。 <a class="note-tag" href="/notes/tags/rust.html">#rust</a> <a class="note-tag" href="/notes/tags/tauri.html">#tauri</a></p>
+<p>末梢神経の炎症によって急速に進行する、稀な自己免疫性の疾患。手足から始まる筋力低下がしびれ・痛みを伴いながら進行し、重症例では完全な麻痺に至ることもある。発症率はおおよそ7万8千人に1人/年で、30〜50歳での発症が最も多い。</p>
 
-<h2>概要</h2>
+<h2>発症機序</h2>
+
+<p>「感染後・免疫介在性ニューロパチー(post-infectious, immune-mediated neuropathy)」と説明される。先行する感染に対する免疫反応が異常をきたし、自らの末梢神経(髄鞘など)を誤って攻撃・損傷することで神経機能障害が起こる。遺伝性でも感染性でもない。</p>
+
+<h2>先行感染</h2>
+
+<p>患者の約2/3は発症前に感染症を経験している。</p>
 
 <ul>
-<li>GitHub: <a href="https://github.com/tauri-apps/tauri">tauri-apps/tauri</a> — 約110,000スター、3,900フォーク</li>
-<li>運営: Tauri Programme（Commons Conservancy傘下、持続的なOSSコミュニティとして運営）</li>
-<li>ライセンス: MIT / Apache-2.0 デュアル</li>
-<li>対応OS: Windows 7+、macOS 10.15+、Linux、iOS/iPadOS 9+、Android 7+</li>
+<li>カンピロバクター・ジェジュニ(Campylobacter jejuni)感染: 下痢を引き起こす細菌で、GBSの最も一般的な誘因の一つ</li>
+<li>呼吸器感染・胃腸炎</li>
+<li>インフルエンザ、EBウイルス、ジカウイルスなどのウイルス感染</li>
 </ul>
 
 
-<h2>アーキテクチャ</h2>
+<h2>症状の経過</h2>
+
+<p>症状は通常1〜4週間かけて悪化した後に安定し、その後徐々に回復していく。多くの患者は発症から2〜3週間後に回復し始めるが、完全回復までは重症度により数ヶ月〜1年以上かかることもある。</p>
+
+<h2>亜型</h2>
 
 <ul>
-<li><strong>WRY</strong>: プラットフォームごとのWebView(macOS/iOS: WKWebView、Windows: WebView2、Linux: WebKitGTK)を抽象化するライブラリ</li>
-<li><strong>TAO</strong>: <code>winit</code>をフォークしたウィンドウ管理ライブラリ(メニューバー・システムトレイ機能を追加)</li>
-<li>Rustコアと WebView間はメッセージパッシングで通信する設計</li>
+<li>AIDP(急性炎症性脱髄性多発根神経炎): 欧米で最も一般的な型(約57%)。呼吸障害や自律神経障害を伴いやすく、比較的重症化しやすい</li>
+<li>AMAN/AMSAN(急性運動性軸索型/急性運動感覚性軸索型ニューロパチー): アジア諸国で相対的に多い型。AMANは小児に多く、急速に進行する対称性の筋力低下と呼吸不全を特徴とする</li>
+<li>ミラーフィッシャー症候群(MFS): 眼球運動麻痺・運動失調・腱反射消失の3徴を特徴とする亜型(約7%)</li>
 </ul>
 
 
-<h2>セキュリティモデル</h2>
+<h2>診断</h2>
 
-<p>WebViewはデフォルトでOS機能に一切アクセスできず、<code>capabilities</code>/<code>permissions</code>という明示的な許可リストを与える設計になっている。<a href="/notes/wails.html">Wails</a>など類似ツールとの比較でもこの点がよく特徴として挙げられる。</p>
+<p>神経学的診察・病歴聴取に加え、筋電図・神経伝導検査、腰椎穿刺(髄液検査。約80%で細胞数正常・タンパク上昇という特徴的所見)、MRIなどを組み合わせて行う。</p>
 
-<h2>沿革・バージョン</h2>
+<h2>治療</h2>
 
-<ul>
-<li>2022年6月: v1.0リリース</li>
-<li>2024年2月: v2 Beta(iOS/Androidのモバイル対応が追加)</li>
-<li>2024年10月2日: v2 安定版リリース。単一のRust+JSコードベースでデスクトップ・モバイル5プラットフォームを統合</li>
-<li>2026年8月時点で2.11系(2.11.5が2026-07-01リリース)</li>
-</ul>
+<p>現時点で根治的な治療法はないが、緊急入院の上で免疫グロブリン療法(ドナー由来の抗体を点滴投与)または血漿交換療法、および支持療法によって症状の管理・回復促進を図る。</p>
 
-
-<h2>類似ツールとの比較</h2>
-
-<p><a href="/notes/electron.html">Electron</a>がフル Chromium を同梱するのに対し、TauriはOSネイティブWebViewを使うことでバイナリサイズを大幅に削減する(READMEでは「Electronより95%小さいバイナリ」と謳う)。バックエンドをGoで書く<a href="/notes/wails.html">Wails</a>とは、OSネイティブWebViewを使うという設計思想は共通しつつ、Rust製である点と上記capabilitiesによるセキュリティモデルが異なる。</p>
+<p><a class="note-tag" href="/notes/tags/medicine.html">#medicine</a> <a class="note-tag" href="/notes/tags/neurology.html">#neurology</a></p>
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://github.com/tauri-apps/tauri">GitHub - tauri-apps/tauri</a></li>
-<li><a href="https://v2.tauri.app/concept/architecture/">Tauri Architecture</a></li>
-<li><a href="https://v2.tauri.app/blog/tauri-20/">Tauri 2.0 Stable Release</a></li>
-<li><a href="https://en.wikipedia.org/wiki/Tauri_(software_framework">Tauri (software framework) - Wikipedia</a>)</li>
+<li><a href="https://my.clevelandclinic.org/health/diseases/15838-guillain-barre-syndrome">Guillain-Barré Syndrome (GBS): Symptoms &amp; Treatment - Cleveland Clinic</a></li>
+<li><a href="https://rarediseases.org/rare-diseases/guillain-barre-syndrome/">Guillain-Barré Syndrome - NORD</a></li>
+<li><a href="https://patient.info/brain-nerves/guillain-barre-syndrome-leaflet">Guillain-Barré Syndrome: Causes, Symptoms, and Treatment - Patient.info</a></li>
+<li><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4511520/">Subtypes and Prognosis of Guillain-Barré Syndrome in Southwest China - PMC</a></li>
 </ul>
 
 
-                                <div class="notes-backlinks">
-                    <h2>🔗 リンクされているノート</h2>
-                    <ul>
-                                            <li><a href="/notes/electron.html">Electron</a></li>
-                                            <li><a href="/notes/wails.html">Wails</a></li>
-                    
-                    </ul>
-                </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-09 16:14 / 更新日時: 2026-08-09 16:15</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=Tauri&url=https%3A%2F%2F64p.org%2Fnotes%2Ftauri.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <span>作成日時: 2026-08-11 23:06 / 更新日時: 2026-08-11 23:06</span>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=%E3%82%AE%E3%83%A9%E3%83%B3%E3%83%BB%E3%83%90%E3%83%AC%E3%83%BC%E7%97%87%E5%80%99%E7%BE%A4%28Guillain-Barr%C3%A9%20Syndrome%2C%20GBS%29&url=https%3A%2F%2F64p.org%2Fnotes%2Fguillain-barre-syndrome.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">
