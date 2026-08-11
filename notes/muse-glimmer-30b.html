@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>PostgreSQL - Notes - 64p.org</title>
+    <title>Muse Glimmer 30B - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/highlight.js@11/styles/github.min.css" media="(prefers-color-scheme: light)">
@@ -21,7 +21,7 @@
                 <a class="notes-tags-link" href="/notes/tags/">🏷️ タグ一覧</a>
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
-                                    <li><a href="/notes/muse-glimmer-30b.html">Muse Glimmer 30B</a></li>
+                                    <li><a href="/notes/muse-glimmer-30b.html" class="active">Muse Glimmer 30B</a></li>
                                     <li><a href="/notes/lxc.html">LXC (Linux Containers)</a></li>
                                     <li><a href="/notes/cgroups.html">cgroups（control groups）</a></li>
                                     <li><a href="/notes/danmari-korogi.html">だんまりこおろぎ（原題: The Very Quiet Cricket）</a></li>
@@ -119,7 +119,7 @@
                                     <li><a href="/notes/mysql.html">MySQL</a></li>
                                     <li><a href="/notes/mvcc.html">MVCC</a></li>
                                     <li><a href="/notes/vacuum.html">VACUUM</a></li>
-                                    <li><a href="/notes/postgresql.html" class="active">PostgreSQL</a></li>
+                                    <li><a href="/notes/postgresql.html">PostgreSQL</a></li>
                                     <li><a href="/notes/pgvector.html">pgvector</a></li>
                                     <li><a href="/notes/hnsw.html">HNSW</a></li>
                                     <li><a href="/notes/neon.html">Neon</a></li>
@@ -242,57 +242,51 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>PostgreSQL</h1>
+                <h1>Muse Glimmer 30B</h1>
 
-<p>オープンソースのRDBMS（リレーショナルデータベース管理システム）。ルーツは1986年にカリフォルニア大学バークレー校で始まった研究プロジェクト（POSTGRES）で、1996年に現在の名称「PostgreSQL」として公開された。ライセンスはBSD系の緩いライセンス（PostgreSQL License）で、商用利用も無償・無制限。</p>
+<p>Meta（Meta Superintelligence Labs）が2026年8月10日に発表した、300億パラメータのAIモデル。ローカル環境で動くAIエージェント向けに設計されている。</p>
 
-<p><a class="note-tag" href="/notes/tags/database.html">#database</a> <a class="note-tag" href="/notes/tags/rdbms.html">#rdbms</a> <a class="note-tag" href="/notes/tags/sql.html">#sql</a></p>
-
-<h2>特徴</h2>
+<h2>概要</h2>
 
 <ul>
-<li><strong>高度なSQL標準準拠</strong>: ウィンドウ関数、CTE（共通テーブル式）、再帰クエリなどをサポート。</li>
-<li><strong>豊富なデータ型</strong>: JSONB型、配列型、RANGE型など。</li>
-<li><strong><a href="/notes/mvcc.html">MVCC</a>（Multi-Version Concurrency Control）</strong>: 複数トランザクションが同時に読み書きしてもロック競合が起きにくい仕組みで、高並列環境に強い。</li>
-<li><strong>拡張性</strong>: プラガブルなインデックス方式や独自データ型・関数を拡張機能として追加できる。地理情報を扱うPostGIS、ベクトル検索を可能にする<a href="/notes/pgvector.html">pgvector</a>などが代表例。</li>
+<li>Apache 2.0ライセンスでオープンウェイトとして公開。</li>
+<li>専用の知覚エンコーダを備えた300億パラメータの因果言語モデルで、より大規模な「Muse Spark」モデルから蒸留（distillation）され、コンシューマー向けハードウェア上での自律的なエージェントタスクに特化して設計されている。</li>
+<li>多段階の推論（multi-step reasoning）、信頼性の高いツール呼び出し（tool use）、マルチモーダル理解、失敗からの回復（failure recovery）を単一モデルに統合しており、クラウドインフラやネットワーク接続なしにローカルだけで完結して動作する。</li>
 </ul>
 
 
-<h2>クラウド上での利用</h2>
+<h2>想定用途</h2>
 
-<p>商用DBに引けを取らない機能を無償で使える点から、企業の基幹システム・金融システム・政府機関でも採用されている。近年はPostgreSQL互換のマネージドクラウドサービスも増えており、<a href="/notes/neon.html">Neon</a>のようにサーバーレス・従量課金で提供するものもある。</p>
+<ul>
+<li>ローカルのコーディングエージェント、LLM-as-a-judge評価、エンドツーエンドのエージェンティックタスク完遂など、常時稼働するローカルエージェントワークフロー向けに最適化。</li>
+<li>長時間にわたるタスク実行、正確なツール呼び出し、マルチモーダル理解、長文脈メモリ、指示追従を組み合わせることを目指した設計。</li>
+</ul>
 
-<h2>最新動向</h2>
 
-<p>2025年9月25日にメジャーバージョン<strong>PostgreSQL 18</strong>がリリースされた。新しいI/Oサブシステムによりストレージ読み込み性能が最大3倍向上したほか、仮想生成列、<code>uuidv7()</code>関数、OAuth 2.0認証サポートなどが追加された。2026年2月時点の最新パッチは18.2（他に17.8/16.12/15.16/14.21も並行メンテナンス中）。</p>
+<h2>動作要件・性能</h2>
+
+<ul>
+<li>量子化した状態で20GB未満のメモリで動作可能とされ、単一のコンシューマー向けGPUでも動く小規模設計。</li>
+<li>AMD Ryzen AI Max+ 395プロセッサで最大24 tokens/秒、AMD Radeon AI PRO R9700 GPU（dFlash有効時）で最大53 tokens/秒という初期ベンチマーク結果が報告されている。</li>
+<li>Hugging Face上で公開されており（<code>meta-models/Muse-Glimmer-30B</code>など）、unslothによるGGUF量子化版も配布されている。</li>
+</ul>
+
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://data-analyst.weblabo.jp/postgresql-introduction/">PostgreSQLが最強のデータベースである理由</a></li>
-<li><a href="https://azure.microsoft.com/ja-jp/resources/cloud-computing-dictionary/what-is-postgresql">PostgreSQL とは？| Microsoft Azure</a></li>
-<li><a href="https://www.postgresql.jp/node/485">PostgreSQL 18 がリリースされました | 日本PostgreSQLユーザ会</a></li>
-<li><a href="https://thinkit.co.jp/news/38971">「PostgreSQL 18.2/17.8/16.12/15.16/14.21」リリース</a></li>
-<li><a href="https://tane-creative.co.jp/column/6367/">【2026年2月版】PostgreSQLのバージョン情報とサポート期限</a></li>
+<li><a href="https://www.phoronix.com/news/Meta-Muse-Glimmer">Meta Publishes Muse Glimmer As 30B Open Agentic Model - Phoronix</a></li>
+<li><a href="https://www.digit.in/news/general/meta-launches-muse-glimmer-a-30b-ai-model-designed-for-local-ai-agents.html">Meta launches Muse Glimmer, a 30B AI model designed for local AI agents - Digit</a></li>
+<li><a href="https://www.amd.com/en/blogs/2026/run-meta-muse-glimmer-30b-on-amd-ryzen-ai-max-and-radeon-gpus.html">Run Meta Muse Glimmer 30B on AMD Ryzen™ AI Max Agentic PCs and Radeon™ GPUs - AMD</a></li>
+<li><a href="https://huggingface.co/meta-models/Muse-Glimmer-30B">meta-models/Muse-Glimmer-30B - Hugging Face</a></li>
 </ul>
 
 
-                                <div class="notes-backlinks">
-                    <h2>🔗 リンクされているノート</h2>
-                    <ul>
-                                            <li><a href="/notes/mvcc.html">MVCC</a></li>
-                                            <li><a href="/notes/mysql.html">MySQL</a></li>
-                                            <li><a href="/notes/neon.html">Neon</a></li>
-                                            <li><a href="/notes/sqlite.html">SQLite</a></li>
-                                            <li><a href="/notes/vacuum.html">VACUUM</a></li>
-                                            <li><a href="/notes/pgvector.html">pgvector</a></li>
-                                            <li><a href="/notes/transaction-isolation-levels.html">トランザクション分離レベル</a></li>
-                    
-                    </ul>
-                </div>
+<p><a class="note-tag" href="/notes/tags/llm.html">#llm</a> <a class="note-tag" href="/notes/tags/meta.html">#meta</a></p>
+
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-10 17:10 / 更新日時: 2026-08-10 17:15</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=PostgreSQL&url=https%3A%2F%2F64p.org%2Fnotes%2Fpostgresql.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <span>作成日時: 2026-08-11 09:44 / 更新日時: 2026-08-11 09:44</span>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=Muse%20Glimmer%2030B&url=https%3A%2F%2F64p.org%2Fnotes%2Fmuse-glimmer-30b.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">
