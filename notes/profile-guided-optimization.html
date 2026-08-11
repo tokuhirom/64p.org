@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>async-profiler - Notes - 64p.org</title>
+    <title>Profile-Guided Optimization (PGO) - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/highlight.js@11/styles/github.min.css" media="(prefers-color-scheme: light)">
@@ -21,10 +21,10 @@
                 <a class="notes-tags-link" href="/notes/tags/">🏷️ タグ一覧</a>
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
-                                    <li><a href="/notes/profile-guided-optimization.html">Profile-Guided Optimization (PGO)</a></li>
+                                    <li><a href="/notes/profile-guided-optimization.html" class="active">Profile-Guided Optimization (PGO)</a></li>
                                     <li><a href="/notes/linux-perf.html">perf(Linuxパフォーマンス解析ツール)</a></li>
                                     <li><a href="/notes/flame-graph.html">フレームグラフ(Flame Graph)</a></li>
-                                    <li><a href="/notes/async-profiler.html" class="active">async-profiler</a></li>
+                                    <li><a href="/notes/async-profiler.html">async-profiler</a></li>
                                     <li><a href="/notes/slang-tuxic.html">Slang::Tuxic</a></li>
                                     <li><a href="/notes/raku-slang.html">Raku の slang 機構</a></li>
                                     <li><a href="/notes/regex-engine-backtracking-vs-nfa.html">正規表現エンジンの実装方式: バックトラッキング型とNFA/DFA型</a></li>
@@ -265,56 +265,66 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>async-profiler</h1>
+                <h1>Profile-Guided Optimization (PGO)</h1>
 
-<p>HotSpotベースのJVM向け低オーバーヘッド・サンプリングプロファイラ。JVMTIに依存せず、Safepoint bias問題を回避する設計になっている。</p>
+<p>コンパイラが静的なヒューリスティックだけに頼るのではなく、実行時に採取したプロファイルデータを最適化判断の材料に使う手法。分岐予測、インライン化、ループ展開、コードレイアウト(基本ブロックの配置)などの判断を、実際の実行挙動に基づいて行えるようになる。</p>
 
-<h2>Safepoint biasの回避</h2>
+<h2>基本的な流れ</h2>
 
-<p>従来のJavaプロファイラの多くはJVMTIの<code>GetStackTrace</code>を使うが、これはJVMのセーフポイントでしかスタックを取得できず、実際にはホットではないコードパスが過剰に計測される「Safepoint bias」というバイアスが生じる。async-profilerはHotSpot固有のAPIである<code>AsyncGetCallTrace</code>と、Linuxの<a href="/notes/linux-perf.html">perf_events</a>を組み合わせて使うことで、Javaスレッドだけでなく GC・JITコンパイラなどのネイティブスレッドも含めて、任意の地点でスタックを取得できる。</p>
+<ol>
+<li>プロファイル収集用にコンパイルする(GCCなら<code>-fprofile-generate</code>、LLVM/Clangなら<code>-fprofile-instr-generate</code>)</li>
+<li>代表的なワークロードでプログラムを実行し、プロファイルデータを採取する</li>
+<li>採取したプロファイルを使って再ビルドする(<code>-fprofile-use</code>/<code>-fprofile-instr-use</code>)</li>
+</ol>
 
-<h2>プロファイリング対象</h2>
+
+<h2>プロファイル収集方式</h2>
 
 <ul>
-<li>CPU時間</li>
-<li>Javaヒープ上のメモリアロケーション</li>
-<li>ネイティブメモリ確保・リーク検出</li>
-<li>ロック競合</li>
-<li>キャッシュミス・ページフォルトなどのハードウェアパフォーマンスカウンタ</li>
+<li><strong>計装(instrumentation)ベース</strong>: コンパイラが分岐・呼び出し・switch-caseの各エッジにカウンタを挿入し、実行時にその頻度を記録する。GCCは終了時に<code>.gcda</code>ファイルへ出力する。正確だが、計装自体にオーバーヘッドがある。</li>
+<li><strong>サンプリングベース(SamplePGO/AutoFDO)</strong>: <a href="/notes/linux-perf.html">perf_events</a>のような既存のハードウェアパフォーマンスカウンタを使い、外部プロファイラでサンプリングする方式。計装なしで低オーバーヘッドにプロファイルを取れる。</li>
 </ul>
 
 
-<p>バイトコード計装やDTraceプローブのような侵襲的な手法を使わないため、Escape AnalysisやJITの最適化(アロケーション除去など)を妨げない。</p>
+<h2>実装例</h2>
 
-<h2>使い方</h2>
+<p>GCC・LLVM/Clangのほか、rustc、Go(1.20以降)などの主要コンパイラ/ツールチェーンがPGOをサポートしている。</p>
 
-<pre><code class="sh">asprof -d 30 -f flamegraph.html &lt;PID&gt;
-</code></pre>
+<h2>効果の実例(Go, JSON パーサーのベンチマーク)</h2>
 
-<p>対象PIDを30秒間プロファイリングし、結果をインタラクティブな<a href="/notes/flame-graph.html">フレームグラフ</a>としてHTMLファイルに出力する。JFR(Java Flight Recorder)形式での出力にも対応する。</p>
+<p>Daniel LemireがGoのPGOをJSONパーサーで検証した記事では、3種類のJSONファイルを使ったベンチマークで以下のような結果が報告されている。</p>
 
-<p>IntelliJ IDEAのProfilerも内部でasync-profilerを使用している。</p>
+<ul>
+<li>最良ケースで4.7%の高速化(<code>canada.json</code>のプロファイルを<code>canada.json</code>自身のベンチマークに使った場合)</li>
+<li>一般的には2〜3%程度の改善</li>
+<li>興味深い点として、プロファイルの取り方によって「汎化」のしやすさが異なる。<code>twitter.json</code>のプロファイルは他のファイルに対しても2.8〜3.1%の改善をもたらした一方、<code>canada.json</code>のプロファイルは自分自身にしか効かなかった</li>
+</ul>
 
-<p><a class="note-tag" href="/notes/tags/java.html">#java</a> <a class="note-tag" href="/notes/tags/jvm.html">#jvm</a> <a class="note-tag" href="/notes/tags/performance.html">#performance</a> <a class="note-tag" href="/notes/tags/profiling.html">#profiling</a></p>
+
+<p>これは、PGOが「代表的な入力でプロファイルを取れば自動的に速くなる」という単純な話ではなく、プロファイルの取り方(どの入力を使うか)次第で最適化が特定のワークロードに過学習しうる、という実務上の注意点を示している。</p>
+
+<p><a class="note-tag" href="/notes/tags/performance.html">#performance</a> <a class="note-tag" href="/notes/tags/compiler.html">#compiler</a> <a class="note-tag" href="/notes/tags/profiling.html">#profiling</a></p>
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://github.com/async-profiler/async-profiler">GitHub - async-profiler/async-profiler</a></li>
-<li><a href="https://www.baeldung.com/java-async-profiler">A Guide to async-profiler | Baeldung</a></li>
+<li><a href="https://lemire.me/blog/2026/08/09/profile-guided-optimization-in-go/">Profile-guided optimization in Go - Daniel Lemire&rsquo;s blog</a></li>
+<li><a href="https://go.googlesource.com/proposal/+/master/design/55022-pgo.md">Proposal: profile-guided optimization - Go</a></li>
+<li><a href="https://llvm.org/docs/HowToBuildWithPGO.html">How To Build Clang and LLVM with Profile-Guided Optimizations - LLVM</a></li>
+<li><a href="https://doc.rust-lang.org/rustc/profile-guided-optimization.html">Profile-guided Optimization - The rustc book</a></li>
 </ul>
 
 
                                 <div class="notes-backlinks">
                     <h2>🔗 リンクされているノート</h2>
                     <ul>
-                                            <li><a href="/notes/flame-graph.html">フレームグラフ(Flame Graph)</a></li>
+                                            <li><a href="/notes/linux-perf.html">perf(Linuxパフォーマンス解析ツール)</a></li>
                     
                     </ul>
                 </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-11 22:36 / 更新日時: 2026-08-11 22:36</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=async-profiler&url=https%3A%2F%2F64p.org%2Fnotes%2Fasync-profiler.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <span>作成日時: 2026-08-11 22:44 / 更新日時: 2026-08-11 22:44</span>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=Profile-Guided%20Optimization%20%28PGO%29&url=https%3A%2F%2F64p.org%2Fnotes%2Fprofile-guided-optimization.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">

@@ -1,6 +1,6 @@
 ---
 created: 2026-08-11 22:28
-updated: 2026-08-11 22:28
+updated: 2026-08-11 22:44
 ---
 # perf(Linuxパフォーマンス解析ツール)
 
@@ -27,6 +27,10 @@ perf report
 ## フレームグラフとの連携
 
 `perf record`/`perf report`で得たスタックトレースは、Brendan Greggの[[flame-graph|フレームグラフ]]の入力データとしてよく使われる。複数サンプルに共通するコールパスを折り畳んで表示することで、ボトルネックを直感的に可視化できる。
+
+## コンパイラ最適化への利用
+
+`perf record`で採取したサンプリングベースのプロファイルは、[[profile-guided-optimization|Profile-Guided Optimization(PGO)]]のSamplePGO/AutoFDOという方式で、コンパイラの最適化判断(インライン化・コードレイアウトなど)にそのまま使うこともできる。
 
 #linux #performance #profiling
 
