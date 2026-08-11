@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>Roam Research - Notes - 64p.org</title>
+    <title>perf(Linuxパフォーマンス解析ツール) - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/highlight.js@11/styles/github.min.css" media="(prefers-color-scheme: light)">
@@ -21,7 +21,7 @@
                 <a class="notes-tags-link" href="/notes/tags/">🏷️ タグ一覧</a>
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
-                                    <li><a href="/notes/linux-perf.html">perf(Linuxパフォーマンス解析ツール)</a></li>
+                                    <li><a href="/notes/linux-perf.html" class="active">perf(Linuxパフォーマンス解析ツール)</a></li>
                                     <li><a href="/notes/slang-tuxic.html">Slang::Tuxic</a></li>
                                     <li><a href="/notes/raku-slang.html">Raku の slang 機構</a></li>
                                     <li><a href="/notes/regex-engine-backtracking-vs-nfa.html">正規表現エンジンの実装方式: バックトラッキング型とNFA/DFA型</a></li>
@@ -226,7 +226,7 @@
                                     <li><a href="/notes/hackathon-coding-agent-skills.html">ハッカソンでのコーディングエージェント向けスキル活用</a></li>
                                     <li><a href="/notes/network-doctor.html">Network Doctor (netdoc)</a></li>
                                     <li><a href="/notes/yusura-ume.html">ユスラウメ(梅桃)</a></li>
-                                    <li><a href="/notes/roam-research.html" class="active">Roam Research</a></li>
+                                    <li><a href="/notes/roam-research.html">Roam Research</a></li>
                                     <li><a href="/notes/obsidian.html">Obsidian</a></li>
                                     <li><a href="/notes/evergreen-notes.html">エバーグリーンノート (Evergreen Notes)</a></li>
                                     <li><a href="/notes/solaris.html">Solaris / illumos</a></li>
@@ -262,55 +262,48 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>Roam Research</h1>
+                <h1>perf(Linuxパフォーマンス解析ツール)</h1>
 
-<p>「双方向リンク」「ブロック参照」「networked thought(思考のネットワーク化)」という概念を世に広めた先駆的なアウトライナー型ノートアプリ。<a href="/notes/obsidian.html">Obsidian</a>・Logseq・Tanaなど、後発の「tools for thought」勢はこのRoamの影響下にある。 <a class="note-tag" href="/notes/tags/zettelkasten.html">#zettelkasten</a> <a class="note-tag" href="/notes/tags/note-taking.html">#note-taking</a></p>
+<p>Linuxカーネルに組み込まれたプロファイリング/パフォーマンス解析ツール。もともと「Performance Counters for Linux (PCL)」として開発され、現在は「perf_events (LPE)」とも呼ばれるカーネルサブシステム上に構築されている。</p>
 
-<h2>概要</h2>
+<h2>できること</h2>
+
+<p>CPUのパフォーマンスモニタリングユニット(PMU)が持つハードウェアカウンタ(サイクル数、実行命令数、キャッシュミス、分岐ミス予測など)に加えて、ソフトウェアカウンタ・tracepoint・kprobe/uprobe(動的トレーシング)も統一的なインターフェースで扱える。<code>strace</code>と異なり、対象プログラムへのパフォーマンスへの影響が小さいとされる。</p>
+
+<h2>主なサブコマンド</h2>
 
 <ul>
-<li>創業者/CEO: Conor White-Sullivan(HuffPost Labsの共同創業者を経て、Roamを起業)</li>
-<li>2019年ローンチ。Mortimer Adlerの著書『How to Read a Book』に着想を得たと語られている</li>
-<li>ブロック単位のアウトライナーで、すべての箇条書き行が参照可能な「ブロック」として扱われる</li>
+<li><code>perf stat</code>: プログラム実行中のパフォーマンスカウンタを集計して表示する。</li>
+<li><code>perf record</code>: サンプリングデータを収集し<code>perf.data</code>ファイルに保存する。デフォルトはサイクルイベントを1000Hz(1秒間に1000サンプル)でサンプリング。</li>
+<li><code>perf report</code>: <code>perf record</code>で記録したサンプルを関数別のオーバーヘッドとして表示する。</li>
+<li><code>perf top</code>: <code>top</code>コマンドのように、CPU時間を消費している関数をリアルタイムに表示する。</li>
+<li><code>perf annotate</code>: 命令レベルでサンプル分布を表示し、ボトルネックをアセンブリ単位で特定する。</li>
 </ul>
 
 
-<h2>特徴</h2>
+<pre><code class="sh">perf stat dd if=/dev/zero of=/dev/null count=1000000
+perf record ./program
+perf report
+</code></pre>
 
-<ul>
-<li><strong>双方向リンク</strong>: フォルダ・タグではなく、すべてのページ/ブロックが相互にリンクし合う個人用ナレッジグラフとしてデザインされている</li>
-<li><strong>ブロック参照</strong>: 任意の箇条書きを他のノートに埋め込み参照でき、元のブロックを編集すると参照先すべてに反映される</li>
-<li><strong>デイリーノート</strong>: 毎日新しいノートページが自動生成され、そこにメモを書き溜めていく運用が特徴的</li>
-</ul>
+<h2>フレームグラフとの連携</h2>
 
+<p><code>perf record</code>/<code>perf report</code>で得たスタックトレースは、Brendan Greggの<strong>フレームグラフ</strong>の入力データとしてよく使われる。複数サンプルに共通するコールパスを折り畳んで表示することで、ボトルネックを直感的に可視化できる。</p>
 
-<h2>料金体系</h2>
-
-<p>月額$15、または年額$165(当時のNotion Personal Proの約4倍・Evernote Premiumの約2倍の価格帯)。2020年には5年分をまとめ払いする「Believer」プラン($500、実質月額$8.33)も導入された。</p>
-
-<h2>2026年時点の位置づけ</h2>
-
-<p>複数プレイヤーでの共同編集や成熟したクエリ機能が強み。一方、同じアウトライナー・ブロック参照・デイリーノートの体験をローカルファイルかつサブスクリプションなしで提供するLogseqなど、後発ツールとの選択肢も増えている。</p>
+<p><a class="note-tag" href="/notes/tags/linux.html">#linux</a> <a class="note-tag" href="/notes/tags/performance.html">#performance</a> <a class="note-tag" href="/notes/tags/profiling.html">#profiling</a></p>
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://newsletter.pricingsaas.com/p/roam-research-the-cult-packaging">Roam Research and the Art of Cult Packaging</a></li>
-<li><a href="https://costbench.com/software/note-taking/roam-research/">Roam Research Pricing 2026 - CostBench</a></li>
-<li><a href="https://aiproductivity.ai/tools/roam-research/">Roam Research Review 2026 - AI Productivity</a></li>
+<li><a href="https://perfwiki.github.io/main/">perf: Linux profiling with performance counters</a></li>
+<li><a href="https://perfwiki.github.io/main/tutorial/">Introduction - perf: Linux profiling with performance counters</a></li>
+<li><a href="https://www.brendangregg.com/perf.html">Linux perf Examples - Brendan Gregg</a></li>
 </ul>
 
 
-                                <div class="notes-backlinks">
-                    <h2>🔗 リンクされているノート</h2>
-                    <ul>
-                                            <li><a href="/notes/zettelkasten.html">Zettelkasten</a></li>
-                    
-                    </ul>
-                </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-09 16:42 / 更新日時: 2026-08-09 16:44</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=Roam%20Research&url=https%3A%2F%2F64p.org%2Fnotes%2Froam-research.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <span>作成日時: 2026-08-11 22:28 / 更新日時: 2026-08-11 22:28</span>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=perf%28Linux%E3%83%91%E3%83%95%E3%82%A9%E3%83%BC%E3%83%9E%E3%83%B3%E3%82%B9%E8%A7%A3%E6%9E%90%E3%83%84%E3%83%BC%E3%83%AB%29&url=https%3A%2F%2F64p.org%2Fnotes%2Flinux-perf.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">
