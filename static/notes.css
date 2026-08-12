@@ -461,3 +461,9 @@ div.mermaid {
     overflow-x: auto;
     margin: 1.2em 0;
 }
+
+/* KaTeX math (client-side rendering; see note.tt) */
+div.math-display {
+    overflow-x: auto;
+    margin: 1.2em 0;
+}

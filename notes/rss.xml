@@ -6,7 +6,131 @@
 <atom:link href="https://64p.org/notes/rss.xml" rel="self" type="application/rss+xml" />
 <description>ちょっと調べたことや検証結果を、AIの力も借りながらメモしていくコーナーです。</description>
 <language>ja</language>
-<lastBuildDate>Wed, 12 Aug 2026 23:59:31 +0900</lastBuildDate>
+<lastBuildDate>Thu, 13 Aug 2026 00:03:28 +0900</lastBuildDate>
+<item>
+<title>ラプラス変換</title>
+<link>https://64p.org/notes/laplace-transform.html</link>
+<guid isPermaLink="true">https://64p.org/notes/laplace-transform.html</guid>
+<pubDate>Thu, 13 Aug 2026 00:03:00 +0900</pubDate>
+<description><![CDATA[<h1>ラプラス変換</h1>
+
+<p><a class="note-tag" href="/notes/tags/math.html">#math</a> <a class="note-tag" href="/notes/tags/signal-processing.html">#signal-processing</a> <a class="note-tag" href="/notes/tags/control-theory.html">#control-theory</a></p>
+
+<p>時間領域の関数 <span class="math-inline">f(t)</span> を複素変数 <span class="math-inline">s</span> の関数に写す積分変換。</p>
+
+<div class="math-display">
+F(s) = \int_0^\infty f(t)\, e^{-st}\, dt, \qquad s = \sigma + j\omega
+</div>
+
+
+<p>一番のご利益は、<strong>時間領域での微分・積分が、s領域では「<span class="math-inline">s</span> を掛ける／<span class="math-inline">s</span> で割る」という代数演算になる</strong>こと。微分方程式が代数方程式に変換されるので、「変換 → 代数的に解く → 逆変換」という手順で常微分方程式が機械的に解ける。初期条件も変換の時点で自然に式へ組み込まれる。</p>
+
+<h2>直感: 「減衰因子つきフーリエ変換」</h2>
+
+<p><a href="/notes/fourier-transform.html">フーリエ変換</a>との関係で捉えるのが分かりやすい。</p>
+
+<ul>
+<li>フーリエ変換は <span class="math-inline">e^{-j\omega t}</span> を掛けて積分するが、信号が絶対可積分でない（発散する）と収束しない</li>
+<li>そこで先に減衰因子 <span class="math-inline">e^{-\sigma t}</span> を掛けて収束させてからフーリエ変換する、というのがラプラス変換。2つの因子をまとめたのが <span class="math-inline">e^{-st}</span>（<span class="math-inline">s = \sigma + j\omega</span>）</li>
+<li><span class="math-inline">\sigma = 0</span> とおけば（両側変換では）フーリエ変換そのものに一致する。つまりラプラス変換はフーリエ変換の一般化で、フーリエ変換が存在しない関数にも適用できる</li>
+</ul>
+
+
+<p>減衰をどこまで強くすれば収束するかが<strong>収束域（ROC: Region of Convergence）</strong>で、<span class="math-inline">\mathrm{Re}(s) &gt; a</span> の右半平面になる。</p>
+
+<h2>主な応用</h2>
+
+<ul>
+<li><strong>制御理論</strong> — システムの入出力関係を伝達関数 <span class="math-inline">G(s)</span> で表す。分母多項式の根（極）の位置で安定性が判定できる（極がすべて左半平面にあれば安定）</li>
+<li><strong>電気回路</strong> — L や C を含む回路方程式（微積分方程式）が、インピーダンス <span class="math-inline">sL</span>, <span class="math-inline">1/(sC)</span> を使った代数計算になる</li>
+<li><strong>微分方程式の求解</strong> — 上述のとおり</li>
+</ul>
+
+
+<h2>歴史</h2>
+
+<p>名前の由来は Pierre-Simon Laplace。1814年頃の確率論の研究（母関数）が源流。工学で実用化したのは Oliver Heaviside の「演算子法（operational calculus）」で、微分演算子を代数的に扱う手法として回路解析に使われた。当初は数学的正当化が曖昧だったが、後にラプラス変換として厳密に基礎づけられ、第二次大戦後に工学の標準ツールになった。</p>
+
+<h2>逆変換・周辺</h2>
+
+<ul>
+<li><p><strong>逆変換</strong> — 理論上は Bromwich 積分（複素積分）</p>
+
+<div class="math-display">
+f(t) = \frac{1}{2\pi i} \lim_{T\to\infty} \int_{\gamma - iT}^{\gamma + iT} e^{st} F(s)\, ds
+</div>
+
+
+<p>だが、実務では部分分数分解して変換表を引くのが普通。</p></li>
+<li><strong>z変換</strong> — 離散時間版の対応物。<span class="math-inline">z = e^{sT}</span> の置換で繋がっており、デジタル信号処理・デジタル制御でのラプラス変換の役割を担う。</li>
+</ul>
+
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/Laplace_transform">Laplace transform - Wikipedia</a></li>
+<li><a href="https://medium.com/intuition/the-intuition-behind-the-laplace-transform-8432c3bceb37">The Intuition behind the Laplace Transform - Medium</a></li>
+<li><a href="https://www.tutorialspoint.com/signals_and_systems/relation_between_laplace_transform_and_fourier_transform.htm">Relation between Laplace Transform and Fourier Transform - Tutorialspoint</a></li>
+</ul>
+
+]]></description>
+</item>
+<item>
+<title>フーリエ変換</title>
+<link>https://64p.org/notes/fourier-transform.html</link>
+<guid isPermaLink="true">https://64p.org/notes/fourier-transform.html</guid>
+<pubDate>Thu, 13 Aug 2026 00:03:00 +0900</pubDate>
+<description><![CDATA[<h1>フーリエ変換</h1>
+
+<p><a class="note-tag" href="/notes/tags/math.html">#math</a> <a class="note-tag" href="/notes/tags/signal-processing.html">#signal-processing</a></p>
+
+<p>時間領域（あるいは空間領域）の関数を、「どの周波数成分がどれだけ含まれているか」を表す周波数領域の関数に写す積分変換。</p>
+
+<div class="math-display">
+\hat{f}(\xi) = \int_{-\infty}^{\infty} f(x)\, e^{-i 2\pi \xi x}\, dx
+</div>
+
+
+<p>音楽の和音を個々の音程に分解するように、複雑な信号を単純な正弦波の重ね合わせに分解する。</p>
+
+<h2>直感</h2>
+
+<p><span class="math-inline">f(x)</span> に <span class="math-inline">e^{-i 2\pi \xi x}</span> を掛けることは、すべての周波数成分から <span class="math-inline">\xi</span> を引くことに相当する。積分すると、周波数 <span class="math-inline">\xi</span> にちょうど一致する成分だけが直流成分として生き残り、それ以外は振動して打ち消し合う。つまり「掛けて積分する」ことが特定周波数成分の抽出になっている。</p>
+
+<h2>主な性質</h2>
+
+<ul>
+<li><strong>畳み込み定理</strong> — 時間領域の畳み込みは周波数領域の掛け算になる（逆も然り）。フィルタ処理や高速な畳み込み計算の基礎</li>
+<li><strong>微分</strong> — 時間領域の微分は周波数領域では <span class="math-inline">i\omega</span> 倍になる。偏微分方程式（熱方程式・波動方程式）の求解に効く</li>
+<li><strong>シフト</strong> — 時間シフトは位相因子の掛け算になる</li>
+<li><strong>不確定性</strong> — 時間領域で局在した関数ほど周波数領域では広がる（逆も然り）。信号解析における不確定性原理</li>
+</ul>
+
+
+<p>存在条件は絶対可積分（<span class="math-inline">\int |f| \, dx &lt; \infty</span>）。発散する信号にはそのまま適用できず、その制約を減衰因子で回避して一般化したのが<a href="/notes/laplace-transform.html">ラプラス変換</a>。</p>
+
+<h2>ファミリー</h2>
+
+<ul>
+<li><strong>フーリエ級数</strong> — 周期関数版。離散的な周波数成分（基本波の整数倍）に分解する。Joseph Fourier が1822年の熱伝導の研究で「任意の関数は正弦波の級数に展開できる」と主張したのが起源</li>
+<li><strong>DFT（離散フーリエ変換）</strong> — サンプリングされた離散データ版</li>
+<li><strong>FFT（高速フーリエ変換）</strong> — DFTを <span class="math-inline">O(n \log n)</span> で計算するアルゴリズム。デジタル信号処理の実用上の主役</li>
+</ul>
+
+
+<h2>応用</h2>
+
+<p>信号処理（スペクトル解析・フィルタリング）、偏微分方程式の求解、フーリエ変換分光法、量子力学（位置表示と運動量表示の橋渡し）など。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/Fourier_transform">Fourier transform - Wikipedia</a></li>
+</ul>
+
+]]></description>
+</item>
 <item>
 <title>virtqueue風トイ実験</title>
 <link>https://64p.org/notes/virtqueue-toy-experiment.html</link>
@@ -1509,95 +1633,6 @@ graph LR
 <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/WebTransport_API">WebTransport API - MDN</a></li>
 <li><a href="https://datatracker.ietf.org/doc/draft-ietf-webtrans-http3/">WebTransport over HTTP/3 - IETF Datatracker</a></li>
 <li><a href="https://caniuse.com/webtransport">Can I use: WebTransport</a></li>
-</ul>
-
-]]></description>
-</item>
-<item>
-<title>WebSocket</title>
-<link>https://64p.org/notes/websocket.html</link>
-<guid isPermaLink="true">https://64p.org/notes/websocket.html</guid>
-<pubDate>Wed, 12 Aug 2026 20:41:00 +0900</pubDate>
-<description><![CDATA[<h1>WebSocket</h1>
-
-<p>ブラウザとサーバー間で全二重（双方向）通信を実現するプロトコル。単一のTCPコネクション上で、HTTPのリクエスト/レスポンス方式と異なり、両側から任意のタイミングでメッセージを送受信できる。仕様は<a href="https://www.rfc-editor.org/rfc/rfc6455.html">RFC 6455</a>で定義されている。 <a class="note-tag" href="/notes/tags/protocol.html">#protocol</a> <a class="note-tag" href="/notes/tags/web.html">#web</a></p>
-
-<h2>ハンドシェイク</h2>
-
-<p>最初はHTTPのGETリクエストとして開始する。クライアントは<code>Upgrade: websocket</code>ヘッダーとランダムな<code>Sec-WebSocket-Key</code>を送り、サーバーは<code>101 Switching Protocols</code>と、そのキーに固定GUIDを連結してSHA-1・Base64エンコードした<code>Sec-WebSocket-Accept</code>を返す。以後はHTTPではなくWebSocket独自のフレーム形式で通信する。80/443番ポートで動作しHTTPプロキシとの親和性を保てるよう設計されている。</p>
-
-<h2>フレーム構造</h2>
-
-<ul>
-<li>FINビット: メッセージの最終フラグメントかどうか</li>
-<li>Opcode(4bit): <code>0x1</code>=テキスト、<code>0x2</code>=バイナリ、<code>0x8</code>=クローズ、<code>0x9</code>=Ping、<code>0xA</code>=Pong</li>
-<li>MASKビット: クライアント→サーバー方向は必須。ペイロードをマスクすることでキャッシュポイズニング攻撃を防ぐ</li>
-<li>ペイロード長: 0〜125byteは直接、126なら16bit、127なら64bitで拡張長を表現</li>
-</ul>
-
-
-<h2>Ping/Pongとクローズ</h2>
-
-<p>Ping(<code>0x9</code>)を受け取った側は同じペイロードでPong(<code>0xA</code>)を返し、接続の生存確認とレイテンシ計測に使う。切断時はどちらかがクローズフレーム(<code>0x8</code>、16bitのステータスコード付き)を送り、相手も応答クローズフレームを返してからTCP接続を閉じる（<code>1000</code>=正常終了など）。</p>
-
-<h2>ユースケース</h2>
-
-<p>チャット、リアルタイム通知、共同編集ツール、ゲーム通信、株価配信など。将来的にはバックプレッシャー対応や非順序配信を持つ<a href="/notes/webtransport.html">WebTransport</a>(<a href="/notes/http3.html">HTTP/3</a>・<a href="/notes/quic.html">QUIC</a>ベース)が一部用途を置き換える見込み。</p>
-
-<h2>関連</h2>
-
-<ul>
-<li><a href="/notes/websockify.html">websockify</a>はWebSocket⇔TCPのプロキシ／ブリッジ、<a href="/notes/novnc.html">noVNC</a>はWebSocket経由で<a href="/notes/rfb.html">RFB（Remote Framebuffer）プロトコル</a>プロトコルを話すVNCクライアント。<a href="/notes/browser-raw-tcp-restriction.html">ブラウザが生のTCPソケットを直接扱えない</a>制約への対処として、この構成が使われている。</li>
-<li><a href="/notes/htmx.html">htmx</a>はHTML属性からWebSocketを宣言的に扱う拡張を持つ。</li>
-<li><a href="/notes/cro.html">Cro</a>（Rakuのウェブフレームワーク）もWebSocketをサポートしている。</li>
-</ul>
-
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://www.rfc-editor.org/rfc/rfc6455.html">RFC 6455: The WebSocket Protocol</a></li>
-<li><a href="https://websocket.org/guides/websocket-protocol/">WebSocket Protocol: RFC 6455 Handshake, Frames &amp; More - WebSocket.org</a></li>
-<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API">WebSocket API - MDN</a></li>
-</ul>
-
-]]></description>
-</item>
-<item>
-<title>Mojo</title>
-<link>https://64p.org/notes/mojo.html</link>
-<guid isPermaLink="true">https://64p.org/notes/mojo.html</guid>
-<pubDate>Wed, 12 Aug 2026 20:37:00 +0900</pubDate>
-<description><![CDATA[<h1>Mojo</h1>
-
-<p>Modular社が開発するプログラミング言語。Pythonに似た構文を持ちつつ、システムプログラミングやGPU/AIワークロード向けの性能を目指す。2023年に初回リリースされ、2026年8月にリリースされた「Modular 26.5」で正式に1.0に到達した。 <a class="note-tag" href="/notes/tags/ai.html">#ai</a> <a class="note-tag" href="/notes/tags/compiler-design.html">#compiler-design</a></p>
-
-<h2>1.0の意味</h2>
-
-<p>1.0到達は、言語の基盤が長期的に安定し、大きな破壊的変更なしにプロジェクトを構築できる段階に入ったことを意味する。1.0以降も破壊的変更は慎重に行いつつ言語開発自体は継続する方針で、2026年中にはコンパイラ・ツールチェーン自体のオープンソース化も予定されている。</p>
-
-<h2>Modular 26.5 / Mojo 1.0での変更点</h2>
-
-<ul>
-<li>言語仕様の一貫性向上。変数宣言・クロージャ・ポインタ型など、これまで複数あった書き方を単一の標準構文に収束させた</li>
-<li>lambda構文のサポート追加</li>
-<li><a href="/notes/lsp.html">LSP</a>サーバーの安定性向上</li>
-<li>メモリ安全性診断機能を実装（無効化された参照の検出など）</li>
-</ul>
-
-
-<h2>コミュニティ</h2>
-
-<p>標準ライブラリのオープンソース化以降、約200人の貢献者が1,100件超のプルリクエストを提出し、20万行以上のコードが変更された。</p>
-
-<h2>MAX(推論プラットフォーム)</h2>
-
-<p>Modular社は<a href="/notes/vllm.html">vLLM</a>と同様のLLM推論・サービング領域で「MAX」という推論プラットフォームも開発している。Modular 26.5に合わせてMAXも26.5となり、インストールプロセスの最適化、GLM-5.2・Nemotron-Hなど新しいモデルファミリーへの対応、エージェント向けスキル機能の拡充が行われた。</p>
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://www.modular.com/blog/modular-26-5-mojo-1-0-is-here">Modular 26.5: Mojo 1.0 is here</a></li>
 </ul>
 
 ]]></description>
