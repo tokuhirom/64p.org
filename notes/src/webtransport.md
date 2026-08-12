@@ -1,10 +1,10 @@
 ---
 created: 2026-08-12 20:43
-updated: 2026-08-12 20:43
+updated: 2026-08-12 20:47
 ---
 # WebTransport
 
-HTTP/3(QUIC)上に構築された、ブラウザとサーバー間の低遅延双方向通信API。[[websocket|WebSocket]]の後継候補として設計されている。仕様はIETF WEBTRANS Working GroupとW3Cが共同で策定しており、W3C仕様はGoogle・Mozilla・Appleのエディタが名を連ねる。2026年時点でW3C Working Draft、HTTP/3マッピングのIETFドラフトはWorking Group Last Callの段階。 #protocol #web
+[[http3|HTTP/3]]([[quic|QUIC]])上に構築された、ブラウザとサーバー間の低遅延双方向通信API。[[websocket|WebSocket]]の後継候補として設計されている。仕様はIETF WEBTRANS Working GroupとW3Cが共同で策定しており、W3C仕様はGoogle・Mozilla・Appleのエディタが名を連ねる。2026年時点でW3C Working Draft、HTTP/3マッピングのIETFドラフトはWorking Group Last Callの段階。 #protocol #web
 
 ## WebSocketとの違い
 
