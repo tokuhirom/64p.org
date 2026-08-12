@@ -23,7 +23,9 @@
                 <a class="notes-tags-link" href="/notes/rss.xml">📡 RSS</a>
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
+                                    <li><a href="/notes/virtqueue-toy-experiment.html">virtqueue風トイ実験</a></li>
                                     <li><a href="/notes/virtio.html" class="active">virtio</a></li>
+                                    <li><a href="/notes/kvm-hello-world-experiment.html">kvm-hello-world実験</a></li>
                                     <li><a href="/notes/rust-vmm.html">rust-vmm</a></li>
                                     <li><a href="/notes/microvm.html">microVM</a></li>
                                     <li><a href="/notes/microvm-ecosystem.html">コンテナ向け軽量VM技術</a></li>
@@ -31,7 +33,6 @@
                                     <li><a href="/notes/crosvm.html">crosvm</a></li>
                                     <li><a href="/notes/qemu.html">QEMU</a></li>
                                     <li><a href="/notes/kvm.html">KVM (Kernel-based Virtual Machine)</a></li>
-                                    <li><a href="/notes/kvm-hello-world-experiment.html">kvm-hello-world実験</a></li>
                                     <li><a href="/notes/hypeman.html">Hypeman</a></li>
                                     <li><a href="/notes/cloud-hypervisor.html">Cloud Hypervisor</a></li>
                                     <li><a href="/notes/llm-text-watermarking.html">LLMテキストの電子透かし</a></li>
@@ -356,13 +357,13 @@
 
 <p><a href="/notes/rust-vmm.html">rust-vmm</a>はvirtioデバイス関連クレートを共通部品として提供しており、<a href="/notes/firecracker.html">Firecracker</a>・<a href="/notes/cloud-hypervisor.html">Cloud Hypervisor</a>・<a href="/notes/crosvm.html">crosvm</a>など複数のVMMがそれを利用してvirtioデバイスを実装している。crosvmは各virtioデバイスを個別プロセスにforkする「process-per-device」設計を取っている。</p>
 
+<h2>実際に動かしてみる</h2>
+
+<p><a href="/notes/kvm.html">KVM</a>の生ioctl実験の上に、virtqueueの核心(共有メモリ+バッチ化+1回の通知)だけを再現したトイ実装を作り、1バイトごとに通知する前回実験と比べてVM exit回数がどれだけ減るかを<a href="/notes/virtqueue-toy-experiment.html">virtqueue風トイ実験</a>で確認した。</p>
+
 <h2><a href="/notes/microvm-ecosystem.html">コンテナ向け軽量VM技術</a>の中での位置づけ</h2>
 
-<p><a href="/notes/firecracker.html">Firecracker</a>・<a href="/notes/cloud-hypervisor.html">Cloud Hypervisor</a>・<a href="/notes/crosvm.html">crosvm</a>・<a href="/notes/qemu.html">QEMU</a>が共通して採用する、ゲスト-ホスト間I/Oの標準インターフェース。<a href="/notes/microvm.html">microVM</a>が高速に起動・動作できる理由の一つは、フルデバイスエミュレーションではなくvirtioのような軽量なI/Oに絞っていることにある。</p>
-
-<h2><a href="/notes/microvm-ecosystem.html">コンテナ向け軽量VM技術</a>の中での位置づけ</h2>
-
-<p><a href="/notes/kvm.html">KVM</a>がCPU仮想化の土台であるのと同様に、virtioはI/O仮想化の共通土台。<a href="/notes/firecracker.html">Firecracker</a>・<a href="/notes/cloud-hypervisor.html">Cloud Hypervisor</a>・<a href="/notes/crosvm.html">crosvm</a>・<a href="/notes/qemu.html">QEMU</a>が共通して採用している。</p>
+<p><a href="/notes/kvm.html">KVM</a>がCPU仮想化の土台であるのと同様に、virtioはI/O仮想化の共通土台。<a href="/notes/firecracker.html">Firecracker</a>・<a href="/notes/cloud-hypervisor.html">Cloud Hypervisor</a>・<a href="/notes/crosvm.html">crosvm</a>・<a href="/notes/qemu.html">QEMU</a>が共通して採用している。<a href="/notes/microvm.html">microVM</a>が高速に起動・動作できる理由の一つは、フルデバイスエミュレーションではなくvirtioのような軽量なI/Oに絞っていることにある。</p>
 
 <h2>出典</h2>
 
@@ -379,14 +380,16 @@
                     <ul>
                                             <li><a href="/notes/kata-containers.html">Kata Containers</a></li>
                                             <li><a href="/notes/crosvm.html">crosvm</a></li>
+                                            <li><a href="/notes/kvm-hello-world-experiment.html">kvm-hello-world実験</a></li>
                                             <li><a href="/notes/microvm.html">microVM</a></li>
                                             <li><a href="/notes/rust-vmm.html">rust-vmm</a></li>
+                                            <li><a href="/notes/virtqueue-toy-experiment.html">virtqueue風トイ実験</a></li>
                                             <li><a href="/notes/microvm-ecosystem.html">コンテナ向け軽量VM技術</a></li>
                     
                     </ul>
                 </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-12 23:51 / 更新日時: 2026-08-12 23:51</span>
+                    <span>作成日時: 2026-08-12 23:51 / 更新日時: 2026-08-12 23:55</span>
                     <a class="share-x" href="https://twitter.com/intent/tweet?text=virtio&url=https%3A%2F%2F64p.org%2Fnotes%2Fvirtio.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>

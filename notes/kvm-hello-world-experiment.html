@@ -23,7 +23,9 @@
                 <a class="notes-tags-link" href="/notes/rss.xml">📡 RSS</a>
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
+                                    <li><a href="/notes/virtqueue-toy-experiment.html">virtqueue風トイ実験</a></li>
                                     <li><a href="/notes/virtio.html">virtio</a></li>
+                                    <li><a href="/notes/kvm-hello-world-experiment.html" class="active">kvm-hello-world実験</a></li>
                                     <li><a href="/notes/rust-vmm.html">rust-vmm</a></li>
                                     <li><a href="/notes/microvm.html">microVM</a></li>
                                     <li><a href="/notes/microvm-ecosystem.html">コンテナ向け軽量VM技術</a></li>
@@ -31,7 +33,6 @@
                                     <li><a href="/notes/crosvm.html">crosvm</a></li>
                                     <li><a href="/notes/qemu.html">QEMU</a></li>
                                     <li><a href="/notes/kvm.html">KVM (Kernel-based Virtual Machine)</a></li>
-                                    <li><a href="/notes/kvm-hello-world-experiment.html" class="active">kvm-hello-world実験</a></li>
                                     <li><a href="/notes/hypeman.html">Hypeman</a></li>
                                     <li><a href="/notes/cloud-hypervisor.html">Cloud Hypervisor</a></li>
                                     <li><a href="/notes/llm-text-watermarking.html">LLMテキストの電子透かし</a></li>
@@ -398,6 +399,10 @@ Testing real mode
 
 <p>ポート0xE9は実在のデバイスではなく、このプログラムが決めた「ただの取り決め」。これが<a href="/notes/kvm.html">KVM</a>ノートで説明した「KVMはデバイスエミュレーションを一切せず、ユーザー空間のVMMがI/Oを肩代わりする」の最小の実例になっている。FirecrackerやQEMUがネットワーク・ディスクに対してやっていることの、極小版がこれだと考えると分かりやすい。</p>
 
+<h2>続き: <a href="/notes/virtqueue-toy-experiment.html">virtqueue風トイ実験</a></h2>
+
+<p>この実験の「1文字ごとに<code>outb</code>してVM exitする」という素朴なI/Oを、<a href="/notes/virtio.html">virtio</a>のように「まとめて共有メモリに書いて1回だけ通知する」設計に変えるとどれだけVM exit回数が減るかを、この実験の続きとして確認した。</p>
+
 <h2>出典</h2>
 
 <ul>
@@ -410,11 +415,12 @@ Testing real mode
                     <h2>🔗 リンクされているノート</h2>
                     <ul>
                                             <li><a href="/notes/kvm.html">KVM (Kernel-based Virtual Machine)</a></li>
+                                            <li><a href="/notes/virtqueue-toy-experiment.html">virtqueue風トイ実験</a></li>
                     
                     </ul>
                 </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-12 23:42 / 更新日時: 2026-08-12 23:47</span>
+                    <span>作成日時: 2026-08-12 23:42 / 更新日時: 2026-08-12 23:55</span>
                     <a class="share-x" href="https://twitter.com/intent/tweet?text=kvm-hello-world%E5%AE%9F%E9%A8%93&url=https%3A%2F%2F64p.org%2Fnotes%2Fkvm-hello-world-experiment.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>

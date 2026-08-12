@@ -1,6 +1,6 @@
 ---
 created: 2026-08-12 23:51
-updated: 2026-08-12 23:51
+updated: 2026-08-12 23:55
 ---
 # virtio
 
@@ -26,13 +26,13 @@ virtio-net(ネットワーク)・virtio-blk(ブロックデバイス)・virtio-c
 
 [[rust-vmm|rust-vmm]]はvirtioデバイス関連クレートを共通部品として提供しており、[[firecracker|Firecracker]]・[[cloud-hypervisor|Cloud Hypervisor]]・[[crosvm|crosvm]]など複数のVMMがそれを利用してvirtioデバイスを実装している。crosvmは各virtioデバイスを個別プロセスにforkする「process-per-device」設計を取っている。
 
+## 実際に動かしてみる
+
+[[kvm|KVM]]の生ioctl実験の上に、virtqueueの核心(共有メモリ+バッチ化+1回の通知)だけを再現したトイ実装を作り、1バイトごとに通知する前回実験と比べてVM exit回数がどれだけ減るかを[[virtqueue-toy-experiment|virtqueue風トイ実験]]で確認した。
+
 ## [[microvm-ecosystem|コンテナ向け軽量VM技術]]の中での位置づけ
 
-[[firecracker|Firecracker]]・[[cloud-hypervisor|Cloud Hypervisor]]・[[crosvm|crosvm]]・[[qemu|QEMU]]が共通して採用する、ゲスト-ホスト間I/Oの標準インターフェース。[[microvm|microVM]]が高速に起動・動作できる理由の一つは、フルデバイスエミュレーションではなくvirtioのような軽量なI/Oに絞っていることにある。
-
-## [[microvm-ecosystem|コンテナ向け軽量VM技術]]の中での位置づけ
-
-[[kvm|KVM]]がCPU仮想化の土台であるのと同様に、virtioはI/O仮想化の共通土台。[[firecracker|Firecracker]]・[[cloud-hypervisor|Cloud Hypervisor]]・[[crosvm|crosvm]]・[[qemu|QEMU]]が共通して採用している。
+[[kvm|KVM]]がCPU仮想化の土台であるのと同様に、virtioはI/O仮想化の共通土台。[[firecracker|Firecracker]]・[[cloud-hypervisor|Cloud Hypervisor]]・[[crosvm|crosvm]]・[[qemu|QEMU]]が共通して採用している。[[microvm|microVM]]が高速に起動・動作できる理由の一つは、フルデバイスエミュレーションではなくvirtioのような軽量なI/Oに絞っていることにある。
 
 ## 出典
 

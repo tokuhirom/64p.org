@@ -6,7 +6,119 @@
 <atom:link href="https://64p.org/notes/rss.xml" rel="self" type="application/rss+xml" />
 <description>ちょっと調べたことや検証結果を、AIの力も借りながらメモしていくコーナーです。</description>
 <language>ja</language>
-<lastBuildDate>Wed, 12 Aug 2026 23:51:51 +0900</lastBuildDate>
+<lastBuildDate>Wed, 12 Aug 2026 23:55:35 +0900</lastBuildDate>
+<item>
+<title>virtqueue風トイ実験</title>
+<link>https://64p.org/notes/virtqueue-toy-experiment.html</link>
+<guid isPermaLink="true">https://64p.org/notes/virtqueue-toy-experiment.html</guid>
+<pubDate>Wed, 12 Aug 2026 23:55:00 +0900</pubDate>
+<description><![CDATA[<h1>virtqueue風トイ実験</h1>
+
+<p><a href="/notes/virtio.html">virtio</a>の核心である「共有メモリ経由でまとめて送り、通知は1回だけ」という設計を体感するための実験。<a href="/notes/kvm-hello-world-experiment.html">kvm-hello-world実験</a>の続きとして、同じ<code>/dev/kvm</code>生ioctlの土台の上に自作した。 <a class="note-tag" href="/notes/tags/virtualization.html">#virtualization</a> <a class="note-tag" href="/notes/tags/linux.html">#linux</a></p>
+
+<h2>前回実験との対比が主眼</h2>
+
+<p>kvm-hello-world実験の<code>guest.c</code>は、1文字送るたびに<code>outb</code>命令を実行し、そのたびに<a href="/notes/kvm.html">KVM</a>の「VM exit」が発生していた。これは実デバイスのレジスタを1バイトずつ叩くのに近い、素朴なやり方。</p>
+
+<p>今回作ったゲストコードは代わりに以下の手順を踏む。</p>
+
+<ol>
+<li>メッセージ全体を共有メモリ上の固定アドレス(0x1000番地)にまとめて書き込む(通常のメモリアクセスなのでVM exitは起きない)</li>
+<li>メッセージ長を別の固定アドレス(0x2000番地)に書き込む</li>
+<li><strong>最後に1回だけ</strong>専用ポート(0xE8)へ<code>outb</code>し、ホストに「ドアベル」を鳴らす</li>
+</ol>
+
+
+<p>ホスト側は、このドアベルを受け取ったら0x2000番地から長さを読み、0x1000番地からメッセージ本体をまとめて読み出す。実際のvirtioは記述子テーブル・avail ring・used ringという3つのリング構造を持つが、この実験ではそれを「固定アドレスのバッファ+長さ+ドアベル」という単一スロットのメールボックスまで単純化している。</p>
+
+<h2>実行結果</h2>
+
+<pre><code>$ ./vq_host vq_guest.img
+[host] loaded 180 bytes of guest code at guest phys 0x0
+[host] doorbell #1: ring says len=64 bytes -- reading straight out of guest memory (no per-byte trap):
+Hello via a toy virtqueue! One doorbell, not one exit per byte.
+[host] guest halted. doorbell rang 1 time(s) total (message was multiple bytes -- one exit either way)
+[host] guest rax=42 (expect 42), mem[0x400]=42 (expect 42)
+</code></pre>
+
+<h2><code>strace</code>で客観的に比較</h2>
+
+<p><code>KVM_RUN</code> ioctlの呼び出し回数(=VM exitしてホストに戻ってきた回数)を<code>strace</code>で数えた。</p>
+
+<table>
+<thead>
+<tr>
+<th> 実験 </th>
+<th> メッセージ長 </th>
+<th> <code>KVM_RUN</code>呼び出し回数 </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td> kvm-hello-world(<code>-s</code>、1文字ごとに<code>outb</code>) </td>
+<td> 14バイト(&ldquo;Hello, world!\n&rdquo;) </td>
+<td> 15回(outb 14回 + HLT 1回) </td>
+</tr>
+<tr>
+<td> virtqueue風トイ実験(まとめて送信) </td>
+<td> 64バイト </td>
+<td> 2回(doorbell 1回 + HLT 1回) </td>
+</tr>
+</tbody>
+</table>
+
+
+<pre><code class="sh">strace -f -e trace=ioctl ./kvm-hello-world -s 2&gt;&amp;1 &gt;/dev/null | grep -c KVM_RUN   # =&gt; 15
+strace -f -e trace=ioctl ./vq_host vq_guest.img 2&gt;&amp;1 &gt;/dev/null | grep -c KVM_RUN  # =&gt; 2
+</code></pre>
+
+<p>送ったメッセージは今回の方が長い(64バイト > 14バイト)にもかかわらず、ホストとのラウンドトリップ回数は15回→2回まで減っている。VM exit1回ごとに発生するコンテキストスイッチのコストを考えると、この差がそのままI/Oスループットの差になる。これが<a href="/notes/virtio.html">virtio</a>がフルデバイスエミュレーションより高速な理由の最小限の実演になっている。</p>
+
+<h2>ソースコード</h2>
+
+<pre><code class="c">/* guest側: vq_guest.c (抜粋) */
+volatile char *buf = (volatile char *) 0x1000;
+volatile uint32_t *lenp = (volatile uint32_t *) 0x2000;
+const char *msg = "Hello via a toy virtqueue! ...\n";
+uint32_t i = 0;
+while (msg[i]) { buf[i] = msg[i]; i++; }  /* VM exitなし */
+*lenp = i;
+outb(NOTIFY_PORT, 1);  /* ここだけVM exit */
+</code></pre>
+
+
+
+<pre><code class="c">/* host側: vq_host.c (抜粋) */
+case KVM_EXIT_IO:
+    if (vcpu.kvm_run-&gt;io.port == NOTIFY_PORT) {
+        uint32_t len;
+        memcpy(&amp;len, vm.mem + 0x2000, sizeof(len));
+        fwrite(vm.mem + 0x1000, 1, len, stdout);  /* 直接ゲストメモリを読む */
+        continue;
+    }
+</code></pre>
+
+<p>ビルド方法は<a href="/notes/kvm-hello-world-experiment.html">kvm-hello-world実験</a>と同様(<code>guest.ld</code>を流用し、<code>OUTPUT_FORMAT(binary)</code>でフラットバイナリを生成、ホスト側は<code>fread</code>でそれを読んでゲストメモリに直接コピーするだけなので、payload.ldのようなオブジェクト結合の仕掛けは不要にした)。</p>
+
+<h2>実際のvirtio仕様との違い(単純化した点)</h2>
+
+<ul>
+<li>記述子テーブル・avail ring・used ringという3種のリングではなく、固定アドレス1つの「メールボックス」にした</li>
+<li>virtio-mmio/virtio-pciのようなデバイス発見・feature negotiationの手順を省いた</li>
+<li>割り込みによる完了通知ではなく、そもそも1往復で完結する単純なやり取りにした</li>
+</ul>
+
+
+<p>これらを省いても「共有メモリ+バッチ化+1回の通知」という核心のメカニズムと、それによるVM exit削減効果は十分に確認できた。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li>実装は独自。<a href="/notes/virtio.html">virtio</a>・<a href="/notes/kvm.html">KVM</a>の一般的な仕組みの理解を踏まえて書き下ろした</li>
+</ul>
+
+]]></description>
+</item>
 <item>
 <title>virtio</title>
 <link>https://64p.org/notes/virtio.html</link>
@@ -36,13 +148,13 @@
 
 <p><a href="/notes/rust-vmm.html">rust-vmm</a>はvirtioデバイス関連クレートを共通部品として提供しており、<a href="/notes/firecracker.html">Firecracker</a>・<a href="/notes/cloud-hypervisor.html">Cloud Hypervisor</a>・<a href="/notes/crosvm.html">crosvm</a>など複数のVMMがそれを利用してvirtioデバイスを実装している。crosvmは各virtioデバイスを個別プロセスにforkする「process-per-device」設計を取っている。</p>
 
+<h2>実際に動かしてみる</h2>
+
+<p><a href="/notes/kvm.html">KVM</a>の生ioctl実験の上に、virtqueueの核心(共有メモリ+バッチ化+1回の通知)だけを再現したトイ実装を作り、1バイトごとに通知する前回実験と比べてVM exit回数がどれだけ減るかを<a href="/notes/virtqueue-toy-experiment.html">virtqueue風トイ実験</a>で確認した。</p>
+
 <h2><a href="/notes/microvm-ecosystem.html">コンテナ向け軽量VM技術</a>の中での位置づけ</h2>
 
-<p><a href="/notes/firecracker.html">Firecracker</a>・<a href="/notes/cloud-hypervisor.html">Cloud Hypervisor</a>・<a href="/notes/crosvm.html">crosvm</a>・<a href="/notes/qemu.html">QEMU</a>が共通して採用する、ゲスト-ホスト間I/Oの標準インターフェース。<a href="/notes/microvm.html">microVM</a>が高速に起動・動作できる理由の一つは、フルデバイスエミュレーションではなくvirtioのような軽量なI/Oに絞っていることにある。</p>
-
-<h2><a href="/notes/microvm-ecosystem.html">コンテナ向け軽量VM技術</a>の中での位置づけ</h2>
-
-<p><a href="/notes/kvm.html">KVM</a>がCPU仮想化の土台であるのと同様に、virtioはI/O仮想化の共通土台。<a href="/notes/firecracker.html">Firecracker</a>・<a href="/notes/cloud-hypervisor.html">Cloud Hypervisor</a>・<a href="/notes/crosvm.html">crosvm</a>・<a href="/notes/qemu.html">QEMU</a>が共通して採用している。</p>
+<p><a href="/notes/kvm.html">KVM</a>がCPU仮想化の土台であるのと同様に、virtioはI/O仮想化の共通土台。<a href="/notes/firecracker.html">Firecracker</a>・<a href="/notes/cloud-hypervisor.html">Cloud Hypervisor</a>・<a href="/notes/crosvm.html">crosvm</a>・<a href="/notes/qemu.html">QEMU</a>が共通して採用している。<a href="/notes/microvm.html">microVM</a>が高速に起動・動作できる理由の一つは、フルデバイスエミュレーションではなくvirtioのような軽量なI/Oに絞っていることにある。</p>
 
 <h2>出典</h2>
 
@@ -174,6 +286,10 @@ Testing real mode
 </code></pre>
 
 <p>ポート0xE9は実在のデバイスではなく、このプログラムが決めた「ただの取り決め」。これが<a href="/notes/kvm.html">KVM</a>ノートで説明した「KVMはデバイスエミュレーションを一切せず、ユーザー空間のVMMがI/Oを肩代わりする」の最小の実例になっている。FirecrackerやQEMUがネットワーク・ディスクに対してやっていることの、極小版がこれだと考えると分かりやすい。</p>
+
+<h2>続き: <a href="/notes/virtqueue-toy-experiment.html">virtqueue風トイ実験</a></h2>
+
+<p>この実験の「1文字ごとに<code>outb</code>してVM exitする」という素朴なI/Oを、<a href="/notes/virtio.html">virtio</a>のように「まとめて共有メモリに書いて1回だけ通知する」設計に変えるとどれだけVM exit回数が減るかを、この実験の続きとして確認した。</p>
 
 <h2>出典</h2>
 
@@ -1474,68 +1590,6 @@ graph LR
 
 <ul>
 <li><a href="https://www.modular.com/blog/modular-26-5-mojo-1-0-is-here">Modular 26.5: Mojo 1.0 is here</a></li>
-</ul>
-
-]]></description>
-</item>
-<item>
-<title>htmx</title>
-<link>https://64p.org/notes/htmx.html</link>
-<guid isPermaLink="true">https://64p.org/notes/htmx.html</guid>
-<pubDate>Wed, 12 Aug 2026 19:37:00 +0900</pubDate>
-<description><![CDATA[<h1>htmx</h1>
-
-<p>HTMLの属性だけでAJAX・<a href="/notes/websocket.html">WebSocket</a>・DOM更新を宣言的に扱えるようにするJavaScriptライブラリ。「モダンブラウザの機能に、JavaScriptを書かずHTMLから直接アクセスできるようにする」ことを掲げる。依存ライブラリなしの約2,500行のJSで、現行バージョンは2.x系。作者はCarson Gross。 <a class="note-tag" href="/notes/tags/web.html">#web</a> <a class="note-tag" href="/notes/tags/javascript.html">#javascript</a></p>
-
-<h2>仕組み</h2>
-
-<p><code>hx-get</code>/<code>hx-post</code>などのカスタム属性をHTML要素に書くと、イベント発火時にHTTPリクエストが飛び、<strong>サーバーが返したHTMLフラグメントがDOMの指定箇所にスワップされる</strong>。SPAのようにJSONを返してクライアント側でレンダリングするのではなく、サーバーがHTMLを返すのが根本的な違い。</p>
-
-<pre><code class="html">&lt;button hx-post="/clicked" hx-trigger="click" hx-target="#parent-div"&gt;
-  Click Me!
-&lt;/button&gt;
-</code></pre>
-
-<h2>設計思想: ハイパーメディア駆動</h2>
-
-<p>Roy Fieldingの本来の<a href="/notes/restful.html">REST</a>、特に<a href="/notes/hateoas.html">HATEOAS</a>(Hypertext As The Engine Of Application State)に沿った「ハイパーメディア駆動」アーキテクチャを標榜する。アプリケーションの状態遷移をクライアント側のJS状態管理ではなくハイパーテキスト(HTML)自体に担わせることで、元来のWebプログラミングモデルに留まったまま動的なUIを作れる、という主張。挙動がHTML要素の属性として書かれる「locality of behavior」も重視している。</p>
-
-<p>作者らによる書籍<a href="https://hypermedia.systems/">『Hypermedia Systems』</a>がこの思想を体系的に説明しており、日本語訳<a href="https://www.amazon.co.jp/dp/4297149451?tag=tokuhirom-22">『ハイパーメディアシステム──htmxとRESTによるシンプルで軽やかなウェブ開発』</a>(技術評論社)も出ている。</p>
-
-<h2>限界・向いていないケース</h2>
-
-<p>作者Carson Gross自身がエッセイ「When Should You Use Hypermedia?」で適用範囲を整理している。</p>
-
-<p>向いているのは、テキスト・画像主体でCRUD中心のUI。エッセイではSaaSのContexteがReactからhtmxへ移行してコードベースを67%削減した事例が挙げられている。逆に向いていないと明言されているのは:</p>
-
-<ul>
-<li><strong>複雑・動的な依存関係を持つUI</strong> — 代表例はスプレッドシート。セル間の依存がユーザー入力で任意に生まれるようなUIは「サーバーがHTMLを返す」モデルに落とし込めない</li>
-<li><strong>オフライン動作</strong> — レンダリングをサーバーに依存する構造上、オフラインファーストは現実的でない</li>
-<li><strong>高頻度なUI状態更新</strong> — マウス移動追跡のような頻度ではサーバーラウンドトリップは実用にならない</li>
-<li><strong>Reactエコシステム前提のコンポーネントライブラリが必須の場合</strong></li>
-</ul>
-
-
-<p>要するに「アプリの状態遷移がページ・部分HTMLの粒度で表現できるか」が分水嶺。</p>
-
-<h2>感想</h2>
-
-<p>肌感としては、「ちょっと動的なサイト」ぐらいまでならhtmxでいけるが、一般的なSPAで作るようなアプリケーションになると無理があると思っている。</p>
-
-<h2>歴史</h2>
-
-<p>前身は2013年にCarson Grossが作ったintercooler.js。jQuery依存だった同ライブラリを依存ゼロで書き直したものがhtmx。SPAフレームワークの複雑さへの反動もあって2020年代にSNSで広く知られるようになった。</p>
-
-<p>サーバー側は何でもよい(HTMLを返せさえすればよい)ため、SSR中心のフレームワークとの相性がよく、<a href="/notes/topcoat.html">Topcoat</a>のようにhtmx連携を組み込みで持つフレームワークもある。</p>
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://htmx.org/docs/">htmx公式ドキュメント</a></li>
-<li><a href="https://htmx.org/essays/when-to-use-hypermedia/">When Should You Use Hypermedia? - htmx.org essays</a></li>
-<li><a href="https://en.wikipedia.org/wiki/Htmx">Htmx - Wikipedia</a></li>
-<li><a href="https://se-radio.net/2025/06/se-radio-671-carson-gross-on-htmx/">SE Radio 671: Carson Gross on HTMX</a></li>
-<li><a href="https://hypermedia.systems/">Hypermedia Systems (書籍サイト)</a></li>
 </ul>
 
 ]]></description>
