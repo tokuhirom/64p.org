@@ -1,6 +1,6 @@
 ---
 created: 2026-08-12 19:33
-updated: 2026-08-13 07:30
+updated: 2026-08-13 07:43
 ---
 # Topcoat
 
@@ -32,7 +32,7 @@ LeptosやDioxusのように[[wasm|WebAssembly]]をブラウザに送るのでは
 - コンテンツハッシュ付きURLのアセットパイプライン
 - Node.js不要のTailwind CSS組み込み、shadcn/ui風コンポーネントライブラリ
 - セッション/クッキー管理、リクエスト単位のメモ化
-- [[htmx]] / Fontsource / Iconify 連携
+- [[htmx]] / Fontsource / [[iconify|Iconify]] 連携
 
 同じくtokio-rs製のasync ORM「Toasty」(2026年4月公開)との統合強化、バリデーション、メール機能がロードマップに載っている。
 

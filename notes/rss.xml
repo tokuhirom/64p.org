@@ -6,7 +6,52 @@
 <atom:link href="https://64p.org/notes/rss.xml" rel="self" type="application/rss+xml" />
 <description>ちょっと調べたことや検証結果を、AIの力も借りながらメモしていくコーナーです。</description>
 <language>ja</language>
-<lastBuildDate>Thu, 13 Aug 2026 07:42:04 +0900</lastBuildDate>
+<lastBuildDate>Thu, 13 Aug 2026 07:43:15 +0900</lastBuildDate>
+<item>
+<title>Iconify</title>
+<link>https://64p.org/notes/iconify.html</link>
+<guid isPermaLink="true">https://64p.org/notes/iconify.html</guid>
+<pubDate>Thu, 13 Aug 2026 07:43:00 +0900</pubDate>
+<description><![CDATA[<h1>Iconify</h1>
+
+<p>複数のオープンソースアイコンセットを統一した記法で扱えるアイコンフレームワーク。個々のアイコンライブラリを直接使うのではなく、それらを束ねる統合レイヤーとして機能する。</p>
+
+<p><a class="note-tag" href="/notes/tags/icon.html">#icon</a> <a class="note-tag" href="/notes/tags/frontend.html">#frontend</a> <a class="note-tag" href="/notes/tags/web.html">#web</a></p>
+
+<h2>対応規模</h2>
+
+<p>Font Awesome、Material Design Icons、Feather Icons、Noto Emojiなど200以上のアイコンセット、約25万個以上のアイコンに対応する。セットをまたいでも同じ統一シンタックスで参照できる。</p>
+
+<h2>仕組み</h2>
+
+<p>Iconify自体はアイコンデータを内包せず、使用するアイコンだけをAPI経由でオンデマンドに取得する。従来のアイコンフォント/SVGスプライトのように未使用アイコンまでバンドルに含める必要がなく、地理分散サーバーで低遅延を実現している。</p>
+
+<h2>利用方法</h2>
+
+<ul>
+<li>全フレームワーク共通で使える<code>iconify-icon</code>というWeb Component</li>
+<li>React/Vue/Svelte向けの専用コンポーネント</li>
+<li>Figma/Sketch/Adobe XD向けのデザインプラグイン</li>
+</ul>
+
+
+<h2>セルフホスト</h2>
+
+<p>IconifyのAPI自体もアイコンセットもGitHubで公開されており、自前サーバーでホストすることも可能。</p>
+
+<h2>ライセンス</h2>
+
+<p>Iconify本体はMITライセンス。ただし個々のアイコンデータは各アイコンセット固有のライセンスに従う。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://iconify.design/docs/iconify-icon/">Iconify Icon Web Component</a></li>
+<li><a href="https://github.com/iconify/iconify">GitHub - iconify/iconify</a></li>
+</ul>
+
+]]></description>
+</item>
 <item>
 <title>WIT (WebAssembly Interface Types)</title>
 <link>https://64p.org/notes/wit.html</link>
@@ -1824,39 +1869,6 @@ flowchart TD
 <ul>
 <li><a href="https://github.com/firecracker-microvm/firecracker-containerd">GitHub - firecracker-microvm/firecracker-containerd</a></li>
 <li><a href="https://github.com/firecracker-microvm/firecracker-containerd/blob/main/docs/architecture.md">firecracker-containerd/docs/architecture.md</a></li>
-</ul>
-
-]]></description>
-</item>
-<item>
-<title>typescript-eslint</title>
-<link>https://64p.org/notes/typescript-eslint.html</link>
-<guid isPermaLink="true">https://64p.org/notes/typescript-eslint.html</guid>
-<pubDate>Wed, 12 Aug 2026 23:21:00 +0900</pubDate>
-<description><![CDATA[<h1>typescript-eslint</h1>
-
-<p>TypeScriptコードを<a href="/notes/eslint.html">ESLint</a>でlintできるようにするツール群（パーサーとプラグインのモノレポプロジェクト）。ESLint本体はJavaScriptのみを解釈するため、TypeScript対応はこのプロジェクトがプラグインとして担っている。 <a class="note-tag" href="/notes/tags/javascript.html">#javascript</a> <a class="note-tag" href="/notes/tags/typescript.html">#typescript</a></p>
-
-<h2>TSLintからの移行</h2>
-
-<p>かつてTypeScriptにはTSLintという専用リンターがあったが、2019年に非推奨（deprecated）となり、公式にtypescript-eslintへの移行が推奨された。以降、JavaScript/TypeScript両方のlintをESLintエコシステムに一本化するのが標準になっている。移行用に設定変換ツール（tslint-to-eslint-config）も提供された。</p>
-
-<h2>type-aware linting（typed linting）</h2>
-
-<p>typescript-eslintの特徴的な機能が、TypeScriptコンパイラの型情報を使ってコードを検査する「型認識lint（type-aware linting / typed linting）」。型情報がないと検出できない問題（例: Promiseのawait忘れ）を検出できる。ただしlint前にTypeScriptによるプロジェクトのビルド相当の処理が必要になるため、性能上のコストがかかる。</p>
-
-<p><a href="/notes/biome.html">Biome</a> v2が「TypeScriptコンパイラに依存しない型認識lint」を打ち出しているのは、このコストへの対案という文脈。</p>
-
-<h2><a href="/notes/javascript-linters-formatters.html">JavaScriptのリンター・フォーマッター</a>の中での位置づけ</h2>
-
-<p><a href="/notes/eslint.html">ESLint</a>のプラグイン機構の上に成立している拡張であり、ESLintエコシステムの代表例。<a href="/notes/biome.html">Biome</a>のリンターが搭載するルールの由来元のひとつでもある。</p>
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://typescript-eslint.io/">typescript-eslint</a></li>
-<li><a href="https://typescript-eslint.io/users/what-about-tslint/">What About TSLint? | typescript-eslint</a></li>
-<li><a href="https://typescript-eslint.io/blog/typed-linting/">Typed Linting: The Most Powerful TypeScript Linting Ever | typescript-eslint</a></li>
 </ul>
 
 ]]></description>
