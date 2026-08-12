@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>Xinu - Notes - 64p.org</title>
+    <title>seccomp - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/highlight.js@11/styles/github.min.css" media="(prefers-color-scheme: light)">
@@ -21,7 +21,7 @@
                 <a class="notes-tags-link" href="/notes/tags/">🏷️ タグ一覧</a>
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
-                                    <li><a href="/notes/seccomp.html">seccomp</a></li>
+                                    <li><a href="/notes/seccomp.html" class="active">seccomp</a></li>
                                     <li><a href="/notes/least-privilege.html">最小権限の原則</a></li>
                                     <li><a href="/notes/vxlan.html">VXLAN</a></li>
                                     <li><a href="/notes/mold-linker.html">mold(高速リンカ)</a></li>
@@ -161,7 +161,7 @@
                                     <li><a href="/notes/ruff.html">Ruff</a></li>
                                     <li><a href="/notes/semaphore.html">セマフォ</a></li>
                                     <li><a href="/notes/mutex.html">ミューテックス(mutex)</a></li>
-                                    <li><a href="/notes/xinu.html" class="active">Xinu</a></li>
+                                    <li><a href="/notes/xinu.html">Xinu</a></li>
                                     <li><a href="/notes/chicken-rice-japan.html">チキンライス(日本の洋食)</a></li>
                                     <li><a href="/notes/chicken-rice-hainanese.html">海南鶏飯(シンガポール式チキンライス)</a></li>
                                     <li><a href="/notes/podman.html">Podman</a></li>
@@ -291,36 +291,53 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>Xinu</h1>
+                <h1>seccomp</h1>
 
-<p>Xinu(Xinu Is Not Unix、再帰的頭字語)は、Douglas Comerが1980年代にPurdue大学の教育用に開発した組み込みシステム向けのオペレーティングシステム。 <a class="note-tag" href="/notes/tags/operating-system.html">#operating-system</a> <a class="note-tag" href="/notes/tags/embedded.html">#embedded</a></p>
+<p><a class="note-tag" href="/notes/tags/linux.html">#linux</a> <a class="note-tag" href="/notes/tags/kernel.html">#kernel</a> <a class="note-tag" href="/notes/tags/security.html">#security</a></p>
 
-<h2>特徴</h2>
+<p>secure computing mode。Linuxカーネルの機能で、プロセスが発行できるシステムコールを制限する仕組み。プロセスの攻撃対象領域（カーネルへの入口）を必要最小限に絞る、<a href="/notes/least-privilege.html">最小権限の原則</a>のシステムコールレベルでの実践と言える。</p>
 
-<p>携帯電話やMP3プレーヤーのような組み込み環境向けに設計された、小さく洗練されたOS。動的なプロセス生成、動的メモリ割り当て、ネットワーク通信、ローカル/リモートファイルシステム、シェル、デバイス非依存のI/O機能をサポートする。</p>
+<h2>strict mode から filter mode へ</h2>
 
-<p>名前にUnixが入っているが、Unixのソースコードを知らずに書かれており、互換性も目指していない。一部Unixと同名のシステムコールを持つが、意味論(セマンティクス)は異なる。</p>
+<ul>
+<li><strong>strict mode</strong>: Andrea Arcangeli が「信頼できないコードを計算サンドボックスで動かす」用途（グリッドコンピューティング的なサービス）のために導入した初期形態。<code>prctl(PR_SET_SECCOMP, SECCOMP_MODE_STRICT)</code> を呼ぶと、以後そのプロセスは read / write / exit / sigreturn の4つのシステムコールしか使えなくなる。安全だが、純粋な数値計算のようなワークロード以外では実用にならなかった。</li>
+<li><strong>filter mode (seccomp-bpf)</strong>: Linux 3.5 で入った現在の主流。<a href="/notes/bpf.html">BPF</a>（classic BPF）のプログラムをフィルタとしてプロセスに取り付け、システムコールごとに「システムコール番号と引数」（<code>struct seccomp_data</code>）を評価して許可・拒否を判定する。Linux 3.17 からは専用の <code>seccomp()</code> システムコールで設定できる。</li>
+</ul>
 
-<h2>対応ハードウェア</h2>
 
-<p>DEC PDP-11/VAX、Motorola 68k(Sun-2/Sun-3、AT&amp;T UNIX PC)、Intel x86、PowerPC G3、MIPS、ARM、AVR(Arduinoのatmega328pなど)と幅広い移植実績がある。</p>
+<p>フィルタの判定結果は <code>SECCOMP_RET_ALLOW</code>（許可）、<code>SECCOMP_RET_ERRNO</code>（エラーを返す）、<code>SECCOMP_RET_TRAP</code>（シグナル送出）、<code>SECCOMP_RET_KILL_PROCESS</code>（プロセスをkill）などのアクションで表現する。Linux 5.0 では判定をユーザー空間のスーパーバイザに委譲する <code>SECCOMP_RET_USER_NOTIF</code> も入った。</p>
 
-<h2>教育用OSとしての位置づけ</h2>
+<h2>設計上の面白い点</h2>
 
-<p>Linuxのような汎用OSと異なり、組み込み・リアルタイム処理という特化した領域を扱う。OS設計の原理を教える大学の授業教材として広く使われており、開発者Douglas Comer自身の著書『Operating System Design: The Xinu Approach』が定番のテキストになっている。</p>
+<ul>
+<li>BPFプログラムはポインタの参照外しができないため、フィルタはシステムコールの引数の値そのものしか評価できない。これは制約であると同時に、システムコール介入系の仕組みにありがちな TOCTOU（time-of-check-to-time-of-use）攻撃が構造的に成立しないという安全性でもある（ユーザーメモリ上の文字列引数などを検査対象にすると、検査後・実行前に書き換えられうる）。</li>
+<li>一度取り付けたフィルタは外せず、子プロセスにも継承される。フィルタは積み重ねられ、複数ある場合は最も厳しい判定が勝つ。</li>
+</ul>
+
+
+<h2>採用例</h2>
+
+<p>Chrome/Chromium のレンダラサンドボックス（seccomp-bpf の初期の代表的ユーザー）、Docker などのコンテナランタイム（デフォルトの seccomp プロファイルで危険なシステムコールを遮断）、systemd の <code>SystemCallFilter=</code>、Firefox、OpenSSH など。コンテナの文脈では、namespace や <a href="/notes/cgroups.html">cgroups（control groups）</a> による分離と組み合わせて使われる。</p>
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://en.wikipedia.org/wiki/Xinu">Xinu - Wikipedia</a></li>
-<li><a href="https://news.ycombinator.com/item?id=17734837">Xinu – A small, elegant operating system | Hacker News</a></li>
-<li><a href="https://medium.com/@einstenkhaled/comprehensive-analysis-of-xinu-a-case-study-in-embedded-os-architecture-f6d982f55986">Comprehensive Analysis of Xinu: A Case Study in Embedded OS Architecture | Medium</a></li>
+<li><a href="https://www.man7.org/linux/man-pages/man2/seccomp.2.html">seccomp(2) - Linux manual page</a></li>
+<li><a href="https://www.kernel.org/doc/html/v4.19/userspace-api/seccomp_filter.html">Seccomp BPF (SECure COMPuting with filters) — The Linux Kernel documentation</a></li>
+<li><a href="https://www.armosec.io/blog/seccomp-internals-part-1/">Seccomp: Enhance Security for Linux Applications - ARMO</a></li>
 </ul>
 
 
+                                <div class="notes-backlinks">
+                    <h2>🔗 リンクされているノート</h2>
+                    <ul>
+                                            <li><a href="/notes/least-privilege.html">最小権限の原則</a></li>
+                    
+                    </ul>
+                </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-10 19:06 / 更新日時: 2026-08-10 19:06</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=Xinu&url=https%3A%2F%2F64p.org%2Fnotes%2Fxinu.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <span>作成日時: 2026-08-12 17:52 / 更新日時: 2026-08-12 17:52</span>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=seccomp&url=https%3A%2F%2F64p.org%2Fnotes%2Fseccomp.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">

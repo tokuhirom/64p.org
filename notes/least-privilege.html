@@ -21,6 +21,8 @@
                 <a class="notes-tags-link" href="/notes/tags/">🏷️ タグ一覧</a>
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
+                                    <li><a href="/notes/seccomp.html">seccomp</a></li>
+                                    <li><a href="/notes/least-privilege.html" class="active">最小権限の原則</a></li>
                                     <li><a href="/notes/vxlan.html">VXLAN</a></li>
                                     <li><a href="/notes/mold-linker.html">mold(高速リンカ)</a></li>
                                     <li><a href="/notes/sqlite-fts5.html">FTS5（SQLite）</a></li>
@@ -28,7 +30,6 @@
                                     <li><a href="/notes/mecab.html">MeCab</a></li>
                                     <li><a href="/notes/rbac.html">RBAC (Role-Based Access Control)</a></li>
                                     <li><a href="/notes/microphonetest.html">MicrophoneTest(マイク音質評価Webアプリ)</a></li>
-                                    <li><a href="/notes/least-privilege.html" class="active">最小権限の原則</a></li>
                                     <li><a href="/notes/data-lakehouse.html">データレイクハウス</a></li>
                                     <li><a href="/notes/common-expression-language.html">CEL (Common Expression Language)</a></li>
                                     <li><a href="/notes/apache-polaris.html">Apache Polaris</a></li>
@@ -312,7 +313,7 @@
 <li><strong>privilege bracketing</strong>: 権限が必要な瞬間だけ取得し、使い終わったら即座に手放す。</li>
 <li><strong>privilege separation</strong>: 特権が必要な部分を別プロセスに分離し、大部分を無特権で動かす（OpenSSHの設計が代表例）。</li>
 <li><strong>アクセス制御モデルでの運用</strong>: <a href="/notes/rbac.html">RBAC</a> のロール設計やクラウドIAMのポリシーで「業務に必要な権限だけ」を割り当てる。<a href="/notes/apache-polaris.html">Apache Polaris</a> の credential vending（テーブルのストレージパスだけにスコープした短命の認証情報を払い出す）もこの原則の実践。</li>
-<li>サンドボックス、コンテナ、seccomp のようなシステムコール制限も、プロセスの持つ能力を必要最小限に絞る手段と言える。</li>
+<li>サンドボックス、コンテナ、<a href="/notes/seccomp.html">seccomp</a> のようなシステムコール制限も、プロセスの持つ能力を必要最小限に絞る手段と言える。</li>
 </ul>
 
 
@@ -333,11 +334,12 @@
                     <h2>🔗 リンクされているノート</h2>
                     <ul>
                                             <li><a href="/notes/rbac.html">RBAC (Role-Based Access Control)</a></li>
+                                            <li><a href="/notes/seccomp.html">seccomp</a></li>
                     
                     </ul>
                 </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-12 13:40 / 更新日時: 2026-08-12 13:40</span>
+                    <span>作成日時: 2026-08-12 13:40 / 更新日時: 2026-08-12 17:52</span>
                     <a class="share-x" href="https://twitter.com/intent/tweet?text=%E6%9C%80%E5%B0%8F%E6%A8%A9%E9%99%90%E3%81%AE%E5%8E%9F%E5%89%87&url=https%3A%2F%2F64p.org%2Fnotes%2Fleast-privilege.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
