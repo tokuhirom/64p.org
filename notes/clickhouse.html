@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>HNSW - Notes - 64p.org</title>
+    <title>ClickHouse - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/highlight.js@11/styles/github.min.css" media="(prefers-color-scheme: light)">
@@ -21,7 +21,7 @@
                 <a class="notes-tags-link" href="/notes/tags/">🏷️ タグ一覧</a>
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
-                                    <li><a href="/notes/clickhouse.html">ClickHouse</a></li>
+                                    <li><a href="/notes/clickhouse.html" class="active">ClickHouse</a></li>
                                     <li><a href="/notes/sentencepiece.html">SentencePiece</a></li>
                                     <li><a href="/notes/project-nessie.html">Project Nessie</a></li>
                                     <li><a href="/notes/dremio.html">Dremio</a></li>
@@ -165,7 +165,7 @@
                                     <li><a href="/notes/vacuum.html">VACUUM</a></li>
                                     <li><a href="/notes/postgresql.html">PostgreSQL</a></li>
                                     <li><a href="/notes/pgvector.html">pgvector</a></li>
-                                    <li><a href="/notes/hnsw.html" class="active">HNSW</a></li>
+                                    <li><a href="/notes/hnsw.html">HNSW</a></li>
                                     <li><a href="/notes/neon.html">Neon</a></li>
                                     <li><a href="/notes/dgx-spark.html">NVIDIA DGX Spark</a></li>
                                     <li><a href="/notes/nixpkgs-core-team-disbanded.html">Nixpkgs Core Teamの解散(2026年8月)</a></li>
@@ -280,57 +280,63 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>HNSW</h1>
+                <h1>ClickHouse</h1>
 
-<p>Hierarchical Navigable Small World の略。高次元ベクトルに対する近似最近傍探索（ANN: Approximate Nearest Neighbor Search）アルゴリズムのひとつ。2016年にYu MalkovとDmitry Yashuninが発表した論文「Efficient and Robust Approximate Nearest Neighbor Search Using Hierarchical Navigable Small World Graphs」（2018年にIEEE TPAMI誌掲載）が元になっている。<a href="/notes/pgvector.html">pgvector</a>が対応するインデックス方式の一つ。</p>
+<p><a class="note-tag" href="/notes/tags/database.html">#database</a> <a class="note-tag" href="/notes/tags/olap.html">#olap</a> <a class="note-tag" href="/notes/tags/data-engineering.html">#data-engineering</a></p>
 
-<p><a class="note-tag" href="/notes/tags/vector-search.html">#vector-search</a> <a class="note-tag" href="/notes/tags/algorithm.html">#algorithm</a> <a class="note-tag" href="/notes/tags/ann.html">#ann</a></p>
+<p><strong>OLAP</strong>（Online Analytical Processing、大量データの集計・分析に最適化されたワークロード）向けに設計されたオープンソースの列指向（columnar）データベース管理システム。対義語はOLTP（Online Transaction Processing、少量レコードの読み書きを高頻度にこなすトランザクション処理）。実装言語はC++（約150万行）で、近年は一部の周辺機能（BLAKE3ハッシュ関数、PRQLというクエリ言語ライブラリの統合など)でRustも部分的に採用され始めているが、コア部分を全面書き換えする方針ではない。</p>
 
-<h2>仕組み</h2>
+<h2>生まれた経緯</h2>
 
-<p>グラフベースの手法で、2つのアイデアを組み合わせている。</p>
+<p>2009年、ロシアのYandex社内でAlexey Milovidov氏が「非集計の生データからリアルタイムでレポートを生成できるか」という仮説検証として開発を開始した。Yandex.Metrica（ロシア第2位のWebアクセス解析サービス）のバックエンドとして2011年に本番投入され、当時374台構成のクラスタで20.3兆行・約2PBの圧縮データを保持し、1日1000億件超のレコード挿入をコアチーム15名で処理していた。2016年6月、MoscowのHighload++カンファレンスでOSS公開。2021年にMilovidov氏がClickHouse社を設立した（CEO: Aaron Katz、Index Ventures/Benchmark主導のシリーズAで$50M調達）。</p>
+
+<h2>アーキテクチャ</h2>
 
 <ul>
-<li><strong>Navigable Small World</strong>: 各点が近い点同士で接続されたグラフ構造。</li>
-<li><strong>階層（Hierarchical）</strong>: 探索を高速化するためのレイヤー構造。</li>
+<li><strong>列指向ストレージ</strong>: 行ではなく列単位でデータを保持する。50カラムのテーブルから3カラムだけ使うクエリなら、その3カラムのファイルしか読まない。</li>
+<li><strong>ベクトル化実行</strong>: 1行ずつでなく、行の集合（バッチ）単位で演算することでCPUキャッシュ効率を最大化する。</li>
+<li><strong>MergeTreeエンジン</strong>: 中核のストレージエンジンファミリー。INSERTのたびに「パート」というディレクトリ単位でデータが書き込まれる（命名規則: <code>{partition_id}_{min_block}_{max_block}_{merge_level}</code>）。パート内部にはカラムごとの圧縮データファイル・インデックスファイル・チェックサムが入り、すべて<code>ORDER BY</code>キーでソート済み。パートは書き込み後イミュータブルで、バックグラウンドで小さいパート同士がマージされてパート数を減らし検索性能を保つ（エンジン名の由来）。</li>
 </ul>
 
 
-<p>下位レイヤーには全ベクトルが含まれ近傍同士が密に接続される一方、上位レイヤーに行くほどノード数が少なくなり、遠くの領域へ素早く移動するための「ハイウェイ」として機能する。検索時は最上層のエントリーポイントから始まり、クエリベクトルに近い方向へ貪欲に降りていくことで、全件比較なしに高速に近傍を見つけられる。</p>
+<h2>データ配置</h2>
 
-<h2>主なパラメータ</h2>
+<p>デフォルトはローカルディスク（<code>/var/lib/clickhouse</code>、多くの場合1台の高速NVMe）にパートとして直接格納する形で、オブジェクトストレージへの依存はない。ただし「ディスク」を抽象化する層があり、S3互換オブジェクトストレージをディスクとして設定することも可能。よくあるのは階層ストレージ（tiered storage）構成で、直近のよく参照されるデータは高速なローカルディスクに、古いデータは閾値を超えたらS3などの安価なストレージに自動で移す「hot-cold」運用。</p>
 
-<ul>
-<li><strong>M</strong>: 各ノードが持つ接続数の上限（推奨値はおおむね5〜48程度）。大きいほど精度（リコール率）は上がるがメモリ消費も増える。</li>
-<li><strong>ef_construction</strong>: インデックス構築時に探索する近傍候補の幅。大きいほど構築品質は上がるが構築時間が伸びる。</li>
-</ul>
+<p>マネージドサービスのClickHouse Cloudでは、SharedMergeTreeというエンジンによってストレージとコンピュートの分離が設定不要でデフォルトで組み込まれており、複数のコンピュートノードが同じオブジェクトストレージ上のデータを共有できる。</p>
 
+<h2>得意・不得意</h2>
 
-<h2>IVFFlatとの違い</h2>
+<p>リアルタイムダッシュボード、ログ分析・SIEM、BIの高速化、AdTech、時系列分析、プロダクト分析、オブザーバビリティ基盤などの分析ワークロードが主戦場。一方でOLTPやレコード単位の頻繁な更新・削除には不向き。実務では「<a href="/notes/postgresql.html">PostgreSQL</a>/<a href="/notes/mysql.html">MySQL</a>でOLTPを担い、分析・リアルタイム集計はClickHouseに任せる」という併用構成が一般的。</p>
 
-<p>学習ステップが不要で、空のテーブルからでもインデックスを作成しデータ追加とともに段階的に構築できる。精度・速度のバランスが良い一方、構築負荷はIVFFlatより大きい。</p>
+<h2>オブザーバビリティ用途と OTLP</h2>
+
+<p><strong>OTLP</strong>（OpenTelemetry Protocol、OpenTelemetryが定義するprotobufベースのテレメトリ送信プロトコル）は、ログ・メトリクス・トレースの収集方式を標準化するが、そのデータの永続化先（バックエンド）までは規定しない。ここでClickHouseが受け皿として使われることが多い。OpenTelemetry CollectorがgRPC/HTTP経由でOTLPとしてスパンやログを受け取り、ClickHouse Exporterでそのままテーブルに書き込む構成が一般的。オブザーバビリティデータは「高頻度の追記のみの書き込み」「広い時間範囲のスキャン」「特定カラムに対する集計」という特性を持ち、これが列指向DBの得意分野と噛み合うため、行指向DBと比べて5〜10倍の圧縮率改善が報告されている。</p>
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://www.mongodb.com/resources/basics/hierarchical-navigable-small-world">What is a Hierarchical Navigable Small World | MongoDB</a></li>
-<li><a href="https://en.wikipedia.org/wiki/Hierarchical_navigable_small_world">Hierarchical navigable small world - Wikipedia</a></li>
-<li><a href="https://zilliz.com/learn/hierarchical-navigable-small-worlds-HNSW">Understanding Hierarchical Navigable Small Worlds (HNSW) - Zilliz Learn</a></li>
-<li><a href="https://www.pinecone.io/learn/series/faiss/hnsw/">Hierarchical Navigable Small Worlds (HNSW) | Pinecone</a></li>
-<li><a href="https://krunalkanojiya.com/blog/hnsw-algorithm-explained">HNSW Algorithm Explained: Diagrams + Tuning (2026)</a></li>
+<li><a href="https://www.flexera.com/blog/finops/clickhouse-architecture/">ClickHouse architecture 101: A comprehensive overview</a></li>
+<li><a href="https://clickhouse.com/resources/engineering/how-to-choose-a-database-for-real-time-analytics-in-2026">How to choose a database for real-time analytics in 2026 | ClickHouse</a></li>
+<li><a href="https://clickhouse.com/use-cases">Use Cases | ClickHouse</a></li>
+<li><a href="https://clickhouse.com/resources/engineering/what-is-columnar-database">What is a columnar database? | ClickHouse</a></li>
+<li><a href="https://www.stacksync.com/blog/one-engineer-at-yandex-the-origin-story-of-clickhouse">One Engineer at Yandex: The Origin Story of ClickHouse</a></li>
+<li><a href="https://research.contrary.com/company/clickhouse">Report: ClickHouse&rsquo;s Business Breakdown &amp; Founding Story</a></li>
+<li><a href="https://oneuptime.com/blog/post/2026-03-31-clickhouse-what-is-mergetree-engine/view">What Is a MergeTree Engine and How It Works</a></li>
+<li><a href="https://oneuptime.com/blog/post/2026-03-31-clickhouse-part-files-explained/view">How ClickHouse Stores Data on Disk - Part Files Explained</a></li>
+<li><a href="https://severalnines.com/blog/clickhouse-storage-architecture-and-optimization/">ClickHouse Storage Architecture and Optimization | Severalnines</a></li>
+<li><a href="https://docs.gitlab.com/development/database/clickhouse/tiered_storage">Tiered Storages in ClickHouse</a></li>
+<li><a href="https://clickhouse.com/docs/guides/separation-storage-compute">Separation of storage and compute | ClickHouse Docs</a></li>
+<li><a href="https://thenewstack.io/moving-from-c-to-rust-clickhouse-has-some-advice/">Moving From C++ to Rust? ClickHouse Has Some Advice - The New Stack</a></li>
+<li><a href="https://clickhouse.com/blog/rust">A Year of Rust in ClickHouse | ClickHouse</a></li>
+<li><a href="https://clickhouse.com/blog/storing-traces-and-spans-open-telemetry-in-clickhouse">Building an Observability Solution with ClickHouse - Part 2 - Traces | ClickHouse</a></li>
+<li><a href="https://clickhouse.com/docs/observability/integrating-opentelemetry">Integrating OpenTelemetry for data collection - ClickHouse Documentation</a></li>
 </ul>
 
 
-                                <div class="notes-backlinks">
-                    <h2>🔗 リンクされているノート</h2>
-                    <ul>
-                                            <li><a href="/notes/pgvector.html">pgvector</a></li>
-                    
-                    </ul>
-                </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-10 17:13 / 更新日時: 2026-08-10 17:13</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=HNSW&url=https%3A%2F%2F64p.org%2Fnotes%2Fhnsw.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <span>作成日時: 2026-08-12 12:53 / 更新日時: 2026-08-12 12:53</span>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=ClickHouse&url=https%3A%2F%2F64p.org%2Fnotes%2Fclickhouse.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">
