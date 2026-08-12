@@ -1,6 +1,6 @@
 ---
 created: 2026-08-13 07:43
-updated: 2026-08-13 07:46
+updated: 2026-08-13 07:48
 ---
 # Iconify
 
@@ -32,9 +32,17 @@ IconifyのAPI自体もアイコンセットもGitHubで公開されており、�
 
 ## ライセンス
 
-Iconify本体はMITライセンス。ただし個々のアイコンデータは各アイコンセット固有のライセンスに従う。
+Iconify本体はMITライセンス。ただし個々のアイコンデータは各アイコンセット固有のライセンスに従い、実際にはMIT・Apache 2.0・CC BY 4.0などが混在する。
+
+- **CC BY 4.0**（表示義務あり）: Solar(6,184アイコン)、[[font-awesome|Font Awesome]] Solid(2,000アイコン)など
+- **MIT**（表示義務は基本任意）: Tabler(3,768)、Boxicons(3,320)など
+- **Apache 2.0**（特許保護条項付き）: MingCute Designなど
+
+どのライセンスかはセットごとにIconify側のメタデータ(ライセンス名・SPDX識別子・URL)として提供されており、CC BY系のセットを使う場合は表示義務の有無をセット単位で確認する必要がある。
 
 ## 出典
 
 - [Iconify Icon Web Component](https://iconify.design/docs/iconify-icon/)
 - [GitHub - iconify/iconify](https://github.com/iconify/iconify)
+- [List of icon sets | Iconify](https://iconify.design/docs/api/collections.html)
+- [icon-sets/collections.md · GitHub](https://github.com/iconify/icon-sets/blob/master/collections.md)

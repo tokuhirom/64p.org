@@ -6,7 +6,7 @@
 <atom:link href="https://64p.org/notes/rss.xml" rel="self" type="application/rss+xml" />
 <description>ちょっと調べたことや検証結果を、AIの力も借りながらメモしていくコーナーです。</description>
 <language>ja</language>
-<lastBuildDate>Thu, 13 Aug 2026 07:46:50 +0900</lastBuildDate>
+<lastBuildDate>Thu, 13 Aug 2026 07:48:18 +0900</lastBuildDate>
 <item>
 <title>Font Awesome</title>
 <link>https://64p.org/notes/font-awesome.html</link>
@@ -98,13 +98,24 @@
 
 <h2>ライセンス</h2>
 
-<p>Iconify本体はMITライセンス。ただし個々のアイコンデータは各アイコンセット固有のライセンスに従う。</p>
+<p>Iconify本体はMITライセンス。ただし個々のアイコンデータは各アイコンセット固有のライセンスに従い、実際にはMIT・Apache 2.0・CC BY 4.0などが混在する。</p>
+
+<ul>
+<li><strong>CC BY 4.0</strong>（表示義務あり）: Solar(6,184アイコン)、<a href="/notes/font-awesome.html">Font Awesome</a> Solid(2,000アイコン)など</li>
+<li><strong>MIT</strong>（表示義務は基本任意）: Tabler(3,768)、Boxicons(3,320)など</li>
+<li><strong>Apache 2.0</strong>（特許保護条項付き）: MingCute Designなど</li>
+</ul>
+
+
+<p>どのライセンスかはセットごとにIconify側のメタデータ(ライセンス名・SPDX識別子・URL)として提供されており、CC BY系のセットを使う場合は表示義務の有無をセット単位で確認する必要がある。</p>
 
 <h2>出典</h2>
 
 <ul>
 <li><a href="https://iconify.design/docs/iconify-icon/">Iconify Icon Web Component</a></li>
 <li><a href="https://github.com/iconify/iconify">GitHub - iconify/iconify</a></li>
+<li><a href="https://iconify.design/docs/api/collections.html">List of icon sets | Iconify</a></li>
+<li><a href="https://github.com/iconify/icon-sets/blob/master/collections.md">icon-sets/collections.md · GitHub</a></li>
 </ul>
 
 ]]></description>
