@@ -1,6 +1,6 @@
 ---
 created: 2026-08-09 22:04
-updated: 2026-08-09 22:10
+updated: 2026-08-12 23:17
 ---
 # MOC (Map of Content)
 
@@ -24,7 +24,7 @@ MOCという用語自体はLYT固有だが、「フォルダではなくリン�
 
 ## このサイトでの実例
 
-`64p.org`の`/notes/`コーナーでも同種の構成を「ハブノート」と呼んで使っている（詳細はプロジェクトの`CLAUDE.md`参照）。例えば[[markdown-presentation-tools|Markdownベースのプレゼンテーションツール]]は[[slidev]]・[[marp]]・[[deck-k1low|deck]]という3つの原子ノートを束ねるMOC/ハブノートの実例になっている。
+`64p.org`の`/notes/`コーナーでも同種の構成を「ハブノート」と呼んで使っている（詳細はプロジェクトの`CLAUDE.md`参照）。例えば[[markdown-presentation-tools|Markdownベースのプレゼンテーションツール]]は[[slidev]]・[[marp]]・[[deck-k1low|deck]]という3つの原子ノートを束ねるMOC/ハブノートの実例になっている。同様に[[javascript-linters-formatters|JavaScriptのリンター・フォーマッター]]は[[eslint|ESLint]]・[[prettier|Prettier]]・[[biome|Biome]]・[[oxc|Oxc]]を束ねている。
 
 #zettelkasten #note-taking #obsidian
 

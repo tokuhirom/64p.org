@@ -6,7 +6,98 @@
 <atom:link href="https://64p.org/notes/rss.xml" rel="self" type="application/rss+xml" />
 <description>ちょっと調べたことや検証結果を、AIの力も借りながらメモしていくコーナーです。</description>
 <language>ja</language>
-<lastBuildDate>Wed, 12 Aug 2026 23:14:18 +0900</lastBuildDate>
+<lastBuildDate>Wed, 12 Aug 2026 23:17:45 +0900</lastBuildDate>
+<item>
+<title>JavaScriptのリンター・フォーマッター</title>
+<link>https://64p.org/notes/javascript-linters-formatters.html</link>
+<guid isPermaLink="true">https://64p.org/notes/javascript-linters-formatters.html</guid>
+<pubDate>Wed, 12 Aug 2026 23:17:00 +0900</pubDate>
+<description><![CDATA[<h1>JavaScriptのリンター・フォーマッター</h1>
+
+<p>JavaScript/TypeScriptエコシステムのコード品質ツール（リンター・フォーマッター）を束ねるハブノート。</p>
+
+<p><a class="note-tag" href="/notes/tags/javascript.html">#javascript</a> <a class="note-tag" href="/notes/tags/moc.html">#moc</a></p>
+
+<h2>全体の構図</h2>
+
+<p>「JS製・単機能特化の従来世代デファクト」と「Rust製・高速・オールインワンの新世代」という対立軸で見ると整理しやすい。新世代ツールはいずれも従来世代の置き換え（ドロップイン互換）を狙っており、性能を「ESLint比・Prettier比で何倍」という形でアピールする。</p>
+
+<div class="mermaid">
+graph LR
+    subgraph 従来世代["従来世代 (JS製・単機能)"]
+        eslint["ESLint (リンター)"]
+        prettier["Prettier (フォーマッター)"]
+    end
+    subgraph 新世代["新世代 (Rust製・統合)"]
+        biome["Biome"]
+        oxc["Oxc (oxlint / oxfmt)"]
+    end
+    biome --&gt;|置き換えを狙う| eslint
+    biome --&gt;|置き換えを狙う| prettier
+    oxc --&gt;|置き換えを狙う| eslint
+    oxc --&gt;|置き換えを狙う| prettier
+    biome &lt;--&gt;|競合| oxc
+</div>
+
+
+<h2>各ツール</h2>
+
+<ul>
+<li><a href="/notes/eslint.html">ESLint</a> — 2013年から続くプラガブルなリンターのデファクト標準。近年はJSON/CSS/Markdownなど言語非依存化を進めている</li>
+<li><a href="/notes/prettier.html">Prettier</a> — オピニオン型（設定最小主義）のフォーマッターのデファクト標準</li>
+<li><a href="/notes/biome.html">Biome</a> — Rust製オールインワンツールチェーン。Romeのコミュニティフォークという系譜。ESLint+Prettierの一括置き換えを狙う</li>
+<li><a href="/notes/oxc.html">Oxc</a> — Rust製ツールチェーン（VoidZero社）。ゼロから開発され、oxlint・oxfmtなど各コンポーネントを個別採用できる点がBiomeと異なる</li>
+</ul>
+
+
+<h2>関連</h2>
+
+<p>Pythonエコシステムでは<a href="/notes/ruff.html">Ruff</a>が「Rust製・高速・既存ツール統合」というまったく同じムーブメントを体現している。</p>
+]]></description>
+</item>
+<item>
+<title>ESLint</title>
+<link>https://64p.org/notes/eslint.html</link>
+<guid isPermaLink="true">https://64p.org/notes/eslint.html</guid>
+<pubDate>Wed, 12 Aug 2026 23:17:00 +0900</pubDate>
+<description><![CDATA[<h1>ESLint</h1>
+
+<p>JavaScript向けの静的解析ツール（リンター）のデファクト標準。Nicholas C. Zakas氏が2013年6月に公開した（当初の名前はJSCheckで、1ヶ月後にESLintに改名）。MITライセンスで、2019年からはOpenJS Foundation傘下のプロジェクト。2025年末時点で週間ダウンロード数は7,000万を超え、最も広く使われているJSリンターとなっている。 <a class="note-tag" href="/notes/tags/javascript.html">#javascript</a></p>
+
+<h2>プラガブルという設計思想</h2>
+
+<p>先行するJSLint・JSHintには「独自ルールを追加できない」という制約があり、それへの不満がESLint誕生の動機になった。ESLintではすべてのルールが個別に有効/無効を切り替えられ、独自ルールを実行時にプラグインとして読み込める。公式サイトも &ldquo;Pluggable JavaScript Linter&rdquo; を掲げている。TypeScript対応もtypescript-eslintというプラグインとして提供される、というようにエコシステム全体がこのプラグイン機構の上に成り立っている。</p>
+
+<h2>flat config</h2>
+
+<p>長年使われてきた <code>.eslintrc</code> 形式（eslintrc config）を置き換える新しい設定システム。<code>eslint.config.js</code> にJavaScriptの配列としてフラットに設定を書く。最初のRFCからv9.0.0（2024年4月）でのデフォルト化まで約5年をかけ、エコシステム全体が移行できるよう意図的にゆっくりロールアウトされた。次期メジャーバージョンのv10.0.0でeslintrc形式のサポートは完全に削除される予定（2025年11月にalpha、12月にbetaが出ておりリリースが近い）。</p>
+
+<h2>JavaScriptの外への拡張</h2>
+
+<p>2024年に「言語非依存（language-agnostic）なリンターになる」方針を発表し、言語プラグイン機構を導入した。公式プラグインとして @eslint/json（JSON/JSONC/JSON5、2024年10月）、@eslint/markdown（同）、@eslint/css（2025年2月）が提供され、コミュニティのhtml-eslint（2025年5月）も合わせると、JavaScript・CSS・HTMLというWebの三要素すべてをESLintでlintできるようになった。</p>
+
+<h2>Rust製新世代ツールとの関係</h2>
+
+<p><a href="/notes/biome.html">Biome</a>や<a href="/notes/oxc.html">Oxc</a>（oxlint）などRust製の新世代リンターが「ESLint比で何倍高速」と比較対象にする基準点になっている（oxlintはESLintの50〜100倍高速を謳う）。一方ESLint自身もv9.34.0でマルチスレッドlintを導入し、大規模プロジェクトで30〜300%の性能向上を実現するなど、性能面での改善を進めている。</p>
+
+<h2><a href="/notes/javascript-linters-formatters.html">JavaScriptのリンター・フォーマッター</a>の中での位置づけ</h2>
+
+<p>従来世代（JS製・単機能）のリンター側の代表。フォーマッター側の代表である<a href="/notes/prettier.html">Prettier</a>と組み合わせて使われることが多い。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://eslint.org/">ESLint - Pluggable JavaScript Linter</a></li>
+<li><a href="https://en.wikipedia.org/wiki/ESLint">ESLint - Wikipedia</a></li>
+<li><a href="https://eslint.org/blog/2025/05/eslint-v9.0.0-retrospective/">ESLint v9.0.0: A retrospective - ESLint</a></li>
+<li><a href="https://eslint.org/blog/2024/10/eslint-json-markdown-support/">ESLint now officially supports linting of JSON and Markdown - ESLint</a></li>
+<li><a href="https://eslint.org/blog/2025/02/eslint-css-support/">ESLint now officially supports linting of CSS - ESLint</a></li>
+<li><a href="https://eslint.org/blog/2025/05/eslint-html-plugin/">ESLint can now lint HTML using the html-eslint language plugin - ESLint</a></li>
+<li><a href="https://eslint.org/blog/2026/01/eslint-2025-year-review/">ESLint&rsquo;s 2025 year in review - ESLint</a></li>
+</ul>
+
+]]></description>
+</item>
 <item>
 <title>microVM</title>
 <link>https://64p.org/notes/microvm.html</link>
@@ -1461,99 +1552,6 @@ rustflags = ["-C", "link-arg=-fuse-ld=/path/to/mold"]
 <li><a href="https://agilealliance.org/glossary/refactoring/">What is Refactoring? | Agile Alliance</a></li>
 <li><a href="https://libquotes.com/ward-cunningham/quote/lbp7q9l">Ward Cunningham Quote (libquotes.com)</a></li>
 <li><a href="https://martinfowler.com/bliki/RefactoringMalapropism.html">bliki: Refactoring Malapropism (martinfowler.com)</a></li>
-</ul>
-
-]]></description>
-</item>
-<item>
-<title>Apache Polaris</title>
-<link>https://64p.org/notes/apache-polaris.html</link>
-<guid isPermaLink="true">https://64p.org/notes/apache-polaris.html</guid>
-<pubDate>Wed, 12 Aug 2026 13:33:00 +0900</pubDate>
-<description><![CDATA[<h1>Apache Polaris</h1>
-
-<p><a class="note-tag" href="/notes/tags/data-engineering.html">#data-engineering</a> <a class="note-tag" href="/notes/tags/security.html">#security</a></p>
-
-<p><a href="/notes/apache-iceberg.html">Apache Iceberg</a> 用のオープンソースのカタログ実装。Iceberg の REST catalog 仕様のベンダー中立な実装で、Spark・Flink・Trino・Apache Doris・StarRocks・<a href="/notes/dremio.html">Dremio</a>・Snowflake など複数のエンジンから同じ Iceberg テーブル群に相互運用的にアクセスできるようにする。Apache 2.0 ライセンス。</p>
-
-<p>もともとは Snowflake が「Polaris Catalog」として2024年6月に発表し、Dremio との共同開発（co-creator）で2024年7月30日にオープンソース化、同年8月に Apache Incubator に寄贈された。約1年半のインキュベーションを経て、2026年2月15日に Apache のトップレベルプロジェクトに昇格した。Google・Microsoft・Confluent など多数の組織がコントリビュートしている。Snowflake のマネージド版は「Snowflake Open Catalog」という名前で提供されている。</p>
-
-<h2>カタログとしての機能</h2>
-
-<p>テーブルのメタデータ位置を管理するだけでなく、ガバナンスレイヤーとしての機能を持つのが特徴。</p>
-
-<ul>
-<li><strong><a href="/notes/rbac.html">RBAC</a></strong>: ロールベースのアクセス制御。principal ごとにカタログ・namespace・テーブル単位の権限を管理する。</li>
-<li><strong>credential vending</strong>: エンジンがテーブルを読み書きする際、Polaris が RBAC を検査したうえで、そのテーブルのストレージパスだけにスコープされた短命のクラウドストレージ認証情報を発行して渡す。エンジン側にオブジェクトストレージの広い権限を直接持たせずに済む。</li>
-<li><strong>カタログフェデレーション</strong>: 外部カタログを配下に束ねられる。</li>
-<li>マルチテナントの namespace、Iceberg SQL view、generic table などにも対応。</li>
-</ul>
-
-
-<h2><a href="/notes/data-lakehouse.html">データレイクハウス</a>の中での位置づけ</h2>
-
-<p>Iceberg スタックの「カタログ」レイヤーの標準実装になりつつあるプロジェクト。同じレイヤーの <a href="/notes/project-nessie.html">Project Nessie</a> が Git ライクなバージョン管理に軸足を置くのに対し、Polaris は REST 仕様準拠の相互運用性とアクセス制御（ガバナンス）に軸足がある。</p>
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://polaris.apache.org/">Apache Polaris 公式サイト</a></li>
-<li><a href="https://polaris.apache.org/blog/2026/02/19/apache-polaris-graduates-to-top-level-project/">Apache Polaris Graduates to Top Level Project!</a></li>
-<li><a href="https://www.snowflake.com/en/blog/introducing-polaris-catalog/">Polaris Catalog: An Open Source Catalog for Apache Iceberg | Snowflake</a></li>
-<li><a href="https://www.dremio.com/blog/apache-polaris-the-catalog-standard-for-lakehouses-and-ai/">Apache Polaris: The Catalog Standard for Iceberg Lakehouses and Agentic Analytics | Dremio</a></li>
-</ul>
-
-]]></description>
-</item>
-<item>
-<title>transcribe.cpp</title>
-<link>https://64p.org/notes/transcribe-cpp.html</link>
-<guid isPermaLink="true">https://64p.org/notes/transcribe-cpp.html</guid>
-<pubDate>Wed, 12 Aug 2026 13:02:00 +0900</pubDate>
-<description><![CDATA[<h1>transcribe.cpp</h1>
-
-<p><a class="note-tag" href="/notes/tags/machine-learning.html">#machine-learning</a> <a class="note-tag" href="/notes/tags/speech-recognition.html">#speech-recognition</a> <a class="note-tag" href="/notes/tags/cpp.html">#cpp</a></p>
-
-<p><a href="/notes/ggml.html">ggml</a>（軽量テンソル演算ライブラリ）ベースの音声認識（ASR: Automatic Speech Recognition）推論エンジン。GitHub上で<code>handy-computer/transcribe.cpp</code>として公開されている。whisper.cppの直接的な後継・置き換えを目指すプロジェクトで、多くのユースケースでwhisper.cppとほぼそのまま置き換え可能とされる（既存の<code>.bin</code>ファイルとの互換性も含む）。</p>
-
-<h2>開発の背景</h2>
-
-<p>音声入力アプリ「Handy」の開発者cjpaisによる作品。Handyはこれまでwhisper.cppを推論エンジンとして使っていたが、次バージョンではtranscribe.cppに置き換わる予定という位置づけ。</p>
-
-<h2>whisper.cppとの違い</h2>
-
-<p>whisper.cppはOpenAIのWhisperモデル専用の実装だったのに対し、transcribe.cppはWhisper以外の多数のASRモデルファミリーを横断的にサポートする、より汎用的な後継ライブラリという位置づけ。</p>
-
-<h2>特徴</h2>
-
-<ul>
-<li><strong>対応モデル数</strong>: 16種類以上のモデルファミリー、60以上のバリエーションに対応（<a href="/notes/ggml.html">GGUF</a>形式）
-
-<ul>
-<li>Whisper（tiny〜large-v3-turbo、12バリエーション）に加え、Parakeet、Canary（NVIDIA製）、Moonshine、SenseVoice、Qwen3-ASR、GigaAM、Voxtralなど幅広くカバー</li>
-<li>話者分離（diarization）専用のSortformerにも対応</li>
-</ul>
-</li>
-<li><strong>品質保証</strong>: 公開している全モデルでWER（単語誤り率）を検証済み</li>
-<li><strong>GPUバックエンド</strong>: Metal（Apple Silicon）、Vulkan、CUDA、TinyBLAS（GPU非搭載CPU向け最適化パス）に対応し、AMD/Intel/NVIDIA/Appleを横断してカバー</li>
-<li><strong>言語バインディング</strong>: Python、JavaScript/TypeScript、Rust、Objective-C/Swiftの公式バインディングあり</li>
-</ul>
-
-
-<h2>ビルド</h2>
-
-<pre><code class="sh">cmake -B build &amp;&amp; cmake --build build
-</code></pre>
-
-<p>Apple SiliconではMetalが自動有効化される。Vulkan（Linux/Windows）・CUDA・HIP/ROCmは対応オプションとして用意されている。量子化ツールのビルドには<code>-DTRANSCRIBE_BUILD_TOOLS=ON</code>フラグが必要。</p>
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://gigazine.net/news/20260811-transcribe-cpp/">GIGAZINE記事</a></li>
-<li><a href="https://elsolitario.org/en/2026/07/19/transcribe-cpp-asr-library-ggml/">transcribe.cpp: An ASR Alternative to whisper.cpp</a></li>
-<li><a href="https://github.com/handy-computer/transcribe.cpp">GitHub - handy-computer/transcribe.cpp</a></li>
-<li><a href="https://github.com/cjpais/Handy">GitHub - cjpais/Handy</a></li>
 </ul>
 
 ]]></description>

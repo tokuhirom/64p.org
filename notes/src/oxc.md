@@ -1,6 +1,6 @@
 ---
 created: 2026-08-10 19:19
-updated: 2026-08-10 19:42
+updated: 2026-08-12 23:17
 ---
 # Oxc(Oxidation Compiler)
 
@@ -15,7 +15,7 @@ Rustで書かれた、JavaScript/TypeScript向けの高性能ツール群(ツー
 既存ツール比で3〜100倍高速と謳っている。
 
 - パーサー: SWCの3倍高速
-- リンター(Oxlint): ESLintの50〜100倍高速
+- リンター(Oxlint): [[eslint|ESLint]]の50〜100倍高速
 - トランスフォーマー: Babelの40倍高速
 - ミニファイア: Terser相当の圧縮率をより高速に実現
 
@@ -32,6 +32,10 @@ Rust製・高速・複数の既存ツールを1つに統合するという思想
 ## [[biome|Biome]]との関係
 
 同じくRust製・JS/TS向けオールインワンツールである[[biome|Biome]]とは競合関係にある。Biomeは既存プロジェクト(Rome)のフォークという系譜を持つ点で、ゼロから作られたOxcとは出自が異なる。
+
+## [[javascript-linters-formatters|JavaScriptのリンター・フォーマッター]]の中での位置づけ
+
+Rust製新世代の統合ツールチェーン。従来世代の[[eslint|ESLint]]+[[prettier|Prettier]]の置き換えを狙う点は[[biome|Biome]]と共通だが、コンポーネント単位で個別採用できる点が異なる。
 
 ## 出典
 

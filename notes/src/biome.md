@@ -1,6 +1,6 @@
 ---
 created: 2026-08-10 19:32
-updated: 2026-08-12 23:09
+updated: 2026-08-12 23:17
 ---
 # Biome
 
@@ -9,7 +9,7 @@ Rustで書かれた、Web(JavaScript/TypeScript/JSX/TSX/JSON/HTML/CSS/GraphQL)�
 ## 機能
 
 - **フォーマッター**: [[prettier|Prettier]]と97%互換の高速フォーマッター
-- **リンター**: ESLint・TypeScript-ESLint由来の517ルールを搭載した高性能リンター
+- **リンター**: [[eslint|ESLint]]・TypeScript-ESLint由来の517ルールを搭載した高性能リンター
 
 ESLint・[[prettier|Prettier]]のドロップイン置き換えを狙って設計されており、Node.jsを必要とせず単体で動作する。CLIおよび[[lsp|LSP]]経由で利用可能。
 
@@ -24,6 +24,10 @@ Biomeの前身はRome。RomeはSebastian McKenzie氏が2020年8月に「Babelの
 ## [[oxc|Oxc]]との関係
 
 同じくRust製・JS/TS向けオールインワンツールである[[oxc|Oxc]]とは競合関係にある。ともにRust製・高速・複数機能統合という共通点を持つが、Biomeは既存プロジェクト(Rome)のフォークという系譜を持つ点で、ゼロから作られたOxcとは出自が異なる。
+
+## [[javascript-linters-formatters|JavaScriptのリンター・フォーマッター]]の中での位置づけ
+
+Rust製新世代の統合ツールチェーン。従来世代のESLint+[[prettier|Prettier]]を一括で置き換えることを狙う。同じ新世代の[[oxc|Oxc]]とは競合。
 
 ## 出典
 
