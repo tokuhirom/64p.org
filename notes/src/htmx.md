@@ -1,6 +1,6 @@
 ---
 created: 2026-08-12 19:37
-updated: 2026-08-12 19:37
+updated: 2026-08-12 19:47
 ---
 # htmx
 
@@ -18,7 +18,7 @@ HTMLの属性だけでAJAX・WebSocket・DOM更新を宣言的に扱えるよう
 
 ## 設計思想: ハイパーメディア駆動
 
-Roy Fieldingの本来のREST、特にHATEOAS(Hypertext As The Engine Of Application State)に沿った「ハイパーメディア駆動」アーキテクチャを標榜する。アプリケーションの状態遷移をクライアント側のJS状態管理ではなくハイパーテキスト(HTML)自体に担わせることで、元来のWebプログラミングモデルに留まったまま動的なUIを作れる、という主張。挙動がHTML要素の属性として書かれる「locality of behavior」も重視している。
+Roy Fieldingの本来の[[restful|REST]]、特に[[hateoas|HATEOAS]](Hypertext As The Engine Of Application State)に沿った「ハイパーメディア駆動」アーキテクチャを標榜する。アプリケーションの状態遷移をクライアント側のJS状態管理ではなくハイパーテキスト(HTML)自体に担わせることで、元来のWebプログラミングモデルに留まったまま動的なUIを作れる、という主張。挙動がHTML要素の属性として書かれる「locality of behavior」も重視している。
 
 作者らによる書籍[『Hypermedia Systems』](https://hypermedia.systems/)がこの思想を体系的に説明しており、日本語訳[『ハイパーメディアシステム──htmxとRESTによるシンプルで軽やかなウェブ開発』](https://www.amazon.co.jp/dp/4297149451?tag=tokuhirom-22)(技術評論社)も出ている。
 
