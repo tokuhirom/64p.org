@@ -6,7 +6,166 @@
 <atom:link href="https://64p.org/notes/rss.xml" rel="self" type="application/rss+xml" />
 <description>ちょっと調べたことや検証結果を、AIの力も借りながらメモしていくコーナーです。</description>
 <language>ja</language>
-<lastBuildDate>Wed, 12 Aug 2026 23:09:24 +0900</lastBuildDate>
+<lastBuildDate>Wed, 12 Aug 2026 23:14:18 +0900</lastBuildDate>
+<item>
+<title>microVM</title>
+<link>https://64p.org/notes/microvm.html</link>
+<guid isPermaLink="true">https://64p.org/notes/microvm.html</guid>
+<pubDate>Wed, 12 Aug 2026 23:14:00 +0900</pubDate>
+<description><![CDATA[<h1>microVM</h1>
+
+<p>デバイスモデルを最小限まで削ぎ落とした軽量な仮想マシン、およびそれを実現する仕組み。伝統的なVMが持つカーネルレベルの分離を保ちつつ、コンテナ並みの起動速度・リソース効率を狙う。 <a class="note-tag" href="/notes/tags/virtualization.html">#virtualization</a></p>
+
+<h2>特徴</h2>
+
+<ul>
+<li>起動時間はミリ秒〜数百ミリ秒程度（伝統的なVMは秒〜分単位）</li>
+<li>1台あたりのメモリオーバーヘッドが数MiB程度と小さい</li>
+<li>レガシーなデバイスエミュレーション・幅広いハードウェアサポートなど、クラウドワークロードに不要な機能を削ぎ落とし、アタックサーフェスと起動時間を削減している</li>
+<li>各microVMは専用のカーネル・専用のメモリ空間・仮想化されたデバイスを持ち、コンテナのようなカーネル共有はしない</li>
+</ul>
+
+
+<h2>代表的な実装</h2>
+
+<ul>
+<li><a href="/notes/firecracker.html">Firecracker</a> — AWSが開発。AWS Lambda/Fargateを支える</li>
+<li><a href="/notes/cloud-hypervisor.html">Cloud Hypervisor</a> — Intel主導、Rust製。rust-vmmプロジェクトの成果を活用</li>
+</ul>
+
+
+<h2>用途</h2>
+
+<p>サーバーレス実行環境やAIエージェント向けサンドボックスなど、マルチテナントで多数の短命なワークロードを高速に隔離・起動する必要がある場面で採用される。<a href="/notes/hypeman.html">Hypeman</a>はFirecracker/Cloud Hypervisor/QEMU/Apple Virtualization.frameworkを切り替え可能な形で統一的に扱うランタイム。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://www.koyeb.com/blog/what-is-a-microvm">What is a microVM? - Koyeb</a></li>
+<li><a href="https://northflank.com/blog/what-is-aws-firecracker">What is AWS Firecracker? The microVM technology, explained | Northflank</a></li>
+</ul>
+
+]]></description>
+</item>
+<item>
+<title>Hypeman</title>
+<link>https://64p.org/notes/hypeman.html</link>
+<guid isPermaLink="true">https://64p.org/notes/hypeman.html</guid>
+<pubDate>Wed, 12 Aug 2026 23:14:00 +0900</pubDate>
+<description><![CDATA[<h1>Hypeman</h1>
+
+<p><a href="https://www.kernel.sh">Kernel</a>社（"Crazy fast, open source infra for AI agents to access the Internet"を掲げる企業）が開発する、OCIコンテナイメージを<a href="/notes/microvm.html">microVM</a>上で動かすマルチハイパーバイザーランタイム。Go製、MITライセンス。2025年10月にリポジトリ作成、star数310（2026年8月時点）。 <a class="note-tag" href="/notes/tags/virtualization.html">#virtualization</a> <a class="note-tag" href="/notes/tags/go.html">#go</a></p>
+
+<h2>コンセプト</h2>
+
+<p>コンテナ（OCIイメージ）を、Dockerのような名前空間分離ではなくVM上で動かす。VMベースにすることでカーネルレベルの分離を確保しつつ、Docker互換のCLI体験(<code>run</code>/<code>exec</code>/<code>stop</code>/<code>ps</code>/<code>logs</code>/<code>pull</code>)を提供する。</p>
+
+<h2>対応ハイパーバイザー</h2>
+
+<ul>
+<li>Linux: <a href="/notes/cloud-hypervisor.html">Cloud Hypervisor</a>、<a href="/notes/firecracker.html">Firecracker</a>、QEMU（KVM必須）</li>
+<li>macOS: Apple Silicon上のVirtualization.framework（Rosetta経由でlinux/amd64イメージも実行可）</li>
+</ul>
+
+
+<h2>主な機能</h2>
+
+<ul>
+<li><strong>Standby/restore</strong>: VMをディスクにスナップショットしてミリ秒単位で再開できる</li>
+<li><strong>組み込みIngress</strong>: TLS終端・サブドメインルーティング対応のリバースプロキシを内蔵</li>
+<li><strong>GPUパススルー</strong>: vGPU/VFIOデバイス対応</li>
+<li><strong>リモートAPI</strong>: JWT認証されたサーバーと別CLIクライアントによるリモート操作</li>
+<li><strong>リモートレジストリへのpush</strong>: キャッシュ済みイメージをAWS ECR/Docker Hub/ghcrなど任意のOCIレジストリへdocker流の一時的な認証情報貸与方式でエクスポート可能</li>
+</ul>
+
+
+<h2>位置づけ</h2>
+
+<p>Firecracker/Cloud HypervisorのようなVMM(Virtual Machine Monitor)単体を、Docker的な使い勝手のCLI/APIで統一的に扱えるようにするレイヤー。開発元がAI agent向けインフラ企業であることから、サンドボックス実行環境としての用途が想定されると見られる（README上に明記はないため推測）。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://github.com/kernel/hypeman">GitHub - kernel/hypeman</a></li>
+<li><a href="https://www.kernel.sh">Kernel</a></li>
+</ul>
+
+]]></description>
+</item>
+<item>
+<title>Firecracker</title>
+<link>https://64p.org/notes/firecracker.html</link>
+<guid isPermaLink="true">https://64p.org/notes/firecracker.html</guid>
+<pubDate>Wed, 12 Aug 2026 23:14:00 +0900</pubDate>
+<description><![CDATA[<h1>Firecracker</h1>
+
+<p>AWSが開発したオープンソースの<a href="/notes/microvm.html">microVM</a>向けVMM(Virtual Machine Monitor)。LinuxのKVMを使って軽量な仮想マシンを作成・実行する。Apache License 2.0。 <a class="note-tag" href="/notes/tags/virtualization.html">#virtualization</a> <a class="note-tag" href="/notes/tags/aws.html">#aws</a></p>
+
+<h2>性能</h2>
+
+<ul>
+<li>microVMの起動時間は最短125ミリ秒</li>
+<li>1VMあたりのメモリオーバーヘッドは5MiB未満</li>
+<li>単一ホスト上で毎秒最大150台のmicroVMを作成可能</li>
+</ul>
+
+
+<h2>設計思想</h2>
+
+<p>不要なデバイスやゲスト向け機能を排除したミニマリストな設計。これによりメモリフットプリントとアタックサーフェスを削減しつつ、起動時間の短縮とハードウェア利用効率の向上を実現している。</p>
+
+<h2>用途</h2>
+
+<p>AWS LambdaおよびAWS Fargateを支える基盤技術として、月間数兆回規模の関数実行を処理している。サーバーレス関数に限らず、AIコードの実行サンドボックスなど幅広いワークロードでも採用が広がっている。<a href="/notes/cloud-hypervisor.html">Cloud Hypervisor</a>の実装コードの一部はFirecrackerの実装を参考にしている。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://aws.amazon.com/blogs/opensource/firecracker-open-source-secure-fast-microvm-serverless/">Announcing the Firecracker Open Source Technology | AWS Open Source Blog</a></li>
+<li><a href="https://github.com/firecracker-microvm/firecracker">GitHub - firecracker-microvm/firecracker</a></li>
+<li><a href="https://northflank.com/blog/what-is-aws-firecracker">What is AWS Firecracker? The microVM technology, explained | Northflank</a></li>
+</ul>
+
+]]></description>
+</item>
+<item>
+<title>Cloud Hypervisor</title>
+<link>https://64p.org/notes/cloud-hypervisor.html</link>
+<guid isPermaLink="true">https://64p.org/notes/cloud-hypervisor.html</guid>
+<pubDate>Wed, 12 Aug 2026 23:14:00 +0900</pubDate>
+<description><![CDATA[<h1>Cloud Hypervisor</h1>
+
+<p>Rust製のオープンソースVMM(Virtual Machine Monitor)。最小限のハードウェアエミュレーションでモダンなクラウドワークロードを動かすことに特化している。KVMおよびMicrosoft Hypervisor(MSHV)上で動作し、x86-64・AArch64をサポート。Linux Foundation傘下のプロジェクト。 <a class="note-tag" href="/notes/tags/virtualization.html">#virtualization</a> <a class="note-tag" href="/notes/tags/rust.html">#rust</a></p>
+
+<h2>rust-vmmとの関係</h2>
+
+<p>rust-vmmプロジェクト（仮想化用のRust製クレートを各プロジェクト間で共有・再利用する取り組み）の理念を採用しており、コードの大部分は<a href="/notes/firecracker.html">Firecracker</a>やcrosvmの実装をベースにしている。</p>
+
+<h2>特徴</h2>
+
+<ul>
+<li>CPU・メモリ・デバイスのホットプラグに対応</li>
+<li>Windows/Linux両方のゲストOSを実行可能</li>
+<li>vhost-userによるデバイスオフロード</li>
+<li>起動時間は約200ms</li>
+<li>Intelエンジニアが中心となりつつ、MicrosoftやArmなど他組織からの継続的なコントリビューションもある</li>
+</ul>
+
+
+<h2>用途</h2>
+
+<p><a href="/notes/microvm.html">microVM</a>型のVMMとして、<a href="/notes/hypeman.html">Hypeman</a>など複数ハイパーバイザーを切り替え可能なランタイムの選択肢の一つに採用されている。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://github.com/cloud-hypervisor/cloud-hypervisor">GitHub - cloud-hypervisor/cloud-hypervisor</a></li>
+<li><a href="https://www.cloudhypervisor.org/docs/prologue/introduction/">Introduction - Cloud Hypervisor</a></li>
+<li><a href="https://thenewstack.io/rust-based-cloud-hypervisor-heads-to-linux-foundation/">Rust-Based Cloud Hypervisor Heads to Linux Foundation - The New Stack</a></li>
+</ul>
+
+]]></description>
+</item>
 <item>
 <title>LSP (Language Server Protocol)</title>
 <link>https://64p.org/notes/lsp.html</link>
@@ -1395,174 +1554,6 @@ rustflags = ["-C", "link-arg=-fuse-ld=/path/to/mold"]
 <li><a href="https://elsolitario.org/en/2026/07/19/transcribe-cpp-asr-library-ggml/">transcribe.cpp: An ASR Alternative to whisper.cpp</a></li>
 <li><a href="https://github.com/handy-computer/transcribe.cpp">GitHub - handy-computer/transcribe.cpp</a></li>
 <li><a href="https://github.com/cjpais/Handy">GitHub - cjpais/Handy</a></li>
-</ul>
-
-]]></description>
-</item>
-<item>
-<title>ggml</title>
-<link>https://64p.org/notes/ggml.html</link>
-<guid isPermaLink="true">https://64p.org/notes/ggml.html</guid>
-<pubDate>Wed, 12 Aug 2026 13:02:00 +0900</pubDate>
-<description><![CDATA[<h1>ggml</h1>
-
-<p><a class="note-tag" href="/notes/tags/machine-learning.html">#machine-learning</a> <a class="note-tag" href="/notes/tags/cpp.html">#cpp</a></p>
-
-<p>Georgi Gerganov氏が2022年から開発している、機械学習推論向けのC/C++製テンソル演算ライブラリ。名前は開発者のイニシャル「GG」+「ML」に由来する。llama.cppやwhisper.cpp、<a href="/notes/transcribe-cpp.html">transcribe.cpp</a>など、C/C++で書かれたローカル推論エコシステム全体を支える計算基盤になっている。</p>
-
-<h2>特徴</h2>
-
-<ul>
-<li><strong>計算グラフベースの実行</strong>: 演算を一度定義し、複数回実行できる計算グラフ抽象を持つ。中核データ構造<code>ggml_tensor</code>は最大4次元のn次元配列とメタデータを表し、実際の計算はグラフのcompute呼び出しまで遅延される。</li>
-<li><strong>メモリ効率</strong>: コンテキストベースのメモリ確保とカスタムアロケータにより、メモリ使用量を細かく制御できる。</li>
-<li><strong>ハードウェア抽象化</strong>: BLAS、CUDA、HIP/ROCm、OpenCL、Metalなど複数のバックエンドをプラガブルに切り替えられる仕組みを持つ。</li>
-<li><strong>量子化サポート</strong>: float型に加え、複数の圧縮フォーマット（量子化型）をサポートする型システムを持つ。</li>
-<li>軽量・移植性・組み込みやすさを重視した設計で、C/C++で書かれている。</li>
-</ul>
-
-
-<h2>GGUFフォーマットとの関係</h2>
-
-<p>当初モデルの保存には独自の「GGML」フォーマットが使われていたが、モデルアーキテクチャごとに専用のロードコードが必要で、メタデータもハードコードされたり別ファイルに分かれていたりと脆弱だった。llama.cppが数十のアーキテクチャと複数の量子化方式に対応するよう成長した2023年8月、後方互換性のない、より高機能な後継フォーマットとして<strong>GGUF</strong>（GGML Universal Format）が導入された。GGUFはモデルのロードに必要な情報（トークナイザーを含む）を単一ファイルに完結させる設計で、数か月のうちにローカルLLM配布の事実上の標準になった。量子化は1.5bit〜8bit整数まで複数段階をサポートする。</p>
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://deepwiki.com/ggml-org/llama.cpp/4-ggml-tensor-library">GGML Tensor Library | ggml-org/llama.cpp | DeepWiki</a></li>
-<li><a href="https://deepwiki.com/ggml-org/llama.cpp/4.1-ggml-core-architecture">GGML Core Architecture | ggml-org/llama.cpp | DeepWiki</a></li>
-<li><a href="https://deepwiki.com/ggml-org/ggml">ggml-org/ggml | DeepWiki</a></li>
-<li><a href="https://apxml.com/courses/practical-llm-quantization/chapter-5-quantization-formats-tooling/gguf-format">GGUF File Format Explained (llama.cpp)</a></li>
-</ul>
-
-]]></description>
-</item>
-<item>
-<title>ClickHouse</title>
-<link>https://64p.org/notes/clickhouse.html</link>
-<guid isPermaLink="true">https://64p.org/notes/clickhouse.html</guid>
-<pubDate>Wed, 12 Aug 2026 12:53:00 +0900</pubDate>
-<description><![CDATA[<h1>ClickHouse</h1>
-
-<p><a class="note-tag" href="/notes/tags/database.html">#database</a> <a class="note-tag" href="/notes/tags/olap.html">#olap</a> <a class="note-tag" href="/notes/tags/data-engineering.html">#data-engineering</a></p>
-
-<p><strong>OLAP</strong>（Online Analytical Processing、大量データの集計・分析に最適化されたワークロード）向けに設計されたオープンソースの列指向（columnar）データベース管理システム。対義語はOLTP（Online Transaction Processing、少量レコードの読み書きを高頻度にこなすトランザクション処理）。実装言語はC++（約150万行）で、近年は一部の周辺機能（BLAKE3ハッシュ関数、PRQLというクエリ言語ライブラリの統合など)でRustも部分的に採用され始めているが、コア部分を全面書き換えする方針ではない。</p>
-
-<h2>生まれた経緯</h2>
-
-<p>2009年、ロシアのYandex社内でAlexey Milovidov氏が「非集計の生データからリアルタイムでレポートを生成できるか」という仮説検証として開発を開始した。Yandex.Metrica（ロシア第2位のWebアクセス解析サービス）のバックエンドとして2011年に本番投入され、当時374台構成のクラスタで20.3兆行・約2PBの圧縮データを保持し、1日1000億件超のレコード挿入をコアチーム15名で処理していた。2016年6月、MoscowのHighload++カンファレンスでOSS公開。2021年にMilovidov氏がClickHouse社を設立した（CEO: Aaron Katz、Index Ventures/Benchmark主導のシリーズAで$50M調達）。</p>
-
-<h2>アーキテクチャ</h2>
-
-<ul>
-<li><strong>列指向ストレージ</strong>: 行ではなく列単位でデータを保持する。50カラムのテーブルから3カラムだけ使うクエリなら、その3カラムのファイルしか読まない。</li>
-<li><strong>ベクトル化実行</strong>: 1行ずつでなく、行の集合（バッチ）単位で演算することでCPUキャッシュ効率を最大化する。</li>
-<li><strong>MergeTreeエンジン</strong>: 中核のストレージエンジンファミリー。INSERTのたびに「パート」というディレクトリ単位でデータが書き込まれる（命名規則: <code>{partition_id}_{min_block}_{max_block}_{merge_level}</code>）。パート内部にはカラムごとの圧縮データファイル・インデックスファイル・チェックサムが入り、すべて<code>ORDER BY</code>キーでソート済み。パートは書き込み後イミュータブルで、バックグラウンドで小さいパート同士がマージされてパート数を減らし検索性能を保つ（エンジン名の由来）。</li>
-</ul>
-
-
-<h2>データ配置</h2>
-
-<p>デフォルトはローカルディスク（<code>/var/lib/clickhouse</code>、多くの場合1台の高速NVMe）にパートとして直接格納する形で、オブジェクトストレージへの依存はない。ただし「ディスク」を抽象化する層があり、S3互換オブジェクトストレージをディスクとして設定することも可能。よくあるのは階層ストレージ（tiered storage）構成で、直近のよく参照されるデータは高速なローカルディスクに、古いデータは閾値を超えたらS3などの安価なストレージに自動で移す「hot-cold」運用。</p>
-
-<p>マネージドサービスのClickHouse Cloudでは、SharedMergeTreeというエンジンによってストレージとコンピュートの分離が設定不要でデフォルトで組み込まれており、複数のコンピュートノードが同じオブジェクトストレージ上のデータを共有できる。</p>
-
-<h2>得意・不得意</h2>
-
-<p>リアルタイムダッシュボード、ログ分析・SIEM、BIの高速化、AdTech、時系列分析、プロダクト分析、オブザーバビリティ基盤などの分析ワークロードが主戦場。一方でOLTPやレコード単位の頻繁な更新・削除には不向き。実務では「<a href="/notes/postgresql.html">PostgreSQL</a>/<a href="/notes/mysql.html">MySQL</a>でOLTPを担い、分析・リアルタイム集計はClickHouseに任せる」という併用構成が一般的。</p>
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://www.flexera.com/blog/finops/clickhouse-architecture/">ClickHouse architecture 101: A comprehensive overview</a></li>
-<li><a href="https://clickhouse.com/resources/engineering/how-to-choose-a-database-for-real-time-analytics-in-2026">How to choose a database for real-time analytics in 2026 | ClickHouse</a></li>
-<li><a href="https://clickhouse.com/use-cases">Use Cases | ClickHouse</a></li>
-<li><a href="https://clickhouse.com/resources/engineering/what-is-columnar-database">What is a columnar database? | ClickHouse</a></li>
-<li><a href="https://www.stacksync.com/blog/one-engineer-at-yandex-the-origin-story-of-clickhouse">One Engineer at Yandex: The Origin Story of ClickHouse</a></li>
-<li><a href="https://research.contrary.com/company/clickhouse">Report: ClickHouse&rsquo;s Business Breakdown &amp; Founding Story</a></li>
-<li><a href="https://oneuptime.com/blog/post/2026-03-31-clickhouse-what-is-mergetree-engine/view">What Is a MergeTree Engine and How It Works</a></li>
-<li><a href="https://oneuptime.com/blog/post/2026-03-31-clickhouse-part-files-explained/view">How ClickHouse Stores Data on Disk - Part Files Explained</a></li>
-<li><a href="https://severalnines.com/blog/clickhouse-storage-architecture-and-optimization/">ClickHouse Storage Architecture and Optimization | Severalnines</a></li>
-<li><a href="https://docs.gitlab.com/development/database/clickhouse/tiered_storage">Tiered Storages in ClickHouse</a></li>
-<li><a href="https://clickhouse.com/docs/guides/separation-storage-compute">Separation of storage and compute | ClickHouse Docs</a></li>
-<li><a href="https://thenewstack.io/moving-from-c-to-rust-clickhouse-has-some-advice/">Moving From C++ to Rust? ClickHouse Has Some Advice - The New Stack</a></li>
-<li><a href="https://clickhouse.com/blog/rust">A Year of Rust in ClickHouse | ClickHouse</a></li>
-</ul>
-
-]]></description>
-</item>
-<item>
-<title>SentencePiece</title>
-<link>https://64p.org/notes/sentencepiece.html</link>
-<guid isPermaLink="true">https://64p.org/notes/sentencepiece.html</guid>
-<pubDate>Wed, 12 Aug 2026 09:55:00 +0900</pubDate>
-<description><![CDATA[<h1>SentencePiece</h1>
-
-<p><a class="note-tag" href="/notes/tags/llm.html">#llm</a> <a class="note-tag" href="/notes/tags/nlp.html">#nlp</a></p>
-
-<p>Google 製のオープンソースのテキストトークナイザ／デトークナイザライブラリ。工藤拓（<a href="/notes/mecab.html">MeCab</a>の作者としても知られる）と John Richardson により開発され、2018年に論文が公開された。ニューラルネットベースのテキスト生成システム向けに、語彙サイズを事前に固定してサブワード分割を学習する。サブワードアルゴリズムとしては <a href="/notes/byte-pair-encoding.html">BPE</a> と Unigram 言語モデルの両方を実装している。</p>
-
-<h2>特徴</h2>
-
-<ul>
-<li><strong>生のテキストストリームとして扱う</strong>: 従来のトークナイザが「空白で単語に分割してからサブワード化する」前提だったのに対し、SentencePiece はテキストを生の文字ストリームとして扱い、空白も <code>▁</code>（U+2581）という特殊マーカーに変換して語彙学習の対象に含める。</li>
-<li><strong>言語非依存</strong>: 空白で単語が区切られない日本語や中国語でも、言語固有の前処理（分かち書き）なしにそのまま学習・適用できる。</li>
-<li><strong>可逆（lossless）</strong>: トークン列から元のテキストを正確に復元できる。前処理で情報が落ちないため、生成系タスクのデトークナイズが単純になる。</li>
-<li><strong>BPE と Unigram の2方式</strong>: BPE が頻度ベースで決定的にマージしていくのに対し、Unigram 言語モデルは確率的で、学習時に複数のトークン化をサンプリングできる（subword regularization）。</li>
-</ul>
-
-
-<p>T5 や ALBERT、XLNet をはじめ多くの言語モデルのトークナイザとして採用されてきた。</p>
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://github.com/google/sentencepiece">google/sentencepiece - GitHub</a></li>
-<li><a href="https://aclanthology.org/D18-2012/">SentencePiece: A simple and language independent subword tokenizer and detokenizer for Neural Text Processing (Kudo &amp; Richardson, 2018)</a></li>
-<li><a href="https://huggingface.co/docs/transformers/tokenizer_summary">Summary of the tokenizers - Hugging Face</a></li>
-</ul>
-
-]]></description>
-</item>
-<item>
-<title>データレイクハウス</title>
-<link>https://64p.org/notes/data-lakehouse.html</link>
-<guid isPermaLink="true">https://64p.org/notes/data-lakehouse.html</guid>
-<pubDate>Wed, 12 Aug 2026 09:55:00 +0900</pubDate>
-<description><![CDATA[<h1>データレイクハウス</h1>
-
-<p><a class="note-tag" href="/notes/tags/moc.html">#moc</a> <a class="note-tag" href="/notes/tags/data-engineering.html">#data-engineering</a></p>
-
-<p>オブジェクトストレージ上のオープンなファイル群（データレイク）に、データウェアハウス並みのテーブル管理機能（ACID・スキーマ管理・ガバナンス）を載せるアーキテクチャ。「lake + warehouse」の造語。オープンなフォーマットと仕様の積み重ねでベンダーロックインを避けられるのが、プロプライエタリなDWHに対する売り。この領域のノートの見取り図。</p>
-
-<h2>スタックの構成要素</h2>
-
-<ul>
-<li><strong>ファイルフォーマット</strong>
-
-<ul>
-<li><a href="/notes/apache-parquet.html">Apache Parquet</a> — ディスク上の列指向ファイルフォーマット。データ本体はこれで置かれることが多い。</li>
-<li><a href="/notes/apache-arrow.html">Apache Arrow</a> — メモリ上の列指向フォーマット。エンジン内部の処理・エンジン間のデータ交換用。</li>
-</ul>
-</li>
-<li><strong>テーブルフォーマット</strong>
-
-<ul>
-<li><a href="/notes/apache-iceberg.html">Apache Iceberg</a> — ファイルの集まりに「SQLテーブル」の抽象を与えるレイヤー。ACID・スキーマ進化・タイムトラベル。同種に Delta Lake / Apache Hudi。</li>
-</ul>
-</li>
-<li><strong>カタログ</strong>
-
-<ul>
-<li><a href="/notes/project-nessie.html">Project Nessie</a> — Iceberg テーブルのカタログに Git ライクなブランチ/コミットの意味論を足したもの。</li>
-<li><a href="/notes/apache-polaris.html">Apache Polaris</a> — Iceberg REST catalog 仕様の標準実装。<a href="/notes/rbac.html">RBAC</a> や credential vending などガバナンス機能に軸足。</li>
-</ul>
-</li>
-<li><strong>クエリエンジン / プラットフォーム</strong>
-
-<ul>
-<li><a href="/notes/dremio.html">Dremio</a> — 上記のオープン部品（Arrow/Iceberg/Nessie/Polaris)を束ねた商用レイクハウスプラットフォーム。ほかに Trino, Spark, Snowflake, Databricks などがこのレイヤーのプレイヤー。</li>
-</ul>
-</li>
 </ul>
 
 ]]></description>
