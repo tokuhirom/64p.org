@@ -1,6 +1,6 @@
 ---
 created: 2026-08-12 18:54
-updated: 2026-08-12 19:21
+updated: 2026-08-12 19:30
 ---
 # Linuxだけで作る仮想ネットワークラボ
 
@@ -19,7 +19,7 @@ unshare --user --map-root-user --net --mount bash
 
 ## ラボ1: VLAN — 同じスイッチ上でL2セグメントが分かれることを確認
 
-netnsを「PC」、VLANフィルタリングを有効にしたLinuxブリッジを「L2スイッチ」に見立て、次の構成を作った。
+netnsを「PC」、VLANフィルタリングを有効にした[[linux-bridge|Linuxブリッジ]]を「L2スイッチ」に見立て、次の構成を作った。
 
 ```mermaid
 flowchart LR

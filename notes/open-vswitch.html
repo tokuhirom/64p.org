@@ -23,6 +23,7 @@
                 <ul class="notes-nav">
                                     <li><a href="/notes/open-vswitch.html" class="active">Open vSwitch (OVS)</a></li>
                                     <li><a href="/notes/linux-virtual-network-lab.html">Linuxだけで作る仮想ネットワークラボ</a></li>
+                                    <li><a href="/notes/linux-bridge.html">Linux標準ブリッジ</a></li>
                                     <li><a href="/notes/vxlan.html">VXLAN</a></li>
                                     <li><a href="/notes/vlan.html">VLAN</a></li>
                                     <li><a href="/notes/vrrp.html">VRRP (Virtual Router Redundancy Protocol)</a></li>
@@ -299,7 +300,7 @@
             <article class="notes-content">
                 <h1>Open vSwitch (OVS)</h1>
 
-<p>Apache 2ライセンスで公開されているオープンソースのマルチレイヤ仮想スイッチ。仮想マシン環境で動作するソフトウェアスイッチで、L2（データリンク層）でイーサネットフレームを扱いつつ、OpenFlowにも対応している。<a href="/notes/linux-virtual-network-lab.html">Linux標準ブリッジ</a>より本格的な仮想スイッチとして、OpenStackなどが実際に採用している。 <a class="note-tag" href="/notes/tags/network.html">#network</a> <a class="note-tag" href="/notes/tags/sdn.html">#sdn</a></p>
+<p>Apache 2ライセンスで公開されているオープンソースのマルチレイヤ仮想スイッチ。仮想マシン環境で動作するソフトウェアスイッチで、L2（データリンク層）でイーサネットフレームを扱いつつ、OpenFlowにも対応している。<a href="/notes/linux-bridge.html">Linux標準ブリッジ</a>より本格的な仮想スイッチとして、OpenStackなどが実際に採用している。 <a class="note-tag" href="/notes/tags/network.html">#network</a> <a class="note-tag" href="/notes/tags/sdn.html">#sdn</a></p>
 
 <h2>アーキテクチャ</h2>
 
@@ -327,7 +328,7 @@
 
 <p>実装形態も複数あり、古典的なカーネルモジュール版のほか、高性能だが設定が複雑なDPDK版、保守性に優れるeBPF版、従来ツールとの互換性を保ちながら高速化するAF_XDP版が存在する。</p>
 
-<h2>従来のLinuxブリッジとの違い</h2>
+<h2>従来の<a href="/notes/linux-bridge.html">Linuxブリッジ</a>との違い</h2>
 
 <p>Linuxブリッジが単一ホスト内の単純なL2転送を主眼にしているのに対し、OVSは複数サーバーにまたがる仮想化環境を対象に設計されている。動的なエンドポイント管理、論理的な抽象化の維持、専用ハードウェアとの統合（オフロード）といった、大規模・動的な環境向けの要件に応える点が特徴。</p>
 
@@ -356,11 +357,12 @@
                     <h2>🔗 リンクされているノート</h2>
                     <ul>
                                             <li><a href="/notes/linux-virtual-network-lab.html">Linuxだけで作る仮想ネットワークラボ</a></li>
+                                            <li><a href="/notes/linux-bridge.html">Linux標準ブリッジ</a></li>
                     
                     </ul>
                 </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-12 19:21 / 更新日時: 2026-08-12 19:21</span>
+                    <span>作成日時: 2026-08-12 19:21 / 更新日時: 2026-08-12 19:30</span>
                     <a class="share-x" href="https://twitter.com/intent/tweet?text=Open%20vSwitch%20%28OVS%29&url=https%3A%2F%2F64p.org%2Fnotes%2Fopen-vswitch.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
