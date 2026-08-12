@@ -21,10 +21,10 @@
                 <a class="notes-tags-link" href="/notes/tags/">🏷️ タグ一覧</a>
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
+                                    <li><a href="/notes/refactoring.html" class="active">リファクタリング(Refactoring)</a></li>
                                     <li><a href="/notes/yagni.html">YAGNI（You Aren&#39;t Gonna Need It）</a></li>
                                     <li><a href="/notes/technical-debt.html">技術的負債（Technical Debt）</a></li>
                                     <li><a href="/notes/tdd.html">TDD (Test-Driven Development / テスト駆動開発)</a></li>
-                                    <li><a href="/notes/refactoring.html" class="active">リファクタリング(Refactoring)</a></li>
                                     <li><a href="/notes/extreme-programming.html">エクストリームプログラミング（XP）</a></li>
                                     <li><a href="/notes/dremio.html">Dremio</a></li>
                                     <li><a href="/notes/data-lakehouse.html">データレイクハウス</a></li>
@@ -312,6 +312,12 @@
 
 <p>リファクタリングはこの少し前から<a href="/notes/extreme-programming.html">Extreme Programming</a>(XP)のプラクティスの一つとして組み込まれており、XPの文脈でも普及が進んだ。<a href="/notes/tdd.html">TDD</a>の<strong>Red-Green-Refactor</strong>サイクルの最終ステップとしても位置づけられている。</p>
 
+<h2>「大規模な変更」をrefactoringと呼ぶことへのFowlerの異論</h2>
+
+<p>Fowlerは"<a href="https://martinfowler.com/bliki/RefactoringMalapropism.html">Refactoring Malapropism</a>&ldquo;という記事で、この用語がしばしば誤用されていると指摘している。「システムが数日間壊れた状態のままrefactoringしている」といった言い回しは誤りだとする。彼の定義するrefactoringは、<strong>外部の振る舞いを変えない小さな変換の積み重ね</strong>であり、その特徴として「システムは数分以上壊れた状態にならない」ことを挙げる。</p>
+
+<p>Fowlerはより広い概念として<strong>restructuring(再構成)</strong>を位置づけ、refactoringはその中の特殊な一技法にすぎないとする。振る舞いが明確に定義されていないもの(ドキュメントの書き直しなど)への適用や、外部の振る舞い自体を変えてしまうような大規模な作り直し・長期間システムが動かない状態を経るような変更は、彼の定義上は"restructuring"であって"refactoring"ではない、という立場。</p>
+
 <h2>出典</h2>
 
 <ul>
@@ -321,6 +327,7 @@
 <li><a href="https://martinfowler.com/books/refactoring.html">Refactoring (martinfowler.com/books)</a></li>
 <li><a href="https://agilealliance.org/glossary/refactoring/">What is Refactoring? | Agile Alliance</a></li>
 <li><a href="https://libquotes.com/ward-cunningham/quote/lbp7q9l">Ward Cunningham Quote (libquotes.com)</a></li>
+<li><a href="https://martinfowler.com/bliki/RefactoringMalapropism.html">bliki: Refactoring Malapropism (martinfowler.com)</a></li>
 </ul>
 
 
@@ -335,7 +342,7 @@
                     </ul>
                 </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-12 13:36 / 更新日時: 2026-08-12 13:36</span>
+                    <span>作成日時: 2026-08-12 13:36 / 更新日時: 2026-08-12 13:37</span>
                     <a class="share-x" href="https://twitter.com/intent/tweet?text=%E3%83%AA%E3%83%95%E3%82%A1%E3%82%AF%E3%82%BF%E3%83%AA%E3%83%B3%E3%82%B0%28Refactoring%29&url=https%3A%2F%2F64p.org%2Fnotes%2Frefactoring.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>

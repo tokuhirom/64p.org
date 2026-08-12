@@ -1,6 +1,6 @@
 ---
 created: 2026-08-12 13:36
-updated: 2026-08-12 13:36
+updated: 2026-08-12 13:37
 ---
 # リファクタリング(Refactoring)
 
@@ -30,6 +30,12 @@ Martin Fowlerが著書執筆にあたりWard Cunningham、Kent Beck、Bill Opdyk
 
 リファクタリングはこの少し前から[[extreme-programming|Extreme Programming]](XP)のプラクティスの一つとして組み込まれており、XPの文脈でも普及が進んだ。[[tdd|TDD]]の**Red-Green-Refactor**サイクルの最終ステップとしても位置づけられている。
 
+## 「大規模な変更」をrefactoringと呼ぶことへのFowlerの異論
+
+Fowlerは"[Refactoring Malapropism](https://martinfowler.com/bliki/RefactoringMalapropism.html)"という記事で、この用語がしばしば誤用されていると指摘している。「システムが数日間壊れた状態のままrefactoringしている」といった言い回しは誤りだとする。彼の定義するrefactoringは、**外部の振る舞いを変えない小さな変換の積み重ね**であり、その特徴として「システムは数分以上壊れた状態にならない」ことを挙げる。
+
+Fowlerはより広い概念として**restructuring(再構成)**を位置づけ、refactoringはその中の特殊な一技法にすぎないとする。振る舞いが明確に定義されていないもの(ドキュメントの書き直しなど)への適用や、外部の振る舞い自体を変えてしまうような大規模な作り直し・長期間システムが動かない状態を経るような変更は、彼の定義上は"restructuring"であって"refactoring"ではない、という立場。
+
 ## 出典
 
 - [bliki: Etymology Of Refactoring (martinfowler.com)](https://martinfowler.com/bliki/EtymologyOfRefactoring.html)
@@ -38,3 +44,4 @@ Martin Fowlerが著書執筆にあたりWard Cunningham、Kent Beck、Bill Opdyk
 - [Refactoring (martinfowler.com/books)](https://martinfowler.com/books/refactoring.html)
 - [What is Refactoring? | Agile Alliance](https://agilealliance.org/glossary/refactoring/)
 - [Ward Cunningham Quote (libquotes.com)](https://libquotes.com/ward-cunningham/quote/lbp7q9l)
+- [bliki: Refactoring Malapropism (martinfowler.com)](https://martinfowler.com/bliki/RefactoringMalapropism.html)
