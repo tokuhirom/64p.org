@@ -309,10 +309,6 @@
 
 <p>リアルタイムダッシュボード、ログ分析・SIEM、BIの高速化、AdTech、時系列分析、プロダクト分析、オブザーバビリティ基盤などの分析ワークロードが主戦場。一方でOLTPやレコード単位の頻繁な更新・削除には不向き。実務では「<a href="/notes/postgresql.html">PostgreSQL</a>/<a href="/notes/mysql.html">MySQL</a>でOLTPを担い、分析・リアルタイム集計はClickHouseに任せる」という併用構成が一般的。</p>
 
-<h2>オブザーバビリティ用途と OTLP</h2>
-
-<p><strong>OTLP</strong>（OpenTelemetry Protocol、OpenTelemetryが定義するprotobufベースのテレメトリ送信プロトコル）は、ログ・メトリクス・トレースの収集方式を標準化するが、そのデータの永続化先（バックエンド）までは規定しない。ここでClickHouseが受け皿として使われることが多い。OpenTelemetry CollectorがgRPC/HTTP経由でOTLPとしてスパンやログを受け取り、ClickHouse Exporterでそのままテーブルに書き込む構成が一般的。オブザーバビリティデータは「高頻度の追記のみの書き込み」「広い時間範囲のスキャン」「特定カラムに対する集計」という特性を持ち、これが列指向DBの得意分野と噛み合うため、行指向DBと比べて5〜10倍の圧縮率改善が報告されている。</p>
-
 <h2>出典</h2>
 
 <ul>
@@ -329,13 +325,11 @@
 <li><a href="https://clickhouse.com/docs/guides/separation-storage-compute">Separation of storage and compute | ClickHouse Docs</a></li>
 <li><a href="https://thenewstack.io/moving-from-c-to-rust-clickhouse-has-some-advice/">Moving From C++ to Rust? ClickHouse Has Some Advice - The New Stack</a></li>
 <li><a href="https://clickhouse.com/blog/rust">A Year of Rust in ClickHouse | ClickHouse</a></li>
-<li><a href="https://clickhouse.com/blog/storing-traces-and-spans-open-telemetry-in-clickhouse">Building an Observability Solution with ClickHouse - Part 2 - Traces | ClickHouse</a></li>
-<li><a href="https://clickhouse.com/docs/observability/integrating-opentelemetry">Integrating OpenTelemetry for data collection - ClickHouse Documentation</a></li>
 </ul>
 
 
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-12 12:53 / 更新日時: 2026-08-12 12:53</span>
+                    <span>作成日時: 2026-08-12 12:53 / 更新日時: 2026-08-12 12:54</span>
                     <a class="share-x" href="https://twitter.com/intent/tweet?text=ClickHouse&url=https%3A%2F%2F64p.org%2Fnotes%2Fclickhouse.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
