@@ -22,6 +22,7 @@
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
                                     <li><a href="/notes/testify.html" class="active">testify</a></li>
+                                    <li><a href="/notes/mockery.html">mockery</a></li>
                                     <li><a href="/notes/seccomp.html">seccomp</a></li>
                                     <li><a href="/notes/least-privilege.html">最小権限の原則</a></li>
                                     <li><a href="/notes/vxlan.html">VXLAN</a></li>
@@ -303,7 +304,7 @@
 <ul>
 <li><strong>assert</strong> — <code>assert.Equal(t, expected, actual)</code> のようなアサーション群。失敗時に読みやすい差分メッセージを出す。失敗しても bool を返してテストは継続する。</li>
 <li><strong>require</strong> — assert と同一のインターフェースだが、失敗した時点で <code>t.FailNow()</code> によりテストを即座に打ち切る。「この前提が崩れたら以降は無意味」という検証（<code>require.NoError(t, err)</code> 等）に使うのが定石。</li>
-<li><strong>mock</strong> — <code>mock.Mock</code> を埋め込んだ構造体でインターフェースのモックを作り、<code>On(...).Return(...)</code> で期待動作を設定、<code>AssertExpectations(t)</code> で呼び出しを検証する。手書きはボイラープレートが多いので、モックコードを自動生成する <strong>mockery</strong> と組み合わせるのが一般的（公式ドキュメントでも推奨）。</li>
+<li><strong>mock</strong> — <code>mock.Mock</code> を埋め込んだ構造体でインターフェースのモックを作り、<code>On(...).Return(...)</code> で期待動作を設定、<code>AssertExpectations(t)</code> で呼び出しを検証する。手書きはボイラープレートが多いので、モックコードを自動生成する <strong><a href="/notes/mockery.html">mockery</a></strong> と組み合わせるのが一般的（公式ドキュメントでも推奨）。</li>
 <li><strong>suite</strong> — SetupTest / TearDownTest などのフックを持つ xUnit 風のテストスイート構造。</li>
 </ul>
 
@@ -327,8 +328,15 @@
 </ul>
 
 
+                                <div class="notes-backlinks">
+                    <h2>🔗 リンクされているノート</h2>
+                    <ul>
+                                            <li><a href="/notes/mockery.html">mockery</a></li>
+                    
+                    </ul>
+                </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-12 18:40 / 更新日時: 2026-08-12 18:40</span>
+                    <span>作成日時: 2026-08-12 18:40 / 更新日時: 2026-08-12 18:42</span>
                     <a class="share-x" href="https://twitter.com/intent/tweet?text=testify&url=https%3A%2F%2F64p.org%2Fnotes%2Ftestify.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
