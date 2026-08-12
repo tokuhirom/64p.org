@@ -1,6 +1,6 @@
 ---
 created: 2026-08-12 23:27
-updated: 2026-08-12 23:28
+updated: 2026-08-12 23:29
 ---
 # rust-vmm
 
@@ -8,7 +8,7 @@ VMM(Virtual Machine Monitor)を作るためのRust製部品(クレート)を共�
 
 ## 成り立ち
 
-2018年12月、Amazon・Google・Intel・Red Hatの開発者が、VMM作成コードを共有する方法について議論したことから発足した。きっかけは、Rust製VMMであるcrosvm（Google/ChromeOS発）と[[firecracker|Firecracker]]（AWS発）が、KVM呼び出しやメモリ管理まわりで似たようなコードを別々に持っていたこと。この重複を解消し、以後Rust製VMMを書く際に同じ実装を繰り返さずに済むようにする狙いがあった。
+2018年12月、Amazon・Google・Intel・Red Hatの開発者が、VMM作成コードを共有する方法について議論したことから発足した。きっかけは、Rust製VMMである[[crosvm|crosvm]]（Google/ChromeOS発）と[[firecracker|Firecracker]]（AWS発）が、KVM呼び出しやメモリ管理まわりで似たようなコードを別々に持っていたこと。この重複を解消し、以後Rust製VMMを書く際に同じ実装を繰り返さずに済むようにする狙いがあった。
 
 ## 主なクレート
 
@@ -23,7 +23,7 @@ VMM(Virtual Machine Monitor)を作るためのRust製部品(クレート)を共�
 
 ## 採用プロジェクト
 
-[[firecracker|Firecracker]]・crosvmに加え、[[cloud-hypervisor|Cloud Hypervisor]]もrust-vmmの理念を採用しており、実装コードの大部分がFirecrackerやcrosvmをベースにしている。QEMUのvirtiofsd実装や`vhost-device`なども取り込まれている。
+[[firecracker|Firecracker]]・[[crosvm|crosvm]]に加え、[[cloud-hypervisor|Cloud Hypervisor]]もrust-vmmの理念を採用しており、実装コードの大部分がFirecrackerやcrosvmをベースにしている。QEMUのvirtiofsd実装や`vhost-device`なども取り込まれている。
 
 ## [[microvm-ecosystem|コンテナ向け軽量VM技術]]の中での位置づけ
 

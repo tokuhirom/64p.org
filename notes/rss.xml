@@ -6,7 +6,222 @@
 <atom:link href="https://64p.org/notes/rss.xml" rel="self" type="application/rss+xml" />
 <description>ちょっと調べたことや検証結果を、AIの力も借りながらメモしていくコーナーです。</description>
 <language>ja</language>
-<lastBuildDate>Wed, 12 Aug 2026 23:28:07 +0900</lastBuildDate>
+<lastBuildDate>Wed, 12 Aug 2026 23:29:34 +0900</lastBuildDate>
+<item>
+<title>SynthID-Text</title>
+<link>https://64p.org/notes/synthid-text.html</link>
+<guid isPermaLink="true">https://64p.org/notes/synthid-text.html</guid>
+<pubDate>Wed, 12 Aug 2026 23:29:00 +0900</pubDate>
+<description><![CDATA[<h1>SynthID-Text</h1>
+
+<p><a class="note-tag" href="/notes/tags/llm.html">#llm</a> <a class="note-tag" href="/notes/tags/ai.html">#ai</a> <a class="note-tag" href="/notes/tags/security.html">#security</a> <a class="note-tag" href="/notes/tags/watermarking.html">#watermarking</a> <a class="note-tag" href="/notes/tags/google.html">#google</a></p>
+
+<p>Google DeepMind による<a href="/notes/llm-text-watermarking.html">LLMテキスト電子透かし</a>の本番実装。論文 &ldquo;Scalable watermarking for identifying large language model outputs&rdquo; は Nature（2024-10）に掲載された。<strong>生成テキスト透かしを大規模本番運用した初の事例</strong>で、Gemini / Gemini Advanced 上で数百万ユーザー規模で稼働した。</p>
+
+<h2>Tournament sampling</h2>
+
+<p>中核のアルゴリズム。次トークンを決めるときに:</p>
+
+<ol>
+<li>元の分布から候補トークンを複数サンプリングする</li>
+<li>候補をペアにして、秘密鍵由来の疑似乱数関数（PRF）のスコアが大きい方を勝ち残らせる</li>
+<li>これをL層のトーナメントとして繰り返し、最後に残ったトークンを出力する</li>
+</ol>
+
+
+<p>基礎に本物のサンプリングが残っているため「同じプロンプトでも毎回違う応答」という多様性が保たれる。Gumbel-max系のdistortion-free手法が抱える出力の決定化問題を回避しつつ、設定次第で:</p>
+
+<ul>
+<li><strong>非歪曲（non-distortionary）</strong>: 出力分布を保存し品質劣化なし</li>
+<li><strong>歪曲（distortionary）</strong>: 品質を少し犠牲にして検出力を上げる</li>
+</ul>
+
+
+<p>の両モードを選べる。論文では両カテゴリで既存手法（KGW系・Gumbel系）より検出力が高いことを示した。</p>
+
+<h2>実運用上の特徴</h2>
+
+<ul>
+<li>学習には一切手を入れず、サンプリング手順だけを差し替える</li>
+<li>検出はLLM本体を使わず軽量に実行できる</li>
+<li>約2,000万件の本番トラフィックでの人間フィードバック評価で品質劣化なしを確認</li>
+<li>実装はオープンソース化されており、Hugging Face Transformers にも組み込まれている</li>
+</ul>
+
+
+<h2><a href="/notes/llm-text-watermarking.html">LLMテキストの電子透かし</a>の中での位置づけ</h2>
+
+<p>ロジット操作型（KGW法）とサンプリング置換型（Gumbel-max）の長所を統合した実用システム。ただしトークン表層の偏りに依存する点は変わらず、強い言い換え・翻訳への耐性は限定的。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://www.nature.com/articles/s41586-024-08025-4">Scalable watermarking for identifying large language model outputs (Nature, 2024)</a></li>
+<li><a href="https://arxiv.org/abs/2603.03410">On Google&rsquo;s SynthID-Text LLM Watermarking System: Theoretical Analysis and Empirical Validation (2026)</a> — 第三者による理論解析</li>
+</ul>
+
+]]></description>
+</item>
+<item>
+<title>LLMテキストの電子透かし</title>
+<link>https://64p.org/notes/llm-text-watermarking.html</link>
+<guid isPermaLink="true">https://64p.org/notes/llm-text-watermarking.html</guid>
+<pubDate>Wed, 12 Aug 2026 23:29:00 +0900</pubDate>
+<description><![CDATA[<h1>LLMテキストの電子透かし</h1>
+
+<p><a class="note-tag" href="/notes/tags/llm.html">#llm</a> <a class="note-tag" href="/notes/tags/ai.html">#ai</a> <a class="note-tag" href="/notes/tags/security.html">#security</a> <a class="note-tag" href="/notes/tags/watermarking.html">#watermarking</a></p>
+
+<p>LLMが生成したテキストに、人間には知覚できない統計的な「印」を埋め込み、後から「このテキストはこのモデルが生成したものか」を検定できるようにする技術。ゼロ幅文字やメタデータを付加する方式とは違い、<strong>トークン選択そのものに偏りを仕込む</strong>ので、コピペしても印がテキストと一緒に運ばれる。</p>
+
+<p>発端は <a href="https://zenn.dev/hellorusk/articles/3328866ca9e922">Kaito Sugimotoさんの解説記事</a>（2026-08、<strong>Claudeの透かし導入</strong>を受けたもの）。以下はそこで紹介されていた研究群を一次情報で裏取りしつつ整理したメモ。</p>
+
+<h2>基本原理</h2>
+
+<p>LLMは次トークンを確率分布からサンプリングしている。「ここは this でも that でも自然」という揺らぎのある場面で、秘密鍵由来の疑似乱数を使って選択を微妙に偏らせる。1トークンあたりの偏りはごく僅かでも、数百トークン集まれば統計的検定（z検定など）で「偶然ではありえない癖」として検出できる。</p>
+
+<ul>
+<li>埋め込みに使えるのはエントロピー（選択の揺らぎ）だけ。事実の列挙やコードのような<strong>低エントロピー出力には埋め込む余地が少ない</strong>という原理的制約がある。</li>
+<li>検出には秘密鍵（と検出アルゴリズム）が必要で、モデル本体は不要。安価に検定できる。</li>
+</ul>
+
+
+<h2>手法の系譜</h2>
+
+<div class="mermaid">
+flowchart TD
+    A[LLMテキスト電子透かし] --&gt; B["ロジット操作型&lt;br/&gt;KGW法 (2023)"]
+    A --&gt; C["サンプリング置換型&lt;br/&gt;(distortion-free)"]
+    C --&gt; C1["Gumbel-maxトリック&lt;br/&gt;Aaronson (2022) / EXP-edit"]
+    C --&gt; C2["Tournament sampling&lt;br/&gt;SynthID-Text"]
+    A --&gt; D["意味空間型&lt;br/&gt;(言い換え耐性)"]
+    D --&gt; D1["SemStamp / k-SemStamp"]
+    D --&gt; D2["PASA (2026)"]
+    A --&gt; E["Post-hoc型&lt;br/&gt;SAEMark"]
+</div>
+
+
+<h3>KGW法（ロジット操作型）</h3>
+
+<p>Kirchenbauer, Geiping, Wen らの &ldquo;A Watermark for Large Language Models"（ICML 2023）。この分野の火付け役。</p>
+
+<ul>
+<li>直前トークン列のハッシュ＋秘密鍵で語彙を「グリーンリスト」（割合γ）と「レッドリスト」に分割し、グリーン側のロジットにバイアスδを加算して優遇する。</li>
+<li>検出はテキスト中のグリーントークン比率が期待値γをどれだけ超えるかのz検定。</li>
+<li>弱点: ロジットを直接いじるので<strong>出力分布が歪む</strong>（品質劣化しうる）。</li>
+</ul>
+
+
+<h3>distortion-free系（サンプリング置換型）</h3>
+
+<p>「分布を歪めずに透かす」方向。サンプリングに使う乱数そのものを秘密鍵由来の疑似乱数に置き換える。</p>
+
+<ul>
+<li><strong>Gumbel-maxトリック</strong>: Aaronson（OpenAI, 2022年に講演で公表）の exponential minimum sampling。各トークン i に疑似乱数 r_i を割り当て、<code>r_i^(1/p_i)</code> が最大のトークンを選ぶと、鍵に関する期待値では元の分布どおりのサンプリングになる（単一トークンでは非歪曲）。検出時は同じ鍵で r_i を再現し、選ばれたトークンの r_i が不自然に大きいことを検定する。</li>
+<li><strong>EXP-edit</strong>: Kuditipudi ら &ldquo;Robust Distortion-free Watermarks for Language Models"（2023, Stanford）。同じくGumbel系で、編集距離ベースのアラインメントにより挿入・削除への頑健性を持たせた。</li>
+<li>弱点: 乱数が鍵から決定的に決まるため、同じプロンプトに対して<strong>出力が毎回同じになりがち</strong>（多様性の喪失）。Gumbel-Soft（Fu ら 2024）などが緩和策。</li>
+</ul>
+
+
+<h3>Tournament sampling</h3>
+
+<p>Google DeepMind の <a href="/notes/synthid-text.html">SynthID-Text</a> が採用。候補トークンを複数サンプリングして秘密鍵由来のスコアで勝ち抜き戦にかける。本物のサンプリングが基礎に残るので多様性が保たれ、非歪曲設定も歪曲設定（検出力優先）も選べる。Nature掲載＋Gemini本番投入という点で実用化の転換点になった。</p>
+
+<h3>意味空間型（言い換え耐性）</h3>
+
+<p>トークン表層の偏りは<strong>パラフレーズ（言い換え）でかなり消える</strong>。これが実用上の最大の攻撃面で、対策として意味表現に透かしを入れる研究がある。</p>
+
+<ul>
+<li><strong>SemStamp</strong>（Hou ら, NAACL 2024）: 文単位で生成し、文埋め込みが LSH（locality-sensitive hashing）で区切った意味空間の「当たり領域」に落ちるまで棄却サンプリングする。言い換えても文の意味（＝埋め込みの落ちる領域）は変わりにくいことを利用。後続の k-SemStamp はLSHをk-meansクラスタリングに置き換えて精度を改善。</li>
+<li><strong>PASA</strong>（Ai &amp; He, ICML 2026）: 意味クラスタと秘密鍵由来の乱数を紐付け、distortion-free と言い換え耐性の両立を理論的な枠組み（検出精度・頑健性・歪みのトレードオフの特徴付け）ごと提示した。</li>
+</ul>
+
+
+<h3>マルチビット透かし</h3>
+
+<p>「AI生成か否か」の1ビット判定を超えて、<strong>ユーザーIDなどのペイロード</strong>を埋め込む方向。</p>
+
+<ul>
+<li>Qu ら &ldquo;Provably Robust Multi-bit Watermarking for AI-generated Text"（USENIX Security 2025）: ペイロードを Reed-Solomon 誤り訂正符号でエンコードし、疑似乱数で決めたテキストセグメントにシンボルを分散埋め込み。編集ノイズが乗っても最近傍の符号語に復号できる。</li>
+<li><strong>SAEMark</strong>（NeurIPS 2025）: post-hoc型。モデルのロジットに一切触れず、生成済みテキストから Sparse Autoencoder で特徴を抽出し、特徴統計が鍵由来のターゲットに最も近い候補を採択する（推論時の棄却サンプリング）。<strong>APIしか触れないブラックボックスモデルにも適用できる</strong>のが特徴で、多言語・コードでも動く。</li>
+</ul>
+
+
+<h2>限界・論点</h2>
+
+<ul>
+<li>強い言い換え・翻訳・人間の文章との混合で検出力は落ちる。意味空間型はここへの対策だが、商用システムにはまだ本格実装されていない（<strong>Claude</strong>も編集・言い換えで消えうると明言している）。</li>
+<li>低エントロピー出力（コード、定型文）には原理的に埋め込みにくい。</li>
+<li>オープンウェイトモデルには強制できない。サンプリング実装を握っているホスト型APIでしか成立しない。</li>
+<li>検出に秘密鍵が要るため、「誰でも検定できる公開検出」と「鍵が漏れると除去攻撃が容易になる」のあいだに緊張がある。</li>
+<li>検出できても分かるのは「そのモデルが生成（処理）した」ことまでで、<strong>著者性の証明にはならない</strong>。逆に「検出されない＝人間が書いた」の証明にもならない。</li>
+</ul>
+
+
+<h2>実運用</h2>
+
+<ul>
+<li>Google: <a href="/notes/synthid-text.html">SynthID-Text</a> を Gemini に本番投入（2024〜）。</li>
+<li>Anthropic: <strong>Claudeのテキスト透かし</strong>（2026-08、EU AI Act対応）。</li>
+</ul>
+
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://zenn.dev/hellorusk/articles/3328866ca9e922">30年後の未来では、AIの出力したテキストに電子透かしが入っているかもしれない</a> — 発端となった解説記事</li>
+<li><a href="https://arxiv.org/abs/2301.10226">A Watermark for Large Language Models (Kirchenbauer et al., 2023)</a></li>
+<li><a href="https://arxiv.org/abs/2307.15593">Robust Distortion-free Watermarks for Language Models (Kuditipudi et al., 2023)</a> / <a href="https://crfm.stanford.edu/2023/07/30/watermarking.html">解説ブログ (Stanford CRFM)</a></li>
+<li><a href="https://www.nature.com/articles/s41586-024-08025-4">Scalable watermarking for identifying large language model outputs (Nature, 2024)</a></li>
+<li><a href="https://aclanthology.org/2024.naacl-long.226/">SemStamp: A Semantic Watermark with Paraphrastic Robustness for Text Generation (NAACL 2024)</a> / <a href="https://arxiv.org/abs/2402.11399">k-SemStamp</a></li>
+<li><a href="https://arxiv.org/abs/2605.10977">PASA: A Principled Embedding-Space Watermarking Approach (ICML 2026)</a></li>
+<li><a href="https://www.usenix.org/system/files/conference/usenixsecurity25/sec25cycle1-prepub-446-qu-watermarking.pdf">Provably Robust Multi-bit Watermarking for AI-generated Text (USENIX Security 2025)</a></li>
+<li><a href="https://arxiv.org/abs/2508.08211">SAEMark: Steering Personalized Multilingual LLM Watermarks with Sparse Autoencoders (NeurIPS 2025)</a></li>
+</ul>
+
+]]></description>
+</item>
+<item>
+<title>crosvm</title>
+<link>https://64p.org/notes/crosvm.html</link>
+<guid isPermaLink="true">https://64p.org/notes/crosvm.html</guid>
+<pubDate>Wed, 12 Aug 2026 23:29:00 +0900</pubDate>
+<description><![CDATA[<h1>crosvm</h1>
+
+<p>Googleが開発するRust製の<a href="/notes/microvm.html">軽量VM</a>向けVMM(Virtual Machine Monitor)。元々はChromeOS上でLinux環境(Crostini)やAndroidゲスト(ARCVM)を動かすために開発されたが、現在はAndroidのTerminal App、Cuttlefish、Windowsなど複数の製品・プラットフォームで使われている。 <a class="note-tag" href="/notes/tags/virtualization.html">#virtualization</a> <a class="note-tag" href="/notes/tags/rust.html">#rust</a></p>
+
+<h2>セキュリティ設計: process-per-deviceモデル</h2>
+
+<ul>
+<li>Main Processがゲストの初期化と中核のオーケストレーションを担当</li>
+<li>各virtioデバイスは個別のDevice Processとしてforkされる(process-per-device)</li>
+<li>各デバイスプロセスはMinijailでVFS/PID/User/Networkの名前空間分離により隔離され、そのデバイスに必要なシステムコールのみを許可する厳格なBPFフィルタが適用される</li>
+</ul>
+
+
+<p>強い隔離とメモリ安全な実装によるセキュリティを重視した設計思想を持つ。</p>
+
+<h2>機能</h2>
+
+<p>io_uring・vhost、内部の非同期ランタイム(<code>cros_async</code>)を活用し、モダンなワークロード向けに最適化されている。virtio-fs/virtio-9pによるファイルシステム共有のほか、Console・RNG・Balloon・Vsock・TPM・Pmem・ビデオデコード/エンコードなど幅広いvirtioデバイスに対応する。</p>
+
+<h2><a href="/notes/rust-vmm.html">rust-vmm</a>との関係</h2>
+
+<p><a href="/notes/firecracker.html">Firecracker</a>と並び、rust-vmmプロジェクト発足のきっかけとなった2つのRust製VMMの一つ。KVM呼び出しやメモリ管理まわりでFirecrackerと似たコードを別々に持っていたことが、rust-vmmでのクレート共有につながった。</p>
+
+<h2><a href="/notes/microvm-ecosystem.html">コンテナ向け軽量VM技術</a>の中での位置づけ</h2>
+
+<p><a href="/notes/firecracker.html">Firecracker</a>・<a href="/notes/cloud-hypervisor.html">Cloud Hypervisor</a>と並ぶ、土台となるVMM実装の一つ。ChromeOS/Android向けという出自の点で、サーバーレス/クラウド向けの他2つとは主戦場が異なる。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://github.com/google/crosvm">GitHub - google/crosvm</a></li>
+<li><a href="https://github.com/google/crosvm/blob/main/README.md">crosvm/README.md at main · google/crosvm</a></li>
+<li><a href="https://crosvm.dev/doc/crosvm/index.html">crosvm - Rust</a></li>
+</ul>
+
+]]></description>
+</item>
 <item>
 <title>rust-vmm</title>
 <link>https://64p.org/notes/rust-vmm.html</link>
@@ -18,7 +233,7 @@
 
 <h2>成り立ち</h2>
 
-<p>2018年12月、Amazon・Google・Intel・Red Hatの開発者が、VMM作成コードを共有する方法について議論したことから発足した。きっかけは、Rust製VMMであるcrosvm（Google/ChromeOS発）と<a href="/notes/firecracker.html">Firecracker</a>（AWS発）が、KVM呼び出しやメモリ管理まわりで似たようなコードを別々に持っていたこと。この重複を解消し、以後Rust製VMMを書く際に同じ実装を繰り返さずに済むようにする狙いがあった。</p>
+<p>2018年12月、Amazon・Google・Intel・Red Hatの開発者が、VMM作成コードを共有する方法について議論したことから発足した。きっかけは、Rust製VMMである<a href="/notes/crosvm.html">crosvm</a>（Google/ChromeOS発）と<a href="/notes/firecracker.html">Firecracker</a>（AWS発）が、KVM呼び出しやメモリ管理まわりで似たようなコードを別々に持っていたこと。この重複を解消し、以後Rust製VMMを書く際に同じ実装を繰り返さずに済むようにする狙いがあった。</p>
 
 <h2>主なクレート</h2>
 
@@ -36,7 +251,7 @@
 
 <h2>採用プロジェクト</h2>
 
-<p><a href="/notes/firecracker.html">Firecracker</a>・crosvmに加え、<a href="/notes/cloud-hypervisor.html">Cloud Hypervisor</a>もrust-vmmの理念を採用しており、実装コードの大部分がFirecrackerやcrosvmをベースにしている。QEMUのvirtiofsd実装や<code>vhost-device</code>なども取り込まれている。</p>
+<p><a href="/notes/firecracker.html">Firecracker</a>・<a href="/notes/crosvm.html">crosvm</a>に加え、<a href="/notes/cloud-hypervisor.html">Cloud Hypervisor</a>もrust-vmmの理念を採用しており、実装コードの大部分がFirecrackerやcrosvmをベースにしている。QEMUのvirtiofsd実装や<code>vhost-device</code>なども取り込まれている。</p>
 
 <h2><a href="/notes/microvm-ecosystem.html">コンテナ向け軽量VM技術</a>の中での位置づけ</h2>
 
@@ -71,6 +286,7 @@
 <li><a href="/notes/firecracker.html">Firecracker</a> — AWS製。AWS Lambda/Fargateを支えるmicroVM実装</li>
 <li><a href="/notes/cloud-hypervisor.html">Cloud Hypervisor</a> — Intel主導・Rust製。<a href="/notes/rust-vmm.html">rust-vmm</a>由来でFirecrackerの実装を参考にしている</li>
 <li><a href="/notes/rust-vmm.html">rust-vmm</a> — Firecracker/crosvm/Cloud Hypervisorが共有する、Rust製VMM部品(クレート)群</li>
+<li><a href="/notes/crosvm.html">crosvm</a> — Google製。ChromeOS/Android向けに開発されたRust製VMM</li>
 </ul>
 
 
@@ -1357,134 +1573,6 @@ IP 10.99.0.2 &gt; 10.99.0.1: ICMP echo reply, id 31448, seq 1, length 64
 <ul>
 <li><a href="https://en.wikipedia.org/wiki/IEEE_802.1Q">IEEE 802.1Q - Wikipedia</a></li>
 <li><a href="https://documentation.meraki.com/General_Administration/Tools_and_Troubleshooting/Fundamentals_of_802.1Q_VLAN_Tagging">Fundamentals of 802.1Q VLAN Tagging - Cisco Meraki Documentation</a></li>
-</ul>
-
-]]></description>
-</item>
-<item>
-<title>VRRP (Virtual Router Redundancy Protocol)</title>
-<link>https://64p.org/notes/vrrp.html</link>
-<guid isPermaLink="true">https://64p.org/notes/vrrp.html</guid>
-<pubDate>Wed, 12 Aug 2026 18:44:00 +0900</pubDate>
-<description><![CDATA[<h1>VRRP (Virtual Router Redundancy Protocol)</h1>
-
-<p><a class="note-tag" href="/notes/tags/networking.html">#networking</a> <a class="note-tag" href="/notes/tags/protocol.html">#protocol</a> <a class="note-tag" href="/notes/tags/linux.html">#linux</a></p>
-
-<p>複数台のルータ(またはサーバ)で1つの仮想IPアドレス(VIP)を共有し、デフォルトゲートウェイやサービスを冗長化するプロトコル。IETFで標準化されており、現行版はIPv4/IPv6両対応のRFC 5798(VRRPv3。IPv4のみのRFC 3768を obsolete)。</p>
-
-<h2>仕組み</h2>
-
-<ul>
-<li>参加ルータには 0〜255 の priority を設定する(デフォルト100)。priorityが最も高いルータが <strong>MASTER</strong> としてVIP宛の通信を処理し、他は <strong>BACKUP</strong> としてMASTERの生存を監視する。優先度が同じ場合は主IPアドレスが大きい方が採用される。</li>
-<li>MASTERは一定間隔(デフォルト1秒)で <strong>VRRP Advertisement</strong> をマルチキャストアドレス<code>224.0.0.18</code>(IPv4、IPプロトコル番号112)へ送信する。BACKUPはこれを受信できなくなると、自身がMASTERに昇格する。</li>
-<li>Advertisementが途絶えてからMASTERに昇格するまでの待ち時間は次の式で決まる。priorityが高いBACKUPほど短い時間で昇格できる。</li>
-</ul>
-
-
-<pre><code class="``">  Skew_Time = (256 - priority) / 256 × Advertisement間隔
-  Master_Down_Interval = 3 × Advertisement間隔 + Skew_Time
-</code></pre>
-
-<ul>
-<li>priority=255 はVIPのアドレス所有者を示す特別な値で、設定に関わらず常にMASTERになる。priority=0 は「現在のMASTERが降りる」という通知で、これを受け取ったBACKUPは通常より短いSkew_Timeだけ待てばよいため、意図的な停止時のフェイルオーバーを高速化できる。</li>
-<li>稼働中の低priority MASTERに対して、後から復帰した高priorityのBACKUPが制御を奪い返すかどうかは <strong>Preemptモード</strong> で制御する(デフォルトは奪う設定)。ただしpriority=255(アドレス所有者)はPreemptモードの設定に関わらず常に昇格する。</li>
-</ul>
-
-
-<h2>Linuxでの実装: keepalived</h2>
-
-<p>Linuxでは<code>keepalived</code>がVRRPの代表的な実装。HAProxyやNginxなどのロードバランサの前段に2台以上のサーバを並べ、VIPをフェイルオーバーさせる用途でよく使われる。LVS(IPVS)によるL4ロードバランシングの死活監視と、VRRPによるルータ/サーバ冗長化の両方を兼ね備えたデーモンとして設計されている。</p>
-
-<h2>可視化デモ</h2>
-
-<p>MASTER選出・フェイルオーバー・Preemptの挙動を、実際のタイマーで動かしながら確認できるデモを作った。</p>
-
-<p><a href="https://claude.ai/code/artifact/d86922b8-5e59-49a7-b13f-8a434ac28213">https://claude.ai/code/artifact/d86922b8-5e59-49a7-b13f-8a434ac28213</a></p>
-
-<p>lb1/lb2の2ノード構成で、リンクダウンやpriority変更がMASTER選出にどう波及するかを、VRRP AdvertisementとクライアントのVIP宛通信をアニメーションで見ながら確認できる。</p>
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://www.rfc-editor.org/rfc/rfc5798">RFC 5798 - Virtual Router Redundancy Protocol (VRRP) Version 3 for IPv4 and IPv6</a></li>
-<li><a href="https://www.keepalived.org/">Keepalived for Linux</a></li>
-</ul>
-
-]]></description>
-</item>
-<item>
-<title>mockery</title>
-<link>https://64p.org/notes/mockery.html</link>
-<guid isPermaLink="true">https://64p.org/notes/mockery.html</guid>
-<pubDate>Wed, 12 Aug 2026 18:42:00 +0900</pubDate>
-<description><![CDATA[<h1>mockery</h1>
-
-<p><a class="note-tag" href="/notes/tags/go.html">#go</a> <a class="note-tag" href="/notes/tags/testing.html">#testing</a></p>
-
-<p>Go のインターフェース定義からモック実装コードを自動生成するCLIツール（vektra/mockery）。<a href="/notes/testify.html">testify</a> の mock パッケージを手で使うと <code>On(...)</code> / <code>Return(...)</code> まわりのボイラープレートが多くなるため、それを丸ごと生成して除去するのが目的。生成されたモックは testify のアサーション・期待値検証パターン（<code>EXPECT()</code> 形式の expecter メソッドを含む）にそのまま乗る。</p>
-
-<h2>使い方</h2>
-
-<p>設定は <code>.mockery.yaml</code> に書き、対象パッケージとインターフェースを宣言してから <code>mockery</code> コマンドを実行する方式。</p>
-
-<pre><code class="yaml">packages:
-    github.com/org/repo:
-        interfaces:
-            DB:
-</code></pre>
-
-<p><code>go generate</code> や task runner に組み込んで、インターフェース変更時にモックを再生成し続けるのが典型的な運用。</p>
-
-<h2>v3</h2>
-
-<p>現行のメジャーバージョンは v3 で、テンプレートベースの生成に刷新された。従来の testify スタイルに加えて matryer/moq スタイルのモックも生成でき、独自テンプレートも書ける。モックを対象と同じパッケージに置くケースの自動検出など設定も整理された。同種のツールとしては gomock や moq がある。</p>
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://vektra.github.io/mockery/latest/">mockery 公式ドキュメント</a></li>
-<li><a href="https://github.com/vektra/mockery">vektra/mockery - GitHub</a></li>
-</ul>
-
-]]></description>
-</item>
-<item>
-<title>testify</title>
-<link>https://64p.org/notes/testify.html</link>
-<guid isPermaLink="true">https://64p.org/notes/testify.html</guid>
-<pubDate>Wed, 12 Aug 2026 18:40:00 +0900</pubDate>
-<description><![CDATA[<h1>testify</h1>
-
-<p><a class="note-tag" href="/notes/tags/go.html">#go</a> <a class="note-tag" href="/notes/tags/testing.html">#testing</a></p>
-
-<p>Go の標準 <code>testing</code> パッケージと組み合わせて使うテストツールキット（stretchr/testify）。MITライセンスで、GitHubスター26k超と、Goのテスト用ライブラリとしては最も広く使われている部類。Go標準にはJUnit的なアサーションAPIがなく <code>if got != want { t.Errorf(...) }</code> を繰り返し書くことになるため、それを読みやすく置き換えるのが主目的。</p>
-
-<h2>パッケージ構成</h2>
-
-<ul>
-<li><strong>assert</strong> — <code>assert.Equal(t, expected, actual)</code> のようなアサーション群。失敗時に読みやすい差分メッセージを出す。失敗しても bool を返してテストは継続する。</li>
-<li><strong>require</strong> — assert と同一のインターフェースだが、失敗した時点で <code>t.FailNow()</code> によりテストを即座に打ち切る。「この前提が崩れたら以降は無意味」という検証（<code>require.NoError(t, err)</code> 等）に使うのが定石。</li>
-<li><strong>mock</strong> — <code>mock.Mock</code> を埋め込んだ構造体でインターフェースのモックを作り、<code>On(...).Return(...)</code> で期待動作を設定、<code>AssertExpectations(t)</code> で呼び出しを検証する。手書きはボイラープレートが多いので、モックコードを自動生成する <strong><a href="/notes/mockery.html">mockery</a></strong> と組み合わせるのが一般的（公式ドキュメントでも推奨）。</li>
-<li><strong>suite</strong> — SetupTest / TearDownTest などのフックを持つ xUnit 風のテストスイート構造。</li>
-</ul>
-
-
-<pre><code class="go">func TestSomething(t *testing.T) {
-    result, err := DoSomething()
-    require.NoError(t, err)              // ここで失敗したら即終了
-    assert.Equal(t, "expected", result)  // 失敗しても他のassertは続行
-}
-</code></pre>
-
-<h2>メンテナンス方針</h2>
-
-<p>「v1 として維持し、破壊的変更は受け付けない」ことが README に明記されている。v2 は別リポジトリのディスカッションで検討が進行中。</p>
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://github.com/stretchr/testify">stretchr/testify - GitHub</a></li>
-<li><a href="https://pkg.go.dev/github.com/stretchr/testify/mock">mock package - pkg.go.dev</a></li>
 </ul>
 
 ]]></description>

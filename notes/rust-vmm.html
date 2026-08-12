@@ -23,9 +23,12 @@
                 <a class="notes-tags-link" href="/notes/rss.xml">📡 RSS</a>
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
+                                    <li><a href="/notes/synthid-text.html">SynthID-Text</a></li>
                                     <li><a href="/notes/rust-vmm.html" class="active">rust-vmm</a></li>
-                                    <li><a href="/notes/microvm.html">microVM</a></li>
                                     <li><a href="/notes/microvm-ecosystem.html">コンテナ向け軽量VM技術</a></li>
+                                    <li><a href="/notes/llm-text-watermarking.html">LLMテキストの電子透かし</a></li>
+                                    <li><a href="/notes/crosvm.html">crosvm</a></li>
+                                    <li><a href="/notes/microvm.html">microVM</a></li>
                                     <li><a href="/notes/cloud-hypervisor.html">Cloud Hypervisor</a></li>
                                     <li><a href="/notes/kata-containers.html">Kata Containers</a></li>
                                     <li><a href="/notes/hypeman.html">Hypeman</a></li>
@@ -329,7 +332,7 @@
 
 <h2>成り立ち</h2>
 
-<p>2018年12月、Amazon・Google・Intel・Red Hatの開発者が、VMM作成コードを共有する方法について議論したことから発足した。きっかけは、Rust製VMMであるcrosvm（Google/ChromeOS発）と<a href="/notes/firecracker.html">Firecracker</a>（AWS発）が、KVM呼び出しやメモリ管理まわりで似たようなコードを別々に持っていたこと。この重複を解消し、以後Rust製VMMを書く際に同じ実装を繰り返さずに済むようにする狙いがあった。</p>
+<p>2018年12月、Amazon・Google・Intel・Red Hatの開発者が、VMM作成コードを共有する方法について議論したことから発足した。きっかけは、Rust製VMMである<a href="/notes/crosvm.html">crosvm</a>（Google/ChromeOS発）と<a href="/notes/firecracker.html">Firecracker</a>（AWS発）が、KVM呼び出しやメモリ管理まわりで似たようなコードを別々に持っていたこと。この重複を解消し、以後Rust製VMMを書く際に同じ実装を繰り返さずに済むようにする狙いがあった。</p>
 
 <h2>主なクレート</h2>
 
@@ -347,7 +350,7 @@
 
 <h2>採用プロジェクト</h2>
 
-<p><a href="/notes/firecracker.html">Firecracker</a>・crosvmに加え、<a href="/notes/cloud-hypervisor.html">Cloud Hypervisor</a>もrust-vmmの理念を採用しており、実装コードの大部分がFirecrackerやcrosvmをベースにしている。QEMUのvirtiofsd実装や<code>vhost-device</code>なども取り込まれている。</p>
+<p><a href="/notes/firecracker.html">Firecracker</a>・<a href="/notes/crosvm.html">crosvm</a>に加え、<a href="/notes/cloud-hypervisor.html">Cloud Hypervisor</a>もrust-vmmの理念を採用しており、実装コードの大部分がFirecrackerやcrosvmをベースにしている。QEMUのvirtiofsd実装や<code>vhost-device</code>なども取り込まれている。</p>
 
 <h2><a href="/notes/microvm-ecosystem.html">コンテナ向け軽量VM技術</a>の中での位置づけ</h2>
 
@@ -367,13 +370,14 @@
                     <h2>🔗 リンクされているノート</h2>
                     <ul>
                                             <li><a href="/notes/cloud-hypervisor.html">Cloud Hypervisor</a></li>
+                                            <li><a href="/notes/crosvm.html">crosvm</a></li>
                                             <li><a href="/notes/microvm.html">microVM</a></li>
                                             <li><a href="/notes/microvm-ecosystem.html">コンテナ向け軽量VM技術</a></li>
                     
                     </ul>
                 </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-12 23:27 / 更新日時: 2026-08-12 23:28</span>
+                    <span>作成日時: 2026-08-12 23:27 / 更新日時: 2026-08-12 23:29</span>
                     <a class="share-x" href="https://twitter.com/intent/tweet?text=rust-vmm&url=https%3A%2F%2F64p.org%2Fnotes%2Frust-vmm.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
