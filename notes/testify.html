@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>ダンジョン配信(ジャンル) - Notes - 64p.org</title>
+    <title>testify - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/highlight.js@11/styles/github.min.css" media="(prefers-color-scheme: light)">
@@ -21,7 +21,7 @@
                 <a class="notes-tags-link" href="/notes/tags/">🏷️ タグ一覧</a>
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
-                                    <li><a href="/notes/testify.html">testify</a></li>
+                                    <li><a href="/notes/testify.html" class="active">testify</a></li>
                                     <li><a href="/notes/seccomp.html">seccomp</a></li>
                                     <li><a href="/notes/least-privilege.html">最小権限の原則</a></li>
                                     <li><a href="/notes/vxlan.html">VXLAN</a></li>
@@ -65,7 +65,7 @@
                                     <li><a href="/notes/regex-engine-backtracking-vs-nfa.html">正規表現エンジンの実装方式: バックトラッキング型とNFA/DFA型</a></li>
                                     <li><a href="/notes/raku-longest-token-matching.html">Longest Token Match (LTM)</a></li>
                                     <li><a href="/notes/gorilla.html">ゴリラ</a></li>
-                                    <li><a href="/notes/dungeon-haishin-genre.html" class="active">ダンジョン配信(ジャンル)</a></li>
+                                    <li><a href="/notes/dungeon-haishin-genre.html">ダンジョン配信(ジャンル)</a></li>
                                     <li><a href="/notes/yama-lsm.html">Yama (Yama LSM)</a></li>
                                     <li><a href="/notes/linux-security-modules.html">LSM (Linux Security Modules) フレームワーク</a></li>
                                     <li><a href="/notes/grsecurity.html">grsecurity</a></li>
@@ -292,42 +292,44 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>ダンジョン配信(ジャンル)</h1>
+                <h1>testify</h1>
 
-<p><a class="note-tag" href="/notes/tags/light-novel.html">#light-novel</a> <a class="note-tag" href="/notes/tags/manga.html">#manga</a></p>
+<p><a class="note-tag" href="/notes/tags/go.html">#go</a> <a class="note-tag" href="/notes/tags/testing.html">#testing</a></p>
 
-<p>「現代ダンジョンもの」（現代日本に突如ダンジョンが出現する設定の異世界・なろう系サブジャンル）に、配信者・視聴者・コメント・投げ銭(スパチャ)といった現代の動画配信文化を組み合わせたジャンル。ダンジョン内を監視カメラ・空中ドローン・頭部装着カメラなどで撮影し、その攻略の様子をネット配信する形式が多い。</p>
+<p>Go の標準 <code>testing</code> パッケージと組み合わせて使うテストツールキット（stretchr/testify）。MITライセンスで、GitHubスター26k超と、Goのテスト用ライブラリとしては最も広く使われている部類。Go標準にはJUnit的なアサーションAPIがなく <code>if got != want { t.Errorf(...) }</code> を繰り返し書くことになるため、それを読みやすく置き換えるのが主目的。</p>
 
-<h2>起源</h2>
+<h2>パッケージ構成</h2>
 
-<p>明確な「元祖」作品は特定されていない。Yahoo!知恵袋での「ダンジョン配信を最初に取り入れた作品は？」という質問へのベストアンサーでは、「小説家になろう」の『<a href="https://ncode.syosetu.com/n6970df/">ライブダンジョン！</a>』（dy冷凍、2016年4月19日連載開始）がメインジャンルとしては最古級に位置づけられている。ただし回答者自身も「短編なども含めればもっと古いものがあってもおかしくない」「ソードアート・オンラインや.hackでもプレイヤー内に配信者的な設定があった」と留保をつけており、決定版ではない。</p>
-
-<p>『ライブダンジョン！』は、旧世界のMMORPG「ライブダンジョン」をクリアした主人公が異世界に飛ばされ、その攻略の様子を異世界側の住民にライブ中継されているという設定で、配信は主人公視点というより周辺設定に近い位置づけだった。</p>
-
-<h2>系譜（仮説）</h2>
-
-<ol>
-<li>SAO・.hackなど、ゲーム世界の中に観客・配信要素がある作品</li>
-<li>現代ダンジョンもの＋配信文化を前面に押し出した『ライブダンジョン！』(2016年)</li>
-<li>配信者自身が主人公で、VTuber文化を色濃く反映した近年の作品群</li>
-</ol>
+<ul>
+<li><strong>assert</strong> — <code>assert.Equal(t, expected, actual)</code> のようなアサーション群。失敗時に読みやすい差分メッセージを出す。失敗しても bool を返してテストは継続する。</li>
+<li><strong>require</strong> — assert と同一のインターフェースだが、失敗した時点で <code>t.FailNow()</code> によりテストを即座に打ち切る。「この前提が崩れたら以降は無意味」という検証（<code>require.NoError(t, err)</code> 等）に使うのが定石。</li>
+<li><strong>mock</strong> — <code>mock.Mock</code> を埋め込んだ構造体でインターフェースのモックを作り、<code>On(...).Return(...)</code> で期待動作を設定、<code>AssertExpectations(t)</code> で呼び出しを検証する。手書きはボイラープレートが多いので、モックコードを自動生成する <strong>mockery</strong> と組み合わせるのが一般的（公式ドキュメントでも推奨）。</li>
+<li><strong>suite</strong> — SetupTest / TearDownTest などのフックを持つ xUnit 風のテストスイート構造。</li>
+</ul>
 
 
-<p>この系譜はWeb上の一意見（知恵袋のベストアンサー）に基づく仮説であり、学術的・網羅的な調査結果ではない点に留意。</p>
+<pre><code class="go">func TestSomething(t *testing.T) {
+    result, err := DoSomething()
+    require.NoError(t, err)              // ここで失敗したら即終了
+    assert.Equal(t, "expected", result)  // 失敗しても他のassertは続行
+}
+</code></pre>
+
+<h2>メンテナンス方針</h2>
+
+<p>「v1 として維持し、破壊的変更は受け付けない」ことが README に明記されている。v2 は別リポジトリのディスカッションで検討が進行中。</p>
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://dic.pixiv.net/a/%E3%83%80%E3%83%B3%E3%82%B8%E3%83%A7%E3%83%B3%E9%85%8D%E4%BF%A1">ダンジョン配信 - ピクシブ百科事典</a></li>
-<li><a href="https://detail.chiebukuro.yahoo.co.jp/qa/question_detail/q14321617324">ダンジョン配信というジャンルをはじめに取り入れた作品ってなんなんですかね？ - Yahoo!知恵袋</a></li>
-<li><a href="https://ncode.syosetu.com/n6970df/">ライブダンジョン！ - 小説家になろう</a></li>
-<li><a href="https://dic.nicovideo.jp/a/%E3%83%A9%E3%82%A4%E3%83%96%E3%83%80%E3%83%B3%E3%82%B8%E3%83%A7%E3%83%B3!">ライブダンジョン!とは - ニコニコ大百科</a></li>
+<li><a href="https://github.com/stretchr/testify">stretchr/testify - GitHub</a></li>
+<li><a href="https://pkg.go.dev/github.com/stretchr/testify/mock">mock package - pkg.go.dev</a></li>
 </ul>
 
 
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-11 00:01 / 更新日時: 2026-08-11 17:00</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=%E3%83%80%E3%83%B3%E3%82%B8%E3%83%A7%E3%83%B3%E9%85%8D%E4%BF%A1%28%E3%82%B8%E3%83%A3%E3%83%B3%E3%83%AB%29&url=https%3A%2F%2F64p.org%2Fnotes%2Fdungeon-haishin-genre.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <span>作成日時: 2026-08-12 18:40 / 更新日時: 2026-08-12 18:40</span>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=testify&url=https%3A%2F%2F64p.org%2Fnotes%2Ftestify.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">
