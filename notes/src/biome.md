@@ -1,6 +1,6 @@
 ---
 created: 2026-08-10 19:32
-updated: 2026-08-10 19:42
+updated: 2026-08-12 23:09
 ---
 # Biome
 
@@ -11,7 +11,7 @@ Rustで書かれた、Web(JavaScript/TypeScript/JSX/TSX/JSON/HTML/CSS/GraphQL)�
 - **フォーマッター**: [[prettier|Prettier]]と97%互換の高速フォーマッター
 - **リンター**: ESLint・TypeScript-ESLint由来の517ルールを搭載した高性能リンター
 
-ESLint・[[prettier|Prettier]]のドロップイン置き換えを狙って設計されており、Node.jsを必要とせず単体で動作する。CLIおよびLSP経由で利用可能。
+ESLint・[[prettier|Prettier]]のドロップイン置き換えを狙って設計されており、Node.jsを必要とせず単体で動作する。CLIおよび[[lsp|LSP]]経由で利用可能。
 
 ## 性能
 
