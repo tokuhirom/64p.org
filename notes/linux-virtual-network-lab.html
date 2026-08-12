@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>海南鶏飯(シンガポール式チキンライス) - Notes - 64p.org</title>
+    <title>Linuxだけで作る仮想ネットワークラボ - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/highlight.js@11/styles/github.min.css" media="(prefers-color-scheme: light)">
@@ -21,7 +21,7 @@
                 <a class="notes-tags-link" href="/notes/tags/">🏷️ タグ一覧</a>
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
-                                    <li><a href="/notes/linux-virtual-network-lab.html">Linuxだけで作る仮想ネットワークラボ</a></li>
+                                    <li><a href="/notes/linux-virtual-network-lab.html" class="active">Linuxだけで作る仮想ネットワークラボ</a></li>
                                     <li><a href="/notes/vxlan.html">VXLAN</a></li>
                                     <li><a href="/notes/vlan.html">VLAN</a></li>
                                     <li><a href="/notes/vrrp.html">VRRP (Virtual Router Redundancy Protocol)</a></li>
@@ -168,7 +168,7 @@
                                     <li><a href="/notes/mutex.html">ミューテックス(mutex)</a></li>
                                     <li><a href="/notes/xinu.html">Xinu</a></li>
                                     <li><a href="/notes/chicken-rice-japan.html">チキンライス(日本の洋食)</a></li>
-                                    <li><a href="/notes/chicken-rice-hainanese.html" class="active">海南鶏飯(シンガポール式チキンライス)</a></li>
+                                    <li><a href="/notes/chicken-rice-hainanese.html">海南鶏飯(シンガポール式チキンライス)</a></li>
                                     <li><a href="/notes/podman.html">Podman</a></li>
                                     <li><a href="/notes/ruriboshi-kamikiri.html">ルリボシカミキリ</a></li>
                                     <li><a href="/notes/raku-rakudo-perl6.html">Raku / Rakudo / Perl 6</a></li>
@@ -296,41 +296,90 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>海南鶏飯(シンガポール式チキンライス)</h1>
+                <h1>Linuxだけで作る仮想ネットワークラボ</h1>
 
-<p>ゆで鶏とその茹で汁で炊いた米を組み合わせた料理。唐辛子やショウガのソースをかけて食べる。シンガポール・タイ・マレーシアなどで広く食べられている。 <a class="note-tag" href="/notes/tags/food-culture.html">#food-culture</a> <a class="note-tag" href="/notes/tags/singapore.html">#singapore</a></p>
+<p><a href="/notes/vlan.html">VLAN</a>や<a href="/notes/vxlan.html">VXLAN</a>を実際に構築して遊ぶのに物理機材は不要。Linuxカーネル自体が両方をネイティブ実装しているので、network namespaceを使えばマシン1台で完結する。さらにunprivileged user namespaceを使えばsudoすら不要（後述）。 <a class="note-tag" href="/notes/tags/network.html">#network</a> <a class="note-tag" href="/notes/tags/linux.html">#linux</a></p>
 
-<h2>ルーツ</h2>
+<h2>レベル1: ipコマンドだけでVLAN</h2>
 
-<p>もともとは中国海南島の料理で、1950年代前後に海南島からの移住者がシンガポールに伝えたとされる。現在はシンガポールを代表する国民食のひとつになっている。</p>
+<p>netnsを「仮想PC」、VLANフィルタリングを有効にしたLinuxブリッジを「L2スイッチ」に見立てる。</p>
 
-<h2>アジアの三大チキンライス</h2>
+<pre><code class="sh"># 「スイッチ」を作る（VLANフィルタリング有効）
+sudo ip link add br0 type bridge vlan_filtering 1
+sudo ip link set br0 up
 
-<p>シンガポール・タイ・マレーシアはそれぞれ独自スタイルの海南鶏飯系チキンライスを持ち、「アジアの三大チキンライス」として紹介されることがある。</p>
+# 「PC」を作って veth ケーブルでスイッチに接続
+sudo ip netns add pc1
+sudo ip link add veth1 type veth peer name eth0 netns pc1
+sudo ip link set veth1 master br0 up
 
-<h2><a href="/notes/chicken-rice-japan.html">チキンライス(日本の洋食)</a>との違い</h2>
+# veth1 をVLAN 10のアクセスポートにする
+sudo bridge vlan add dev veth1 vid 10 pvid untagged
+sudo bridge vlan del dev veth1 vid 1
+</code></pre>
 
-<p>日本で「チキンライス」と言った場合は、ケチャップで味付けした<a href="/notes/chicken-rice-japan.html">洋食のチキンライス</a>を指すのが一般的で、こちらとは全くの別物。</p>
+<p>同様にpc2をVLAN 10、pc3をVLAN 20に繋ぐと、「同じスイッチに刺さっているのにpc1↔pc2はpingが通り、pc3には通らない」というVLANの本質をそのまま体験できる。<code>tcpdump -e vlan</code>でタグ付きフレームも観察できる。</p>
+
+<h2>レベル2: VXLANもipコマンドで</h2>
+
+<pre><code class="sh">sudo ip link add vxlan100 type vxlan id 100 dstport 4789 \
+    local 192.168.0.1 remote 192.168.0.2 dev eth0
+</code></pre>
+
+<p>netns 2つ（または実マシン2台・VPS 2台）の間でこれを張り、<code>tcpdump -i eth0 udp port 4789</code>すると、EthernetフレームがまるごとUDPに包まれて飛ぶ様子（MAC over UDP）が実際に見える。</p>
+
+<h2>sudoなしで試す: unprivileged user namespace</h2>
+
+<p>上記のラボはすべて<code>sudo</code>前提で書いたが、<strong>unprivileged user namespace</strong>の中では一般ユーザーが（そのnamespace内限定の）rootになれるので、sudoなしで丸ごと動かせる。</p>
+
+<pre><code class="sh">unshare --user --map-root-user --net --mount bash
+</code></pre>
+
+<p>これで入ったシェルの中では<code>ip link add</code>（bridge/veth/vxlanいずれも）、<code>ip netns add</code>（<code>--mount</code>を付けた上で<code>mount -t tmpfs tmpfs /run</code>しておく）、<code>ip netns exec</code>などが全部素で通る。上のVLANラボ（pc1/pc2をVLAN 10、pc3をVLAN 20に収容してpingが遮断されることの確認）を丸ごとこの中で実行して動作することを確認した（Pop!_OS、kernel 6.18）。</p>
+
+<p>制約:</p>
+
+<ul>
+<li>namespace内に閉じているので、<strong>ホストの実NICは触れない</strong>。実マシン2台間でVXLANを張るような実験にはやはり実NICへの権限が必要</li>
+<li>ディストリによってはunprivileged usernsが制限されている（Ubuntuは23.10でAppArmorによる制限を導入し、24.04からデフォルト有効。<code>sysctl kernel.apparmor_restrict_unprivileged_userns</code>で確認できる）</li>
+</ul>
+
+
+<p>sudoなし縛りの他の選択肢としては、QEMUのユーザーモードネットワーキングでVMを立ててその中でrootになる（ホスト権限不要）、rootlessコンテナ（podman + slirp4netns）などがある。</p>
+
+<h2>レベル3: containerlab + FRRでEVPN/VXLANファブリック</h2>
+
+<p>leaf-spine構成でBGP EVPNをコントロールプレーンにしたVXLANまでやるなら、containerlabが定番。トポロジをYAMLで書くと、FRRouting（オープンソースのルーティングスイート）のコンテナ群をvethで配線した仮想ネットワークが一発で立ち上がる。お手本リポジトリ:</p>
+
+<ul>
+<li><a href="https://github.com/martimy/clab_vxlan_frr">martimy/clab_vxlan_frr</a> — マルチキャスト方式・EVPN方式など複数のVXLANシナリオ</li>
+<li><a href="https://github.com/darnodo/VXLAN-EVPN">darnodo/VXLAN-EVPN</a> — spine 1台 + leaf 2台の最小EVPNラボ</li>
+</ul>
+
+
+<h2>その他の選択肢</h2>
+
+<ul>
+<li><strong>Open vSwitch</strong> — Linux標準ブリッジより本格的な仮想スイッチ。OpenStackなどが実際に使っている</li>
+<li><strong>GNS3 / EVE-NG</strong> — Cisco IOSなどベンダーOSのイメージを動かすエミュレータ。「実機のCLI操作」の練習向けだが、イメージ入手にライセンスの壁がある</li>
+</ul>
+
+
+<p>学習の順序としては、レベル1→2を生のipコマンドでやって仕組みを掴んでから、containerlabでEVPNに進むのがよさそう。</p>
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://housefoods.jp/recipe/rcp_00001588.html">シンガポールチキンライス（海南鶏飯） | レシピ | ハウス食品</a></li>
-<li><a href="https://cuisine-kingdom.com/hainan-chickenrice2/">似ているようで実は違う！奥深いシンガポールとタイの「海南チキンライス」の魅力 - 料理王国</a></li>
-<li><a href="https://www.nikkei.com/article/DGXMZO30361060R10C18A5000000/">アジアの三大チキンライス 東京で食べ比べてみると… - 日本経済新聞</a></li>
+<li><a href="https://labs.iximiuz.com/courses/computer-networking-fundamentals/simple-vlan">Networking Lab: Setting Up a VLAN Using a Linux Bridge - iximiuz Labs</a></li>
+<li><a href="https://developers.redhat.com/articles/2026/04/03/introduction-to-linux-interfaces-for-virtual-networking">Introduction to Linux interfaces for virtual networking - Red Hat Developer</a></li>
+<li><a href="https://www.netpilot.io/blog/what-is-containerlab">What Is ContainerLab? The Complete 2026 Guide - NetPilot</a></li>
+<li><a href="https://discourse.ubuntu.com/t/understanding-apparmor-user-namespace-restriction/58007">Understanding AppArmor User Namespace Restriction - Ubuntu Community Hub</a></li>
 </ul>
 
 
-                                <div class="notes-backlinks">
-                    <h2>🔗 リンクされているノート</h2>
-                    <ul>
-                                            <li><a href="/notes/chicken-rice-japan.html">チキンライス(日本の洋食)</a></li>
-                    
-                    </ul>
-                </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-10 18:54 / 更新日時: 2026-08-10 18:54</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=%E6%B5%B7%E5%8D%97%E9%B6%8F%E9%A3%AF%28%E3%82%B7%E3%83%B3%E3%82%AC%E3%83%9D%E3%83%BC%E3%83%AB%E5%BC%8F%E3%83%81%E3%82%AD%E3%83%B3%E3%83%A9%E3%82%A4%E3%82%B9%29&url=https%3A%2F%2F64p.org%2Fnotes%2Fchicken-rice-hainanese.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <span>作成日時: 2026-08-12 18:54 / 更新日時: 2026-08-12 18:54</span>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=Linux%E3%81%A0%E3%81%91%E3%81%A7%E4%BD%9C%E3%82%8B%E4%BB%AE%E6%83%B3%E3%83%8D%E3%83%83%E3%83%88%E3%83%AF%E3%83%BC%E3%82%AF%E3%83%A9%E3%83%9C&url=https%3A%2F%2F64p.org%2Fnotes%2Flinux-virtual-network-lab.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">
