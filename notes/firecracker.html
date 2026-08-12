@@ -23,6 +23,11 @@
                 <a class="notes-tags-link" href="/notes/rss.xml">📡 RSS</a>
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
+                                    <li><a href="/notes/firecracker.html" class="active">Firecracker</a></li>
+                                    <li><a href="/notes/typescript-eslint.html">typescript-eslint</a></li>
+                                    <li><a href="/notes/openjs-foundation.html">OpenJS Foundation</a></li>
+                                    <li><a href="/notes/jslint.html">JSLint</a></li>
+                                    <li><a href="/notes/jshint.html">JSHint</a></li>
                                     <li><a href="/notes/microvm.html">microVM</a></li>
                                     <li><a href="/notes/prettier.html">Prettier</a></li>
                                     <li><a href="/notes/oxc.html">Oxc(Oxidation Compiler)</a></li>
@@ -31,7 +36,6 @@
                                     <li><a href="/notes/eslint.html">ESLint</a></li>
                                     <li><a href="/notes/biome.html">Biome</a></li>
                                     <li><a href="/notes/hypeman.html">Hypeman</a></li>
-                                    <li><a href="/notes/firecracker.html" class="active">Firecracker</a></li>
                                     <li><a href="/notes/cloud-hypervisor.html">Cloud Hypervisor</a></li>
                                     <li><a href="/notes/mojo.html">Mojo</a></li>
                                     <li><a href="/notes/lsp.html">LSP (Language Server Protocol)</a></li>
@@ -336,12 +340,29 @@
 
 <p>AWS LambdaおよびAWS Fargateを支える基盤技術として、月間数兆回規模の関数実行を処理している。サーバーレス関数に限らず、AIコードの実行サンドボックスなど幅広いワークロードでも採用が広がっている。<a href="/notes/cloud-hypervisor.html">Cloud Hypervisor</a>の実装コードの一部はFirecrackerの実装を参考にしている。</p>
 
+<h2>OCIイメージは直接扱えない</h2>
+
+<p>FirecrackerはVMMであり、扱うのはカーネルイメージとrootfsのブロックデバイスイメージ(ext4等)のみ。OCIイメージという概念自体を解釈する機能は持たない。OCIイメージをFirecracker上で動かすには、事前にレイヤーをrootfsのext4イメージへ変換するレイヤーが別途必要になる。代表的なアプローチ:</p>
+
+<ul>
+<li>手動変換 — コンテナのrootfsをtar化し、空のext4イメージへ展開する</li>
+<li>Weave Ignite — OCIイメージのrootfsをそのままVMのrootfsとして起動する</li>
+<li>firecracker-containerd — containerdのプラグインとしてFirecrackerをコンテナの分離レイヤーに使う</li>
+<li>Kata Containers — containerdのdevmapperスナップショッタで、コンテナのrootfsをvirtio blockデバイスとしてVMにホットプラグする</li>
+</ul>
+
+
+<p><a href="/notes/hypeman.html">Hypeman</a>は、この「OCIイメージ→VM rootfs変換」レイヤーを自前で実装し、Docker互換の使い勝手を提供している。</p>
+
 <h2>出典</h2>
 
 <ul>
 <li><a href="https://aws.amazon.com/blogs/opensource/firecracker-open-source-secure-fast-microvm-serverless/">Announcing the Firecracker Open Source Technology | AWS Open Source Blog</a></li>
 <li><a href="https://github.com/firecracker-microvm/firecracker">GitHub - firecracker-microvm/firecracker</a></li>
 <li><a href="https://northflank.com/blog/what-is-aws-firecracker">What is AWS Firecracker? The microVM technology, explained | Northflank</a></li>
+<li><a href="https://github.com/arcboxlabs/oci2rootfs">GitHub - arcboxlabs/oci2rootfs</a></li>
+<li><a href="https://github.com/weaveworks/ignite">GitHub - weaveworks/ignite</a></li>
+<li><a href="https://github.com/kata-containers/kata-containers/blob/main/docs/how-to/how-to-use-kata-containers-with-firecracker.md">Kata Containers: how-to-use-kata-containers-with-firecracker.md</a></li>
 </ul>
 
 
@@ -355,7 +376,7 @@
                     </ul>
                 </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-12 23:14 / 更新日時: 2026-08-12 23:14</span>
+                    <span>作成日時: 2026-08-12 23:14 / 更新日時: 2026-08-12 23:22</span>
                     <a class="share-x" href="https://twitter.com/intent/tweet?text=Firecracker&url=https%3A%2F%2F64p.org%2Fnotes%2Ffirecracker.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>

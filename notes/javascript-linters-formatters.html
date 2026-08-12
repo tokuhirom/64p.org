@@ -23,6 +23,11 @@
                 <a class="notes-tags-link" href="/notes/rss.xml">📡 RSS</a>
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
+                                    <li><a href="/notes/firecracker.html">Firecracker</a></li>
+                                    <li><a href="/notes/typescript-eslint.html">typescript-eslint</a></li>
+                                    <li><a href="/notes/openjs-foundation.html">OpenJS Foundation</a></li>
+                                    <li><a href="/notes/jslint.html">JSLint</a></li>
+                                    <li><a href="/notes/jshint.html">JSHint</a></li>
                                     <li><a href="/notes/microvm.html">microVM</a></li>
                                     <li><a href="/notes/prettier.html">Prettier</a></li>
                                     <li><a href="/notes/oxc.html">Oxc(Oxidation Compiler)</a></li>
@@ -31,7 +36,6 @@
                                     <li><a href="/notes/eslint.html">ESLint</a></li>
                                     <li><a href="/notes/biome.html">Biome</a></li>
                                     <li><a href="/notes/hypeman.html">Hypeman</a></li>
-                                    <li><a href="/notes/firecracker.html">Firecracker</a></li>
                                     <li><a href="/notes/cloud-hypervisor.html">Cloud Hypervisor</a></li>
                                     <li><a href="/notes/mojo.html">Mojo</a></li>
                                     <li><a href="/notes/lsp.html">LSP (Language Server Protocol)</a></li>
@@ -350,6 +354,18 @@ graph LR
 <li><a href="/notes/prettier.html">Prettier</a> — オピニオン型（設定最小主義）のフォーマッターのデファクト標準</li>
 <li><a href="/notes/biome.html">Biome</a> — Rust製オールインワンツールチェーン。Romeのコミュニティフォークという系譜。ESLint+Prettierの一括置き換えを狙う</li>
 <li><a href="/notes/oxc.html">Oxc</a> — Rust製ツールチェーン（VoidZero社）。ゼロから開発され、oxlint・oxfmtなど各コンポーネントを個別採用できる点がBiomeと異なる</li>
+<li><a href="/notes/typescript-eslint.html">typescript-eslint</a> — ESLintのプラグイン機構の上でTypeScript対応を担う拡張。type-aware lintingが特徴</li>
+</ul>
+
+
+<h2>リンターの系譜</h2>
+
+<p>ESLint以前の歴史。「設定不可」→「設定可能」→「プラガブル」という進化の流れ。</p>
+
+<ul>
+<li><a href="/notes/jslint.html">JSLint</a> — 2002年、Douglas Crockford作。最初期のJSリンター。オピニオン型で設定不可</li>
+<li><a href="/notes/jshint.html">JSHint</a> — 2011年、JSLintの柔軟性のなさに反発したコミュニティフォーク。設定可能だが独自ルールは書けない</li>
+<li><a href="/notes/eslint.html">ESLint</a> — 2013年、独自ルールを書けない不満から誕生。すべてをプラグイン化</li>
 </ul>
 
 
@@ -362,9 +378,12 @@ graph LR
                     <ul>
                                             <li><a href="/notes/biome.html">Biome</a></li>
                                             <li><a href="/notes/eslint.html">ESLint</a></li>
+                                            <li><a href="/notes/jshint.html">JSHint</a></li>
+                                            <li><a href="/notes/jslint.html">JSLint</a></li>
                                             <li><a href="/notes/moc.html">MOC (Map of Content)</a></li>
                                             <li><a href="/notes/oxc.html">Oxc(Oxidation Compiler)</a></li>
                                             <li><a href="/notes/prettier.html">Prettier</a></li>
+                                            <li><a href="/notes/typescript-eslint.html">typescript-eslint</a></li>
                     
                     </ul>
                 </div>

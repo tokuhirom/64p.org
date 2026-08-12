@@ -4,11 +4,11 @@ updated: 2026-08-12 23:17
 ---
 # ESLint
 
-JavaScript向けの静的解析ツール（リンター）のデファクト標準。Nicholas C. Zakas氏が2013年6月に公開した（当初の名前はJSCheckで、1ヶ月後にESLintに改名）。MITライセンスで、2019年からはOpenJS Foundation傘下のプロジェクト。2025年末時点で週間ダウンロード数は7,000万を超え、最も広く使われているJSリンターとなっている。 #javascript
+JavaScript向けの静的解析ツール（リンター）のデファクト標準。Nicholas C. Zakas氏が2013年6月に公開した（当初の名前はJSCheckで、1ヶ月後にESLintに改名）。MITライセンスで、2019年からは[[openjs-foundation|OpenJS Foundation]]傘下のプロジェクト。2025年末時点で週間ダウンロード数は7,000万を超え、最も広く使われているJSリンターとなっている。 #javascript
 
 ## プラガブルという設計思想
 
-先行するJSLint・JSHintには「独自ルールを追加できない」という制約があり、それへの不満がESLint誕生の動機になった。ESLintではすべてのルールが個別に有効/無効を切り替えられ、独自ルールを実行時にプラグインとして読み込める。公式サイトも "Pluggable JavaScript Linter" を掲げている。TypeScript対応もtypescript-eslintというプラグインとして提供される、というようにエコシステム全体がこのプラグイン機構の上に成り立っている。
+先行する[[jslint|JSLint]]・[[jshint|JSHint]]には「独自ルールを追加できない」という制約があり、それへの不満がESLint誕生の動機になった。ESLintではすべてのルールが個別に有効/無効を切り替えられ、独自ルールを実行時にプラグインとして読み込める。公式サイトも "Pluggable JavaScript Linter" を掲げている。TypeScript対応も[[typescript-eslint]]というプラグインとして提供される、というようにエコシステム全体がこのプラグイン機構の上に成り立っている。
 
 ## flat config
 

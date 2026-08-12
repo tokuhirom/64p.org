@@ -9,7 +9,7 @@ ChromiumとNode.jsを組み合わせて、Web技術(JavaScript/HTML/CSS)だけ�
 ## 概要
 
 - GitHub: [electron/electron](https://github.com/electron/electron) — 約122.4kスター、17.4kフォーク
-- ライセンス: MIT(OpenJS Foundation傘下のプロジェクト)
+- ライセンス: MIT([[openjs-foundation|OpenJS Foundation]]傘下のプロジェクト)
 - 対応OS: macOS(Ventura+, Intel/Apple Silicon)、Windows(10+, x64/arm64)、Linux(x64/arm64)
 
 ## アーキテクチャ

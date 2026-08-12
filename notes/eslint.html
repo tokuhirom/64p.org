@@ -23,6 +23,11 @@
                 <a class="notes-tags-link" href="/notes/rss.xml">📡 RSS</a>
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
+                                    <li><a href="/notes/firecracker.html">Firecracker</a></li>
+                                    <li><a href="/notes/typescript-eslint.html">typescript-eslint</a></li>
+                                    <li><a href="/notes/openjs-foundation.html">OpenJS Foundation</a></li>
+                                    <li><a href="/notes/jslint.html">JSLint</a></li>
+                                    <li><a href="/notes/jshint.html">JSHint</a></li>
                                     <li><a href="/notes/microvm.html">microVM</a></li>
                                     <li><a href="/notes/prettier.html">Prettier</a></li>
                                     <li><a href="/notes/oxc.html">Oxc(Oxidation Compiler)</a></li>
@@ -31,7 +36,6 @@
                                     <li><a href="/notes/eslint.html" class="active">ESLint</a></li>
                                     <li><a href="/notes/biome.html">Biome</a></li>
                                     <li><a href="/notes/hypeman.html">Hypeman</a></li>
-                                    <li><a href="/notes/firecracker.html">Firecracker</a></li>
                                     <li><a href="/notes/cloud-hypervisor.html">Cloud Hypervisor</a></li>
                                     <li><a href="/notes/mojo.html">Mojo</a></li>
                                     <li><a href="/notes/lsp.html">LSP (Language Server Protocol)</a></li>
@@ -317,11 +321,11 @@
             <article class="notes-content">
                 <h1>ESLint</h1>
 
-<p>JavaScript向けの静的解析ツール（リンター）のデファクト標準。Nicholas C. Zakas氏が2013年6月に公開した（当初の名前はJSCheckで、1ヶ月後にESLintに改名）。MITライセンスで、2019年からはOpenJS Foundation傘下のプロジェクト。2025年末時点で週間ダウンロード数は7,000万を超え、最も広く使われているJSリンターとなっている。 <a class="note-tag" href="/notes/tags/javascript.html">#javascript</a></p>
+<p>JavaScript向けの静的解析ツール（リンター）のデファクト標準。Nicholas C. Zakas氏が2013年6月に公開した（当初の名前はJSCheckで、1ヶ月後にESLintに改名）。MITライセンスで、2019年からは<a href="/notes/openjs-foundation.html">OpenJS Foundation</a>傘下のプロジェクト。2025年末時点で週間ダウンロード数は7,000万を超え、最も広く使われているJSリンターとなっている。 <a class="note-tag" href="/notes/tags/javascript.html">#javascript</a></p>
 
 <h2>プラガブルという設計思想</h2>
 
-<p>先行するJSLint・JSHintには「独自ルールを追加できない」という制約があり、それへの不満がESLint誕生の動機になった。ESLintではすべてのルールが個別に有効/無効を切り替えられ、独自ルールを実行時にプラグインとして読み込める。公式サイトも &ldquo;Pluggable JavaScript Linter&rdquo; を掲げている。TypeScript対応もtypescript-eslintというプラグインとして提供される、というようにエコシステム全体がこのプラグイン機構の上に成り立っている。</p>
+<p>先行する<a href="/notes/jslint.html">JSLint</a>・<a href="/notes/jshint.html">JSHint</a>には「独自ルールを追加できない」という制約があり、それへの不満がESLint誕生の動機になった。ESLintではすべてのルールが個別に有効/無効を切り替えられ、独自ルールを実行時にプラグインとして読み込める。公式サイトも &ldquo;Pluggable JavaScript Linter&rdquo; を掲げている。TypeScript対応も<a href="/notes/typescript-eslint.html">typescript-eslint</a>というプラグインとして提供される、というようにエコシステム全体がこのプラグイン機構の上に成り立っている。</p>
 
 <h2>flat config</h2>
 
@@ -356,10 +360,14 @@
                     <h2>🔗 リンクされているノート</h2>
                     <ul>
                                             <li><a href="/notes/biome.html">Biome</a></li>
+                                            <li><a href="/notes/jshint.html">JSHint</a></li>
+                                            <li><a href="/notes/jslint.html">JSLint</a></li>
                                             <li><a href="/notes/javascript-linters-formatters.html">JavaScriptのリンター・フォーマッター</a></li>
                                             <li><a href="/notes/moc.html">MOC (Map of Content)</a></li>
+                                            <li><a href="/notes/openjs-foundation.html">OpenJS Foundation</a></li>
                                             <li><a href="/notes/oxc.html">Oxc(Oxidation Compiler)</a></li>
                                             <li><a href="/notes/prettier.html">Prettier</a></li>
+                                            <li><a href="/notes/typescript-eslint.html">typescript-eslint</a></li>
                     
                     </ul>
                 </div>

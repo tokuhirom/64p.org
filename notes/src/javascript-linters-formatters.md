@@ -35,6 +35,15 @@ graph LR
 - [[prettier|Prettier]] — オピニオン型（設定最小主義）のフォーマッターのデファクト標準
 - [[biome|Biome]] — Rust製オールインワンツールチェーン。Romeのコミュニティフォークという系譜。ESLint+Prettierの一括置き換えを狙う
 - [[oxc|Oxc]] — Rust製ツールチェーン（VoidZero社）。ゼロから開発され、oxlint・oxfmtなど各コンポーネントを個別採用できる点がBiomeと異なる
+- [[typescript-eslint]] — ESLintのプラグイン機構の上でTypeScript対応を担う拡張。type-aware lintingが特徴
+
+## リンターの系譜
+
+ESLint以前の歴史。「設定不可」→「設定可能」→「プラガブル」という進化の流れ。
+
+- [[jslint|JSLint]] — 2002年、Douglas Crockford作。最初期のJSリンター。オピニオン型で設定不可
+- [[jshint|JSHint]] — 2011年、JSLintの柔軟性のなさに反発したコミュニティフォーク。設定可能だが独自ルールは書けない
+- [[eslint|ESLint]] — 2013年、独自ルールを書けない不満から誕生。すべてをプラグイン化
 
 ## 関連
 

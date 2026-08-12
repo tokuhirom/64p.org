@@ -9,7 +9,7 @@ Rustで書かれた、Web(JavaScript/TypeScript/JSX/TSX/JSON/HTML/CSS/GraphQL)�
 ## 機能
 
 - **フォーマッター**: [[prettier|Prettier]]と97%互換の高速フォーマッター
-- **リンター**: [[eslint|ESLint]]・TypeScript-ESLint由来の517ルールを搭載した高性能リンター
+- **リンター**: [[eslint|ESLint]]・[[typescript-eslint|TypeScript-ESLint]]由来の517ルールを搭載した高性能リンター
 
 ESLint・[[prettier|Prettier]]のドロップイン置き換えを狙って設計されており、Node.jsを必要とせず単体で動作する。CLIおよび[[lsp|LSP]]経由で利用可能。
 
