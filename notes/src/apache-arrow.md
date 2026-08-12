@@ -1,6 +1,6 @@
 ---
 created: 2026-08-09 21:14
-updated: 2026-08-09 22:22
+updated: 2026-08-12 09:55
 ---
 # Apache Arrow
 
@@ -19,6 +19,10 @@ updated: 2026-08-09 22:22
 - データサイエンスライブラリ: pandas, polars, R Arrow
 - データフォーマット: Vortex, [[apache-parquet|Parquet]]のreader
 - データ転送レイヤー: Flight SQL, ADBC
+
+## [[data-lakehouse|データレイクハウス]]の中での位置づけ
+
+「ディスク上のParquet」に対する「メモリ上のArrow」として、クエリエンジン内部の処理やエンジン間のゼロコピーなデータ交換を担う。[[dremio|Dremio]] のクエリエンジンのようにArrowを実行時表現としてネイティブに使うプロダクトもある。
 
 ## 出典
 

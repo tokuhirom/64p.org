@@ -1,6 +1,6 @@
 ---
 created: 2026-08-09 21:14
-updated: 2026-08-09 21:14
+updated: 2026-08-12 09:55
 ---
 # Apache Parquet
 
@@ -16,6 +16,10 @@ updated: 2026-08-09 21:14
 ## 用途・エコシステム
 
 Apache Hadoop, Apache Spark, Apache Drill, Presto などの分散処理基盤で広く使われている、分析ワークロード向けのフォーマット。
+
+## [[data-lakehouse|データレイクハウス]]の中での位置づけ
+
+データレイクハウスのスタックでは最下層の「データファイル本体」のフォーマット。この上に [[apache-iceberg|Apache Iceberg]] のようなテーブルフォーマットが載り、SQLテーブルとしての抽象を与える。
 
 ## 出典
 
