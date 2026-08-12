@@ -6,7 +6,7 @@
 <atom:link href="https://64p.org/notes/rss.xml" rel="self" type="application/rss+xml" />
 <description>ちょっと調べたことや検証結果を、AIの力も借りながらメモしていくコーナーです。</description>
 <language>ja</language>
-<lastBuildDate>Wed, 12 Aug 2026 23:55:35 +0900</lastBuildDate>
+<lastBuildDate>Wed, 12 Aug 2026 23:59:31 +0900</lastBuildDate>
 <item>
 <title>virtqueue風トイ実験</title>
 <link>https://64p.org/notes/virtqueue-toy-experiment.html</link>
@@ -110,6 +110,10 @@ case KVM_EXIT_IO:
 
 
 <p>これらを省いても「共有メモリ+バッチ化+1回の通知」という核心のメカニズムと、それによるVM exit削減効果は十分に確認できた。</p>
+
+<h2>ソース</h2>
+
+<p>このリポジトリの<a href="https://github.com/tokuhirom/64p.org/tree/master/notes/code/virtqueue-toy"><code>notes/code/virtqueue-toy/</code></a>にソース一式を置いてある(<code>make run</code>でビルド・実行できる)。</p>
 
 <h2>出典</h2>
 
@@ -286,6 +290,10 @@ Testing real mode
 </code></pre>
 
 <p>ポート0xE9は実在のデバイスではなく、このプログラムが決めた「ただの取り決め」。これが<a href="/notes/kvm.html">KVM</a>ノートで説明した「KVMはデバイスエミュレーションを一切せず、ユーザー空間のVMMがI/Oを肩代わりする」の最小の実例になっている。FirecrackerやQEMUがネットワーク・ディスクに対してやっていることの、極小版がこれだと考えると分かりやすい。</p>
+
+<h2>ソース</h2>
+
+<p>このリポジトリの<a href="https://github.com/tokuhirom/64p.org/tree/master/notes/code/kvm-hello-world"><code>notes/code/kvm-hello-world/</code></a>に、上記の修正を加えたソース一式を置いてある(<code>make</code>するだけでビルドできる)。</p>
 
 <h2>続き: <a href="/notes/virtqueue-toy-experiment.html">virtqueue風トイ実験</a></h2>
 

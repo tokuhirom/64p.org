@@ -1,6 +1,6 @@
 ---
 created: 2026-08-12 23:55
-updated: 2026-08-12 23:55
+updated: 2026-08-12 23:59
 ---
 # virtqueue風トイ実験
 
@@ -78,6 +78,10 @@ case KVM_EXIT_IO:
 - 割り込みによる完了通知ではなく、そもそも1往復で完結する単純なやり取りにした
 
 これらを省いても「共有メモリ+バッチ化+1回の通知」という核心のメカニズムと、それによるVM exit削減効果は十分に確認できた。
+
+## ソース
+
+このリポジトリの[`notes/code/virtqueue-toy/`](https://github.com/tokuhirom/64p.org/tree/master/notes/code/virtqueue-toy)にソース一式を置いてある(`make run`でビルド・実行できる)。
 
 ## 出典
 

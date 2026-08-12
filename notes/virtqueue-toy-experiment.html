@@ -24,8 +24,8 @@
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
                                     <li><a href="/notes/virtqueue-toy-experiment.html" class="active">virtqueue風トイ実験</a></li>
-                                    <li><a href="/notes/virtio.html">virtio</a></li>
                                     <li><a href="/notes/kvm-hello-world-experiment.html">kvm-hello-world実験</a></li>
+                                    <li><a href="/notes/virtio.html">virtio</a></li>
                                     <li><a href="/notes/rust-vmm.html">rust-vmm</a></li>
                                     <li><a href="/notes/microvm.html">microVM</a></li>
                                     <li><a href="/notes/microvm-ecosystem.html">コンテナ向け軽量VM技術</a></li>
@@ -432,6 +432,10 @@ case KVM_EXIT_IO:
 
 <p>これらを省いても「共有メモリ+バッチ化+1回の通知」という核心のメカニズムと、それによるVM exit削減効果は十分に確認できた。</p>
 
+<h2>ソース</h2>
+
+<p>このリポジトリの<a href="https://github.com/tokuhirom/64p.org/tree/master/notes/code/virtqueue-toy"><code>notes/code/virtqueue-toy/</code></a>にソース一式を置いてある(<code>make run</code>でビルド・実行できる)。</p>
+
 <h2>出典</h2>
 
 <ul>
@@ -448,7 +452,7 @@ case KVM_EXIT_IO:
                     </ul>
                 </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-12 23:55 / 更新日時: 2026-08-12 23:55</span>
+                    <span>作成日時: 2026-08-12 23:55 / 更新日時: 2026-08-12 23:59</span>
                     <a class="share-x" href="https://twitter.com/intent/tweet?text=virtqueue%E9%A2%A8%E3%83%88%E3%82%A4%E5%AE%9F%E9%A8%93&url=https%3A%2F%2F64p.org%2Fnotes%2Fvirtqueue-toy-experiment.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>

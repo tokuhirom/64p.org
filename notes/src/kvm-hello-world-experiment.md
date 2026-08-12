@@ -1,6 +1,6 @@
 ---
 created: 2026-08-12 23:42
-updated: 2026-08-12 23:55
+updated: 2026-08-12 23:59
 ---
 # kvm-hello-world実験
 
@@ -68,6 +68,10 @@ case KVM_EXIT_IO:
 ```
 
 ポート0xE9は実在のデバイスではなく、このプログラムが決めた「ただの取り決め」。これが[[kvm|KVM]]ノートで説明した「KVMはデバイスエミュレーションを一切せず、ユーザー空間のVMMがI/Oを肩代わりする」の最小の実例になっている。FirecrackerやQEMUがネットワーク・ディスクに対してやっていることの、極小版がこれだと考えると分かりやすい。
+
+## ソース
+
+このリポジトリの[`notes/code/kvm-hello-world/`](https://github.com/tokuhirom/64p.org/tree/master/notes/code/kvm-hello-world)に、上記の修正を加えたソース一式を置いてある(`make`するだけでビルドできる)。
 
 ## 続き: [[virtqueue-toy-experiment|virtqueue風トイ実験]]
 
