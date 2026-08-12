@@ -6,7 +6,60 @@
 <atom:link href="https://64p.org/notes/rss.xml" rel="self" type="application/rss+xml" />
 <description>ちょっと調べたことや検証結果を、AIの力も借りながらメモしていくコーナーです。</description>
 <language>ja</language>
-<lastBuildDate>Thu, 13 Aug 2026 07:45:32 +0900</lastBuildDate>
+<lastBuildDate>Thu, 13 Aug 2026 07:46:50 +0900</lastBuildDate>
+<item>
+<title>Font Awesome</title>
+<link>https://64p.org/notes/font-awesome.html</link>
+<guid isPermaLink="true">https://64p.org/notes/font-awesome.html</guid>
+<pubDate>Thu, 13 Aug 2026 07:46:00 +0900</pubDate>
+<description><![CDATA[<h1>Font Awesome</h1>
+
+<p>SVG・Webフォント・CSSを提供するアイコンライブラリ/ツールキット。2012年3月3日にDave GandyがBootstrap用として個人的に作り始めたのが始まりで、現在は世界で最も普及しているアイコンセットとされ、1億以上のウェブサイトで使われている。</p>
+
+<p><a class="note-tag" href="/notes/tags/icon.html">#icon</a> <a class="note-tag" href="/notes/tags/frontend.html">#frontend</a> <a class="note-tag" href="/notes/tags/web.html">#web</a></p>
+
+<h2>スタイル</h2>
+
+<p>Solid・Regular・Light・Thin・Duotone・Sharp・Brands(SNSやOSSプロジェクトのロゴ)など複数のスタイルバリエーションを持つ。無料版で使えるのはSolid/Regular/Brandsの一部に限られ、Light/Thin/Duotone/Sharpなどの追加スタイルはPro版限定。</p>
+
+<h2>提供形式</h2>
+
+<p>アイコンデータはSVG(および対応するJS)として管理されており、そこからWebフォント形式やCSSも生成される。従来は「アイコンフォント」として使われることが多かったが、現在はSVGでの利用も公式に推奨されている。</p>
+
+<h2>ライセンス(無料版)</h2>
+
+<ul>
+<li>アイコン(SVG/JS): CC BY 4.0(表示義務あり)</li>
+<li>フォント(Web/デスクトップ): SIL OFL 1.1</li>
+<li>コード: MIT</li>
+</ul>
+
+
+<p>無料版は約2,000アイコンに限定される。</p>
+
+<h2>料金プラン</h2>
+
+<p>無料版で使い始められ、Proプランに切り替えるとアイコン数・追加スタイル・Kits・ページビュー枠・サポートが拡充される。2025年の値上げ以降、Proは年額$60〜$600。</p>
+
+<h2>バージョン</h2>
+
+<p>2026年時点でVersion 7が最新。Version 6はLTS(重要バグ修正のみ提供)、Version 3〜5はEOL。</p>
+
+<h2>Iconifyとの関係</h2>
+
+<p><a href="/notes/iconify.html">Iconify</a>はFont Awesomeを含む200以上のアイコンセットを統一シンタックスで横断的に扱うための集約レイヤーで、実際にIconifyのアイコン検索サイトにもFont Awesome(オープンソース版)の各スタイルがそのまま収録されている。Font Awesome自体は1つの独立したアイコンセット/ブランドという位置づけ。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://github.com/FortAwesome/Font-Awesome">GitHub - FortAwesome/Font-Awesome</a></li>
+<li><a href="https://fontawesome.com/plans">Plans &amp; Pricing to Meet Your Icon Needs | Font Awesome</a></li>
+<li><a href="https://fontawesome.com/versions">Versions of Font Awesome</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Font_Awesome">Font Awesome - Wikipedia</a></li>
+</ul>
+
+]]></description>
+</item>
 <item>
 <title>Iconify</title>
 <link>https://64p.org/notes/iconify.html</link>
@@ -20,7 +73,7 @@
 
 <h2>対応規模</h2>
 
-<p>Font Awesome、Material Design Icons、Feather Icons、Noto Emojiなど200以上のアイコンセット、約25万個以上のアイコンに対応する。セットをまたいでも同じ統一シンタックスで参照できる。</p>
+<p><a href="/notes/font-awesome.html">Font Awesome</a>、Material Design Icons、Feather Icons、Noto Emojiなど200以上のアイコンセット、約25万個以上のアイコンに対応する。セットをまたいでも同じ統一シンタックスで参照できる。</p>
 
 <h2>仕組み</h2>
 
@@ -37,7 +90,7 @@
 
 <h2>Font Awesomeなど個別のアイコンセットとの関係性</h2>
 
-<p>Font Awesomeは1つの統一デザイン言語を持つ独立したアイコンセット（公式のReact/Vue/Angular連携、CDN配布、Pro版は年額$99〜のサブスクリプション課金）。一方Iconifyはそれ自体がアイコンを作るのではなく、Font Awesome（オープンソース版）を含む200以上の既存アイコンセットを統一シンタックスで横断的に扱うための集約レイヤーで、実際にIconifyのアイコン検索サイトにも「Font Awesome Solid」「Font Awesome 6 Brands」がそのまま収録されている。したがって両者は対等な競合というより、「1つのアイコンセット」対「複数のアイコンセット（Font Awesomeも含む）を束ねる仕組み」という関係にある。</p>
+<p><a href="/notes/font-awesome.html">Font Awesome</a>は1つの統一デザイン言語を持つ独立したアイコンセット（公式のReact/Vue/Angular連携、CDN配布、Pro版はサブスクリプション課金）。一方Iconifyはそれ自体がアイコンを作るのではなく、Font Awesome（オープンソース版）を含む200以上の既存アイコンセットを統一シンタックスで横断的に扱うための集約レイヤーで、実際にIconifyのアイコン検索サイトにも「Font Awesome Solid」「Font Awesome 6 Brands」がそのまま収録されている。したがって両者は対等な競合というより、「1つのアイコンセット」対「複数のアイコンセット（Font Awesomeも含む）を束ねる仕組み」という関係にある。</p>
 
 <h2>セルフホスト</h2>
 
@@ -1838,41 +1891,6 @@ flowchart TD
 <li><a href="https://katacontainers.io/blog/kata-containers-confirmed-as-first-new-top-level-open-infrastructure-project-by-openstack-foundation/">Kata Containers Confirmed as First New Top-Level Open Infrastructure Project by OpenStack Foundation</a></li>
 <li><a href="https://cloudkernels.github.io/posts/kata-build-configure-fc/">Kata Containers: Build and configure Firecracker | CloudKernels</a></li>
 <li><a href="https://github.com/kata-containers/kata-containers/blob/main/docs/how-to/how-to-use-kata-containers-with-firecracker.md">kata-containers/docs/how-to/how-to-use-kata-containers-with-firecracker.md</a></li>
-</ul>
-
-]]></description>
-</item>
-<item>
-<title>firecracker-containerd</title>
-<link>https://64p.org/notes/firecracker-containerd.html</link>
-<guid isPermaLink="true">https://64p.org/notes/firecracker-containerd.html</guid>
-<pubDate>Wed, 12 Aug 2026 23:23:00 +0900</pubDate>
-<description><![CDATA[<h1>firecracker-containerd</h1>
-
-<p>AWSが開発する、containerdに<a href="/notes/firecracker.html">Firecracker</a>をコンテナのVM分離バックエンドとして統合するプロジェクト。containerdのプラグインとして実装されており、Kubernetes・Amazon ECSなど既存のコンテナオーケストレーションフレームワークとの互換性を保ちながら、コンテナをFirecracker microVM単位で分離実行できる。 <a class="note-tag" href="/notes/tags/virtualization.html">#virtualization</a> <a class="note-tag" href="/notes/tags/aws.html">#aws</a></p>
-
-<h2>アーキテクチャ</h2>
-
-<ul>
-<li><strong>Runtime</strong>: ホスト側のcontainerdとFirecracker VMMの間、およびmicroVM内で動く後述のAgentとの間をつなぐコンポーネント。ttrpc経由で通信するout-of-processシムとして実装されている。</li>
-<li><strong>Agent</strong>: microVM内で動作し、Runtimeからの制御指示を実行するプロセス。containerdの<code>containerd-shim-runc-v1</code>経由でrunCを呼び出し、microVM内部に標準的なLinuxコンテナを作る。</li>
-<li>ネットワーキングはCNIプラグインでmicroVM単位に設定でき、チェイン可能な<code>tc-redirect-tap</code>というCNIプラグインを提供している。</li>
-</ul>
-
-
-<h2><a href="/notes/kata-containers.html">Kata Containers</a>との違い</h2>
-
-<p>Kata ContainersがOCI/CRI互換のコンテナランタイムとして複数のVMM・複数のコンテナランタイム統合先を横断的にサポートするのに対し、firecracker-containerdはAWSが開発する、containerd専用のFirecracker統合という位置づけ。</p>
-
-<h2><a href="/notes/microvm-ecosystem.html">コンテナ向け軽量VM技術</a>の中での位置づけ</h2>
-
-<p>containerd専用のFirecracker統合レイヤー。</p>
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://github.com/firecracker-microvm/firecracker-containerd">GitHub - firecracker-microvm/firecracker-containerd</a></li>
-<li><a href="https://github.com/firecracker-microvm/firecracker-containerd/blob/main/docs/architecture.md">firecracker-containerd/docs/architecture.md</a></li>
 </ul>
 
 ]]></description>

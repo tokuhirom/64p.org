@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>YAGNI（You Aren&#39;t Gonna Need It） - Notes - 64p.org</title>
+    <title>Font Awesome - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="alternate" type="application/rss+xml" title="Notes - 64p.org" href="/notes/rss.xml">
@@ -24,7 +24,7 @@
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
                                     <li><a href="/notes/iconify.html">Iconify</a></li>
-                                    <li><a href="/notes/font-awesome.html">Font Awesome</a></li>
+                                    <li><a href="/notes/font-awesome.html" class="active">Font Awesome</a></li>
                                     <li><a href="/notes/topcoat.html">Topcoat</a></li>
                                     <li><a href="/notes/wit.html">WIT (WebAssembly Interface Types)</a></li>
                                     <li><a href="/notes/wasm.html">WebAssembly (Wasm)</a></li>
@@ -106,7 +106,7 @@
                                     <li><a href="/notes/common-expression-language.html">CEL (Common Expression Language)</a></li>
                                     <li><a href="/notes/apache-polaris.html">Apache Polaris</a></li>
                                     <li><a href="/notes/refactoring.html">リファクタリング(Refactoring)</a></li>
-                                    <li><a href="/notes/yagni.html" class="active">YAGNI（You Aren&#39;t Gonna Need It）</a></li>
+                                    <li><a href="/notes/yagni.html">YAGNI（You Aren&#39;t Gonna Need It）</a></li>
                                     <li><a href="/notes/technical-debt.html">技術的負債（Technical Debt）</a></li>
                                     <li><a href="/notes/tdd.html">TDD (Test-Driven Development / テスト駆動開発)</a></li>
                                     <li><a href="/notes/extreme-programming.html">エクストリームプログラミング（XP）</a></li>
@@ -350,49 +350,63 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>YAGNI（You Aren&rsquo;t Gonna Need It）</h1>
+                <h1>Font Awesome</h1>
 
-<p><a href="/notes/extreme-programming.html">エクストリームプログラミング（XP）</a>から生まれた原則。「プログラマは、実際に必要とされるまで機能を追加すべきではない」という考え方。</p>
+<p>SVG・Webフォント・CSSを提供するアイコンライブラリ/ツールキット。2012年3月3日にDave GandyがBootstrap用として個人的に作り始めたのが始まりで、現在は世界で最も普及しているアイコンセットとされ、1億以上のウェブサイトで使われている。</p>
 
-<h2>起源</h2>
+<p><a class="note-tag" href="/notes/tags/icon.html">#icon</a> <a class="note-tag" href="/notes/tags/frontend.html">#frontend</a> <a class="note-tag" href="/notes/tags/web.html">#web</a></p>
+
+<h2>スタイル</h2>
+
+<p>Solid・Regular・Light・Thin・Duotone・Sharp・Brands(SNSやOSSプロジェクトのロゴ)など複数のスタイルバリエーションを持つ。無料版で使えるのはSolid/Regular/Brandsの一部に限られ、Light/Thin/Duotone/Sharpなどの追加スタイルはPro版限定。</p>
+
+<h2>提供形式</h2>
+
+<p>アイコンデータはSVG(および対応するJS)として管理されており、そこからWebフォント形式やCSSも生成される。従来は「アイコンフォント」として使われることが多かったが、現在はSVGでの利用も公式に推奨されている。</p>
+
+<h2>ライセンス(無料版)</h2>
 
 <ul>
-<li>最初のXPプロジェクトで生まれた言葉。Kent Beckが、単純な問題に対して大掛かりな解決策を提案する人に対して「You&rsquo;re not gonna need it」と言っていたことに由来する。将来を見越した設計より「今」に注意を向けさせるための言葉だった。</li>
-<li>2001年、Ron Jeffries・Ann Anderson・Chet Hendricksonの共著 <em>&ldquo;Extreme Programming Installed&rdquo;</em> にて、XPの正式なプラクティスとして文書化された。</li>
-<li>XP共同創始者のRon Jeffriesは「常に、実際に必要になった時に実装せよ。必要になるだろうと予見しただけの時に実装してはならない」と説明している。</li>
-<li>Kent Beckの著書 <em>&ldquo;Extreme Programming Explained&rdquo;</em> の第17章でもこの略語が使われ、その根拠が説明されている。</li>
+<li>アイコン(SVG/JS): CC BY 4.0(表示義務あり)</li>
+<li>フォント(Web/デスクトップ): SIL OFL 1.1</li>
+<li>コード: MIT</li>
 </ul>
 
 
-<h2>原則の位置づけ</h2>
+<p>無料版は約2,000アイコンに限定される。</p>
 
-<ul>
-<li>XPの実践「<strong>Do the simplest thing that could possibly work（できるだけシンプルなことをする、DTSTTCPW）</strong>」を支える原則の一つ。</li>
-<li>継続的<a href="/notes/refactoring.html">リファクタリング</a>・継続的自動単体テスト・継続的インテグレーションなど、他のXPプラクティスと組み合わせて使うことが前提。これらを伴わずにYAGNIだけを適用すると、コードが散らかり、大規模な修正が必要になる「<a href="/notes/technical-debt.html">技術的負債</a>」につながりうる、という注意点も指摘されている。</li>
-</ul>
+<h2>料金プラン</h2>
 
+<p>無料版で使い始められ、Proプランに切り替えるとアイコン数・追加スタイル・Kits・ページビュー枠・サポートが拡充される。2025年の値上げ以降、Proは年額$60〜$600。</p>
+
+<h2>バージョン</h2>
+
+<p>2026年時点でVersion 7が最新。Version 6はLTS(重要バグ修正のみ提供)、Version 3〜5はEOL。</p>
+
+<h2>Iconifyとの関係</h2>
+
+<p><a href="/notes/iconify.html">Iconify</a>はFont Awesomeを含む200以上のアイコンセットを統一シンタックスで横断的に扱うための集約レイヤーで、実際にIconifyのアイコン検索サイトにもFont Awesome(オープンソース版)の各スタイルがそのまま収録されている。Font Awesome自体は1つの独立したアイコンセット/ブランドという位置づけ。</p>
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://en.wikipedia.org/wiki/You_aren%27t_gonna_need_it">You aren&rsquo;t gonna need it - Wikipedia (English)</a></li>
-<li><a href="https://en.wikipedia.org/wiki/Ron_Jeffries">Ron Jeffries - Wikipedia (English)</a></li>
-<li><a href="https://ronjeffries.com/articles/019-01ff/iter-yagni-skimp/">YAGNI, yes. Skimping, no. Technical Debt? Not even. - ronjeffries.com</a></li>
+<li><a href="https://github.com/FortAwesome/Font-Awesome">GitHub - FortAwesome/Font-Awesome</a></li>
+<li><a href="https://fontawesome.com/plans">Plans &amp; Pricing to Meet Your Icon Needs | Font Awesome</a></li>
+<li><a href="https://fontawesome.com/versions">Versions of Font Awesome</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Font_Awesome">Font Awesome - Wikipedia</a></li>
 </ul>
 
-
-<p><a class="note-tag" href="/notes/tags/software-engineering.html">#software-engineering</a> <a class="note-tag" href="/notes/tags/agile.html">#agile</a></p>
 
                                 <div class="notes-backlinks">
                     <h2>🔗 リンクされているノート</h2>
                     <ul>
-                                            <li><a href="/notes/extreme-programming.html">エクストリームプログラミング（XP）</a></li>
+                                            <li><a href="/notes/iconify.html">Iconify</a></li>
                     
                     </ul>
                 </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-11 08:04 / 更新日時: 2026-08-12 13:36</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=YAGNI%EF%BC%88You%20Aren%27t%20Gonna%20Need%20It%EF%BC%89&url=https%3A%2F%2F64p.org%2Fnotes%2Fyagni.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <span>作成日時: 2026-08-13 07:46 / 更新日時: 2026-08-13 07:46</span>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=Font%20Awesome&url=https%3A%2F%2F64p.org%2Fnotes%2Ffont-awesome.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">
