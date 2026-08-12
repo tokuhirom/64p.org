@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>Amazon EC2 Application Status Checks - Notes - 64p.org</title>
+    <title>virtio - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="alternate" type="application/rss+xml" title="Notes - 64p.org" href="/notes/rss.xml">
@@ -23,7 +23,7 @@
                 <a class="notes-tags-link" href="/notes/rss.xml">📡 RSS</a>
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
-                                    <li><a href="/notes/virtio.html">virtio</a></li>
+                                    <li><a href="/notes/virtio.html" class="active">virtio</a></li>
                                     <li><a href="/notes/rust-vmm.html">rust-vmm</a></li>
                                     <li><a href="/notes/microvm.html">microVM</a></li>
                                     <li><a href="/notes/microvm-ecosystem.html">コンテナ向け軽量VM技術</a></li>
@@ -134,7 +134,7 @@
                                     <li><a href="/notes/lauren-set.html">ローレンセット</a></li>
                                     <li><a href="/notes/mos-black-angus-burger.html">モスバーガー「ブラックアンガスバーガー」</a></li>
                                     <li><a href="/notes/naisuimen-yoshoku.html">内水面養殖業（ないすいめんようしょくぎょう）</a></li>
-                                    <li><a href="/notes/ec2-application-status-checks.html" class="active">Amazon EC2 Application Status Checks</a></li>
+                                    <li><a href="/notes/ec2-application-status-checks.html">Amazon EC2 Application Status Checks</a></li>
                                     <li><a href="/notes/bola.html">BOLA（Broken Object Level Authorization）</a></li>
                                     <li><a href="/notes/ai-agent-gym-booking-hack.html">AIエージェントによるジム予約システム侵害事件（2026年8月）</a></li>
                                     <li><a href="/notes/ai-agent-api-authorization-governance.html">AIエージェント時代のAPI認可ガバナンス</a></li>
@@ -332,48 +332,62 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>Amazon EC2 Application Status Checks</h1>
+                <h1>virtio</h1>
 
-<p>2026年8月10日にAWSが発表した、EC2インスタンス上で動作するアプリケーション自体の状態を監視する新機能。</p>
+<p>準仮想化(paravirtualization)デバイスの標準規格。ゲストOS側のデバイスドライバが「本物のハードウェアを模倣したフリ」をせず、最初から仮想環境向けに設計された軽量なプロトコルでホスト(VMM)と直接やり取りする。OASISが管理するオープン標準。 <a class="note-tag" href="/notes/tags/virtualization.html">#virtualization</a></p>
 
-<h2>従来のステータスチェックとの違い</h2>
+<h2>成り立ち</h2>
 
-<p>従来のEC2ステータスチェック（システムステータスチェック・インスタンスステータスチェック）は、インスタンスやその基盤システムの到達可能性を監視するものだった。これに対しApplication Status Checksは、Webサーバーがリクエストを受け付けない・Dockerデーモンが停止している・ネットワーク設定を誤っている、といった<strong>アプリケーション層の問題</strong>を検出する。</p>
+<p>2007年、Rusty RussellがIBM研究所在籍時に、自身の<code>lguest</code>ハイパーバイザー向けに開発した。その後<a href="/notes/kvm.html">KVM</a>の準仮想化I/Oデバイスの事実上の標準として広く採用されるようになった。</p>
 
-<h2>仕組み</h2>
+<h2>なぜ必要か: フルデバイスエミュレーションとの対比</h2>
 
-<p>利用者が以下を指定して監視チェックを作成する。</p>
+<p><a href="/notes/qemu.html">QEMU</a>のようなVMMは、実在するNICやディスクコントローラ(例: Intel e1000)のレジスタ挙動までソフトウェアで再現する「フルデバイスエミュレーション」も可能だが、これはゲストのI/Oアクセスのたびに細かい互換性の再現が必要でオーバーヘッドが大きい。virtioは「どうせゲスト側もハイパーバイザー前提で動くなら、実機を装うのをやめて効率重視のインターフェースにしよう」という発想で設計されている。</p>
 
-<ul>
-<li>プロトコル（HTTP/HTTPS）</li>
-<li>ポート番号</li>
-<li>監視対象パス</li>
-<li>正常（ヘルシー）と判定する応答コード</li>
-</ul>
+<h2>仕組み: virtqueue</h2>
 
+<p>ゲストのドライバとホスト側のデバイス実装は、<code>virtqueue</code>と呼ばれる共有メモリ上のリングバッファを介して通信する。ゲストはバッファをキューに積み、ホストに「ドアベル」で通知する。処理が終わるとホストはゲストに割り込みで通知する。ポーリングを避けつつ、データコピーやトラップの回数を最小限に抑える設計になっている。</p>
 
-<p>設定後、EC2は60秒ごとにそのポート・パスへリクエストを送信し、アプリケーションの状態をレポートする。</p>
+<h2>主なデバイス種別</h2>
 
-<h2>リージョン・連携</h2>
+<p>virtio-net(ネットワーク)・virtio-blk(ブロックデバイス)・virtio-console(シリアルコンソール)・virtio-fs(ファイルシステム共有)・virtio-vsock(ホスト-ゲスト間ソケット通信)など。<a href="/notes/firecracker.html">Firecracker</a>が提供する実質5種類のデバイスも、その大半がvirtioベース。</p>
 
-<ul>
-<li>全商用AWSリージョンおよびAWS GovCloud（US）リージョンで利用可能。</li>
-<li>Auto Scalingグループと連携させることで、アプリケーションが異常（アンヘルシー）を報告した際に、インスタンスを自動的に置き換えて復旧を開始できる。</li>
-</ul>
+<h2>rust-vmm/crosvmでの扱い</h2>
 
+<p><a href="/notes/rust-vmm.html">rust-vmm</a>はvirtioデバイス関連クレートを共通部品として提供しており、<a href="/notes/firecracker.html">Firecracker</a>・<a href="/notes/cloud-hypervisor.html">Cloud Hypervisor</a>・<a href="/notes/crosvm.html">crosvm</a>など複数のVMMがそれを利用してvirtioデバイスを実装している。crosvmは各virtioデバイスを個別プロセスにforkする「process-per-device」設計を取っている。</p>
+
+<h2><a href="/notes/microvm-ecosystem.html">コンテナ向け軽量VM技術</a>の中での位置づけ</h2>
+
+<p><a href="/notes/firecracker.html">Firecracker</a>・<a href="/notes/cloud-hypervisor.html">Cloud Hypervisor</a>・<a href="/notes/crosvm.html">crosvm</a>・<a href="/notes/qemu.html">QEMU</a>が共通して採用する、ゲスト-ホスト間I/Oの標準インターフェース。<a href="/notes/microvm.html">microVM</a>が高速に起動・動作できる理由の一つは、フルデバイスエミュレーションではなくvirtioのような軽量なI/Oに絞っていることにある。</p>
+
+<h2><a href="/notes/microvm-ecosystem.html">コンテナ向け軽量VM技術</a>の中での位置づけ</h2>
+
+<p><a href="/notes/kvm.html">KVM</a>がCPU仮想化の土台であるのと同様に、virtioはI/O仮想化の共通土台。<a href="/notes/firecracker.html">Firecracker</a>・<a href="/notes/cloud-hypervisor.html">Cloud Hypervisor</a>・<a href="/notes/crosvm.html">crosvm</a>・<a href="/notes/qemu.html">QEMU</a>が共通して採用している。</p>
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://aws.amazon.com/jp/about-aws/whats-new/2026/08/amazon-ec2-application-status-checks/">Amazon EC2 Application Status Checks - AWS What&rsquo;s New</a></li>
+<li><a href="https://docs.oasis-open.org/virtio/virtio/v1.3/virtio-v1.3.html">Virtual I/O Device (VIRTIO) Version 1.3 - OASIS</a></li>
+<li><a href="https://docs.kernel.org/driver-api/virtio/virtio.html">Virtio on Linux — The Linux Kernel documentation</a></li>
+<li><a href="https://www.linux-kvm.org/page/Virtio">Virtio - KVM</a></li>
+<li><a href="https://www.redhat.com/en/blog/virtqueues-and-virtio-ring-how-data-travels">Virtqueues and virtio ring: How the data travels | Red Hat</a></li>
 </ul>
 
 
-<p><a class="note-tag" href="/notes/tags/aws.html">#aws</a> <a class="note-tag" href="/notes/tags/cloud.html">#cloud</a></p>
-
+                                <div class="notes-backlinks">
+                    <h2>🔗 リンクされているノート</h2>
+                    <ul>
+                                            <li><a href="/notes/kata-containers.html">Kata Containers</a></li>
+                                            <li><a href="/notes/crosvm.html">crosvm</a></li>
+                                            <li><a href="/notes/microvm.html">microVM</a></li>
+                                            <li><a href="/notes/rust-vmm.html">rust-vmm</a></li>
+                                            <li><a href="/notes/microvm-ecosystem.html">コンテナ向け軽量VM技術</a></li>
+                    
+                    </ul>
+                </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-11 11:23 / 更新日時: 2026-08-11 11:23</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=Amazon%20EC2%20Application%20Status%20Checks&url=https%3A%2F%2F64p.org%2Fnotes%2Fec2-application-status-checks.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <span>作成日時: 2026-08-12 23:51 / 更新日時: 2026-08-12 23:51</span>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=virtio&url=https%3A%2F%2F64p.org%2Fnotes%2Fvirtio.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">

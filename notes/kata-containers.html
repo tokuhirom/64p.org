@@ -23,15 +23,16 @@
                 <a class="notes-tags-link" href="/notes/rss.xml">📡 RSS</a>
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
+                                    <li><a href="/notes/virtio.html">virtio</a></li>
                                     <li><a href="/notes/rust-vmm.html">rust-vmm</a></li>
-                                    <li><a href="/notes/qemu.html">QEMU</a></li>
                                     <li><a href="/notes/microvm.html">microVM</a></li>
                                     <li><a href="/notes/microvm-ecosystem.html">コンテナ向け軽量VM技術</a></li>
+                                    <li><a href="/notes/kata-containers.html" class="active">Kata Containers</a></li>
+                                    <li><a href="/notes/crosvm.html">crosvm</a></li>
+                                    <li><a href="/notes/qemu.html">QEMU</a></li>
                                     <li><a href="/notes/kvm.html">KVM (Kernel-based Virtual Machine)</a></li>
                                     <li><a href="/notes/kvm-hello-world-experiment.html">kvm-hello-world実験</a></li>
-                                    <li><a href="/notes/kata-containers.html" class="active">Kata Containers</a></li>
                                     <li><a href="/notes/hypeman.html">Hypeman</a></li>
-                                    <li><a href="/notes/crosvm.html">crosvm</a></li>
                                     <li><a href="/notes/cloud-hypervisor.html">Cloud Hypervisor</a></li>
                                     <li><a href="/notes/llm-text-watermarking.html">LLMテキストの電子透かし</a></li>
                                     <li><a href="/notes/eu-ai-act.html">EU AI Act</a></li>
@@ -341,7 +342,7 @@
 
 <h2>動作の仕組み</h2>
 
-<p>コンテナ(OCIイメージ由来のrootfs)ごとに専用の軽量VMを起動し、その中でコンテナプロセスを実行する。ハイパーバイザーは特定の実装に固定されておらず、<a href="/notes/firecracker.html">Firecracker</a>・<a href="/notes/cloud-hypervisor.html">Cloud Hypervisor</a>・<a href="/notes/qemu.html">QEMU</a>など複数のVMMをバックエンドとして選択できる。Firecracker利用時は、containerdのdevmapperスナップショッタでコンテナのrootfsをdevice mapperスナップショットとして扱い、virtio blockデバイスとしてVMにホットプラグする構成を取る。</p>
+<p>コンテナ(OCIイメージ由来のrootfs)ごとに専用の軽量VMを起動し、その中でコンテナプロセスを実行する。ハイパーバイザーは特定の実装に固定されておらず、<a href="/notes/firecracker.html">Firecracker</a>・<a href="/notes/cloud-hypervisor.html">Cloud Hypervisor</a>・<a href="/notes/qemu.html">QEMU</a>など複数のVMMをバックエンドとして選択できる。Firecracker利用時は、containerdのdevmapperスナップショッタでコンテナのrootfsをdevice mapperスナップショットとして扱い、<a href="/notes/virtio.html">virtio</a> blockデバイスとしてVMにホットプラグする構成を取る。</p>
 
 <h2><a href="/notes/firecracker-containerd.html">firecracker-containerd</a>との違い</h2>
 
@@ -371,7 +372,7 @@
                     </ul>
                 </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-12 23:23 / 更新日時: 2026-08-12 23:47</span>
+                    <span>作成日時: 2026-08-12 23:23 / 更新日時: 2026-08-12 23:51</span>
                     <a class="share-x" href="https://twitter.com/intent/tweet?text=Kata%20Containers&url=https%3A%2F%2F64p.org%2Fnotes%2Fkata-containers.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>

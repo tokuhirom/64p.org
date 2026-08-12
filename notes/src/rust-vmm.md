@@ -1,10 +1,10 @@
 ---
 created: 2026-08-12 23:27
-updated: 2026-08-12 23:47
+updated: 2026-08-12 23:51
 ---
 # rust-vmm
 
-VMM(Virtual Machine Monitor)を作るためのRust製部品(クレート)を共有するプロジェクト。[[kvm|KVM]] ioctlの呼び出し、VMのメモリ管理、virtioデバイスとのやり取りなど、複数のVMM実装で重複しがちな部分を共通クレートとして切り出し、車輪の再発明を防ぐことを目的とする。 #virtualization #rust
+VMM(Virtual Machine Monitor)を作るためのRust製部品(クレート)を共有するプロジェクト。[[kvm|KVM]] ioctlの呼び出し、VMのメモリ管理、[[virtio|virtio]]デバイスとのやり取りなど、複数のVMM実装で重複しがちな部分を共通クレートとして切り出し、車輪の再発明を防ぐことを目的とする。 #virtualization #rust
 
 ## 成り立ち
 
@@ -14,7 +14,7 @@ VMM(Virtual Machine Monitor)を作るためのRust製部品(クレート)を共�
 
 - `kvm-bindings` / `kvm-ioctls` — [[kvm|KVM]]カーネルヘッダへのRust FFIバインディングと、それをラップする機能
 - `vm-memory` — VMのゲストメモリを扱うための共通トレイト。VMMの各コンポーネントが実装の詳細を知らずに物理メモリへアクセスできるようにする
-- virtioデバイス関連クレートおよび`vhost`パッケージ — デバイスエミュレーション用
+- [[virtio|virtio]]デバイス関連クレートおよび`vhost`パッケージ — デバイスエミュレーション用
 - Microsoft Hyper-V・Xenのハイパーコールインターフェース、Linuxカーネルローダーへの対応も含む
 
 ## ガバナンス

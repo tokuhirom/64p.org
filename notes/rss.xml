@@ -6,7 +6,55 @@
 <atom:link href="https://64p.org/notes/rss.xml" rel="self" type="application/rss+xml" />
 <description>ちょっと調べたことや検証結果を、AIの力も借りながらメモしていくコーナーです。</description>
 <language>ja</language>
-<lastBuildDate>Wed, 12 Aug 2026 23:47:33 +0900</lastBuildDate>
+<lastBuildDate>Wed, 12 Aug 2026 23:51:51 +0900</lastBuildDate>
+<item>
+<title>virtio</title>
+<link>https://64p.org/notes/virtio.html</link>
+<guid isPermaLink="true">https://64p.org/notes/virtio.html</guid>
+<pubDate>Wed, 12 Aug 2026 23:51:00 +0900</pubDate>
+<description><![CDATA[<h1>virtio</h1>
+
+<p>準仮想化(paravirtualization)デバイスの標準規格。ゲストOS側のデバイスドライバが「本物のハードウェアを模倣したフリ」をせず、最初から仮想環境向けに設計された軽量なプロトコルでホスト(VMM)と直接やり取りする。OASISが管理するオープン標準。 <a class="note-tag" href="/notes/tags/virtualization.html">#virtualization</a></p>
+
+<h2>成り立ち</h2>
+
+<p>2007年、Rusty RussellがIBM研究所在籍時に、自身の<code>lguest</code>ハイパーバイザー向けに開発した。その後<a href="/notes/kvm.html">KVM</a>の準仮想化I/Oデバイスの事実上の標準として広く採用されるようになった。</p>
+
+<h2>なぜ必要か: フルデバイスエミュレーションとの対比</h2>
+
+<p><a href="/notes/qemu.html">QEMU</a>のようなVMMは、実在するNICやディスクコントローラ(例: Intel e1000)のレジスタ挙動までソフトウェアで再現する「フルデバイスエミュレーション」も可能だが、これはゲストのI/Oアクセスのたびに細かい互換性の再現が必要でオーバーヘッドが大きい。virtioは「どうせゲスト側もハイパーバイザー前提で動くなら、実機を装うのをやめて効率重視のインターフェースにしよう」という発想で設計されている。</p>
+
+<h2>仕組み: virtqueue</h2>
+
+<p>ゲストのドライバとホスト側のデバイス実装は、<code>virtqueue</code>と呼ばれる共有メモリ上のリングバッファを介して通信する。ゲストはバッファをキューに積み、ホストに「ドアベル」で通知する。処理が終わるとホストはゲストに割り込みで通知する。ポーリングを避けつつ、データコピーやトラップの回数を最小限に抑える設計になっている。</p>
+
+<h2>主なデバイス種別</h2>
+
+<p>virtio-net(ネットワーク)・virtio-blk(ブロックデバイス)・virtio-console(シリアルコンソール)・virtio-fs(ファイルシステム共有)・virtio-vsock(ホスト-ゲスト間ソケット通信)など。<a href="/notes/firecracker.html">Firecracker</a>が提供する実質5種類のデバイスも、その大半がvirtioベース。</p>
+
+<h2>rust-vmm/crosvmでの扱い</h2>
+
+<p><a href="/notes/rust-vmm.html">rust-vmm</a>はvirtioデバイス関連クレートを共通部品として提供しており、<a href="/notes/firecracker.html">Firecracker</a>・<a href="/notes/cloud-hypervisor.html">Cloud Hypervisor</a>・<a href="/notes/crosvm.html">crosvm</a>など複数のVMMがそれを利用してvirtioデバイスを実装している。crosvmは各virtioデバイスを個別プロセスにforkする「process-per-device」設計を取っている。</p>
+
+<h2><a href="/notes/microvm-ecosystem.html">コンテナ向け軽量VM技術</a>の中での位置づけ</h2>
+
+<p><a href="/notes/firecracker.html">Firecracker</a>・<a href="/notes/cloud-hypervisor.html">Cloud Hypervisor</a>・<a href="/notes/crosvm.html">crosvm</a>・<a href="/notes/qemu.html">QEMU</a>が共通して採用する、ゲスト-ホスト間I/Oの標準インターフェース。<a href="/notes/microvm.html">microVM</a>が高速に起動・動作できる理由の一つは、フルデバイスエミュレーションではなくvirtioのような軽量なI/Oに絞っていることにある。</p>
+
+<h2><a href="/notes/microvm-ecosystem.html">コンテナ向け軽量VM技術</a>の中での位置づけ</h2>
+
+<p><a href="/notes/kvm.html">KVM</a>がCPU仮想化の土台であるのと同様に、virtioはI/O仮想化の共通土台。<a href="/notes/firecracker.html">Firecracker</a>・<a href="/notes/cloud-hypervisor.html">Cloud Hypervisor</a>・<a href="/notes/crosvm.html">crosvm</a>・<a href="/notes/qemu.html">QEMU</a>が共通して採用している。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://docs.oasis-open.org/virtio/virtio/v1.3/virtio-v1.3.html">Virtual I/O Device (VIRTIO) Version 1.3 - OASIS</a></li>
+<li><a href="https://docs.kernel.org/driver-api/virtio/virtio.html">Virtio on Linux — The Linux Kernel documentation</a></li>
+<li><a href="https://www.linux-kvm.org/page/Virtio">Virtio - KVM</a></li>
+<li><a href="https://www.redhat.com/en/blog/virtqueues-and-virtio-ring-how-data-travels">Virtqueues and virtio ring: How the data travels | Red Hat</a></li>
+</ul>
+
+]]></description>
+</item>
 <item>
 <title>QEMU</title>
 <link>https://64p.org/notes/qemu.html</link>
@@ -453,7 +501,7 @@ flowchart TD
 
 <ul>
 <li>Main Processがゲストの初期化と中核のオーケストレーションを担当</li>
-<li>各virtioデバイスは個別のDevice Processとしてforkされる(process-per-device)</li>
+<li>各<a href="/notes/virtio.html">virtio</a>デバイスは個別のDevice Processとしてforkされる(process-per-device)</li>
 <li>各デバイスプロセスはMinijailでVFS/PID/User/Networkの名前空間分離により隔離され、そのデバイスに必要なシステムコールのみを許可する厳格なBPFフィルタが適用される</li>
 </ul>
 
@@ -462,7 +510,7 @@ flowchart TD
 
 <h2>機能</h2>
 
-<p>io_uring・vhost、内部の非同期ランタイム(<code>cros_async</code>)を活用し、モダンなワークロード向けに最適化されている。virtio-fs/virtio-9pによるファイルシステム共有のほか、Console・RNG・Balloon・Vsock・TPM・Pmem・ビデオデコード/エンコードなど幅広いvirtioデバイスに対応する。</p>
+<p>io_uring・vhost、内部の非同期ランタイム(<code>cros_async</code>)を活用し、モダンなワークロード向けに最適化されている。virtio-fs/virtio-9pによるファイルシステム共有のほか、Console・RNG・Balloon・Vsock・TPM・Pmem・ビデオデコード/エンコードなど幅広い<a href="/notes/virtio.html">virtio</a>デバイスに対応する。</p>
 
 <h2><a href="/notes/rust-vmm.html">rust-vmm</a>との関係</h2>
 
@@ -591,7 +639,7 @@ flowchart TD
 <pubDate>Wed, 12 Aug 2026 23:27:00 +0900</pubDate>
 <description><![CDATA[<h1>rust-vmm</h1>
 
-<p>VMM(Virtual Machine Monitor)を作るためのRust製部品(クレート)を共有するプロジェクト。<a href="/notes/kvm.html">KVM</a> ioctlの呼び出し、VMのメモリ管理、virtioデバイスとのやり取りなど、複数のVMM実装で重複しがちな部分を共通クレートとして切り出し、車輪の再発明を防ぐことを目的とする。 <a class="note-tag" href="/notes/tags/virtualization.html">#virtualization</a> <a class="note-tag" href="/notes/tags/rust.html">#rust</a></p>
+<p>VMM(Virtual Machine Monitor)を作るためのRust製部品(クレート)を共有するプロジェクト。<a href="/notes/kvm.html">KVM</a> ioctlの呼び出し、VMのメモリ管理、<a href="/notes/virtio.html">virtio</a>デバイスとのやり取りなど、複数のVMM実装で重複しがちな部分を共通クレートとして切り出し、車輪の再発明を防ぐことを目的とする。 <a class="note-tag" href="/notes/tags/virtualization.html">#virtualization</a> <a class="note-tag" href="/notes/tags/rust.html">#rust</a></p>
 
 <h2>成り立ち</h2>
 
@@ -602,7 +650,7 @@ flowchart TD
 <ul>
 <li><code>kvm-bindings</code> / <code>kvm-ioctls</code> — <a href="/notes/kvm.html">KVM</a>カーネルヘッダへのRust FFIバインディングと、それをラップする機能</li>
 <li><code>vm-memory</code> — VMのゲストメモリを扱うための共通トレイト。VMMの各コンポーネントが実装の詳細を知らずに物理メモリへアクセスできるようにする</li>
-<li>virtioデバイス関連クレートおよび<code>vhost</code>パッケージ — デバイスエミュレーション用</li>
+<li><a href="/notes/virtio.html">virtio</a>デバイス関連クレートおよび<code>vhost</code>パッケージ — デバイスエミュレーション用</li>
 <li>Microsoft Hyper-V・Xenのハイパーコールインターフェース、Linuxカーネルローダーへの対応も含む</li>
 </ul>
 
@@ -656,6 +704,13 @@ flowchart TD
 </ul>
 
 
+<h2>I/Oインターフェースの標準: virtio</h2>
+
+<ul>
+<li><a href="/notes/virtio.html">virtio</a> — ゲスト-ホスト間I/Oの準仮想化標準。フルデバイスエミュレーションより軽量で、以下のVMM群が共通して採用している</li>
+</ul>
+
+
 <h2>土台: VMM(Virtual Machine Monitor)</h2>
 
 <ul>
@@ -699,7 +754,7 @@ flowchart TD
 
 <h2>動作の仕組み</h2>
 
-<p>コンテナ(OCIイメージ由来のrootfs)ごとに専用の軽量VMを起動し、その中でコンテナプロセスを実行する。ハイパーバイザーは特定の実装に固定されておらず、<a href="/notes/firecracker.html">Firecracker</a>・<a href="/notes/cloud-hypervisor.html">Cloud Hypervisor</a>・<a href="/notes/qemu.html">QEMU</a>など複数のVMMをバックエンドとして選択できる。Firecracker利用時は、containerdのdevmapperスナップショッタでコンテナのrootfsをdevice mapperスナップショットとして扱い、virtio blockデバイスとしてVMにホットプラグする構成を取る。</p>
+<p>コンテナ(OCIイメージ由来のrootfs)ごとに専用の軽量VMを起動し、その中でコンテナプロセスを実行する。ハイパーバイザーは特定の実装に固定されておらず、<a href="/notes/firecracker.html">Firecracker</a>・<a href="/notes/cloud-hypervisor.html">Cloud Hypervisor</a>・<a href="/notes/qemu.html">QEMU</a>など複数のVMMをバックエンドとして選択できる。Firecracker利用時は、containerdのdevmapperスナップショッタでコンテナのrootfsをdevice mapperスナップショットとして扱い、<a href="/notes/virtio.html">virtio</a> blockデバイスとしてVMにホットプラグする構成を取る。</p>
 
 <h2><a href="/notes/firecracker-containerd.html">firecracker-containerd</a>との違い</h2>
 
@@ -1013,7 +1068,7 @@ graph LR
 
 <ol>
 <li><strong>BIOS・ブートローダーを省略した直接カーネルブート</strong> — Linuxカーネル自体はBIOS/ブートローダーを必須としない。「64-bit Linux Boot Protocol」を使い、16-bitリアルモードからではなくカーネルのprotected-modeエントリポイントへ直接ジャンプする。ACPIテーブルもカーネル起動に必要な最小限しか用意しない。</li>
-<li><strong>最小限のデバイスモデル</strong> — USB・PCIバス・レガシーデバイスなど不要なハードウェアエミュレーションを排除。Firecrackerが提供するデバイスは実質5種類のみ(virtio-net、virtio-block、virtio-vsock、シリアルコンソール、最小限のキーボードコントローラ)。</li>
+<li><strong>最小限のデバイスモデル</strong> — USB・PCIバス・レガシーデバイスなど不要なハードウェアエミュレーションを排除。Firecrackerが提供するデバイスは実質5種類のみ(<a href="/notes/virtio.html">virtio</a>-net、virtio-block、virtio-vsock、シリアルコンソール、最小限のキーボードコントローラ)。</li>
 <li><strong>ミニマルなVMMコード</strong> — 汎用ハイパーバイザーが持つ幅広いハードウェアサポートのコードパスを持たないため、実行すべきコード量自体が少ない。</li>
 </ol>
 
@@ -1481,69 +1536,6 @@ graph LR
 <li><a href="https://en.wikipedia.org/wiki/Htmx">Htmx - Wikipedia</a></li>
 <li><a href="https://se-radio.net/2025/06/se-radio-671-carson-gross-on-htmx/">SE Radio 671: Carson Gross on HTMX</a></li>
 <li><a href="https://hypermedia.systems/">Hypermedia Systems (書籍サイト)</a></li>
-</ul>
-
-]]></description>
-</item>
-<item>
-<title>Topcoat</title>
-<link>https://64p.org/notes/topcoat.html</link>
-<guid isPermaLink="true">https://64p.org/notes/topcoat.html</guid>
-<pubDate>Wed, 12 Aug 2026 19:33:00 +0900</pubDate>
-<description><![CDATA[<h1>Topcoat</h1>
-
-<p>Tokioチーム(tokio-rs)が2026年7月22日に発表した、Rust製の「バッテリー同梱」フルスタックWebフレームワーク。サーバーサイドレンダリング(SSR)中心で、バックエンド+フロントエンド+API層+ビルドパイプラインという「組み合わせ一式」を1つのRustプロジェクトで置き換えることを狙う。HTTPルータとしては内部でAxumを使っており、Axum/Actixの競合ではなくその上に載る層。早期実験段階で、破壊的変更ありと明言されている。 <a class="note-tag" href="/notes/tags/rust.html">#rust</a> <a class="note-tag" href="/notes/tags/web.html">#web</a></p>
-
-<div class="mermaid">
-flowchart LR
-    subgraph server["Topcoatサーバー (Axum上)"]
-        comp["asyncコンポーネント&lt;br/&gt;(SSRでHTML生成)"] --- db[("DB&lt;br/&gt;(API層なしで直接アクセス)")]
-    end
-    comp --&gt;|"HTML + 変換されたJS"| browser["ブラウザ&lt;br/&gt;(signalでリアクティブ動作。&lt;br/&gt;wasmバンドル・npm・&lt;br/&gt;クライアントビルド不要)"]
-</div>
-
-
-<h2>最大の特徴: RustからJSへのクロスコンパイル</h2>
-
-<p>LeptosやDioxusのようにWebAssemblyをブラウザに送るのではなく、<strong>マクロで選択したRust式だけをJavaScriptに変換する</strong>方式。</p>
-
-<ul>
-<li>Rustとして型チェックされる</li>
-<li>初回レンダリングはサーバー側で評価される</li>
-<li>ブラウザ上ではJSとしてsignalベースでリアクティブに動く</li>
-<li>npm・frontend用ディレクトリ・クライアントビルド工程が不要で、最小構成なら1つのRustファイルからWebページを起動できる</li>
-</ul>
-
-
-<h2>設計思想</h2>
-
-<p>「locality of behavior」を掲げる。コンポーネントが自分のデータ取得・認証・メモ化を自己完結的に持つ構造で、人間の推論にもAI支援開発にも扱いやすくすることを意図している。コンポーネントはasyncで、API層を挟まず直接DBに問い合わせられる。</p>
-
-<h2>同梱物</h2>
-
-<ul>
-<li>コンテンツハッシュ付きURLのアセットパイプライン</li>
-<li>Node.js不要のTailwind CSS組み込み、shadcn/ui風コンポーネントライブラリ</li>
-<li>セッション/クッキー管理、リクエスト単位のメモ化</li>
-<li><a href="/notes/htmx.html">htmx</a> / Fontsource / Iconify 連携</li>
-</ul>
-
-
-<p>同じくtokio-rs製のasync ORM「Toasty」(2026年4月公開)との統合強化、バリデーション、メール機能がロードマップに載っている。</p>
-
-<h2>検証記事での評価</h2>
-
-<p>きっかけは<a href="https://syu-m-5151.hatenablog.com/entry/2026/08/12/163644">nwiizo氏によるTopcoat 0.5.0の検証記事</a>。実際にアプリケーションを構築した上で、signal(ブラウザ側)・procedure(サーバー側検証)・shard(部分SSR)という実行場所の使い分けを整理しつつ、認証・パスワード管理・DBマイグレーションはアプリケーション側の責任として残ると限界を明確化していた。結論は「SSR中心の業務画面や小規模サービス向き、複雑なクライアント状態管理が必要なアプリには不向き」というもの。</p>
-
-<p>なお、10年以上前にAdobeが公開していた同名のCSSライブラリ「Topcoat」があるが、無関係。</p>
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://tokio.rs/blog/2026-07-22-announcing-topcoat">Announcing Topcoat: a framework for building full-stack reactive web apps with Rust - Tokio公式ブログ</a></li>
-<li><a href="https://github.com/tokio-rs/topcoat">tokio-rs/topcoat - GitHub</a></li>
-<li><a href="https://crates.io/crates/topcoat">topcoat - crates.io</a></li>
-<li><a href="https://syu-m-5151.hatenablog.com/entry/2026/08/12/163644">Topcoat 0.5.0 検証記事 (syu-m-5151.hatenablog.com)</a></li>
 </ul>
 
 ]]></description>

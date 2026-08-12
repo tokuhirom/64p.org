@@ -1,6 +1,6 @@
 ---
 created: 2026-08-12 23:29
-updated: 2026-08-12 23:36
+updated: 2026-08-12 23:51
 ---
 # crosvm
 
@@ -9,14 +9,14 @@ Googleが開発するRust製の[[microvm|軽量VM]]向けVMM(Virtual Machine Mon
 ## セキュリティ設計: process-per-deviceモデル
 
 - Main Processがゲストの初期化と中核のオーケストレーションを担当
-- 各virtioデバイスは個別のDevice Processとしてforkされる(process-per-device)
+- 各[[virtio|virtio]]デバイスは個別のDevice Processとしてforkされる(process-per-device)
 - 各デバイスプロセスはMinijailでVFS/PID/User/Networkの名前空間分離により隔離され、そのデバイスに必要なシステムコールのみを許可する厳格なBPFフィルタが適用される
 
 強い隔離とメモリ安全な実装によるセキュリティを重視した設計思想を持つ。
 
 ## 機能
 
-io_uring・vhost、内部の非同期ランタイム(`cros_async`)を活用し、モダンなワークロード向けに最適化されている。virtio-fs/virtio-9pによるファイルシステム共有のほか、Console・RNG・Balloon・Vsock・TPM・Pmem・ビデオデコード/エンコードなど幅広いvirtioデバイスに対応する。
+io_uring・vhost、内部の非同期ランタイム(`cros_async`)を活用し、モダンなワークロード向けに最適化されている。virtio-fs/virtio-9pによるファイルシステム共有のほか、Console・RNG・Balloon・Vsock・TPM・Pmem・ビデオデコード/エンコードなど幅広い[[virtio|virtio]]デバイスに対応する。
 
 ## [[rust-vmm|rust-vmm]]との関係
 

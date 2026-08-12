@@ -23,15 +23,16 @@
                 <a class="notes-tags-link" href="/notes/rss.xml">📡 RSS</a>
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
+                                    <li><a href="/notes/virtio.html">virtio</a></li>
                                     <li><a href="/notes/rust-vmm.html">rust-vmm</a></li>
-                                    <li><a href="/notes/qemu.html">QEMU</a></li>
                                     <li><a href="/notes/microvm.html">microVM</a></li>
                                     <li><a href="/notes/microvm-ecosystem.html">コンテナ向け軽量VM技術</a></li>
+                                    <li><a href="/notes/kata-containers.html">Kata Containers</a></li>
+                                    <li><a href="/notes/crosvm.html" class="active">crosvm</a></li>
+                                    <li><a href="/notes/qemu.html">QEMU</a></li>
                                     <li><a href="/notes/kvm.html">KVM (Kernel-based Virtual Machine)</a></li>
                                     <li><a href="/notes/kvm-hello-world-experiment.html">kvm-hello-world実験</a></li>
-                                    <li><a href="/notes/kata-containers.html">Kata Containers</a></li>
                                     <li><a href="/notes/hypeman.html">Hypeman</a></li>
-                                    <li><a href="/notes/crosvm.html" class="active">crosvm</a></li>
                                     <li><a href="/notes/cloud-hypervisor.html">Cloud Hypervisor</a></li>
                                     <li><a href="/notes/llm-text-watermarking.html">LLMテキストの電子透かし</a></li>
                                     <li><a href="/notes/eu-ai-act.html">EU AI Act</a></li>
@@ -339,7 +340,7 @@
 
 <ul>
 <li>Main Processがゲストの初期化と中核のオーケストレーションを担当</li>
-<li>各virtioデバイスは個別のDevice Processとしてforkされる(process-per-device)</li>
+<li>各<a href="/notes/virtio.html">virtio</a>デバイスは個別のDevice Processとしてforkされる(process-per-device)</li>
 <li>各デバイスプロセスはMinijailでVFS/PID/User/Networkの名前空間分離により隔離され、そのデバイスに必要なシステムコールのみを許可する厳格なBPFフィルタが適用される</li>
 </ul>
 
@@ -348,7 +349,7 @@
 
 <h2>機能</h2>
 
-<p>io_uring・vhost、内部の非同期ランタイム(<code>cros_async</code>)を活用し、モダンなワークロード向けに最適化されている。virtio-fs/virtio-9pによるファイルシステム共有のほか、Console・RNG・Balloon・Vsock・TPM・Pmem・ビデオデコード/エンコードなど幅広いvirtioデバイスに対応する。</p>
+<p>io_uring・vhost、内部の非同期ランタイム(<code>cros_async</code>)を活用し、モダンなワークロード向けに最適化されている。virtio-fs/virtio-9pによるファイルシステム共有のほか、Console・RNG・Balloon・Vsock・TPM・Pmem・ビデオデコード/エンコードなど幅広い<a href="/notes/virtio.html">virtio</a>デバイスに対応する。</p>
 
 <h2><a href="/notes/rust-vmm.html">rust-vmm</a>との関係</h2>
 
@@ -373,12 +374,13 @@
                                             <li><a href="/notes/kvm.html">KVM (Kernel-based Virtual Machine)</a></li>
                                             <li><a href="/notes/qemu.html">QEMU</a></li>
                                             <li><a href="/notes/rust-vmm.html">rust-vmm</a></li>
+                                            <li><a href="/notes/virtio.html">virtio</a></li>
                                             <li><a href="/notes/microvm-ecosystem.html">コンテナ向け軽量VM技術</a></li>
                     
                     </ul>
                 </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-12 23:29 / 更新日時: 2026-08-12 23:36</span>
+                    <span>作成日時: 2026-08-12 23:29 / 更新日時: 2026-08-12 23:51</span>
                     <a class="share-x" href="https://twitter.com/intent/tweet?text=crosvm&url=https%3A%2F%2F64p.org%2Fnotes%2Fcrosvm.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
