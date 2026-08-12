@@ -21,12 +21,13 @@
                 <a class="notes-tags-link" href="/notes/tags/">🏷️ タグ一覧</a>
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
+                                    <li><a href="/notes/vxlan.html" class="active">VXLAN</a></li>
+                                    <li><a href="/notes/vlan.html">VLAN</a></li>
                                     <li><a href="/notes/vrrp.html">VRRP (Virtual Router Redundancy Protocol)</a></li>
                                     <li><a href="/notes/testify.html">testify</a></li>
                                     <li><a href="/notes/mockery.html">mockery</a></li>
                                     <li><a href="/notes/seccomp.html">seccomp</a></li>
                                     <li><a href="/notes/least-privilege.html">最小権限の原則</a></li>
-                                    <li><a href="/notes/vxlan.html" class="active">VXLAN</a></li>
                                     <li><a href="/notes/mold-linker.html">mold(高速リンカ)</a></li>
                                     <li><a href="/notes/sqlite-fts5.html">FTS5（SQLite）</a></li>
                                     <li><a href="/notes/sentencepiece.html">SentencePiece</a></li>
@@ -300,7 +301,7 @@
 
 <h2>生まれた背景</h2>
 
-<p>従来のIEEE 802.1Q VLANはVLAN IDが12bitしかなく、最大4094セグメントしか作れない。クラウド/データセンターの仮想化環境では、これが以下の理由で不足するようになった。</p>
+<p>従来の<a href="/notes/vlan.html">IEEE 802.1Q VLAN</a>はVLAN IDが12bitしかなく、最大4094セグメントしか作れない。クラウド/データセンターの仮想化環境では、これが以下の理由で不足するようになった。</p>
 
 <ul>
 <li>マルチテナント環境で、テナントごとに複数VLANが必要になり数が枯渇する</li>
@@ -336,8 +337,15 @@
 </ul>
 
 
+                                <div class="notes-backlinks">
+                    <h2>🔗 リンクされているノート</h2>
+                    <ul>
+                                            <li><a href="/notes/vlan.html">VLAN</a></li>
+                    
+                    </ul>
+                </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-12 17:51 / 更新日時: 2026-08-12 17:51</span>
+                    <span>作成日時: 2026-08-12 17:51 / 更新日時: 2026-08-12 18:47</span>
                     <a class="share-x" href="https://twitter.com/intent/tweet?text=VXLAN&url=https%3A%2F%2F64p.org%2Fnotes%2Fvxlan.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
