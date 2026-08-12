@@ -2,13 +2,12 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>FFT（高速フーリエ変換） - Notes - 64p.org</title>
+    <title>PGlite - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="alternate" type="application/rss+xml" title="Notes - 64p.org" href="/notes/rss.xml">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@highlightjs/cdn-assets@11/styles/github.min.css" media="(prefers-color-scheme: light)">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@highlightjs/cdn-assets@11/styles/github-dark.min.css" media="(prefers-color-scheme: dark)">
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/katex@0.16/dist/katex.min.css">
 </head>
 <body>
     <div class="notes-layout">
@@ -26,7 +25,7 @@
                 <ul class="notes-nav">
                                     <li><a href="/notes/postgresql.html">PostgreSQL</a></li>
                                     <li><a href="/notes/pgvector.html">pgvector</a></li>
-                                    <li><a href="/notes/pglite.html">PGlite</a></li>
+                                    <li><a href="/notes/pglite.html" class="active">PGlite</a></li>
                                     <li><a href="/notes/librosa.html">librosa</a></li>
                                     <li><a href="/notes/taylor-series.html">テイラー展開</a></li>
                                     <li><a href="/notes/gradient-descent.html">勾配降下法</a></li>
@@ -36,7 +35,7 @@
                                     <li><a href="/notes/frequency-domain-transforms.html">周波数領域の変換</a></li>
                                     <li><a href="/notes/fourier-transform.html">フーリエ変換</a></li>
                                     <li><a href="/notes/derivative.html">微分</a></li>
-                                    <li><a href="/notes/fft.html" class="active">FFT（高速フーリエ変換）</a></li>
+                                    <li><a href="/notes/fft.html">FFT（高速フーリエ変換）</a></li>
                                     <li><a href="/notes/vm-exit.html">VM exit</a></li>
                                     <li><a href="/notes/virtqueue-toy-experiment.html">virtqueue風トイ実験</a></li>
                                     <li><a href="/notes/kvm-hello-world-experiment.html">kvm-hello-world実験</a></li>
@@ -346,70 +345,68 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>FFT（高速フーリエ変換）</h1>
+                <h1>PGlite</h1>
 
-<p><a class="note-tag" href="/notes/tags/math.html">#math</a> <a class="note-tag" href="/notes/tags/signal-processing.html">#signal-processing</a> <a class="note-tag" href="/notes/tags/algorithm.html">#algorithm</a></p>
+<p><a href="/notes/postgresql.html">PostgreSQL</a>をWebAssemblyにコンパイルし、TypeScript/JavaScriptクライアントライブラリとしてパッケージ化したもの。ElectricSQLプロジェクトが開発している。ブラウザ・Node.js・Bun・Denoで動作し、gzip後3MB以下と軽量。</p>
 
-<p>DFT（離散フーリエ変換）を高速に計算するアルゴリズム。<a href="/notes/fourier-transform.html">フーリエ変換</a>のサンプリングされた離散データ版であるDFT</p>
+<p><a class="note-tag" href="/notes/tags/postgresql.html">#postgresql</a> <a class="note-tag" href="/notes/tags/wasm.html">#wasm</a> <a class="note-tag" href="/notes/tags/database.html">#database</a> <a class="note-tag" href="/notes/tags/javascript.html">#javascript</a></p>
 
-<div class="math-display">
-X_k = \sum_{n=0}^{N-1} x_n\, e^{-i 2\pi k n / N}
-</div>
+<h2>アーキテクチャ上の特徴</h2>
 
+<p>従来の「ブラウザでPostgresを動かす」系のプロジェクトはLinux仮想マシンをWASM上でエミュレートしてその中でPostgresを走らせる方式が多かったが、PGliteはLinux VMを使わず、Postgres自体を直接WASMにコンパイルしている。単一ユーザー・単一コネクション向けの設計になっており、従来のマルチプロセス型Postgresとは前提が異なる。</p>
 
-<p>を素朴に計算すると <span class="math-inline">O(N<sup>2</sup>)</span> かかるが、FFTは <span class="math-inline">O(N \log N)</span> で計算する。N=4096 で実測400倍ほどの高速化になり、この差が「DFTを実用にした」と言ってよい。Gilbert Strang は「我々の生涯で最も重要な数値アルゴリズム」と評し、IEEEの「20世紀のトップ10アルゴリズム」にも選ばれている。</p>
+<h2>基本的な使い方</h2>
 
-<h2>Cooley-Tukeyアルゴリズムの核心</h2>
+<pre><code class="javascript">import { PGlite } from "@electric-sql/pglite";
+const db = new PGlite();
+await db.query("select 'Hello world' as message;");
+</code></pre>
 
-<p>分割統治。サイズ <span class="math-inline">N = N_1 \times N_2</span> のDFTを、サイズ <span class="math-inline">N_2</span> の小さいDFT <span class="math-inline">N_1</span> 個に再帰的に分解し、「回転因子（twiddle factor）」と呼ばれる1のべき根 <span class="math-inline">e^{-i 2\pi k / N}</span> の掛け算 <span class="math-inline">O(N)</span> 回で結合する。</p>
-
-<p>最も普及しているのは radix-2（時間間引き）版: 入力を偶数番目と奇数番目に分けると、サイズNのDFTがサイズN/2のDFT2つと回転因子の掛け算に分解できる。これを再帰すると <span class="math-inline">T(N) = 2T(N/2) + O(N) = O(N \log N)</span>。2つの半分の結果を足し引きで結合する演算パターンが蝶の形に見えることから「バタフライ演算」と呼ばれる。radix-2はNが2のべき乗に限られるが、混合基数版は任意の合成数を扱える。</p>
-
-<h2>歴史</h2>
+<h2>永続化</h2>
 
 <ul>
-<li>起源は Carl Friedrich Gauss（1805年頃）。小惑星軌道の補間のために同等の手法を使っていたが、計算量の解析はしていなかった</li>
-<li>その後も Yates (1932)、Danielson &amp; Lanczos (1942, X線結晶構造解析) などで部分的に再発明されている</li>
-<li>現代のFFTは Cooley &amp; Tukey が1965年に（Gaussを知らずに）再発見・発表したもの。Tukey がケネディ政権の会議でソ連の核実験を地震計センサー網で検出する議論中に着想し、同僚の Richard Garwin が汎用性に気づいてIBMの Cooley に持ち込んだ。Tukey がIBM社員でなかったためアルゴリズムはパブリックドメインになり、それがデジタル信号処理での普及を後押しした</li>
+<li>インメモリ（一時利用向け、デフォルト）</li>
+<li>ファイルシステム（Node/Bun/Deno）: <code>new PGlite("./path/to/pgdata")</code></li>
+<li>IndexedDB（ブラウザ）: <code>new PGlite("idb://my-pgdata")</code></li>
 </ul>
 
 
-<h2>バリエーション</h2>
+<h2>拡張機能</h2>
+
+<p><a href="/notes/pgvector.html">pgvector</a>やPostGISなど複数のPostgres拡張に対応する。</p>
+
+<h2>想定用途</h2>
 
 <ul>
-<li><strong>prime-factor FFT</strong> — 互いに素な因数分解に中国剰余定理を使い、回転因子なしで分解</li>
-<li><strong>Raderのアルゴリズム / Bluesteinのchirp-z</strong> — 素数サイズのDFTを巡回畳み込みに変換して処理</li>
-<li><strong>split-radix</strong> — Cooley-Tukeyより算術演算数を減らす</li>
-<li><strong>実数入力の最適化</strong> — 入力が実数なら出力が共役対称になるので、計算量・メモリをほぼ半減できる</li>
+<li>テストごとに独立したPostgresインスタンスを立てるテスト環境</li>
+<li>サーバー不要なローカル開発・Web container統合</li>
+<li>ブラウザ内でpgvectorを使ったエッジAI・ローカルRAG</li>
 </ul>
 
 
-<h2>応用</h2>
+<h2>ライセンス</h2>
 
-<p>スペクトル解析・フィルタリング（overlap-add/save法）、多倍長整数や多項式の乗算、JPEG/MP3などのエンコード（高速DCT経由）、4G LTE/5GのOFDM変調など。実装では FFTW（"Fastest Fourier Transform in the West"）が有名で、NumPy/SciPy・MATLAB・Julia などの標準機能の背後にもFFTライブラリがいる。</p>
-
-<h2><a href="/notes/frequency-domain-transforms.html">周波数領域の変換</a>の中での位置づけ</h2>
-
-<p><a href="/notes/fourier-transform.html">フーリエ変換</a>・<a href="/notes/laplace-transform.html">ラプラス変換</a>が連続の数学理論なのに対し、こちらは離散版（DFT）を計算機で高速に計算するためのアルゴリズム。理論を実用に変えたのがこのノートの主役。</p>
+<p>Apache 2.0とPostgreSQL Licenseのデュアルライセンス。</p>
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://en.wikipedia.org/wiki/Fast_Fourier_transform">Fast Fourier transform - Wikipedia</a></li>
+<li><a href="https://pglite.dev/docs/about">What is PGlite | PGlite</a></li>
+<li><a href="https://github.com/electric-sql/pglite">GitHub - electric-sql/pglite</a></li>
 </ul>
 
 
                                 <div class="notes-backlinks">
                     <h2>🔗 リンクされているノート</h2>
                     <ul>
-                                            <li><a href="/notes/fourier-transform.html">フーリエ変換</a></li>
-                                            <li><a href="/notes/frequency-domain-transforms.html">周波数領域の変換</a></li>
+                                            <li><a href="/notes/postgresql.html">PostgreSQL</a></li>
+                                            <li><a href="/notes/pgvector.html">pgvector</a></li>
                     
                     </ul>
                 </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-13 00:11 / 更新日時: 2026-08-13 00:14</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=FFT%EF%BC%88%E9%AB%98%E9%80%9F%E3%83%95%E3%83%BC%E3%83%AA%E3%82%A8%E5%A4%89%E6%8F%9B%EF%BC%89&url=https%3A%2F%2F64p.org%2Fnotes%2Ffft.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <span>作成日時: 2026-08-13 00:41 / 更新日時: 2026-08-13 00:41</span>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=PGlite&url=https%3A%2F%2F64p.org%2Fnotes%2Fpglite.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">
@@ -421,16 +418,5 @@ X_k = \sum_{n=0}^{N-1} x_n\, e^{-i 2\pi k n / N}
     <script src="//cdn.jsdelivr.net/npm/@highlightjs/cdn-assets@11/highlight.min.js"></script>
     <script>hljs.highlightAll();</script>
     <script src="/static/notes.js"></script>
-    <script defer src="//cdn.jsdelivr.net/npm/katex@0.16/dist/katex.min.js"></script>
-    <script>
-    window.addEventListener('DOMContentLoaded', function () {
-        document.querySelectorAll('div.math-display, span.math-inline').forEach(function (el) {
-            katex.render(el.textContent, el, {
-                displayMode: el.tagName === 'DIV',
-                throwOnError: false,
-            });
-        });
-    });
-    </script>
 </body>
 </html>

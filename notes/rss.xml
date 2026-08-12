@@ -6,7 +6,64 @@
 <atom:link href="https://64p.org/notes/rss.xml" rel="self" type="application/rss+xml" />
 <description>ちょっと調べたことや検証結果を、AIの力も借りながらメモしていくコーナーです。</description>
 <language>ja</language>
-<lastBuildDate>Thu, 13 Aug 2026 00:24:26 +0900</lastBuildDate>
+<lastBuildDate>Thu, 13 Aug 2026 00:41:20 +0900</lastBuildDate>
+<item>
+<title>PGlite</title>
+<link>https://64p.org/notes/pglite.html</link>
+<guid isPermaLink="true">https://64p.org/notes/pglite.html</guid>
+<pubDate>Thu, 13 Aug 2026 00:41:00 +0900</pubDate>
+<description><![CDATA[<h1>PGlite</h1>
+
+<p><a href="/notes/postgresql.html">PostgreSQL</a>をWebAssemblyにコンパイルし、TypeScript/JavaScriptクライアントライブラリとしてパッケージ化したもの。ElectricSQLプロジェクトが開発している。ブラウザ・Node.js・Bun・Denoで動作し、gzip後3MB以下と軽量。</p>
+
+<p><a class="note-tag" href="/notes/tags/postgresql.html">#postgresql</a> <a class="note-tag" href="/notes/tags/wasm.html">#wasm</a> <a class="note-tag" href="/notes/tags/database.html">#database</a> <a class="note-tag" href="/notes/tags/javascript.html">#javascript</a></p>
+
+<h2>アーキテクチャ上の特徴</h2>
+
+<p>従来の「ブラウザでPostgresを動かす」系のプロジェクトはLinux仮想マシンをWASM上でエミュレートしてその中でPostgresを走らせる方式が多かったが、PGliteはLinux VMを使わず、Postgres自体を直接WASMにコンパイルしている。単一ユーザー・単一コネクション向けの設計になっており、従来のマルチプロセス型Postgresとは前提が異なる。</p>
+
+<h2>基本的な使い方</h2>
+
+<pre><code class="javascript">import { PGlite } from "@electric-sql/pglite";
+const db = new PGlite();
+await db.query("select 'Hello world' as message;");
+</code></pre>
+
+<h2>永続化</h2>
+
+<ul>
+<li>インメモリ（一時利用向け、デフォルト）</li>
+<li>ファイルシステム（Node/Bun/Deno）: <code>new PGlite("./path/to/pgdata")</code></li>
+<li>IndexedDB（ブラウザ）: <code>new PGlite("idb://my-pgdata")</code></li>
+</ul>
+
+
+<h2>拡張機能</h2>
+
+<p><a href="/notes/pgvector.html">pgvector</a>やPostGISなど複数のPostgres拡張に対応する。</p>
+
+<h2>想定用途</h2>
+
+<ul>
+<li>テストごとに独立したPostgresインスタンスを立てるテスト環境</li>
+<li>サーバー不要なローカル開発・Web container統合</li>
+<li>ブラウザ内でpgvectorを使ったエッジAI・ローカルRAG</li>
+</ul>
+
+
+<h2>ライセンス</h2>
+
+<p>Apache 2.0とPostgreSQL Licenseのデュアルライセンス。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://pglite.dev/docs/about">What is PGlite | PGlite</a></li>
+<li><a href="https://github.com/electric-sql/pglite">GitHub - electric-sql/pglite</a></li>
+</ul>
+
+]]></description>
+</item>
 <item>
 <title>librosa</title>
 <link>https://64p.org/notes/librosa.html</link>
@@ -1714,66 +1771,6 @@ graph TD
 <li><a href="https://en.wikipedia.org/wiki/JSLint">JSLint - Wikipedia</a></li>
 </ul>
 
-]]></description>
-</item>
-<item>
-<title>JavaScriptのリンター・フォーマッター</title>
-<link>https://64p.org/notes/javascript-linters-formatters.html</link>
-<guid isPermaLink="true">https://64p.org/notes/javascript-linters-formatters.html</guid>
-<pubDate>Wed, 12 Aug 2026 23:17:00 +0900</pubDate>
-<description><![CDATA[<h1>JavaScriptのリンター・フォーマッター</h1>
-
-<p>JavaScript/TypeScriptエコシステムのコード品質ツール（リンター・フォーマッター）を束ねるハブノート。</p>
-
-<p><a class="note-tag" href="/notes/tags/javascript.html">#javascript</a> <a class="note-tag" href="/notes/tags/moc.html">#moc</a></p>
-
-<h2>全体の構図</h2>
-
-<p>「JS製・単機能特化の従来世代デファクト」と「Rust製・高速・オールインワンの新世代」という対立軸で見ると整理しやすい。新世代ツールはいずれも従来世代の置き換え（ドロップイン互換）を狙っており、性能を「ESLint比・Prettier比で何倍」という形でアピールする。</p>
-
-<div class="mermaid">
-graph LR
-    subgraph 従来世代["従来世代 (JS製・単機能)"]
-        eslint["ESLint (リンター)"]
-        prettier["Prettier (フォーマッター)"]
-    end
-    subgraph 新世代["新世代 (Rust製・統合)"]
-        biome["Biome"]
-        oxc["Oxc (oxlint / oxfmt)"]
-    end
-    biome --&gt;|置き換えを狙う| eslint
-    biome --&gt;|置き換えを狙う| prettier
-    oxc --&gt;|置き換えを狙う| eslint
-    oxc --&gt;|置き換えを狙う| prettier
-    biome &lt;--&gt;|競合| oxc
-</div>
-
-
-<h2>各ツール</h2>
-
-<ul>
-<li><a href="/notes/eslint.html">ESLint</a> — 2013年から続くプラガブルなリンターのデファクト標準。近年はJSON/CSS/Markdownなど言語非依存化を進めている</li>
-<li><a href="/notes/prettier.html">Prettier</a> — オピニオン型（設定最小主義）のフォーマッターのデファクト標準</li>
-<li><a href="/notes/biome.html">Biome</a> — Rust製オールインワンツールチェーン。Romeのコミュニティフォークという系譜。ESLint+Prettierの一括置き換えを狙う</li>
-<li><a href="/notes/oxc.html">Oxc</a> — Rust製ツールチェーン（VoidZero社）。ゼロから開発され、oxlint・oxfmtなど各コンポーネントを個別採用できる点がBiomeと異なる</li>
-<li><a href="/notes/typescript-eslint.html">typescript-eslint</a> — ESLintのプラグイン機構の上でTypeScript対応を担う拡張。type-aware lintingが特徴</li>
-</ul>
-
-
-<h2>リンターの系譜</h2>
-
-<p>ESLint以前の歴史。「設定不可」→「設定可能」→「プラガブル」という進化の流れ。</p>
-
-<ul>
-<li><a href="/notes/jslint.html">JSLint</a> — 2002年、Douglas Crockford作。最初期のJSリンター。オピニオン型で設定不可</li>
-<li><a href="/notes/jshint.html">JSHint</a> — 2011年、JSLintの柔軟性のなさに反発したコミュニティフォーク。設定可能だが独自ルールは書けない</li>
-<li><a href="/notes/eslint.html">ESLint</a> — 2013年、独自ルールを書けない不満から誕生。すべてをプラグイン化</li>
-</ul>
-
-
-<h2>関連</h2>
-
-<p>Pythonエコシステムでは<a href="/notes/ruff.html">Ruff</a>が「Rust製・高速・既存ツール統合」というまったく同じムーブメントを体現している。</p>
 ]]></description>
 </item>
 </channel>

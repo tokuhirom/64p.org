@@ -23,6 +23,9 @@
                 <a class="notes-tags-link" href="/notes/rss.xml">📡 RSS</a>
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
+                                    <li><a href="/notes/postgresql.html">PostgreSQL</a></li>
+                                    <li><a href="/notes/pgvector.html" class="active">pgvector</a></li>
+                                    <li><a href="/notes/pglite.html">PGlite</a></li>
                                     <li><a href="/notes/librosa.html">librosa</a></li>
                                     <li><a href="/notes/taylor-series.html">テイラー展開</a></li>
                                     <li><a href="/notes/gradient-descent.html">勾配降下法</a></li>
@@ -228,8 +231,6 @@
                                     <li><a href="/notes/mysql.html">MySQL</a></li>
                                     <li><a href="/notes/mvcc.html">MVCC</a></li>
                                     <li><a href="/notes/vacuum.html">VACUUM</a></li>
-                                    <li><a href="/notes/postgresql.html">PostgreSQL</a></li>
-                                    <li><a href="/notes/pgvector.html" class="active">pgvector</a></li>
                                     <li><a href="/notes/hnsw.html">HNSW</a></li>
                                     <li><a href="/notes/neon.html">Neon</a></li>
                                     <li><a href="/notes/dgx-spark.html">NVIDIA DGX Spark</a></li>
@@ -364,7 +365,7 @@
 
 <h2>メリット</h2>
 
-<p>AWS/Azure/GCPなど主要クラウドのマネージドPostgreSQLサービスでも対応しており、既存のBIツールやSQLベースの分析基盤とも相性がよい。PostgreSQLの知見があれば学習コストを抑えて導入できる。</p>
+<p>AWS/Azure/GCPなど主要クラウドのマネージドPostgreSQLサービスでも対応しており、既存のBIツールやSQLベースの分析基盤とも相性がよい。PostgreSQLの知見があれば学習コストを抑えて導入できる。<a href="/notes/pglite.html">PGlite</a>のようなWASM版Postgresでも対応拡張機能として使え、ブラウザ内でのローカルベクトル検索が可能になる。</p>
 
 <h2>出典</h2>
 
@@ -381,12 +382,13 @@
                     <h2>🔗 リンクされているノート</h2>
                     <ul>
                                             <li><a href="/notes/hnsw.html">HNSW</a></li>
+                                            <li><a href="/notes/pglite.html">PGlite</a></li>
                                             <li><a href="/notes/postgresql.html">PostgreSQL</a></li>
                     
                     </ul>
                 </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-10 17:10 / 更新日時: 2026-08-10 17:13</span>
+                    <span>作成日時: 2026-08-10 17:10 / 更新日時: 2026-08-13 00:41</span>
                     <a class="share-x" href="https://twitter.com/intent/tweet?text=pgvector&url=https%3A%2F%2F64p.org%2Fnotes%2Fpgvector.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
