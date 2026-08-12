@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>grsecurity - Notes - 64p.org</title>
+    <title>7AI - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/highlight.js@11/styles/github.min.css" media="(prefers-color-scheme: light)">
@@ -21,7 +21,7 @@
                 <a class="notes-tags-link" href="/notes/tags/">🏷️ タグ一覧</a>
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
-                                    <li><a href="/notes/7ai.html">7AI</a></li>
+                                    <li><a href="/notes/7ai.html" class="active">7AI</a></li>
                                     <li><a href="/notes/loophub.html">LoopHub</a></li>
                                     <li><a href="/notes/hunk-cli.html">hunk(AIエージェント向けCLI diffビューア)</a></li>
                                     <li><a href="/notes/guillain-barre-syndrome.html">ギラン・バレー症候群(Guillain-Barré Syndrome, GBS)</a></li>
@@ -37,7 +37,7 @@
                                     <li><a href="/notes/dungeon-haishin-genre.html">ダンジョン配信(ジャンル)</a></li>
                                     <li><a href="/notes/yama-lsm.html">Yama (Yama LSM)</a></li>
                                     <li><a href="/notes/linux-security-modules.html">LSM (Linux Security Modules) フレームワーク</a></li>
-                                    <li><a href="/notes/grsecurity.html" class="active">grsecurity</a></li>
+                                    <li><a href="/notes/grsecurity.html">grsecurity</a></li>
                                     <li><a href="/notes/sunzi.html">孫子</a></li>
                                     <li><a href="/notes/erlang.html">Erlang</a></li>
                                     <li><a href="/notes/metasploit.html">Metasploit</a></li>
@@ -269,35 +269,37 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>grsecurity</h1>
+                <h1>7AI</h1>
 
-<p>Linuxカーネル向けのセキュリティ強化パッチセット。メモリ保護機能「PaX」を内包し、<a href="/notes/yama-lsm.html">Yama</a>のptrace制限ロジックの元にもなった「子プロセスのみ」制限など、後にメインラインカーネルへ個別に取り込まれた機能を多数含んでいた。<a href="/notes/linux-security-modules.html">LSMフレームワーク</a>を使う実装ではなく、カーネル本体に直接パッチを当てる方式である点が異なる。</p>
+<p>AIエージェントを使ってセキュリティ運用(SOC: Security Operations Center)業務を自動化する、米ボストン拠点のサイバーセキュリティ企業。「Seven AI」とも表記される。2025年2月にステルスから正式ローンチ。</p>
 
-<h2>経緯</h2>
+<h2>概要</h2>
 
-<p>2003年頃から開発・公開されてきたが、2015年8月にPaXが無償公開を終了し、2017年4月26日を最後に公開パッチの提供が終了した。以降はgrsecurityの商用サブスクライバー向けにのみ、最新カーネルに追従する形でパッチが提供されている。ライセンスはGPLv2のため、それまでに公開された最後の公開パッチをコミュニティが引き続き利用・改変・再配布すること自体は可能。</p>
+<p>「Agentic Security Platform」を謳い、検知・調査・脅威ハンティングから(許可された範囲での)対応まで、セキュリティ運用のライフサイクル全体をAIエージェントが自律的に判断・実行する。人間のセキュリティチームを反復作業から解放し、より戦略的な業務にシフトさせることを狙う。</p>
 
-<p><a class="note-tag" href="/notes/tags/kernel.html">#kernel</a> <a class="note-tag" href="/notes/tags/linux.html">#linux</a> <a class="note-tag" href="/notes/tags/security.html">#security</a></p>
+<h2>実績</h2>
+
+<p>ローンチから10か月で、エージェントが250万件超のアラートを処理し、65万件超のセキュリティ調査を完了。調査時間を数時間から数分に短縮し、本番環境で誤検知(false positive)を95〜99%削減したとしている。</p>
+
+<h2>資金調達・製品展開</h2>
+
+<p>2025年12月、Index Ventures主導で1億3000万ドルのシリーズA調達を発表。サイバーセキュリティ分野における史上最大のシリーズAラウンドと報じられている。直近では「7AI Federated SIEM」と「7AI Build」を発表し、AIネイティブなセキュリティ運用の基盤づくりを進めている。</p>
+
+<p><a class="note-tag" href="/notes/tags/ai-agent.html">#ai-agent</a> <a class="note-tag" href="/notes/tags/security.html">#security</a></p>
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://grsecurity.net/passing_the_baton_faq">Passing the Baton: FAQ - grsecurity</a></li>
-<li><a href="https://grsecurity.net/faq">grsecurity - FAQ</a></li>
+<li><a href="https://intezer.com/guides/soc-as-a-service/7ai">7AI: Key Capabilities, Limitations, Pricing &amp; Top 5 Alternatives</a></li>
+<li><a href="https://www.businesswire.com/news/home/20251204907769/en/Citing-the-Agentic-Security-Inflection-Point-7AI-Raises-Largest-Cybersecurity-A-Round-in-History-to-Bring-AI-Security-Agents-to-Enterprises">Citing the &lsquo;Agentic Security Inflection Point,&rsquo; 7AI Raises Largest Cybersecurity A Round in History</a></li>
+<li><a href="https://finance.yahoo.com/technology/ai/articles/7ai-launches-federated-siem-7ai-130000356.html">7AI Launches Federated SIEM and 7AI Build</a></li>
+<li><a href="https://www.linkedin.com/company/seven-ai">7AI | LinkedIn</a></li>
 </ul>
 
 
-                                <div class="notes-backlinks">
-                    <h2>🔗 リンクされているノート</h2>
-                    <ul>
-                                            <li><a href="/notes/linux-security-modules.html">LSM (Linux Security Modules) フレームワーク</a></li>
-                                            <li><a href="/notes/yama-lsm.html">Yama (Yama LSM)</a></li>
-                    
-                    </ul>
-                </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-11 16:46 / 更新日時: 2026-08-11 16:46</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=grsecurity&url=https%3A%2F%2F64p.org%2Fnotes%2Fgrsecurity.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <span>作成日時: 2026-08-12 09:41 / 更新日時: 2026-08-12 09:41</span>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=7AI&url=https%3A%2F%2F64p.org%2Fnotes%2F7ai.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">
