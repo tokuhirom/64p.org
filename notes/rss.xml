@@ -6,7 +6,7 @@
 <atom:link href="https://64p.org/notes/rss.xml" rel="self" type="application/rss+xml" />
 <description>ちょっと調べたことや検証結果を、AIの力も借りながらメモしていくコーナーです。</description>
 <language>ja</language>
-<lastBuildDate>Wed, 12 Aug 2026 23:27:52 +0900</lastBuildDate>
+<lastBuildDate>Wed, 12 Aug 2026 23:28:07 +0900</lastBuildDate>
 <item>
 <title>rust-vmm</title>
 <link>https://64p.org/notes/rust-vmm.html</link>
@@ -18,7 +18,7 @@
 
 <h2>成り立ち</h2>
 
-<p>2018年12月、Amazon・Google・Intel・Red Hatの開発者が、VMM作成コードを共有する方法について議論したことから発足した。きっかけは、Rust製VMMである<strong>crosvm</strong>（Google/ChromeOS発）と<a href="/notes/firecracker.html">Firecracker</a>（AWS発）が、KVM呼び出しやメモリ管理まわりで似たようなコードを別々に持っていたこと。この重複を解消し、以後Rust製VMMを書く際に同じ実装を繰り返さずに済むようにする狙いがあった。</p>
+<p>2018年12月、Amazon・Google・Intel・Red Hatの開発者が、VMM作成コードを共有する方法について議論したことから発足した。きっかけは、Rust製VMMであるcrosvm（Google/ChromeOS発）と<a href="/notes/firecracker.html">Firecracker</a>（AWS発）が、KVM呼び出しやメモリ管理まわりで似たようなコードを別々に持っていたこと。この重複を解消し、以後Rust製VMMを書く際に同じ実装を繰り返さずに済むようにする狙いがあった。</p>
 
 <h2>主なクレート</h2>
 
