@@ -23,13 +23,14 @@
                 <a class="notes-tags-link" href="/notes/rss.xml">📡 RSS</a>
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
+                                    <li><a href="/notes/rust-vmm.html">rust-vmm</a></li>
                                     <li><a href="/notes/microvm.html">microVM</a></li>
                                     <li><a href="/notes/microvm-ecosystem.html">コンテナ向け軽量VM技術</a></li>
+                                    <li><a href="/notes/cloud-hypervisor.html" class="active">Cloud Hypervisor</a></li>
                                     <li><a href="/notes/kata-containers.html">Kata Containers</a></li>
                                     <li><a href="/notes/hypeman.html">Hypeman</a></li>
                                     <li><a href="/notes/firecracker.html">Firecracker</a></li>
                                     <li><a href="/notes/firecracker-containerd.html">firecracker-containerd</a></li>
-                                    <li><a href="/notes/cloud-hypervisor.html" class="active">Cloud Hypervisor</a></li>
                                     <li><a href="/notes/typescript-eslint.html">typescript-eslint</a></li>
                                     <li><a href="/notes/openjs-foundation.html">OpenJS Foundation</a></li>
                                     <li><a href="/notes/jslint.html">JSLint</a></li>
@@ -326,7 +327,7 @@
 
 <p>Rust製のオープンソースVMM(Virtual Machine Monitor)。最小限のハードウェアエミュレーションでモダンなクラウドワークロードを動かすことに特化している。KVMおよびMicrosoft Hypervisor(MSHV)上で動作し、x86-64・AArch64をサポート。Linux Foundation傘下のプロジェクト。 <a class="note-tag" href="/notes/tags/virtualization.html">#virtualization</a> <a class="note-tag" href="/notes/tags/rust.html">#rust</a></p>
 
-<h2>rust-vmmとの関係</h2>
+<h2><a href="/notes/rust-vmm.html">rust-vmm</a>との関係</h2>
 
 <p>rust-vmmプロジェクト（仮想化用のRust製クレートを各プロジェクト間で共有・再利用する取り組み）の理念を採用しており、コードの大部分は<a href="/notes/firecracker.html">Firecracker</a>やcrosvmの実装をベースにしている。</p>
 
@@ -365,12 +366,13 @@
                                             <li><a href="/notes/hypeman.html">Hypeman</a></li>
                                             <li><a href="/notes/kata-containers.html">Kata Containers</a></li>
                                             <li><a href="/notes/microvm.html">microVM</a></li>
+                                            <li><a href="/notes/rust-vmm.html">rust-vmm</a></li>
                                             <li><a href="/notes/microvm-ecosystem.html">コンテナ向け軽量VM技術</a></li>
                     
                     </ul>
                 </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-12 23:14 / 更新日時: 2026-08-12 23:25</span>
+                    <span>作成日時: 2026-08-12 23:14 / 更新日時: 2026-08-12 23:27</span>
                     <a class="share-x" href="https://twitter.com/intent/tweet?text=Cloud%20Hypervisor&url=https%3A%2F%2F64p.org%2Fnotes%2Fcloud-hypervisor.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>

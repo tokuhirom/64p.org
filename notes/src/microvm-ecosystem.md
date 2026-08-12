@@ -1,6 +1,6 @@
 ---
 created: 2026-08-12 23:25
-updated: 2026-08-12 23:25
+updated: 2026-08-12 23:27
 ---
 # コンテナ向け軽量VM技術
 
@@ -12,7 +12,8 @@ updated: 2026-08-12 23:25
 
 - [[microvm|microVM]] — デバイスモデルを最小化した軽量VMという概念そのもの。なぜ起動が速いかを解説
 - [[firecracker|Firecracker]] — AWS製。AWS Lambda/Fargateを支えるmicroVM実装
-- [[cloud-hypervisor|Cloud Hypervisor]] — Intel主導・Rust製。rust-vmm由来でFirecrackerの実装を参考にしている
+- [[cloud-hypervisor|Cloud Hypervisor]] — Intel主導・Rust製。[[rust-vmm|rust-vmm]]由来でFirecrackerの実装を参考にしている
+- [[rust-vmm|rust-vmm]] — Firecracker/crosvm/Cloud Hypervisorが共有する、Rust製VMM部品(クレート)群
 
 ## コンテナエコシステムとの統合レイヤー
 

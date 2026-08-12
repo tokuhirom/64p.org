@@ -1,12 +1,12 @@
 ---
 created: 2026-08-12 23:14
-updated: 2026-08-12 23:25
+updated: 2026-08-12 23:27
 ---
 # Cloud Hypervisor
 
 Rust製のオープンソースVMM(Virtual Machine Monitor)。最小限のハードウェアエミュレーションでモダンなクラウドワークロードを動かすことに特化している。KVMおよびMicrosoft Hypervisor(MSHV)上で動作し、x86-64・AArch64をサポート。Linux Foundation傘下のプロジェクト。 #virtualization #rust
 
-## rust-vmmとの関係
+## [[rust-vmm|rust-vmm]]との関係
 
 rust-vmmプロジェクト（仮想化用のRust製クレートを各プロジェクト間で共有・再利用する取り組み）の理念を採用しており、コードの大部分は[[firecracker|Firecracker]]やcrosvmの実装をベースにしている。
 

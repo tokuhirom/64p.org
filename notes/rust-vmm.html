@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>Tableau - Notes - 64p.org</title>
+    <title>rust-vmm - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="alternate" type="application/rss+xml" title="Notes - 64p.org" href="/notes/rss.xml">
@@ -23,7 +23,7 @@
                 <a class="notes-tags-link" href="/notes/rss.xml">📡 RSS</a>
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
-                                    <li><a href="/notes/rust-vmm.html">rust-vmm</a></li>
+                                    <li><a href="/notes/rust-vmm.html" class="active">rust-vmm</a></li>
                                     <li><a href="/notes/microvm.html">microVM</a></li>
                                     <li><a href="/notes/microvm-ecosystem.html">コンテナ向け軽量VM技術</a></li>
                                     <li><a href="/notes/cloud-hypervisor.html">Cloud Hypervisor</a></li>
@@ -303,7 +303,7 @@
                                     <li><a href="/notes/freya.html">Freya (freyaui.dev) — Rust製クロスプラットフォームGUIライブラリ</a></li>
                                     <li><a href="/notes/hacker-news.html">Hacker News (HN) について</a></li>
                                     <li><a href="/notes/edge-manifest-v3.html">Microsoft Edge、拡張機能をManifest V3へ完全移行</a></li>
-                                    <li><a href="/notes/tableau.html" class="active">Tableau</a></li>
+                                    <li><a href="/notes/tableau.html">Tableau</a></li>
                                     <li><a href="/notes/gpui.html">GPUI</a></li>
                                     <li><a href="/notes/project-glasswing.html">Project Glasswing</a></li>
                                     <li><a href="/notes/openssf.html">OpenSSF (Open Source Security Foundation)</a></li>
@@ -323,47 +323,58 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>Tableau</h1>
+                <h1>rust-vmm</h1>
 
-<p><a class="note-tag" href="/notes/tags/bi.html">#bi</a> <a class="note-tag" href="/notes/tags/dataviz.html">#dataviz</a></p>
+<p>VMM(Virtual Machine Monitor)を作るためのRust製部品(クレート)を共有するプロジェクト。KVM ioctlの呼び出し、VMのメモリ管理、virtioデバイスとのやり取りなど、複数のVMM実装で重複しがちな部分を共通クレートとして切り出し、車輪の再発明を防ぐことを目的とする。 <a class="note-tag" href="/notes/tags/virtualization.html">#virtualization</a> <a class="note-tag" href="/notes/tags/rust.html">#rust</a></p>
 
-<p>Stanford大学のスピンオフとして2003年1月に、Chris Stolte、Christian Chabot、Pat Hanrahanの3人が創業したBI(ビジネスインテリジェンス)・データ可視化ツール。ドラッグ&amp;ドロップ操作だけで直感的にデータを分析・グラフ化でき、専門知識がなくてもインタラクティブなダッシュボードを作れる点で広く使われている。</p>
+<h2>成り立ち</h2>
 
-<h2>中核技術</h2>
+<p>2018年12月、Amazon・Google・Intel・Red Hatの開発者が、VMM作成コードを共有する方法について議論したことから発足した。きっかけは、Rust製VMMである<strong>crosvm</strong>（Google/ChromeOS発）と<a href="/notes/firecracker.html">Firecracker</a>（AWS発）が、KVM呼び出しやメモリ管理まわりで似たようなコードを別々に持っていたこと。この重複を解消し、以後Rust製VMMを書く際に同じ実装を繰り返さずに済むようにする狙いがあった。</p>
 
-<p>独自特許技術の<strong>VizQL</strong>(Visualization Query Language)。1999〜2002年の学術研究をもとに開発され、ドラッグ&amp;ドロップ操作を裏側でデータクエリに変換し、その結果をインタラクティブなグラフとして描画する仕組み。</p>
-
-<h2>沿革</h2>
-
-<p>2013年5月にニューヨーク証券取引所へ上場(ティッカー: DATA)。2019年6月にSalesforceが買収を発表し、同年8月に約157億ドルで買収完了(当時Salesforce史上最大の買収)。以降Salesforceの完全子会社として、独立ブランドのまま運営が続いている。</p>
-
-<h2>2026年現在の主な機能</h2>
+<h2>主なクレート</h2>
 
 <ul>
-<li><strong>Tableau Pulse</strong>: AIがユーザーごとに重要な指標を自動要約し、SlackやメールにKPIの変化を配信する。</li>
-<li><strong>Tableau Agent</strong>: 会話型アシスタントとしてデータ探索・可視化作成・インサイト発見を支援する。</li>
-<li>エディションはStandard/Enterprise/Cloud+/Tableau+の4段階。Tableau Cloudの料金目安はViewer 1,800円/Explorer 5,040円/Creator 9,000円(1ユーザー月額、年間契約)。</li>
+<li><code>kvm-bindings</code> / <code>kvm-ioctls</code> — KVMカーネルヘッダへのRust FFIバインディングと、それをラップする機能</li>
+<li><code>vm-memory</code> — VMのゲストメモリを扱うための共通トレイト。VMMの各コンポーネントが実装の詳細を知らずに物理メモリへアクセスできるようにする</li>
+<li>virtioデバイス関連クレートおよび<code>vhost</code>パッケージ — デバイスエミュレーション用</li>
+<li>Microsoft Hyper-V・Xenのハイパーコールインターフェース、Linuxカーネルローダーへの対応も含む</li>
 </ul>
 
 
-<h2>位置づけ</h2>
+<h2>ガバナンス</h2>
 
-<p>Power BI(Microsoft)、Looker Studio(Google)などと並ぶ主要BIツールの一つで、全社的なデータ分析やアドホック分析を重視する中〜大企業に向いているとされる。</p>
+<p>特定企業に閉じたプロジェクトではなく、Alibaba・AWS・Crowdstrike・Intel・Google・Linaro・Red Hatなどの企業から参加する開発者、および個人コントリビューターによる共同所有・共同運営の体制を取っている。</p>
+
+<h2>採用プロジェクト</h2>
+
+<p><a href="/notes/firecracker.html">Firecracker</a>・crosvmに加え、<a href="/notes/cloud-hypervisor.html">Cloud Hypervisor</a>もrust-vmmの理念を採用しており、実装コードの大部分がFirecrackerやcrosvmをベースにしている。QEMUのvirtiofsd実装や<code>vhost-device</code>なども取り込まれている。</p>
+
+<h2><a href="/notes/microvm-ecosystem.html">コンテナ向け軽量VM技術</a>の中での位置づけ</h2>
+
+<p><a href="/notes/firecracker.html">Firecracker</a>・<a href="/notes/cloud-hypervisor.html">Cloud Hypervisor</a>など、土台となる複数のVMM実装が共有する部品群。</p>
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://www.tableau.com/why-tableau/what-is-tableau">What Is Tableau? - Tableau</a></li>
-<li><a href="https://www.salesforce.com/news/press-releases/2019/08/01/salesforce-completes-acquisition-of-tableau/">Salesforce Completes Acquisition of Tableau - Salesforce</a></li>
-<li><a href="https://www.tableau.com/blog/analyzing-history-tableau-innovation">Analyzing the history of Tableau innovation</a></li>
-<li><a href="https://www.sora-michi.co.jp/blog/7329">Tableauとは？できること・料金・Power BI/Looker Studioとの違い【2026年最新】</a></li>
-<li><a href="https://www.principle-c.com/column/bi-tools-comparison-ai-2026/">【2026年最新】AI時代のBIツール選び - Tableau・Power BI</a></li>
+<li><a href="https://github.com/rust-vmm/rust-vmm">GitHub - rust-vmm/rust-vmm: The rust-vmm monorepo</a></li>
+<li><a href="https://opensource.com/article/19/3/rust-virtual-machine">Building the virtualization stack of the future with rust-vmm | Opensource.com</a></li>
+<li><a href="https://github.com/rust-vmm/community/blob/main/README.md">community/README.md at main · rust-vmm/community</a></li>
+<li><a href="https://medium.com/@michael2012zhao_67085/history-of-cloud-hypervisor-138568b2fc1f">History of Cloud-hypervisor | Michael Zhao</a></li>
 </ul>
 
 
+                                <div class="notes-backlinks">
+                    <h2>🔗 リンクされているノート</h2>
+                    <ul>
+                                            <li><a href="/notes/cloud-hypervisor.html">Cloud Hypervisor</a></li>
+                                            <li><a href="/notes/microvm.html">microVM</a></li>
+                                            <li><a href="/notes/microvm-ecosystem.html">コンテナ向け軽量VM技術</a></li>
+                    
+                    </ul>
+                </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-09 15:47 / 更新日時: 2026-08-09 15:47</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=Tableau&url=https%3A%2F%2F64p.org%2Fnotes%2Ftableau.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <span>作成日時: 2026-08-12 23:27 / 更新日時: 2026-08-12 23:27</span>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=rust-vmm&url=https%3A%2F%2F64p.org%2Fnotes%2Frust-vmm.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">

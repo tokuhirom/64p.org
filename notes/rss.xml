@@ -6,7 +6,53 @@
 <atom:link href="https://64p.org/notes/rss.xml" rel="self" type="application/rss+xml" />
 <description>ちょっと調べたことや検証結果を、AIの力も借りながらメモしていくコーナーです。</description>
 <language>ja</language>
-<lastBuildDate>Wed, 12 Aug 2026 23:25:14 +0900</lastBuildDate>
+<lastBuildDate>Wed, 12 Aug 2026 23:27:52 +0900</lastBuildDate>
+<item>
+<title>rust-vmm</title>
+<link>https://64p.org/notes/rust-vmm.html</link>
+<guid isPermaLink="true">https://64p.org/notes/rust-vmm.html</guid>
+<pubDate>Wed, 12 Aug 2026 23:27:00 +0900</pubDate>
+<description><![CDATA[<h1>rust-vmm</h1>
+
+<p>VMM(Virtual Machine Monitor)を作るためのRust製部品(クレート)を共有するプロジェクト。KVM ioctlの呼び出し、VMのメモリ管理、virtioデバイスとのやり取りなど、複数のVMM実装で重複しがちな部分を共通クレートとして切り出し、車輪の再発明を防ぐことを目的とする。 <a class="note-tag" href="/notes/tags/virtualization.html">#virtualization</a> <a class="note-tag" href="/notes/tags/rust.html">#rust</a></p>
+
+<h2>成り立ち</h2>
+
+<p>2018年12月、Amazon・Google・Intel・Red Hatの開発者が、VMM作成コードを共有する方法について議論したことから発足した。きっかけは、Rust製VMMである<strong>crosvm</strong>（Google/ChromeOS発）と<a href="/notes/firecracker.html">Firecracker</a>（AWS発）が、KVM呼び出しやメモリ管理まわりで似たようなコードを別々に持っていたこと。この重複を解消し、以後Rust製VMMを書く際に同じ実装を繰り返さずに済むようにする狙いがあった。</p>
+
+<h2>主なクレート</h2>
+
+<ul>
+<li><code>kvm-bindings</code> / <code>kvm-ioctls</code> — KVMカーネルヘッダへのRust FFIバインディングと、それをラップする機能</li>
+<li><code>vm-memory</code> — VMのゲストメモリを扱うための共通トレイト。VMMの各コンポーネントが実装の詳細を知らずに物理メモリへアクセスできるようにする</li>
+<li>virtioデバイス関連クレートおよび<code>vhost</code>パッケージ — デバイスエミュレーション用</li>
+<li>Microsoft Hyper-V・Xenのハイパーコールインターフェース、Linuxカーネルローダーへの対応も含む</li>
+</ul>
+
+
+<h2>ガバナンス</h2>
+
+<p>特定企業に閉じたプロジェクトではなく、Alibaba・AWS・Crowdstrike・Intel・Google・Linaro・Red Hatなどの企業から参加する開発者、および個人コントリビューターによる共同所有・共同運営の体制を取っている。</p>
+
+<h2>採用プロジェクト</h2>
+
+<p><a href="/notes/firecracker.html">Firecracker</a>・crosvmに加え、<a href="/notes/cloud-hypervisor.html">Cloud Hypervisor</a>もrust-vmmの理念を採用しており、実装コードの大部分がFirecrackerやcrosvmをベースにしている。QEMUのvirtiofsd実装や<code>vhost-device</code>なども取り込まれている。</p>
+
+<h2><a href="/notes/microvm-ecosystem.html">コンテナ向け軽量VM技術</a>の中での位置づけ</h2>
+
+<p><a href="/notes/firecracker.html">Firecracker</a>・<a href="/notes/cloud-hypervisor.html">Cloud Hypervisor</a>など、土台となる複数のVMM実装が共有する部品群。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://github.com/rust-vmm/rust-vmm">GitHub - rust-vmm/rust-vmm: The rust-vmm monorepo</a></li>
+<li><a href="https://opensource.com/article/19/3/rust-virtual-machine">Building the virtualization stack of the future with rust-vmm | Opensource.com</a></li>
+<li><a href="https://github.com/rust-vmm/community/blob/main/README.md">community/README.md at main · rust-vmm/community</a></li>
+<li><a href="https://medium.com/@michael2012zhao_67085/history-of-cloud-hypervisor-138568b2fc1f">History of Cloud-hypervisor | Michael Zhao</a></li>
+</ul>
+
+]]></description>
+</item>
 <item>
 <title>コンテナ向け軽量VM技術</title>
 <link>https://64p.org/notes/microvm-ecosystem.html</link>
@@ -23,7 +69,8 @@
 <ul>
 <li><a href="/notes/microvm.html">microVM</a> — デバイスモデルを最小化した軽量VMという概念そのもの。なぜ起動が速いかを解説</li>
 <li><a href="/notes/firecracker.html">Firecracker</a> — AWS製。AWS Lambda/Fargateを支えるmicroVM実装</li>
-<li><a href="/notes/cloud-hypervisor.html">Cloud Hypervisor</a> — Intel主導・Rust製。rust-vmm由来でFirecrackerの実装を参考にしている</li>
+<li><a href="/notes/cloud-hypervisor.html">Cloud Hypervisor</a> — Intel主導・Rust製。<a href="/notes/rust-vmm.html">rust-vmm</a>由来でFirecrackerの実装を参考にしている</li>
+<li><a href="/notes/rust-vmm.html">rust-vmm</a> — Firecracker/crosvm/Cloud Hypervisorが共有する、Rust製VMM部品(クレート)群</li>
 </ul>
 
 
@@ -383,7 +430,7 @@ graph LR
 
 <ul>
 <li><a href="/notes/firecracker.html">Firecracker</a> — AWSが開発。AWS Lambda/Fargateを支える</li>
-<li><a href="/notes/cloud-hypervisor.html">Cloud Hypervisor</a> — Intel主導、Rust製。rust-vmmプロジェクトの成果を活用</li>
+<li><a href="/notes/cloud-hypervisor.html">Cloud Hypervisor</a> — Intel主導、Rust製。<a href="/notes/rust-vmm.html">rust-vmm</a>プロジェクトの成果を活用</li>
 </ul>
 
 
@@ -403,6 +450,48 @@ graph LR
 <li><a href="https://github.com/firecracker-microvm/firecracker/blob/main/FAQ.md">firecracker/FAQ.md at main · firecracker-microvm/firecracker</a></li>
 <li><a href="https://unixism.net/2019/10/how-aws-firecracker-works-a-deep-dive/">How AWS Firecracker works: a deep dive – Unixism</a></li>
 <li><a href="https://github.com/firecracker-microvm/firecracker/blob/main/docs/rootfs-and-kernel-setup.md">firecracker/docs/rootfs-and-kernel-setup.md at main · firecracker-microvm/firecracker</a></li>
+</ul>
+
+]]></description>
+</item>
+<item>
+<title>Cloud Hypervisor</title>
+<link>https://64p.org/notes/cloud-hypervisor.html</link>
+<guid isPermaLink="true">https://64p.org/notes/cloud-hypervisor.html</guid>
+<pubDate>Wed, 12 Aug 2026 23:14:00 +0900</pubDate>
+<description><![CDATA[<h1>Cloud Hypervisor</h1>
+
+<p>Rust製のオープンソースVMM(Virtual Machine Monitor)。最小限のハードウェアエミュレーションでモダンなクラウドワークロードを動かすことに特化している。KVMおよびMicrosoft Hypervisor(MSHV)上で動作し、x86-64・AArch64をサポート。Linux Foundation傘下のプロジェクト。 <a class="note-tag" href="/notes/tags/virtualization.html">#virtualization</a> <a class="note-tag" href="/notes/tags/rust.html">#rust</a></p>
+
+<h2><a href="/notes/rust-vmm.html">rust-vmm</a>との関係</h2>
+
+<p>rust-vmmプロジェクト（仮想化用のRust製クレートを各プロジェクト間で共有・再利用する取り組み）の理念を採用しており、コードの大部分は<a href="/notes/firecracker.html">Firecracker</a>やcrosvmの実装をベースにしている。</p>
+
+<h2>特徴</h2>
+
+<ul>
+<li>CPU・メモリ・デバイスのホットプラグに対応</li>
+<li>Windows/Linux両方のゲストOSを実行可能</li>
+<li>vhost-userによるデバイスオフロード</li>
+<li>起動時間は約200ms</li>
+<li>Intelエンジニアが中心となりつつ、MicrosoftやArmなど他組織からの継続的なコントリビューションもある</li>
+</ul>
+
+
+<h2>用途</h2>
+
+<p><a href="/notes/microvm.html">microVM</a>型のVMMとして、<a href="/notes/hypeman.html">Hypeman</a>など複数ハイパーバイザーを切り替え可能なランタイムの選択肢の一つに採用されている。</p>
+
+<h2><a href="/notes/microvm-ecosystem.html">コンテナ向け軽量VM技術</a>の中での位置づけ</h2>
+
+<p><a href="/notes/firecracker.html">Firecracker</a>と並ぶ、土台となるVMM実装の一つ。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://github.com/cloud-hypervisor/cloud-hypervisor">GitHub - cloud-hypervisor/cloud-hypervisor</a></li>
+<li><a href="https://www.cloudhypervisor.org/docs/prologue/introduction/">Introduction - Cloud Hypervisor</a></li>
+<li><a href="https://thenewstack.io/rust-based-cloud-hypervisor-heads-to-linux-foundation/">Rust-Based Cloud Hypervisor Heads to Linux Foundation - The New Stack</a></li>
 </ul>
 
 ]]></description>
@@ -509,48 +598,6 @@ graph LR
 <li><a href="https://github.com/arcboxlabs/oci2rootfs">GitHub - arcboxlabs/oci2rootfs</a></li>
 <li><a href="https://github.com/weaveworks/ignite">GitHub - weaveworks/ignite</a></li>
 <li><a href="https://github.com/kata-containers/kata-containers/blob/main/docs/how-to/how-to-use-kata-containers-with-firecracker.md">Kata Containers: how-to-use-kata-containers-with-firecracker.md</a></li>
-</ul>
-
-]]></description>
-</item>
-<item>
-<title>Cloud Hypervisor</title>
-<link>https://64p.org/notes/cloud-hypervisor.html</link>
-<guid isPermaLink="true">https://64p.org/notes/cloud-hypervisor.html</guid>
-<pubDate>Wed, 12 Aug 2026 23:14:00 +0900</pubDate>
-<description><![CDATA[<h1>Cloud Hypervisor</h1>
-
-<p>Rust製のオープンソースVMM(Virtual Machine Monitor)。最小限のハードウェアエミュレーションでモダンなクラウドワークロードを動かすことに特化している。KVMおよびMicrosoft Hypervisor(MSHV)上で動作し、x86-64・AArch64をサポート。Linux Foundation傘下のプロジェクト。 <a class="note-tag" href="/notes/tags/virtualization.html">#virtualization</a> <a class="note-tag" href="/notes/tags/rust.html">#rust</a></p>
-
-<h2>rust-vmmとの関係</h2>
-
-<p>rust-vmmプロジェクト（仮想化用のRust製クレートを各プロジェクト間で共有・再利用する取り組み）の理念を採用しており、コードの大部分は<a href="/notes/firecracker.html">Firecracker</a>やcrosvmの実装をベースにしている。</p>
-
-<h2>特徴</h2>
-
-<ul>
-<li>CPU・メモリ・デバイスのホットプラグに対応</li>
-<li>Windows/Linux両方のゲストOSを実行可能</li>
-<li>vhost-userによるデバイスオフロード</li>
-<li>起動時間は約200ms</li>
-<li>Intelエンジニアが中心となりつつ、MicrosoftやArmなど他組織からの継続的なコントリビューションもある</li>
-</ul>
-
-
-<h2>用途</h2>
-
-<p><a href="/notes/microvm.html">microVM</a>型のVMMとして、<a href="/notes/hypeman.html">Hypeman</a>など複数ハイパーバイザーを切り替え可能なランタイムの選択肢の一つに採用されている。</p>
-
-<h2><a href="/notes/microvm-ecosystem.html">コンテナ向け軽量VM技術</a>の中での位置づけ</h2>
-
-<p><a href="/notes/firecracker.html">Firecracker</a>と並ぶ、土台となるVMM実装の一つ。</p>
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://github.com/cloud-hypervisor/cloud-hypervisor">GitHub - cloud-hypervisor/cloud-hypervisor</a></li>
-<li><a href="https://www.cloudhypervisor.org/docs/prologue/introduction/">Introduction - Cloud Hypervisor</a></li>
-<li><a href="https://thenewstack.io/rust-based-cloud-hypervisor-heads-to-linux-foundation/">Rust-Based Cloud Hypervisor Heads to Linux Foundation - The New Stack</a></li>
 </ul>
 
 ]]></description>
@@ -1438,49 +1485,6 @@ IP 10.99.0.2 &gt; 10.99.0.1: ICMP echo reply, id 31448, seq 1, length 64
 <ul>
 <li><a href="https://github.com/stretchr/testify">stretchr/testify - GitHub</a></li>
 <li><a href="https://pkg.go.dev/github.com/stretchr/testify/mock">mock package - pkg.go.dev</a></li>
-</ul>
-
-]]></description>
-</item>
-<item>
-<title>seccomp</title>
-<link>https://64p.org/notes/seccomp.html</link>
-<guid isPermaLink="true">https://64p.org/notes/seccomp.html</guid>
-<pubDate>Wed, 12 Aug 2026 17:52:00 +0900</pubDate>
-<description><![CDATA[<h1>seccomp</h1>
-
-<p><a class="note-tag" href="/notes/tags/linux.html">#linux</a> <a class="note-tag" href="/notes/tags/kernel.html">#kernel</a> <a class="note-tag" href="/notes/tags/security.html">#security</a></p>
-
-<p>secure computing mode。Linuxカーネルの機能で、プロセスが発行できるシステムコールを制限する仕組み。プロセスの攻撃対象領域（カーネルへの入口）を必要最小限に絞る、<a href="/notes/least-privilege.html">最小権限の原則</a>のシステムコールレベルでの実践と言える。</p>
-
-<h2>strict mode から filter mode へ</h2>
-
-<ul>
-<li><strong>strict mode</strong>: Andrea Arcangeli が「信頼できないコードを計算サンドボックスで動かす」用途（グリッドコンピューティング的なサービス）のために導入した初期形態。<code>prctl(PR_SET_SECCOMP, SECCOMP_MODE_STRICT)</code> を呼ぶと、以後そのプロセスは read / write / exit / sigreturn の4つのシステムコールしか使えなくなる。安全だが、純粋な数値計算のようなワークロード以外では実用にならなかった。</li>
-<li><strong>filter mode (seccomp-bpf)</strong>: Linux 3.5 で入った現在の主流。<a href="/notes/bpf.html">BPF</a>（classic BPF）のプログラムをフィルタとしてプロセスに取り付け、システムコールごとに「システムコール番号と引数」（<code>struct seccomp_data</code>）を評価して許可・拒否を判定する。Linux 3.17 からは専用の <code>seccomp()</code> システムコールで設定できる。</li>
-</ul>
-
-
-<p>フィルタの判定結果は <code>SECCOMP_RET_ALLOW</code>（許可）、<code>SECCOMP_RET_ERRNO</code>（エラーを返す）、<code>SECCOMP_RET_TRAP</code>（シグナル送出）、<code>SECCOMP_RET_KILL_PROCESS</code>（プロセスをkill）などのアクションで表現する。Linux 5.0 では判定をユーザー空間のスーパーバイザに委譲する <code>SECCOMP_RET_USER_NOTIF</code> も入った。</p>
-
-<h2>設計上の面白い点</h2>
-
-<ul>
-<li>BPFプログラムはポインタの参照外しができないため、フィルタはシステムコールの引数の値そのものしか評価できない。これは制約であると同時に、システムコール介入系の仕組みにありがちな TOCTOU（time-of-check-to-time-of-use）攻撃が構造的に成立しないという安全性でもある（ユーザーメモリ上の文字列引数などを検査対象にすると、検査後・実行前に書き換えられうる）。</li>
-<li>一度取り付けたフィルタは外せず、子プロセスにも継承される。フィルタは積み重ねられ、複数ある場合は最も厳しい判定が勝つ。</li>
-</ul>
-
-
-<h2>採用例</h2>
-
-<p>Chrome/Chromium のレンダラサンドボックス（seccomp-bpf の初期の代表的ユーザー）、Docker などのコンテナランタイム（デフォルトの seccomp プロファイルで危険なシステムコールを遮断）、systemd の <code>SystemCallFilter=</code>、Firefox、OpenSSH など。コンテナの文脈では、namespace や <a href="/notes/cgroups.html">cgroups（control groups）</a> による分離と組み合わせて使われる。</p>
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://www.man7.org/linux/man-pages/man2/seccomp.2.html">seccomp(2) - Linux manual page</a></li>
-<li><a href="https://www.kernel.org/doc/html/v4.19/userspace-api/seccomp_filter.html">Seccomp BPF (SECure COMPuting with filters) — The Linux Kernel documentation</a></li>
-<li><a href="https://www.armosec.io/blog/seccomp-internals-part-1/">Seccomp: Enhance Security for Linux Applications - ARMO</a></li>
 </ul>
 
 ]]></description>

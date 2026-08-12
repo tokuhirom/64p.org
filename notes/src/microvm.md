@@ -1,6 +1,6 @@
 ---
 created: 2026-08-12 23:14
-updated: 2026-08-12 23:25
+updated: 2026-08-12 23:27
 ---
 # microVM
 
@@ -26,7 +26,7 @@ updated: 2026-08-12 23:25
 ## 代表的な実装
 
 - [[firecracker|Firecracker]] — AWSが開発。AWS Lambda/Fargateを支える
-- [[cloud-hypervisor|Cloud Hypervisor]] — Intel主導、Rust製。rust-vmmプロジェクトの成果を活用
+- [[cloud-hypervisor|Cloud Hypervisor]] — Intel主導、Rust製。[[rust-vmm|rust-vmm]]プロジェクトの成果を活用
 
 ## 用途
 
