@@ -23,8 +23,8 @@
                 <a class="notes-tags-link" href="/notes/rss.xml">📡 RSS</a>
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
-                                    <li><a href="/notes/synthid-text.html">SynthID-Text</a></li>
                                     <li><a href="/notes/rust-vmm.html" class="active">rust-vmm</a></li>
+                                    <li><a href="/notes/synthid-text.html">SynthID-Text</a></li>
                                     <li><a href="/notes/microvm-ecosystem.html">コンテナ向け軽量VM技術</a></li>
                                     <li><a href="/notes/llm-text-watermarking.html">LLMテキストの電子透かし</a></li>
                                     <li><a href="/notes/crosvm.html">crosvm</a></li>
@@ -353,6 +353,12 @@
 
 <p><a href="/notes/firecracker.html">Firecracker</a>・<a href="/notes/crosvm.html">crosvm</a>に加え、<a href="/notes/cloud-hypervisor.html">Cloud Hypervisor</a>もrust-vmmの理念を採用しており、実装コードの大部分がFirecrackerやcrosvmをベースにしている。QEMUのvirtiofsd実装や<code>vhost-device</code>なども取り込まれている。</p>
 
+<h2>どこまで簡単にVMMを作れるか</h2>
+
+<p>rust-vmm公式が「rust-vmmクレート＋最小限の接着コード」で構成される<code>vmm-reference</code>という参照実装を公開している。これをforkして部品を組み替えれば、KVMベースの最小限のVMMのたたき台はすぐ作れる。難しいのはKVM呼び出し自体よりも「どんなデバイスモデルにするか」の設計判断だという指摘もある。</p>
+
+<p>一方で、Firecracker相当の製品に届くにはまだ距離がある。<code>vmm-reference</code>自体、デバイスのホットプラグ・VMの一時停止/再開・スナップショット・ライブマイグレーションを(少なくとも初期時点では)サポートしていないと明言している。加えてFirecrackerが持つjailerによるプロセス隔離やseccompフィルタでのシステムコール制限といったセキュリティハードニング、REST APIサーバー、豊富なテスト・ファジングは、rust-vmmのクレートを組み合わせただけでは付いてこず、Firecracker自身が長年かけて積み上げてきた部分になる。</p>
+
 <h2><a href="/notes/microvm-ecosystem.html">コンテナ向け軽量VM技術</a>の中での位置づけ</h2>
 
 <p><a href="/notes/firecracker.html">Firecracker</a>・<a href="/notes/cloud-hypervisor.html">Cloud Hypervisor</a>など、土台となる複数のVMM実装が共有する部品群。</p>
@@ -364,6 +370,8 @@
 <li><a href="https://opensource.com/article/19/3/rust-virtual-machine">Building the virtualization stack of the future with rust-vmm | Opensource.com</a></li>
 <li><a href="https://github.com/rust-vmm/community/blob/main/README.md">community/README.md at main · rust-vmm/community</a></li>
 <li><a href="https://medium.com/@michael2012zhao_67085/history-of-cloud-hypervisor-138568b2fc1f">History of Cloud-hypervisor | Michael Zhao</a></li>
+<li><a href="https://github.com/rust-vmm/vmm-reference">GitHub - rust-vmm/vmm-reference</a></li>
+<li><a href="https://github.com/rust-vmm/vmm-reference/blob/main/docs/DESIGN.md">vmm-reference/docs/DESIGN.md</a></li>
 </ul>
 
 
@@ -378,7 +386,7 @@
                     </ul>
                 </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-12 23:27 / 更新日時: 2026-08-12 23:29</span>
+                    <span>作成日時: 2026-08-12 23:27 / 更新日時: 2026-08-12 23:33</span>
                     <a class="share-x" href="https://twitter.com/intent/tweet?text=rust-vmm&url=https%3A%2F%2F64p.org%2Fnotes%2Frust-vmm.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
