@@ -21,7 +21,10 @@
                 <a class="notes-tags-link" href="/notes/tags/">🏷️ タグ一覧</a>
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
+                                    <li><a href="/notes/shannon-entropy.html">シャノンエントロピー</a></li>
                                     <li><a href="/notes/gitleaks.html" class="active">gitleaks</a></li>
+                                    <li><a href="/notes/common-expression-language.html">CEL (Common Expression Language)</a></li>
+                                    <li><a href="/notes/byte-pair-encoding.html">BPE (Byte Pair Encoding)</a></li>
                                     <li><a href="/notes/betterleaks.html">betterleaks</a></li>
                                     <li><a href="/notes/7ai.html">7AI</a></li>
                                     <li><a href="/notes/loophub.html">LoopHub</a></li>
@@ -282,7 +285,7 @@
 <h2>検出の仕組み</h2>
 
 <ul>
-<li><strong>正規表現 + シャノンエントロピー</strong>の組み合わせ。AWSキー・GitHubトークン・Slack webhook など既知のシークレット形式は組み込みの正規表現ルールで、ランダム文字列らしさはエントロピー値でスコアリングする。</li>
+<li><strong>正規表現 + <a href="/notes/shannon-entropy.html">シャノンエントロピー</a></strong>の組み合わせ。AWSキー・GitHubトークン・Slack webhook など既知のシークレット形式は組み込みの正規表現ルールで、ランダム文字列らしさはエントロピー値でスコアリングする。</li>
 <li>ルールは TOML形式の <code>.gitleaks.toml</code> でカスタマイズ可能。allowlist（誤検知の除外）、エンコードされたテキストの自動デコード深度、アーカイブ内スキャンの深度なども設定できる。</li>
 <li>出力形式は JSON / CSV / JUnit / SARIF。SARIF出力は GitHub Advanced Security と統合でき、GitHubのSecurityタブに findings を表示したり、シークレットを含むPRをブロックしたりできる。</li>
 </ul>
@@ -316,11 +319,12 @@ cat file | gitleaks stdin     # 標準入力をスキャン
                     <h2>🔗 リンクされているノート</h2>
                     <ul>
                                             <li><a href="/notes/betterleaks.html">betterleaks</a></li>
+                                            <li><a href="/notes/shannon-entropy.html">シャノンエントロピー</a></li>
                     
                     </ul>
                 </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-12 09:43 / 更新日時: 2026-08-12 09:43</span>
+                    <span>作成日時: 2026-08-12 09:43 / 更新日時: 2026-08-12 09:46</span>
                     <a class="share-x" href="https://twitter.com/intent/tweet?text=gitleaks&url=https%3A%2F%2F64p.org%2Fnotes%2Fgitleaks.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>

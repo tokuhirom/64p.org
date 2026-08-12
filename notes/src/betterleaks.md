@@ -1,6 +1,6 @@
 ---
 created: 2026-08-12 09:43
-updated: 2026-08-12 09:43
+updated: 2026-08-12 09:46
 ---
 # betterleaks
 
@@ -12,7 +12,7 @@ gitleaks の drop-in replacement を謳っており、既存のCLIオプショ�
 
 ## Token Efficiency: エントロピーに代わる誤検知フィルタ
 
-gitleaks がランダム文字列らしさの判定にシャノンエントロピーを使っていたのに対し、betterleaks は **BPE（byte pair encoding）トークン化に基づく「Token Efficiency」** を使う。
+gitleaks がランダム文字列らしさの判定に[[shannon-entropy|シャノンエントロピー]]を使っていたのに対し、betterleaks は **[[byte-pair-encoding|BPE（byte pair encoding）]]トークン化に基づく「Token Efficiency」** を使う。
 
 - 自然言語はBPEトークナイザで長いトークンに効率よく圧縮される（高いtoken efficiency）。
 - シークレットのようなランダム文字列は短いトークンに細切れになり、圧縮効率が悪い（低いtoken efficiency）。
@@ -22,7 +22,7 @@ LLMのトークナイザで使われるBPEを、シークレット検出の統�
 
 ## その他の特徴
 
-- **式ベースのルールフィルタ**: 検出候補の属性を式で評価してコンテキストに応じたフィルタリングができる（記事では CEL: Common Expression Language で検証ロジックを書けると紹介されている）。
+- **式ベースのルールフィルタ**: 検出候補の属性を式で評価してコンテキストに応じたフィルタリングができる（記事では [[common-expression-language|CEL: Common Expression Language]] で検証ロジックを書けると紹介されている）。
 - **シークレットの有効性検証**: ルール定義から非同期HTTPリクエストを発行し、検出したシークレットが実際に有効かを検証できる。
 - **多様なスキャン対象**: git / ディレクトリ / stdin に加えて、GitHub・GitLab・Hugging Face・S3 などのリモートソースを直接スキャンできる。
 
