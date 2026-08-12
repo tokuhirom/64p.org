@@ -23,9 +23,13 @@
                 <a class="notes-tags-link" href="/notes/rss.xml">📡 RSS</a>
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
+                                    <li><a href="/notes/wasm.html">WebAssembly (Wasm)</a></li>
+                                    <li><a href="/notes/wasi.html">WASI (WebAssembly System Interface)</a></li>
+                                    <li><a href="/notes/topcoat.html">Topcoat</a></li>
+                                    <li><a href="/notes/raku-rakudo-perl6.html">Raku / Rakudo / Perl 6</a></li>
+                                    <li><a href="/notes/pglite.html" class="active">PGlite</a></li>
                                     <li><a href="/notes/postgresql.html">PostgreSQL</a></li>
                                     <li><a href="/notes/pgvector.html">pgvector</a></li>
-                                    <li><a href="/notes/pglite.html" class="active">PGlite</a></li>
                                     <li><a href="/notes/librosa.html">librosa</a></li>
                                     <li><a href="/notes/taylor-series.html">テイラー展開</a></li>
                                     <li><a href="/notes/gradient-descent.html">勾配降下法</a></li>
@@ -78,7 +82,6 @@
                                     <li><a href="/notes/htmx.html">htmx</a></li>
                                     <li><a href="/notes/cro.html">Cro</a></li>
                                     <li><a href="/notes/vllm.html">vLLM</a></li>
-                                    <li><a href="/notes/topcoat.html">Topcoat</a></li>
                                     <li><a href="/notes/linux-virtual-network-lab.html">Linuxだけで作る仮想ネットワークラボ</a></li>
                                     <li><a href="/notes/network-namespace.html">Network Namespace (netns)</a></li>
                                     <li><a href="/notes/open-vswitch.html">Open vSwitch (OVS)</a></li>
@@ -224,7 +227,6 @@
                                     <li><a href="/notes/chicken-rice-hainanese.html">海南鶏飯(シンガポール式チキンライス)</a></li>
                                     <li><a href="/notes/podman.html">Podman</a></li>
                                     <li><a href="/notes/ruriboshi-kamikiri.html">ルリボシカミキリ</a></li>
-                                    <li><a href="/notes/raku-rakudo-perl6.html">Raku / Rakudo / Perl 6</a></li>
                                     <li><a href="/notes/sqlite-fts3.html">FTS3（SQLite）</a></li>
                                     <li><a href="/notes/sqlite.html">SQLite</a></li>
                                     <li><a href="/notes/transaction-isolation-levels.html">トランザクション分離レベル</a></li>
@@ -347,13 +349,13 @@
             <article class="notes-content">
                 <h1>PGlite</h1>
 
-<p><a href="/notes/postgresql.html">PostgreSQL</a>をWebAssemblyにコンパイルし、TypeScript/JavaScriptクライアントライブラリとしてパッケージ化したもの。ElectricSQLプロジェクトが開発している。ブラウザ・Node.js・Bun・Denoで動作し、gzip後3MB以下と軽量。</p>
+<p><a href="/notes/postgresql.html">PostgreSQL</a>を<a href="/notes/wasm.html">WebAssembly</a>にコンパイルし、TypeScript/JavaScriptクライアントライブラリとしてパッケージ化したもの。ElectricSQLプロジェクトが開発している。ブラウザ・Node.js・Bun・Denoで動作し、gzip後3MB以下と軽量。</p>
 
 <p><a class="note-tag" href="/notes/tags/postgresql.html">#postgresql</a> <a class="note-tag" href="/notes/tags/wasm.html">#wasm</a> <a class="note-tag" href="/notes/tags/database.html">#database</a> <a class="note-tag" href="/notes/tags/javascript.html">#javascript</a></p>
 
 <h2>アーキテクチャ上の特徴</h2>
 
-<p>従来の「ブラウザでPostgresを動かす」系のプロジェクトはLinux仮想マシンをWASM上でエミュレートしてその中でPostgresを走らせる方式が多かったが、PGliteはLinux VMを使わず、Postgres自体を直接WASMにコンパイルしている。単一ユーザー・単一コネクション向けの設計になっており、従来のマルチプロセス型Postgresとは前提が異なる。</p>
+<p>従来の「ブラウザでPostgresを動かす」系のプロジェクトはLinux仮想マシンをWasm上でエミュレートしてその中でPostgresを走らせる方式が多かったが、PGliteはLinux VMを使わず、Postgres自体を直接Wasmにコンパイルしている。単一ユーザー・単一コネクション向けの設計になっており、従来のマルチプロセス型Postgresとは前提が異なる。</p>
 
 <h2>基本的な使い方</h2>
 
@@ -405,7 +407,7 @@ await db.query("select 'Hello world' as message;");
                     </ul>
                 </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-13 00:41 / 更新日時: 2026-08-13 00:41</span>
+                    <span>作成日時: 2026-08-13 00:41 / 更新日時: 2026-08-13 07:30</span>
                     <a class="share-x" href="https://twitter.com/intent/tweet?text=PGlite&url=https%3A%2F%2F64p.org%2Fnotes%2Fpglite.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>

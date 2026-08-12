@@ -1,16 +1,16 @@
 ---
 created: 2026-08-13 00:41
-updated: 2026-08-13 00:41
+updated: 2026-08-13 07:30
 ---
 # PGlite
 
-[[postgresql|PostgreSQL]]をWebAssemblyにコンパイルし、TypeScript/JavaScriptクライアントライブラリとしてパッケージ化したもの。ElectricSQLプロジェクトが開発している。ブラウザ・Node.js・Bun・Denoで動作し、gzip後3MB以下と軽量。
+[[postgresql|PostgreSQL]]を[[wasm|WebAssembly]]にコンパイルし、TypeScript/JavaScriptクライアントライブラリとしてパッケージ化したもの。ElectricSQLプロジェクトが開発している。ブラウザ・Node.js・Bun・Denoで動作し、gzip後3MB以下と軽量。
 
 #postgresql #wasm #database #javascript
 
 ## アーキテクチャ上の特徴
 
-従来の「ブラウザでPostgresを動かす」系のプロジェクトはLinux仮想マシンをWASM上でエミュレートしてその中でPostgresを走らせる方式が多かったが、PGliteはLinux VMを使わず、Postgres自体を直接WASMにコンパイルしている。単一ユーザー・単一コネクション向けの設計になっており、従来のマルチプロセス型Postgresとは前提が異なる。
+従来の「ブラウザでPostgresを動かす」系のプロジェクトはLinux仮想マシンをWasm上でエミュレートしてその中でPostgresを走らせる方式が多かったが、PGliteはLinux VMを使わず、Postgres自体を直接Wasmにコンパイルしている。単一ユーザー・単一コネクション向けの設計になっており、従来のマルチプロセス型Postgresとは前提が異なる。
 
 ## 基本的な使い方
 

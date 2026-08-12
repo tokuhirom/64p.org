@@ -1,6 +1,6 @@
 ---
 created: 2026-08-12 19:33
-updated: 2026-08-12 19:37
+updated: 2026-08-13 07:30
 ---
 # Topcoat
 
@@ -16,7 +16,7 @@ flowchart LR
 
 ## 最大の特徴: RustからJSへのクロスコンパイル
 
-LeptosやDioxusのようにWebAssemblyをブラウザに送るのではなく、**マクロで選択したRust式だけをJavaScriptに変換する**方式。
+LeptosやDioxusのように[[wasm|WebAssembly]]をブラウザに送るのではなく、**マクロで選択したRust式だけをJavaScriptに変換する**方式。
 
 - Rustとして型チェックされる
 - 初回レンダリングはサーバー側で評価される

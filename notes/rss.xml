@@ -6,7 +6,90 @@
 <atom:link href="https://64p.org/notes/rss.xml" rel="self" type="application/rss+xml" />
 <description>ちょっと調べたことや検証結果を、AIの力も借りながらメモしていくコーナーです。</description>
 <language>ja</language>
-<lastBuildDate>Thu, 13 Aug 2026 00:41:20 +0900</lastBuildDate>
+<lastBuildDate>Thu, 13 Aug 2026 07:30:03 +0900</lastBuildDate>
+<item>
+<title>WebAssembly (Wasm)</title>
+<link>https://64p.org/notes/wasm.html</link>
+<guid isPermaLink="true">https://64p.org/notes/wasm.html</guid>
+<pubDate>Thu, 13 Aug 2026 07:30:00 +0900</pubDate>
+<description><![CDATA[<h1>WebAssembly (Wasm)</h1>
+
+<p>スタックベースの仮想機械向けバイナリ命令フォーマット。プログラミング言語の移植可能なコンパイルターゲットとして設計されている。</p>
+
+<p><a class="note-tag" href="/notes/tags/wasm.html">#wasm</a> <a class="note-tag" href="/notes/tags/webassembly.html">#webassembly</a></p>
+
+<h2>設計目標</h2>
+
+<ul>
+<li><strong>高速</strong>: ネイティブに近い実行速度を目指す。</li>
+<li><strong>安全</strong>: メモリセーフでサンドボックス化された実行環境。ウェブ埋め込み時はブラウザのセキュリティポリシーが適用される。</li>
+<li><strong>移植可能</strong>: ブラウザ以外の環境(サーバー、エッジ、組込機器など)でも動作する。</li>
+<li><strong>オープン</strong>: デバッグ・テスト・学習用のテキスト形式も定義されている。</li>
+</ul>
+
+
+<h2>フォーマット</h2>
+
+<p>デプロイ用のバイナリ形式(<code>.wasm</code>)と、人間が読めるテキスト形式(<code>.wat</code>)の2つが定義されている。</p>
+
+<h2>仕様の現状</h2>
+
+<p>コア仕様は WebAssembly 3.0(2026年7月28日版)が最新。2025年9月にW3C標準として正式に勧告された。</p>
+
+<h2>対応言語</h2>
+
+<p>Rust、C/C++、Go、AssemblyScriptなど多数の言語からコンパイル可能。<a href="/notes/raku-rakudo-perl6.html">mutsu</a>もWebAssembly化されて公式サイト上のプレイグラウンドで動いている。</p>
+
+<h2>Component Model</h2>
+
+<p>複数のWasmモジュール(異なる言語で書かれたものも含む)を組み合わせてアプリケーションを構築するための仕組み。WIT(WebAssembly Interface Types)というIDLで複雑な型のやり取りを扱う。ブラウザの外でWasmを動かす際のOS機能アクセスは<a href="/notes/wasi.html">WASI</a>が担う。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://webassembly.github.io/spec/core/intro/introduction.html">Introduction — WebAssembly 3.0</a></li>
+<li><a href="https://webassembly.org/">webassembly.org</a></li>
+<li><a href="https://devnewsletter.com/p/state-of-webassembly-2026/">State of WebAssembly 2026</a></li>
+</ul>
+
+]]></description>
+</item>
+<item>
+<title>WASI (WebAssembly System Interface)</title>
+<link>https://64p.org/notes/wasi.html</link>
+<guid isPermaLink="true">https://64p.org/notes/wasi.html</guid>
+<pubDate>Thu, 13 Aug 2026 07:30:00 +0900</pubDate>
+<description><![CDATA[<h1>WASI (WebAssembly System Interface)</h1>
+
+<p><a href="/notes/wasm.html">WebAssembly</a>にコンパイルされたソフトウェアがファイル・ネットワーク・時刻・乱数などOS機能にアクセスするための標準API仕様群。ブラウザのサンドボックスの外(サーバー・エッジ・組込機器)でWasmを動かす際の「システムコール」に相当する。</p>
+
+<p><a class="note-tag" href="/notes/tags/wasm.html">#wasm</a> <a class="note-tag" href="/notes/tags/webassembly.html">#webassembly</a> <a class="note-tag" href="/notes/tags/wasi.html">#wasi</a></p>
+
+<h2>必要性</h2>
+
+<p>HTTPマイクロサービスのような重い仕組みなしに、異なる言語で書かれたコンポーネント同士を安全に組み合わせられるようにする。プラグインモデルやマルチ言語SDKを持つプロジェクトに向く。</p>
+
+<h2>バージョン推移</h2>
+
+<p>Preview 1 → Preview 2(WASI 0.2、モジュール化されComponent Model上に構築、安定版) → Preview 3(WASI 0.3、2026年2月導入。<code>stream&lt;T&gt;</code>/<code>future&lt;T&gt;</code>によるネイティブ非同期I/Oサポートを追加)。</p>
+
+<h2>セキュリティモデル</h2>
+
+<p>capability-basedサンドボックス。Wasmモジュール/コンポーネントは起動時に権限を一切持たず、ホスト側が明示的に許可した操作しか実行できない。</p>
+
+<h2>代表的なランタイム</h2>
+
+<p>Wasmtime、WasmEdge、WAMR、wazero(Go製)、Wasmer、wasmi/wasm3(組込向け軽量実装)など。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://wasi.dev/">Introduction · WASI.dev</a></li>
+<li><a href="https://eunomia.dev/blog/2025/02/16/wasi-and-the-webassembly-component-model-current-status/">WASI and the WebAssembly Component Model: Current Status</a></li>
+</ul>
+
+]]></description>
+</item>
 <item>
 <title>PGlite</title>
 <link>https://64p.org/notes/pglite.html</link>
@@ -14,13 +97,13 @@
 <pubDate>Thu, 13 Aug 2026 00:41:00 +0900</pubDate>
 <description><![CDATA[<h1>PGlite</h1>
 
-<p><a href="/notes/postgresql.html">PostgreSQL</a>をWebAssemblyにコンパイルし、TypeScript/JavaScriptクライアントライブラリとしてパッケージ化したもの。ElectricSQLプロジェクトが開発している。ブラウザ・Node.js・Bun・Denoで動作し、gzip後3MB以下と軽量。</p>
+<p><a href="/notes/postgresql.html">PostgreSQL</a>を<a href="/notes/wasm.html">WebAssembly</a>にコンパイルし、TypeScript/JavaScriptクライアントライブラリとしてパッケージ化したもの。ElectricSQLプロジェクトが開発している。ブラウザ・Node.js・Bun・Denoで動作し、gzip後3MB以下と軽量。</p>
 
 <p><a class="note-tag" href="/notes/tags/postgresql.html">#postgresql</a> <a class="note-tag" href="/notes/tags/wasm.html">#wasm</a> <a class="note-tag" href="/notes/tags/database.html">#database</a> <a class="note-tag" href="/notes/tags/javascript.html">#javascript</a></p>
 
 <h2>アーキテクチャ上の特徴</h2>
 
-<p>従来の「ブラウザでPostgresを動かす」系のプロジェクトはLinux仮想マシンをWASM上でエミュレートしてその中でPostgresを走らせる方式が多かったが、PGliteはLinux VMを使わず、Postgres自体を直接WASMにコンパイルしている。単一ユーザー・単一コネクション向けの設計になっており、従来のマルチプロセス型Postgresとは前提が異なる。</p>
+<p>従来の「ブラウザでPostgresを動かす」系のプロジェクトはLinux仮想マシンをWasm上でエミュレートしてその中でPostgresを走らせる方式が多かったが、PGliteはLinux VMを使わず、Postgres自体を直接Wasmにコンパイルしている。単一ユーザー・単一コネクション向けの設計になっており、従来のマルチプロセス型Postgresとは前提が異なる。</p>
 
 <h2>基本的な使い方</h2>
 
@@ -1711,64 +1794,6 @@ graph TD
 <li><a href="https://en.wikipedia.org/wiki/OpenJS_Foundation">OpenJS Foundation - Wikipedia</a></li>
 <li><a href="https://www.linuxfoundation.org/press/press-release/node-js-foundation-and-js-foundation-merge-to-form-openjs-foundation">Node.js Foundation and JS Foundation Merge to Form OpenJS Foundation - Linux Foundation</a></li>
 <li><a href="https://openjsf.org/">OpenJS Foundation</a></li>
-</ul>
-
-]]></description>
-</item>
-<item>
-<title>JSLint</title>
-<link>https://64p.org/notes/jslint.html</link>
-<guid isPermaLink="true">https://64p.org/notes/jslint.html</guid>
-<pubDate>Wed, 12 Aug 2026 23:21:00 +0900</pubDate>
-<description><![CDATA[<h1>JSLint</h1>
-
-<p>Douglas Crockford氏（JSONの考案者として知られる）が2002年に公開した、JavaScript向け静的解析ツール。最初期のJavaScriptリンターとされる。jslint.comのWebアプリケーションとして提供されたのが始まり。 <a class="note-tag" href="/notes/tags/javascript.html">#javascript</a></p>
-
-<h2>設定不可というオピニオン型設計</h2>
-
-<p>後発のリンターと違い、意図的に設定変更をほぼ許さない設計だった。Crockford氏の考える「正しいJavaScript」を強制するツールであり、この柔軟性のなさへの不満が<a href="/notes/jshint.html">JSHint</a>のフォーク（2011年）、さらにカスタムルールを書けない制約への不満が<a href="/notes/eslint.html">ESLint</a>の誕生（2013年）につながった。</p>
-
-<h2>&ldquo;Good, not Evil&rdquo; ライセンス条項</h2>
-
-<p>ライセンスはMITベースだが「The Software shall be used for Good, not Evil.（本ソフトウェアは善のために使われるべきであり、悪のために使われてはならない）」という条項が追加されていた。この道徳的制約のためFree Software Foundationからは非フリーなライセンスと分類され、Google CodeでのホスティングやDebianリポジトリへの収録ができないという実害があった。</p>
-
-<p>2011年にはIBMが「顧客がこの制約なしにJSLintを使えるようにしてほしい」と問い合わせ、Crockford氏が「IBMとその顧客・パートナー・手下（minions）がJSLintを悪のために使うことを許可する」と返答した逸話がある。2021年にUnlicense（FSF/OSI承認済み）へ移行し、長年のライセンス問題は解消された。</p>
-
-<h2><a href="/notes/javascript-linters-formatters.html">JavaScriptのリンター・フォーマッター</a>の中での位置づけ</h2>
-
-<p>JSリンターの系譜の始祖。JSLint → <a href="/notes/jshint.html">JSHint</a> → <a href="/notes/eslint.html">ESLint</a>という流れの起点。</p>
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://en.wikipedia.org/wiki/JSLint">JSLint - Wikipedia</a></li>
-<li><a href="https://en.wikipedia.org/wiki/JSHint">JSHint - Wikipedia</a></li>
-</ul>
-
-]]></description>
-</item>
-<item>
-<title>JSHint</title>
-<link>https://64p.org/notes/jshint.html</link>
-<guid isPermaLink="true">https://64p.org/notes/jshint.html</guid>
-<pubDate>Wed, 12 Aug 2026 23:21:00 +0900</pubDate>
-<description><![CDATA[<h1>JSHint</h1>
-
-<p>Anton Kovalyov氏が2011年に<a href="/notes/jslint.html">JSLint</a>をフォークして作ったJavaScriptリンター。フォークの動機は「JSLintは不快なほどオピニオン化していた（uncomfortably opinionated）」というもので、JSLintが許さなかったルールのカスタマイズをコミュニティ主導で可能にした。 <a class="note-tag" href="/notes/tags/javascript.html">#javascript</a></p>
-
-<h2>ライセンス問題の継承と解消</h2>
-
-<p>フォーク元のJSLint由来のコードに「Good, not Evil」条項（詳細は<a href="/notes/jslint.html">JSLint</a>参照）が残っていたため、JSHintも長年Free Software Foundationから非フリー扱いされていた。2020年8月に該当コードをすべて置き換えて完全なMITライセンスとなり、問題が解消された。</p>
-
-<h2><a href="/notes/javascript-linters-formatters.html">JavaScriptのリンター・フォーマッター</a>の中での位置づけ</h2>
-
-<p>JSリンター系譜の中間世代。<a href="/notes/jslint.html">JSLint</a>の「設定不可」への反発から生まれたが、独自ルールの追加はできず、その制約への不満から<a href="/notes/eslint.html">ESLint</a>が生まれた。「設定可能」（JSHint）から「プラガブル」（ESLint）への進化の途中段階といえる。</p>
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://en.wikipedia.org/wiki/JSHint">JSHint - Wikipedia</a></li>
-<li><a href="https://en.wikipedia.org/wiki/JSLint">JSLint - Wikipedia</a></li>
 </ul>
 
 ]]></description>
