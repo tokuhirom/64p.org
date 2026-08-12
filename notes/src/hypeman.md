@@ -1,6 +1,6 @@
 ---
 created: 2026-08-12 23:14
-updated: 2026-08-12 23:14
+updated: 2026-08-12 23:25
 ---
 # Hypeman
 
@@ -26,6 +26,10 @@ updated: 2026-08-12 23:14
 ## 位置づけ
 
 Firecracker/Cloud HypervisorのようなVMM(Virtual Machine Monitor)単体を、Docker的な使い勝手のCLI/APIで統一的に扱えるようにするレイヤー。開発元がAI agent向けインフラ企業であることから、サンドボックス実行環境としての用途が想定されると見られる（README上に明記はないため推測）。
+
+## [[microvm-ecosystem|コンテナ向け軽量VM技術]]の中での位置づけ
+
+VMMを直接扱わず、OCIイメージのpull・実行というDocker互換の使い勝手を提供する統合レイヤーの一つ。
 
 ## 出典
 

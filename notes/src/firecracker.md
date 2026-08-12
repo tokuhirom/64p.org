@@ -1,6 +1,6 @@
 ---
 created: 2026-08-12 23:14
-updated: 2026-08-12 23:23
+updated: 2026-08-12 23:25
 ---
 # Firecracker
 
@@ -30,6 +30,10 @@ FirecrackerはVMMであり、扱うのはカーネルイメージとrootfsのブ
 - [[kata-containers|Kata Containers]] — containerdのdevmapperスナップショッタで、コンテナのrootfsをvirtio blockデバイスとしてVMにホットプラグする
 
 [[hypeman|Hypeman]]は、この「OCIイメージ→VM rootfs変換」レイヤーを自前で実装し、Docker互換の使い勝手を提供している。
+
+## [[microvm-ecosystem|コンテナ向け軽量VM技術]]の中での位置づけ
+
+[[cloud-hypervisor|Cloud Hypervisor]]と並ぶ、土台となるVMM実装の一つ。
 
 ## 出典
 

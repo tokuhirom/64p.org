@@ -1,6 +1,6 @@
 ---
 created: 2026-08-12 23:14
-updated: 2026-08-12 23:20
+updated: 2026-08-12 23:25
 ---
 # microVM
 
@@ -31,6 +31,10 @@ updated: 2026-08-12 23:20
 ## 用途
 
 サーバーレス実行環境やAIエージェント向けサンドボックスなど、マルチテナントで多数の短命なワークロードを高速に隔離・起動する必要がある場面で採用される。[[hypeman|Hypeman]]はFirecracker/Cloud Hypervisor/QEMU/Apple Virtualization.frameworkを切り替え可能な形で統一的に扱うランタイム。
+
+## [[microvm-ecosystem|コンテナ向け軽量VM技術]]の中での位置づけ
+
+コンテナ向け軽量VM技術群の土台となる概念そのもの。
 
 ## 出典
 

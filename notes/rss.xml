@@ -6,7 +6,43 @@
 <atom:link href="https://64p.org/notes/rss.xml" rel="self" type="application/rss+xml" />
 <description>ちょっと調べたことや検証結果を、AIの力も借りながらメモしていくコーナーです。</description>
 <language>ja</language>
-<lastBuildDate>Wed, 12 Aug 2026 23:23:40 +0900</lastBuildDate>
+<lastBuildDate>Wed, 12 Aug 2026 23:25:14 +0900</lastBuildDate>
+<item>
+<title>コンテナ向け軽量VM技術</title>
+<link>https://64p.org/notes/microvm-ecosystem.html</link>
+<guid isPermaLink="true">https://64p.org/notes/microvm-ecosystem.html</guid>
+<pubDate>Wed, 12 Aug 2026 23:25:00 +0900</pubDate>
+<description><![CDATA[<h1>コンテナ向け軽量VM技術</h1>
+
+<p>コンテナのカーネル共有による分離の弱さを、VMレベルの分離で補おうとする一群の技術。<a href="/notes/microvm.html">microVM</a>という土台技術の上に、それをコンテナのエコシステム(OCIイメージ・containerd・Kubernetes)と繋ぐレイヤーが複数存在する。</p>
+
+<p><a class="note-tag" href="/notes/tags/virtualization.html">#virtualization</a> <a class="note-tag" href="/notes/tags/moc.html">#moc</a></p>
+
+<h2>土台: VMM(Virtual Machine Monitor)</h2>
+
+<ul>
+<li><a href="/notes/microvm.html">microVM</a> — デバイスモデルを最小化した軽量VMという概念そのもの。なぜ起動が速いかを解説</li>
+<li><a href="/notes/firecracker.html">Firecracker</a> — AWS製。AWS Lambda/Fargateを支えるmicroVM実装</li>
+<li><a href="/notes/cloud-hypervisor.html">Cloud Hypervisor</a> — Intel主導・Rust製。rust-vmm由来でFirecrackerの実装を参考にしている</li>
+</ul>
+
+
+<h2>コンテナエコシステムとの統合レイヤー</h2>
+
+<p>FirecrackerなどのVMMは素のカーネル+rootfsしか扱えないため、OCIイメージ/containerd/Kubernetesと繋ぐには別レイヤーが必要になる。</p>
+
+<ul>
+<li><a href="/notes/kata-containers.html">Kata Containers</a> — OpenStack Foundation発。OCI/CRI互換のコンテナランタイムとして、Firecracker/Cloud Hypervisor/QEMUなど複数のVMMを横断的にバックエンドとして選べる</li>
+<li><a href="/notes/firecracker-containerd.html">firecracker-containerd</a> — AWS製。containerd専用のFirecracker統合プラグイン</li>
+<li><a href="/notes/hypeman.html">Hypeman</a> — Kernel社製。OCIイメージのpull・実行をDocker互換CLIで扱えるようにした、マルチハイパーバイザー対応のランタイム</li>
+</ul>
+
+
+<h2>出典</h2>
+
+<p>各ノートの出典セクションを参照。</p>
+]]></description>
+</item>
 <item>
 <title>Kata Containers</title>
 <link>https://64p.org/notes/kata-containers.html</link>
@@ -27,6 +63,10 @@
 <h2><a href="/notes/firecracker-containerd.html">firecracker-containerd</a>との違い</h2>
 
 <p>どちらもFirecrackerをバックエンドにコンテナへVM分離を与える点は共通するが、Kata ContainersはOCI/CRI互換のコンテナランタイムそのものとして複数のVMM・複数のコンテナランタイム統合先を横断的にサポートするのに対し、firecracker-containerdはAWSが開発しているcontainerd専用のFirecracker統合という位置づけの違いがある。</p>
+
+<h2><a href="/notes/microvm-ecosystem.html">コンテナ向け軽量VM技術</a>の中での位置づけ</h2>
+
+<p>複数のVMMを横断的にバックエンドとして選べる、OCI/CRI互換のコンテナランタイム統合レイヤー。</p>
 
 <h2>出典</h2>
 
@@ -59,6 +99,10 @@
 <h2><a href="/notes/kata-containers.html">Kata Containers</a>との違い</h2>
 
 <p>Kata ContainersがOCI/CRI互換のコンテナランタイムとして複数のVMM・複数のコンテナランタイム統合先を横断的にサポートするのに対し、firecracker-containerdはAWSが開発する、containerd専用のFirecracker統合という位置づけ。</p>
+
+<h2><a href="/notes/microvm-ecosystem.html">コンテナ向け軽量VM技術</a>の中での位置づけ</h2>
+
+<p>containerd専用のFirecracker統合レイヤー。</p>
 
 <h2>出典</h2>
 
@@ -304,59 +348,6 @@ graph LR
 ]]></description>
 </item>
 <item>
-<title>Firecracker</title>
-<link>https://64p.org/notes/firecracker.html</link>
-<guid isPermaLink="true">https://64p.org/notes/firecracker.html</guid>
-<pubDate>Wed, 12 Aug 2026 23:14:00 +0900</pubDate>
-<description><![CDATA[<h1>Firecracker</h1>
-
-<p>AWSが開発したオープンソースの<a href="/notes/microvm.html">microVM</a>向けVMM(Virtual Machine Monitor)。LinuxのKVMを使って軽量な仮想マシンを作成・実行する。Apache License 2.0。 <a class="note-tag" href="/notes/tags/virtualization.html">#virtualization</a> <a class="note-tag" href="/notes/tags/aws.html">#aws</a></p>
-
-<h2>性能</h2>
-
-<ul>
-<li>microVMの起動時間は最短125ミリ秒</li>
-<li>1VMあたりのメモリオーバーヘッドは5MiB未満</li>
-<li>単一ホスト上で毎秒最大150台のmicroVMを作成可能</li>
-</ul>
-
-
-<h2>設計思想</h2>
-
-<p>不要なデバイスやゲスト向け機能を排除したミニマリストな設計。これによりメモリフットプリントとアタックサーフェスを削減しつつ、起動時間の短縮とハードウェア利用効率の向上を実現している。</p>
-
-<h2>用途</h2>
-
-<p>AWS LambdaおよびAWS Fargateを支える基盤技術として、月間数兆回規模の関数実行を処理している。サーバーレス関数に限らず、AIコードの実行サンドボックスなど幅広いワークロードでも採用が広がっている。<a href="/notes/cloud-hypervisor.html">Cloud Hypervisor</a>の実装コードの一部はFirecrackerの実装を参考にしている。</p>
-
-<h2>OCIイメージは直接扱えない</h2>
-
-<p>FirecrackerはVMMであり、扱うのはカーネルイメージとrootfsのブロックデバイスイメージ(ext4等)のみ。OCIイメージという概念自体を解釈する機能は持たない。OCIイメージをFirecracker上で動かすには、事前にレイヤーをrootfsのext4イメージへ変換するレイヤーが別途必要になる。代表的なアプローチ:</p>
-
-<ul>
-<li>手動変換 — コンテナのrootfsをtar化し、空のext4イメージへ展開する</li>
-<li>Weave Ignite — OCIイメージのrootfsをそのままVMのrootfsとして起動する</li>
-<li><a href="/notes/firecracker-containerd.html">firecracker-containerd</a> — containerdのプラグインとしてFirecrackerをコンテナの分離レイヤーに使う</li>
-<li><a href="/notes/kata-containers.html">Kata Containers</a> — containerdのdevmapperスナップショッタで、コンテナのrootfsをvirtio blockデバイスとしてVMにホットプラグする</li>
-</ul>
-
-
-<p><a href="/notes/hypeman.html">Hypeman</a>は、この「OCIイメージ→VM rootfs変換」レイヤーを自前で実装し、Docker互換の使い勝手を提供している。</p>
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://aws.amazon.com/blogs/opensource/firecracker-open-source-secure-fast-microvm-serverless/">Announcing the Firecracker Open Source Technology | AWS Open Source Blog</a></li>
-<li><a href="https://github.com/firecracker-microvm/firecracker">GitHub - firecracker-microvm/firecracker</a></li>
-<li><a href="https://northflank.com/blog/what-is-aws-firecracker">What is AWS Firecracker? The microVM technology, explained | Northflank</a></li>
-<li><a href="https://github.com/arcboxlabs/oci2rootfs">GitHub - arcboxlabs/oci2rootfs</a></li>
-<li><a href="https://github.com/weaveworks/ignite">GitHub - weaveworks/ignite</a></li>
-<li><a href="https://github.com/kata-containers/kata-containers/blob/main/docs/how-to/how-to-use-kata-containers-with-firecracker.md">Kata Containers: how-to-use-kata-containers-with-firecracker.md</a></li>
-</ul>
-
-]]></description>
-</item>
-<item>
 <title>microVM</title>
 <link>https://64p.org/notes/microvm.html</link>
 <guid isPermaLink="true">https://64p.org/notes/microvm.html</guid>
@@ -399,6 +390,10 @@ graph LR
 <h2>用途</h2>
 
 <p>サーバーレス実行環境やAIエージェント向けサンドボックスなど、マルチテナントで多数の短命なワークロードを高速に隔離・起動する必要がある場面で採用される。<a href="/notes/hypeman.html">Hypeman</a>はFirecracker/Cloud Hypervisor/QEMU/Apple Virtualization.frameworkを切り替え可能な形で統一的に扱うランタイム。</p>
+
+<h2><a href="/notes/microvm-ecosystem.html">コンテナ向け軽量VM技術</a>の中での位置づけ</h2>
+
+<p>コンテナ向け軽量VM技術群の土台となる概念そのもの。</p>
 
 <h2>出典</h2>
 
@@ -448,11 +443,72 @@ graph LR
 
 <p>Firecracker/Cloud HypervisorのようなVMM(Virtual Machine Monitor)単体を、Docker的な使い勝手のCLI/APIで統一的に扱えるようにするレイヤー。開発元がAI agent向けインフラ企業であることから、サンドボックス実行環境としての用途が想定されると見られる（README上に明記はないため推測）。</p>
 
+<h2><a href="/notes/microvm-ecosystem.html">コンテナ向け軽量VM技術</a>の中での位置づけ</h2>
+
+<p>VMMを直接扱わず、OCIイメージのpull・実行というDocker互換の使い勝手を提供する統合レイヤーの一つ。</p>
+
 <h2>出典</h2>
 
 <ul>
 <li><a href="https://github.com/kernel/hypeman">GitHub - kernel/hypeman</a></li>
 <li><a href="https://www.kernel.sh">Kernel</a></li>
+</ul>
+
+]]></description>
+</item>
+<item>
+<title>Firecracker</title>
+<link>https://64p.org/notes/firecracker.html</link>
+<guid isPermaLink="true">https://64p.org/notes/firecracker.html</guid>
+<pubDate>Wed, 12 Aug 2026 23:14:00 +0900</pubDate>
+<description><![CDATA[<h1>Firecracker</h1>
+
+<p>AWSが開発したオープンソースの<a href="/notes/microvm.html">microVM</a>向けVMM(Virtual Machine Monitor)。LinuxのKVMを使って軽量な仮想マシンを作成・実行する。Apache License 2.0。 <a class="note-tag" href="/notes/tags/virtualization.html">#virtualization</a> <a class="note-tag" href="/notes/tags/aws.html">#aws</a></p>
+
+<h2>性能</h2>
+
+<ul>
+<li>microVMの起動時間は最短125ミリ秒</li>
+<li>1VMあたりのメモリオーバーヘッドは5MiB未満</li>
+<li>単一ホスト上で毎秒最大150台のmicroVMを作成可能</li>
+</ul>
+
+
+<h2>設計思想</h2>
+
+<p>不要なデバイスやゲスト向け機能を排除したミニマリストな設計。これによりメモリフットプリントとアタックサーフェスを削減しつつ、起動時間の短縮とハードウェア利用効率の向上を実現している。</p>
+
+<h2>用途</h2>
+
+<p>AWS LambdaおよびAWS Fargateを支える基盤技術として、月間数兆回規模の関数実行を処理している。サーバーレス関数に限らず、AIコードの実行サンドボックスなど幅広いワークロードでも採用が広がっている。<a href="/notes/cloud-hypervisor.html">Cloud Hypervisor</a>の実装コードの一部はFirecrackerの実装を参考にしている。</p>
+
+<h2>OCIイメージは直接扱えない</h2>
+
+<p>FirecrackerはVMMであり、扱うのはカーネルイメージとrootfsのブロックデバイスイメージ(ext4等)のみ。OCIイメージという概念自体を解釈する機能は持たない。OCIイメージをFirecracker上で動かすには、事前にレイヤーをrootfsのext4イメージへ変換するレイヤーが別途必要になる。代表的なアプローチ:</p>
+
+<ul>
+<li>手動変換 — コンテナのrootfsをtar化し、空のext4イメージへ展開する</li>
+<li>Weave Ignite — OCIイメージのrootfsをそのままVMのrootfsとして起動する</li>
+<li><a href="/notes/firecracker-containerd.html">firecracker-containerd</a> — containerdのプラグインとしてFirecrackerをコンテナの分離レイヤーに使う</li>
+<li><a href="/notes/kata-containers.html">Kata Containers</a> — containerdのdevmapperスナップショッタで、コンテナのrootfsをvirtio blockデバイスとしてVMにホットプラグする</li>
+</ul>
+
+
+<p><a href="/notes/hypeman.html">Hypeman</a>は、この「OCIイメージ→VM rootfs変換」レイヤーを自前で実装し、Docker互換の使い勝手を提供している。</p>
+
+<h2><a href="/notes/microvm-ecosystem.html">コンテナ向け軽量VM技術</a>の中での位置づけ</h2>
+
+<p><a href="/notes/cloud-hypervisor.html">Cloud Hypervisor</a>と並ぶ、土台となるVMM実装の一つ。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://aws.amazon.com/blogs/opensource/firecracker-open-source-secure-fast-microvm-serverless/">Announcing the Firecracker Open Source Technology | AWS Open Source Blog</a></li>
+<li><a href="https://github.com/firecracker-microvm/firecracker">GitHub - firecracker-microvm/firecracker</a></li>
+<li><a href="https://northflank.com/blog/what-is-aws-firecracker">What is AWS Firecracker? The microVM technology, explained | Northflank</a></li>
+<li><a href="https://github.com/arcboxlabs/oci2rootfs">GitHub - arcboxlabs/oci2rootfs</a></li>
+<li><a href="https://github.com/weaveworks/ignite">GitHub - weaveworks/ignite</a></li>
+<li><a href="https://github.com/kata-containers/kata-containers/blob/main/docs/how-to/how-to-use-kata-containers-with-firecracker.md">Kata Containers: how-to-use-kata-containers-with-firecracker.md</a></li>
 </ul>
 
 ]]></description>
@@ -484,6 +540,10 @@ graph LR
 <h2>用途</h2>
 
 <p><a href="/notes/microvm.html">microVM</a>型のVMMとして、<a href="/notes/hypeman.html">Hypeman</a>など複数ハイパーバイザーを切り替え可能なランタイムの選択肢の一つに採用されている。</p>
+
+<h2><a href="/notes/microvm-ecosystem.html">コンテナ向け軽量VM技術</a>の中での位置づけ</h2>
+
+<p><a href="/notes/firecracker.html">Firecracker</a>と並ぶ、土台となるVMM実装の一つ。</p>
 
 <h2>出典</h2>
 
@@ -1421,54 +1481,6 @@ IP 10.99.0.2 &gt; 10.99.0.1: ICMP echo reply, id 31448, seq 1, length 64
 <li><a href="https://www.man7.org/linux/man-pages/man2/seccomp.2.html">seccomp(2) - Linux manual page</a></li>
 <li><a href="https://www.kernel.org/doc/html/v4.19/userspace-api/seccomp_filter.html">Seccomp BPF (SECure COMPuting with filters) — The Linux Kernel documentation</a></li>
 <li><a href="https://www.armosec.io/blog/seccomp-internals-part-1/">Seccomp: Enhance Security for Linux Applications - ARMO</a></li>
-</ul>
-
-]]></description>
-</item>
-<item>
-<title>VXLAN</title>
-<link>https://64p.org/notes/vxlan.html</link>
-<guid isPermaLink="true">https://64p.org/notes/vxlan.html</guid>
-<pubDate>Wed, 12 Aug 2026 17:51:00 +0900</pubDate>
-<description><![CDATA[<h1>VXLAN</h1>
-
-<p>Virtual eXtensible Local Area Networkの略。L3ネットワークの上にL2のオーバーレイネットワークを構築するトンネリング技術。RFC 7348(2014年、Informational)で標準化されており、Cisco・VMware・Arista・Broadcom・Red Hatなど複数ベンダーが共著者として名を連ねている。 <a class="note-tag" href="/notes/tags/network.html">#network</a> <a class="note-tag" href="/notes/tags/sdn.html">#sdn</a> <a class="note-tag" href="/notes/tags/datacenter.html">#datacenter</a></p>
-
-<h2>生まれた背景</h2>
-
-<p>従来の<a href="/notes/vlan.html">IEEE 802.1Q VLAN</a>はVLAN IDが12bitしかなく、最大4094セグメントしか作れない。クラウド/データセンターの仮想化環境では、これが以下の理由で不足するようになった。</p>
-
-<ul>
-<li>マルチテナント環境で、テナントごとに複数VLANが必要になり数が枯渇する</li>
-<li>1台のサーバに数百台のVMが載ることで、ToR(Top-of-Rack)スイッチのMACアドレステーブルへの圧力が増大する</li>
-<li>複数ラック間でL2セグメントを「延伸」させたいニーズ(VM移行など)がある</li>
-</ul>
-
-
-<p>VXLANは24bitのVNI(VXLAN Network Identifier)を使うことで、理論上1,600万以上のセグメントを識別可能にし、この制約を解消した。</p>
-
-<h2>仕組み</h2>
-
-<p>L2フレームをまるごとUDPパケットに包んでL3ネットワーク上を運ぶ、いわゆる「MAC over UDP」方式。</p>
-
-<pre><code>外側Ethernetヘッダ → 外側IPヘッダ → 外側UDPヘッダ(宛先ポート4789) → VXLANヘッダ(VNI 24bit) → 元のEthernetフレーム
-</code></pre>
-
-<ul>
-<li>カプセル化・逆カプセル化を行う終端ノードを<strong>VTEP(VXLAN Tunnel End Point)</strong>と呼ぶ。ハイパーバイザー上のソフトウェアスイッチとして実装されることが多いが、物理スイッチに実装される場合もある。</li>
-<li>宛先UDPポートはIANA割り当ての<strong>4789</strong>固定。送信元ポートは内部フレームの内容からハッシュ計算した動的ポートで、ECMPによる経路上の負荷分散を意図している。</li>
-</ul>
-
-
-<h2>ブロードキャスト・マルチキャストの扱い</h2>
-
-<p>ARPなどのブロードキャストフレームは、VNIに対応付けられたIPマルチキャストグループへ送信される。応答フレームは、リクエスト受信時に学習した宛先VTEPのIPアドレスへユニキャストで返送されるため、不要なフラッディングを避けられる。コントロールプレーンにEVPNを使う実装では、このマルチキャストが不要な構成も存在する。</p>
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://www.rfc-editor.org/rfc/rfc7348">RFC 7348 - Virtual eXtensible Local Area Network (VXLAN)</a></li>
-<li><a href="https://www.rfc-editor.org/info/rfc7348/">RFC 7348 info page</a></li>
 </ul>
 
 ]]></description>

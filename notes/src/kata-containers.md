@@ -1,6 +1,6 @@
 ---
 created: 2026-08-12 23:23
-updated: 2026-08-12 23:23
+updated: 2026-08-12 23:25
 ---
 # Kata Containers
 
@@ -17,6 +17,10 @@ VMの持つセキュリティ上の分離性と、コンテナの持つ速度・
 ## [[firecracker-containerd|firecracker-containerd]]との違い
 
 どちらもFirecrackerをバックエンドにコンテナへVM分離を与える点は共通するが、Kata ContainersはOCI/CRI互換のコンテナランタイムそのものとして複数のVMM・複数のコンテナランタイム統合先を横断的にサポートするのに対し、firecracker-containerdはAWSが開発しているcontainerd専用のFirecracker統合という位置づけの違いがある。
+
+## [[microvm-ecosystem|コンテナ向け軽量VM技術]]の中での位置づけ
+
+複数のVMMを横断的にバックエンドとして選べる、OCI/CRI互換のコンテナランタイム統合レイヤー。
 
 ## 出典
 

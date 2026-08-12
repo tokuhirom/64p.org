@@ -1,6 +1,6 @@
 ---
 created: 2026-08-12 23:23
-updated: 2026-08-12 23:23
+updated: 2026-08-12 23:25
 ---
 # firecracker-containerd
 
@@ -15,6 +15,10 @@ AWSが開発する、containerdに[[firecracker|Firecracker]]をコンテナのV
 ## [[kata-containers|Kata Containers]]との違い
 
 Kata ContainersがOCI/CRI互換のコンテナランタイムとして複数のVMM・複数のコンテナランタイム統合先を横断的にサポートするのに対し、firecracker-containerdはAWSが開発する、containerd専用のFirecracker統合という位置づけ。
+
+## [[microvm-ecosystem|コンテナ向け軽量VM技術]]の中での位置づけ
+
+containerd専用のFirecracker統合レイヤー。
 
 ## 出典
 

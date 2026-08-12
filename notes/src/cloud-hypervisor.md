@@ -1,6 +1,6 @@
 ---
 created: 2026-08-12 23:14
-updated: 2026-08-12 23:14
+updated: 2026-08-12 23:25
 ---
 # Cloud Hypervisor
 
@@ -21,6 +21,10 @@ rust-vmmプロジェクト（仮想化用のRust製クレートを各プロジ�
 ## 用途
 
 [[microvm|microVM]]型のVMMとして、[[hypeman|Hypeman]]など複数ハイパーバイザーを切り替え可能なランタイムの選択肢の一つに採用されている。
+
+## [[microvm-ecosystem|コンテナ向け軽量VM技術]]の中での位置づけ
+
+[[firecracker|Firecracker]]と並ぶ、土台となるVMM実装の一つ。
 
 ## 出典
 
