@@ -1,6 +1,6 @@
 ---
 created: 2026-08-11 07:41
-updated: 2026-08-12 20:41
+updated: 2026-08-12 20:43
 ---
 # ブラウザの生TCP/UDPソケット制限
 
@@ -14,7 +14,7 @@ ChromeなどでTCP/UDPソケットを直接開ける「**Direct Sockets API**」
 
 ## 将来的な動き：WebTransport
 
-HTTP/3（QUIC）ベースの新しい多重化通信API「WebTransport」の標準化も進行中（W3Cで2026年内にCandidate Recommendation入りを目指している段階）。ただしこれも任意の生TCPを喋れるようにするものではなく、QUIC/HTTP3上の多重化トランスポートという位置づけ。
+HTTP/3（QUIC）ベースの新しい多重化通信API「[[webtransport|WebTransport]]」の標準化も進行中（W3Cで2026年内にCandidate Recommendation入りを目指している段階）。ただしこれも任意の生TCPを喋れるようにするものではなく、QUIC/HTTP3上の多重化トランスポートという位置づけ。
 
 ## 出典
 

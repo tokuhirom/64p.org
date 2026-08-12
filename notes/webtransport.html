@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>名古屋港統一ターミナルシステム(NUTS)ランサムウェア事案（2023年） - Notes - 64p.org</title>
+    <title>WebTransport - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/highlight.js@11/styles/github.min.css" media="(prefers-color-scheme: light)">
@@ -21,7 +21,7 @@
                 <a class="notes-tags-link" href="/notes/tags/">🏷️ タグ一覧</a>
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
-                                    <li><a href="/notes/webtransport.html">WebTransport</a></li>
+                                    <li><a href="/notes/webtransport.html" class="active">WebTransport</a></li>
                                     <li><a href="/notes/websocket.html">WebSocket</a></li>
                                     <li><a href="/notes/browser-raw-tcp-restriction.html">ブラウザの生TCP/UDPソケット制限</a></li>
                                     <li><a href="/notes/websockify.html">websockify</a></li>
@@ -94,7 +94,7 @@
                                     <li><a href="/notes/burp-suite.html">Burp Suite</a></li>
                                     <li><a href="/notes/ransomware.html">ランサムウェア</a></li>
                                     <li><a href="/notes/osaka-general-medical-center-ransomware-2022.html">大阪急性期・総合医療センターランサムウェア事案（2022年）</a></li>
-                                    <li><a href="/notes/nagoya-port-ransomware-2023.html" class="active">名古屋港統一ターミナルシステム(NUTS)ランサムウェア事案（2023年）</a></li>
+                                    <li><a href="/notes/nagoya-port-ransomware-2023.html">名古屋港統一ターミナルシステム(NUTS)ランサムウェア事案（2023年）</a></li>
                                     <li><a href="/notes/kojima-press-ransomware-2022.html">小島プレス工業ランサムウェア事案（2022年）</a></li>
                                     <li><a href="/notes/kadokawa-ransomware-2024.html">KADOKAWAランサムウェア事案（2024年）</a></li>
                                     <li><a href="/notes/japan-ransomware-incidents.html">国内ランサムウェア被害事例</a></li>
@@ -304,50 +304,53 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>名古屋港統一ターミナルシステム(NUTS)ランサムウェア事案（2023年）</h1>
+                <h1>WebTransport</h1>
 
-<p>名古屋港のコンテナターミナルを一元管理する「名古屋港統一ターミナルシステム（NUTS）」が<a href="/notes/ransomware.html">ランサムウェア</a>被害を受け、港湾物流機能が停止した事案。攻撃者集団LockBitによる犯行とされる。</p>
+<p>HTTP/3(QUIC)上に構築された、ブラウザとサーバー間の低遅延双方向通信API。<a href="/notes/websocket.html">WebSocket</a>の後継候補として設計されている。仕様はIETF WEBTRANS Working GroupとW3Cが共同で策定しており、W3C仕様はGoogle・Mozilla・Appleのエディタが名を連ねる。2026年時点でW3C Working Draft、HTTP/3マッピングのIETFドラフトはWorking Group Last Callの段階。 <a class="note-tag" href="/notes/tags/protocol.html">#protocol</a> <a class="note-tag" href="/notes/tags/web.html">#web</a></p>
 
-<h2>経緯</h2>
+<h2>WebSocketとの違い</h2>
 
-<p>2023年7月4日午前6時30分ごろ、障害の発生が確認された。同日朝、職員が出社しコンテナ重量の計測機器の不具合に気づいたことで発覚。プリンターから約100枚の英語の脅迫文が勝手に印刷されており、冒頭には「LockBit Black Ransomware」と記載されていた。</p>
+<ul>
+<li><strong>輸送層</strong>: WebSocketはTCP上、WebTransportはQUIC(UDPベース)上のHTTP/3を使う</li>
+<li><strong>Head-of-lineブロッキング</strong>: TCPではストリーム単位の分離ができず、1つのデータ欠落が他の通信もブロックする。QUICはストリームを多重化できるため、この問題が起きない</li>
+<li><strong>ネットワーク切り替え</strong>: QUICは接続をIPアドレスでなく接続IDで識別するため、Wi-Fi⇔モバイル回線の切り替えでも接続を継続できる</li>
+<li><strong>信頼性の選択</strong>: WebSocketは常に信頼性のある配信のみだが、WebTransportは信頼性あり/なしを通信方式ごとに選べる</li>
+</ul>
 
-<p>調査の結果、リモート接続機器の脆弱性が悪用され不正アクセスを受けたとみられ、データセンター内のNUTS全サーバーが暗号化されたことが確認された。</p>
 
-<h2>影響と復旧</h2>
+<h2>3つの通信方式</h2>
 
-<p>障害によりコンテナの搬出入作業が一時中止された。システムが復旧し全ての作業を再開できたのは7月6日18時15分で、全面復旧までおよそ3日を要した。ログまで暗号化されており、感染経路の特定は難航した。</p>
+<ul>
+<li><strong>データグラム</strong>: 信頼性・順序保証なし。ゲームの状態更新やセンサーデータなど、最新の値だけ届けばよい用途向け</li>
+<li><strong>単方向ストリーム</strong>: 信頼性・順序保証あり、片方向のみ。ファイル送信やライブ配信向け</li>
+<li><strong>双方向ストリーム</strong>: 信頼性・順序保証あり、双方向。チャットやリアルタイム共同編集向け</li>
+</ul>
 
-<h2>LockBitについて</h2>
 
-<p>LockBitは「サービスとしてのランサムウェア（RaaS）」を採用する主要な攻撃者集団のひとつで、データ暗号化と情報暴露を組み合わせた多重脅迫の手口を取る。</p>
+<h2>ブラウザ対応</h2>
 
-<h2><a href="/notes/japan-ransomware-incidents.html">国内ランサムウェア被害事例</a>の中での位置づけ</h2>
-
-<p>リモート接続機器の脆弱性が侵入経路になった点は<a href="/notes/handa-hospital-ransomware-2021.html">半田病院</a>や<a href="/notes/kojima-press-ransomware-2022.html">小島プレス工業</a>の事案と共通する。企業単体ではなく港湾インフラという社会基盤が止まった点が特徴的。</p>
-
-<p><a class="note-tag" href="/notes/tags/security.html">#security</a></p>
+<p>Chrome/Edgeは2022年頃(Chrome 97, Edge 98)から対応、Firefoxは114から対応。Safariは2026年3月リリースのSafari 26.4で対応し、主要ブラウザが出揃った。</p>
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://piyolog.hatenadiary.jp/entry/2023/07/05/233959">ランサムウエアによる名古屋港のシステム障害についてまとめてみた - piyolog</a></li>
-<li><a href="https://xtech.nikkei.com/atcl/nxt/column/18/01157/112900099/">名古屋港のランサム被害、約3日で復旧もログまで暗号化され感染経路はいまだ不明</a></li>
-<li><a href="https://www.trendmicro.com/ja_jp/jp-security/23/g/securitytrend-20230710-01.html">名古屋港の活動停止につながったランサムウェア攻撃～今一度考えるその影響と対策 | トレンドマイクロ</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/WebTransport_API">WebTransport API - MDN</a></li>
+<li><a href="https://datatracker.ietf.org/doc/draft-ietf-webtrans-http3/">WebTransport over HTTP/3 - IETF Datatracker</a></li>
+<li><a href="https://caniuse.com/webtransport">Can I use: WebTransport</a></li>
 </ul>
 
 
                                 <div class="notes-backlinks">
                     <h2>🔗 リンクされているノート</h2>
                     <ul>
-                                            <li><a href="/notes/japan-ransomware-incidents.html">国内ランサムウェア被害事例</a></li>
-                                            <li><a href="/notes/kojima-press-ransomware-2022.html">小島プレス工業ランサムウェア事案（2022年）</a></li>
+                                            <li><a href="/notes/websocket.html">WebSocket</a></li>
+                                            <li><a href="/notes/browser-raw-tcp-restriction.html">ブラウザの生TCP/UDPソケット制限</a></li>
                     
                     </ul>
                 </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-11 13:42 / 更新日時: 2026-08-11 13:42</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=%E5%90%8D%E5%8F%A4%E5%B1%8B%E6%B8%AF%E7%B5%B1%E4%B8%80%E3%82%BF%E3%83%BC%E3%83%9F%E3%83%8A%E3%83%AB%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%28NUTS%29%E3%83%A9%E3%83%B3%E3%82%B5%E3%83%A0%E3%82%A6%E3%82%A7%E3%82%A2%E4%BA%8B%E6%A1%88%EF%BC%882023%E5%B9%B4%EF%BC%89&url=https%3A%2F%2F64p.org%2Fnotes%2Fnagoya-port-ransomware-2023.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <span>作成日時: 2026-08-12 20:43 / 更新日時: 2026-08-12 20:43</span>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=WebTransport&url=https%3A%2F%2F64p.org%2Fnotes%2Fwebtransport.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">
