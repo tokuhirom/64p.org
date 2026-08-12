@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>エクストリームプログラミング（XP） - Notes - 64p.org</title>
+    <title>Claudeのテキスト電子透かし導入 (2026-08) - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="alternate" type="application/rss+xml" title="Notes - 64p.org" href="/notes/rss.xml">
@@ -28,7 +28,7 @@
                                     <li><a href="/notes/microvm-ecosystem.html">コンテナ向け軽量VM技術</a></li>
                                     <li><a href="/notes/llm-text-watermarking.html">LLMテキストの電子透かし</a></li>
                                     <li><a href="/notes/crosvm.html">crosvm</a></li>
-                                    <li><a href="/notes/claude-text-watermark.html">Claudeのテキスト電子透かし導入 (2026-08)</a></li>
+                                    <li><a href="/notes/claude-text-watermark.html" class="active">Claudeのテキスト電子透かし導入 (2026-08)</a></li>
                                     <li><a href="/notes/microvm.html">microVM</a></li>
                                     <li><a href="/notes/cloud-hypervisor.html">Cloud Hypervisor</a></li>
                                     <li><a href="/notes/kata-containers.html">Kata Containers</a></li>
@@ -83,7 +83,7 @@
                                     <li><a href="/notes/yagni.html">YAGNI（You Aren&#39;t Gonna Need It）</a></li>
                                     <li><a href="/notes/technical-debt.html">技術的負債（Technical Debt）</a></li>
                                     <li><a href="/notes/tdd.html">TDD (Test-Driven Development / テスト駆動開発)</a></li>
-                                    <li><a href="/notes/extreme-programming.html" class="active">エクストリームプログラミング（XP）</a></li>
+                                    <li><a href="/notes/extreme-programming.html">エクストリームプログラミング（XP）</a></li>
                                     <li><a href="/notes/dremio.html">Dremio</a></li>
                                     <li><a href="/notes/apache-iceberg.html">Apache Iceberg</a></li>
                                     <li><a href="/notes/transcribe-cpp.html">transcribe.cpp</a></li>
@@ -327,75 +327,57 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>エクストリームプログラミング（XP）</h1>
+                <h1>Claudeのテキスト電子透かし導入 (2026-08)</h1>
 
-<p>ソフトウェア開発手法の一つ。技術的な卓越性と、人と人との良好な関係の両方が成功に不可欠だとする考え方に立つ。</p>
+<p><a class="note-tag" href="/notes/tags/llm.html">#llm</a> <a class="note-tag" href="/notes/tags/ai.html">#ai</a> <a class="note-tag" href="/notes/tags/security.html">#security</a> <a class="note-tag" href="/notes/tags/watermarking.html">#watermarking</a> <a class="note-tag" href="/notes/tags/anthropic.html">#anthropic</a> <a class="note-tag" href="/notes/tags/claude.html">#claude</a></p>
 
-<h2>起源</h2>
+<p>Anthropic が2026-08-11に、Claude の生成テキストへ知覚不能な<a href="/notes/llm-text-watermarking.html">電子透かし</a>を埋め込むと発表した。<strong>2026-08-02以降にリリースされる新モデルすべてが対象</strong>で、旧モデルへも順次拡張予定とのこと（<a href="/notes/claude-model-tiers.html">現行のモデル階層</a>でいうと2026年8月以降の新モデルから）。</p>
+
+<h2>背景: EU AI Act</h2>
+
+<p>直接の契機は EU AI Act 第50条（透明性義務）。2026-08-02から新規リリースのAIシステムに対して施行され、生成AIの出力に機械可読なマークを埋め込むことを提供者に義務付けている。Anthropic は EU 域内限定ではなく<strong>全世界のトラフィックに一律適用</strong>する方針を取った。</p>
+
+<h2>実装の特徴（公表情報から）</h2>
 
 <ul>
-<li>1996年、Kent Beckがクライスラー社の給与計算プロジェクト「<strong>Chrysler Comprehensive Compensation System（C3）</strong>」のリーダーに就任。当時プロジェクトは給与計算を一件も処理できていない状態だった。</li>
-<li>システムはSmalltalkとGemStoneで構築。Beckは開発手法を洗練させ、1997年にはシステムが稼働し約1万人分の給与処理を開始した。</li>
-<li>1999年10月、Beckは <em>&ldquo;Extreme Programming Explained&rdquo;</em> を出版し、XPを方法論として体系化。</li>
-<li>プロジェクト自体は、より大きな範囲の給与計算を扱う方向で継続する予定だったが、1999年に新規開発が停止した（2000年のDaimler-Benzによる買収に伴いプロジェクトが終了したとする記述もある）。</li>
+<li><strong>モデルレベルの埋め込み</strong>: 特定アプリが後付けするのではなくモデル出力自体に入るため、Claude API / claude.ai / Claude Code / Claude Cowork / Claude Tag、さらに AWS・Google Cloud・Microsoft Foundry 経由のアクセスまで経路を問わず適用される。</li>
+<li>テキストの意味・可読性は変えないとしている（アルゴリズムの詳細は非公開）。</li>
+<li>コピペしても透かしは残り、多少の編集にも耐えることがある。</li>
+<li>画像・ファイルには C2PA 標準の署名付きメタデータを使う（テキスト透かしとは別レイヤー）。</li>
+<li>検出用のツールと技術仕様を公開し、サードパーティも検証できるようにする予定。</li>
 </ul>
 
 
-<h2>3人の創始者</h2>
-
-<p>1996年頃のXP創始者として、Kent Beck・<a href="/notes/ward-cunningham.html">Ward Cunningham</a>・Ron Jeffriesの3人が位置づけられている。Ward CunninghamとBeckは以前からの頻繁な協力者で、開発手法の提案・実装を共同で進めた。XPの概念は、Cunninghamが発明したWiki「WikiWikiWeb」上での議論を通じて広まっていった。</p>
-
-<h2>5つの価値</h2>
-
-<ol>
-<li><strong>コミュニケーション</strong> — チーム内での共有認識構築</li>
-<li><strong>シンプリシティ</strong> — <a href="/notes/yagni.html">&ldquo;You aren&rsquo;t gonna need it"（YAGNI）</a></li>
-<li><strong>フィードバック</strong> — システム・顧客・チームからの多面的な反応</li>
-<li><strong>勇気</strong> — <a href="/notes/refactoring.html">リファクタリング</a>や陳腐化したコードの削除を実行する勇気</li>
-<li><strong>尊重（Respect）</strong> — チームメンバー間の相互尊重（第2版で追加された価値）</li>
-</ol>
-
-
-<h2>12のプラクティス（4分類）</h2>
+<h2>限界（Anthropic自身が明記）</h2>
 
 <ul>
-<li><strong>細かいスケールでのフィードバック</strong>：ペアプログラミング、計画ゲーム、<a href="/notes/tdd.html">テスト駆動開発</a></li>
-<li><strong>継続的プロセス</strong>：継続的インテグレーション、<a href="/notes/refactoring.html">リファクタリング</a>、小規模リリース</li>
-<li><strong>共有理解</strong>：コーディング標準、集団的コード所有権、シンプル設計</li>
-<li><strong>プログラマの福利</strong>：持続可能なペース</li>
+<li>大幅な書き換え・言い換え・翻訳・人間の文章との混合で検出不能になりうる。</li>
+<li><strong>検出されるのは「Claudeが処理した」ことまでで、Claudeが著者であることの証明にはならない</strong>。人間が書いたテキストをClaudeに通しただけでもマークは付きうる。逆に、透かしが無いことは人間が書いた証明にもならない。</li>
 </ul>
 
 
-<h2><a href="/notes/technical-debt.html">技術的負債（Technical Debt）</a>との関わり</h2>
-
-<p>Ward Cunninghamは自身が考案した技術的負債のメタファーについて、「<a href="/notes/refactoring.html">リファクタリング</a>可能な程度にきれいなコードであること」がXPの中核だと述べており、両者は密接に結びついている概念。</p>
+<p>発表を受けた解説記事（<a href="https://zenn.dev/hellorusk/articles/3328866ca9e922">Kaito Sugimotoさん</a>）では、「言い換えで消える」という記述から、2026年時点の研究の主戦場である意味空間型の言い換え耐性（SemStampやPASAの方向）はまだ備えていないのではと推測されている。</p>
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://en.wikipedia.org/wiki/Extreme_programming">Extreme programming - Wikipedia (English)</a></li>
-<li><a href="https://en.wikipedia.org/wiki/Chrysler_Comprehensive_Compensation_System">Chrysler Comprehensive Compensation System - Wikipedia (English)</a></li>
-<li><a href="https://en.wikipedia.org/wiki/Ron_Jeffries">Ron Jeffries - Wikipedia (English)</a></li>
-<li><a href="https://en.wikipedia.org/wiki/Kent_Beck">Kent Beck - Wikipedia (English)</a></li>
+<li><a href="https://support.claude.com/en/articles/16266773-how-claude-marks-ai-generated-content">How Claude marks AI-generated content (Claude Help Center)</a></li>
+<li><a href="https://techcrunch.com/2026/08/11/anthropic-says-it-will-watermark-text-generated-by-its-ai-models/">Anthropic says it will watermark text generated by its AI models (TechCrunch, 2026-08-11)</a></li>
+<li><a href="https://www.euronews.com/next/2026/08/11/eu-compliance-delivered-globally-anthropic-to-watermark-claudes-output-worldwide">EU compliance, delivered globally (Euronews, 2026-08-11)</a></li>
+<li><a href="https://zenn.dev/hellorusk/articles/3328866ca9e922">30年後の未来では、AIの出力したテキストに電子透かしが入っているかもしれない (Zenn)</a></li>
 </ul>
 
-
-<p><a class="note-tag" href="/notes/tags/software-engineering.html">#software-engineering</a> <a class="note-tag" href="/notes/tags/agile.html">#agile</a></p>
 
                                 <div class="notes-backlinks">
                     <h2>🔗 リンクされているノート</h2>
                     <ul>
-                                            <li><a href="/notes/tdd.html">TDD (Test-Driven Development / テスト駆動開発)</a></li>
-                                            <li><a href="/notes/ward-cunningham.html">Ward Cunningham</a></li>
-                                            <li><a href="/notes/yagni.html">YAGNI（You Aren&#39;t Gonna Need It）</a></li>
-                                            <li><a href="/notes/refactoring.html">リファクタリング(Refactoring)</a></li>
-                                            <li><a href="/notes/technical-debt.html">技術的負債（Technical Debt）</a></li>
+                                            <li><a href="/notes/llm-text-watermarking.html">LLMテキストの電子透かし</a></li>
                     
                     </ul>
                 </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-11 08:02 / 更新日時: 2026-08-12 13:36</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=%E3%82%A8%E3%82%AF%E3%82%B9%E3%83%88%E3%83%AA%E3%83%BC%E3%83%A0%E3%83%97%E3%83%AD%E3%82%B0%E3%83%A9%E3%83%9F%E3%83%B3%E3%82%B0%EF%BC%88XP%EF%BC%89&url=https%3A%2F%2F64p.org%2Fnotes%2Fextreme-programming.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <span>作成日時: 2026-08-12 23:29 / 更新日時: 2026-08-12 23:29</span>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=Claude%E3%81%AE%E3%83%86%E3%82%AD%E3%82%B9%E3%83%88%E9%9B%BB%E5%AD%90%E9%80%8F%E3%81%8B%E3%81%97%E5%B0%8E%E5%85%A5%20%282026-08%29&url=https%3A%2F%2F64p.org%2Fnotes%2Fclaude-text-watermark.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">

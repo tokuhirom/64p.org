@@ -28,6 +28,7 @@
                                     <li><a href="/notes/microvm-ecosystem.html">コンテナ向け軽量VM技術</a></li>
                                     <li><a href="/notes/llm-text-watermarking.html" class="active">LLMテキストの電子透かし</a></li>
                                     <li><a href="/notes/crosvm.html">crosvm</a></li>
+                                    <li><a href="/notes/claude-text-watermark.html">Claudeのテキスト電子透かし導入 (2026-08)</a></li>
                                     <li><a href="/notes/microvm.html">microVM</a></li>
                                     <li><a href="/notes/cloud-hypervisor.html">Cloud Hypervisor</a></li>
                                     <li><a href="/notes/kata-containers.html">Kata Containers</a></li>
@@ -332,7 +333,7 @@
 
 <p>LLMが生成したテキストに、人間には知覚できない統計的な「印」を埋め込み、後から「このテキストはこのモデルが生成したものか」を検定できるようにする技術。ゼロ幅文字やメタデータを付加する方式とは違い、<strong>トークン選択そのものに偏りを仕込む</strong>ので、コピペしても印がテキストと一緒に運ばれる。</p>
 
-<p>発端は <a href="https://zenn.dev/hellorusk/articles/3328866ca9e922">Kaito Sugimotoさんの解説記事</a>（2026-08、<strong>Claudeの透かし導入</strong>を受けたもの）。以下はそこで紹介されていた研究群を一次情報で裏取りしつつ整理したメモ。</p>
+<p>発端は <a href="https://zenn.dev/hellorusk/articles/3328866ca9e922">Kaito Sugimotoさんの解説記事</a>（2026-08、<a href="/notes/claude-text-watermark.html">Claudeの透かし導入</a>を受けたもの）。以下はそこで紹介されていた研究群を一次情報で裏取りしつつ整理したメモ。</p>
 
 <h2>基本原理</h2>
 
@@ -408,7 +409,7 @@ flowchart TD
 <h2>限界・論点</h2>
 
 <ul>
-<li>強い言い換え・翻訳・人間の文章との混合で検出力は落ちる。意味空間型はここへの対策だが、商用システムにはまだ本格実装されていない（<strong>Claude</strong>も編集・言い換えで消えうると明言している）。</li>
+<li>強い言い換え・翻訳・人間の文章との混合で検出力は落ちる。意味空間型はここへの対策だが、商用システムにはまだ本格実装されていない（<a href="/notes/claude-text-watermark.html">Claude</a>も編集・言い換えで消えうると明言している）。</li>
 <li>低エントロピー出力（コード、定型文）には原理的に埋め込みにくい。</li>
 <li>オープンウェイトモデルには強制できない。サンプリング実装を握っているホスト型APIでしか成立しない。</li>
 <li>検出に秘密鍵が要るため、「誰でも検定できる公開検出」と「鍵が漏れると除去攻撃が容易になる」のあいだに緊張がある。</li>
@@ -420,7 +421,7 @@ flowchart TD
 
 <ul>
 <li>Google: <a href="/notes/synthid-text.html">SynthID-Text</a> を Gemini に本番投入（2024〜）。</li>
-<li>Anthropic: <strong>Claudeのテキスト透かし</strong>（2026-08、EU AI Act対応）。</li>
+<li>Anthropic: <a href="/notes/claude-text-watermark.html">Claudeのテキスト透かし</a>（2026-08、EU AI Act対応）。</li>
 </ul>
 
 
@@ -441,6 +442,7 @@ flowchart TD
                                 <div class="notes-backlinks">
                     <h2>🔗 リンクされているノート</h2>
                     <ul>
+                                            <li><a href="/notes/claude-text-watermark.html">Claudeのテキスト電子透かし導入 (2026-08)</a></li>
                                             <li><a href="/notes/synthid-text.html">SynthID-Text</a></li>
                     
                     </ul>
