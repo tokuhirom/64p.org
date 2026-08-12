@@ -320,6 +320,26 @@
 
 <p>作者らによる書籍<a href="https://hypermedia.systems/">『Hypermedia Systems』</a>がこの思想を体系的に説明しており、日本語訳<a href="https://www.amazon.co.jp/dp/4297149451?tag=tokuhirom-22">『ハイパーメディアシステム──htmxとRESTによるシンプルで軽やかなウェブ開発』</a>(技術評論社)も出ている。</p>
 
+<h2>限界・向いていないケース</h2>
+
+<p>作者Carson Gross自身がエッセイ「When Should You Use Hypermedia?」で適用範囲を整理している。</p>
+
+<p>向いているのは、テキスト・画像主体でCRUD中心のUI。エッセイではSaaSのContexteがReactからhtmxへ移行してコードベースを67%削減した事例が挙げられている。逆に向いていないと明言されているのは:</p>
+
+<ul>
+<li><strong>複雑・動的な依存関係を持つUI</strong> — 代表例はスプレッドシート。セル間の依存がユーザー入力で任意に生まれるようなUIは「サーバーがHTMLを返す」モデルに落とし込めない</li>
+<li><strong>オフライン動作</strong> — レンダリングをサーバーに依存する構造上、オフラインファーストは現実的でない</li>
+<li><strong>高頻度なUI状態更新</strong> — マウス移動追跡のような頻度ではサーバーラウンドトリップは実用にならない</li>
+<li><strong>Reactエコシステム前提のコンポーネントライブラリが必須の場合</strong></li>
+</ul>
+
+
+<p>要するに「アプリの状態遷移がページ・部分HTMLの粒度で表現できるか」が分水嶺。</p>
+
+<h2>感想</h2>
+
+<p>肌感としては、「ちょっと動的なサイト」ぐらいまでならhtmxでいけるが、一般的なSPAで作るようなアプリケーションになると無理があると思っている。</p>
+
 <h2>歴史</h2>
 
 <p>前身は2013年にCarson Grossが作ったintercooler.js。jQuery依存だった同ライブラリを依存ゼロで書き直したものがhtmx。SPAフレームワークの複雑さへの反動もあって2020年代にSNSで広く知られるようになった。</p>
@@ -330,6 +350,7 @@
 
 <ul>
 <li><a href="https://htmx.org/docs/">htmx公式ドキュメント</a></li>
+<li><a href="https://htmx.org/essays/when-to-use-hypermedia/">When Should You Use Hypermedia? - htmx.org essays</a></li>
 <li><a href="https://en.wikipedia.org/wiki/Htmx">Htmx - Wikipedia</a></li>
 <li><a href="https://se-radio.net/2025/06/se-radio-671-carson-gross-on-htmx/">SE Radio 671: Carson Gross on HTMX</a></li>
 <li><a href="https://hypermedia.systems/">Hypermedia Systems (書籍サイト)</a></li>
@@ -344,7 +365,7 @@
                     </ul>
                 </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-12 19:37 / 更新日時: 2026-08-12 19:47</span>
+                    <span>作成日時: 2026-08-12 19:37 / 更新日時: 2026-08-12 19:51</span>
                     <a class="share-x" href="https://twitter.com/intent/tweet?text=htmx&url=https%3A%2F%2F64p.org%2Fnotes%2Fhtmx.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
