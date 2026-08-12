@@ -6,7 +6,69 @@
 <atom:link href="https://64p.org/notes/rss.xml" rel="self" type="application/rss+xml" />
 <description>ちょっと調べたことや検証結果を、AIの力も借りながらメモしていくコーナーです。</description>
 <language>ja</language>
-<lastBuildDate>Wed, 12 Aug 2026 23:22:23 +0900</lastBuildDate>
+<lastBuildDate>Wed, 12 Aug 2026 23:23:40 +0900</lastBuildDate>
+<item>
+<title>Kata Containers</title>
+<link>https://64p.org/notes/kata-containers.html</link>
+<guid isPermaLink="true">https://64p.org/notes/kata-containers.html</guid>
+<pubDate>Wed, 12 Aug 2026 23:23:00 +0900</pubDate>
+<description><![CDATA[<h1>Kata Containers</h1>
+
+<p>VMの持つセキュリティ上の分離性と、コンテナの持つ速度・軽量性を両立させることを目指すコンテナランタイム。コンテナ1個ごとに軽量VMを立ち上げ、その中でコンテナプロセスを動かす。OCIランタイム仕様・Kubernetesのcontainer runtime interface(CRI)双方に対応している。 <a class="note-tag" href="/notes/tags/virtualization.html">#virtualization</a></p>
+
+<h2>成り立ち</h2>
+
+<p>2017年、OpenStack Foundationの主導で、IntelのClear Containersプロジェクトと、HyperのrunV技術を統合する形で発足。2017年12月にpilotプロジェクトとなり、OpenStack Foundationにとって最初のtop-level Open Infrastructureプロジェクトとして承認された。OpenStack Foundation配下ではあるが、独自の技術ガバナンス・コントリビューター基盤を持つ独立したプロジェクトとして運営されている。</p>
+
+<h2>動作の仕組み</h2>
+
+<p>コンテナ(OCIイメージ由来のrootfs)ごとに専用の軽量VMを起動し、その中でコンテナプロセスを実行する。ハイパーバイザーは特定の実装に固定されておらず、<a href="/notes/firecracker.html">Firecracker</a>・<a href="/notes/cloud-hypervisor.html">Cloud Hypervisor</a>・QEMUなど複数のVMMをバックエンドとして選択できる。Firecracker利用時は、containerdのdevmapperスナップショッタでコンテナのrootfsをdevice mapperスナップショットとして扱い、virtio blockデバイスとしてVMにホットプラグする構成を取る。</p>
+
+<h2><a href="/notes/firecracker-containerd.html">firecracker-containerd</a>との違い</h2>
+
+<p>どちらもFirecrackerをバックエンドにコンテナへVM分離を与える点は共通するが、Kata ContainersはOCI/CRI互換のコンテナランタイムそのものとして複数のVMM・複数のコンテナランタイム統合先を横断的にサポートするのに対し、firecracker-containerdはAWSが開発しているcontainerd専用のFirecracker統合という位置づけの違いがある。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://katacontainers.io/blog/kata-containers-confirmed-as-first-new-top-level-open-infrastructure-project-by-openstack-foundation/">Kata Containers Confirmed as First New Top-Level Open Infrastructure Project by OpenStack Foundation</a></li>
+<li><a href="https://cloudkernels.github.io/posts/kata-build-configure-fc/">Kata Containers: Build and configure Firecracker | CloudKernels</a></li>
+<li><a href="https://github.com/kata-containers/kata-containers/blob/main/docs/how-to/how-to-use-kata-containers-with-firecracker.md">kata-containers/docs/how-to/how-to-use-kata-containers-with-firecracker.md</a></li>
+</ul>
+
+]]></description>
+</item>
+<item>
+<title>firecracker-containerd</title>
+<link>https://64p.org/notes/firecracker-containerd.html</link>
+<guid isPermaLink="true">https://64p.org/notes/firecracker-containerd.html</guid>
+<pubDate>Wed, 12 Aug 2026 23:23:00 +0900</pubDate>
+<description><![CDATA[<h1>firecracker-containerd</h1>
+
+<p>AWSが開発する、containerdに<a href="/notes/firecracker.html">Firecracker</a>をコンテナのVM分離バックエンドとして統合するプロジェクト。containerdのプラグインとして実装されており、Kubernetes・Amazon ECSなど既存のコンテナオーケストレーションフレームワークとの互換性を保ちながら、コンテナをFirecracker microVM単位で分離実行できる。 <a class="note-tag" href="/notes/tags/virtualization.html">#virtualization</a> <a class="note-tag" href="/notes/tags/aws.html">#aws</a></p>
+
+<h2>アーキテクチャ</h2>
+
+<ul>
+<li><strong>Runtime</strong>: ホスト側のcontainerdとFirecracker VMMの間、およびmicroVM内で動く後述のAgentとの間をつなぐコンポーネント。ttrpc経由で通信するout-of-processシムとして実装されている。</li>
+<li><strong>Agent</strong>: microVM内で動作し、Runtimeからの制御指示を実行するプロセス。containerdの<code>containerd-shim-runc-v1</code>経由でrunCを呼び出し、microVM内部に標準的なLinuxコンテナを作る。</li>
+<li>ネットワーキングはCNIプラグインでmicroVM単位に設定でき、チェイン可能な<code>tc-redirect-tap</code>というCNIプラグインを提供している。</li>
+</ul>
+
+
+<h2><a href="/notes/kata-containers.html">Kata Containers</a>との違い</h2>
+
+<p>Kata ContainersがOCI/CRI互換のコンテナランタイムとして複数のVMM・複数のコンテナランタイム統合先を横断的にサポートするのに対し、firecracker-containerdはAWSが開発する、containerd専用のFirecracker統合という位置づけ。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://github.com/firecracker-microvm/firecracker-containerd">GitHub - firecracker-microvm/firecracker-containerd</a></li>
+<li><a href="https://github.com/firecracker-microvm/firecracker-containerd/blob/main/docs/architecture.md">firecracker-containerd/docs/architecture.md</a></li>
+</ul>
+
+]]></description>
+</item>
 <item>
 <title>typescript-eslint</title>
 <link>https://64p.org/notes/typescript-eslint.html</link>
@@ -274,8 +336,8 @@ graph LR
 <ul>
 <li>手動変換 — コンテナのrootfsをtar化し、空のext4イメージへ展開する</li>
 <li>Weave Ignite — OCIイメージのrootfsをそのままVMのrootfsとして起動する</li>
-<li>firecracker-containerd — containerdのプラグインとしてFirecrackerをコンテナの分離レイヤーに使う</li>
-<li>Kata Containers — containerdのdevmapperスナップショッタで、コンテナのrootfsをvirtio blockデバイスとしてVMにホットプラグする</li>
+<li><a href="/notes/firecracker-containerd.html">firecracker-containerd</a> — containerdのプラグインとしてFirecrackerをコンテナの分離レイヤーに使う</li>
+<li><a href="/notes/kata-containers.html">Kata Containers</a> — containerdのdevmapperスナップショッタで、コンテナのrootfsをvirtio blockデバイスとしてVMにホットプラグする</li>
 </ul>
 
 
@@ -1407,112 +1469,6 @@ IP 10.99.0.2 &gt; 10.99.0.1: ICMP echo reply, id 31448, seq 1, length 64
 <ul>
 <li><a href="https://www.rfc-editor.org/rfc/rfc7348">RFC 7348 - Virtual eXtensible Local Area Network (VXLAN)</a></li>
 <li><a href="https://www.rfc-editor.org/info/rfc7348/">RFC 7348 info page</a></li>
-</ul>
-
-]]></description>
-</item>
-<item>
-<title>mold(高速リンカ)</title>
-<link>https://64p.org/notes/mold-linker.html</link>
-<guid isPermaLink="true">https://64p.org/notes/mold-linker.html</guid>
-<pubDate>Wed, 12 Aug 2026 13:50:00 +0900</pubDate>
-<description><![CDATA[<h1>mold(高速リンカ)</h1>
-
-<p>rui314氏(LLVM lldリンカの開発者でもある)が開発した、C++20製の次世代リンカ。GNU ld・LLVM lld・goldといった既存のUnix系リンカの代替として、リンク工程そのものを高速化することを狙ったツール。 <a class="note-tag" href="/notes/tags/rust.html">#rust</a> <a class="note-tag" href="/notes/tags/build.html">#build</a> <a class="note-tag" href="/notes/tags/linker.html">#linker</a></p>
-
-<h2>速度</h2>
-
-<p>MySQLのリンクを例にしたベンチマークでは、GNU ldが10.84秒、lldが1.64秒に対し、moldは0.46秒だったと報告されている。Clang 19でのビルドでもmold 1.35秒に対しlld 5.20秒という差が出ている。高度に並列化されており、リンク処理の全フェーズで利用可能な全コアを使い切る設計。デバッグビルドで編集→再ビルドを繰り返す開発サイクルでの恩恵が大きいとされる。</p>
-
-<h2>対応プラットフォーム</h2>
-
-<p>x86-64, i386, ARM64, ARM32, RISC-V(32/64bit, LE/BE), PowerPC(32/64bit), s390x, LoongArch, SPARC64, m68k, SH-4など幅広いISAに対応。</p>
-
-<h2>ライセンスの変遷</h2>
-
-<ul>
-<li>元々AGPLライセンスのOSSとして公開されていた。</li>
-<li>開発初期の段階で、macOS対応など一部機能は「sold」という商用版(Blue Whale Systems社が販売、per-user課金)にゲートされていた。</li>
-<li>AGPL/商用のデュアルライセンス戦略が期待通りにはマネタイズできず、mold 2.0でAGPLコードをMITライセンスへ再ライセンスし、より広いユーザー獲得を狙う方針に転換した。</li>
-</ul>
-
-
-<h2>Rustプロジェクトでの使い方</h2>
-
-<p>プロジェクト直下の<code>.cargo/config.toml</code>に以下のように書いておくとリンカとして利用できる。</p>
-
-<pre><code class="toml">[target.x86_64-unknown-linux-gnu]
-linker = "clang"
-rustflags = ["-C", "link-arg=-fuse-ld=/path/to/mold"]
-</code></pre>
-
-<h2>自分の利用状況</h2>
-
-<p>Rust製Rakuインタプリタ「<a href="/notes/raku-rakudo-perl6.html">mutsu</a>」のビルドで既にmoldを採用している。</p>
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://github.com/rui314/mold">rui314/mold - GitHub</a></li>
-<li><a href="https://github.com/rui314/mold/blob/main/README.md">mold/README.md</a></li>
-<li><a href="https://www.phoronix.com/news/Mold-2.0-Linker">Mold 2.0 High Speed Linker Released: Moves From AGPL To MIT License - Phoronix</a></li>
-<li><a href="https://news.ycombinator.com/item?id=34141912">Mold linker: targeting macOS/iOS now requires a commercial license | Hacker News</a></li>
-</ul>
-
-]]></description>
-</item>
-<item>
-<title>MeCab</title>
-<link>https://64p.org/notes/mecab.html</link>
-<guid isPermaLink="true">https://64p.org/notes/mecab.html</guid>
-<pubDate>Wed, 12 Aug 2026 13:42:00 +0900</pubDate>
-<description><![CDATA[<h1>MeCab</h1>
-
-<p><a class="note-tag" href="/notes/tags/nlp.html">#nlp</a></p>
-
-<p>京都大学大学院情報学研究科とNTTコミュニケーション科学基礎研究所の共同研究ユニットプロジェクトとして開発された、オープンソースの日本語形態素解析エンジン。開発者は工藤拓。2006年3月26日にバージョン0.90として最初に公開された。名前の由来は開発者の好物である「和布蕪(めかぶ)」から。</p>
-
-<p>工藤拓は後に<a href="/notes/sentencepiece.html">SentencePiece</a>の開発者としても知られ、Google Japanese Inputの開発にも携わった。</p>
-
-<h2>開発の背景</h2>
-
-<p>MeCab以前の代表的な形態素解析器にJumanとChaSenがあった。</p>
-
-<ul>
-<li><strong>Juman</strong>: 辞書や品詞体系を外部に定義できる自由度はあったが、単語同士の連接コストを人手で調整する必要があり、そのコストが大きかった。</li>
-<li><strong>ChaSen</strong>: 隠れマルコフモデル(HMM)による統計処理を導入したが、複雑な品詞体系を扱うにはHMMでは力不足という限界があった。</li>
-</ul>
-
-
-<h2>CRFの採用</h2>
-
-<p>MeCab最大の技術的特徴は、コスト値の推定に条件付き確率場(<strong>Conditional Random Fields, CRF</strong>)を採用したこと。HMMと異なり複数の内部状態を定義できるため、「細かい品詞階層と粗い品詞階層の確率値を混ぜる」ようなスムージングが自然かつ自動的に実現でき、人手調整のコストを大幅に削減した。学習コーパスもHMMの1/3程度で同程度の性能が得られるとされる。</p>
-
-<p>そのほかの特徴として、未知語処理を外部から自由に定義できる点、辞書引きにDouble-Array Trie構造を用いた高速性、N-best出力や制約付き解析への対応などが挙げられる。</p>
-
-<h2>辞書</h2>
-
-<p>MeCab本体は言語・辞書・コーパスに依存しない汎用設計になっており、動作には別途辞書が必要。代表的なものに以下がある。</p>
-
-<ul>
-<li><strong>IPAdic</strong>: 標準的によく使われる辞書</li>
-<li><strong>UniDic</strong>: 国立国語研究所が整備する、より詳細な形態素情報を持つ辞書</li>
-<li><strong>mecab-ipadic-NEologd</strong>: IPAdicをベースに、Web上の言語資源から抽出した新語・固有表現を週2回のペースで追加収録するカスタム辞書。IPAdicでは分割されがちな固有名詞をまとめて認識できる一方、ディスク・メモリを多く消費する</li>
-</ul>
-
-
-<h2>後継・代替ツール</h2>
-
-<p>その後登場した日本語形態素解析器として、Works Applications主導の<strong>Sudachi</strong>などがある。MeCabとは別の辞書体系を持ち、代替の選択肢として比較されることが多い。</p>
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://taku910.github.io/mecab/">MeCab: Yet Another Part-of-Speech and Morphological Analyzer (公式サイト)</a></li>
-<li><a href="https://taku910.github.io/mecab/feature.html">MeCab の開発経緯 (公式サイト)</a></li>
-<li><a href="https://github.com/taku910/mecab">taku910/mecab (GitHub)</a></li>
-<li><a href="https://github.com/neologd/mecab-ipadic-neologd/blob/master/README.ja.md">mecab-ipadic-neologd README (GitHub)</a></li>
-<li><a href="https://www.capa.co.jp/archives/24856">「めかぶ」とは？食べ物ではないとっても賢いMeCab | 株式会社キャパ</a></li>
 </ul>
 
 ]]></description>

@@ -1,6 +1,6 @@
 ---
 created: 2026-08-12 23:14
-updated: 2026-08-12 23:22
+updated: 2026-08-12 23:23
 ---
 # Firecracker
 
@@ -26,8 +26,8 @@ FirecrackerはVMMであり、扱うのはカーネルイメージとrootfsのブ
 
 - 手動変換 — コンテナのrootfsをtar化し、空のext4イメージへ展開する
 - Weave Ignite — OCIイメージのrootfsをそのままVMのrootfsとして起動する
-- firecracker-containerd — containerdのプラグインとしてFirecrackerをコンテナの分離レイヤーに使う
-- Kata Containers — containerdのdevmapperスナップショッタで、コンテナのrootfsをvirtio blockデバイスとしてVMにホットプラグする
+- [[firecracker-containerd|firecracker-containerd]] — containerdのプラグインとしてFirecrackerをコンテナの分離レイヤーに使う
+- [[kata-containers|Kata Containers]] — containerdのdevmapperスナップショッタで、コンテナのrootfsをvirtio blockデバイスとしてVMにホットプラグする
 
 [[hypeman|Hypeman]]は、この「OCIイメージ→VM rootfs変換」レイヤーを自前で実装し、Docker互換の使い勝手を提供している。
 
