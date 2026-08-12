@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>bpftraceを動かしてeBPFトレーシングを体感する - Notes - 64p.org</title>
+    <title>Cilium - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="alternate" type="application/rss+xml" title="Notes - 64p.org" href="/notes/rss.xml">
@@ -23,10 +23,10 @@
                 <a class="notes-tags-link" href="/notes/rss.xml">📡 RSS</a>
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
-                                    <li><a href="/notes/cilium.html">Cilium</a></li>
+                                    <li><a href="/notes/cilium.html" class="active">Cilium</a></li>
                                     <li><a href="/notes/bpf.html">BPF (Berkeley Packet Filter)</a></li>
                                     <li><a href="/notes/bpftrace.html">bpftrace</a></li>
-                                    <li><a href="/notes/bpftrace-experiment.html" class="active">bpftraceを動かしてeBPFトレーシングを体感する</a></li>
+                                    <li><a href="/notes/bpftrace-experiment.html">bpftraceを動かしてeBPFトレーシングを体感する</a></li>
                                     <li><a href="/notes/open-vswitch.html">Open vSwitch (OVS)</a></li>
                                     <li><a href="/notes/iconify.html">Iconify</a></li>
                                     <li><a href="/notes/font-awesome.html">Font Awesome</a></li>
@@ -353,80 +353,44 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>bpftraceを動かしてeBPFトレーシングを体感する</h1>
+                <h1>Cilium</h1>
 
-<p><a href="/notes/bpftrace.html">bpftrace</a>を実際にこのマシン(Pop!_OS/Ubuntu noble)にインストールして動かし、<a href="/notes/bpf.html">eBPF</a>によるトレーシングを体感した記録。 <a class="note-tag" href="/notes/tags/linux.html">#linux</a> <a class="note-tag" href="/notes/tags/kernel.html">#kernel</a> <a class="note-tag" href="/notes/tags/observability.html">#observability</a></p>
+<p>Docker/Kubernetesなどのコンテナプラットフォーム上で、アプリケーションサービス間のネットワーク接続を透過的に保護するオープンソースソフトウェア。土台は<a href="/notes/bpf.html">eBPF</a>で、Linuxカーネル内で動的にネットワーキング・セキュリティロジックを挿入できるこの技術により、アプリケーションコードやコンテナ設定を変更することなくポリシーの適用・更新ができる。 <a class="note-tag" href="/notes/tags/networking.html">#networking</a> <a class="note-tag" href="/notes/tags/kubernetes.html">#kubernetes</a> <a class="note-tag" href="/notes/tags/security.html">#security</a></p>
 
-<h2>環境構築</h2>
-
-<p><code>apt install bpftrace</code> でインストールできた(候補バージョン <code>0.20.2-1ubuntu4.3</code>)。</p>
-
-<pre><code class="sh">$ apt-cache policy bpftrace
-bpftrace:
-  Installed: (none)
-  Candidate: 0.20.2-1ubuntu4.3
-$ sudo apt install -y bpftrace
-$ bpftrace --version
-bpftrace v0.20.2
-</code></pre>
-
-<h2>躓いた点: 非対話環境でのroot権限</h2>
-
-<p>bpftraceの実行にはroot権限(eBPFプログラムのロードにCAP_BPF/CAP_SYS_ADMIN相当の権限が必要)が要る。しかしClaude CodeのBashツールにはインタラクティブなsudoパスワード入力用のTTYが無く、<code>sudo -n true</code>や<code>sudo -v</code>はいずれも失敗した。</p>
-
-<pre><code>$ sudo -n true
-sudo: a password is required
-$ sudo -v
-sudo: a terminal is required to read the password; either use the -S option to read from standard input or configure an askpass helper
-</code></pre>
-
-<p>そのため、実行自体はユーザーが別の実端末上で行い、出力をファイル経由で共有してもらう形で進めた。</p>
-
-<h2>実験1: syscallをプロセス名別に集計する(tracepoint)</h2>
-
-<pre><code class="sh">sudo bpftrace -e 'tracepoint:raw_syscalls:sys_enter { @[comm] = count(); } interval:s:5 { exit(); }'
-</code></pre>
-
-<p><code>@[comm] = count()</code>というmap集計だけで、カーネル空間でのプロセス名(<code>comm</code>)ごとのsyscall呼び出し回数を集計できる。<code>interval:s:5 { exit(); }</code>のように別のprobeでタイマーによる終了処理を書けるのも分かった。</p>
-
-<p>5秒間の実行結果は降順で、上位は<code>HeapHelper</code>(291754回)、<code>pgrep</code>(159370回)、<code>herdr</code>(85612回)、<code>gnome-terminal-</code>(54975回)、<code>claude</code>(49301回)など。GUI環境(<code>gnome-shell</code>: 42290回、<code>Xorg</code>: 40950回)も多数のsyscallを発生させていることが見えた。プロセス名はLinuxの<code>comm</code>(<code>TASK_COMM_LEN</code>)の制約で15文字に切り詰められるため、<code>StreamT~ #14757</code>のような省略表示になっているものもあった。</p>
-
-<h2>実験2: <code>do_nanosleep</code>カーネル関数をkprobeで追跡する</h2>
-
-<pre><code class="sh">sudo timeout 5 bpftrace -e 'kprobe:do_nanosleep { printf("PID %d (%s) sleeping\n", pid, comm); }'
-</code></pre>
-
-<p><code>ibus-ui-gtk3</code>や<code>tailscaled</code>など、定期的にポーリング/スリープしているデーモンプロセスが高頻度で<code>do_nanosleep</code>を呼んでいることが可視化された。コンテナ管理daemonの<code>incusd</code>が短時間に何十回もsleepしている様子も観測できた。ユーザーが手動で叩いた<code>sleep</code>コマンドの呼び出しもPIDごとに個別に捕捉されている。</p>
-
-<p>kprobeはカーネル関数名を直接指定するだけでフックできる手軽さがある一方、<code>do_nanosleep</code>のような内部関数名はカーネルバージョンが変われば変わりうる、という<a href="/notes/bpftrace.html">bpftraceノート</a>で触れた「tracepointの方が安定している」という説明を裏付ける結果でもあった。</p>
-
-<h2>実験3: execveをtracepointで追跡し、新規プロセス起動を可視化する</h2>
-
-<pre><code class="sh">sudo timeout 5 bpftrace -e 'tracepoint:syscalls:sys_enter_execve { printf("%s -&gt; %s\n", comm, str(args-&gt;filename)); }'
-</code></pre>
-
-<p><code>args-&gt;filename</code>のように、tracepointの引数構造体からファイルパス文字列を<code>str()</code>で読み出せる。5秒間の結果には<code>zsh -&gt; /usr/bin/pgrep</code>のような親プロセスと起動された実行ファイルのペアが並び、シェルのプロンプト表示のたびに<code>pgrep</code>や<code>sleep</code>が起動されている様子が見えた。ユーザーが個人で開発しているRust製Rakuインタプリタ<code>mutsu</code>のデバッグビルド(<code>../../target/debug/mutsu</code>)が<code>timeout</code>コマンド経由で起動されているのも捕捉された。</p>
-
-<h2>分かったこと</h2>
+<h2>主な機能</h2>
 
 <ul>
-<li><code>@[key] = count()</code>のようなmap構文だけで、カーネル空間での集計処理をユーザー空間へのイベント転送やロックなしに数行で書ける</li>
-<li>複数のprobeを1つのスクリプトに並べて書ける(タイマーprobeでの終了処理など)</li>
-<li><code>printf</code>はカーネル側からユーザー空間の標準出力へ安全に文字列を渡す仕組みとして機能する</li>
-<li>実運用では、動かす環境にTTY越しの対話的なroot権限取得手段が要る(今回のような非対話CI/エージェント環境では一手間かかる)</li>
+<li><strong>ネットワーキング</strong>: オーバーレイネットワーク・ネイティブルーティングなど柔軟なルーティングオプションを提供。eBPFベースの分散ロードバランシングにより、従来iptablesベースだったkube-proxyを置き換えられる</li>
+<li><strong>セキュリティ(Network Policy)</strong>: IPアドレスへの依存から脱却し、ID・ラベルベースのセキュリティモデルを実現。Kubernetes標準のNetworkPolicy(L3/L4)に加え、CiliumNetworkPolicyとしてL7(HTTPメソッド/パスフィルタ、DNSベースのegress、FQDNポリシー)まで対応する</li>
+<li><strong>Hubble(Observability)</strong>: 完全に分散されたネットワーク可視化プラットフォーム。ノードごとにフローをキャプチャし、Hubble relayでクラスタ全体に集約、CLI/UIで閲覧できる。サービス依存関係マップ・HTTPフロー・DNS問題の検出・レイテンシ分析が可能</li>
+<li><strong>Service Mesh</strong>: サイドカーを使わない設計が特徴。L3/L4はeBPFで処理し、L7が必要な場合のみノードレベルのEnvoyを使う。WireGuardやIPsecによる透過的暗号化、SPIFFE/SPIRE連携によるmTLSもサポートする</li>
+</ul>
+
+
+<h2>エコシステムでの位置づけ</h2>
+
+<p>CNCFのプロジェクトとして2023年にGraduated(卒業)ステータスに到達している。Google Kubernetes Engine(GKE Autopilot)のデフォルトCNI、Amazon EKSの推奨CNI、Azure AKSの組み込みオプションとして採用されるなど、主要クラウドのマネージドKubernetesに組み込まれている。動作にはLinux 5.4以降が必要(本番運用では5.15以降が推奨)。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://docs.cilium.io/en/stable/overview/intro/">docs.cilium.io - Cilium &amp; Hubble overview</a></li>
+<li><a href="https://oneuptime.com/blog/post/2026-01-07-ebpf-cilium-kubernetes-networking/view">How to Deploy Cilium CNI for eBPF-Powered Kubernetes Networking</a></li>
+<li><a href="https://oneuptime.com/blog/post/2026-01-27-cilium-service-mesh/view">How to Implement Cilium Service Mesh</a></li>
+<li><a href="https://notes.kodekloud.com/docs/Prep-Course-Cilium-Certified-Associate-CCA-Certification/Cilium-Overview/Architecture/page">Architecture - KodeKloud</a></li>
 </ul>
 
 
                                 <div class="notes-backlinks">
                     <h2>🔗 リンクされているノート</h2>
                     <ul>
-                                            <li><a href="/notes/bpftrace.html">bpftrace</a></li>
+                                            <li><a href="/notes/bpf.html">BPF (Berkeley Packet Filter)</a></li>
                     
                     </ul>
                 </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-13 08:32 / 更新日時: 2026-08-13 08:32</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=bpftrace%E3%82%92%E5%8B%95%E3%81%8B%E3%81%97%E3%81%A6eBPF%E3%83%88%E3%83%AC%E3%83%BC%E3%82%B7%E3%83%B3%E3%82%B0%E3%82%92%E4%BD%93%E6%84%9F%E3%81%99%E3%82%8B&url=https%3A%2F%2F64p.org%2Fnotes%2Fbpftrace-experiment.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <span>作成日時: 2026-08-13 08:33 / 更新日時: 2026-08-13 08:33</span>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=Cilium&url=https%3A%2F%2F64p.org%2Fnotes%2Fcilium.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">

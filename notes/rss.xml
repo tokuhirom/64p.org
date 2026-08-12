@@ -6,7 +6,41 @@
 <atom:link href="https://64p.org/notes/rss.xml" rel="self" type="application/rss+xml" />
 <description>ちょっと調べたことや検証結果を、AIの力も借りながらメモしていくコーナーです。</description>
 <language>ja</language>
-<lastBuildDate>Thu, 13 Aug 2026 08:32:09 +0900</lastBuildDate>
+<lastBuildDate>Thu, 13 Aug 2026 08:33:50 +0900</lastBuildDate>
+<item>
+<title>Cilium</title>
+<link>https://64p.org/notes/cilium.html</link>
+<guid isPermaLink="true">https://64p.org/notes/cilium.html</guid>
+<pubDate>Thu, 13 Aug 2026 08:33:00 +0900</pubDate>
+<description><![CDATA[<h1>Cilium</h1>
+
+<p>Docker/Kubernetesなどのコンテナプラットフォーム上で、アプリケーションサービス間のネットワーク接続を透過的に保護するオープンソースソフトウェア。土台は<a href="/notes/bpf.html">eBPF</a>で、Linuxカーネル内で動的にネットワーキング・セキュリティロジックを挿入できるこの技術により、アプリケーションコードやコンテナ設定を変更することなくポリシーの適用・更新ができる。 <a class="note-tag" href="/notes/tags/networking.html">#networking</a> <a class="note-tag" href="/notes/tags/kubernetes.html">#kubernetes</a> <a class="note-tag" href="/notes/tags/security.html">#security</a></p>
+
+<h2>主な機能</h2>
+
+<ul>
+<li><strong>ネットワーキング</strong>: オーバーレイネットワーク・ネイティブルーティングなど柔軟なルーティングオプションを提供。eBPFベースの分散ロードバランシングにより、従来iptablesベースだったkube-proxyを置き換えられる</li>
+<li><strong>セキュリティ(Network Policy)</strong>: IPアドレスへの依存から脱却し、ID・ラベルベースのセキュリティモデルを実現。Kubernetes標準のNetworkPolicy(L3/L4)に加え、CiliumNetworkPolicyとしてL7(HTTPメソッド/パスフィルタ、DNSベースのegress、FQDNポリシー)まで対応する</li>
+<li><strong>Hubble(Observability)</strong>: 完全に分散されたネットワーク可視化プラットフォーム。ノードごとにフローをキャプチャし、Hubble relayでクラスタ全体に集約、CLI/UIで閲覧できる。サービス依存関係マップ・HTTPフロー・DNS問題の検出・レイテンシ分析が可能</li>
+<li><strong>Service Mesh</strong>: サイドカーを使わない設計が特徴。L3/L4はeBPFで処理し、L7が必要な場合のみノードレベルのEnvoyを使う。WireGuardやIPsecによる透過的暗号化、SPIFFE/SPIRE連携によるmTLSもサポートする</li>
+</ul>
+
+
+<h2>エコシステムでの位置づけ</h2>
+
+<p>CNCFのプロジェクトとして2023年にGraduated(卒業)ステータスに到達している。Google Kubernetes Engine(GKE Autopilot)のデフォルトCNI、Amazon EKSの推奨CNI、Azure AKSの組み込みオプションとして採用されるなど、主要クラウドのマネージドKubernetesに組み込まれている。動作にはLinux 5.4以降が必要(本番運用では5.15以降が推奨)。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://docs.cilium.io/en/stable/overview/intro/">docs.cilium.io - Cilium &amp; Hubble overview</a></li>
+<li><a href="https://oneuptime.com/blog/post/2026-01-07-ebpf-cilium-kubernetes-networking/view">How to Deploy Cilium CNI for eBPF-Powered Kubernetes Networking</a></li>
+<li><a href="https://oneuptime.com/blog/post/2026-01-27-cilium-service-mesh/view">How to Implement Cilium Service Mesh</a></li>
+<li><a href="https://notes.kodekloud.com/docs/Prep-Course-Cilium-Certified-Associate-CCA-Certification/Cilium-Overview/Architecture/page">Architecture - KodeKloud</a></li>
+</ul>
+
+]]></description>
+</item>
 <item>
 <title>bpftrace</title>
 <link>https://64p.org/notes/bpftrace.html</link>
@@ -1884,60 +1918,6 @@ flowchart TD
 <ul>
 <li><a href="https://www.nature.com/articles/s41586-024-08025-4">Scalable watermarking for identifying large language model outputs (Nature, 2024)</a></li>
 <li><a href="https://arxiv.org/abs/2603.03410">On Google&rsquo;s SynthID-Text LLM Watermarking System: Theoretical Analysis and Empirical Validation (2026)</a> — 第三者による理論解析</li>
-</ul>
-
-]]></description>
-</item>
-<item>
-<title>rust-vmm</title>
-<link>https://64p.org/notes/rust-vmm.html</link>
-<guid isPermaLink="true">https://64p.org/notes/rust-vmm.html</guid>
-<pubDate>Wed, 12 Aug 2026 23:27:00 +0900</pubDate>
-<description><![CDATA[<h1>rust-vmm</h1>
-
-<p>VMM(Virtual Machine Monitor)を作るためのRust製部品(クレート)を共有するプロジェクト。<a href="/notes/kvm.html">KVM</a> ioctlの呼び出し、VMのメモリ管理、<a href="/notes/virtio.html">virtio</a>デバイスとのやり取りなど、複数のVMM実装で重複しがちな部分を共通クレートとして切り出し、車輪の再発明を防ぐことを目的とする。 <a class="note-tag" href="/notes/tags/virtualization.html">#virtualization</a> <a class="note-tag" href="/notes/tags/rust.html">#rust</a></p>
-
-<h2>成り立ち</h2>
-
-<p>2018年12月、Amazon・Google・Intel・Red Hatの開発者が、VMM作成コードを共有する方法について議論したことから発足した。きっかけは、Rust製VMMである<a href="/notes/crosvm.html">crosvm</a>（Google/ChromeOS発）と<a href="/notes/firecracker.html">Firecracker</a>（AWS発）が、<a href="/notes/kvm.html">KVM</a>呼び出しやメモリ管理まわりで似たようなコードを別々に持っていたこと。この重複を解消し、以後Rust製VMMを書く際に同じ実装を繰り返さずに済むようにする狙いがあった。</p>
-
-<h2>主なクレート</h2>
-
-<ul>
-<li><code>kvm-bindings</code> / <code>kvm-ioctls</code> — <a href="/notes/kvm.html">KVM</a>カーネルヘッダへのRust FFIバインディングと、それをラップする機能</li>
-<li><code>vm-memory</code> — VMのゲストメモリを扱うための共通トレイト。VMMの各コンポーネントが実装の詳細を知らずに物理メモリへアクセスできるようにする</li>
-<li><a href="/notes/virtio.html">virtio</a>デバイス関連クレートおよび<code>vhost</code>パッケージ — デバイスエミュレーション用</li>
-<li>Microsoft Hyper-V・Xenのハイパーコールインターフェース、Linuxカーネルローダーへの対応も含む</li>
-</ul>
-
-
-<h2>ガバナンス</h2>
-
-<p>特定企業に閉じたプロジェクトではなく、Alibaba・AWS・Crowdstrike・Intel・Google・Linaro・Red Hatなどの企業から参加する開発者、および個人コントリビューターによる共同所有・共同運営の体制を取っている。</p>
-
-<h2>採用プロジェクト</h2>
-
-<p><a href="/notes/firecracker.html">Firecracker</a>・<a href="/notes/crosvm.html">crosvm</a>に加え、<a href="/notes/cloud-hypervisor.html">Cloud Hypervisor</a>もrust-vmmの理念を採用しており、実装コードの大部分がFirecrackerやcrosvmをベースにしている。<a href="/notes/qemu.html">QEMU</a>のvirtiofsd実装や<code>vhost-device</code>なども取り込まれている。</p>
-
-<h2>どこまで簡単にVMMを作れるか</h2>
-
-<p>rust-vmm公式が「rust-vmmクレート＋最小限の接着コード」で構成される<code>vmm-reference</code>という参照実装を公開している。これをforkして部品を組み替えれば、<a href="/notes/kvm.html">KVM</a>ベースの最小限のVMMのたたき台はすぐ作れる。難しいのはKVM呼び出し自体よりも「どんなデバイスモデルにするか」の設計判断だという指摘もある。</p>
-
-<p>一方で、Firecracker相当の製品に届くにはまだ距離がある。<code>vmm-reference</code>自体、デバイスのホットプラグ・VMの一時停止/再開・スナップショット・ライブマイグレーションを(少なくとも初期時点では)サポートしていないと明言している。加えてFirecrackerが持つjailerによるプロセス隔離やseccompフィルタでのシステムコール制限といったセキュリティハードニング、REST APIサーバー、豊富なテスト・ファジングは、rust-vmmのクレートを組み合わせただけでは付いてこず、Firecracker自身が長年かけて積み上げてきた部分になる。</p>
-
-<h2><a href="/notes/microvm-ecosystem.html">コンテナ向け軽量VM技術</a>の中での位置づけ</h2>
-
-<p><a href="/notes/firecracker.html">Firecracker</a>・<a href="/notes/cloud-hypervisor.html">Cloud Hypervisor</a>など、土台となる複数のVMM実装が共有する部品群。</p>
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://github.com/rust-vmm/rust-vmm">GitHub - rust-vmm/rust-vmm: The rust-vmm monorepo</a></li>
-<li><a href="https://opensource.com/article/19/3/rust-virtual-machine">Building the virtualization stack of the future with rust-vmm | Opensource.com</a></li>
-<li><a href="https://github.com/rust-vmm/community/blob/main/README.md">community/README.md at main · rust-vmm/community</a></li>
-<li><a href="https://medium.com/@michael2012zhao_67085/history-of-cloud-hypervisor-138568b2fc1f">History of Cloud-hypervisor | Michael Zhao</a></li>
-<li><a href="https://github.com/rust-vmm/vmm-reference">GitHub - rust-vmm/vmm-reference</a></li>
-<li><a href="https://github.com/rust-vmm/vmm-reference/blob/main/docs/DESIGN.md">vmm-reference/docs/DESIGN.md</a></li>
 </ul>
 
 ]]></description>
