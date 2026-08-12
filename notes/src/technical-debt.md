@@ -1,6 +1,6 @@
 ---
 created: 2026-08-11 07:50
-updated: 2026-08-11 08:02
+updated: 2026-08-12 13:36
 ---
 # 技術的負債（Technical Debt）
 
@@ -8,7 +8,7 @@ updated: 2026-08-11 08:02
 
 ## 原典1: 1992年のOOPSLA論文
 
-論文タイトルは *"The WyCash Portfolio Management System"*（OOPSLA '92 Experience Report）。CunninghamがSmalltalkで開発していた金融アプリケーションについて、非技術者の経営層にリファクタリングの必要性を説明するために書かれた。
+論文タイトルは *"The WyCash Portfolio Management System"*（OOPSLA '92 Experience Report）。CunninghamがSmalltalkで開発していた金融アプリケーションについて、非技術者の経営層に[[refactoring|リファクタリング]]の必要性を説明するために書かれた。
 
 > "Shipping first time code is like going into debt. A little debt speeds development so long as it is paid back promptly with a rewrite."
 > （初回リリースのコードを出荷することは借金をするようなものだ。少額の借金は、書き直しという形ですぐに返済される限り、開発を加速させる）
@@ -25,7 +25,7 @@ Cunninghamは後年、このメタファーが誤解されがちだと述べて�
 
 - 本来のポイントは「その時点での自分たちの理解（ドメイン理解）を反映したコードを書くこと」にある。開発初期はドメインへの理解が不完全なまま実装せざるを得ず、その「理解と実装のズレ」自体が負債である、という考え方。
 - 負債には**元本（principal）**と**利子（interest）**があり、元本は「その決定を後で置き換えるのにかかるコスト」、利子は「置き換えるまでの間、他の機能開発が受け続ける速度低下」を指す。
-- 質の悪いコードを書くこと自体を正当化するメタファーではなく、あくまで「リファクタリング可能な程度にきれいなコード」であることが前提。これが彼の言う「[[extreme-programming|エクストリーム・プログラミング]]の中核」だとしている。
+- 質の悪いコードを書くこと自体を正当化するメタファーではなく、あくまで「[[refactoring|リファクタリング]]可能な程度にきれいなコード」であることが前提。これが彼の言う「[[extreme-programming|エクストリーム・プログラミング]]の中核」だとしている。
 
 ## 補足: 後の展開
 

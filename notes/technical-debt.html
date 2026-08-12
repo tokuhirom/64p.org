@@ -21,6 +21,11 @@
                 <a class="notes-tags-link" href="/notes/tags/">🏷️ タグ一覧</a>
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
+                                    <li><a href="/notes/yagni.html">YAGNI（You Aren&#39;t Gonna Need It）</a></li>
+                                    <li><a href="/notes/technical-debt.html" class="active">技術的負債（Technical Debt）</a></li>
+                                    <li><a href="/notes/tdd.html">TDD (Test-Driven Development / テスト駆動開発)</a></li>
+                                    <li><a href="/notes/refactoring.html">リファクタリング(Refactoring)</a></li>
+                                    <li><a href="/notes/extreme-programming.html">エクストリームプログラミング（XP）</a></li>
                                     <li><a href="/notes/dremio.html">Dremio</a></li>
                                     <li><a href="/notes/data-lakehouse.html">データレイクハウス</a></li>
                                     <li><a href="/notes/apache-polaris.html">Apache Polaris</a></li>
@@ -101,11 +106,7 @@
                                     <li><a href="/notes/restful.html">RESTful（REST: Representational State Transfer）</a></li>
                                     <li><a href="/notes/hateoas.html">HATEOAS（Hypermedia As The Engine Of Application State）</a></li>
                                     <li><a href="/notes/lxd.html">LXD</a></li>
-                                    <li><a href="/notes/yagni.html">YAGNI（You Aren&#39;t Gonna Need It）</a></li>
-                                    <li><a href="/notes/extreme-programming.html">エクストリームプログラミング（XP）</a></li>
                                     <li><a href="/notes/ward-cunningham.html">Ward Cunningham</a></li>
-                                    <li><a href="/notes/technical-debt.html" class="active">技術的負債（Technical Debt）</a></li>
-                                    <li><a href="/notes/tdd.html">TDD (Test-Driven Development / テスト駆動開発)</a></li>
                                     <li><a href="/notes/agile-manifesto.html">アジャイルソフトウェア開発宣言（Manifesto for Agile Software Development）</a></li>
                                     <li><a href="/notes/technical-debt-quadrant.html">技術的負債の四象限（Technical Debt Quadrant）</a></li>
                                     <li><a href="/notes/bourbon-confectionery.html">ブルボン（株式会社ブルボン）</a></li>
@@ -289,7 +290,7 @@
 
 <h2>原典1: 1992年のOOPSLA論文</h2>
 
-<p>論文タイトルは <em>&ldquo;The WyCash Portfolio Management System&rdquo;</em>（OOPSLA &lsquo;92 Experience Report）。CunninghamがSmalltalkで開発していた金融アプリケーションについて、非技術者の経営層にリファクタリングの必要性を説明するために書かれた。</p>
+<p>論文タイトルは <em>&ldquo;The WyCash Portfolio Management System&rdquo;</em>（OOPSLA &lsquo;92 Experience Report）。CunninghamがSmalltalkで開発していた金融アプリケーションについて、非技術者の経営層に<a href="/notes/refactoring.html">リファクタリング</a>の必要性を説明するために書かれた。</p>
 
 <blockquote><p>&ldquo;Shipping first time code is like going into debt. A little debt speeds development so long as it is paid back promptly with a rewrite.&rdquo;
 （初回リリースのコードを出荷することは借金をするようなものだ。少額の借金は、書き直しという形ですぐに返済される限り、開発を加速させる）</p>
@@ -307,7 +308,7 @@
 <ul>
 <li>本来のポイントは「その時点での自分たちの理解（ドメイン理解）を反映したコードを書くこと」にある。開発初期はドメインへの理解が不完全なまま実装せざるを得ず、その「理解と実装のズレ」自体が負債である、という考え方。</li>
 <li>負債には<strong>元本（principal）</strong>と<strong>利子（interest）</strong>があり、元本は「その決定を後で置き換えるのにかかるコスト」、利子は「置き換えるまでの間、他の機能開発が受け続ける速度低下」を指す。</li>
-<li>質の悪いコードを書くこと自体を正当化するメタファーではなく、あくまで「リファクタリング可能な程度にきれいなコード」であることが前提。これが彼の言う「<a href="/notes/extreme-programming.html">エクストリーム・プログラミング</a>の中核」だとしている。</li>
+<li>質の悪いコードを書くこと自体を正当化するメタファーではなく、あくまで「<a href="/notes/refactoring.html">リファクタリング</a>可能な程度にきれいなコード」であることが前提。これが彼の言う「<a href="/notes/extreme-programming.html">エクストリーム・プログラミング</a>の中核」だとしている。</li>
 </ul>
 
 
@@ -339,7 +340,7 @@
                     </ul>
                 </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-11 07:50 / 更新日時: 2026-08-11 08:02</span>
+                    <span>作成日時: 2026-08-11 07:50 / 更新日時: 2026-08-12 13:36</span>
                     <a class="share-x" href="https://twitter.com/intent/tweet?text=%E6%8A%80%E8%A1%93%E7%9A%84%E8%B2%A0%E5%82%B5%EF%BC%88Technical%20Debt%EF%BC%89&url=https%3A%2F%2F64p.org%2Fnotes%2Ftechnical-debt.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
