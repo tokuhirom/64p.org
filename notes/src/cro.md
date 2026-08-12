@@ -1,6 +1,6 @@
 ---
 created: 2026-08-10 18:09
-updated: 2026-08-10 18:09
+updated: 2026-08-12 20:41
 ---
 # Cro
 
@@ -14,7 +14,7 @@ Cro の中核にあるのは、Rakuの`Supply`（非同期リアクティブス�
 
 ## 主な機能
 
-- HTTP（HTTPS、HTTP/2.0を含む）、WebSocketのサポート
+- HTTP（HTTPS、HTTP/2.0を含む）、[[websocket|WebSocket]]のサポート
 - ルーティング機能
 - `Cro::WebApp`によるテンプレート機能
 - `cro`コマンドラインツールによる開発用サーバー起動・テストの支援

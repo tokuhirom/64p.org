@@ -1,10 +1,10 @@
 ---
 created: 2026-08-12 19:37
-updated: 2026-08-12 19:51
+updated: 2026-08-12 20:41
 ---
 # htmx
 
-HTMLの属性だけでAJAX・WebSocket・DOM更新を宣言的に扱えるようにするJavaScriptライブラリ。「モダンブラウザの機能に、JavaScriptを書かずHTMLから直接アクセスできるようにする」ことを掲げる。依存ライブラリなしの約2,500行のJSで、現行バージョンは2.x系。作者はCarson Gross。 #web #javascript
+HTMLの属性だけでAJAX・[[websocket|WebSocket]]・DOM更新を宣言的に扱えるようにするJavaScriptライブラリ。「モダンブラウザの機能に、JavaScriptを書かずHTMLから直接アクセスできるようにする」ことを掲げる。依存ライブラリなしの約2,500行のJSで、現行バージョンは2.x系。作者はCarson Gross。 #web #javascript
 
 ## 仕組み
 

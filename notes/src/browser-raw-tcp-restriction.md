@@ -1,12 +1,12 @@
 ---
 created: 2026-08-11 07:41
-updated: 2026-08-11 07:41
+updated: 2026-08-12 20:41
 ---
 # ブラウザの生TCP/UDPソケット制限
 
 一般的なWebページ（通常のブラウザタブで開くサイト）は、悪用防止のため生のTCP/UDPソケットを直接開くことができない。`WebSocket`・`fetch`・`WebRTC`といった標準のWeb通信APIは、この制約を前提に意図的に設計されている。
 
-これが[[websockify]]のようなWebSocket⇔TCPブリッジが必要とされる理由そのものであり、[[novnc]]が[[rfb]]サーバーへ直接ではなくWebSocket経由で接続する構成を取る背景にもなっている。
+これが[[websockify]]のような[[websocket|WebSocket]]⇔TCPブリッジが必要とされる理由そのものであり、[[novnc]]が[[rfb]]サーバーへ直接ではなくWebSocket経由で接続する構成を取る背景にもなっている。
 
 ## 例外：Direct Sockets API
 

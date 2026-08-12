@@ -1,6 +1,6 @@
 ---
 created: 2026-08-11 07:38
-updated: 2026-08-11 07:38
+updated: 2026-08-12 20:41
 ---
 # RFB（Remote Framebuffer）プロトコル
 
@@ -23,7 +23,7 @@ updated: 2026-08-11 07:38
 
 ## ブラウザ・JavaScriptでの実装
 
-ブラウザは通常のVNC接続で使われる生のTCPソケットを直接扱えないため、[[novnc]]はWebSocketを介してRFBプロトコルをやり取りする。
+ブラウザは通常のVNC接続で使われる生のTCPソケットを直接扱えないため、[[novnc]]は[[websocket|WebSocket]]を介してRFBプロトコルをやり取りする。
 
 ## 出典
 

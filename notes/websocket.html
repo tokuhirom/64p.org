@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>Apache Parquet - Notes - 64p.org</title>
+    <title>WebSocket - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/highlight.js@11/styles/github.min.css" media="(prefers-color-scheme: light)">
@@ -22,7 +22,7 @@
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
                                     <li><a href="/notes/websockify.html">websockify</a></li>
-                                    <li><a href="/notes/websocket.html">WebSocket</a></li>
+                                    <li><a href="/notes/websocket.html" class="active">WebSocket</a></li>
                                     <li><a href="/notes/rfb.html">RFB（Remote Framebuffer）プロトコル</a></li>
                                     <li><a href="/notes/novnc.html">noVNC</a></li>
                                     <li><a href="/notes/htmx.html">htmx</a></li>
@@ -63,7 +63,7 @@
                                     <li><a href="/notes/ggml.html">ggml</a></li>
                                     <li><a href="/notes/clickhouse.html">ClickHouse</a></li>
                                     <li><a href="/notes/project-nessie.html">Project Nessie</a></li>
-                                    <li><a href="/notes/apache-parquet.html" class="active">Apache Parquet</a></li>
+                                    <li><a href="/notes/apache-parquet.html">Apache Parquet</a></li>
                                     <li><a href="/notes/apache-arrow.html">Apache Arrow</a></li>
                                     <li><a href="/notes/shannon-entropy.html">シャノンエントロピー</a></li>
                                     <li><a href="/notes/gitleaks.html">gitleaks</a></li>
@@ -303,49 +303,65 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>Apache Parquet</h1>
+                <h1>WebSocket</h1>
 
-<p>ディスク永続化用の、オープンソースの列指向(カラムナー)ファイルフォーマット。<a href="/notes/apache-arrow.html">Apache Arrow</a>と対比されることが多く、「Arrowはメモリ上、Parquetはディスク上」という関係にある。</p>
+<p>ブラウザとサーバー間で全二重（双方向）通信を実現するプロトコル。単一のTCPコネクション上で、HTTPのリクエスト/レスポンス方式と異なり、両側から任意のタイミングでメッセージを送受信できる。仕様は<a href="https://www.rfc-editor.org/rfc/rfc6455.html">RFC 6455</a>で定義されている。 <a class="note-tag" href="/notes/tags/protocol.html">#protocol</a> <a class="note-tag" href="/notes/tags/web.html">#web</a></p>
 
-<h2>特徴</h2>
+<h2>ハンドシェイク</h2>
+
+<p>最初はHTTPのGETリクエストとして開始する。クライアントは<code>Upgrade: websocket</code>ヘッダーとランダムな<code>Sec-WebSocket-Key</code>を送り、サーバーは<code>101 Switching Protocols</code>と、そのキーに固定GUIDを連結してSHA-1・Base64エンコードした<code>Sec-WebSocket-Accept</code>を返す。以後はHTTPではなくWebSocket独自のフレーム形式で通信する。80/443番ポートで動作しHTTPプロキシとの親和性を保てるよう設計されている。</p>
+
+<h2>フレーム構造</h2>
 
 <ul>
-<li><strong>列指向ストレージ</strong>: CSVやJSONのような行指向フォーマットと異なり、同じ列の値をディスク上に連続して配置する。</li>
-<li><strong>高い圧縮率</strong>: 同じ型のデータをまとめて持つため、列ごとに異なるエンコード/圧縮アルゴリズムを適用でき、CSV/JSONより高い圧縮率を実現する。</li>
-<li><strong>カラムプルーニング</strong>: クエリに必要な列だけを読み込むことでI/Oを削減する。</li>
-<li><strong>述語プッシュダウン(predicate pushdown)</strong>: データ読み込み前にフィルタ条件を適用し、不要な読み込みを避ける。</li>
+<li>FINビット: メッセージの最終フラグメントかどうか</li>
+<li>Opcode(4bit): <code>0x1</code>=テキスト、<code>0x2</code>=バイナリ、<code>0x8</code>=クローズ、<code>0x9</code>=Ping、<code>0xA</code>=Pong</li>
+<li>MASKビット: クライアント→サーバー方向は必須。ペイロードをマスクすることでキャッシュポイズニング攻撃を防ぐ</li>
+<li>ペイロード長: 0〜125byteは直接、126なら16bit、127なら64bitで拡張長を表現</li>
 </ul>
 
 
-<h2>用途・エコシステム</h2>
+<h2>Ping/Pongとクローズ</h2>
 
-<p>Apache Hadoop, Apache Spark, Apache Drill, Presto などの分散処理基盤で広く使われている、分析ワークロード向けのフォーマット。</p>
+<p>Ping(<code>0x9</code>)を受け取った側は同じペイロードでPong(<code>0xA</code>)を返し、接続の生存確認とレイテンシ計測に使う。切断時はどちらかがクローズフレーム(<code>0x8</code>、16bitのステータスコード付き)を送り、相手も応答クローズフレームを返してからTCP接続を閉じる（<code>1000</code>=正常終了など）。</p>
 
-<h2><a href="/notes/data-lakehouse.html">データレイクハウス</a>の中での位置づけ</h2>
+<h2>ユースケース</h2>
 
-<p>データレイクハウスのスタックでは最下層の「データファイル本体」のフォーマット。この上に <a href="/notes/apache-iceberg.html">Apache Iceberg</a> のようなテーブルフォーマットが載り、SQLテーブルとしての抽象を与える。</p>
+<p>チャット、リアルタイム通知、共同編集ツール、ゲーム通信、株価配信など。将来的にはバックプレッシャー対応や非順序配信を持つ<strong>WebTransport API</strong>（HTTP/3・QUICベース）が一部用途を置き換える見込み。</p>
+
+<h2>関連</h2>
+
+<ul>
+<li><a href="/notes/websockify.html">websockify</a>はWebSocket⇔TCPのプロキシ／ブリッジ、<a href="/notes/novnc.html">noVNC</a>はWebSocket経由で<a href="/notes/rfb.html">RFB（Remote Framebuffer）プロトコル</a>プロトコルを話すVNCクライアント。<a href="/notes/browser-raw-tcp-restriction.html">ブラウザが生のTCPソケットを直接扱えない</a>制約への対処として、この構成が使われている。</li>
+<li><a href="/notes/htmx.html">htmx</a>はHTML属性からWebSocketを宣言的に扱う拡張を持つ。</li>
+<li><a href="/notes/cro.html">Cro</a>（Rakuのウェブフレームワーク）もWebSocketをサポートしている。</li>
+</ul>
+
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://parquet.apache.org/">Parquet公式サイト</a></li>
-<li><a href="https://www.databricks.com/blog/what-is-parquet">What is Parquet? | Databricks</a></li>
-<li><a href="https://www.ibm.com/think/topics/parquet">What is Apache Parquet? | IBM</a></li>
+<li><a href="https://www.rfc-editor.org/rfc/rfc6455.html">RFC 6455: The WebSocket Protocol</a></li>
+<li><a href="https://websocket.org/guides/websocket-protocol/">WebSocket Protocol: RFC 6455 Handshake, Frames &amp; More - WebSocket.org</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API">WebSocket API - MDN</a></li>
 </ul>
 
 
                                 <div class="notes-backlinks">
                     <h2>🔗 リンクされているノート</h2>
                     <ul>
-                                            <li><a href="/notes/apache-arrow.html">Apache Arrow</a></li>
-                                            <li><a href="/notes/apache-iceberg.html">Apache Iceberg</a></li>
-                                            <li><a href="/notes/data-lakehouse.html">データレイクハウス</a></li>
+                                            <li><a href="/notes/cro.html">Cro</a></li>
+                                            <li><a href="/notes/rfb.html">RFB（Remote Framebuffer）プロトコル</a></li>
+                                            <li><a href="/notes/htmx.html">htmx</a></li>
+                                            <li><a href="/notes/novnc.html">noVNC</a></li>
+                                            <li><a href="/notes/websockify.html">websockify</a></li>
+                                            <li><a href="/notes/browser-raw-tcp-restriction.html">ブラウザの生TCP/UDPソケット制限</a></li>
                     
                     </ul>
                 </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-09 21:14 / 更新日時: 2026-08-12 09:55</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=Apache%20Parquet&url=https%3A%2F%2F64p.org%2Fnotes%2Fapache-parquet.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <span>作成日時: 2026-08-12 20:41 / 更新日時: 2026-08-12 20:41</span>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=WebSocket&url=https%3A%2F%2F64p.org%2Fnotes%2Fwebsocket.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">

@@ -1,10 +1,10 @@
 ---
 created: 2026-08-11 07:38
-updated: 2026-08-11 07:41
+updated: 2026-08-12 20:41
 ---
 # noVNC
 
-HTML5（JavaScript・Canvas API・WebSocket）で実装された、ブラウザ上で動く[[rfb]]クライアント。専用のVNCクライアントアプリなしに、ブラウザだけで[[vnc]]サーバーへ接続できる。
+HTML5（JavaScript・Canvas API・[[websocket|WebSocket]]）で実装された、ブラウザ上で動く[[rfb]]クライアント。専用のVNCクライアントアプリなしに、ブラウザだけで[[vnc]]サーバーへ接続できる。
 
 ## 構成
 
