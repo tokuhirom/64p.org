@@ -2,12 +2,13 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>Hack The Box - Notes - 64p.org</title>
+    <title>周波数領域の変換 - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="alternate" type="application/rss+xml" title="Notes - 64p.org" href="/notes/rss.xml">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@highlightjs/cdn-assets@11/styles/github.min.css" media="(prefers-color-scheme: light)">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@highlightjs/cdn-assets@11/styles/github-dark.min.css" media="(prefers-color-scheme: dark)">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/katex@0.16/dist/katex.min.css">
 </head>
 <body>
     <div class="notes-layout">
@@ -24,7 +25,7 @@
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
                                     <li><a href="/notes/laplace-transform.html">ラプラス変換</a></li>
-                                    <li><a href="/notes/frequency-domain-transforms.html">周波数領域の変換</a></li>
+                                    <li><a href="/notes/frequency-domain-transforms.html" class="active">周波数領域の変換</a></li>
                                     <li><a href="/notes/fourier-transform.html">フーリエ変換</a></li>
                                     <li><a href="/notes/fft.html">FFT（高速フーリエ変換）</a></li>
                                     <li><a href="/notes/vm-exit.html">VM exit</a></li>
@@ -193,7 +194,7 @@
                                     <li><a href="/notes/ufw.html">ufw</a></li>
                                     <li><a href="/notes/iptables.html">iptables</a></li>
                                     <li><a href="/notes/acm-icpc.html">ACM-ICPC</a></li>
-                                    <li><a href="/notes/hack-the-box.html" class="active">Hack The Box</a></li>
+                                    <li><a href="/notes/hack-the-box.html">Hack The Box</a></li>
                                     <li><a href="/notes/luajit.html">LuaJIT</a></li>
                                     <li><a href="/notes/lua.html">Lua</a></li>
                                     <li><a href="/notes/aio-launcher.html">AIO Launcher</a></li>
@@ -338,49 +339,46 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>Hack The Box</h1>
+                <h1>周波数領域の変換</h1>
 
-<p>サイバーセキュリティのスキル向上を目的とした、オンラインの実践学習プラットフォーム。ペネトレーションテスト(侵入テスト)や倫理的ハッキングの技術を、実際の攻撃・防御を模した環境で体験しながら学べる。 <a class="note-tag" href="/notes/tags/security.html">#security</a></p>
+<p>時間領域（あるいは空間領域）の信号・関数を、周波数領域に写してから扱う手法群のハブノート。「時間領域では難しい操作（微分方程式・畳み込み・スペクトル分析）が、変換先では簡単な代数演算になる」という共通の発想でつながっている。</p>
 
-<h2>仕組み</h2>
+<p><a class="note-tag" href="/notes/tags/math.html">#math</a> <a class="note-tag" href="/notes/tags/signal-processing.html">#signal-processing</a> <a class="note-tag" href="/notes/tags/moc.html">#moc</a></p>
+
+<div class="mermaid">
+graph LR
+    ft[フーリエ変換] --&gt;|"減衰因子 e^(-σt) で一般化"| lt[ラプラス変換]
+    ft --&gt;|離散化| dft[DFT]
+    dft --&gt;|"O(N log N) で計算"| fft[FFT]
+    lt --&gt;|"離散時間版 z = e^(sT)"| zt[z変換]
+</div>
+
+
+<h2>配下ノート</h2>
 
 <ul>
-<li>仮想環境上に用意された脆弱な<strong>マシン(サーバー)</strong>に実際に侵入し、隠された<strong>Flag</strong>(目標データ)を取得することがゴール</li>
-<li>難易度は初心者向けの「Starting Point」から、超上級者向けの「Pro Labs」まで幅広く用意されている</li>
-<li>マシン攻略の実績に応じてポイントが付与され、ポイントに応じたランク(称号)が与えられる、ゲーミフィケーション的な要素がある</li>
+<li><a href="/notes/fourier-transform.html">フーリエ変換</a> — 信号を正弦波の重ね合わせに分解する、この分野の基本となる積分変換</li>
+<li><a href="/notes/laplace-transform.html">ラプラス変換</a> — フーリエ変換に減衰因子を加えて発散する信号にも適用できるようにした一般化。微分方程式の求解・制御理論・回路解析向き</li>
+<li><a href="/notes/fft.html">FFT（高速フーリエ変換）</a> — 離散版（DFT）を <span class="math-inline">O(N \log N)</span> で計算するアルゴリズム。連続の理論を計算機で実用にした立役者</li>
 </ul>
 
 
-<h2>主なコンテンツ</h2>
+<h2>まだ独立ノートになっていない隣接概念</h2>
 
-<ul>
-<li><strong>Labs</strong> — 脆弱な仮想マシンへの侵入練習(実践的なペネトレーションテストのトレーニング)</li>
-<li><strong>HTB Academy</strong> — 体系的なセキュリティ学習コンテンツ(座学寄り)</li>
-<li>個人向けだけでなく、企業のセキュリティ人材育成用途でも利用されている</li>
-</ul>
+<p>DFT・フーリエ級数・z変換・DCT（JPEG/MP3で使われる）・OFDM など。</p>
 
-
-<h2>料金</h2>
-
-<p>無料プランと有料(サブスクリプション)プランがあり、有料プランではより多くのマシンやコンテンツにアクセスできる。</p>
-
-<h2>関連</h2>
-
-<p>侵入テストの実践では<a href="/notes/kali-linux.html">Kali Linux</a>や<a href="/notes/metasploit.html">Metasploit</a>のようなツールがよく使われる。</p>
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://hakuhakublog.tech/hack-the-box/">Hack The Boxとは？料金やHTB Academyも解説 - セキュリティエンジニアへの道しるべ</a></li>
-<li><a href="https://hack-lab-256.com/hack-the-box-starter/1640/">Hack The Boxの始め方｜無料と有料プラン・LabsとAcademyの違いを徹底比較</a></li>
-<li><a href="https://jpn.nec.com/cybersecurity/blog/200619/index.html">トレーニングコンテンツ：「Hack The Box」を触り始めてみた: NECセキュリティブログ</a></li>
-<li><a href="https://jp.security.ntt/insights_resources/tech_blog/102hdvh/">HACK THE BOX を利用したスキル研鑽について | NTTセキュリティ・ジャパン</a></li>
-</ul>
-
-
+                                <div class="notes-backlinks">
+                    <h2>🔗 リンクされているノート</h2>
+                    <ul>
+                                            <li><a href="/notes/fft.html">FFT（高速フーリエ変換）</a></li>
+                                            <li><a href="/notes/fourier-transform.html">フーリエ変換</a></li>
+                                            <li><a href="/notes/laplace-transform.html">ラプラス変換</a></li>
+                    
+                    </ul>
+                </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-10 20:41 / 更新日時: 2026-08-10 20:41</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=Hack%20The%20Box&url=https%3A%2F%2F64p.org%2Fnotes%2Fhack-the-box.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <span>作成日時: 2026-08-13 00:14 / 更新日時: 2026-08-13 00:14</span>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=%E5%91%A8%E6%B3%A2%E6%95%B0%E9%A0%98%E5%9F%9F%E3%81%AE%E5%A4%89%E6%8F%9B&url=https%3A%2F%2F64p.org%2Fnotes%2Ffrequency-domain-transforms.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">
@@ -392,5 +390,36 @@
     <script src="//cdn.jsdelivr.net/npm/@highlightjs/cdn-assets@11/highlight.min.js"></script>
     <script>hljs.highlightAll();</script>
     <script src="/static/notes.js"></script>
+    <script defer src="//cdn.jsdelivr.net/npm/katex@0.16/dist/katex.min.js"></script>
+    <script>
+    window.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('div.math-display, span.math-inline').forEach(function (el) {
+            katex.render(el.textContent, el, {
+                displayMode: el.tagName === 'DIV',
+                throwOnError: false,
+            });
+        });
+    });
+    </script>
+    <script type="module">
+    import mermaid from '//cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+    var root = document.documentElement;
+    var divs = document.querySelectorAll('div.mermaid');
+    divs.forEach(function (d) { d.dataset.src = d.textContent; });
+    function isDark() {
+        var t = root.getAttribute('data-theme');
+        return t ? t === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+    }
+    function render() {
+        mermaid.initialize({ startOnLoad: false, theme: isDark() ? 'dark' : 'default' });
+        divs.forEach(function (d) {
+            d.textContent = d.dataset.src;
+            d.removeAttribute('data-processed');
+        });
+        mermaid.run({ nodes: divs });
+    }
+    new MutationObserver(render).observe(root, { attributeFilter: ['data-theme'] });
+    render();
+    </script>
 </body>
 </html>

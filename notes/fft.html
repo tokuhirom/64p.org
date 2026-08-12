@@ -24,10 +24,11 @@
                 <a class="notes-tags-link" href="/notes/rss.xml">📡 RSS</a>
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
-                                    <li><a href="/notes/vm-exit.html">VM exit</a></li>
+                                    <li><a href="/notes/laplace-transform.html">ラプラス変換</a></li>
+                                    <li><a href="/notes/frequency-domain-transforms.html">周波数領域の変換</a></li>
                                     <li><a href="/notes/fourier-transform.html">フーリエ変換</a></li>
                                     <li><a href="/notes/fft.html" class="active">FFT（高速フーリエ変換）</a></li>
-                                    <li><a href="/notes/laplace-transform.html">ラプラス変換</a></li>
+                                    <li><a href="/notes/vm-exit.html">VM exit</a></li>
                                     <li><a href="/notes/virtqueue-toy-experiment.html">virtqueue風トイ実験</a></li>
                                     <li><a href="/notes/kvm-hello-world-experiment.html">kvm-hello-world実験</a></li>
                                     <li><a href="/notes/virtio.html">virtio</a></li>
@@ -380,6 +381,10 @@ X_k = \sum_{n=0}^{N-1} x_n\, e^{-i 2\pi k n / N}
 
 <p>スペクトル解析・フィルタリング（overlap-add/save法）、多倍長整数や多項式の乗算、JPEG/MP3などのエンコード（高速DCT経由）、4G LTE/5GのOFDM変調など。実装では FFTW（"Fastest Fourier Transform in the West"）が有名で、NumPy/SciPy・MATLAB・Julia などの標準機能の背後にもFFTライブラリがいる。</p>
 
+<h2><a href="/notes/frequency-domain-transforms.html">周波数領域の変換</a>の中での位置づけ</h2>
+
+<p><a href="/notes/fourier-transform.html">フーリエ変換</a>・<a href="/notes/laplace-transform.html">ラプラス変換</a>が連続の数学理論なのに対し、こちらは離散版（DFT）を計算機で高速に計算するためのアルゴリズム。理論を実用に変えたのがこのノートの主役。</p>
+
 <h2>出典</h2>
 
 <ul>
@@ -391,11 +396,12 @@ X_k = \sum_{n=0}^{N-1} x_n\, e^{-i 2\pi k n / N}
                     <h2>🔗 リンクされているノート</h2>
                     <ul>
                                             <li><a href="/notes/fourier-transform.html">フーリエ変換</a></li>
+                                            <li><a href="/notes/frequency-domain-transforms.html">周波数領域の変換</a></li>
                     
                     </ul>
                 </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-13 00:11 / 更新日時: 2026-08-13 00:11</span>
+                    <span>作成日時: 2026-08-13 00:11 / 更新日時: 2026-08-13 00:14</span>
                     <a class="share-x" href="https://twitter.com/intent/tweet?text=FFT%EF%BC%88%E9%AB%98%E9%80%9F%E3%83%95%E3%83%BC%E3%83%AA%E3%82%A8%E5%A4%89%E6%8F%9B%EF%BC%89&url=https%3A%2F%2F64p.org%2Fnotes%2Ffft.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>

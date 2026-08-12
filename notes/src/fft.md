@@ -1,6 +1,6 @@
 ---
 created: 2026-08-13 00:11
-updated: 2026-08-13 00:11
+updated: 2026-08-13 00:14
 ---
 # FFT（高速フーリエ変換）
 
@@ -36,6 +36,10 @@ $$
 ## 応用
 
 スペクトル解析・フィルタリング（overlap-add/save法）、多倍長整数や多項式の乗算、JPEG/MP3などのエンコード（高速DCT経由）、4G LTE/5GのOFDM変調など。実装では FFTW（"Fastest Fourier Transform in the West"）が有名で、NumPy/SciPy・MATLAB・Julia などの標準機能の背後にもFFTライブラリがいる。
+
+## [[frequency-domain-transforms]]の中での位置づけ
+
+[[fourier-transform|フーリエ変換]]・[[laplace-transform|ラプラス変換]]が連続の数学理論なのに対し、こちらは離散版（DFT）を計算機で高速に計算するためのアルゴリズム。理論を実用に変えたのがこのノートの主役。
 
 ## 出典
 

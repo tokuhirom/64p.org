@@ -6,7 +6,100 @@
 <atom:link href="https://64p.org/notes/rss.xml" rel="self" type="application/rss+xml" />
 <description>ちょっと調べたことや検証結果を、AIの力も借りながらメモしていくコーナーです。</description>
 <language>ja</language>
-<lastBuildDate>Thu, 13 Aug 2026 00:11:15 +0900</lastBuildDate>
+<lastBuildDate>Thu, 13 Aug 2026 00:14:11 +0900</lastBuildDate>
+<item>
+<title>周波数領域の変換</title>
+<link>https://64p.org/notes/frequency-domain-transforms.html</link>
+<guid isPermaLink="true">https://64p.org/notes/frequency-domain-transforms.html</guid>
+<pubDate>Thu, 13 Aug 2026 00:14:00 +0900</pubDate>
+<description><![CDATA[<h1>周波数領域の変換</h1>
+
+<p>時間領域（あるいは空間領域）の信号・関数を、周波数領域に写してから扱う手法群のハブノート。「時間領域では難しい操作（微分方程式・畳み込み・スペクトル分析）が、変換先では簡単な代数演算になる」という共通の発想でつながっている。</p>
+
+<p><a class="note-tag" href="/notes/tags/math.html">#math</a> <a class="note-tag" href="/notes/tags/signal-processing.html">#signal-processing</a> <a class="note-tag" href="/notes/tags/moc.html">#moc</a></p>
+
+<div class="mermaid">
+graph LR
+    ft[フーリエ変換] --&gt;|"減衰因子 e^(-σt) で一般化"| lt[ラプラス変換]
+    ft --&gt;|離散化| dft[DFT]
+    dft --&gt;|"O(N log N) で計算"| fft[FFT]
+    lt --&gt;|"離散時間版 z = e^(sT)"| zt[z変換]
+</div>
+
+
+<h2>配下ノート</h2>
+
+<ul>
+<li><a href="/notes/fourier-transform.html">フーリエ変換</a> — 信号を正弦波の重ね合わせに分解する、この分野の基本となる積分変換</li>
+<li><a href="/notes/laplace-transform.html">ラプラス変換</a> — フーリエ変換に減衰因子を加えて発散する信号にも適用できるようにした一般化。微分方程式の求解・制御理論・回路解析向き</li>
+<li><a href="/notes/fft.html">FFT（高速フーリエ変換）</a> — 離散版（DFT）を <span class="math-inline">O(N \log N)</span> で計算するアルゴリズム。連続の理論を計算機で実用にした立役者</li>
+</ul>
+
+
+<h2>まだ独立ノートになっていない隣接概念</h2>
+
+<p>DFT・フーリエ級数・z変換・DCT（JPEG/MP3で使われる）・OFDM など。</p>
+]]></description>
+</item>
+<item>
+<title>FFT（高速フーリエ変換）</title>
+<link>https://64p.org/notes/fft.html</link>
+<guid isPermaLink="true">https://64p.org/notes/fft.html</guid>
+<pubDate>Thu, 13 Aug 2026 00:11:00 +0900</pubDate>
+<description><![CDATA[<h1>FFT（高速フーリエ変換）</h1>
+
+<p><a class="note-tag" href="/notes/tags/math.html">#math</a> <a class="note-tag" href="/notes/tags/signal-processing.html">#signal-processing</a> <a class="note-tag" href="/notes/tags/algorithm.html">#algorithm</a></p>
+
+<p>DFT（離散フーリエ変換）を高速に計算するアルゴリズム。<a href="/notes/fourier-transform.html">フーリエ変換</a>のサンプリングされた離散データ版であるDFT</p>
+
+<div class="math-display">
+X_k = \sum_{n=0}^{N-1} x_n\, e^{-i 2\pi k n / N}
+</div>
+
+
+<p>を素朴に計算すると <span class="math-inline">O(N<sup>2</sup>)</span> かかるが、FFTは <span class="math-inline">O(N \log N)</span> で計算する。N=4096 で実測400倍ほどの高速化になり、この差が「DFTを実用にした」と言ってよい。Gilbert Strang は「我々の生涯で最も重要な数値アルゴリズム」と評し、IEEEの「20世紀のトップ10アルゴリズム」にも選ばれている。</p>
+
+<h2>Cooley-Tukeyアルゴリズムの核心</h2>
+
+<p>分割統治。サイズ <span class="math-inline">N = N_1 \times N_2</span> のDFTを、サイズ <span class="math-inline">N_2</span> の小さいDFT <span class="math-inline">N_1</span> 個に再帰的に分解し、「回転因子（twiddle factor）」と呼ばれる1のべき根 <span class="math-inline">e^{-i 2\pi k / N}</span> の掛け算 <span class="math-inline">O(N)</span> 回で結合する。</p>
+
+<p>最も普及しているのは radix-2（時間間引き）版: 入力を偶数番目と奇数番目に分けると、サイズNのDFTがサイズN/2のDFT2つと回転因子の掛け算に分解できる。これを再帰すると <span class="math-inline">T(N) = 2T(N/2) + O(N) = O(N \log N)</span>。2つの半分の結果を足し引きで結合する演算パターンが蝶の形に見えることから「バタフライ演算」と呼ばれる。radix-2はNが2のべき乗に限られるが、混合基数版は任意の合成数を扱える。</p>
+
+<h2>歴史</h2>
+
+<ul>
+<li>起源は Carl Friedrich Gauss（1805年頃）。小惑星軌道の補間のために同等の手法を使っていたが、計算量の解析はしていなかった</li>
+<li>その後も Yates (1932)、Danielson &amp; Lanczos (1942, X線結晶構造解析) などで部分的に再発明されている</li>
+<li>現代のFFTは Cooley &amp; Tukey が1965年に（Gaussを知らずに）再発見・発表したもの。Tukey がケネディ政権の会議でソ連の核実験を地震計センサー網で検出する議論中に着想し、同僚の Richard Garwin が汎用性に気づいてIBMの Cooley に持ち込んだ。Tukey がIBM社員でなかったためアルゴリズムはパブリックドメインになり、それがデジタル信号処理での普及を後押しした</li>
+</ul>
+
+
+<h2>バリエーション</h2>
+
+<ul>
+<li><strong>prime-factor FFT</strong> — 互いに素な因数分解に中国剰余定理を使い、回転因子なしで分解</li>
+<li><strong>Raderのアルゴリズム / Bluesteinのchirp-z</strong> — 素数サイズのDFTを巡回畳み込みに変換して処理</li>
+<li><strong>split-radix</strong> — Cooley-Tukeyより算術演算数を減らす</li>
+<li><strong>実数入力の最適化</strong> — 入力が実数なら出力が共役対称になるので、計算量・メモリをほぼ半減できる</li>
+</ul>
+
+
+<h2>応用</h2>
+
+<p>スペクトル解析・フィルタリング（overlap-add/save法）、多倍長整数や多項式の乗算、JPEG/MP3などのエンコード（高速DCT経由）、4G LTE/5GのOFDM変調など。実装では FFTW（"Fastest Fourier Transform in the West"）が有名で、NumPy/SciPy・MATLAB・Julia などの標準機能の背後にもFFTライブラリがいる。</p>
+
+<h2><a href="/notes/frequency-domain-transforms.html">周波数領域の変換</a>の中での位置づけ</h2>
+
+<p><a href="/notes/fourier-transform.html">フーリエ変換</a>・<a href="/notes/laplace-transform.html">ラプラス変換</a>が連続の数学理論なのに対し、こちらは離散版（DFT）を計算機で高速に計算するためのアルゴリズム。理論を実用に変えたのがこのノートの主役。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/Fast_Fourier_transform">Fast Fourier transform - Wikipedia</a></li>
+</ul>
+
+]]></description>
+</item>
 <item>
 <title>VM exit</title>
 <link>https://64p.org/notes/vm-exit.html</link>
@@ -82,116 +175,6 @@
 ]]></description>
 </item>
 <item>
-<title>FFT（高速フーリエ変換）</title>
-<link>https://64p.org/notes/fft.html</link>
-<guid isPermaLink="true">https://64p.org/notes/fft.html</guid>
-<pubDate>Thu, 13 Aug 2026 00:11:00 +0900</pubDate>
-<description><![CDATA[<h1>FFT（高速フーリエ変換）</h1>
-
-<p><a class="note-tag" href="/notes/tags/math.html">#math</a> <a class="note-tag" href="/notes/tags/signal-processing.html">#signal-processing</a> <a class="note-tag" href="/notes/tags/algorithm.html">#algorithm</a></p>
-
-<p>DFT（離散フーリエ変換）を高速に計算するアルゴリズム。<a href="/notes/fourier-transform.html">フーリエ変換</a>のサンプリングされた離散データ版であるDFT</p>
-
-<div class="math-display">
-X_k = \sum_{n=0}^{N-1} x_n\, e^{-i 2\pi k n / N}
-</div>
-
-
-<p>を素朴に計算すると <span class="math-inline">O(N<sup>2</sup>)</span> かかるが、FFTは <span class="math-inline">O(N \log N)</span> で計算する。N=4096 で実測400倍ほどの高速化になり、この差が「DFTを実用にした」と言ってよい。Gilbert Strang は「我々の生涯で最も重要な数値アルゴリズム」と評し、IEEEの「20世紀のトップ10アルゴリズム」にも選ばれている。</p>
-
-<h2>Cooley-Tukeyアルゴリズムの核心</h2>
-
-<p>分割統治。サイズ <span class="math-inline">N = N_1 \times N_2</span> のDFTを、サイズ <span class="math-inline">N_2</span> の小さいDFT <span class="math-inline">N_1</span> 個に再帰的に分解し、「回転因子（twiddle factor）」と呼ばれる1のべき根 <span class="math-inline">e^{-i 2\pi k / N}</span> の掛け算 <span class="math-inline">O(N)</span> 回で結合する。</p>
-
-<p>最も普及しているのは radix-2（時間間引き）版: 入力を偶数番目と奇数番目に分けると、サイズNのDFTがサイズN/2のDFT2つと回転因子の掛け算に分解できる。これを再帰すると <span class="math-inline">T(N) = 2T(N/2) + O(N) = O(N \log N)</span>。2つの半分の結果を足し引きで結合する演算パターンが蝶の形に見えることから「バタフライ演算」と呼ばれる。radix-2はNが2のべき乗に限られるが、混合基数版は任意の合成数を扱える。</p>
-
-<h2>歴史</h2>
-
-<ul>
-<li>起源は Carl Friedrich Gauss（1805年頃）。小惑星軌道の補間のために同等の手法を使っていたが、計算量の解析はしていなかった</li>
-<li>その後も Yates (1932)、Danielson &amp; Lanczos (1942, X線結晶構造解析) などで部分的に再発明されている</li>
-<li>現代のFFTは Cooley &amp; Tukey が1965年に（Gaussを知らずに）再発見・発表したもの。Tukey がケネディ政権の会議でソ連の核実験を地震計センサー網で検出する議論中に着想し、同僚の Richard Garwin が汎用性に気づいてIBMの Cooley に持ち込んだ。Tukey がIBM社員でなかったためアルゴリズムはパブリックドメインになり、それがデジタル信号処理での普及を後押しした</li>
-</ul>
-
-
-<h2>バリエーション</h2>
-
-<ul>
-<li><strong>prime-factor FFT</strong> — 互いに素な因数分解に中国剰余定理を使い、回転因子なしで分解</li>
-<li><strong>Raderのアルゴリズム / Bluesteinのchirp-z</strong> — 素数サイズのDFTを巡回畳み込みに変換して処理</li>
-<li><strong>split-radix</strong> — Cooley-Tukeyより算術演算数を減らす</li>
-<li><strong>実数入力の最適化</strong> — 入力が実数なら出力が共役対称になるので、計算量・メモリをほぼ半減できる</li>
-</ul>
-
-
-<h2>応用</h2>
-
-<p>スペクトル解析・フィルタリング（overlap-add/save法）、多倍長整数や多項式の乗算、JPEG/MP3などのエンコード（高速DCT経由）、4G LTE/5GのOFDM変調など。実装では FFTW（"Fastest Fourier Transform in the West"）が有名で、NumPy/SciPy・MATLAB・Julia などの標準機能の背後にもFFTライブラリがいる。</p>
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://en.wikipedia.org/wiki/Fast_Fourier_transform">Fast Fourier transform - Wikipedia</a></li>
-</ul>
-
-]]></description>
-</item>
-<item>
-<title>フーリエ変換</title>
-<link>https://64p.org/notes/fourier-transform.html</link>
-<guid isPermaLink="true">https://64p.org/notes/fourier-transform.html</guid>
-<pubDate>Thu, 13 Aug 2026 00:03:00 +0900</pubDate>
-<description><![CDATA[<h1>フーリエ変換</h1>
-
-<p><a class="note-tag" href="/notes/tags/math.html">#math</a> <a class="note-tag" href="/notes/tags/signal-processing.html">#signal-processing</a></p>
-
-<p>時間領域（あるいは空間領域）の関数を、「どの周波数成分がどれだけ含まれているか」を表す周波数領域の関数に写す積分変換。</p>
-
-<div class="math-display">
-\hat{f}(\xi) = \int_{-\infty}^{\infty} f(x)\, e^{-i 2\pi \xi x}\, dx
-</div>
-
-
-<p>音楽の和音を個々の音程に分解するように、複雑な信号を単純な正弦波の重ね合わせに分解する。</p>
-
-<h2>直感</h2>
-
-<p><span class="math-inline">f(x)</span> に <span class="math-inline">e^{-i 2\pi \xi x}</span> を掛けることは、すべての周波数成分から <span class="math-inline">\xi</span> を引くことに相当する。積分すると、周波数 <span class="math-inline">\xi</span> にちょうど一致する成分だけが直流成分として生き残り、それ以外は振動して打ち消し合う。つまり「掛けて積分する」ことが特定周波数成分の抽出になっている。</p>
-
-<h2>主な性質</h2>
-
-<ul>
-<li><strong>畳み込み定理</strong> — 時間領域の畳み込みは周波数領域の掛け算になる（逆も然り）。フィルタ処理や高速な畳み込み計算の基礎</li>
-<li><strong>微分</strong> — 時間領域の微分は周波数領域では <span class="math-inline">i\omega</span> 倍になる。偏微分方程式（熱方程式・波動方程式）の求解に効く</li>
-<li><strong>シフト</strong> — 時間シフトは位相因子の掛け算になる</li>
-<li><strong>不確定性</strong> — 時間領域で局在した関数ほど周波数領域では広がる（逆も然り）。信号解析における不確定性原理</li>
-</ul>
-
-
-<p>存在条件は絶対可積分（<span class="math-inline">\int |f| \, dx &lt; \infty</span>）。発散する信号にはそのまま適用できず、その制約を減衰因子で回避して一般化したのが<a href="/notes/laplace-transform.html">ラプラス変換</a>。</p>
-
-<h2>ファミリー</h2>
-
-<ul>
-<li><strong>フーリエ級数</strong> — 周期関数版。離散的な周波数成分（基本波の整数倍）に分解する。Joseph Fourier が1822年の熱伝導の研究で「任意の関数は正弦波の級数に展開できる」と主張したのが起源</li>
-<li><strong>DFT（離散フーリエ変換）</strong> — サンプリングされた離散データ版</li>
-<li><strong><a href="/notes/fft.html">FFT（高速フーリエ変換）</a></strong> — DFTを <span class="math-inline">O(n \log n)</span> で計算するアルゴリズム。デジタル信号処理の実用上の主役</li>
-</ul>
-
-
-<h2>応用</h2>
-
-<p>信号処理（スペクトル解析・フィルタリング）、偏微分方程式の求解、フーリエ変換分光法、量子力学（位置表示と運動量表示の橋渡し）など。</p>
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://en.wikipedia.org/wiki/Fourier_transform">Fourier transform - Wikipedia</a></li>
-</ul>
-
-]]></description>
-</item>
-<item>
 <title>ラプラス変換</title>
 <link>https://64p.org/notes/laplace-transform.html</link>
 <guid isPermaLink="true">https://64p.org/notes/laplace-transform.html</guid>
@@ -250,12 +233,75 @@ f(t) = \frac{1}{2\pi i} \lim_{T\to\infty} \int_{\gamma - iT}^{\gamma + iT} e^{st
 </ul>
 
 
+<h2><a href="/notes/frequency-domain-transforms.html">周波数領域の変換</a>の中での位置づけ</h2>
+
+<p><a href="/notes/fourier-transform.html">フーリエ変換</a>が「周波数分解」そのものを目的にするのに対し、こちらは減衰因子を加えた一般化によって発散する信号や過渡応答を扱えるようにし、微分方程式・制御・回路といった「システムを解く」方向に特化している。</p>
+
 <h2>出典</h2>
 
 <ul>
 <li><a href="https://en.wikipedia.org/wiki/Laplace_transform">Laplace transform - Wikipedia</a></li>
 <li><a href="https://medium.com/intuition/the-intuition-behind-the-laplace-transform-8432c3bceb37">The Intuition behind the Laplace Transform - Medium</a></li>
 <li><a href="https://www.tutorialspoint.com/signals_and_systems/relation_between_laplace_transform_and_fourier_transform.htm">Relation between Laplace Transform and Fourier Transform - Tutorialspoint</a></li>
+</ul>
+
+]]></description>
+</item>
+<item>
+<title>フーリエ変換</title>
+<link>https://64p.org/notes/fourier-transform.html</link>
+<guid isPermaLink="true">https://64p.org/notes/fourier-transform.html</guid>
+<pubDate>Thu, 13 Aug 2026 00:03:00 +0900</pubDate>
+<description><![CDATA[<h1>フーリエ変換</h1>
+
+<p><a class="note-tag" href="/notes/tags/math.html">#math</a> <a class="note-tag" href="/notes/tags/signal-processing.html">#signal-processing</a></p>
+
+<p>時間領域（あるいは空間領域）の関数を、「どの周波数成分がどれだけ含まれているか」を表す周波数領域の関数に写す積分変換。</p>
+
+<div class="math-display">
+\hat{f}(\xi) = \int_{-\infty}^{\infty} f(x)\, e^{-i 2\pi \xi x}\, dx
+</div>
+
+
+<p>音楽の和音を個々の音程に分解するように、複雑な信号を単純な正弦波の重ね合わせに分解する。</p>
+
+<h2>直感</h2>
+
+<p><span class="math-inline">f(x)</span> に <span class="math-inline">e^{-i 2\pi \xi x}</span> を掛けることは、すべての周波数成分から <span class="math-inline">\xi</span> を引くことに相当する。積分すると、周波数 <span class="math-inline">\xi</span> にちょうど一致する成分だけが直流成分として生き残り、それ以外は振動して打ち消し合う。つまり「掛けて積分する」ことが特定周波数成分の抽出になっている。</p>
+
+<h2>主な性質</h2>
+
+<ul>
+<li><strong>畳み込み定理</strong> — 時間領域の畳み込みは周波数領域の掛け算になる（逆も然り）。フィルタ処理や高速な畳み込み計算の基礎</li>
+<li><strong>微分</strong> — 時間領域の微分は周波数領域では <span class="math-inline">i\omega</span> 倍になる。偏微分方程式（熱方程式・波動方程式）の求解に効く</li>
+<li><strong>シフト</strong> — 時間シフトは位相因子の掛け算になる</li>
+<li><strong>不確定性</strong> — 時間領域で局在した関数ほど周波数領域では広がる（逆も然り）。信号解析における不確定性原理</li>
+</ul>
+
+
+<p>存在条件は絶対可積分（<span class="math-inline">\int |f| \, dx &lt; \infty</span>）。発散する信号にはそのまま適用できず、その制約を減衰因子で回避して一般化したのが<a href="/notes/laplace-transform.html">ラプラス変換</a>。</p>
+
+<h2>ファミリー</h2>
+
+<ul>
+<li><strong>フーリエ級数</strong> — 周期関数版。離散的な周波数成分（基本波の整数倍）に分解する。Joseph Fourier が1822年の熱伝導の研究で「任意の関数は正弦波の級数に展開できる」と主張したのが起源</li>
+<li><strong>DFT（離散フーリエ変換）</strong> — サンプリングされた離散データ版</li>
+<li><strong><a href="/notes/fft.html">FFT（高速フーリエ変換）</a></strong> — DFTを <span class="math-inline">O(n \log n)</span> で計算するアルゴリズム。デジタル信号処理の実用上の主役</li>
+</ul>
+
+
+<h2>応用</h2>
+
+<p>信号処理（スペクトル解析・フィルタリング）、偏微分方程式の求解、フーリエ変換分光法、量子力学（位置表示と運動量表示の橋渡し）など。</p>
+
+<h2><a href="/notes/frequency-domain-transforms.html">周波数領域の変換</a>の中での位置づけ</h2>
+
+<p>この分野の出発点となる基本の変換。<a href="/notes/laplace-transform.html">ラプラス変換</a>は本変換の連続方向への一般化、<a href="/notes/fft.html">FFT</a>は離散版（DFT）の高速計算アルゴリズムで、いずれも本変換を起点に派生している。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/Fourier_transform">Fourier transform - Wikipedia</a></li>
 </ul>
 
 ]]></description>
@@ -1666,33 +1712,6 @@ graph LR
 <li><a href="https://microsoft.github.io/language-server-protocol/">Official page for Language Server Protocol</a></li>
 <li><a href="https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/">Language Server Protocol Specification - 3.17</a></li>
 <li><a href="https://zylos.ai/research/2026-01-13-language-server-protocol-ecosystem/">Language Server Protocol Ecosystem 2026 | Zylos Research</a></li>
-</ul>
-
-]]></description>
-</item>
-<item>
-<title>QUIC</title>
-<link>https://64p.org/notes/quic.html</link>
-<guid isPermaLink="true">https://64p.org/notes/quic.html</guid>
-<pubDate>Wed, 12 Aug 2026 20:47:00 +0900</pubDate>
-<description><![CDATA[<h1>QUIC</h1>
-
-<p>UDP上に構築されたトランスポート層プロトコル。TLS 1.3による暗号化を必須で組み込んでおり、平文での通信を許さない設計になっている。GoogleのJim Roskindらによって2012年頃に考案され、IETFにより2021年5月に<strong>RFC 9000</strong>として標準化された。<a href="/notes/http3.html">HTTP/3</a>や<a href="/notes/webtransport.html">WebTransport</a>の基盤として使われる。 <a class="note-tag" href="/notes/tags/protocol.html">#protocol</a></p>
-
-<h2>TCPとの違い</h2>
-
-<ul>
-<li><strong>ハンドシェイク</strong>: TCPは3-wayハンドシェイクの後に別途TLSネゴシエーションが必要で複数RTTを要するが、QUICはトランスポートのハンドシェイクにTLS 1.3を統合しており、既知のサーバーには0-RTTでの再接続も可能</li>
-<li><strong>ストリーム多重化</strong>: 複数の独立したストリームをトランスポート層で多重化できる。1つのストリームでのパケットロスが他のストリームをブロックしない(Head-of-lineブロッキングの回避)。TCPは単一のバイトストリームしか扱えないため、この分離ができない</li>
-<li><strong>コネクションの識別</strong>: IPアドレス+ポートの組ではなく、コネクションIDでコネクションを識別する。そのためWi-Fi⇔モバイル回線のようなネットワーク切り替えでも接続を維持できる</li>
-</ul>
-
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://www.rfc-editor.org/rfc/rfc9000.html">RFC 9000: QUIC: A UDP-Based Multiplexed and Secure Transport</a></li>
-<li><a href="https://blog.apnic.net/2022/11/03/comparing-tcp-and-quic/">Comparing TCP and QUIC - APNIC Blog</a></li>
 </ul>
 
 ]]></description>
