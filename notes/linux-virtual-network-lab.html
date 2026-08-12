@@ -298,46 +298,121 @@
             <article class="notes-content">
                 <h1>Linuxだけで作る仮想ネットワークラボ</h1>
 
-<p><a href="/notes/vlan.html">VLAN</a>や<a href="/notes/vxlan.html">VXLAN</a>を実際に構築して遊ぶのに物理機材は不要。Linuxカーネル自体が両方をネイティブ実装しているので、network namespaceを使えばマシン1台で完結する。さらにunprivileged user namespaceを使えばsudoすら不要（後述）。 <a class="note-tag" href="/notes/tags/network.html">#network</a> <a class="note-tag" href="/notes/tags/linux.html">#linux</a></p>
+<p><a href="/notes/vlan.html">VLAN</a>や<a href="/notes/vxlan.html">VXLAN</a>を実際に構築して遊ぶのに物理機材は不要。Linuxカーネル自体が両方をネイティブ実装しているので、network namespaceを使えばマシン1台で完結する。しかも<strong>unprivileged user namespaceを使えばsudoすら不要</strong>。以下はClaude Codeに実際にsudoなしで構築・動作確認させたときの実ログ（Pop!_OS、kernel 6.18）。 <a class="note-tag" href="/notes/tags/network.html">#network</a> <a class="note-tag" href="/notes/tags/linux.html">#linux</a></p>
 
-<h2>レベル1: ipコマンドだけでVLAN</h2>
-
-<p>netnsを「仮想PC」、VLANフィルタリングを有効にしたLinuxブリッジを「L2スイッチ」に見立てる。</p>
-
-<pre><code class="sh"># 「スイッチ」を作る（VLANフィルタリング有効）
-sudo ip link add br0 type bridge vlan_filtering 1
-sudo ip link set br0 up
-
-# 「PC」を作って veth ケーブルでスイッチに接続
-sudo ip netns add pc1
-sudo ip link add veth1 type veth peer name eth0 netns pc1
-sudo ip link set veth1 master br0 up
-
-# veth1 をVLAN 10のアクセスポートにする
-sudo bridge vlan add dev veth1 vid 10 pvid untagged
-sudo bridge vlan del dev veth1 vid 1
-</code></pre>
-
-<p>同様にpc2をVLAN 10、pc3をVLAN 20に繋ぐと、「同じスイッチに刺さっているのにpc1↔pc2はpingが通り、pc3には通らない」というVLANの本質をそのまま体験できる。<code>tcpdump -e vlan</code>でタグ付きフレームも観察できる。</p>
-
-<h2>レベル2: VXLANもipコマンドで</h2>
-
-<pre><code class="sh">sudo ip link add vxlan100 type vxlan id 100 dstport 4789 \
-    local 192.168.0.1 remote 192.168.0.2 dev eth0
-</code></pre>
-
-<p>netns 2つ（または実マシン2台・VPS 2台）の間でこれを張り、<code>tcpdump -i eth0 udp port 4789</code>すると、EthernetフレームがまるごとUDPに包まれて飛ぶ様子（MAC over UDP）が実際に見える。</p>
-
-<h2>sudoなしで試す: unprivileged user namespace</h2>
-
-<p>上記のラボはすべて<code>sudo</code>前提で書いたが、<strong>unprivileged user namespace</strong>の中では一般ユーザーが（そのnamespace内限定の）rootになれるので、sudoなしで丸ごと動かせる。</p>
+<h2>sudoなしで動かす鍵: unprivileged user namespace</h2>
 
 <pre><code class="sh">unshare --user --map-root-user --net --mount bash
 </code></pre>
 
-<p>これで入ったシェルの中では<code>ip link add</code>（bridge/veth/vxlanいずれも）、<code>ip netns add</code>（<code>--mount</code>を付けた上で<code>mount -t tmpfs tmpfs /run</code>しておく）、<code>ip netns exec</code>などが全部素で通る。上のVLANラボ（pc1/pc2をVLAN 10、pc3をVLAN 20に収容してpingが遮断されることの確認）を丸ごとこの中で実行して動作することを確認した（Pop!_OS、kernel 6.18）。</p>
+<p>これで入ったシェルは「そのnamespace内限定のroot」なので、<code>ip link add</code>（bridge/veth/vxlanいずれも）や<code>ip netns add</code>が素で通る。ホストのネットワークには一切影響せず、exitすれば全部消える。ハマりどころは2つあった。</p>
 
-<p>制約:</p>
+<ul>
+<li><code>ip netns add</code>は<code>/run/netns</code>を使うので、<code>--mount</code>を付けた上で<code>mount -t tmpfs tmpfs /run</code>しておく必要がある</li>
+<li>tcpdumpはデフォルトで<code>tcpdump</code>ユーザーへ権限降格しようとするが、userns内ではそのuidがマップされておらず<code>Couldn't change to 'tcpdump' uid=114: Operation not permitted</code>で死ぬ。<strong><code>-Z root</code>を付けて降格を止める</strong></li>
+</ul>
+
+
+<h2>ラボ1: VLAN — 同じスイッチ上でL2セグメントが分かれることを確認</h2>
+
+<p>netnsを「PC」、VLANフィルタリングを有効にしたLinuxブリッジを「L2スイッチ」に見立て、次の構成を作った。</p>
+
+<pre><code>pc1(10.0.0.1) --veth1-- ┌─────────────┐
+pc2(10.0.0.2) --veth2-- │ br0         │ veth1,2: VLAN 10 アクセスポート
+pc3(10.0.0.3) --veth3-- │ (L2スイッチ) │ veth3:   VLAN 20 アクセスポート
+pc4(10.0.0.4) --veth4-- └─────────────┘ veth4:   VLAN 10 トランクポート(タグ付き)
+</code></pre>
+
+<p>構築コマンド（userns内。抜粋）:</p>
+
+<pre><code class="sh">ip link add br0 type bridge vlan_filtering 1
+ip link set br0 up
+
+# pc1〜pc3を作ってブリッジに接続(pc2, pc3も同様)
+ip netns add pc1
+ip link add veth1 type veth peer name eth0 netns pc1
+ip link set veth1 master br0 up
+ip netns exec pc1 ip link set eth0 up
+ip netns exec pc1 ip addr add 10.0.0.1/24 dev eth0
+
+# veth1,2をVLAN 10、veth3をVLAN 20のアクセスポートに
+bridge vlan add dev veth1 vid 10 pvid untagged
+bridge vlan del dev veth1 vid 1
+
+# veth4はVLAN 10をタグ付きで通すトランクポートに。pc4側はVLANサブインターフェースで受ける
+bridge vlan add dev veth4 vid 10 tagged
+bridge vlan del dev veth4 vid 1
+ip netns exec pc4 ip link add link eth0 name eth0.10 type vlan id 10
+ip netns exec pc4 ip link set eth0.10 up
+ip netns exec pc4 ip addr add 10.0.0.4/24 dev eth0.10
+</code></pre>
+
+<p>ポートのVLAN割り当てはこうなる。</p>
+
+<pre><code>$ bridge vlan show
+port              vlan-id
+br0               1 PVID Egress Untagged
+veth1             10 PVID Egress Untagged
+veth2             10 PVID Egress Untagged
+veth3             20 PVID Egress Untagged
+veth4             10
+</code></pre>
+
+<p>同一VLAN間はpingが通る。</p>
+
+<pre><code>$ ip netns exec pc1 ping -c 2 10.0.0.2   # pc1 -&gt; pc2 (同じVLAN 10)
+64 bytes from 10.0.0.2: icmp_seq=1 ttl=64 time=0.061 ms
+64 bytes from 10.0.0.2: icmp_seq=2 ttl=64 time=0.041 ms
+2 packets transmitted, 2 received, 0% packet loss, time 1021ms
+</code></pre>
+
+<p>別VLANへは同じスイッチ・同じIPサブネットに居るのに届かない。これがVLAN＝ブロードキャストドメイン分割の本質。</p>
+
+<pre><code>$ ip netns exec pc1 ping -c 2 -W 1 10.0.0.3   # pc1 -&gt; pc3 (別VLAN)
+2 packets transmitted, 0 received, 100% packet loss, time 1019ms
+</code></pre>
+
+<p>トランクポートで観察すると、802.1Qタグ（<code>ethertype 802.1Q</code>、<code>vlan 10</code>）が付いたフレームが実際に流れているのが見える。アクセスポート(veth1)から入ったタグなしフレームに、スイッチがトランクから出すときタグを付けている。</p>
+
+<pre><code>$ ip netns exec pc4 tcpdump -Z root -e -n -i eth0 -c 4
+9e:c6:65:df:45:62 &gt; ff:ff:ff:ff:ff:ff, ethertype 802.1Q (0x8100), length 46: vlan 10, p 0,
+    ethertype ARP (0x0806), Request who-has 10.0.0.4 tell 10.0.0.1, length 28
+12:20:80:28:ae:0f &gt; 9e:c6:65:df:45:62, ethertype 802.1Q (0x8100), length 46: vlan 10, p 0,
+    ethertype ARP (0x0806), Reply 10.0.0.4 is-at 12:20:80:28:ae:0f, length 28
+9e:c6:65:df:45:62 &gt; 12:20:80:28:ae:0f, ethertype 802.1Q (0x8100), length 102: vlan 10, p 0,
+    ethertype IPv4 (0x0800), 10.0.0.1 &gt; 10.0.0.4: ICMP echo request, id 30761, seq 1, length 64
+</code></pre>
+
+<h2>ラボ2: VXLAN — MAC over UDPを実際に覗く</h2>
+
+<p>「物理サーバ2台」をnetns(host1/host2)で用意してvethで直結し（これがL3アンダーレイ 192.168.0.0/24）、その上にVNI 100のVXLANオーバーレイ(10.99.0.0/24)を張った。</p>
+
+<pre><code class="sh">ip netns exec host1 ip link add vxlan100 type vxlan id 100 dstport 4789 \
+    local 192.168.0.1 remote 192.168.0.2 dev eth0
+# host2側はlocal/remoteを逆にして同様に作成し、10.99.0.1/24, 10.99.0.2/24を割り当て
+</code></pre>
+
+<p>アンダーレイをtcpdumpしながらオーバーレイのアドレスにpingすると、ARPもICMPも<strong>EthernetフレームまるごとUDP(4789)にカプセル化されて飛ぶ</strong>様子がそのまま見える。</p>
+
+<pre><code>$ ip netns exec host1 ping -c 2 10.99.0.2   # オーバーレイ側でping
+$ ip netns exec host1 tcpdump -Z root -n -i eth0 -c 4 udp port 4789   # アンダーレイ側で観察
+IP 192.168.0.1.43502 &gt; 192.168.0.2.4789: VXLAN, flags [I] (0x08), vni 100
+ARP, Request who-has 10.99.0.2 tell 10.99.0.1, length 28
+IP 192.168.0.2.43502 &gt; 192.168.0.1.4789: VXLAN, flags [I] (0x08), vni 100
+ARP, Reply 10.99.0.2 is-at be:e1:fe:0e:36:4c, length 28
+IP 192.168.0.1.56075 &gt; 192.168.0.2.4789: VXLAN, flags [I] (0x08), vni 100
+IP 10.99.0.1 &gt; 10.99.0.2: ICMP echo request, id 31448, seq 1, length 64
+IP 192.168.0.2.56075 &gt; 192.168.0.1.4789: VXLAN, flags [I] (0x08), vni 100
+IP 10.99.0.2 &gt; 10.99.0.1: ICMP echo reply, id 31448, seq 1, length 64
+</code></pre>
+
+<p>細かいが面白いのは送信元UDPポートで、ARPのフロー(43502)とICMPのフロー(56075)で違う値になっている。<a href="/notes/vxlan.html">VXLANの仕様</a>どおり、内部フレームのハッシュから送信元ポートを決めてECMPで経路分散させる挙動が実際に確認できた。</p>
+
+<p>なお最初に実行したときはIPv6のneighbor solicitationなどがカプセル化される様子ばかりが録れたので、ログを見やすくするため<code>sysctl net.ipv6.conf.vxlan100.disable_ipv6=1</code>してから録り直した。</p>
+
+<h2>制約と、その先</h2>
+
+<p>unprivileged usernsの制約:</p>
 
 <ul>
 <li>namespace内に閉じているので、<strong>ホストの実NICは触れない</strong>。実マシン2台間でVXLANを張るような実験にはやはり実NICへの権限が必要</li>
@@ -345,27 +420,14 @@ sudo bridge vlan del dev veth1 vid 1
 </ul>
 
 
-<p>sudoなし縛りの他の選択肢としては、QEMUのユーザーモードネットワーキングでVMを立ててその中でrootになる（ホスト権限不要）、rootlessコンテナ（podman + slirp4netns）などがある。</p>
-
-<h2>レベル3: containerlab + FRRでEVPN/VXLANファブリック</h2>
-
-<p>leaf-spine構成でBGP EVPNをコントロールプレーンにしたVXLANまでやるなら、containerlabが定番。トポロジをYAMLで書くと、FRRouting（オープンソースのルーティングスイート）のコンテナ群をvethで配線した仮想ネットワークが一発で立ち上がる。お手本リポジトリ:</p>
+<p>もっと本格的にやるなら:</p>
 
 <ul>
-<li><a href="https://github.com/martimy/clab_vxlan_frr">martimy/clab_vxlan_frr</a> — マルチキャスト方式・EVPN方式など複数のVXLANシナリオ</li>
-<li><a href="https://github.com/darnodo/VXLAN-EVPN">darnodo/VXLAN-EVPN</a> — spine 1台 + leaf 2台の最小EVPNラボ</li>
-</ul>
-
-
-<h2>その他の選択肢</h2>
-
-<ul>
+<li><strong>containerlab + FRRouting</strong> — leaf-spine構成でBGP EVPNをコントロールプレーンにしたVXLANファブリックをYAML一発で構築できる。お手本: <a href="https://github.com/martimy/clab_vxlan_frr">martimy/clab_vxlan_frr</a>、<a href="https://github.com/darnodo/VXLAN-EVPN">darnodo/VXLAN-EVPN</a>（いずれもDockerが必要なのでsudoなし縛りだとrootless dockerで）</li>
 <li><strong>Open vSwitch</strong> — Linux標準ブリッジより本格的な仮想スイッチ。OpenStackなどが実際に使っている</li>
 <li><strong>GNS3 / EVE-NG</strong> — Cisco IOSなどベンダーOSのイメージを動かすエミュレータ。「実機のCLI操作」の練習向けだが、イメージ入手にライセンスの壁がある</li>
 </ul>
 
-
-<p>学習の順序としては、レベル1→2を生のipコマンドでやって仕組みを掴んでから、containerlabでEVPNに進むのがよさそう。</p>
 
 <h2>出典</h2>
 
@@ -378,7 +440,7 @@ sudo bridge vlan del dev veth1 vid 1
 
 
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-12 18:54 / 更新日時: 2026-08-12 18:54</span>
+                    <span>作成日時: 2026-08-12 18:54 / 更新日時: 2026-08-12 18:59</span>
                     <a class="share-x" href="https://twitter.com/intent/tweet?text=Linux%E3%81%A0%E3%81%91%E3%81%A7%E4%BD%9C%E3%82%8B%E4%BB%AE%E6%83%B3%E3%83%8D%E3%83%83%E3%83%88%E3%83%AF%E3%83%BC%E3%82%AF%E3%83%A9%E3%83%9C&url=https%3A%2F%2F64p.org%2Fnotes%2Flinux-virtual-network-lab.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
