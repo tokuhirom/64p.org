@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>ReDoS (Regular Expression Denial of Service) - Notes - 64p.org</title>
+    <title>XDP (eXpress Data Path) - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="alternate" type="application/rss+xml" title="Notes - 64p.org" href="/notes/rss.xml">
@@ -23,7 +23,7 @@
                 <a class="notes-tags-link" href="/notes/rss.xml">📡 RSS</a>
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
-                                    <li><a href="/notes/xdp.html">XDP (eXpress Data Path)</a></li>
+                                    <li><a href="/notes/xdp.html" class="active">XDP (eXpress Data Path)</a></li>
                                     <li><a href="/notes/open-vswitch.html">Open vSwitch (OVS)</a></li>
                                     <li><a href="/notes/bpf.html">BPF (Berkeley Packet Filter)</a></li>
                                     <li><a href="/notes/cilium.html">Cilium</a></li>
@@ -283,7 +283,7 @@
                                     <li><a href="/notes/simd.html">SIMD</a></li>
                                     <li><a href="/notes/project-panama.html">Project Panama</a></li>
                                     <li><a href="/notes/thompson-construction.html">Thompson construction</a></li>
-                                    <li><a href="/notes/redos.html" class="active">ReDoS (Regular Expression Denial of Service)</a></li>
+                                    <li><a href="/notes/redos.html">ReDoS (Regular Expression Denial of Service)</a></li>
                                     <li><a href="/notes/project-notes.html">プロジェクトノート (Project Notes)</a></li>
                                     <li><a href="/notes/lyt.html">LYT (Linking Your Thinking)</a></li>
                                     <li><a href="/notes/literature-notes.html">文献ノート (Literature Notes)</a></li>
@@ -354,46 +354,68 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>ReDoS (Regular Expression Denial of Service)</h1>
+                <h1>XDP (eXpress Data Path)</h1>
 
-<p><a href="/notes/regex-engine-backtracking-vs-nfa.html">バックトラッキング型</a>の正規表現エンジンが持つ脆弱性。細工された入力文字列を与えることで、エンジンに指数関数的な時間がかかる探索（catastrophic backtracking）をさせ、CPUリソースを占有させるサービス拒否(DoS)攻撃。</p>
+<p>Linuxカーネルに統合された高性能パケット処理フレームワーク。<a href="/notes/bpf.html">eBPF</a>を利用し、パケットがNICドライバに届いた直後、カーネルが<code>sk_buff</code>を確保するより前の最も早い段階でカスタムのパケット処理を実行できる。 <a class="note-tag" href="/notes/tags/networking.html">#networking</a> <a class="note-tag" href="/notes/tags/linux.html">#linux</a> <a class="note-tag" href="/notes/tags/kernel.html">#kernel</a></p>
 
-<h2>発生条件</h2>
+<h2>実行モード</h2>
 
-<p>ある部分式が別の部分式を含み、それぞれに<code>*</code>・<code>+</code>・<code>*?</code>・<code>+?</code>・<code>{...}</code>のような量指定子が掛かっている場合に起こりやすい。</p>
+<ul>
+<li><strong>Native XDP</strong>: ドライバのRXパス内で直接実行される、最も高速なデフォルトモード。mlx5, i40e, ixgbeなど主要な高性能NICドライバが対応</li>
+<li><strong>Generic XDP</strong>: <code>sk_buff</code>ベースで動作し、ドライバを問わず任意の環境で使えるが低速。ネイティブ対応がない場合のフォールバックで、主に開発・テスト用途</li>
+<li><strong>Offloaded XDP</strong>: SmartNICなどの専用ハードウェア上でXDPプログラム自体を実行するモード。ホストCPUを消費せずに済むが、対応NICと利用可能なeBPF機能に制約がある</li>
+</ul>
 
-<h2>典型例: <code>(a+)+$</code></h2>
 
-<p><code>(a+)+$</code>という正規表現に、<code>"a"</code>を30個並べたあと非マッチな文字（例: <code>!</code>）を続けた入力を与えると、外側の<code>+</code>と内側の<code>+</code>の間で「aの並びをどう分割するか」の組み合わせが2<sup>30</sup>（約10億）通り試され、実質的にハングする。</p>
+<h2>アクション(戻り値)</h2>
 
-<h2>実例と影響</h2>
+<p>XDPプログラムはパケットごとに以下のいずれかのアクションを返す。</p>
 
-<p>Node.jsのようなシングルスレッドのイベントループを持つ環境では、ReDoSでスレッドが占有されるとイベントループ全体がブロックされ、他の処理が一切進まなくなる。httplib2ライブラリが、悪意あるHTTPヘッダー内の長い空白文字列によってcatastrophic backtrackingを起こしフリーズした実例が報告されている。</p>
+<ul>
+<li><strong>XDP_PASS</strong>: パケットを通常のネットワークスタックに渡す(内容の書き換えも可能)</li>
+<li><strong>XDP_DROP</strong>: パケットを破棄する。DDoS対策やファイアウォールで、不正トラフィックを最小オーバーヘッドで早期に落とす用途に使われる</li>
+<li><strong>XDP_TX</strong>: 受信したのと同じNICからパケットを送り返す</li>
+<li><strong>XDP_REDIRECT</strong>: 別のNICやCPU、あるいは後述のAF_XDPソケットへパケットを転送する</li>
+<li><strong>XDP_ABORTED</strong>: プログラムのエラーを示し、パケットは破棄される(トレースポイントで検知可能)</li>
+</ul>
 
-<h2>対策</h2>
 
-<p><a href="/notes/regex-engine-backtracking-vs-nfa.html">NFA/DFA型</a>のエンジン（RE2、Rustの<code>regex</code>クレートなど）は原理的にReDoSが起こらないため、信頼できない入力を正規表現にかける場合の対策として採用されることがある。</p>
+<h2>AF_XDP</h2>
 
-<p><a class="note-tag" href="/notes/tags/regex.html">#regex</a> <a class="note-tag" href="/notes/tags/security.html">#security</a></p>
+<p>ユーザー空間アプリケーションがXDPプログラムから直接パケットを受け取るための、高性能パケット処理に最適化されたアドレスファミリ。XDPプログラムが<code>bpf_redirect_map()</code>でXSKMAP内のAF_XDPソケットへパケットを転送する仕組み。RXとTXが同じUMEM(ユーザーメモリ領域)を共有することで、パケットをRXとTX間でコピーする必要がないゼロコピーモードを実現できる。高スループットが要求されるパケット処理フレームワークやネットワーク監視ツールなどで使われる。</p>
+
+<h2>ユースケース</h2>
+
+<ul>
+<li><strong>DDoS対策・ファイアウォール</strong>: <code>XDP_DROP</code>で不正トラフィックを早期に破棄</li>
+<li><strong>ロードバランシング・転送</strong>: <code>XDP_TX</code>/<code>XDP_REDIRECT</code>によるパケット転送</li>
+<li><strong>モニタリング</strong>: パケットヘッダや流特性の抽出</li>
+</ul>
+
+
+<p><a href="/notes/cilium.html">Cilium</a>の高性能ロードバランシングや、<a href="/notes/open-vswitch.html">Open vSwitch</a>のAF_XDP版実装など、eBPFエコシステムのネットワーキング用途で広く使われている。</p>
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://owasp.org/www-community/attacks/Regular_expression_Denial_of_Service_-_ReDoS">Regular expression Denial of Service - ReDoS | OWASP Foundation</a></li>
-<li><a href="https://snyk.io/blog/redos-and-catastrophic-backtracking/">Regular Expression Denial of Service (ReDoS) and Catastrophic Backtracking | Snyk</a></li>
+<li><a href="https://kernel-internals.org/net/xdp/">XDP (eXpress Data Path) - Linux Kernel Internals</a></li>
+<li><a href="https://www.tigera.io/learn/guides/ebpf/ebpf-xdp/">eBPF XDP: The Basics and a Quick Tutorial - Tigera</a></li>
+<li><a href="https://docs.kernel.org/networking/af_xdp.html">AF_XDP — The Linux Kernel documentation</a></li>
+<li><a href="https://www.datadoghq.com/blog/xdp-intro/">A gentle introduction to XDP - Datadog</a></li>
 </ul>
 
 
                                 <div class="notes-backlinks">
                     <h2>🔗 リンクされているノート</h2>
                     <ul>
-                                            <li><a href="/notes/regex-engine-backtracking-vs-nfa.html">正規表現エンジンの実装方式: バックトラッキング型とNFA/DFA型</a></li>
+                                            <li><a href="/notes/bpf.html">BPF (Berkeley Packet Filter)</a></li>
+                                            <li><a href="/notes/open-vswitch.html">Open vSwitch (OVS)</a></li>
                     
                     </ul>
                 </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-09 22:16 / 更新日時: 2026-08-09 22:16</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=ReDoS%20%28Regular%20Expression%20Denial%20of%20Service%29&url=https%3A%2F%2F64p.org%2Fnotes%2Fredos.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <span>作成日時: 2026-08-13 08:35 / 更新日時: 2026-08-13 08:35</span>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=XDP%20%28eXpress%20Data%20Path%29&url=https%3A%2F%2F64p.org%2Fnotes%2Fxdp.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">
