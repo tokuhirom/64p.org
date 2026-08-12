@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>ユスラウメ(梅桃) - Notes - 64p.org</title>
+    <title>Mojo - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/highlight.js@11/styles/github.min.css" media="(prefers-color-scheme: light)">
@@ -22,7 +22,7 @@
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
                                     <li><a href="/notes/vllm.html">vLLM</a></li>
-                                    <li><a href="/notes/mojo.html">Mojo</a></li>
+                                    <li><a href="/notes/mojo.html" class="active">Mojo</a></li>
                                     <li><a href="/notes/htmx.html">htmx</a></li>
                                     <li><a href="/notes/topcoat.html">Topcoat</a></li>
                                     <li><a href="/notes/linux-virtual-network-lab.html">Linuxだけで作る仮想ネットワークラボ</a></li>
@@ -265,7 +265,7 @@
                                     <li><a href="/notes/dangouzaka-yurai.html">談合坂の地名由来</a></li>
                                     <li><a href="/notes/hackathon-coding-agent-skills.html">ハッカソンでのコーディングエージェント向けスキル活用</a></li>
                                     <li><a href="/notes/network-doctor.html">Network Doctor (netdoc)</a></li>
-                                    <li><a href="/notes/yusura-ume.html" class="active">ユスラウメ(梅桃)</a></li>
+                                    <li><a href="/notes/yusura-ume.html">ユスラウメ(梅桃)</a></li>
                                     <li><a href="/notes/roam-research.html">Roam Research</a></li>
                                     <li><a href="/notes/obsidian.html">Obsidian</a></li>
                                     <li><a href="/notes/evergreen-notes.html">エバーグリーンノート (Evergreen Notes)</a></li>
@@ -302,44 +302,49 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>ユスラウメ(梅桃)</h1>
+                <h1>Mojo</h1>
 
-<p>バラ科サクラ属の落葉低木。中国原産で、日本へは江戸時代初期にはすでに伝わっていた。</p>
+<p>Modular社が開発するプログラミング言語。Pythonに似た構文を持ちつつ、システムプログラミングやGPU/AIワークロード向けの性能を目指す。2023年に初回リリースされ、2026年8月にリリースされた「Modular 26.5」で正式に1.0に到達した。 <a class="note-tag" href="/notes/tags/ai.html">#ai</a> <a class="note-tag" href="/notes/tags/compiler-design.html">#compiler-design</a></p>
 
-<h2>特徴</h2>
+<h2>1.0の意味</h2>
+
+<p>1.0到達は、言語の基盤が長期的に安定し、大きな破壊的変更なしにプロジェクトを構築できる段階に入ったことを意味する。1.0以降も破壊的変更は慎重に行いつつ言語開発自体は継続する方針で、2026年中にはコンパイラ・ツールチェーン自体のオープンソース化も予定されている。</p>
+
+<h2>Modular 26.5 / Mojo 1.0での変更点</h2>
 
 <ul>
-<li>サクラが咲く頃、ウメに似た5弁の白〜淡紅色の花を枝いっぱいに咲かせる</li>
-<li>梅雨の初め頃、直径1cmほどの真っ赤な小さい果実がなる</li>
-<li>新芽の明るいグリーンも美しく、花・実がない時期も鑑賞価値がある</li>
-<li>丈夫で育てやすい</li>
+<li>言語仕様の一貫性向上。変数宣言・クロージャ・ポインタ型など、これまで複数あった書き方を単一の標準構文に収束させた</li>
+<li>lambda構文のサポート追加</li>
+<li>LSPサーバーの安定性向上</li>
+<li>メモリ安全性診断機能を実装（無効化された参照の検出など）</li>
 </ul>
 
 
-<h2>実</h2>
+<h2>コミュニティ</h2>
 
-<p>熟した果実は生食可能で、甘酸っぱい味。ジャムなどにも利用される。</p>
+<p>標準ライブラリのオープンソース化以降、約200人の貢献者が1,100件超のプルリクエストを提出し、20万行以上のコードが変更された。</p>
 
-<h2>育て方</h2>
+<h2>MAX(推論プラットフォーム)</h2>
 
-<p>日光を好むため地植えが一般的だが、日当たりが確保できれば鉢植え・室内栽培も可能。</p>
-
-<p><a class="note-tag" href="/notes/tags/garden.html">#garden</a> <a class="note-tag" href="/notes/tags/plant.html">#plant</a></p>
+<p>Modular社は<a href="/notes/vllm.html">vLLM</a>と同様のLLM推論・サービング領域で「MAX」という推論プラットフォームも開発している。Modular 26.5に合わせてMAXも26.5となり、インストールプロセスの最適化、GLM-5.2・Nemotron-Hなど新しいモデルファミリーへの対応、エージェント向けスキル機能の拡充が行われた。</p>
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://hanaprime.jp/botanical-book/downy-cherry/">ユスラウメの育て方｜植物図鑑｜HanaPrime</a></li>
-<li><a href="https://www.shuminoengei.jp/m-pc/a-page_p_detail/target_plant_code-940">ユスラウメとは｜育て方がわかる植物図鑑｜みんなの趣味の園芸（NHK出版）</a></li>
-<li><a href="https://www.shuminoengei.jp/m-pc/a-page_p_detail/target_plant_code-940/target_tab-2">ユスラウメの育て方・栽培方法｜植物図鑑｜みんなの趣味の園芸（NHK出版）</a></li>
-<li><a href="https://greensnap.jp/category1/flower/botany/409/growth">ユスラウメ(梅桃)の育て方｜GreenSnap</a></li>
-<li><a href="https://lovegreen.net/library/fruit-tree/p124699/">ユスラウメの育て方・栽培方法・栽培 | LOVEGREEN</a></li>
+<li><a href="https://www.modular.com/blog/modular-26-5-mojo-1-0-is-here">Modular 26.5: Mojo 1.0 is here</a></li>
 </ul>
 
 
+                                <div class="notes-backlinks">
+                    <h2>🔗 リンクされているノート</h2>
+                    <ul>
+                                            <li><a href="/notes/vllm.html">vLLM</a></li>
+                    
+                    </ul>
+                </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-09 16:52 / 更新日時: 2026-08-09 16:52</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=%E3%83%A6%E3%82%B9%E3%83%A9%E3%82%A6%E3%83%A1%28%E6%A2%85%E6%A1%83%29&url=https%3A%2F%2F64p.org%2Fnotes%2Fyusura-ume.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <span>作成日時: 2026-08-12 20:37 / 更新日時: 2026-08-12 20:37</span>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=Mojo&url=https%3A%2F%2F64p.org%2Fnotes%2Fmojo.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">
