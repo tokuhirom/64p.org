@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>Skia - Notes - 64p.org</title>
+    <title>WIT (WebAssembly Interface Types) - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="alternate" type="application/rss+xml" title="Notes - 64p.org" href="/notes/rss.xml">
@@ -23,7 +23,7 @@
                 <a class="notes-tags-link" href="/notes/rss.xml">📡 RSS</a>
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
-                                    <li><a href="/notes/wit.html">WIT (WebAssembly Interface Types)</a></li>
+                                    <li><a href="/notes/wit.html" class="active">WIT (WebAssembly Interface Types)</a></li>
                                     <li><a href="/notes/wasm.html">WebAssembly (Wasm)</a></li>
                                     <li><a href="/notes/wasi.html">WASI (WebAssembly System Interface)</a></li>
                                     <li><a href="/notes/topcoat.html">Topcoat</a></li>
@@ -322,7 +322,7 @@
                                     <li><a href="/notes/wails.html">Wails</a></li>
                                     <li><a href="/notes/tauri.html">Tauri</a></li>
                                     <li><a href="/notes/electron.html">Electron</a></li>
-                                    <li><a href="/notes/skia.html" class="active">Skia</a></li>
+                                    <li><a href="/notes/skia.html">Skia</a></li>
                                     <li><a href="/notes/rust-gui-libraries.html">Rust GUI ライブラリ一覧</a></li>
                                     <li><a href="/notes/go-gui-libraries.html">Go GUI ライブラリ一覧</a></li>
                                     <li><a href="/notes/freya.html">Freya (freyaui.dev) — Rust製クロスプラットフォームGUIライブラリ</a></li>
@@ -348,61 +348,114 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>Skia</h1>
+                <h1>WIT (WebAssembly Interface Types)</h1>
 
-<p>Googleが管理しているオープンソースの2Dグラフィックスライブラリ。 <a class="note-tag" href="/notes/tags/graphics.html">#graphics</a></p>
+<p><a href="/notes/wasm.html">WebAssembly</a>のComponent Model(複数のWasmモジュールを組み合わせる仕組み)で使われるIDL(インターフェース定義言語)。コンポーネント同士の「契約」——何をインポートし何をエクスポートするか——を、実装ではなく仕様のみとして記述する。</p>
 
-<h2>概要</h2>
+<p><a class="note-tag" href="/notes/tags/wasm.html">#wasm</a> <a class="note-tag" href="/notes/tags/webassembly.html">#webassembly</a> <a class="note-tag" href="/notes/tags/wit.html">#wit</a></p>
+
+<h2>3つの構成要素: package / interface / world</h2>
+
+<p><strong>package</strong>: 複数の<code>.wit</code>ファイルにまたがるinterfaceとworldのグループ。同じディレクトリ内の<code>.wit</code>ファイルはすべて同じpackageに属する。</p>
+
+<pre><code class="wit">package documentation:example@1.0.1;
+</code></pre>
+
+<p>名前空間:名前の形式で、任意でsemver準拠のバージョンを付けられる。</p>
+
+<p><strong>interface</strong>: 型と関数の名前付き集合。</p>
+
+<pre><code class="wit">interface wall-clock {
+    record datetime {
+        seconds: u64,
+        nanoseconds: u32,
+    }
+    now: func() -&gt; datetime;
+}
+</code></pre>
+
+<p><strong>world</strong>: コンポーネント全体の契約。importとexportを列挙する、最上位の記述単位。</p>
+
+<pre><code class="wit">world command {
+  import stdin;
+  import stdout;
+  export run;
+}
+</code></pre>
+
+<p><code>use</code>でinterface間の型を共有し、<code>include</code>でworld同士を合成できる。</p>
+
+<h2>型システム</h2>
+
+<p>プリミティブ型は<code>bool</code>/<code>s8〜s64</code>/<code>u8〜u64</code>/<code>f32</code>/<code>f64</code>/<code>char</code>/<code>string</code>。</p>
+
+<p>複合型:</p>
 
 <ul>
-<li>C++製の汎用2D描画エンジン。テキスト・図形・画像の描画を、プラットフォーム固有のグラフィックスAPI（DirectX、Metal、Vulkan、OpenGLなど）の違いを吸収した共通APIで扱える</li>
-<li>ライセンス: New BSD</li>
+<li><strong>record</strong>: 構造体的な集合(<code>{ id: u64, name: string }</code>)</li>
+<li><strong>variant</strong>: 判別共用体(タグ付きunion)</li>
+<li><strong>enum</strong>: タグのみのvariant</li>
+<li><strong>flags</strong>: ビットフィールド</li>
+<li><strong>resource</strong>: コンストラクタ・メソッドを持つオブジェクト的な型(ハンドルとして渡される)</li>
 </ul>
 
 
-<h2>沿革</h2>
+<p>ジェネリック型: <code>list&lt;T&gt;</code>、<code>option&lt;T&gt;</code>、<code>result&lt;T, E&gt;</code>、<code>tuple&lt;T, U&gt;</code>、そして非同期I/O向けの<code>stream&lt;T&gt;</code>/<code>future&lt;T&gt;</code>(WASI 0.3で導入)。</p>
+
+<p>識別子はASCIIのケバブケースのみ許容される(<code>my-function</code>のような形式)。</p>
+
+<h2>具体例: HTTPハンドラの定義</h2>
+
+<pre><code class="wit">// types.wit
+interface types {
+    record request { method: string, path: string }
+    record response { status: u32, body: list&lt;u8&gt; }
+}
+
+// handler.wit
+interface incoming-handler {
+    use types.{request, response};
+    handle: func(req: request) -&gt; response;
+}
+
+package wasi:http@0.2.0;
+
+world proxy {
+    export incoming-handler;
+    import outgoing-handler;
+}
+</code></pre>
+
+<p><a href="/notes/wasi.html">WASI</a> 0.2以降のインターフェースはこの形でWITとして定義されている。</p>
+
+<h2>ツールチェーン</h2>
 
 <ul>
-<li>2004年、Mike ReedとCary ClarkがNorth Carolina州Chapel Hillで Skia Inc を設立</li>
-<li>2005年、Googleが買収</li>
-<li>2008年、BSDライセンスでオープンソース公開</li>
-</ul>
-
-
-<h2>採用プロダクト</h2>
-
-<ul>
-<li>Google Chrome / ChromeOS</li>
-<li>Android（標準の2D描画エンジン）</li>
-<li>Flutter（UIレンダリングの中核）</li>
-<li>Mozilla Firefox / Thunderbird</li>
-<li>LibreOffice、Avalonia（.NET製UIフレームワーク）など</li>
-</ul>
-
-
-<h2>このサイトでの登場文脈</h2>
-
-<p>新興のRust GUIフレームワークでも、安定した2D描画バックエンドとしてよく採用されている。</p>
-
-<ul>
-<li><a href="/notes/freya.html">Freya (freyaui.dev) — Rust製クロスプラットフォームGUIライブラリ</a> — レンダリングエンジンとしてSkiaを採用</li>
-<li><a href="/notes/rust-gui-libraries.html">Rust GUI ライブラリ一覧</a> — FloemがVello/Skia/tiny-skiaを選択可能なレンダラーとして紹介</li>
+<li><strong>wit-bindgen</strong>: <code>.wit</code>ファイルから各言語(Rust/C/Go(TinyGo)/Java(TeaVM)/C#など)向けのバインディングコードを生成するツール群。Rustでは<code>wit-bindgen</code>クレートの<code>generate!</code>マクロとして使うことが多い。</li>
+<li><strong>wasm-tools</strong>: 生成されたバインディング経由でビルドしたcore wasmモジュールを、<code>wasm-tools component new</code>でコンポーネント(WITの契約を満たすWasmバイナリ)に変換する。</li>
 </ul>
 
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://skia.org/">Skia</a></li>
-<li><a href="https://skia.org/about/">About Skia | Skia</a></li>
-<li><a href="https://en.wikipedia.org/wiki/Skia_Graphics_Engine">Skia Graphics Engine - Wikipedia</a></li>
-<li><a href="https://github.com/google/skia">GitHub - google/skia</a></li>
+<li><a href="https://component-model.bytecodealliance.org/design/wit.html">WIT Reference | The WebAssembly Component Model</a></li>
+<li><a href="https://component-model.bytecodealliance.org/design/wit-example.html">WIT By Example | The WebAssembly Component Model</a></li>
+<li><a href="https://component-model.bytecodealliance.org/design/packages.html">WIT package | The WebAssembly Component Model</a></li>
 </ul>
 
 
+                                <div class="notes-backlinks">
+                    <h2>🔗 リンクされているノート</h2>
+                    <ul>
+                                            <li><a href="/notes/wasi.html">WASI (WebAssembly System Interface)</a></li>
+                                            <li><a href="/notes/wasm.html">WebAssembly (Wasm)</a></li>
+                    
+                    </ul>
+                </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-09 16:08 / 更新日時: 2026-08-09 16:08</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=Skia&url=https%3A%2F%2F64p.org%2Fnotes%2Fskia.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <span>作成日時: 2026-08-13 07:42 / 更新日時: 2026-08-13 07:42</span>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=WIT%20%28WebAssembly%20Interface%20Types%29&url=https%3A%2F%2F64p.org%2Fnotes%2Fwit.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">

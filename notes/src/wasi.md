@@ -1,6 +1,6 @@
 ---
 created: 2026-08-13 07:30
-updated: 2026-08-13 07:30
+updated: 2026-08-13 07:42
 ---
 # WASI (WebAssembly System Interface)
 
@@ -14,7 +14,7 @@ HTTPマイクロサービスのような重い仕組みなしに、異なる言�
 
 ## バージョン推移
 
-Preview 1 → Preview 2(WASI 0.2、モジュール化されComponent Model上に構築、安定版) → Preview 3(WASI 0.3、2026年2月導入。`stream<T>`/`future<T>`によるネイティブ非同期I/Oサポートを追加)。
+Preview 1 → Preview 2(WASI 0.2、モジュール化されComponent Model上に構築、[[wit|WIT]]で定義された安定版) → Preview 3(WASI 0.3、2026年2月導入。WITの`stream<T>`/`future<T>`によるネイティブ非同期I/Oサポートを追加)。
 
 ## セキュリティモデル
 

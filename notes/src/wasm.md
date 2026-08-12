@@ -1,6 +1,6 @@
 ---
 created: 2026-08-13 07:30
-updated: 2026-08-13 07:30
+updated: 2026-08-13 07:42
 ---
 # WebAssembly (Wasm)
 
@@ -29,7 +29,7 @@ Rust、C/C++、Go、AssemblyScriptなど多数の言語からコンパイル可�
 
 ## Component Model
 
-複数のWasmモジュール(異なる言語で書かれたものも含む)を組み合わせてアプリケーションを構築するための仕組み。WIT(WebAssembly Interface Types)というIDLで複雑な型のやり取りを扱う。ブラウザの外でWasmを動かす際のOS機能アクセスは[[wasi|WASI]]が担う。
+複数のWasmモジュール(異なる言語で書かれたものも含む)を組み合わせてアプリケーションを構築するための仕組み。[[wit|WIT(WebAssembly Interface Types)]]というIDLで複雑な型のやり取りを扱う。ブラウザの外でWasmを動かす際のOS機能アクセスは[[wasi|WASI]]が担う。
 
 ## 出典
 

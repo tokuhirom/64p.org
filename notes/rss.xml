@@ -6,7 +6,110 @@
 <atom:link href="https://64p.org/notes/rss.xml" rel="self" type="application/rss+xml" />
 <description>ちょっと調べたことや検証結果を、AIの力も借りながらメモしていくコーナーです。</description>
 <language>ja</language>
-<lastBuildDate>Thu, 13 Aug 2026 07:30:03 +0900</lastBuildDate>
+<lastBuildDate>Thu, 13 Aug 2026 07:42:04 +0900</lastBuildDate>
+<item>
+<title>WIT (WebAssembly Interface Types)</title>
+<link>https://64p.org/notes/wit.html</link>
+<guid isPermaLink="true">https://64p.org/notes/wit.html</guid>
+<pubDate>Thu, 13 Aug 2026 07:42:00 +0900</pubDate>
+<description><![CDATA[<h1>WIT (WebAssembly Interface Types)</h1>
+
+<p><a href="/notes/wasm.html">WebAssembly</a>のComponent Model(複数のWasmモジュールを組み合わせる仕組み)で使われるIDL(インターフェース定義言語)。コンポーネント同士の「契約」——何をインポートし何をエクスポートするか——を、実装ではなく仕様のみとして記述する。</p>
+
+<p><a class="note-tag" href="/notes/tags/wasm.html">#wasm</a> <a class="note-tag" href="/notes/tags/webassembly.html">#webassembly</a> <a class="note-tag" href="/notes/tags/wit.html">#wit</a></p>
+
+<h2>3つの構成要素: package / interface / world</h2>
+
+<p><strong>package</strong>: 複数の<code>.wit</code>ファイルにまたがるinterfaceとworldのグループ。同じディレクトリ内の<code>.wit</code>ファイルはすべて同じpackageに属する。</p>
+
+<pre><code class="wit">package documentation:example@1.0.1;
+</code></pre>
+
+<p>名前空間:名前の形式で、任意でsemver準拠のバージョンを付けられる。</p>
+
+<p><strong>interface</strong>: 型と関数の名前付き集合。</p>
+
+<pre><code class="wit">interface wall-clock {
+    record datetime {
+        seconds: u64,
+        nanoseconds: u32,
+    }
+    now: func() -&gt; datetime;
+}
+</code></pre>
+
+<p><strong>world</strong>: コンポーネント全体の契約。importとexportを列挙する、最上位の記述単位。</p>
+
+<pre><code class="wit">world command {
+  import stdin;
+  import stdout;
+  export run;
+}
+</code></pre>
+
+<p><code>use</code>でinterface間の型を共有し、<code>include</code>でworld同士を合成できる。</p>
+
+<h2>型システム</h2>
+
+<p>プリミティブ型は<code>bool</code>/<code>s8〜s64</code>/<code>u8〜u64</code>/<code>f32</code>/<code>f64</code>/<code>char</code>/<code>string</code>。</p>
+
+<p>複合型:</p>
+
+<ul>
+<li><strong>record</strong>: 構造体的な集合(<code>{ id: u64, name: string }</code>)</li>
+<li><strong>variant</strong>: 判別共用体(タグ付きunion)</li>
+<li><strong>enum</strong>: タグのみのvariant</li>
+<li><strong>flags</strong>: ビットフィールド</li>
+<li><strong>resource</strong>: コンストラクタ・メソッドを持つオブジェクト的な型(ハンドルとして渡される)</li>
+</ul>
+
+
+<p>ジェネリック型: <code>list&lt;T&gt;</code>、<code>option&lt;T&gt;</code>、<code>result&lt;T, E&gt;</code>、<code>tuple&lt;T, U&gt;</code>、そして非同期I/O向けの<code>stream&lt;T&gt;</code>/<code>future&lt;T&gt;</code>(WASI 0.3で導入)。</p>
+
+<p>識別子はASCIIのケバブケースのみ許容される(<code>my-function</code>のような形式)。</p>
+
+<h2>具体例: HTTPハンドラの定義</h2>
+
+<pre><code class="wit">// types.wit
+interface types {
+    record request { method: string, path: string }
+    record response { status: u32, body: list&lt;u8&gt; }
+}
+
+// handler.wit
+interface incoming-handler {
+    use types.{request, response};
+    handle: func(req: request) -&gt; response;
+}
+
+package wasi:http@0.2.0;
+
+world proxy {
+    export incoming-handler;
+    import outgoing-handler;
+}
+</code></pre>
+
+<p><a href="/notes/wasi.html">WASI</a> 0.2以降のインターフェースはこの形でWITとして定義されている。</p>
+
+<h2>ツールチェーン</h2>
+
+<ul>
+<li><strong>wit-bindgen</strong>: <code>.wit</code>ファイルから各言語(Rust/C/Go(TinyGo)/Java(TeaVM)/C#など)向けのバインディングコードを生成するツール群。Rustでは<code>wit-bindgen</code>クレートの<code>generate!</code>マクロとして使うことが多い。</li>
+<li><strong>wasm-tools</strong>: 生成されたバインディング経由でビルドしたcore wasmモジュールを、<code>wasm-tools component new</code>でコンポーネント(WITの契約を満たすWasmバイナリ)に変換する。</li>
+</ul>
+
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://component-model.bytecodealliance.org/design/wit.html">WIT Reference | The WebAssembly Component Model</a></li>
+<li><a href="https://component-model.bytecodealliance.org/design/wit-example.html">WIT By Example | The WebAssembly Component Model</a></li>
+<li><a href="https://component-model.bytecodealliance.org/design/packages.html">WIT package | The WebAssembly Component Model</a></li>
+</ul>
+
+]]></description>
+</item>
 <item>
 <title>WebAssembly (Wasm)</title>
 <link>https://64p.org/notes/wasm.html</link>
@@ -42,7 +145,7 @@
 
 <h2>Component Model</h2>
 
-<p>複数のWasmモジュール(異なる言語で書かれたものも含む)を組み合わせてアプリケーションを構築するための仕組み。WIT(WebAssembly Interface Types)というIDLで複雑な型のやり取りを扱う。ブラウザの外でWasmを動かす際のOS機能アクセスは<a href="/notes/wasi.html">WASI</a>が担う。</p>
+<p>複数のWasmモジュール(異なる言語で書かれたものも含む)を組み合わせてアプリケーションを構築するための仕組み。<a href="/notes/wit.html">WIT(WebAssembly Interface Types)</a>というIDLで複雑な型のやり取りを扱う。ブラウザの外でWasmを動かす際のOS機能アクセスは<a href="/notes/wasi.html">WASI</a>が担う。</p>
 
 <h2>出典</h2>
 
@@ -71,7 +174,7 @@
 
 <h2>バージョン推移</h2>
 
-<p>Preview 1 → Preview 2(WASI 0.2、モジュール化されComponent Model上に構築、安定版) → Preview 3(WASI 0.3、2026年2月導入。<code>stream&lt;T&gt;</code>/<code>future&lt;T&gt;</code>によるネイティブ非同期I/Oサポートを追加)。</p>
+<p>Preview 1 → Preview 2(WASI 0.2、モジュール化されComponent Model上に構築、<a href="/notes/wit.html">WIT</a>で定義された安定版) → Preview 3(WASI 0.3、2026年2月導入。WITの<code>stream&lt;T&gt;</code>/<code>future&lt;T&gt;</code>によるネイティブ非同期I/Oサポートを追加)。</p>
 
 <h2>セキュリティモデル</h2>
 
@@ -1754,46 +1857,6 @@ flowchart TD
 <li><a href="https://typescript-eslint.io/">typescript-eslint</a></li>
 <li><a href="https://typescript-eslint.io/users/what-about-tslint/">What About TSLint? | typescript-eslint</a></li>
 <li><a href="https://typescript-eslint.io/blog/typed-linting/">Typed Linting: The Most Powerful TypeScript Linting Ever | typescript-eslint</a></li>
-</ul>
-
-]]></description>
-</item>
-<item>
-<title>OpenJS Foundation</title>
-<link>https://64p.org/notes/openjs-foundation.html</link>
-<guid isPermaLink="true">https://64p.org/notes/openjs-foundation.html</guid>
-<pubDate>Wed, 12 Aug 2026 23:21:00 +0900</pubDate>
-<description><![CDATA[<h1>OpenJS Foundation</h1>
-
-<p>JavaScriptエコシステムのOSSプロジェクトをホストする非営利財団。2019年3月にNode.js FoundationとJS Foundationが合併して発足した。Linux Foundation傘下のサブファウンデーションとして運営されている。 <a class="note-tag" href="/notes/tags/javascript.html">#javascript</a> <a class="note-tag" href="/notes/tags/oss.html">#oss</a></p>
-
-<h2>系譜</h2>
-
-<p>複数の財団の合併を重ねてできた組織。</p>
-
-<div class="mermaid">
-graph TD
-    jquery["jQuery Foundation (2012)"] --&gt; jsf["JS Foundation (2016)"]
-    dojo["Dojo Foundation"] --&gt; jsf
-    nodejs["Node.js Foundation (2015)"] --&gt; openjs["OpenJS Foundation (2019)"]
-    jsf --&gt; openjs
-</div>
-
-
-<h2>ホストするプロジェクト</h2>
-
-<p>Node.js・jQuery・webpack・Appium・Node-RED・<a href="/notes/eslint.html">ESLint</a>・<a href="/notes/electron.html">Electron</a>など、約38のOSSプロジェクトをホストする（2025年時点）。設立時のメンバーにはGoogle・Microsoft・IBM・PayPal・GoDaddy・Joyentなどが名を連ねる。ドイツのSovereign Tech Fundから80万ユーロ超の資金提供を受けるなど、公的資金によるOSS支援の受け皿にもなっている。</p>
-
-<h2>役割</h2>
-
-<p>特定企業に属さない中立的な組織としてプロジェクトの商標・ガバナンスを引き受け、JavaScriptエコシステム全体の持続的な成長を支えることを使命とする。個人が始めたプロジェクトが広く使われるようになったとき、その資産（商標など）と運営を引き継ぐ受け皿として機能している（例: <a href="/notes/eslint.html">ESLint</a>は2016年にjQuery Foundationに参加し、合併を経て現在はOpenJS Foundation傘下）。</p>
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://en.wikipedia.org/wiki/OpenJS_Foundation">OpenJS Foundation - Wikipedia</a></li>
-<li><a href="https://www.linuxfoundation.org/press/press-release/node-js-foundation-and-js-foundation-merge-to-form-openjs-foundation">Node.js Foundation and JS Foundation Merge to Form OpenJS Foundation - Linux Foundation</a></li>
-<li><a href="https://openjsf.org/">OpenJS Foundation</a></li>
 </ul>
 
 ]]></description>
