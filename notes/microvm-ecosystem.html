@@ -23,10 +23,13 @@
                 <a class="notes-tags-link" href="/notes/rss.xml">📡 RSS</a>
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
+                                    <li><a href="/notes/rust-vmm.html">rust-vmm</a></li>
+                                    <li><a href="/notes/qemu.html">QEMU</a></li>
+                                    <li><a href="/notes/microvm.html">microVM</a></li>
+                                    <li><a href="/notes/microvm-ecosystem.html" class="active">コンテナ向け軽量VM技術</a></li>
                                     <li><a href="/notes/kvm.html">KVM (Kernel-based Virtual Machine)</a></li>
                                     <li><a href="/notes/kvm-hello-world-experiment.html">kvm-hello-world実験</a></li>
-                                    <li><a href="/notes/rust-vmm.html">rust-vmm</a></li>
-                                    <li><a href="/notes/microvm-ecosystem.html" class="active">コンテナ向け軽量VM技術</a></li>
+                                    <li><a href="/notes/kata-containers.html">Kata Containers</a></li>
                                     <li><a href="/notes/hypeman.html">Hypeman</a></li>
                                     <li><a href="/notes/crosvm.html">crosvm</a></li>
                                     <li><a href="/notes/cloud-hypervisor.html">Cloud Hypervisor</a></li>
@@ -34,8 +37,6 @@
                                     <li><a href="/notes/eu-ai-act.html">EU AI Act</a></li>
                                     <li><a href="/notes/claude-text-watermark.html">Claudeのテキスト電子透かし導入 (2026-08)</a></li>
                                     <li><a href="/notes/synthid-text.html">SynthID-Text</a></li>
-                                    <li><a href="/notes/microvm.html">microVM</a></li>
-                                    <li><a href="/notes/kata-containers.html">Kata Containers</a></li>
                                     <li><a href="/notes/firecracker.html">Firecracker</a></li>
                                     <li><a href="/notes/firecracker-containerd.html">firecracker-containerd</a></li>
                                     <li><a href="/notes/typescript-eslint.html">typescript-eslint</a></li>
@@ -351,6 +352,7 @@
 <li><a href="/notes/cloud-hypervisor.html">Cloud Hypervisor</a> — Intel主導・Rust製。<a href="/notes/rust-vmm.html">rust-vmm</a>由来でFirecrackerの実装を参考にしている</li>
 <li><a href="/notes/rust-vmm.html">rust-vmm</a> — Firecracker/crosvm/Cloud Hypervisorが共有する、Rust製VMM部品(クレート)群</li>
 <li><a href="/notes/crosvm.html">crosvm</a> — Google製。ChromeOS/Android向けに開発されたRust製VMM</li>
+<li><a href="/notes/qemu.html">QEMU</a> — 2003年発。他のVMMと異なりmicroVM専用ではなく、幅広いアーキテクチャ・デバイスをフルエミュレートできる「何でも屋」</li>
 </ul>
 
 
@@ -359,7 +361,7 @@
 <p>FirecrackerなどのVMMは素のカーネル+rootfsしか扱えないため、OCIイメージ/containerd/Kubernetesと繋ぐには別レイヤーが必要になる。</p>
 
 <ul>
-<li><a href="/notes/kata-containers.html">Kata Containers</a> — OpenStack Foundation発。OCI/CRI互換のコンテナランタイムとして、Firecracker/Cloud Hypervisor/QEMUなど複数のVMMを横断的にバックエンドとして選べる</li>
+<li><a href="/notes/kata-containers.html">Kata Containers</a> — OpenStack Foundation発。OCI/CRI互換のコンテナランタイムとして、Firecracker/Cloud Hypervisor/<a href="/notes/qemu.html">QEMU</a>など複数のVMMを横断的にバックエンドとして選べる</li>
 <li><a href="/notes/firecracker-containerd.html">firecracker-containerd</a> — AWS製。containerd専用のFirecracker統合プラグイン</li>
 <li><a href="/notes/hypeman.html">Hypeman</a> — Kernel社製。OCIイメージのpull・実行をDocker互換CLIで扱えるようにした、マルチハイパーバイザー対応のランタイム</li>
 </ul>
@@ -377,6 +379,7 @@
                                             <li><a href="/notes/hypeman.html">Hypeman</a></li>
                                             <li><a href="/notes/kvm.html">KVM (Kernel-based Virtual Machine)</a></li>
                                             <li><a href="/notes/kata-containers.html">Kata Containers</a></li>
+                                            <li><a href="/notes/qemu.html">QEMU</a></li>
                                             <li><a href="/notes/crosvm.html">crosvm</a></li>
                                             <li><a href="/notes/firecracker-containerd.html">firecracker-containerd</a></li>
                                             <li><a href="/notes/microvm.html">microVM</a></li>
@@ -385,7 +388,7 @@
                     </ul>
                 </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-12 23:25 / 更新日時: 2026-08-12 23:36</span>
+                    <span>作成日時: 2026-08-12 23:25 / 更新日時: 2026-08-12 23:47</span>
                     <a class="share-x" href="https://twitter.com/intent/tweet?text=%E3%82%B3%E3%83%B3%E3%83%86%E3%83%8A%E5%90%91%E3%81%91%E8%BB%BD%E9%87%8FVM%E6%8A%80%E8%A1%93&url=https%3A%2F%2F64p.org%2Fnotes%2Fmicrovm-ecosystem.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>

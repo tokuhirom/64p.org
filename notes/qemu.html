@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>LYT (Linking Your Thinking) - Notes - 64p.org</title>
+    <title>QEMU - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="alternate" type="application/rss+xml" title="Notes - 64p.org" href="/notes/rss.xml">
@@ -24,7 +24,7 @@
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
                                     <li><a href="/notes/rust-vmm.html">rust-vmm</a></li>
-                                    <li><a href="/notes/qemu.html">QEMU</a></li>
+                                    <li><a href="/notes/qemu.html" class="active">QEMU</a></li>
                                     <li><a href="/notes/microvm.html">microVM</a></li>
                                     <li><a href="/notes/microvm-ecosystem.html">コンテナ向け軽量VM技術</a></li>
                                     <li><a href="/notes/kvm.html">KVM (Kernel-based Virtual Machine)</a></li>
@@ -261,7 +261,7 @@
                                     <li><a href="/notes/thompson-construction.html">Thompson construction</a></li>
                                     <li><a href="/notes/redos.html">ReDoS (Regular Expression Denial of Service)</a></li>
                                     <li><a href="/notes/project-notes.html">プロジェクトノート (Project Notes)</a></li>
-                                    <li><a href="/notes/lyt.html" class="active">LYT (Linking Your Thinking)</a></li>
+                                    <li><a href="/notes/lyt.html">LYT (Linking Your Thinking)</a></li>
                                     <li><a href="/notes/literature-notes.html">文献ノート (Literature Notes)</a></li>
                                     <li><a href="/notes/zettelkasten.html">Zettelkasten</a></li>
                                     <li><a href="/notes/permanent-notes.html">パーマネントノート (Permanent Notes)</a></li>
@@ -331,49 +331,65 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>LYT (Linking Your Thinking)</h1>
+                <h1>QEMU</h1>
 
-<p>Nick Miloが2020年に体系化した個人知識管理(PKM)フレームワーク。<a href="/notes/obsidian.html">Obsidian</a>コミュニティを中心に広まった。フォルダ階層ではなくリンクによってノートを繋ぎ、思考を育てていくという点で<a href="/notes/zettelkasten.html">Zettelkasten</a>や<a href="/notes/evergreen-notes.html">エバーグリーンノート</a>と発想を共有する。中心概念のひとつが<a href="/notes/moc.html">MOC</a>（Map of Content）。</p>
+<p>汎用のマシンエミュレータ兼VMM(Virtual Machine Monitor)。x86・ARM・PowerPC・RISC-Vなど多数のCPUアーキテクチャをエミュレートでき、ホストと異なるアーキテクチャのバイナリもそのまま動かせる(QEMU user-mode emulation)。 <a class="note-tag" href="/notes/tags/virtualization.html">#virtualization</a></p>
 
-<h2>Ideaverse</h2>
+<h2>成り立ち</h2>
 
-<p>自分の脳と周囲のあらゆる場所との間に存在する、アイデアの宇宙全体を指す言葉。実務上はデジタルでリンクされたノート群そのものを指すことが多い。Nick MiloはObsidianの初期ベータテスターの一人で、2020年5月に最初のLYT実践キット（後に「Ideaverse」と改名）を無償公開し、7万ダウンロードを超える、最も広く使われているリンク型ノートのスターターキットになっている。</p>
+<p>2003年、Fabrice BellardがQEMUの開発を開始し、2005年のv0.7.1まで一人で開発した。BellardはFFmpegやTiny C Compilerの作者としても知られる。現在はPeter Maydellらを含むQEMUチームによって開発が続けられている。</p>
 
-<h2>Idea Emergence（アイデア創発）の6ステップ</h2>
+<h2>動的バイナリ変換(TCG)</h2>
 
-<p>LYTでは、個々のノートが育って<a href="/notes/moc.html">MOC</a>にまとまっていくプロセスを次の6ステップで説明する。</p>
+<p>QEMUのコアには「Tiny Code Generator(TCG)」というJITコンパイラがあり、ゲストの命令列をホストのネイティブコードへ動的に変換・キャッシュしながら実行する(動的バイナリ変換)。これによりハードウェア仮想化支援機能なしでも任意のCPUアーキテクチャをソフトウェアだけでエミュレートできるが、ネイティブ実行に比べて一般に10倍程度遅くなるとされる。</p>
 
-<ol>
-<li>気になったものに出会う（"That&rsquo;s interesting"）</li>
-<li>それについてノートを作り、他のノートとリンクする</li>
-<li>これを100回ほど繰り返す</li>
-<li>頭がパンクしそうになる瞬間（mental squeeze point）を感じたら、関連ノートを<a href="/notes/moc.html">MOC</a>にまとめる</li>
-<li>Obsidianデータベース全体をナビゲートするための「ホームノート」を作る</li>
-<li>折に触れて自分のIdeaverseを探索し、好奇心の赴くままに飛び回る</li>
-</ol>
+<h2><a href="/notes/kvm.html">KVM</a>との役割分担</h2>
+
+<p><a href="/notes/kvm.html">KVM</a>と組み合わせて使う場合、QEMUは「アクセラレータ」としてKVMを利用する。役割はきれいに分かれている。</p>
+
+<ul>
+<li><strong>KVM</strong>: CPUの仮想化のみを担当。ディスク・ネットワーク・画面などのデバイスは一切エミュレートしない</li>
+<li><strong>QEMU</strong>: ゲストから見えるあらゆるデバイスのエミュレーションを担当。ゲストがI/Oを起こして「VM exit」すると、KVMから制御がQEMUに戻り、QEMUがそのデバイス動作をソフトウェアでエミュレートしてから、また実行をKVMに戻す</li>
+</ul>
 
 
-<p><a class="note-tag" href="/notes/tags/zettelkasten.html">#zettelkasten</a> <a class="note-tag" href="/notes/tags/note-taking.html">#note-taking</a> <a class="note-tag" href="/notes/tags/obsidian.html">#obsidian</a></p>
+<p>ハードウェア仮想化支援がない環境や、KVMが対応していないアーキテクチャの組み合わせでは、QEMUは自身のTCGだけでCPUもソフトウェア的にエミュレートして動作する(KVM非使用モード)。</p>
+
+<h2><a href="/notes/microvm-ecosystem.html">コンテナ向け軽量VM技術</a>の中での位置づけ</h2>
+
+<p><a href="/notes/firecracker.html">Firecracker</a>・<a href="/notes/cloud-hypervisor.html">Cloud Hypervisor</a>・<a href="/notes/crosvm.html">crosvm</a>と並ぶ、<a href="/notes/kvm.html">KVM</a>を土台に使えるVMMの一つ。ただしQEMUはこれらと異なり2003年発でmicroVM専用に設計されたものではなく、幅広いデバイス・アーキテクチャをフルエミュレートする「何でも屋」という性格が強い。<a href="/notes/hypeman.html">Hypeman</a>や<a href="/notes/kata-containers.html">Kata Containers</a>は、対応VMMの選択肢の一つとしてQEMUも選べる。</p>
+
+<h2><a href="/notes/microvm-ecosystem.html">コンテナ向け軽量VM技術</a>の中での位置づけ</h2>
+
+<p><a href="/notes/firecracker.html">Firecracker</a>・<a href="/notes/cloud-hypervisor.html">Cloud Hypervisor</a>・<a href="/notes/crosvm.html">crosvm</a>と並ぶ、<a href="/notes/kvm.html">KVM</a>を使えるVMMの一つ。他の3つがmicroVM専用に設計されているのに対し、QEMUは幅広いアーキテクチャ・デバイスをフルエミュレートできる「何でも屋」という違いがある。</p>
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://www.linkingyourthinking.com/">Linking Your Thinking</a></li>
-<li><a href="https://blog.linkingyourthinking.com/ideaverse-map">Ideaverse Map - LYT Blog - Linking Your Thinking</a></li>
-<li><a href="https://www.linkingyourthinking.com/ideaverse/benefits-of-lyt-frameworks">Benefits of LYT frameworks</a></li>
+<li><a href="https://en.wikipedia.org/wiki/QEMU">QEMU - Wikipedia</a></li>
+<li><a href="https://www.qemu.org/docs/master/system/introduction.html">Introduction — QEMU documentation</a></li>
+<li><a href="https://www.diskinternals.com/vmfs-recovery/kvm-vs-qemu/">KVM vs QEMU: Architecture, Performance, and the Critical Difference</a></li>
+<li><a href="https://docs.saferwall.com/blog/virtualization-internals-part-4-qemu/">Virtualization Internals Part 4 - QEMU | Saferwall</a></li>
+<li><a href="https://www.usenix.org/legacy/event/usenix05/tech/freenix/full_papers/bellard/bellard.pdf">QEMU, a Fast and Portable Dynamic Translator | USENIX</a></li>
 </ul>
 
 
                                 <div class="notes-backlinks">
                     <h2>🔗 リンクされているノート</h2>
                     <ul>
-                                            <li><a href="/notes/moc.html">MOC (Map of Content)</a></li>
+                                            <li><a href="/notes/hypeman.html">Hypeman</a></li>
+                                            <li><a href="/notes/kvm.html">KVM (Kernel-based Virtual Machine)</a></li>
+                                            <li><a href="/notes/kata-containers.html">Kata Containers</a></li>
+                                            <li><a href="/notes/kvm-hello-world-experiment.html">kvm-hello-world実験</a></li>
+                                            <li><a href="/notes/microvm.html">microVM</a></li>
+                                            <li><a href="/notes/rust-vmm.html">rust-vmm</a></li>
+                                            <li><a href="/notes/microvm-ecosystem.html">コンテナ向け軽量VM技術</a></li>
                     
                     </ul>
                 </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-09 22:10 / 更新日時: 2026-08-09 22:10</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=LYT%20%28Linking%20Your%20Thinking%29&url=https%3A%2F%2F64p.org%2Fnotes%2Flyt.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <span>作成日時: 2026-08-12 23:47 / 更新日時: 2026-08-12 23:47</span>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=QEMU&url=https%3A%2F%2F64p.org%2Fnotes%2Fqemu.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">

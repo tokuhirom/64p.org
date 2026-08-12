@@ -1,6 +1,6 @@
 ---
 created: 2026-08-12 23:36
-updated: 2026-08-12 23:42
+updated: 2026-08-12 23:47
 ---
 # KVM (Kernel-based Virtual Machine)
 
@@ -8,7 +8,7 @@ LinuxカーネルにビルトインされたCPU仮想化機能。CPUが持つハ
 
 ## KVM単体ではVMは動かない
 
-KVMは**デバイスのエミュレーションを一切やらない**。ディスクI/O、ネットワークアダプタ、画面出力、USB、PCIデバイス、ファームウェア(BIOS相当)——これらはすべてKVMの管轄外で、QEMUや[[firecracker|Firecracker]]、[[cloud-hypervisor|Cloud Hypervisor]]のような「ユーザー空間のVMM」側が担当する。KVMが提供するのは「CPUを仮想的に走らせる」部分だけ。
+KVMは**デバイスのエミュレーションを一切やらない**。ディスクI/O、ネットワークアダプタ、画面出力、USB、PCIデバイス、ファームウェア(BIOS相当)——これらはすべてKVMの管轄外で、[[qemu|QEMU]]や[[firecracker|Firecracker]]、[[cloud-hypervisor|Cloud Hypervisor]]のような「ユーザー空間のVMM」側が担当する。KVMが提供するのは「CPUを仮想的に走らせる」部分だけ。
 
 ## `/dev/kvm`とioctlインターフェース
 
@@ -27,7 +27,7 @@ VMMが`KVM_RUN`を呼ぶと、ゲストのコードがホストCPU上でほぼ�
 
 ## 実際に動かしてみる
 
-QEMU等を使わず`/dev/kvm`のioctlを直接叩いて最小限のVMを起動する実験を[[kvm-hello-world-experiment|kvm-hello-world実験]]で行った。「VM exit」がどう発生し、ユーザー空間のVMMがどう処理するかを手を動かして確認できる。
+[[qemu|QEMU]]等を使わず`/dev/kvm`のioctlを直接叩いて最小限のVMを起動する実験を[[kvm-hello-world-experiment|kvm-hello-world実験]]で行った。「VM exit」がどう発生し、ユーザー空間のVMMがどう処理するかを手を動かして確認できる。
 
 ## このシリーズの文脈での位置づけ
 

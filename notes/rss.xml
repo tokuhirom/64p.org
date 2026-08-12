@@ -6,7 +6,56 @@
 <atom:link href="https://64p.org/notes/rss.xml" rel="self" type="application/rss+xml" />
 <description>ちょっと調べたことや検証結果を、AIの力も借りながらメモしていくコーナーです。</description>
 <language>ja</language>
-<lastBuildDate>Wed, 12 Aug 2026 23:42:28 +0900</lastBuildDate>
+<lastBuildDate>Wed, 12 Aug 2026 23:47:33 +0900</lastBuildDate>
+<item>
+<title>QEMU</title>
+<link>https://64p.org/notes/qemu.html</link>
+<guid isPermaLink="true">https://64p.org/notes/qemu.html</guid>
+<pubDate>Wed, 12 Aug 2026 23:47:00 +0900</pubDate>
+<description><![CDATA[<h1>QEMU</h1>
+
+<p>汎用のマシンエミュレータ兼VMM(Virtual Machine Monitor)。x86・ARM・PowerPC・RISC-Vなど多数のCPUアーキテクチャをエミュレートでき、ホストと異なるアーキテクチャのバイナリもそのまま動かせる(QEMU user-mode emulation)。 <a class="note-tag" href="/notes/tags/virtualization.html">#virtualization</a></p>
+
+<h2>成り立ち</h2>
+
+<p>2003年、Fabrice BellardがQEMUの開発を開始し、2005年のv0.7.1まで一人で開発した。BellardはFFmpegやTiny C Compilerの作者としても知られる。現在はPeter Maydellらを含むQEMUチームによって開発が続けられている。</p>
+
+<h2>動的バイナリ変換(TCG)</h2>
+
+<p>QEMUのコアには「Tiny Code Generator(TCG)」というJITコンパイラがあり、ゲストの命令列をホストのネイティブコードへ動的に変換・キャッシュしながら実行する(動的バイナリ変換)。これによりハードウェア仮想化支援機能なしでも任意のCPUアーキテクチャをソフトウェアだけでエミュレートできるが、ネイティブ実行に比べて一般に10倍程度遅くなるとされる。</p>
+
+<h2><a href="/notes/kvm.html">KVM</a>との役割分担</h2>
+
+<p><a href="/notes/kvm.html">KVM</a>と組み合わせて使う場合、QEMUは「アクセラレータ」としてKVMを利用する。役割はきれいに分かれている。</p>
+
+<ul>
+<li><strong>KVM</strong>: CPUの仮想化のみを担当。ディスク・ネットワーク・画面などのデバイスは一切エミュレートしない</li>
+<li><strong>QEMU</strong>: ゲストから見えるあらゆるデバイスのエミュレーションを担当。ゲストがI/Oを起こして「VM exit」すると、KVMから制御がQEMUに戻り、QEMUがそのデバイス動作をソフトウェアでエミュレートしてから、また実行をKVMに戻す</li>
+</ul>
+
+
+<p>ハードウェア仮想化支援がない環境や、KVMが対応していないアーキテクチャの組み合わせでは、QEMUは自身のTCGだけでCPUもソフトウェア的にエミュレートして動作する(KVM非使用モード)。</p>
+
+<h2><a href="/notes/microvm-ecosystem.html">コンテナ向け軽量VM技術</a>の中での位置づけ</h2>
+
+<p><a href="/notes/firecracker.html">Firecracker</a>・<a href="/notes/cloud-hypervisor.html">Cloud Hypervisor</a>・<a href="/notes/crosvm.html">crosvm</a>と並ぶ、<a href="/notes/kvm.html">KVM</a>を土台に使えるVMMの一つ。ただしQEMUはこれらと異なり2003年発でmicroVM専用に設計されたものではなく、幅広いデバイス・アーキテクチャをフルエミュレートする「何でも屋」という性格が強い。<a href="/notes/hypeman.html">Hypeman</a>や<a href="/notes/kata-containers.html">Kata Containers</a>は、対応VMMの選択肢の一つとしてQEMUも選べる。</p>
+
+<h2><a href="/notes/microvm-ecosystem.html">コンテナ向け軽量VM技術</a>の中での位置づけ</h2>
+
+<p><a href="/notes/firecracker.html">Firecracker</a>・<a href="/notes/cloud-hypervisor.html">Cloud Hypervisor</a>・<a href="/notes/crosvm.html">crosvm</a>と並ぶ、<a href="/notes/kvm.html">KVM</a>を使えるVMMの一つ。他の3つがmicroVM専用に設計されているのに対し、QEMUは幅広いアーキテクチャ・デバイスをフルエミュレートできる「何でも屋」という違いがある。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/QEMU">QEMU - Wikipedia</a></li>
+<li><a href="https://www.qemu.org/docs/master/system/introduction.html">Introduction — QEMU documentation</a></li>
+<li><a href="https://www.diskinternals.com/vmfs-recovery/kvm-vs-qemu/">KVM vs QEMU: Architecture, Performance, and the Critical Difference</a></li>
+<li><a href="https://docs.saferwall.com/blog/virtualization-internals-part-4-qemu/">Virtualization Internals Part 4 - QEMU | Saferwall</a></li>
+<li><a href="https://www.usenix.org/legacy/event/usenix05/tech/freenix/full_papers/bellard/bellard.pdf">QEMU, a Fast and Portable Dynamic Translator | USENIX</a></li>
+</ul>
+
+]]></description>
+</item>
 <item>
 <title>kvm-hello-world実験</title>
 <link>https://64p.org/notes/kvm-hello-world-experiment.html</link>
@@ -14,11 +63,11 @@
 <pubDate>Wed, 12 Aug 2026 23:42:00 +0900</pubDate>
 <description><![CDATA[<h1>kvm-hello-world実験</h1>
 
-<p><a href="/notes/kvm.html">KVM</a>がやっていることを手を動かして体感するための実験記録。QEMU等を一切使わず、<code>/dev/kvm</code>のioctlを直接叩くだけの最小限のCプログラムでVMを起動する。 <a class="note-tag" href="/notes/tags/virtualization.html">#virtualization</a> <a class="note-tag" href="/notes/tags/linux.html">#linux</a></p>
+<p><a href="/notes/kvm.html">KVM</a>がやっていることを手を動かして体感するための実験記録。<a href="/notes/qemu.html">QEMU</a>等を一切使わず、<code>/dev/kvm</code>のioctlを直接叩くだけの最小限のCプログラムでVMを起動する。 <a class="note-tag" href="/notes/tags/virtualization.html">#virtualization</a> <a class="note-tag" href="/notes/tags/linux.html">#linux</a></p>
 
 <h2>使ったもの</h2>
 
-<p><a href="https://github.com/dpw/kvm-hello-world">dpw/kvm-hello-world</a>というMIT Licenseの約500行のC教材プログラム。QEMUやkvmtoolのような「フル機能のVMM」ではなく、KVM APIの使い方だけを見せるために書かれたもの。</p>
+<p><a href="https://github.com/dpw/kvm-hello-world">dpw/kvm-hello-world</a>というMIT Licenseの約500行のC教材プログラム。<a href="/notes/qemu.html">QEMU</a>やkvmtoolのような「フル機能のVMM」ではなく、KVM APIの使い方だけを見せるために書かれたもの。</p>
 
 <h2>動かし方</h2>
 
@@ -98,7 +147,7 @@ Testing real mode
 
 <h2>KVM単体ではVMは動かない</h2>
 
-<p>KVMは<strong>デバイスのエミュレーションを一切やらない</strong>。ディスクI/O、ネットワークアダプタ、画面出力、USB、PCIデバイス、ファームウェア(BIOS相当)——これらはすべてKVMの管轄外で、QEMUや<a href="/notes/firecracker.html">Firecracker</a>、<a href="/notes/cloud-hypervisor.html">Cloud Hypervisor</a>のような「ユーザー空間のVMM」側が担当する。KVMが提供するのは「CPUを仮想的に走らせる」部分だけ。</p>
+<p>KVMは<strong>デバイスのエミュレーションを一切やらない</strong>。ディスクI/O、ネットワークアダプタ、画面出力、USB、PCIデバイス、ファームウェア(BIOS相当)——これらはすべてKVMの管轄外で、<a href="/notes/qemu.html">QEMU</a>や<a href="/notes/firecracker.html">Firecracker</a>、<a href="/notes/cloud-hypervisor.html">Cloud Hypervisor</a>のような「ユーザー空間のVMM」側が担当する。KVMが提供するのは「CPUを仮想的に走らせる」部分だけ。</p>
 
 <h2><code>/dev/kvm</code>とioctlインターフェース</h2>
 
@@ -120,7 +169,7 @@ Testing real mode
 
 <h2>実際に動かしてみる</h2>
 
-<p>QEMU等を使わず<code>/dev/kvm</code>のioctlを直接叩いて最小限のVMを起動する実験を<a href="/notes/kvm-hello-world-experiment.html">kvm-hello-world実験</a>で行った。「VM exit」がどう発生し、ユーザー空間のVMMがどう処理するかを手を動かして確認できる。</p>
+<p><a href="/notes/qemu.html">QEMU</a>等を使わず<code>/dev/kvm</code>のioctlを直接叩いて最小限のVMを起動する実験を<a href="/notes/kvm-hello-world-experiment.html">kvm-hello-world実験</a>で行った。「VM exit」がどう発生し、ユーザー空間のVMMがどう処理するかを手を動かして確認できる。</p>
 
 <h2>このシリーズの文脈での位置づけ</h2>
 
@@ -564,7 +613,7 @@ flowchart TD
 
 <h2>採用プロジェクト</h2>
 
-<p><a href="/notes/firecracker.html">Firecracker</a>・<a href="/notes/crosvm.html">crosvm</a>に加え、<a href="/notes/cloud-hypervisor.html">Cloud Hypervisor</a>もrust-vmmの理念を採用しており、実装コードの大部分がFirecrackerやcrosvmをベースにしている。QEMUのvirtiofsd実装や<code>vhost-device</code>なども取り込まれている。</p>
+<p><a href="/notes/firecracker.html">Firecracker</a>・<a href="/notes/crosvm.html">crosvm</a>に加え、<a href="/notes/cloud-hypervisor.html">Cloud Hypervisor</a>もrust-vmmの理念を採用しており、実装コードの大部分がFirecrackerやcrosvmをベースにしている。<a href="/notes/qemu.html">QEMU</a>のvirtiofsd実装や<code>vhost-device</code>なども取り込まれている。</p>
 
 <h2>どこまで簡単にVMMを作れるか</h2>
 
@@ -615,6 +664,7 @@ flowchart TD
 <li><a href="/notes/cloud-hypervisor.html">Cloud Hypervisor</a> — Intel主導・Rust製。<a href="/notes/rust-vmm.html">rust-vmm</a>由来でFirecrackerの実装を参考にしている</li>
 <li><a href="/notes/rust-vmm.html">rust-vmm</a> — Firecracker/crosvm/Cloud Hypervisorが共有する、Rust製VMM部品(クレート)群</li>
 <li><a href="/notes/crosvm.html">crosvm</a> — Google製。ChromeOS/Android向けに開発されたRust製VMM</li>
+<li><a href="/notes/qemu.html">QEMU</a> — 2003年発。他のVMMと異なりmicroVM専用ではなく、幅広いアーキテクチャ・デバイスをフルエミュレートできる「何でも屋」</li>
 </ul>
 
 
@@ -623,7 +673,7 @@ flowchart TD
 <p>FirecrackerなどのVMMは素のカーネル+rootfsしか扱えないため、OCIイメージ/containerd/Kubernetesと繋ぐには別レイヤーが必要になる。</p>
 
 <ul>
-<li><a href="/notes/kata-containers.html">Kata Containers</a> — OpenStack Foundation発。OCI/CRI互換のコンテナランタイムとして、Firecracker/Cloud Hypervisor/QEMUなど複数のVMMを横断的にバックエンドとして選べる</li>
+<li><a href="/notes/kata-containers.html">Kata Containers</a> — OpenStack Foundation発。OCI/CRI互換のコンテナランタイムとして、Firecracker/Cloud Hypervisor/<a href="/notes/qemu.html">QEMU</a>など複数のVMMを横断的にバックエンドとして選べる</li>
 <li><a href="/notes/firecracker-containerd.html">firecracker-containerd</a> — AWS製。containerd専用のFirecracker統合プラグイン</li>
 <li><a href="/notes/hypeman.html">Hypeman</a> — Kernel社製。OCIイメージのpull・実行をDocker互換CLIで扱えるようにした、マルチハイパーバイザー対応のランタイム</li>
 </ul>
@@ -649,7 +699,7 @@ flowchart TD
 
 <h2>動作の仕組み</h2>
 
-<p>コンテナ(OCIイメージ由来のrootfs)ごとに専用の軽量VMを起動し、その中でコンテナプロセスを実行する。ハイパーバイザーは特定の実装に固定されておらず、<a href="/notes/firecracker.html">Firecracker</a>・<a href="/notes/cloud-hypervisor.html">Cloud Hypervisor</a>・QEMUなど複数のVMMをバックエンドとして選択できる。Firecracker利用時は、containerdのdevmapperスナップショッタでコンテナのrootfsをdevice mapperスナップショットとして扱い、virtio blockデバイスとしてVMにホットプラグする構成を取る。</p>
+<p>コンテナ(OCIイメージ由来のrootfs)ごとに専用の軽量VMを起動し、その中でコンテナプロセスを実行する。ハイパーバイザーは特定の実装に固定されておらず、<a href="/notes/firecracker.html">Firecracker</a>・<a href="/notes/cloud-hypervisor.html">Cloud Hypervisor</a>・<a href="/notes/qemu.html">QEMU</a>など複数のVMMをバックエンドとして選択できる。Firecracker利用時は、containerdのdevmapperスナップショッタでコンテナのrootfsをdevice mapperスナップショットとして扱い、virtio blockデバイスとしてVMにホットプラグする構成を取る。</p>
 
 <h2><a href="/notes/firecracker-containerd.html">firecracker-containerd</a>との違い</h2>
 
@@ -939,6 +989,66 @@ graph LR
 ]]></description>
 </item>
 <item>
+<title>microVM</title>
+<link>https://64p.org/notes/microvm.html</link>
+<guid isPermaLink="true">https://64p.org/notes/microvm.html</guid>
+<pubDate>Wed, 12 Aug 2026 23:14:00 +0900</pubDate>
+<description><![CDATA[<h1>microVM</h1>
+
+<p>デバイスモデルを最小限まで削ぎ落とした軽量な仮想マシン、およびそれを実現する仕組み。伝統的なVMが持つカーネルレベルの分離を保ちつつ、コンテナ並みの起動速度・リソース効率を狙う。 <a class="note-tag" href="/notes/tags/virtualization.html">#virtualization</a></p>
+
+<h2>特徴</h2>
+
+<ul>
+<li>起動時間はミリ秒〜数百ミリ秒程度（伝統的なVMは秒〜分単位）</li>
+<li>1台あたりのメモリオーバーヘッドが数MiB程度と小さい</li>
+<li>レガシーなデバイスエミュレーション・幅広いハードウェアサポートなど、クラウドワークロードに不要な機能を削ぎ落とし、アタックサーフェスと起動時間を削減している</li>
+<li>各microVMは専用のカーネル・専用のメモリ空間・仮想化されたデバイスを持ち、コンテナのようなカーネル共有はしない</li>
+</ul>
+
+
+<h2>なぜ起動が速いか</h2>
+
+<p><a href="/notes/firecracker.html">Firecracker</a>を例にすると、主に3つの要因が重なっている。</p>
+
+<ol>
+<li><strong>BIOS・ブートローダーを省略した直接カーネルブート</strong> — Linuxカーネル自体はBIOS/ブートローダーを必須としない。「64-bit Linux Boot Protocol」を使い、16-bitリアルモードからではなくカーネルのprotected-modeエントリポイントへ直接ジャンプする。ACPIテーブルもカーネル起動に必要な最小限しか用意しない。</li>
+<li><strong>最小限のデバイスモデル</strong> — USB・PCIバス・レガシーデバイスなど不要なハードウェアエミュレーションを排除。Firecrackerが提供するデバイスは実質5種類のみ(virtio-net、virtio-block、virtio-vsock、シリアルコンソール、最小限のキーボードコントローラ)。</li>
+<li><strong>ミニマルなVMMコード</strong> — 汎用ハイパーバイザーが持つ幅広いハードウェアサポートのコードパスを持たないため、実行すべきコード量自体が少ない。</li>
+</ol>
+
+
+<p>これらにより、Firecrackerでは起動125ミリ秒未満・メモリオーバーヘッド5MiB未満を実現している。<a href="/notes/hypeman.html">Hypeman</a>のstandby/restoreのような、起動済みVMのスナップショットからの復元（ミリ秒単位）を使えばさらに短縮できる。</p>
+
+<h2>代表的な実装</h2>
+
+<ul>
+<li><a href="/notes/firecracker.html">Firecracker</a> — AWSが開発。AWS Lambda/Fargateを支える</li>
+<li><a href="/notes/cloud-hypervisor.html">Cloud Hypervisor</a> — Intel主導、Rust製。<a href="/notes/rust-vmm.html">rust-vmm</a>プロジェクトの成果を活用</li>
+</ul>
+
+
+<h2>用途</h2>
+
+<p>サーバーレス実行環境やAIエージェント向けサンドボックスなど、マルチテナントで多数の短命なワークロードを高速に隔離・起動する必要がある場面で採用される。<a href="/notes/hypeman.html">Hypeman</a>はFirecracker/Cloud Hypervisor/<a href="/notes/qemu.html">QEMU</a>/Apple Virtualization.frameworkを切り替え可能な形で統一的に扱うランタイム。</p>
+
+<h2><a href="/notes/microvm-ecosystem.html">コンテナ向け軽量VM技術</a>の中での位置づけ</h2>
+
+<p>コンテナ向け軽量VM技術群の土台となる概念そのもの。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://www.koyeb.com/blog/what-is-a-microvm">What is a microVM? - Koyeb</a></li>
+<li><a href="https://northflank.com/blog/what-is-aws-firecracker">What is AWS Firecracker? The microVM technology, explained | Northflank</a></li>
+<li><a href="https://github.com/firecracker-microvm/firecracker/blob/main/FAQ.md">firecracker/FAQ.md at main · firecracker-microvm/firecracker</a></li>
+<li><a href="https://unixism.net/2019/10/how-aws-firecracker-works-a-deep-dive/">How AWS Firecracker works: a deep dive – Unixism</a></li>
+<li><a href="https://github.com/firecracker-microvm/firecracker/blob/main/docs/rootfs-and-kernel-setup.md">firecracker/docs/rootfs-and-kernel-setup.md at main · firecracker-microvm/firecracker</a></li>
+</ul>
+
+]]></description>
+</item>
+<item>
 <title>Hypeman</title>
 <link>https://64p.org/notes/hypeman.html</link>
 <guid isPermaLink="true">https://64p.org/notes/hypeman.html</guid>
@@ -954,7 +1064,7 @@ graph LR
 <h2>対応ハイパーバイザー</h2>
 
 <ul>
-<li>Linux: <a href="/notes/cloud-hypervisor.html">Cloud Hypervisor</a>、<a href="/notes/firecracker.html">Firecracker</a>、QEMU（<a href="/notes/kvm.html">KVM</a>必須）</li>
+<li>Linux: <a href="/notes/cloud-hypervisor.html">Cloud Hypervisor</a>、<a href="/notes/firecracker.html">Firecracker</a>、<a href="/notes/qemu.html">QEMU</a>（<a href="/notes/kvm.html">KVM</a>必須）</li>
 <li>macOS: Apple Silicon上のVirtualization.framework（Rosetta経由でlinux/amd64イメージも実行可）</li>
 </ul>
 
@@ -1025,66 +1135,6 @@ graph LR
 <li><a href="https://github.com/cloud-hypervisor/cloud-hypervisor">GitHub - cloud-hypervisor/cloud-hypervisor</a></li>
 <li><a href="https://www.cloudhypervisor.org/docs/prologue/introduction/">Introduction - Cloud Hypervisor</a></li>
 <li><a href="https://thenewstack.io/rust-based-cloud-hypervisor-heads-to-linux-foundation/">Rust-Based Cloud Hypervisor Heads to Linux Foundation - The New Stack</a></li>
-</ul>
-
-]]></description>
-</item>
-<item>
-<title>microVM</title>
-<link>https://64p.org/notes/microvm.html</link>
-<guid isPermaLink="true">https://64p.org/notes/microvm.html</guid>
-<pubDate>Wed, 12 Aug 2026 23:14:00 +0900</pubDate>
-<description><![CDATA[<h1>microVM</h1>
-
-<p>デバイスモデルを最小限まで削ぎ落とした軽量な仮想マシン、およびそれを実現する仕組み。伝統的なVMが持つカーネルレベルの分離を保ちつつ、コンテナ並みの起動速度・リソース効率を狙う。 <a class="note-tag" href="/notes/tags/virtualization.html">#virtualization</a></p>
-
-<h2>特徴</h2>
-
-<ul>
-<li>起動時間はミリ秒〜数百ミリ秒程度（伝統的なVMは秒〜分単位）</li>
-<li>1台あたりのメモリオーバーヘッドが数MiB程度と小さい</li>
-<li>レガシーなデバイスエミュレーション・幅広いハードウェアサポートなど、クラウドワークロードに不要な機能を削ぎ落とし、アタックサーフェスと起動時間を削減している</li>
-<li>各microVMは専用のカーネル・専用のメモリ空間・仮想化されたデバイスを持ち、コンテナのようなカーネル共有はしない</li>
-</ul>
-
-
-<h2>なぜ起動が速いか</h2>
-
-<p><a href="/notes/firecracker.html">Firecracker</a>を例にすると、主に3つの要因が重なっている。</p>
-
-<ol>
-<li><strong>BIOS・ブートローダーを省略した直接カーネルブート</strong> — Linuxカーネル自体はBIOS/ブートローダーを必須としない。「64-bit Linux Boot Protocol」を使い、16-bitリアルモードからではなくカーネルのprotected-modeエントリポイントへ直接ジャンプする。ACPIテーブルもカーネル起動に必要な最小限しか用意しない。</li>
-<li><strong>最小限のデバイスモデル</strong> — USB・PCIバス・レガシーデバイスなど不要なハードウェアエミュレーションを排除。Firecrackerが提供するデバイスは実質5種類のみ(virtio-net、virtio-block、virtio-vsock、シリアルコンソール、最小限のキーボードコントローラ)。</li>
-<li><strong>ミニマルなVMMコード</strong> — 汎用ハイパーバイザーが持つ幅広いハードウェアサポートのコードパスを持たないため、実行すべきコード量自体が少ない。</li>
-</ol>
-
-
-<p>これらにより、Firecrackerでは起動125ミリ秒未満・メモリオーバーヘッド5MiB未満を実現している。<a href="/notes/hypeman.html">Hypeman</a>のstandby/restoreのような、起動済みVMのスナップショットからの復元（ミリ秒単位）を使えばさらに短縮できる。</p>
-
-<h2>代表的な実装</h2>
-
-<ul>
-<li><a href="/notes/firecracker.html">Firecracker</a> — AWSが開発。AWS Lambda/Fargateを支える</li>
-<li><a href="/notes/cloud-hypervisor.html">Cloud Hypervisor</a> — Intel主導、Rust製。<a href="/notes/rust-vmm.html">rust-vmm</a>プロジェクトの成果を活用</li>
-</ul>
-
-
-<h2>用途</h2>
-
-<p>サーバーレス実行環境やAIエージェント向けサンドボックスなど、マルチテナントで多数の短命なワークロードを高速に隔離・起動する必要がある場面で採用される。<a href="/notes/hypeman.html">Hypeman</a>はFirecracker/Cloud Hypervisor/QEMU/Apple Virtualization.frameworkを切り替え可能な形で統一的に扱うランタイム。</p>
-
-<h2><a href="/notes/microvm-ecosystem.html">コンテナ向け軽量VM技術</a>の中での位置づけ</h2>
-
-<p>コンテナ向け軽量VM技術群の土台となる概念そのもの。</p>
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://www.koyeb.com/blog/what-is-a-microvm">What is a microVM? - Koyeb</a></li>
-<li><a href="https://northflank.com/blog/what-is-aws-firecracker">What is AWS Firecracker? The microVM technology, explained | Northflank</a></li>
-<li><a href="https://github.com/firecracker-microvm/firecracker/blob/main/FAQ.md">firecracker/FAQ.md at main · firecracker-microvm/firecracker</a></li>
-<li><a href="https://unixism.net/2019/10/how-aws-firecracker-works-a-deep-dive/">How AWS Firecracker works: a deep dive – Unixism</a></li>
-<li><a href="https://github.com/firecracker-microvm/firecracker/blob/main/docs/rootfs-and-kernel-setup.md">firecracker/docs/rootfs-and-kernel-setup.md at main · firecracker-microvm/firecracker</a></li>
 </ul>
 
 ]]></description>
@@ -1494,55 +1544,6 @@ flowchart LR
 <li><a href="https://github.com/tokio-rs/topcoat">tokio-rs/topcoat - GitHub</a></li>
 <li><a href="https://crates.io/crates/topcoat">topcoat - crates.io</a></li>
 <li><a href="https://syu-m-5151.hatenablog.com/entry/2026/08/12/163644">Topcoat 0.5.0 検証記事 (syu-m-5151.hatenablog.com)</a></li>
-</ul>
-
-]]></description>
-</item>
-<item>
-<title>Network Namespace (netns)</title>
-<link>https://64p.org/notes/network-namespace.html</link>
-<guid isPermaLink="true">https://64p.org/notes/network-namespace.html</guid>
-<pubDate>Wed, 12 Aug 2026 19:33:00 +0900</pubDate>
-<description><![CDATA[<h1>Network Namespace (netns)</h1>
-
-<p>Linuxカーネルの機能で、プロセスグループごとに独立したネットワークスタックを持たせる分離技術。カーネル内部では各namespaceインスタンスが<code>struct net</code>で表現される。プロセス・ファイルシステム・IPCなどを分離する他のnamespace種別と並ぶ、Linux namespaces機構の一種。<a href="/notes/cgroups.html">cgroups（control groups）</a>によるリソース制御と組み合わせて<a href="/notes/lxc.html">LXC</a>などの軽量仮想化の基盤にもなっている。 <a class="note-tag" href="/notes/tags/network.html">#network</a> <a class="note-tag" href="/notes/tags/linux.html">#linux</a> <a class="note-tag" href="/notes/tags/kernel.html">#kernel</a></p>
-
-<h2>namespaceごとに独立して管理されるもの</h2>
-
-<ul>
-<li>ネットワークインターフェース（lo, eth0など）</li>
-<li>ルーティングテーブル（IPv4/IPv6）</li>
-<li>iptables/nftablesのファイアウォール設定</li>
-<li>netfilterの接続追跡状態</li>
-<li>Unixドメインソケットの名前空間</li>
-<li>ポート番号空間（0-65535）</li>
-<li><code>/proc/net/</code>以下のビュー</li>
-</ul>
-
-
-<p>初期化時に<code>pernet_operations</code>フックを通じて、各サブシステムがper-namespace状態を初期化する。</p>
-
-<h2>管理コマンド: ip netns</h2>
-
-<pre><code class="sh">ip netns add ns1                        # 名前空間を作成
-ip netns exec ns1 &lt;cmd&gt;                  # 名前空間内でコマンド実行
-ip link set &lt;iface&gt; netns ns1            # 既存インターフェースを移動
-ip netns del ns1                         # 削除
-</code></pre>
-
-<h2>veth pairによる接続</h2>
-
-<p>異なるnamespace同士やnamespaceとホストを繋ぐ標準的な手段が<strong>veth pair</strong>（仮想Ethernetペア）。片方に入れたフレームがもう片方から出てくる「パイプ」のように振る舞う。ペアの一端をnamespace Aに、もう一端をnamespace Bやホストに配置して接続する。<a href="/notes/linux-virtual-network-lab.html">実際に構築した例</a>では、veth pairで複数のnamespaceを<a href="/notes/linux-bridge.html">Linuxブリッジ</a>に接続した。</p>
-
-<h2>unprivileged user namespaceとの組み合わせ</h2>
-
-<p><code>unshare --user --map-root-user --net</code>のようにuser namespaceと組み合わせることで、sudoなしでもnetwork namespaceを作成・操作できる。ただし作成したnamespaceはホストの実NICには触れられない。</p>
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://kernel-internals.org/net/net-namespaces/">Network Namespaces - Linux Kernel Internals</a></li>
-<li><a href="https://www.commandinline.com/linux-network-namespaces-guide/">Linux Network Namespaces: Isolate Network Stacks | Command in Line</a></li>
 </ul>
 
 ]]></description>

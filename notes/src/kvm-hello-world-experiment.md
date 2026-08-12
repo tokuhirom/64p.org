@@ -1,14 +1,14 @@
 ---
 created: 2026-08-12 23:42
-updated: 2026-08-12 23:42
+updated: 2026-08-12 23:47
 ---
 # kvm-hello-world実験
 
-[[kvm|KVM]]がやっていることを手を動かして体感するための実験記録。QEMU等を一切使わず、`/dev/kvm`のioctlを直接叩くだけの最小限のCプログラムでVMを起動する。 #virtualization #linux
+[[kvm|KVM]]がやっていることを手を動かして体感するための実験記録。[[qemu|QEMU]]等を一切使わず、`/dev/kvm`のioctlを直接叩くだけの最小限のCプログラムでVMを起動する。 #virtualization #linux
 
 ## 使ったもの
 
-[dpw/kvm-hello-world](https://github.com/dpw/kvm-hello-world)というMIT Licenseの約500行のC教材プログラム。QEMUやkvmtoolのような「フル機能のVMM」ではなく、KVM APIの使い方だけを見せるために書かれたもの。
+[dpw/kvm-hello-world](https://github.com/dpw/kvm-hello-world)というMIT Licenseの約500行のC教材プログラム。[[qemu|QEMU]]やkvmtoolのような「フル機能のVMM」ではなく、KVM APIの使い方だけを見せるために書かれたもの。
 
 ## 動かし方
 

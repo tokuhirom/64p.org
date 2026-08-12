@@ -1,6 +1,6 @@
 ---
 created: 2026-08-12 23:27
-updated: 2026-08-12 23:36
+updated: 2026-08-12 23:47
 ---
 # rust-vmm
 
@@ -23,7 +23,7 @@ VMM(Virtual Machine Monitor)を作るためのRust製部品(クレート)を共�
 
 ## 採用プロジェクト
 
-[[firecracker|Firecracker]]・[[crosvm|crosvm]]に加え、[[cloud-hypervisor|Cloud Hypervisor]]もrust-vmmの理念を採用しており、実装コードの大部分がFirecrackerやcrosvmをベースにしている。QEMUのvirtiofsd実装や`vhost-device`なども取り込まれている。
+[[firecracker|Firecracker]]・[[crosvm|crosvm]]に加え、[[cloud-hypervisor|Cloud Hypervisor]]もrust-vmmの理念を採用しており、実装コードの大部分がFirecrackerやcrosvmをベースにしている。[[qemu|QEMU]]のvirtiofsd実装や`vhost-device`なども取り込まれている。
 
 ## どこまで簡単にVMMを作れるか
 

@@ -1,6 +1,6 @@
 ---
 created: 2026-08-12 23:23
-updated: 2026-08-12 23:25
+updated: 2026-08-12 23:47
 ---
 # Kata Containers
 
@@ -12,7 +12,7 @@ VMの持つセキュリティ上の分離性と、コンテナの持つ速度・
 
 ## 動作の仕組み
 
-コンテナ(OCIイメージ由来のrootfs)ごとに専用の軽量VMを起動し、その中でコンテナプロセスを実行する。ハイパーバイザーは特定の実装に固定されておらず、[[firecracker|Firecracker]]・[[cloud-hypervisor|Cloud Hypervisor]]・QEMUなど複数のVMMをバックエンドとして選択できる。Firecracker利用時は、containerdのdevmapperスナップショッタでコンテナのrootfsをdevice mapperスナップショットとして扱い、virtio blockデバイスとしてVMにホットプラグする構成を取る。
+コンテナ(OCIイメージ由来のrootfs)ごとに専用の軽量VMを起動し、その中でコンテナプロセスを実行する。ハイパーバイザーは特定の実装に固定されておらず、[[firecracker|Firecracker]]・[[cloud-hypervisor|Cloud Hypervisor]]・[[qemu|QEMU]]など複数のVMMをバックエンドとして選択できる。Firecracker利用時は、containerdのdevmapperスナップショッタでコンテナのrootfsをdevice mapperスナップショットとして扱い、virtio blockデバイスとしてVMにホットプラグする構成を取る。
 
 ## [[firecracker-containerd|firecracker-containerd]]との違い
 
