@@ -25,8 +25,10 @@
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
                                     <li><a href="/notes/laplace-transform.html" class="active">ラプラス変換</a></li>
+                                    <li><a href="/notes/integral.html">積分</a></li>
                                     <li><a href="/notes/frequency-domain-transforms.html">周波数領域の変換</a></li>
                                     <li><a href="/notes/fourier-transform.html">フーリエ変換</a></li>
+                                    <li><a href="/notes/derivative.html">微分</a></li>
                                     <li><a href="/notes/fft.html">FFT（高速フーリエ変換）</a></li>
                                     <li><a href="/notes/vm-exit.html">VM exit</a></li>
                                     <li><a href="/notes/virtqueue-toy-experiment.html">virtqueue風トイ実験</a></li>
@@ -343,14 +345,14 @@
 
 <p><a class="note-tag" href="/notes/tags/math.html">#math</a> <a class="note-tag" href="/notes/tags/signal-processing.html">#signal-processing</a> <a class="note-tag" href="/notes/tags/control-theory.html">#control-theory</a></p>
 
-<p>時間領域の関数 <span class="math-inline">f(t)</span> を複素変数 <span class="math-inline">s</span> の関数に写す積分変換。</p>
+<p>時間領域の関数 <span class="math-inline">f(t)</span> を複素変数 <span class="math-inline">s</span> の関数に写す<a href="/notes/integral.html">積分</a>変換。</p>
 
 <div class="math-display">
 F(s) = \int_0^\infty f(t)\, e^{-st}\, dt, \qquad s = \sigma + j\omega
 </div>
 
 
-<p>一番のご利益は、<strong>時間領域での微分・積分が、s領域では「<span class="math-inline">s</span> を掛ける／<span class="math-inline">s</span> で割る」という代数演算になる</strong>こと。微分方程式が代数方程式に変換されるので、「変換 → 代数的に解く → 逆変換」という手順で常微分方程式が機械的に解ける。初期条件も変換の時点で自然に式へ組み込まれる。</p>
+<p>一番のご利益は、<strong>時間領域での<a href="/notes/derivative.html">微分</a>・<a href="/notes/integral.html">積分</a>が、s領域では「<span class="math-inline">s</span> を掛ける／<span class="math-inline">s</span> で割る」という代数演算になる</strong>こと。微分方程式が代数方程式に変換されるので、「変換 → 代数的に解く → 逆変換」という手順で常微分方程式が機械的に解ける。初期条件も変換の時点で自然に式へ組み込まれる。</p>
 
 <h2>直感: 「減衰因子つきフーリエ変換」</h2>
 
@@ -412,11 +414,13 @@ f(t) = \frac{1}{2\pi i} \lim_{T\to\infty} \int_{\gamma - iT}^{\gamma + iT} e^{st
                                             <li><a href="/notes/fft.html">FFT（高速フーリエ変換）</a></li>
                                             <li><a href="/notes/fourier-transform.html">フーリエ変換</a></li>
                                             <li><a href="/notes/frequency-domain-transforms.html">周波数領域の変換</a></li>
+                                            <li><a href="/notes/derivative.html">微分</a></li>
+                                            <li><a href="/notes/integral.html">積分</a></li>
                     
                     </ul>
                 </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-13 00:03 / 更新日時: 2026-08-13 00:14</span>
+                    <span>作成日時: 2026-08-13 00:03 / 更新日時: 2026-08-13 00:20</span>
                     <a class="share-x" href="https://twitter.com/intent/tweet?text=%E3%83%A9%E3%83%97%E3%83%A9%E3%82%B9%E5%A4%89%E6%8F%9B&url=https%3A%2F%2F64p.org%2Fnotes%2Flaplace-transform.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>

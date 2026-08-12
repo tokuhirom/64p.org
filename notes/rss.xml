@@ -6,7 +6,112 @@
 <atom:link href="https://64p.org/notes/rss.xml" rel="self" type="application/rss+xml" />
 <description>ちょっと調べたことや検証結果を、AIの力も借りながらメモしていくコーナーです。</description>
 <language>ja</language>
-<lastBuildDate>Thu, 13 Aug 2026 00:14:11 +0900</lastBuildDate>
+<lastBuildDate>Thu, 13 Aug 2026 00:20:23 +0900</lastBuildDate>
+<item>
+<title>積分</title>
+<link>https://64p.org/notes/integral.html</link>
+<guid isPermaLink="true">https://64p.org/notes/integral.html</guid>
+<pubDate>Thu, 13 Aug 2026 00:20:00 +0900</pubDate>
+<description><![CDATA[<h1>積分</h1>
+
+<p><a class="note-tag" href="/notes/tags/math.html">#math</a></p>
+
+<p>「細かく刻んで足し合わせる」操作の極限。歴史的・概念的に別物だった2つの顔（定積分と不定積分）があり、それが微積分学の基本定理で結ばれている。</p>
+
+<h2>定積分 — 総量を求める</h2>
+
+<p>曲線 <span class="math-inline">y = f(x)</span> と x軸に挟まれた領域の面積を求めるのが出発点。区間 <span class="math-inline">[a, b]</span> を <span class="math-inline">n</span> 個の細い短冊に切り、各短冊を「幅 <span class="math-inline">\Delta x</span> × 高さ <span class="math-inline">f(x_i)</span>」の長方形で近似して全部足したものが<strong>リーマン和</strong>。短冊を無限に細くした極限が定積分。</p>
+
+<div class="math-display">
+\int_a^b f(x)\, dx = \lim_{n \to \infty} \sum_{i=1}^{n} f(x_i)\, \Delta x
+</div>
+
+
+<p><span class="math-inline">\int</span> という記号自体が Sum の S を縦に伸ばしたもの（ライプニッツ由来）。面積に限らず「密度を足し合わせて質量」「速度を足し合わせて移動距離」など、<em>変化する量 × 微小区間の総和</em>はすべてこの形になる。</p>
+
+<h2>不定積分 — 微分の逆演算</h2>
+
+<p>「<a href="/notes/derivative.html">微分</a>すると <span class="math-inline">f(x)</span> になる関数 <span class="math-inline">F(x)</span>（<strong>原始関数</strong>）を探す」操作。たとえば <span class="math-inline">x<sup>2</sup></span> を微分すると <span class="math-inline">2x</span> なので、<span class="math-inline">2x</span> の原始関数は <span class="math-inline">x<sup>2</sup> + C</span>（<span class="math-inline">C</span> は積分定数）。こちらは面積とは無関係に見える、純粋に代数的な逆問題。</p>
+
+<h2>微積分学の基本定理</h2>
+
+<p>一見無関係なこの2つが実は同じものだ、というのが<strong>微積分学の基本定理</strong>。<span class="math-inline">f</span> が <span class="math-inline">[a, b]</span> 上で連続なら、その任意の原始関数 <span class="math-inline">F</span> について</p>
+
+<div class="math-display">
+\int_a^b f(x)\, dx = F(b) - F(a)
+</div>
+
+
+<p>「無限個の長方形を足す」という極限計算が、「原始関数を1つ見つけて端点の差を取る」だけで済む。ニュートンとライプニッツの最大の発見で、積分が実用的な計算手段になった理由。<a href="/notes/derivative.html">微分</a>は「瞬間の変化率」、積分は「変化の累積」で、互いに逆向きの操作になっている。</p>
+
+<h2>積分変換への接続</h2>
+
+<p>関数に核（カーネル）を掛けて積分することで別の領域の関数に写す操作を積分変換と呼ぶ。<a href="/notes/fourier-transform.html">フーリエ変換</a>や<a href="/notes/laplace-transform.html">ラプラス変換</a>（→ <a href="/notes/frequency-domain-transforms.html">周波数領域の変換</a>）は、<span class="math-inline">\int f(t)\, e^{-st}\, dt</span> のような形でまさに定積分を道具として使っている。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/Riemann_sum">Riemann sum - Wikipedia</a></li>
+<li><a href="https://math.libretexts.org/Bookshelves/Calculus/Calculus_(OpenStax">The Fundamental Theorem of Calculus - Mathematics LibreTexts</a>/05:<em>Integration/5.03:</em>The_Fundamental_Theorem_of_Calculus)</li>
+<li><a href="https://www.ma.ic.ac.uk/~ajm8/M1M1/integ.pdf">M1M1: The Riemann Integral and the Fundamental Theorem of Calculus - Imperial College</a></li>
+</ul>
+
+]]></description>
+</item>
+<item>
+<title>微分</title>
+<link>https://64p.org/notes/derivative.html</link>
+<guid isPermaLink="true">https://64p.org/notes/derivative.html</guid>
+<pubDate>Thu, 13 Aug 2026 00:20:00 +0900</pubDate>
+<description><![CDATA[<h1>微分</h1>
+
+<p><a class="note-tag" href="/notes/tags/math.html">#math</a></p>
+
+<p>関数の<strong>瞬間の変化率</strong>を取り出す操作。グラフでいえば、その点での接線の傾き。</p>
+
+<h2>定義 — 差分商の極限</h2>
+
+<p>区間での平均変化率（割線の傾き）は差分商 <span class="math-inline">\frac{f(a+h) - f(a)}{h}</span> で表せる。<span class="math-inline">h</span> を 0 に近づけると割線は接線に近づき、その極限が点 <span class="math-inline">a</span> での微分係数。</p>
+
+<div class="math-display">
+f'(a) = \lim_{h \to 0} \frac{f(a+h) - f(a)}{h}
+</div>
+
+
+<p>各点にその微分係数を対応させた関数 <span class="math-inline">f'(x)</span> を<strong>導関数</strong>と呼ぶ。記法はラグランジュの <span class="math-inline">f'(x)</span> のほか、ライプニッツの <span class="math-inline">\frac{dy}{dx}</span>（「微小な <span class="math-inline">y</span> の変化 ÷ 微小な <span class="math-inline">x</span> の変化」という定義の形をそのまま残した記法）がよく使われる。</p>
+
+<h2>直感</h2>
+
+<p>「位置を微分すると速度、速度を微分すると加速度」が典型例。車の速度メーターが表示しているのは、まさに位置関数の瞬間の変化率。平均時速（区間の差分商）ではなく「今この瞬間」の値を極限で定義するのが微分のアイデア。</p>
+
+<h2>積分との関係</h2>
+
+<p>微分の逆演算が<a href="/notes/integral.html">積分</a>（不定積分・原始関数を求める操作）。両者が互いに逆であることを述べるのが微積分学の基本定理で、詳細は<a href="/notes/integral.html">積分</a>側に書いた。</p>
+
+<ul>
+<li>微分 = 瞬間の変化率（累積量 → 変化率）</li>
+<li>積分 = 変化の累積（変化率 → 累積量）</li>
+</ul>
+
+
+<h2>応用</h2>
+
+<ul>
+<li><strong>最適化</strong> — 導関数が 0 になる点が極値の候補。機械学習の勾配降下法もこの延長</li>
+<li><strong>微分方程式</strong> — 未知関数とその導関数の関係式。物理・工学のモデル記述の基本言語。<a href="/notes/laplace-transform.html">ラプラス変換</a>は微分を代数演算に変えてこれを解く道具</li>
+<li><strong>近似</strong> — 接線による一次近似（<span class="math-inline">f(a+h) \approx f(a) + f'(a)h</span>）、テイラー展開への入り口</li>
+</ul>
+
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://math.libretexts.org/Bookshelves/Calculus/Calculus_(OpenStax">Defining the Derivative - Mathematics LibreTexts</a>/03:<em>Derivatives/3.01:</em>Defining_the_Derivative)</li>
+<li><a href="https://courses.lumenlearning.com/precalculus/chapter/derivatives/">Derivatives | Precalculus - Lumen Learning</a></li>
+</ul>
+
+]]></description>
+</item>
 <item>
 <title>周波数領域の変換</title>
 <link>https://64p.org/notes/frequency-domain-transforms.html</link>
@@ -30,7 +135,7 @@ graph LR
 <h2>配下ノート</h2>
 
 <ul>
-<li><a href="/notes/fourier-transform.html">フーリエ変換</a> — 信号を正弦波の重ね合わせに分解する、この分野の基本となる積分変換</li>
+<li><a href="/notes/fourier-transform.html">フーリエ変換</a> — 信号を正弦波の重ね合わせに分解する、この分野の基本となる<a href="/notes/integral.html">積分</a>変換</li>
 <li><a href="/notes/laplace-transform.html">ラプラス変換</a> — フーリエ変換に減衰因子を加えて発散する信号にも適用できるようにした一般化。微分方程式の求解・制御理論・回路解析向き</li>
 <li><a href="/notes/fft.html">FFT（高速フーリエ変換）</a> — 離散版（DFT）を <span class="math-inline">O(N \log N)</span> で計算するアルゴリズム。連続の理論を計算機で実用にした立役者</li>
 </ul>
@@ -183,14 +288,14 @@ X_k = \sum_{n=0}^{N-1} x_n\, e^{-i 2\pi k n / N}
 
 <p><a class="note-tag" href="/notes/tags/math.html">#math</a> <a class="note-tag" href="/notes/tags/signal-processing.html">#signal-processing</a> <a class="note-tag" href="/notes/tags/control-theory.html">#control-theory</a></p>
 
-<p>時間領域の関数 <span class="math-inline">f(t)</span> を複素変数 <span class="math-inline">s</span> の関数に写す積分変換。</p>
+<p>時間領域の関数 <span class="math-inline">f(t)</span> を複素変数 <span class="math-inline">s</span> の関数に写す<a href="/notes/integral.html">積分</a>変換。</p>
 
 <div class="math-display">
 F(s) = \int_0^\infty f(t)\, e^{-st}\, dt, \qquad s = \sigma + j\omega
 </div>
 
 
-<p>一番のご利益は、<strong>時間領域での微分・積分が、s領域では「<span class="math-inline">s</span> を掛ける／<span class="math-inline">s</span> で割る」という代数演算になる</strong>こと。微分方程式が代数方程式に変換されるので、「変換 → 代数的に解く → 逆変換」という手順で常微分方程式が機械的に解ける。初期条件も変換の時点で自然に式へ組み込まれる。</p>
+<p>一番のご利益は、<strong>時間領域での<a href="/notes/derivative.html">微分</a>・<a href="/notes/integral.html">積分</a>が、s領域では「<span class="math-inline">s</span> を掛ける／<span class="math-inline">s</span> で割る」という代数演算になる</strong>こと。微分方程式が代数方程式に変換されるので、「変換 → 代数的に解く → 逆変換」という手順で常微分方程式が機械的に解ける。初期条件も変換の時点で自然に式へ組み込まれる。</p>
 
 <h2>直感: 「減衰因子つきフーリエ変換」</h2>
 
@@ -256,7 +361,7 @@ f(t) = \frac{1}{2\pi i} \lim_{T\to\infty} \int_{\gamma - iT}^{\gamma + iT} e^{st
 
 <p><a class="note-tag" href="/notes/tags/math.html">#math</a> <a class="note-tag" href="/notes/tags/signal-processing.html">#signal-processing</a></p>
 
-<p>時間領域（あるいは空間領域）の関数を、「どの周波数成分がどれだけ含まれているか」を表す周波数領域の関数に写す積分変換。</p>
+<p>時間領域（あるいは空間領域）の関数を、「どの周波数成分がどれだけ含まれているか」を表す周波数領域の関数に写す<a href="/notes/integral.html">積分</a>変換。</p>
 
 <div class="math-display">
 \hat{f}(\xi) = \int_{-\infty}^{\infty} f(x)\, e^{-i 2\pi \xi x}\, dx
@@ -273,7 +378,7 @@ f(t) = \frac{1}{2\pi i} \lim_{T\to\infty} \int_{\gamma - iT}^{\gamma + iT} e^{st
 
 <ul>
 <li><strong>畳み込み定理</strong> — 時間領域の畳み込みは周波数領域の掛け算になる（逆も然り）。フィルタ処理や高速な畳み込み計算の基礎</li>
-<li><strong>微分</strong> — 時間領域の微分は周波数領域では <span class="math-inline">i\omega</span> 倍になる。偏微分方程式（熱方程式・波動方程式）の求解に効く</li>
+<li><strong>微分</strong> — 時間領域の<a href="/notes/derivative.html">微分</a>は周波数領域では <span class="math-inline">i\omega</span> 倍になる。偏微分方程式（熱方程式・波動方程式）の求解に効く</li>
 <li><strong>シフト</strong> — 時間シフトは位相因子の掛け算になる</li>
 <li><strong>不確定性</strong> — 時間領域で局在した関数ほど周波数領域では広がる（逆も然り）。信号解析における不確定性原理</li>
 </ul>
@@ -1614,104 +1719,6 @@ graph LR
 <li><a href="https://github.com/cloud-hypervisor/cloud-hypervisor">GitHub - cloud-hypervisor/cloud-hypervisor</a></li>
 <li><a href="https://www.cloudhypervisor.org/docs/prologue/introduction/">Introduction - Cloud Hypervisor</a></li>
 <li><a href="https://thenewstack.io/rust-based-cloud-hypervisor-heads-to-linux-foundation/">Rust-Based Cloud Hypervisor Heads to Linux Foundation - The New Stack</a></li>
-</ul>
-
-]]></description>
-</item>
-<item>
-<title>Firecracker</title>
-<link>https://64p.org/notes/firecracker.html</link>
-<guid isPermaLink="true">https://64p.org/notes/firecracker.html</guid>
-<pubDate>Wed, 12 Aug 2026 23:14:00 +0900</pubDate>
-<description><![CDATA[<h1>Firecracker</h1>
-
-<p>AWSが開発したオープンソースの<a href="/notes/microvm.html">microVM</a>向けVMM(Virtual Machine Monitor)。LinuxのKVMを使って軽量な仮想マシンを作成・実行する。Apache License 2.0。 <a class="note-tag" href="/notes/tags/virtualization.html">#virtualization</a> <a class="note-tag" href="/notes/tags/aws.html">#aws</a></p>
-
-<h2>性能</h2>
-
-<ul>
-<li>microVMの起動時間は最短125ミリ秒</li>
-<li>1VMあたりのメモリオーバーヘッドは5MiB未満</li>
-<li>単一ホスト上で毎秒最大150台のmicroVMを作成可能</li>
-</ul>
-
-
-<h2>設計思想</h2>
-
-<p>不要なデバイスやゲスト向け機能を排除したミニマリストな設計。これによりメモリフットプリントとアタックサーフェスを削減しつつ、起動時間の短縮とハードウェア利用効率の向上を実現している。</p>
-
-<h2>用途</h2>
-
-<p>AWS LambdaおよびAWS Fargateを支える基盤技術として、月間数兆回規模の関数実行を処理している。サーバーレス関数に限らず、AIコードの実行サンドボックスなど幅広いワークロードでも採用が広がっている。<a href="/notes/cloud-hypervisor.html">Cloud Hypervisor</a>の実装コードの一部はFirecrackerの実装を参考にしている。</p>
-
-<h2>OCIイメージは直接扱えない</h2>
-
-<p>FirecrackerはVMMであり、扱うのはカーネルイメージとrootfsのブロックデバイスイメージ(ext4等)のみ。OCIイメージという概念自体を解釈する機能は持たない。OCIイメージをFirecracker上で動かすには、事前にレイヤーをrootfsのext4イメージへ変換するレイヤーが別途必要になる。代表的なアプローチ:</p>
-
-<ul>
-<li>手動変換 — コンテナのrootfsをtar化し、空のext4イメージへ展開する</li>
-<li>Weave Ignite — OCIイメージのrootfsをそのままVMのrootfsとして起動する</li>
-<li><a href="/notes/firecracker-containerd.html">firecracker-containerd</a> — containerdのプラグインとしてFirecrackerをコンテナの分離レイヤーに使う</li>
-<li><a href="/notes/kata-containers.html">Kata Containers</a> — containerdのdevmapperスナップショッタで、コンテナのrootfsをvirtio blockデバイスとしてVMにホットプラグする</li>
-</ul>
-
-
-<p><a href="/notes/hypeman.html">Hypeman</a>は、この「OCIイメージ→VM rootfs変換」レイヤーを自前で実装し、Docker互換の使い勝手を提供している。</p>
-
-<h2><a href="/notes/microvm-ecosystem.html">コンテナ向け軽量VM技術</a>の中での位置づけ</h2>
-
-<p><a href="/notes/cloud-hypervisor.html">Cloud Hypervisor</a>と並ぶ、土台となるVMM実装の一つ。</p>
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://aws.amazon.com/blogs/opensource/firecracker-open-source-secure-fast-microvm-serverless/">Announcing the Firecracker Open Source Technology | AWS Open Source Blog</a></li>
-<li><a href="https://github.com/firecracker-microvm/firecracker">GitHub - firecracker-microvm/firecracker</a></li>
-<li><a href="https://northflank.com/blog/what-is-aws-firecracker">What is AWS Firecracker? The microVM technology, explained | Northflank</a></li>
-<li><a href="https://github.com/arcboxlabs/oci2rootfs">GitHub - arcboxlabs/oci2rootfs</a></li>
-<li><a href="https://github.com/weaveworks/ignite">GitHub - weaveworks/ignite</a></li>
-<li><a href="https://github.com/kata-containers/kata-containers/blob/main/docs/how-to/how-to-use-kata-containers-with-firecracker.md">Kata Containers: how-to-use-kata-containers-with-firecracker.md</a></li>
-</ul>
-
-]]></description>
-</item>
-<item>
-<title>LSP (Language Server Protocol)</title>
-<link>https://64p.org/notes/lsp.html</link>
-<guid isPermaLink="true">https://64p.org/notes/lsp.html</guid>
-<pubDate>Wed, 12 Aug 2026 23:09:00 +0900</pubDate>
-<description><![CDATA[<h1>LSP (Language Server Protocol)</h1>
-
-<p>エディタ/IDEと「言語サーバー」の間で通信するためのプロトコル。コード補完・定義へのジャンプ・参照検索・診断（エラー表示）などの言語機能を、エディタ本体から切り離して独立プロセス（言語サーバー）に持たせ、JSON-RPCベースの標準化されたメッセージでやり取りする。 <a class="note-tag" href="/notes/tags/lsp.html">#lsp</a></p>
-
-<h2>成り立ち</h2>
-
-<p>2015年、MicrosoftがVS Code向けに開発。元々はOmniSharpがC#向けの高度な編集機能を提供するために採用した「言語サーバー」という概念がベースになっている。2016年6月27日、Red Hat・Codenvyと協業してプロトコル仕様を標準化すると発表し、以降はVS Codeに限らないオープンな仕様として展開されている。</p>
-
-<h2>目的</h2>
-
-<p>言語ごとの解析ロジック（言語サーバー）をエディタごとに再実装せずに済むようにすること。「N個のエディタ × M個の言語」の組み合わせ問題を、共通プロトコルを挟むことで「N + M」の実装量に減らせる。</p>
-
-<h2>バージョン</h2>
-
-<p>現行は3.17〜3.18系。3.17ではtype hierarchy・inline values・inlay hints・ノートブックドキュメント対応などが追加された。</p>
-
-<h2>エコシステム(2026年時点)</h2>
-
-<ul>
-<li>400以上の言語サーバーが開発されている。</li>
-<li>VS Code、JetBrains系IDE、Neovim、Eclipseなど主要エディタが対応。<a href="/notes/biome.html">Biome</a>もCLIに加えてLSP経由での利用に対応している。</li>
-<li>近年はGitHub Copilot Language Server SDKのようにAIアシスタント側でも採用が広がり、Jupyter Notebookやデータベースツールなど従来のコードエディタ以外にも拡大している。<a href="/notes/mojo.html">Mojo</a>もLSPサーバーを提供しており、Modular 26.5でその安定性が向上した。</li>
-</ul>
-
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://en.wikipedia.org/wiki/Language_Server_Protocol">Language Server Protocol - Wikipedia</a></li>
-<li><a href="https://microsoft.github.io/language-server-protocol/">Official page for Language Server Protocol</a></li>
-<li><a href="https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/">Language Server Protocol Specification - 3.17</a></li>
-<li><a href="https://zylos.ai/research/2026-01-13-language-server-protocol-ecosystem/">Language Server Protocol Ecosystem 2026 | Zylos Research</a></li>
 </ul>
 
 ]]></description>

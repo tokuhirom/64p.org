@@ -25,8 +25,10 @@
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
                                     <li><a href="/notes/laplace-transform.html">ラプラス変換</a></li>
+                                    <li><a href="/notes/integral.html">積分</a></li>
                                     <li><a href="/notes/frequency-domain-transforms.html">周波数領域の変換</a></li>
                                     <li><a href="/notes/fourier-transform.html" class="active">フーリエ変換</a></li>
+                                    <li><a href="/notes/derivative.html">微分</a></li>
                                     <li><a href="/notes/fft.html">FFT（高速フーリエ変換）</a></li>
                                     <li><a href="/notes/vm-exit.html">VM exit</a></li>
                                     <li><a href="/notes/virtqueue-toy-experiment.html">virtqueue風トイ実験</a></li>
@@ -343,7 +345,7 @@
 
 <p><a class="note-tag" href="/notes/tags/math.html">#math</a> <a class="note-tag" href="/notes/tags/signal-processing.html">#signal-processing</a></p>
 
-<p>時間領域（あるいは空間領域）の関数を、「どの周波数成分がどれだけ含まれているか」を表す周波数領域の関数に写す積分変換。</p>
+<p>時間領域（あるいは空間領域）の関数を、「どの周波数成分がどれだけ含まれているか」を表す周波数領域の関数に写す<a href="/notes/integral.html">積分</a>変換。</p>
 
 <div class="math-display">
 \hat{f}(\xi) = \int_{-\infty}^{\infty} f(x)\, e^{-i 2\pi \xi x}\, dx
@@ -360,7 +362,7 @@
 
 <ul>
 <li><strong>畳み込み定理</strong> — 時間領域の畳み込みは周波数領域の掛け算になる（逆も然り）。フィルタ処理や高速な畳み込み計算の基礎</li>
-<li><strong>微分</strong> — 時間領域の微分は周波数領域では <span class="math-inline">i\omega</span> 倍になる。偏微分方程式（熱方程式・波動方程式）の求解に効く</li>
+<li><strong>微分</strong> — 時間領域の<a href="/notes/derivative.html">微分</a>は周波数領域では <span class="math-inline">i\omega</span> 倍になる。偏微分方程式（熱方程式・波動方程式）の求解に効く</li>
 <li><strong>シフト</strong> — 時間シフトは位相因子の掛け算になる</li>
 <li><strong>不確定性</strong> — 時間領域で局在した関数ほど周波数領域では広がる（逆も然り）。信号解析における不確定性原理</li>
 </ul>
@@ -398,11 +400,12 @@
                                             <li><a href="/notes/fft.html">FFT（高速フーリエ変換）</a></li>
                                             <li><a href="/notes/laplace-transform.html">ラプラス変換</a></li>
                                             <li><a href="/notes/frequency-domain-transforms.html">周波数領域の変換</a></li>
+                                            <li><a href="/notes/integral.html">積分</a></li>
                     
                     </ul>
                 </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-13 00:03 / 更新日時: 2026-08-13 00:14</span>
+                    <span>作成日時: 2026-08-13 00:03 / 更新日時: 2026-08-13 00:20</span>
                     <a class="share-x" href="https://twitter.com/intent/tweet?text=%E3%83%95%E3%83%BC%E3%83%AA%E3%82%A8%E5%A4%89%E6%8F%9B&url=https%3A%2F%2F64p.org%2Fnotes%2Ffourier-transform.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
