@@ -23,8 +23,10 @@
                 <a class="notes-tags-link" href="/notes/rss.xml">📡 RSS</a>
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
-                                    <li><a href="/notes/laplace-transform.html">ラプラス変換</a></li>
+                                    <li><a href="/notes/vm-exit.html">VM exit</a></li>
                                     <li><a href="/notes/fourier-transform.html">フーリエ変換</a></li>
+                                    <li><a href="/notes/fft.html">FFT（高速フーリエ変換）</a></li>
+                                    <li><a href="/notes/laplace-transform.html">ラプラス変換</a></li>
                                     <li><a href="/notes/virtqueue-toy-experiment.html">virtqueue風トイ実験</a></li>
                                     <li><a href="/notes/kvm-hello-world-experiment.html" class="active">kvm-hello-world実験</a></li>
                                     <li><a href="/notes/virtio.html">virtio</a></li>
@@ -388,7 +390,7 @@ Testing real mode
     outb(0xE9, *p);
 </code></pre>
 
-<p>ホスト側(<code>kvm-hello-world.c</code>)はこの機械語をVMのメモリに直接コピーし、<code>KVM_RUN</code>をループで呼ぶ。ゲストが<code>outb</code>を実行するたびに「VM exit」が発生し、<code>KVM_EXIT_IO</code>としてホスト側に制御が戻る。</p>
+<p>ホスト側(<code>kvm-hello-world.c</code>)はこの機械語をVMのメモリに直接コピーし、<code>KVM_RUN</code>をループで呼ぶ。ゲストが<code>outb</code>を実行するたびに「<a href="/notes/vm-exit.html">VM exit</a>」が発生し、<code>KVM_EXIT_IO</code>としてホスト側に制御が戻る。</p>
 
 <pre><code class="c">case KVM_EXIT_IO:
     if (vcpu-&gt;kvm_run-&gt;io.direction == KVM_EXIT_IO_OUT
@@ -407,7 +409,7 @@ Testing real mode
 
 <h2>続き: <a href="/notes/virtqueue-toy-experiment.html">virtqueue風トイ実験</a></h2>
 
-<p>この実験の「1文字ごとに<code>outb</code>してVM exitする」という素朴なI/Oを、<a href="/notes/virtio.html">virtio</a>のように「まとめて共有メモリに書いて1回だけ通知する」設計に変えるとどれだけVM exit回数が減るかを、この実験の続きとして確認した。</p>
+<p>この実験の「1文字ごとに<code>outb</code>して<a href="/notes/vm-exit.html">VM exit</a>する」という素朴なI/Oを、<a href="/notes/virtio.html">virtio</a>のように「まとめて共有メモリに書いて1回だけ通知する」設計に変えるとどれだけVM exit回数が減るかを、この実験の続きとして確認した。</p>
 
 <h2>出典</h2>
 
@@ -421,6 +423,7 @@ Testing real mode
                     <h2>🔗 リンクされているノート</h2>
                     <ul>
                                             <li><a href="/notes/kvm.html">KVM (Kernel-based Virtual Machine)</a></li>
+                                            <li><a href="/notes/vm-exit.html">VM exit</a></li>
                                             <li><a href="/notes/virtqueue-toy-experiment.html">virtqueue風トイ実験</a></li>
                     
                     </ul>

@@ -23,8 +23,10 @@
                 <a class="notes-tags-link" href="/notes/rss.xml">📡 RSS</a>
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
-                                    <li><a href="/notes/laplace-transform.html">ラプラス変換</a></li>
+                                    <li><a href="/notes/vm-exit.html">VM exit</a></li>
                                     <li><a href="/notes/fourier-transform.html">フーリエ変換</a></li>
+                                    <li><a href="/notes/fft.html">FFT（高速フーリエ変換）</a></li>
+                                    <li><a href="/notes/laplace-transform.html">ラプラス変換</a></li>
                                     <li><a href="/notes/virtqueue-toy-experiment.html" class="active">virtqueue風トイ実験</a></li>
                                     <li><a href="/notes/kvm-hello-world-experiment.html">kvm-hello-world実験</a></li>
                                     <li><a href="/notes/virtio.html">virtio</a></li>
@@ -341,12 +343,12 @@
 
 <h2>前回実験との対比が主眼</h2>
 
-<p>kvm-hello-world実験の<code>guest.c</code>は、1文字送るたびに<code>outb</code>命令を実行し、そのたびに<a href="/notes/kvm.html">KVM</a>の「VM exit」が発生していた。これは実デバイスのレジスタを1バイトずつ叩くのに近い、素朴なやり方。</p>
+<p>kvm-hello-world実験の<code>guest.c</code>は、1文字送るたびに<code>outb</code>命令を実行し、そのたびに<a href="/notes/kvm.html">KVM</a>の「<a href="/notes/vm-exit.html">VM exit</a>」が発生していた。これは実デバイスのレジスタを1バイトずつ叩くのに近い、素朴なやり方。</p>
 
 <p>今回作ったゲストコードは代わりに以下の手順を踏む。</p>
 
 <ol>
-<li>メッセージ全体を共有メモリ上の固定アドレス(0x1000番地)にまとめて書き込む(通常のメモリアクセスなのでVM exitは起きない)</li>
+<li>メッセージ全体を共有メモリ上の固定アドレス(0x1000番地)にまとめて書き込む(通常のメモリアクセスなので<a href="/notes/vm-exit.html">VM exit</a>は起きない)</li>
 <li>メッセージ長を別の固定アドレス(0x2000番地)に書き込む</li>
 <li><strong>最後に1回だけ</strong>専用ポート(0xE8)へ<code>outb</code>し、ホストに「ドアベル」を鳴らす</li>
 </ol>
@@ -366,7 +368,7 @@ Hello via a toy virtqueue! One doorbell, not one exit per byte.
 
 <h2><code>strace</code>で客観的に比較</h2>
 
-<p><code>KVM_RUN</code> ioctlの呼び出し回数(=VM exitしてホストに戻ってきた回数)を<code>strace</code>で数えた。</p>
+<p><code>KVM_RUN</code> ioctlの呼び出し回数(=<a href="/notes/vm-exit.html">VM exit</a>してホストに戻ってきた回数)を<code>strace</code>で数えた。</p>
 
 <table>
 <thead>
@@ -395,7 +397,7 @@ Hello via a toy virtqueue! One doorbell, not one exit per byte.
 strace -f -e trace=ioctl ./vq_host vq_guest.img 2&gt;&amp;1 &gt;/dev/null | grep -c KVM_RUN  # =&gt; 2
 </code></pre>
 
-<p>送ったメッセージは今回の方が長い(64バイト > 14バイト)にもかかわらず、ホストとのラウンドトリップ回数は15回→2回まで減っている。VM exit1回ごとに発生するコンテキストスイッチのコストを考えると、この差がそのままI/Oスループットの差になる。これが<a href="/notes/virtio.html">virtio</a>がフルデバイスエミュレーションより高速な理由の最小限の実演になっている。</p>
+<p>送ったメッセージは今回の方が長い(64バイト > 14バイト)にもかかわらず、ホストとのラウンドトリップ回数は15回→2回まで減っている。<a href="/notes/vm-exit.html">VM exit</a>1回ごとに発生するコンテキストスイッチのコストを考えると、この差がそのままI/Oスループットの差になる。これが<a href="/notes/virtio.html">virtio</a>がフルデバイスエミュレーションより高速な理由の最小限の実演になっている。</p>
 
 <h2>ソースコード</h2>
 
@@ -432,7 +434,7 @@ case KVM_EXIT_IO:
 </ul>
 
 
-<p>これらを省いても「共有メモリ+バッチ化+1回の通知」という核心のメカニズムと、それによるVM exit削減効果は十分に確認できた。</p>
+<p>これらを省いても「共有メモリ+バッチ化+1回の通知」という核心のメカニズムと、それによる<a href="/notes/vm-exit.html">VM exit</a>削減効果は十分に確認できた。</p>
 
 <h2>ソース</h2>
 
@@ -448,6 +450,7 @@ case KVM_EXIT_IO:
                                 <div class="notes-backlinks">
                     <h2>🔗 リンクされているノート</h2>
                     <ul>
+                                            <li><a href="/notes/vm-exit.html">VM exit</a></li>
                                             <li><a href="/notes/kvm-hello-world-experiment.html">kvm-hello-world実験</a></li>
                                             <li><a href="/notes/virtio.html">virtio</a></li>
                     

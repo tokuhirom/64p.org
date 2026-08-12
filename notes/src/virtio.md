@@ -28,7 +28,7 @@ virtio-net(ネットワーク)・virtio-blk(ブロックデバイス)・virtio-c
 
 ## 実際に動かしてみる
 
-[[kvm|KVM]]の生ioctl実験の上に、virtqueueの核心(共有メモリ+バッチ化+1回の通知)だけを再現したトイ実装を作り、1バイトごとに通知する前回実験と比べてVM exit回数がどれだけ減るかを[[virtqueue-toy-experiment|virtqueue風トイ実験]]で確認した。
+[[kvm|KVM]]の生ioctl実験の上に、virtqueueの核心(共有メモリ+バッチ化+1回の通知)だけを再現したトイ実装を作り、1バイトごとに通知する前回実験と比べて[[vm-exit|VM exit]]回数がどれだけ減るかを[[virtqueue-toy-experiment|virtqueue風トイ実験]]で確認した。
 
 ## [[microvm-ecosystem|コンテナ向け軽量VM技術]]の中での位置づけ
 

@@ -55,7 +55,7 @@ for (p = "Hello, world!\n"; *p; ++p)
     outb(0xE9, *p);
 ```
 
-ホスト側(`kvm-hello-world.c`)はこの機械語をVMのメモリに直接コピーし、`KVM_RUN`をループで呼ぶ。ゲストが`outb`を実行するたびに「VM exit」が発生し、`KVM_EXIT_IO`としてホスト側に制御が戻る。
+ホスト側(`kvm-hello-world.c`)はこの機械語をVMのメモリに直接コピーし、`KVM_RUN`をループで呼ぶ。ゲストが`outb`を実行するたびに「[[vm-exit|VM exit]]」が発生し、`KVM_EXIT_IO`としてホスト側に制御が戻る。
 
 ```c
 case KVM_EXIT_IO:
@@ -75,7 +75,7 @@ case KVM_EXIT_IO:
 
 ## 続き: [[virtqueue-toy-experiment|virtqueue風トイ実験]]
 
-この実験の「1文字ごとに`outb`してVM exitする」という素朴なI/Oを、[[virtio|virtio]]のように「まとめて共有メモリに書いて1回だけ通知する」設計に変えるとどれだけVM exit回数が減るかを、この実験の続きとして確認した。
+この実験の「1文字ごとに`outb`して[[vm-exit|VM exit]]する」という素朴なI/Oを、[[virtio|virtio]]のように「まとめて共有メモリに書いて1回だけ通知する」設計に変えるとどれだけVM exit回数が減るかを、この実験の続きとして確認した。
 
 ## 出典
 

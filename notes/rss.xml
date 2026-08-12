@@ -6,7 +6,191 @@
 <atom:link href="https://64p.org/notes/rss.xml" rel="self" type="application/rss+xml" />
 <description>ちょっと調べたことや検証結果を、AIの力も借りながらメモしていくコーナーです。</description>
 <language>ja</language>
-<lastBuildDate>Thu, 13 Aug 2026 00:03:28 +0900</lastBuildDate>
+<lastBuildDate>Thu, 13 Aug 2026 00:11:15 +0900</lastBuildDate>
+<item>
+<title>VM exit</title>
+<link>https://64p.org/notes/vm-exit.html</link>
+<guid isPermaLink="true">https://64p.org/notes/vm-exit.html</guid>
+<pubDate>Thu, 13 Aug 2026 00:11:00 +0900</pubDate>
+<description><![CDATA[<h1>VM exit</h1>
+
+<p>ゲスト(VM内で動くコード)が、CPU自身では処理できない・処理してはいけない操作をしようとした瞬間に、制御が強制的にゲストからホスト側(<a href="/notes/kvm.html">KVM</a>およびその上のVMM)に戻される現象。 <a class="note-tag" href="/notes/tags/virtualization.html">#virtualization</a></p>
+
+<h2>発生する操作</h2>
+
+<p><a href="/notes/kvm.html">KVM</a>は「ゲストのCPU命令をホストCPU上でほぼそのままネイティブ実行する」というのが基本方針だが、以下のような操作だけは例外的にトラップしてユーザー空間のVMMに処理を投げる。</p>
+
+<ul>
+<li><strong>I/O命令</strong>(<code>outb</code>/<code>inb</code>などポートへの読み書き) — <code>KVM_EXIT_IO</code></li>
+<li><strong>メモリマップドI/O(MMIO)へのアクセス</strong> — <code>KVM_EXIT_MMIO</code></li>
+<li><strong>HLT命令</strong>(CPUを停止させる) — <code>KVM_EXIT_HLT</code></li>
+<li><strong>特権命令の実行</strong>(CR3の書き換えなど、ハードウェア全体に影響する操作)</li>
+<li><strong>割り込み・例外</strong></li>
+</ul>
+
+
+<h2><code>kvm_run</code>構造体</h2>
+
+<p>VMMが<code>KVM_RUN</code>ioctlを呼んでゲストを実行させると、VM exitが起きた際の理由は<code>struct kvm_run</code>(vCPUのファイルディスクリプタにmmapされた共有メモリ)の<code>exit_reason</code>フィールドに書き込まれる。I/Oの場合は<code>run-&gt;io</code>に方向(入力/出力)・サイズ・ポート番号・値の個数が、MMIOの場合は<code>run-&gt;mmio</code>にゲスト物理アドレスや読み書きするデータが入る。VMM側はこの<code>exit_reason</code>を見て該当するデバイスエミュレーションを行い、また<code>KVM_RUN</code>を呼んでゲストの実行を再開させる。</p>
+
+<h2>なぜ重要か: 性能設計の中心テーマ</h2>
+
+<p>VM exit1回ごとに、ゲストモードからホストモードへのコンテキストスイッチというオーバーヘッドが乗る。そのため「VM exitの回数をいかに減らすか」が仮想化I/Oの性能設計の中心的なテーマになる。<a href="/notes/virtio.html">virtio</a>が「共有メモリのリングバッファにまとめて書き、通知は1回だけ」という設計を取っているのも、まさにこのVM exit削減が狙い。</p>
+
+<h2>実際に動かしてみる</h2>
+
+<p><a href="/notes/kvm-hello-world-experiment.html">kvm-hello-world実験</a>と<a href="/notes/virtqueue-toy-experiment.html">virtqueue風トイ実験</a>で、VM exit回数を<code>strace</code>で実測して比較した。</p>
+
+<table>
+<thead>
+<tr>
+<th> 実験 </th>
+<th> 送信データ量 </th>
+<th> VM exit(<code>KVM_RUN</code>)回数 </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td> 1文字ごとに<code>outb</code>で通知 </td>
+<td> 14バイト </td>
+<td> 15回 </td>
+</tr>
+<tr>
+<td> まとめて書いて1回だけ通知 </td>
+<td> 64バイト </td>
+<td> 2回 </td>
+</tr>
+</tbody>
+</table>
+
+
+<p>送信データ量は後者の方が大きいにもかかわらず、VM exit回数は15回→2回まで減った。データをまとめてVM exitを減らすことが、そのままI/Oスループットの改善に直結することを数字で確認できる。</p>
+
+<h2><a href="/notes/microvm-ecosystem.html">コンテナ向け軽量VM技術</a>の中での位置づけ</h2>
+
+<p><a href="/notes/kvm.html">KVM</a>とユーザー空間VMMの間の連携を成立させている核心のメカニズム。<a href="/notes/virtio.html">virtio</a>のようなI/O設計は、このVM exitをいかに減らすかという課題への回答になっている。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://lwn.net/Articles/658511/">Using the KVM API - LWN.net</a></li>
+<li><a href="https://linux-kernel-labs.github.io/refs/heads/master/so2/assign7-kvm-vmm.html">Assignment 7 - SO2 Virtual Machine Manager with KVM — The Linux Kernel documentation</a></li>
+<li><a href="https://kernel-internals.org/virtualization/kvm-exits/">KVM Exit Handling - Linux Kernel Internals</a></li>
+<li><a href="https://access.redhat.com/solutions/6994095">Analyzing VM exit reasons and statistics with kvmexit command - Red Hat Customer Portal</a></li>
+</ul>
+
+]]></description>
+</item>
+<item>
+<title>FFT（高速フーリエ変換）</title>
+<link>https://64p.org/notes/fft.html</link>
+<guid isPermaLink="true">https://64p.org/notes/fft.html</guid>
+<pubDate>Thu, 13 Aug 2026 00:11:00 +0900</pubDate>
+<description><![CDATA[<h1>FFT（高速フーリエ変換）</h1>
+
+<p><a class="note-tag" href="/notes/tags/math.html">#math</a> <a class="note-tag" href="/notes/tags/signal-processing.html">#signal-processing</a> <a class="note-tag" href="/notes/tags/algorithm.html">#algorithm</a></p>
+
+<p>DFT（離散フーリエ変換）を高速に計算するアルゴリズム。<a href="/notes/fourier-transform.html">フーリエ変換</a>のサンプリングされた離散データ版であるDFT</p>
+
+<div class="math-display">
+X_k = \sum_{n=0}^{N-1} x_n\, e^{-i 2\pi k n / N}
+</div>
+
+
+<p>を素朴に計算すると <span class="math-inline">O(N<sup>2</sup>)</span> かかるが、FFTは <span class="math-inline">O(N \log N)</span> で計算する。N=4096 で実測400倍ほどの高速化になり、この差が「DFTを実用にした」と言ってよい。Gilbert Strang は「我々の生涯で最も重要な数値アルゴリズム」と評し、IEEEの「20世紀のトップ10アルゴリズム」にも選ばれている。</p>
+
+<h2>Cooley-Tukeyアルゴリズムの核心</h2>
+
+<p>分割統治。サイズ <span class="math-inline">N = N_1 \times N_2</span> のDFTを、サイズ <span class="math-inline">N_2</span> の小さいDFT <span class="math-inline">N_1</span> 個に再帰的に分解し、「回転因子（twiddle factor）」と呼ばれる1のべき根 <span class="math-inline">e^{-i 2\pi k / N}</span> の掛け算 <span class="math-inline">O(N)</span> 回で結合する。</p>
+
+<p>最も普及しているのは radix-2（時間間引き）版: 入力を偶数番目と奇数番目に分けると、サイズNのDFTがサイズN/2のDFT2つと回転因子の掛け算に分解できる。これを再帰すると <span class="math-inline">T(N) = 2T(N/2) + O(N) = O(N \log N)</span>。2つの半分の結果を足し引きで結合する演算パターンが蝶の形に見えることから「バタフライ演算」と呼ばれる。radix-2はNが2のべき乗に限られるが、混合基数版は任意の合成数を扱える。</p>
+
+<h2>歴史</h2>
+
+<ul>
+<li>起源は Carl Friedrich Gauss（1805年頃）。小惑星軌道の補間のために同等の手法を使っていたが、計算量の解析はしていなかった</li>
+<li>その後も Yates (1932)、Danielson &amp; Lanczos (1942, X線結晶構造解析) などで部分的に再発明されている</li>
+<li>現代のFFTは Cooley &amp; Tukey が1965年に（Gaussを知らずに）再発見・発表したもの。Tukey がケネディ政権の会議でソ連の核実験を地震計センサー網で検出する議論中に着想し、同僚の Richard Garwin が汎用性に気づいてIBMの Cooley に持ち込んだ。Tukey がIBM社員でなかったためアルゴリズムはパブリックドメインになり、それがデジタル信号処理での普及を後押しした</li>
+</ul>
+
+
+<h2>バリエーション</h2>
+
+<ul>
+<li><strong>prime-factor FFT</strong> — 互いに素な因数分解に中国剰余定理を使い、回転因子なしで分解</li>
+<li><strong>Raderのアルゴリズム / Bluesteinのchirp-z</strong> — 素数サイズのDFTを巡回畳み込みに変換して処理</li>
+<li><strong>split-radix</strong> — Cooley-Tukeyより算術演算数を減らす</li>
+<li><strong>実数入力の最適化</strong> — 入力が実数なら出力が共役対称になるので、計算量・メモリをほぼ半減できる</li>
+</ul>
+
+
+<h2>応用</h2>
+
+<p>スペクトル解析・フィルタリング（overlap-add/save法）、多倍長整数や多項式の乗算、JPEG/MP3などのエンコード（高速DCT経由）、4G LTE/5GのOFDM変調など。実装では FFTW（"Fastest Fourier Transform in the West"）が有名で、NumPy/SciPy・MATLAB・Julia などの標準機能の背後にもFFTライブラリがいる。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/Fast_Fourier_transform">Fast Fourier transform - Wikipedia</a></li>
+</ul>
+
+]]></description>
+</item>
+<item>
+<title>フーリエ変換</title>
+<link>https://64p.org/notes/fourier-transform.html</link>
+<guid isPermaLink="true">https://64p.org/notes/fourier-transform.html</guid>
+<pubDate>Thu, 13 Aug 2026 00:03:00 +0900</pubDate>
+<description><![CDATA[<h1>フーリエ変換</h1>
+
+<p><a class="note-tag" href="/notes/tags/math.html">#math</a> <a class="note-tag" href="/notes/tags/signal-processing.html">#signal-processing</a></p>
+
+<p>時間領域（あるいは空間領域）の関数を、「どの周波数成分がどれだけ含まれているか」を表す周波数領域の関数に写す積分変換。</p>
+
+<div class="math-display">
+\hat{f}(\xi) = \int_{-\infty}^{\infty} f(x)\, e^{-i 2\pi \xi x}\, dx
+</div>
+
+
+<p>音楽の和音を個々の音程に分解するように、複雑な信号を単純な正弦波の重ね合わせに分解する。</p>
+
+<h2>直感</h2>
+
+<p><span class="math-inline">f(x)</span> に <span class="math-inline">e^{-i 2\pi \xi x}</span> を掛けることは、すべての周波数成分から <span class="math-inline">\xi</span> を引くことに相当する。積分すると、周波数 <span class="math-inline">\xi</span> にちょうど一致する成分だけが直流成分として生き残り、それ以外は振動して打ち消し合う。つまり「掛けて積分する」ことが特定周波数成分の抽出になっている。</p>
+
+<h2>主な性質</h2>
+
+<ul>
+<li><strong>畳み込み定理</strong> — 時間領域の畳み込みは周波数領域の掛け算になる（逆も然り）。フィルタ処理や高速な畳み込み計算の基礎</li>
+<li><strong>微分</strong> — 時間領域の微分は周波数領域では <span class="math-inline">i\omega</span> 倍になる。偏微分方程式（熱方程式・波動方程式）の求解に効く</li>
+<li><strong>シフト</strong> — 時間シフトは位相因子の掛け算になる</li>
+<li><strong>不確定性</strong> — 時間領域で局在した関数ほど周波数領域では広がる（逆も然り）。信号解析における不確定性原理</li>
+</ul>
+
+
+<p>存在条件は絶対可積分（<span class="math-inline">\int |f| \, dx &lt; \infty</span>）。発散する信号にはそのまま適用できず、その制約を減衰因子で回避して一般化したのが<a href="/notes/laplace-transform.html">ラプラス変換</a>。</p>
+
+<h2>ファミリー</h2>
+
+<ul>
+<li><strong>フーリエ級数</strong> — 周期関数版。離散的な周波数成分（基本波の整数倍）に分解する。Joseph Fourier が1822年の熱伝導の研究で「任意の関数は正弦波の級数に展開できる」と主張したのが起源</li>
+<li><strong>DFT（離散フーリエ変換）</strong> — サンプリングされた離散データ版</li>
+<li><strong><a href="/notes/fft.html">FFT（高速フーリエ変換）</a></strong> — DFTを <span class="math-inline">O(n \log n)</span> で計算するアルゴリズム。デジタル信号処理の実用上の主役</li>
+</ul>
+
+
+<h2>応用</h2>
+
+<p>信号処理（スペクトル解析・フィルタリング）、偏微分方程式の求解、フーリエ変換分光法、量子力学（位置表示と運動量表示の橋渡し）など。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/Fourier_transform">Fourier transform - Wikipedia</a></li>
+</ul>
+
+]]></description>
+</item>
 <item>
 <title>ラプラス変換</title>
 <link>https://64p.org/notes/laplace-transform.html</link>
@@ -77,61 +261,6 @@ f(t) = \frac{1}{2\pi i} \lim_{T\to\infty} \int_{\gamma - iT}^{\gamma + iT} e^{st
 ]]></description>
 </item>
 <item>
-<title>フーリエ変換</title>
-<link>https://64p.org/notes/fourier-transform.html</link>
-<guid isPermaLink="true">https://64p.org/notes/fourier-transform.html</guid>
-<pubDate>Thu, 13 Aug 2026 00:03:00 +0900</pubDate>
-<description><![CDATA[<h1>フーリエ変換</h1>
-
-<p><a class="note-tag" href="/notes/tags/math.html">#math</a> <a class="note-tag" href="/notes/tags/signal-processing.html">#signal-processing</a></p>
-
-<p>時間領域（あるいは空間領域）の関数を、「どの周波数成分がどれだけ含まれているか」を表す周波数領域の関数に写す積分変換。</p>
-
-<div class="math-display">
-\hat{f}(\xi) = \int_{-\infty}^{\infty} f(x)\, e^{-i 2\pi \xi x}\, dx
-</div>
-
-
-<p>音楽の和音を個々の音程に分解するように、複雑な信号を単純な正弦波の重ね合わせに分解する。</p>
-
-<h2>直感</h2>
-
-<p><span class="math-inline">f(x)</span> に <span class="math-inline">e^{-i 2\pi \xi x}</span> を掛けることは、すべての周波数成分から <span class="math-inline">\xi</span> を引くことに相当する。積分すると、周波数 <span class="math-inline">\xi</span> にちょうど一致する成分だけが直流成分として生き残り、それ以外は振動して打ち消し合う。つまり「掛けて積分する」ことが特定周波数成分の抽出になっている。</p>
-
-<h2>主な性質</h2>
-
-<ul>
-<li><strong>畳み込み定理</strong> — 時間領域の畳み込みは周波数領域の掛け算になる（逆も然り）。フィルタ処理や高速な畳み込み計算の基礎</li>
-<li><strong>微分</strong> — 時間領域の微分は周波数領域では <span class="math-inline">i\omega</span> 倍になる。偏微分方程式（熱方程式・波動方程式）の求解に効く</li>
-<li><strong>シフト</strong> — 時間シフトは位相因子の掛け算になる</li>
-<li><strong>不確定性</strong> — 時間領域で局在した関数ほど周波数領域では広がる（逆も然り）。信号解析における不確定性原理</li>
-</ul>
-
-
-<p>存在条件は絶対可積分（<span class="math-inline">\int |f| \, dx &lt; \infty</span>）。発散する信号にはそのまま適用できず、その制約を減衰因子で回避して一般化したのが<a href="/notes/laplace-transform.html">ラプラス変換</a>。</p>
-
-<h2>ファミリー</h2>
-
-<ul>
-<li><strong>フーリエ級数</strong> — 周期関数版。離散的な周波数成分（基本波の整数倍）に分解する。Joseph Fourier が1822年の熱伝導の研究で「任意の関数は正弦波の級数に展開できる」と主張したのが起源</li>
-<li><strong>DFT（離散フーリエ変換）</strong> — サンプリングされた離散データ版</li>
-<li><strong>FFT（高速フーリエ変換）</strong> — DFTを <span class="math-inline">O(n \log n)</span> で計算するアルゴリズム。デジタル信号処理の実用上の主役</li>
-</ul>
-
-
-<h2>応用</h2>
-
-<p>信号処理（スペクトル解析・フィルタリング）、偏微分方程式の求解、フーリエ変換分光法、量子力学（位置表示と運動量表示の橋渡し）など。</p>
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://en.wikipedia.org/wiki/Fourier_transform">Fourier transform - Wikipedia</a></li>
-</ul>
-
-]]></description>
-</item>
-<item>
 <title>virtqueue風トイ実験</title>
 <link>https://64p.org/notes/virtqueue-toy-experiment.html</link>
 <guid isPermaLink="true">https://64p.org/notes/virtqueue-toy-experiment.html</guid>
@@ -142,12 +271,12 @@ f(t) = \frac{1}{2\pi i} \lim_{T\to\infty} \int_{\gamma - iT}^{\gamma + iT} e^{st
 
 <h2>前回実験との対比が主眼</h2>
 
-<p>kvm-hello-world実験の<code>guest.c</code>は、1文字送るたびに<code>outb</code>命令を実行し、そのたびに<a href="/notes/kvm.html">KVM</a>の「VM exit」が発生していた。これは実デバイスのレジスタを1バイトずつ叩くのに近い、素朴なやり方。</p>
+<p>kvm-hello-world実験の<code>guest.c</code>は、1文字送るたびに<code>outb</code>命令を実行し、そのたびに<a href="/notes/kvm.html">KVM</a>の「<a href="/notes/vm-exit.html">VM exit</a>」が発生していた。これは実デバイスのレジスタを1バイトずつ叩くのに近い、素朴なやり方。</p>
 
 <p>今回作ったゲストコードは代わりに以下の手順を踏む。</p>
 
 <ol>
-<li>メッセージ全体を共有メモリ上の固定アドレス(0x1000番地)にまとめて書き込む(通常のメモリアクセスなのでVM exitは起きない)</li>
+<li>メッセージ全体を共有メモリ上の固定アドレス(0x1000番地)にまとめて書き込む(通常のメモリアクセスなので<a href="/notes/vm-exit.html">VM exit</a>は起きない)</li>
 <li>メッセージ長を別の固定アドレス(0x2000番地)に書き込む</li>
 <li><strong>最後に1回だけ</strong>専用ポート(0xE8)へ<code>outb</code>し、ホストに「ドアベル」を鳴らす</li>
 </ol>
@@ -167,7 +296,7 @@ Hello via a toy virtqueue! One doorbell, not one exit per byte.
 
 <h2><code>strace</code>で客観的に比較</h2>
 
-<p><code>KVM_RUN</code> ioctlの呼び出し回数(=VM exitしてホストに戻ってきた回数)を<code>strace</code>で数えた。</p>
+<p><code>KVM_RUN</code> ioctlの呼び出し回数(=<a href="/notes/vm-exit.html">VM exit</a>してホストに戻ってきた回数)を<code>strace</code>で数えた。</p>
 
 <table>
 <thead>
@@ -196,7 +325,7 @@ Hello via a toy virtqueue! One doorbell, not one exit per byte.
 strace -f -e trace=ioctl ./vq_host vq_guest.img 2&gt;&amp;1 &gt;/dev/null | grep -c KVM_RUN  # =&gt; 2
 </code></pre>
 
-<p>送ったメッセージは今回の方が長い(64バイト > 14バイト)にもかかわらず、ホストとのラウンドトリップ回数は15回→2回まで減っている。VM exit1回ごとに発生するコンテキストスイッチのコストを考えると、この差がそのままI/Oスループットの差になる。これが<a href="/notes/virtio.html">virtio</a>がフルデバイスエミュレーションより高速な理由の最小限の実演になっている。</p>
+<p>送ったメッセージは今回の方が長い(64バイト > 14バイト)にもかかわらず、ホストとのラウンドトリップ回数は15回→2回まで減っている。<a href="/notes/vm-exit.html">VM exit</a>1回ごとに発生するコンテキストスイッチのコストを考えると、この差がそのままI/Oスループットの差になる。これが<a href="/notes/virtio.html">virtio</a>がフルデバイスエミュレーションより高速な理由の最小限の実演になっている。</p>
 
 <h2>ソースコード</h2>
 
@@ -233,7 +362,7 @@ case KVM_EXIT_IO:
 </ul>
 
 
-<p>これらを省いても「共有メモリ+バッチ化+1回の通知」という核心のメカニズムと、それによるVM exit削減効果は十分に確認できた。</p>
+<p>これらを省いても「共有メモリ+バッチ化+1回の通知」という核心のメカニズムと、それによる<a href="/notes/vm-exit.html">VM exit</a>削減効果は十分に確認できた。</p>
 
 <h2>ソース</h2>
 
@@ -278,7 +407,7 @@ case KVM_EXIT_IO:
 
 <h2>実際に動かしてみる</h2>
 
-<p><a href="/notes/kvm.html">KVM</a>の生ioctl実験の上に、virtqueueの核心(共有メモリ+バッチ化+1回の通知)だけを再現したトイ実装を作り、1バイトごとに通知する前回実験と比べてVM exit回数がどれだけ減るかを<a href="/notes/virtqueue-toy-experiment.html">virtqueue風トイ実験</a>で確認した。</p>
+<p><a href="/notes/kvm.html">KVM</a>の生ioctl実験の上に、virtqueueの核心(共有メモリ+バッチ化+1回の通知)だけを再現したトイ実装を作り、1バイトごとに通知する前回実験と比べて<a href="/notes/vm-exit.html">VM exit</a>回数がどれだけ減るかを<a href="/notes/virtqueue-toy-experiment.html">virtqueue風トイ実験</a>で確認した。</p>
 
 <h2><a href="/notes/microvm-ecosystem.html">コンテナ向け軽量VM技術</a>の中での位置づけ</h2>
 
@@ -318,7 +447,7 @@ case KVM_EXIT_IO:
 
 <ul>
 <li><strong>KVM</strong>: CPUの仮想化のみを担当。ディスク・ネットワーク・画面などのデバイスは一切エミュレートしない</li>
-<li><strong>QEMU</strong>: ゲストから見えるあらゆるデバイスのエミュレーションを担当。ゲストがI/Oを起こして「VM exit」すると、KVMから制御がQEMUに戻り、QEMUがそのデバイス動作をソフトウェアでエミュレートしてから、また実行をKVMに戻す</li>
+<li><strong>QEMU</strong>: ゲストから見えるあらゆるデバイスのエミュレーションを担当。ゲストがI/Oを起こして「<a href="/notes/vm-exit.html">VM exit</a>」すると、KVMから制御がQEMUに戻り、QEMUがそのデバイス動作をソフトウェアでエミュレートしてから、また実行をKVMに戻す</li>
 </ul>
 
 
@@ -402,7 +531,7 @@ Testing real mode
     outb(0xE9, *p);
 </code></pre>
 
-<p>ホスト側(<code>kvm-hello-world.c</code>)はこの機械語をVMのメモリに直接コピーし、<code>KVM_RUN</code>をループで呼ぶ。ゲストが<code>outb</code>を実行するたびに「VM exit」が発生し、<code>KVM_EXIT_IO</code>としてホスト側に制御が戻る。</p>
+<p>ホスト側(<code>kvm-hello-world.c</code>)はこの機械語をVMのメモリに直接コピーし、<code>KVM_RUN</code>をループで呼ぶ。ゲストが<code>outb</code>を実行するたびに「<a href="/notes/vm-exit.html">VM exit</a>」が発生し、<code>KVM_EXIT_IO</code>としてホスト側に制御が戻る。</p>
 
 <pre><code class="c">case KVM_EXIT_IO:
     if (vcpu-&gt;kvm_run-&gt;io.direction == KVM_EXIT_IO_OUT
@@ -421,7 +550,7 @@ Testing real mode
 
 <h2>続き: <a href="/notes/virtqueue-toy-experiment.html">virtqueue風トイ実験</a></h2>
 
-<p>この実験の「1文字ごとに<code>outb</code>してVM exitする」という素朴なI/Oを、<a href="/notes/virtio.html">virtio</a>のように「まとめて共有メモリに書いて1回だけ通知する」設計に変えるとどれだけVM exit回数が減るかを、この実験の続きとして確認した。</p>
+<p>この実験の「1文字ごとに<code>outb</code>して<a href="/notes/vm-exit.html">VM exit</a>する」という素朴なI/Oを、<a href="/notes/virtio.html">virtio</a>のように「まとめて共有メモリに書いて1回だけ通知する」設計に変えるとどれだけVM exit回数が減るかを、この実験の続きとして確認した。</p>
 
 <h2>出典</h2>
 
@@ -457,7 +586,7 @@ Testing real mode
 </ul>
 
 
-<p>VMMが<code>KVM_RUN</code>を呼ぶと、ゲストのコードがホストCPU上でほぼネイティブ速度で直接実行される。ゲストがI/Oを起こすなど「VM exit」が発生するとKVMから制御がVMM側に戻り、VMM側がそのデバイス動作をエミュレートしてからまたKVMに実行を戻す、というループになっている。</p>
+<p>VMMが<code>KVM_RUN</code>を呼ぶと、ゲストのコードがホストCPU上でほぼネイティブ速度で直接実行される。ゲストがI/Oを起こすなど「<a href="/notes/vm-exit.html">VM exit</a>」が発生するとKVMから制御がVMM側に戻り、VMM側がそのデバイス動作をエミュレートしてからまたKVMに実行を戻す、というループになっている。</p>
 
 <h2>なぜカーネル内蔵なのか</h2>
 
@@ -465,7 +594,7 @@ Testing real mode
 
 <h2>実際に動かしてみる</h2>
 
-<p><a href="/notes/qemu.html">QEMU</a>等を使わず<code>/dev/kvm</code>のioctlを直接叩いて最小限のVMを起動する実験を<a href="/notes/kvm-hello-world-experiment.html">kvm-hello-world実験</a>で行った。「VM exit」がどう発生し、ユーザー空間のVMMがどう処理するかを手を動かして確認できる。</p>
+<p><a href="/notes/qemu.html">QEMU</a>等を使わず<code>/dev/kvm</code>のioctlを直接叩いて最小限のVMを起動する実験を<a href="/notes/kvm-hello-world-experiment.html">kvm-hello-world実験</a>で行った。「<a href="/notes/vm-exit.html">VM exit</a>」がどう発生し、ユーザー空間のVMMがどう処理するかを手を動かして確認できる。</p>
 
 <h2>このシリーズの文脈での位置づけ</h2>
 
@@ -949,6 +1078,7 @@ flowchart TD
 
 <ul>
 <li><a href="/notes/kvm.html">KVM</a> — LinuxカーネルにビルトインされたCPU仮想化機能。デバイスエミュレーションは一切行わず、以下のVMM群がその役目を担う</li>
+<li><a href="/notes/vm-exit.html">VM exit</a> — ゲストが特権操作・I/Oを試みた瞬間にホストへ制御が戻る仕組み。KVMとVMM間の連携の核心</li>
 </ul>
 
 
@@ -1563,76 +1693,6 @@ graph LR
 <ul>
 <li><a href="https://www.rfc-editor.org/rfc/rfc9000.html">RFC 9000: QUIC: A UDP-Based Multiplexed and Secure Transport</a></li>
 <li><a href="https://blog.apnic.net/2022/11/03/comparing-tcp-and-quic/">Comparing TCP and QUIC - APNIC Blog</a></li>
-</ul>
-
-]]></description>
-</item>
-<item>
-<title>HTTP/3</title>
-<link>https://64p.org/notes/http3.html</link>
-<guid isPermaLink="true">https://64p.org/notes/http3.html</guid>
-<pubDate>Wed, 12 Aug 2026 20:47:00 +0900</pubDate>
-<description><![CDATA[<h1>HTTP/3</h1>
-
-<p>輸送層に<a href="/notes/quic.html">QUIC</a>を使う版のHTTP。TCPの代わりにUDPベースのQUICを使うことで、HTTP/2までTCP由来で残っていたHead-of-lineブロッキング問題(1つのストリームのパケットロストが同一コネクション上の他の全ストリームを止めてしまう問題)を解消する。IETFにより2022年6月に<strong>RFC 9114</strong>として標準化された。 <a class="note-tag" href="/notes/tags/protocol.html">#protocol</a> <a class="note-tag" href="/notes/tags/web.html">#web</a></p>
-
-<h2>HTTP/2との関係</h2>
-
-<ul>
-<li>メソッド・ステータスコード・ヘッダーといったHTTPセマンティクス自体はHTTP/2・HTTP/1.1と同じ</li>
-<li>各ストリーム上でHTTP/2に似たバイナリフレーミングを使う</li>
-<li>リクエスト/レスポンスヘッダーはHTTP/2同様に圧縮される(ただしQUICのストリーム順不同配送に対応するため、圧縮アルゴリズム自体はQPACKに変更されている)</li>
-<li>HTTP/2の機能の一部はQUIC自体に吸収され、残りはQUICの上に実装される、という形で再構成されている</li>
-</ul>
-
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://www.rfc-editor.org/rfc/rfc9114.html">RFC 9114: HTTP/3</a></li>
-<li><a href="https://ably.com/topic/http-2-vs-http-3">HTTP/2 vs HTTP/3: A look at key differences and similarities - Ably</a></li>
-</ul>
-
-]]></description>
-</item>
-<item>
-<title>WebTransport</title>
-<link>https://64p.org/notes/webtransport.html</link>
-<guid isPermaLink="true">https://64p.org/notes/webtransport.html</guid>
-<pubDate>Wed, 12 Aug 2026 20:43:00 +0900</pubDate>
-<description><![CDATA[<h1>WebTransport</h1>
-
-<p><a href="/notes/http3.html">HTTP/3</a>(<a href="/notes/quic.html">QUIC</a>)上に構築された、ブラウザとサーバー間の低遅延双方向通信API。<a href="/notes/websocket.html">WebSocket</a>の後継候補として設計されている。仕様はIETF WEBTRANS Working GroupとW3Cが共同で策定しており、W3C仕様はGoogle・Mozilla・Appleのエディタが名を連ねる。2026年時点でW3C Working Draft、HTTP/3マッピングのIETFドラフトはWorking Group Last Callの段階。 <a class="note-tag" href="/notes/tags/protocol.html">#protocol</a> <a class="note-tag" href="/notes/tags/web.html">#web</a></p>
-
-<h2>WebSocketとの違い</h2>
-
-<ul>
-<li><strong>輸送層</strong>: WebSocketはTCP上、WebTransportはQUIC(UDPベース)上のHTTP/3を使う</li>
-<li><strong>Head-of-lineブロッキング</strong>: TCPではストリーム単位の分離ができず、1つのデータ欠落が他の通信もブロックする。QUICはストリームを多重化できるため、この問題が起きない</li>
-<li><strong>ネットワーク切り替え</strong>: QUICは接続をIPアドレスでなく接続IDで識別するため、Wi-Fi⇔モバイル回線の切り替えでも接続を継続できる</li>
-<li><strong>信頼性の選択</strong>: WebSocketは常に信頼性のある配信のみだが、WebTransportは信頼性あり/なしを通信方式ごとに選べる</li>
-</ul>
-
-
-<h2>3つの通信方式</h2>
-
-<ul>
-<li><strong>データグラム</strong>: 信頼性・順序保証なし。ゲームの状態更新やセンサーデータなど、最新の値だけ届けばよい用途向け</li>
-<li><strong>単方向ストリーム</strong>: 信頼性・順序保証あり、片方向のみ。ファイル送信やライブ配信向け</li>
-<li><strong>双方向ストリーム</strong>: 信頼性・順序保証あり、双方向。チャットやリアルタイム共同編集向け</li>
-</ul>
-
-
-<h2>ブラウザ対応</h2>
-
-<p>Chrome/Edgeは2022年頃(Chrome 97, Edge 98)から対応、Firefoxは114から対応。Safariは2026年3月リリースのSafari 26.4で対応し、主要ブラウザが出揃った。</p>
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/WebTransport_API">WebTransport API - MDN</a></li>
-<li><a href="https://datatracker.ietf.org/doc/draft-ietf-webtrans-http3/">WebTransport over HTTP/3 - IETF Datatracker</a></li>
-<li><a href="https://caniuse.com/webtransport">Can I use: WebTransport</a></li>
 </ul>
 
 ]]></description>

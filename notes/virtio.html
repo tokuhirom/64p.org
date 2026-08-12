@@ -23,8 +23,10 @@
                 <a class="notes-tags-link" href="/notes/rss.xml">📡 RSS</a>
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
-                                    <li><a href="/notes/laplace-transform.html">ラプラス変換</a></li>
+                                    <li><a href="/notes/vm-exit.html">VM exit</a></li>
                                     <li><a href="/notes/fourier-transform.html">フーリエ変換</a></li>
+                                    <li><a href="/notes/fft.html">FFT（高速フーリエ変換）</a></li>
+                                    <li><a href="/notes/laplace-transform.html">ラプラス変換</a></li>
                                     <li><a href="/notes/virtqueue-toy-experiment.html">virtqueue風トイ実験</a></li>
                                     <li><a href="/notes/kvm-hello-world-experiment.html">kvm-hello-world実験</a></li>
                                     <li><a href="/notes/virtio.html" class="active">virtio</a></li>
@@ -361,7 +363,7 @@
 
 <h2>実際に動かしてみる</h2>
 
-<p><a href="/notes/kvm.html">KVM</a>の生ioctl実験の上に、virtqueueの核心(共有メモリ+バッチ化+1回の通知)だけを再現したトイ実装を作り、1バイトごとに通知する前回実験と比べてVM exit回数がどれだけ減るかを<a href="/notes/virtqueue-toy-experiment.html">virtqueue風トイ実験</a>で確認した。</p>
+<p><a href="/notes/kvm.html">KVM</a>の生ioctl実験の上に、virtqueueの核心(共有メモリ+バッチ化+1回の通知)だけを再現したトイ実装を作り、1バイトごとに通知する前回実験と比べて<a href="/notes/vm-exit.html">VM exit</a>回数がどれだけ減るかを<a href="/notes/virtqueue-toy-experiment.html">virtqueue風トイ実験</a>で確認した。</p>
 
 <h2><a href="/notes/microvm-ecosystem.html">コンテナ向け軽量VM技術</a>の中での位置づけ</h2>
 
@@ -381,6 +383,7 @@
                     <h2>🔗 リンクされているノート</h2>
                     <ul>
                                             <li><a href="/notes/kata-containers.html">Kata Containers</a></li>
+                                            <li><a href="/notes/vm-exit.html">VM exit</a></li>
                                             <li><a href="/notes/crosvm.html">crosvm</a></li>
                                             <li><a href="/notes/kvm-hello-world-experiment.html">kvm-hello-world実験</a></li>
                                             <li><a href="/notes/microvm.html">microVM</a></li>

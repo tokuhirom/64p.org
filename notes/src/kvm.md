@@ -19,7 +19,7 @@ VMMと`/dev/kvm`の間のやり取りはioctl呼び出しで行われる。
 - `KVM_SET_USER_MEMORY_REGION` — ゲストの物理メモリをVMのアドレス空間にマップする
 - `KVM_RUN` — 実際にゲストCPUをホストCPU上で直接実行させる
 
-VMMが`KVM_RUN`を呼ぶと、ゲストのコードがホストCPU上でほぼネイティブ速度で直接実行される。ゲストがI/Oを起こすなど「VM exit」が発生するとKVMから制御がVMM側に戻り、VMM側がそのデバイス動作をエミュレートしてからまたKVMに実行を戻す、というループになっている。
+VMMが`KVM_RUN`を呼ぶと、ゲストのコードがホストCPU上でほぼネイティブ速度で直接実行される。ゲストがI/Oを起こすなど「[[vm-exit|VM exit]]」が発生するとKVMから制御がVMM側に戻り、VMM側がそのデバイス動作をエミュレートしてからまたKVMに実行を戻す、というループになっている。
 
 ## なぜカーネル内蔵なのか
 
@@ -27,7 +27,7 @@ VMMが`KVM_RUN`を呼ぶと、ゲストのコードがホストCPU上でほぼ�
 
 ## 実際に動かしてみる
 
-[[qemu|QEMU]]等を使わず`/dev/kvm`のioctlを直接叩いて最小限のVMを起動する実験を[[kvm-hello-world-experiment|kvm-hello-world実験]]で行った。「VM exit」がどう発生し、ユーザー空間のVMMがどう処理するかを手を動かして確認できる。
+[[qemu|QEMU]]等を使わず`/dev/kvm`のioctlを直接叩いて最小限のVMを起動する実験を[[kvm-hello-world-experiment|kvm-hello-world実験]]で行った。「[[vm-exit|VM exit]]」がどう発生し、ユーザー空間のVMMがどう処理するかを手を動かして確認できる。
 
 ## このシリーズの文脈での位置づけ
 
