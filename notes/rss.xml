@@ -6,7 +6,132 @@
 <atom:link href="https://64p.org/notes/rss.xml" rel="self" type="application/rss+xml" />
 <description>ちょっと調べたことや検証結果を、AIの力も借りながらメモしていくコーナーです。</description>
 <language>ja</language>
-<lastBuildDate>Thu, 13 Aug 2026 08:14:45 +0900</lastBuildDate>
+<lastBuildDate>Thu, 13 Aug 2026 08:32:09 +0900</lastBuildDate>
+<item>
+<title>bpftrace</title>
+<link>https://64p.org/notes/bpftrace.html</link>
+<guid isPermaLink="true">https://64p.org/notes/bpftrace.html</guid>
+<pubDate>Thu, 13 Aug 2026 08:32:00 +0900</pubDate>
+<description><![CDATA[<h1>bpftrace</h1>
+
+<p>Linux向けの高レベルなトレーシング言語兼フロントエンド。ユーザーが書いたトレーシングスクリプトをコンパイルし、<a href="/notes/bpf.html">eBPF</a>バイトコードとしてカーネル空間で安全に実行する。eBPFのオブザーバビリティ用途を代表するツールの一つ。 <a class="note-tag" href="/notes/tags/linux.html">#linux</a> <a class="note-tag" href="/notes/tags/kernel.html">#kernel</a> <a class="note-tag" href="/notes/tags/observability.html">#observability</a></p>
+
+<h2>設計</h2>
+
+<ul>
+<li>言語デザインはawk、C、および先行するトレーサーであるDTrace・SystemTapから影響を受けている</li>
+<li>バックエンドとしてLLVM(スクリプトのコンパイル)とlibbpf(BPFサブシステムとのやり取り)を使用する</li>
+</ul>
+
+
+<h2>probeの種類</h2>
+
+<ul>
+<li><strong>kprobe/kretprobe</strong>: カーネル関数の呼び出し時/リターン時に発火する。動的で、デバッグ・調査向け</li>
+<li><strong>uprobe/uretprobe</strong>: ユーザー空間関数版のkprobe。アプリケーション内部の可視化に使う</li>
+<li><strong>tracepoint</strong>: カーネルソースコードに静的に定義されたプローブ地点。kprobeと異なりカーネルバージョン間で安定しているため、本番監視向け</li>
+<li><strong>usdt</strong> (User Statically-Defined Tracing): ユーザー空間アプリケーションに静的に埋め込まれたトレースポイント</li>
+</ul>
+
+
+<p>使い分けの目安として、本番監視には安定したtracepoint、デバッグ・調査にはkprobe、アプリケーション内部を見たい場合はuprobeを使うとされる。</p>
+
+<h2>実行モード</h2>
+
+<ul>
+<li><strong>Dynamic Mode</strong>: スクリプトを即座にコンパイル・実行する通常の使い方</li>
+<li><strong>Listing Mode</strong> (<code>-l</code>): 実行せず利用可能なprobe地点を列挙する</li>
+<li><strong>Ahead-of-Time Mode</strong> (<code>--aot</code>): スクリプトを移植可能な実行ファイルに事前コンパイルする</li>
+<li><strong>Test Mode</strong> (<code>--test-mode</code>): カーネル実行なしでの検証・ベンチマーク用</li>
+</ul>
+
+
+<h2>実験</h2>
+
+<p>実際にインストールして動かした記録は<a href="/notes/bpftrace-experiment.html">bpftraceを動かしてeBPFトレーシングを体感する</a>を参照。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://bpftrace.org/">bpftrace: dynamic tracing for Linux</a></li>
+<li><a href="https://github.com/bpftrace/bpftrace">GitHub - bpftrace/bpftrace</a></li>
+<li><a href="https://deepwiki.com/bpftrace/bpftrace">bpftrace/bpftrace | DeepWiki</a></li>
+<li><a href="https://www.brendangregg.com/blog/2019-08-19/bpftrace.html">A thorough introduction to bpftrace - Brendan Gregg</a></li>
+<li><a href="https://bpftrace.org/hol/kernel-probes">Working with kernel probes - bpftrace docs</a></li>
+</ul>
+
+]]></description>
+</item>
+<item>
+<title>bpftraceを動かしてeBPFトレーシングを体感する</title>
+<link>https://64p.org/notes/bpftrace-experiment.html</link>
+<guid isPermaLink="true">https://64p.org/notes/bpftrace-experiment.html</guid>
+<pubDate>Thu, 13 Aug 2026 08:32:00 +0900</pubDate>
+<description><![CDATA[<h1>bpftraceを動かしてeBPFトレーシングを体感する</h1>
+
+<p><a href="/notes/bpftrace.html">bpftrace</a>を実際にこのマシン(Pop!_OS/Ubuntu noble)にインストールして動かし、<a href="/notes/bpf.html">eBPF</a>によるトレーシングを体感した記録。 <a class="note-tag" href="/notes/tags/linux.html">#linux</a> <a class="note-tag" href="/notes/tags/kernel.html">#kernel</a> <a class="note-tag" href="/notes/tags/observability.html">#observability</a></p>
+
+<h2>環境構築</h2>
+
+<p><code>apt install bpftrace</code> でインストールできた(候補バージョン <code>0.20.2-1ubuntu4.3</code>)。</p>
+
+<pre><code class="sh">$ apt-cache policy bpftrace
+bpftrace:
+  Installed: (none)
+  Candidate: 0.20.2-1ubuntu4.3
+$ sudo apt install -y bpftrace
+$ bpftrace --version
+bpftrace v0.20.2
+</code></pre>
+
+<h2>躓いた点: 非対話環境でのroot権限</h2>
+
+<p>bpftraceの実行にはroot権限(eBPFプログラムのロードにCAP_BPF/CAP_SYS_ADMIN相当の権限が必要)が要る。しかしClaude CodeのBashツールにはインタラクティブなsudoパスワード入力用のTTYが無く、<code>sudo -n true</code>や<code>sudo -v</code>はいずれも失敗した。</p>
+
+<pre><code>$ sudo -n true
+sudo: a password is required
+$ sudo -v
+sudo: a terminal is required to read the password; either use the -S option to read from standard input or configure an askpass helper
+</code></pre>
+
+<p>そのため、実行自体はユーザーが別の実端末上で行い、出力をファイル経由で共有してもらう形で進めた。</p>
+
+<h2>実験1: syscallをプロセス名別に集計する(tracepoint)</h2>
+
+<pre><code class="sh">sudo bpftrace -e 'tracepoint:raw_syscalls:sys_enter { @[comm] = count(); } interval:s:5 { exit(); }'
+</code></pre>
+
+<p><code>@[comm] = count()</code>というmap集計だけで、カーネル空間でのプロセス名(<code>comm</code>)ごとのsyscall呼び出し回数を集計できる。<code>interval:s:5 { exit(); }</code>のように別のprobeでタイマーによる終了処理を書けるのも分かった。</p>
+
+<p>5秒間の実行結果は降順で、上位は<code>HeapHelper</code>(291754回)、<code>pgrep</code>(159370回)、<code>herdr</code>(85612回)、<code>gnome-terminal-</code>(54975回)、<code>claude</code>(49301回)など。GUI環境(<code>gnome-shell</code>: 42290回、<code>Xorg</code>: 40950回)も多数のsyscallを発生させていることが見えた。プロセス名はLinuxの<code>comm</code>(<code>TASK_COMM_LEN</code>)の制約で15文字に切り詰められるため、<code>StreamT~ #14757</code>のような省略表示になっているものもあった。</p>
+
+<h2>実験2: <code>do_nanosleep</code>カーネル関数をkprobeで追跡する</h2>
+
+<pre><code class="sh">sudo timeout 5 bpftrace -e 'kprobe:do_nanosleep { printf("PID %d (%s) sleeping\n", pid, comm); }'
+</code></pre>
+
+<p><code>ibus-ui-gtk3</code>や<code>tailscaled</code>など、定期的にポーリング/スリープしているデーモンプロセスが高頻度で<code>do_nanosleep</code>を呼んでいることが可視化された。コンテナ管理daemonの<code>incusd</code>が短時間に何十回もsleepしている様子も観測できた。ユーザーが手動で叩いた<code>sleep</code>コマンドの呼び出しもPIDごとに個別に捕捉されている。</p>
+
+<p>kprobeはカーネル関数名を直接指定するだけでフックできる手軽さがある一方、<code>do_nanosleep</code>のような内部関数名はカーネルバージョンが変われば変わりうる、という<a href="/notes/bpftrace.html">bpftraceノート</a>で触れた「tracepointの方が安定している」という説明を裏付ける結果でもあった。</p>
+
+<h2>実験3: execveをtracepointで追跡し、新規プロセス起動を可視化する</h2>
+
+<pre><code class="sh">sudo timeout 5 bpftrace -e 'tracepoint:syscalls:sys_enter_execve { printf("%s -&gt; %s\n", comm, str(args-&gt;filename)); }'
+</code></pre>
+
+<p><code>args-&gt;filename</code>のように、tracepointの引数構造体からファイルパス文字列を<code>str()</code>で読み出せる。5秒間の結果には<code>zsh -&gt; /usr/bin/pgrep</code>のような親プロセスと起動された実行ファイルのペアが並び、シェルのプロンプト表示のたびに<code>pgrep</code>や<code>sleep</code>が起動されている様子が見えた。ユーザーが個人で開発しているRust製Rakuインタプリタ<code>mutsu</code>のデバッグビルド(<code>../../target/debug/mutsu</code>)が<code>timeout</code>コマンド経由で起動されているのも捕捉された。</p>
+
+<h2>分かったこと</h2>
+
+<ul>
+<li><code>@[key] = count()</code>のようなmap構文だけで、カーネル空間での集計処理をユーザー空間へのイベント転送やロックなしに数行で書ける</li>
+<li>複数のprobeを1つのスクリプトに並べて書ける(タイマーprobeでの終了処理など)</li>
+<li><code>printf</code>はカーネル側からユーザー空間の標準出力へ安全に文字列を渡す仕組みとして機能する</li>
+<li>実運用では、動かす環境にTTY越しの対話的なroot権限取得手段が要る(今回のような非対話CI/エージェント環境では一手間かかる)</li>
+</ul>
+
+]]></description>
+</item>
 <item>
 <title>Font Awesome</title>
 <link>https://64p.org/notes/font-awesome.html</link>
@@ -1813,95 +1938,6 @@ flowchart TD
 <li><a href="https://medium.com/@michael2012zhao_67085/history-of-cloud-hypervisor-138568b2fc1f">History of Cloud-hypervisor | Michael Zhao</a></li>
 <li><a href="https://github.com/rust-vmm/vmm-reference">GitHub - rust-vmm/vmm-reference</a></li>
 <li><a href="https://github.com/rust-vmm/vmm-reference/blob/main/docs/DESIGN.md">vmm-reference/docs/DESIGN.md</a></li>
-</ul>
-
-]]></description>
-</item>
-<item>
-<title>コンテナ向け軽量VM技術</title>
-<link>https://64p.org/notes/microvm-ecosystem.html</link>
-<guid isPermaLink="true">https://64p.org/notes/microvm-ecosystem.html</guid>
-<pubDate>Wed, 12 Aug 2026 23:25:00 +0900</pubDate>
-<description><![CDATA[<h1>コンテナ向け軽量VM技術</h1>
-
-<p>コンテナのカーネル共有による分離の弱さを、VMレベルの分離で補おうとする一群の技術。<a href="/notes/microvm.html">microVM</a>という土台技術の上に、それをコンテナのエコシステム(OCIイメージ・containerd・Kubernetes)と繋ぐレイヤーが複数存在する。</p>
-
-<p><a class="note-tag" href="/notes/tags/virtualization.html">#virtualization</a> <a class="note-tag" href="/notes/tags/moc.html">#moc</a></p>
-
-<h2>さらに下の土台: カーネル側の仮想化基盤</h2>
-
-<ul>
-<li><a href="/notes/kvm.html">KVM</a> — LinuxカーネルにビルトインされたCPU仮想化機能。デバイスエミュレーションは一切行わず、以下のVMM群がその役目を担う</li>
-<li><a href="/notes/vm-exit.html">VM exit</a> — ゲストが特権操作・I/Oを試みた瞬間にホストへ制御が戻る仕組み。KVMとVMM間の連携の核心</li>
-</ul>
-
-
-<h2>I/Oインターフェースの標準: virtio</h2>
-
-<ul>
-<li><a href="/notes/virtio.html">virtio</a> — ゲスト-ホスト間I/Oの準仮想化標準。フルデバイスエミュレーションより軽量で、以下のVMM群が共通して採用している</li>
-</ul>
-
-
-<h2>土台: VMM(Virtual Machine Monitor)</h2>
-
-<ul>
-<li><a href="/notes/microvm.html">microVM</a> — デバイスモデルを最小化した軽量VMという概念そのもの。なぜ起動が速いかを解説</li>
-<li><a href="/notes/firecracker.html">Firecracker</a> — AWS製。AWS Lambda/Fargateを支えるmicroVM実装</li>
-<li><a href="/notes/cloud-hypervisor.html">Cloud Hypervisor</a> — Intel主導・Rust製。<a href="/notes/rust-vmm.html">rust-vmm</a>由来でFirecrackerの実装を参考にしている</li>
-<li><a href="/notes/rust-vmm.html">rust-vmm</a> — Firecracker/crosvm/Cloud Hypervisorが共有する、Rust製VMM部品(クレート)群</li>
-<li><a href="/notes/crosvm.html">crosvm</a> — Google製。ChromeOS/Android向けに開発されたRust製VMM</li>
-<li><a href="/notes/qemu.html">QEMU</a> — 2003年発。他のVMMと異なりmicroVM専用ではなく、幅広いアーキテクチャ・デバイスをフルエミュレートできる「何でも屋」</li>
-</ul>
-
-
-<h2>コンテナエコシステムとの統合レイヤー</h2>
-
-<p>FirecrackerなどのVMMは素のカーネル+rootfsしか扱えないため、OCIイメージ/containerd/Kubernetesと繋ぐには別レイヤーが必要になる。</p>
-
-<ul>
-<li><a href="/notes/kata-containers.html">Kata Containers</a> — OpenStack Foundation発。OCI/CRI互換のコンテナランタイムとして、Firecracker/Cloud Hypervisor/<a href="/notes/qemu.html">QEMU</a>など複数のVMMを横断的にバックエンドとして選べる</li>
-<li><a href="/notes/firecracker-containerd.html">firecracker-containerd</a> — AWS製。containerd専用のFirecracker統合プラグイン</li>
-<li><a href="/notes/hypeman.html">Hypeman</a> — Kernel社製。OCIイメージのpull・実行をDocker互換CLIで扱えるようにした、マルチハイパーバイザー対応のランタイム</li>
-</ul>
-
-
-<h2>出典</h2>
-
-<p>各ノートの出典セクションを参照。</p>
-]]></description>
-</item>
-<item>
-<title>Kata Containers</title>
-<link>https://64p.org/notes/kata-containers.html</link>
-<guid isPermaLink="true">https://64p.org/notes/kata-containers.html</guid>
-<pubDate>Wed, 12 Aug 2026 23:23:00 +0900</pubDate>
-<description><![CDATA[<h1>Kata Containers</h1>
-
-<p>VMの持つセキュリティ上の分離性と、コンテナの持つ速度・軽量性を両立させることを目指すコンテナランタイム。コンテナ1個ごとに軽量VMを立ち上げ、その中でコンテナプロセスを動かす。OCIランタイム仕様・Kubernetesのcontainer runtime interface(CRI)双方に対応している。 <a class="note-tag" href="/notes/tags/virtualization.html">#virtualization</a></p>
-
-<h2>成り立ち</h2>
-
-<p>2017年、OpenStack Foundationの主導で、IntelのClear Containersプロジェクトと、HyperのrunV技術を統合する形で発足。2017年12月にpilotプロジェクトとなり、OpenStack Foundationにとって最初のtop-level Open Infrastructureプロジェクトとして承認された。OpenStack Foundation配下ではあるが、独自の技術ガバナンス・コントリビューター基盤を持つ独立したプロジェクトとして運営されている。</p>
-
-<h2>動作の仕組み</h2>
-
-<p>コンテナ(OCIイメージ由来のrootfs)ごとに専用の軽量VMを起動し、その中でコンテナプロセスを実行する。ハイパーバイザーは特定の実装に固定されておらず、<a href="/notes/firecracker.html">Firecracker</a>・<a href="/notes/cloud-hypervisor.html">Cloud Hypervisor</a>・<a href="/notes/qemu.html">QEMU</a>など複数のVMMをバックエンドとして選択できる。Firecracker利用時は、containerdのdevmapperスナップショッタでコンテナのrootfsをdevice mapperスナップショットとして扱い、<a href="/notes/virtio.html">virtio</a> blockデバイスとしてVMにホットプラグする構成を取る。</p>
-
-<h2><a href="/notes/firecracker-containerd.html">firecracker-containerd</a>との違い</h2>
-
-<p>どちらもFirecrackerをバックエンドにコンテナへVM分離を与える点は共通するが、Kata ContainersはOCI/CRI互換のコンテナランタイムそのものとして複数のVMM・複数のコンテナランタイム統合先を横断的にサポートするのに対し、firecracker-containerdはAWSが開発しているcontainerd専用のFirecracker統合という位置づけの違いがある。</p>
-
-<h2><a href="/notes/microvm-ecosystem.html">コンテナ向け軽量VM技術</a>の中での位置づけ</h2>
-
-<p>複数のVMMを横断的にバックエンドとして選べる、OCI/CRI互換のコンテナランタイム統合レイヤー。</p>
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://katacontainers.io/blog/kata-containers-confirmed-as-first-new-top-level-open-infrastructure-project-by-openstack-foundation/">Kata Containers Confirmed as First New Top-Level Open Infrastructure Project by OpenStack Foundation</a></li>
-<li><a href="https://cloudkernels.github.io/posts/kata-build-configure-fc/">Kata Containers: Build and configure Firecracker | CloudKernels</a></li>
-<li><a href="https://github.com/kata-containers/kata-containers/blob/main/docs/how-to/how-to-use-kata-containers-with-firecracker.md">kata-containers/docs/how-to/how-to-use-kata-containers-with-firecracker.md</a></li>
 </ul>
 
 ]]></description>
