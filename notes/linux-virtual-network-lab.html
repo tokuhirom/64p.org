@@ -21,6 +21,7 @@
                 <a class="notes-tags-link" href="/notes/tags/">🏷️ タグ一覧</a>
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
+                                    <li><a href="/notes/open-vswitch.html">Open vSwitch (OVS)</a></li>
                                     <li><a href="/notes/linux-virtual-network-lab.html" class="active">Linuxだけで作る仮想ネットワークラボ</a></li>
                                     <li><a href="/notes/vxlan.html">VXLAN</a></li>
                                     <li><a href="/notes/vlan.html">VLAN</a></li>
@@ -443,7 +444,7 @@ IP 10.99.0.2 &gt; 10.99.0.1: ICMP echo reply, id 31448, seq 1, length 64
 
 <ul>
 <li><strong>containerlab + FRRouting</strong> — leaf-spine構成でBGP EVPNをコントロールプレーンにしたVXLANファブリックをYAML一発で構築できる。お手本: <a href="https://github.com/martimy/clab_vxlan_frr">martimy/clab_vxlan_frr</a>、<a href="https://github.com/darnodo/VXLAN-EVPN">darnodo/VXLAN-EVPN</a>（いずれもDockerが必要なのでsudoなし縛りだとrootless dockerで）</li>
-<li><strong>Open vSwitch</strong> — Linux標準ブリッジより本格的な仮想スイッチ。OpenStackなどが実際に使っている</li>
+<li><strong><a href="/notes/open-vswitch.html">Open vSwitch</a></strong> — Linux標準ブリッジより本格的な仮想スイッチ。OpenStackなどが実際に使っている</li>
 <li><strong>GNS3 / EVE-NG</strong> — Cisco IOSなどベンダーOSのイメージを動かすエミュレータ。「実機のCLI操作」の練習向けだが、イメージ入手にライセンスの壁がある</li>
 </ul>
 
@@ -458,8 +459,15 @@ IP 10.99.0.2 &gt; 10.99.0.1: ICMP echo reply, id 31448, seq 1, length 64
 </ul>
 
 
+                                <div class="notes-backlinks">
+                    <h2>🔗 リンクされているノート</h2>
+                    <ul>
+                                            <li><a href="/notes/open-vswitch.html">Open vSwitch (OVS)</a></li>
+                    
+                    </ul>
+                </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-12 18:54 / 更新日時: 2026-08-12 19:09</span>
+                    <span>作成日時: 2026-08-12 18:54 / 更新日時: 2026-08-12 19:21</span>
                     <a class="share-x" href="https://twitter.com/intent/tweet?text=Linux%E3%81%A0%E3%81%91%E3%81%A7%E4%BD%9C%E3%82%8B%E4%BB%AE%E6%83%B3%E3%83%8D%E3%83%83%E3%83%88%E3%83%AF%E3%83%BC%E3%82%AF%E3%83%A9%E3%83%9C&url=https%3A%2F%2F64p.org%2Fnotes%2Flinux-virtual-network-lab.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>

@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>HATEOAS（Hypermedia As The Engine Of Application State） - Notes - 64p.org</title>
+    <title>Open vSwitch (OVS) - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/highlight.js@11/styles/github.min.css" media="(prefers-color-scheme: light)">
@@ -21,7 +21,7 @@
                 <a class="notes-tags-link" href="/notes/tags/">🏷️ タグ一覧</a>
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
-                                    <li><a href="/notes/open-vswitch.html">Open vSwitch (OVS)</a></li>
+                                    <li><a href="/notes/open-vswitch.html" class="active">Open vSwitch (OVS)</a></li>
                                     <li><a href="/notes/linux-virtual-network-lab.html">Linuxだけで作る仮想ネットワークラボ</a></li>
                                     <li><a href="/notes/vxlan.html">VXLAN</a></li>
                                     <li><a href="/notes/vlan.html">VLAN</a></li>
@@ -118,7 +118,7 @@
                                     <li><a href="/notes/kita-maimai-kaburi.html">キタマイマイカブリ</a></li>
                                     <li><a href="/notes/kappa-yokai.html">河童（かっぱ）</a></li>
                                     <li><a href="/notes/restful.html">RESTful（REST: Representational State Transfer）</a></li>
-                                    <li><a href="/notes/hateoas.html" class="active">HATEOAS（Hypermedia As The Engine Of Application State）</a></li>
+                                    <li><a href="/notes/hateoas.html">HATEOAS（Hypermedia As The Engine Of Application State）</a></li>
                                     <li><a href="/notes/lxd.html">LXD</a></li>
                                     <li><a href="/notes/ward-cunningham.html">Ward Cunningham</a></li>
                                     <li><a href="/notes/agile-manifesto.html">アジャイルソフトウェア開発宣言（Manifesto for Agile Software Development）</a></li>
@@ -297,57 +297,71 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>HATEOAS（Hypermedia As The Engine Of Application State）</h1>
+                <h1>Open vSwitch (OVS)</h1>
 
-<p><a href="/notes/restful.html">REST</a>の4つの「統一インターフェース制約」のうち最後の1つ。Roy Fieldingの2000年の博士論文で初めて言及された。</p>
+<p>Apache 2ライセンスで公開されているオープンソースのマルチレイヤ仮想スイッチ。仮想マシン環境で動作するソフトウェアスイッチで、L2（データリンク層）でイーサネットフレームを扱いつつ、OpenFlowにも対応している。<a href="/notes/linux-virtual-network-lab.html">Linux標準ブリッジ</a>より本格的な仮想スイッチとして、OpenStackなどが実際に採用している。 <a class="note-tag" href="/notes/tags/network.html">#network</a> <a class="note-tag" href="/notes/tags/sdn.html">#sdn</a></p>
 
-<h2>原典での定義</h2>
-
-<p>論文セクション5.1.5（Uniform Interface）で、REST全体を定義する4つのインターフェース制約の一つとして登場する。</p>
-
-<blockquote><p>&ldquo;REST is defined by four interface constraints: identification of resources; manipulation of resources through representations; self-descriptive messages; and, hypermedia as the engine of application state.&rdquo;</p></blockquote>
-
-<p>つまり、クライアントは事前に固定されたAPI仕様書やURI構造の知識に頼るのではなく、サーバーから返されるレスポンス（ハイパーメディア＝リンクなど）そのものから、次に取りうる操作（アフォーダンス）を発見しながら進んでいくべき、という制約。</p>
-
-<h2>Richardson Maturity Model（成熟度モデル）とHATEOAS</h2>
-
-<p>HATEOASを段階的な指標として整理したのが、Leonard Richardson（書籍 <em>&ldquo;RESTful Web Services&rdquo;</em> の共著者）。2008年11月20日、QCon San Franciscoでの講演 <em>&ldquo;Justice Will Take Us Millions Of Intricate Moves&rdquo;</em> の第3幕（Act 3）で発表した「成熟度ヒューリスティック」が原型。</p>
+<h2>アーキテクチャ</h2>
 
 <ul>
-<li><strong>Level 0</strong>: 単一のエンドポイントにPOSTだけを投げるRPCスタイル</li>
-<li><strong>Level 1</strong>: リソースごとにURIを分ける</li>
-<li><strong>Level 2</strong>: HTTPメソッド（GET/POST/PUT/DELETE等）を正しく使い分ける</li>
-<li><strong>Level 3</strong>: HATEOAS対応。レスポンスにハイパーメディアリンクを含み、クライアントが動的に次のアクションを発見できる（このモデルの最上位段階）</li>
+<li><strong>ovs-vswitchd</strong> — スイッチ機能そのものを実装するデーモン。付随するLinuxカーネルモジュールと組み合わせてフローベースのスイッチングを行う（userspace実装のみでの動作も可能）。</li>
+<li><strong>ovsdb-server</strong> — ovs-vswitchdが設定情報を取得するための軽量なデータベースサーバー。</li>
+<li><strong>カーネルモジュール/datapath</strong> — 実際のパケット転送処理を担う層。</li>
+<li><strong>ovs-ofctl</strong> — OpenFlowスイッチに対してクエリ・制御を行うユーティリティ。</li>
 </ul>
 
 
-<h2>Fieldingによる軽視への批判</h2>
+<p>OpenFlow 1.0とその多数の拡張をサポートしており、外部のSDNコントローラからフロールールを供給できる（あるいは手動でCLIから投入することも可能）。</p>
 
-<p>Fieldingは2008年、"REST APIs must be hypertext-driven" という記事で、世に「REST API」を名乗るものの多くがHATEOASを欠いた単なるRPCに過ぎないと批判している。固定的なリソース名・階層構造を仕様書などの帯域外情報で定義し、URI構造自体に意味を持たせるAPIは、クライアント・サーバ間を過度に結合させてしまう問題があると指摘した。</p>
+<h2>主な機能</h2>
+
+<ul>
+<li>VLAN（<a href="/notes/vlan.html">IEEE 802.1Q</a>）対応</li>
+<li><a href="/notes/vxlan.html">VXLAN</a>、GRE、Geneveなど複数のトンネリングプロトコル対応</li>
+<li>NetFlow、IPFIX、sFlowによるトラフィック可視化</li>
+<li>QoS設定・ポリシング</li>
+<li>ネットワーク状態（L2学習テーブル、L3転送状態、ACLなど）のホスト間移行</li>
+<li>カーネルデータパスのハードウェアチップセットへのオフロード</li>
+</ul>
+
+
+<p>実装形態も複数あり、古典的なカーネルモジュール版のほか、高性能だが設定が複雑なDPDK版、保守性に優れるeBPF版、従来ツールとの互換性を保ちながら高速化するAF_XDP版が存在する。</p>
+
+<h2>従来のLinuxブリッジとの違い</h2>
+
+<p>Linuxブリッジが単一ホスト内の単純なL2転送を主眼にしているのに対し、OVSは複数サーバーにまたがる仮想化環境を対象に設計されている。動的なエンドポイント管理、論理的な抽象化の維持、専用ハードウェアとの統合（オフロード）といった、大規模・動的な環境向けの要件に応える点が特徴。</p>
+
+<h2>主なユースケース</h2>
+
+<ul>
+<li><strong>OpenStack</strong> — Neutronのプラグインとして、VM間のネットワークを構成する標準的な仮想スイッチ</li>
+<li><strong>Kubernetes/コンテナ基盤</strong> — CNIプラグイン経由でPod間ネットワークを構築</li>
+<li><strong>SDN環境</strong> — 外部のSDNコントローラから直接OpenFlowで制御される構成</li>
+<li><strong>マルチテナントのトンネリング</strong> — VXLAN等でコンピュートノード間をオーバーレイ接続</li>
+<li><strong>サービスチェーン</strong> — 複数の仮想ネットワーク機能（VNF）間でトラフィックを転送</li>
+</ul>
+
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://roy.gbiv.com/pubs/dissertation/rest_arch_style.htm">Fielding Dissertation: Chapter 5 - Representational State Transfer (REST)</a></li>
-<li><a href="https://www.crummy.com/writing/speaking/2008-QCon/">Justice Will Take Us Millions Of Intricate Moves - Leonard Richardson (crummy.com, 2008 QCon)</a></li>
-<li><a href="https://martinfowler.com/articles/richardsonMaturityModel.html">Richardson Maturity Model - Martin Fowler</a></li>
-<li><a href="https://en.wikipedia.org/wiki/Richardson_Maturity_Model">Richardson Maturity Model - Wikipedia (English)</a></li>
-<li><a href="https://roy.gbiv.com/untangled/2008/rest-apis-must-be-hypertext-driven">REST APIs must be hypertext-driven - Roy Fielding&rsquo;s blog (2008)</a></li>
+<li><a href="https://docs.openvswitch.org/en/stable/intro/why-ovs/">Why Open vSwitch? — Open vSwitch documentation</a></li>
+<li><a href="https://docs.openvswitch.org/en/latest/intro/what-is-ovs/">What is OVS? — Open vSwitch documentation</a></li>
+<li><a href="https://ubuntu.com/blog/data-centre-networking-what-is-ovs">Data centre networking: what is OVS? | Ubuntu</a></li>
+<li><a href="https://medium.com/@isaac2ngeno5/open-vswitch-ovs-in-openstack-85b71e5539e5">Open vSwitch (OVS) in Openstack | Medium</a></li>
 </ul>
 
-
-<p><a class="note-tag" href="/notes/tags/software-engineering.html">#software-engineering</a> <a class="note-tag" href="/notes/tags/protocol.html">#protocol</a></p>
 
                                 <div class="notes-backlinks">
                     <h2>🔗 リンクされているノート</h2>
                     <ul>
-                                            <li><a href="/notes/restful.html">RESTful（REST: Representational State Transfer）</a></li>
+                                            <li><a href="/notes/linux-virtual-network-lab.html">Linuxだけで作る仮想ネットワークラボ</a></li>
                     
                     </ul>
                 </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-11 08:09 / 更新日時: 2026-08-11 08:09</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=HATEOAS%EF%BC%88Hypermedia%20As%20The%20Engine%20Of%20Application%20State%EF%BC%89&url=https%3A%2F%2F64p.org%2Fnotes%2Fhateoas.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <span>作成日時: 2026-08-12 19:21 / 更新日時: 2026-08-12 19:21</span>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=Open%20vSwitch%20%28OVS%29&url=https%3A%2F%2F64p.org%2Fnotes%2Fopen-vswitch.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">

@@ -1,6 +1,6 @@
 ---
 created: 2026-08-12 18:54
-updated: 2026-08-12 19:09
+updated: 2026-08-12 19:21
 ---
 # Linuxだけで作る仮想ネットワークラボ
 
@@ -146,7 +146,7 @@ unprivileged usernsの制約:
 もっと本格的にやるなら:
 
 - **containerlab + FRRouting** — leaf-spine構成でBGP EVPNをコントロールプレーンにしたVXLANファブリックをYAML一発で構築できる。お手本: [martimy/clab_vxlan_frr](https://github.com/martimy/clab_vxlan_frr)、[darnodo/VXLAN-EVPN](https://github.com/darnodo/VXLAN-EVPN)（いずれもDockerが必要なのでsudoなし縛りだとrootless dockerで）
-- **Open vSwitch** — Linux標準ブリッジより本格的な仮想スイッチ。OpenStackなどが実際に使っている
+- **[[open-vswitch|Open vSwitch]]** — Linux標準ブリッジより本格的な仮想スイッチ。OpenStackなどが実際に使っている
 - **GNS3 / EVE-NG** — Cisco IOSなどベンダーOSのイメージを動かすエミュレータ。「実機のCLI操作」の練習向けだが、イメージ入手にライセンスの壁がある
 
 ## 出典
