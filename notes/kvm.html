@@ -23,9 +23,10 @@
                 <a class="notes-tags-link" href="/notes/rss.xml">📡 RSS</a>
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
+                                    <li><a href="/notes/kvm.html" class="active">KVM (Kernel-based Virtual Machine)</a></li>
+                                    <li><a href="/notes/kvm-hello-world-experiment.html">kvm-hello-world実験</a></li>
                                     <li><a href="/notes/rust-vmm.html">rust-vmm</a></li>
                                     <li><a href="/notes/microvm-ecosystem.html">コンテナ向け軽量VM技術</a></li>
-                                    <li><a href="/notes/kvm.html" class="active">KVM (Kernel-based Virtual Machine)</a></li>
                                     <li><a href="/notes/hypeman.html">Hypeman</a></li>
                                     <li><a href="/notes/crosvm.html">crosvm</a></li>
                                     <li><a href="/notes/cloud-hypervisor.html">Cloud Hypervisor</a></li>
@@ -355,6 +356,10 @@
 
 <p>カーネルの一部として動くことで、Linuxが既に持っているプロセススケジューラ・メモリ管理・デバイスドライバの資産をそのまま仮想化にも使い回せる、という設計になっている。</p>
 
+<h2>実際に動かしてみる</h2>
+
+<p>QEMU等を使わず<code>/dev/kvm</code>のioctlを直接叩いて最小限のVMを起動する実験を<a href="/notes/kvm-hello-world-experiment.html">kvm-hello-world実験</a>で行った。「VM exit」がどう発生し、ユーザー空間のVMMがどう処理するかを手を動かして確認できる。</p>
+
 <h2>このシリーズの文脈での位置づけ</h2>
 
 <p><a href="/notes/firecracker.html">Firecracker</a>・<a href="/notes/cloud-hypervisor.html">Cloud Hypervisor</a>・<a href="/notes/crosvm.html">crosvm</a>は、いずれもこの「KVMというCPU仮想化の土台」の上に、自前のデバイスモデル(ミニマルなvirtioデバイス群など)を実装したVMMという位置づけになる。<a href="/notes/rust-vmm.html">rust-vmm</a>の<code>kvm-ioctls</code>/<code>kvm-bindings</code>クレートは、この<code>/dev/kvm</code>のioctl呼び出しをRustから安全に扱うためのラッパー。</p>
@@ -380,13 +385,14 @@
                                             <li><a href="/notes/cloud-hypervisor.html">Cloud Hypervisor</a></li>
                                             <li><a href="/notes/hypeman.html">Hypeman</a></li>
                                             <li><a href="/notes/crosvm.html">crosvm</a></li>
+                                            <li><a href="/notes/kvm-hello-world-experiment.html">kvm-hello-world実験</a></li>
                                             <li><a href="/notes/rust-vmm.html">rust-vmm</a></li>
                                             <li><a href="/notes/microvm-ecosystem.html">コンテナ向け軽量VM技術</a></li>
                     
                     </ul>
                 </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-12 23:36 / 更新日時: 2026-08-12 23:36</span>
+                    <span>作成日時: 2026-08-12 23:36 / 更新日時: 2026-08-12 23:42</span>
                     <a class="share-x" href="https://twitter.com/intent/tweet?text=KVM%20%28Kernel-based%20Virtual%20Machine%29&url=https%3A%2F%2F64p.org%2Fnotes%2Fkvm.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
