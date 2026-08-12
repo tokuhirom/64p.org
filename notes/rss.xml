@@ -6,7 +6,254 @@
 <atom:link href="https://64p.org/notes/rss.xml" rel="self" type="application/rss+xml" />
 <description>ちょっと調べたことや検証結果を、AIの力も借りながらメモしていくコーナーです。</description>
 <language>ja</language>
-<lastBuildDate>Thu, 13 Aug 2026 00:20:23 +0900</lastBuildDate>
+<lastBuildDate>Thu, 13 Aug 2026 00:24:26 +0900</lastBuildDate>
+<item>
+<title>librosa</title>
+<link>https://64p.org/notes/librosa.html</link>
+<guid isPermaLink="true">https://64p.org/notes/librosa.html</guid>
+<pubDate>Thu, 13 Aug 2026 00:24:00 +0900</pubDate>
+<description><![CDATA[<h1>librosa</h1>
+
+<p>Pythonの音声・音楽信号処理ライブラリ。MIR（Music Information Retrieval、音楽情報検索）システム構築に必要な基礎的なアルゴリズムとツール群を提供する。NumPy/SciPyの上に構築されており、matplotlibと連携した可視化もできる。ISCライセンス。</p>
+
+<p>2015年のSciPyカンファレンスで発表された論文「librosa: Audio and music signal analysis in python」がベースになっている、研究由来のライブラリ。</p>
+
+<p>インストールは以下のいずれか。</p>
+
+<pre><code class="sh">pip install librosa
+conda install -c conda-forge librosa
+</code></pre>
+
+<h2>モジュール構成</h2>
+
+<table>
+<thead>
+<tr>
+<th> モジュール </th>
+<th> 役割 </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td> <code>librosa.core</code>（トップレベル<code>librosa.*</code>からも直接呼べる） </td>
+<td> 音声ファイルの読み込み(<code>load</code>)、各種スペクトログラム計算など基礎機能 </td>
+</tr>
+<tr>
+<td> <code>librosa.feature</code> </td>
+<td> MFCC、クロマ特徴量、メルスペクトログラム、スペクトル重心など特徴量抽出。<code>delta()</code>で差分特徴量も可 </td>
+</tr>
+<tr>
+<td> <code>librosa.beat</code> </td>
+<td> テンポ推定・ビート検出（<code>beat_track()</code>） </td>
+</tr>
+<tr>
+<td> <code>librosa.onset</code> </td>
+<td> オンセット（音の立ち上がり）検出 </td>
+</tr>
+<tr>
+<td> <code>librosa.effects</code> </td>
+<td> ピッチシフト、タイムストレッチなど時間領域の加工 </td>
+</tr>
+<tr>
+<td> <code>librosa.decompose</code> </td>
+<td> 調波・打楽器成分分離(HPSS)、汎用スペクトログラム分解 </td>
+</tr>
+<tr>
+<td> <code>librosa.segment</code> </td>
+<td> 構造セグメンテーション </td>
+</tr>
+<tr>
+<td> <code>librosa.sequence</code> </td>
+<td> ビタービ復号などの系列モデリング </td>
+</tr>
+<tr>
+<td> <code>librosa.display</code> </td>
+<td> matplotlibベースの波形・スペクトログラム可視化 </td>
+</tr>
+<tr>
+<td> <code>librosa.util</code> </td>
+<td> 正規化・パディング等のユーティリティ </td>
+</tr>
+</tbody>
+</table>
+
+
+<h2>主な用途</h2>
+
+<ul>
+<li>音楽情報検索(MIR): ジャンル分類、テンポ・拍検出、コード認識など</li>
+<li>機械学習の前処理: MFCCやメルスペクトログラムを算出し、音声認識・音響イベント検出モデルの入力にする</li>
+<li>音声加工: ハーモニック/パーカッシブ分離、ピッチ・テンポ変換</li>
+<li>対応フォーマットはWAV/OGG/MP3/FLACなど</li>
+</ul>
+
+
+<p>典型的なワークフローは、<code>librosa.load()</code>で波形を読み込み → <code>librosa.feature.*</code>で特徴量抽出 → 必要に応じて<code>librosa.beat.beat_track()</code>や<code>librosa.effects.hpss()</code>で解析、という流れになる。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://github.com/librosa/librosa">librosa GitHub</a></li>
+<li><a href="https://librosa.org/doc/0.11.0/tutorial.html">librosa Tutorial (0.11.0)</a></li>
+<li><a href="https://kaavyamaha12.medium.com/extracting-audio-features-using-librosa-3be4ff1fe57f">Extracting audio features using Librosa</a></li>
+<li><a href="https://medium.com/@rijuldahiya/a-comprehensive-guide-to-audio-processing-with-librosa-in-python-a49276387a4b">A Comprehensive Guide to Audio Processing with Librosa in Python</a></li>
+</ul>
+
+]]></description>
+</item>
+<item>
+<title>テイラー展開</title>
+<link>https://64p.org/notes/taylor-series.html</link>
+<guid isPermaLink="true">https://64p.org/notes/taylor-series.html</guid>
+<pubDate>Thu, 13 Aug 2026 00:23:00 +0900</pubDate>
+<description><![CDATA[<h1>テイラー展開</h1>
+
+<p><a class="note-tag" href="/notes/tags/math.html">#math</a></p>
+
+<p>関数を、1点での<a href="/notes/derivative.html">微分</a>係数の情報だけを使って多項式（冪級数）で表現する手法。</p>
+
+<div class="math-display">
+f(x) = \sum_{n=0}^{\infty} \frac{f^{(n)}(a)}{n!} (x-a)^n = f(a) + f'(a)(x-a) + \frac{f''(a)}{2!}(x-a)^2 + \cdots
+</div>
+
+
+<p>点 <span class="math-inline">a</span> を中心に展開したものをテイラー級数、特に <span class="math-inline">a = 0</span> を中心にしたものを<strong>マクローリン級数</strong>と呼ぶ。</p>
+
+<h2>直感 — 接線近似の高次版</h2>
+
+<p><a href="/notes/derivative.html">微分</a>による一次近似 <span class="math-inline">f(a+h) \approx f(a) + f'(a)h</span>（接線で代用する）の精度を、2次・3次…の項を足して上げていったもの。1次で「傾き」、2次で「曲がり具合」、と高階の導関数が形の情報を順に補っていき、次数を上げるほど元の関数に近づく。</p>
+
+<h2>剰余項と収束</h2>
+
+<p>有限次で打ち切った<strong>テイラー多項式</strong>と元の関数との差が剰余項 <span class="math-inline">R_n(x)</span>。剰余項が <span class="math-inline">n \to \infty</span> で 0 に収束する範囲でのみ、テイラー級数は元の関数に一致する。<span class="math-inline">e<sup>x</sup></span>, <span class="math-inline">\sin x</span>, <span class="math-inline">\cos x</span> は全実数で収束する代表例。</p>
+
+<div class="math-display">
+e^x = 1 + x + \frac{x^2}{2!} + \frac{x^3}{3!} + \cdots
+</div>
+
+
+<h2>用途</h2>
+
+<ul>
+<li><strong>数値計算</strong> — 関数電卓やライブラリが <span class="math-inline">\sin</span> や <span class="math-inline">e<sup>x</sup></span> を計算する際の基礎（実装では精度最適化した多項式近似が使われるが、発想の原点）</li>
+<li><strong>物理の近似</strong> — 「<span class="math-inline">\theta</span> が小さいとき <span class="math-inline">\sin\theta \approx \theta</span>」のような微小量近似は、テイラー展開を1次で打ち切ったもの</li>
+<li><strong>オイラーの公式</strong> — <span class="math-inline">e^{ix}</span>, <span class="math-inline">\cos x</span>, <span class="math-inline">\sin x</span> のマクローリン級数を見比べると <span class="math-inline">e^{ix} = \cos x + i \sin x</span> が導ける。<a href="/notes/fourier-transform.html">フーリエ変換</a>の核 <span class="math-inline">e^{-i\omega t}</span> の背後にある関係式</li>
+</ul>
+
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://mathresearch.utsa.edu/wiki/index.php?title=Taylor_and_Maclaurin_Series">Taylor and Maclaurin Series - UTSA</a></li>
+<li><a href="https://courses.lumenlearning.com/calculus2/chapter/taylors-theorem-with-remainder/">Taylor&rsquo;s Theorem with Remainder and Convergence - Lumen Learning</a></li>
+<li><a href="https://www.parabola.unsw.edu.au/sites/default/files/2025-04/vol61_no1_7.pdf">An introduction to Taylor series and their applications - Parabola (UNSW)</a></li>
+</ul>
+
+]]></description>
+</item>
+<item>
+<title>勾配降下法</title>
+<link>https://64p.org/notes/gradient-descent.html</link>
+<guid isPermaLink="true">https://64p.org/notes/gradient-descent.html</guid>
+<pubDate>Thu, 13 Aug 2026 00:23:00 +0900</pubDate>
+<description><![CDATA[<h1>勾配降下法</h1>
+
+<p><a class="note-tag" href="/notes/tags/math.html">#math</a> <a class="note-tag" href="/notes/tags/machine-learning.html">#machine-learning</a></p>
+
+<p>微分可能な関数の（局所）最小値を反復計算で探す最適化アルゴリズム。機械学習で損失関数を最小化するパラメータを求める際の基本手法。</p>
+
+<div class="math-display">
+\theta_{t+1} = \theta_t - \eta \, \nabla f(\theta_t)
+</div>
+
+
+<p>勾配 <span class="math-inline">\nabla f</span> は<a href="/notes/derivative.html">微分</a>係数の多変数版（各変数での偏微分を並べたベクトル）で、「その点で関数が最も急に増える方向」を指す。その<strong>逆方向</strong>に少しずつ進めば関数値が下がっていく、というのが全体のアイデア。霧の中で山を下るとき、足元の傾きだけを頼りに一番急な下り方向へ一歩ずつ進むのに例えられる。</p>
+
+<h2>学習率</h2>
+
+<p>ステップ幅を決める係数 <span class="math-inline">\eta</span> を<strong>学習率</strong>と呼ぶ。代表的なハイパーパラメータで、トレードオフがある。</p>
+
+<ul>
+<li>小さすぎる — 収束までの反復回数が膨大になり学習が遅い</li>
+<li>大きすぎる — 最小値を飛び越えて振動・発散する</li>
+</ul>
+
+
+<h2>バリエーション</h2>
+
+<p>勾配を計算するときに使うデータ量で分類される。</p>
+
+<ul>
+<li><strong>バッチ勾配降下法</strong> — 全訓練データで勾配を計算。正確だが1ステップが重い</li>
+<li><strong>確率的勾配降下法（SGD）</strong> — 1サンプルだけで勾配を近似。1ステップが軽く、ノイズが局所解からの脱出に効くこともある</li>
+<li><strong>ミニバッチ勾配降下法</strong> — 小さなサブセットで勾配を近似する折衷案。深層学習の実務ではこれが標準</li>
+</ul>
+
+
+<p>学習率を自動調整する発展形として Momentum、AdaGrad、Adam などがある。</p>
+
+<h2>機械学習との関係</h2>
+
+<p>ニューラルネットワークの学習は「損失関数をパラメータで偏微分した勾配を誤差逆伝播法（backpropagation）で効率よく計算し、勾配降下法でパラメータを更新する」の反復。導関数が 0 になる点を解析的に解けない巨大な関数でも、勾配さえ計算できれば数値的に最小化へ向かえるのがポイント。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://builtin.com/data-science/gradient-descent">What Is Gradient Descent? - Built In</a></li>
+<li><a href="https://www.ibm.com/think/topics/learning-rate">What is Learning Rate in Machine Learning? - IBM</a></li>
+<li><a href="https://medium.com/munchy-bytes/navigating-the-learning-curve-gradient-descent-stochastic-gradient-descent-in-ml-e8ec03efa673">A Guide to Gradient Descent and Stochastic Gradient Descent - Medium</a></li>
+</ul>
+
+]]></description>
+</item>
+<item>
+<title>微分方程式</title>
+<link>https://64p.org/notes/differential-equation.html</link>
+<guid isPermaLink="true">https://64p.org/notes/differential-equation.html</guid>
+<pubDate>Thu, 13 Aug 2026 00:23:00 +0900</pubDate>
+<description><![CDATA[<h1>微分方程式</h1>
+
+<p><a class="note-tag" href="/notes/tags/math.html">#math</a></p>
+
+<p>未知の<strong>関数</strong>とその導関数（<a href="/notes/derivative.html">微分</a>）の間の関係を記述した方程式。普通の方程式の解が「数」なのに対し、微分方程式の解は「関数」になる。「変化のルール（変化率）から挙動そのもの（関数）を復元する」問題であり、物理・工学でのモデル記述の基本言語。</p>
+
+<h2>例</h2>
+
+<ul>
+<li><strong>指数増殖</strong> — <span class="math-inline">\frac{dy}{dt} = ky</span>（増加率が現在量に比例）。解は <span class="math-inline">y = Ce^{kt}</span>。人口増加・放射性崩壊・複利</li>
+<li><strong>ニュートンの冷却法則</strong> — <span class="math-inline">\frac{dy}{dt} = k(A - y)</span>（温度差に比例して冷める）</li>
+<li><strong>減衰振動</strong> — <span class="math-inline">m\frac{d<sup>2x</sup>}{dt<sup>2</sup>} + c\frac{dx}{dt} + kx = f(t)</span>。バネ・ダンパー系や RLC 回路がこの形</li>
+</ul>
+
+
+<h2>分類</h2>
+
+<ul>
+<li><strong>常微分方程式（ODE）</strong> — 未知関数が1変数で、通常の導関数だけを含む。1次元の力学系のモデルに多い</li>
+<li><strong>偏微分方程式（PDE）</strong> — 未知関数が多変数で、偏導関数を含む。熱・波動・流体・電磁気・量子力学など、空間的な広がりを持つ系のモデルに多い</li>
+<li><strong>階数（order）</strong> — 含まれる導関数の最高階。上の冷却法則は1階、減衰振動は2階</li>
+<li><strong>線形/非線形</strong> — 未知関数とその導関数について線形かどうか。線形なら解の重ね合わせが効き、理論が整っている</li>
+</ul>
+
+
+<h2>解き方</h2>
+
+<ul>
+<li><strong>解析的に解く</strong> — 変数分離などの求積法（<a href="/notes/integral.html">積分</a>に帰着させる）、<a href="/notes/laplace-transform.html">ラプラス変換</a>（微分を代数演算に変えて機械的に解く）、<a href="/notes/fourier-transform.html">フーリエ変換</a>（偏微分方程式向き）など。ただし解析解が求まるのは限られたクラスだけ</li>
+<li><strong>数値的に解く</strong> — オイラー法・ルンゲクッタ法などで数値解を計算する。実務ではこちらが主流</li>
+</ul>
+
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://tutorial.math.lamar.edu/classes/de/definitions.aspx">Differential Equations - Definitions - Paul&rsquo;s Online Notes (Lamar University)</a></li>
+<li><a href="https://web.uvic.ca/~tbazett/diffyqs/classification_section.html">Classification of differential equations - University of Victoria</a></li>
+<li><a href="https://phas.ubc.ca/~berciu/TEACHING/PHYS312/LECTURES/FILES/defs.pdf">Definitions and important facts regarding ODEs and PDEs - UBC</a></li>
+</ul>
+
+]]></description>
+</item>
 <item>
 <title>積分</title>
 <link>https://64p.org/notes/integral.html</link>
@@ -97,9 +344,9 @@ f'(a) = \lim_{h \to 0} \frac{f(a+h) - f(a)}{h}
 <h2>応用</h2>
 
 <ul>
-<li><strong>最適化</strong> — 導関数が 0 になる点が極値の候補。機械学習の勾配降下法もこの延長</li>
-<li><strong>微分方程式</strong> — 未知関数とその導関数の関係式。物理・工学のモデル記述の基本言語。<a href="/notes/laplace-transform.html">ラプラス変換</a>は微分を代数演算に変えてこれを解く道具</li>
-<li><strong>近似</strong> — 接線による一次近似（<span class="math-inline">f(a+h) \approx f(a) + f'(a)h</span>）、テイラー展開への入り口</li>
+<li><strong>最適化</strong> — 導関数が 0 になる点が極値の候補。機械学習の<a href="/notes/gradient-descent.html">勾配降下法</a>もこの延長</li>
+<li><strong><a href="/notes/differential-equation.html">微分方程式</a></strong> — 未知関数とその導関数の関係式。物理・工学のモデル記述の基本言語。<a href="/notes/laplace-transform.html">ラプラス変換</a>は微分を代数演算に変えてこれを解く道具</li>
+<li><strong>近似</strong> — 接線による一次近似（<span class="math-inline">f(a+h) \approx f(a) + f'(a)h</span>）、<a href="/notes/taylor-series.html">テイラー展開</a>への入り口</li>
 </ul>
 
 
@@ -119,7 +366,7 @@ f'(a) = \lim_{h \to 0} \frac{f(a+h) - f(a)}{h}
 <pubDate>Thu, 13 Aug 2026 00:14:00 +0900</pubDate>
 <description><![CDATA[<h1>周波数領域の変換</h1>
 
-<p>時間領域（あるいは空間領域）の信号・関数を、周波数領域に写してから扱う手法群のハブノート。「時間領域では難しい操作（微分方程式・畳み込み・スペクトル分析）が、変換先では簡単な代数演算になる」という共通の発想でつながっている。</p>
+<p>時間領域（あるいは空間領域）の信号・関数を、周波数領域に写してから扱う手法群のハブノート。「時間領域では難しい操作（<a href="/notes/differential-equation.html">微分方程式</a>・畳み込み・スペクトル分析）が、変換先では簡単な代数演算になる」という共通の発想でつながっている。</p>
 
 <p><a class="note-tag" href="/notes/tags/math.html">#math</a> <a class="note-tag" href="/notes/tags/signal-processing.html">#signal-processing</a> <a class="note-tag" href="/notes/tags/moc.html">#moc</a></p>
 
@@ -295,7 +542,7 @@ F(s) = \int_0^\infty f(t)\, e^{-st}\, dt, \qquad s = \sigma + j\omega
 </div>
 
 
-<p>一番のご利益は、<strong>時間領域での<a href="/notes/derivative.html">微分</a>・<a href="/notes/integral.html">積分</a>が、s領域では「<span class="math-inline">s</span> を掛ける／<span class="math-inline">s</span> で割る」という代数演算になる</strong>こと。微分方程式が代数方程式に変換されるので、「変換 → 代数的に解く → 逆変換」という手順で常微分方程式が機械的に解ける。初期条件も変換の時点で自然に式へ組み込まれる。</p>
+<p>一番のご利益は、<strong>時間領域での<a href="/notes/derivative.html">微分</a>・<a href="/notes/integral.html">積分</a>が、s領域では「<span class="math-inline">s</span> を掛ける／<span class="math-inline">s</span> で割る」という代数演算になる</strong>こと。<a href="/notes/differential-equation.html">微分方程式</a>が代数方程式に変換されるので、「変換 → 代数的に解く → 逆変換」という手順で常微分方程式が機械的に解ける。初期条件も変換の時点で自然に式へ組み込まれる。</p>
 
 <h2>直感: 「減衰因子つきフーリエ変換」</h2>
 
@@ -378,7 +625,7 @@ f(t) = \frac{1}{2\pi i} \lim_{T\to\infty} \int_{\gamma - iT}^{\gamma + iT} e^{st
 
 <ul>
 <li><strong>畳み込み定理</strong> — 時間領域の畳み込みは周波数領域の掛け算になる（逆も然り）。フィルタ処理や高速な畳み込み計算の基礎</li>
-<li><strong>微分</strong> — 時間領域の<a href="/notes/derivative.html">微分</a>は周波数領域では <span class="math-inline">i\omega</span> 倍になる。偏微分方程式（熱方程式・波動方程式）の求解に効く</li>
+<li><strong>微分</strong> — 時間領域の<a href="/notes/derivative.html">微分</a>は周波数領域では <span class="math-inline">i\omega</span> 倍になる。<a href="/notes/differential-equation.html">偏微分方程式</a>（熱方程式・波動方程式）の求解に効く</li>
 <li><strong>シフト</strong> — 時間シフトは位相因子の掛け算になる</li>
 <li><strong>不確定性</strong> — 時間領域で局在した関数ほど周波数領域では広がる（逆も然り）。信号解析における不確定性原理</li>
 </ul>
@@ -1527,200 +1774,6 @@ graph LR
 <h2>関連</h2>
 
 <p>Pythonエコシステムでは<a href="/notes/ruff.html">Ruff</a>が「Rust製・高速・既存ツール統合」というまったく同じムーブメントを体現している。</p>
-]]></description>
-</item>
-<item>
-<title>ESLint</title>
-<link>https://64p.org/notes/eslint.html</link>
-<guid isPermaLink="true">https://64p.org/notes/eslint.html</guid>
-<pubDate>Wed, 12 Aug 2026 23:17:00 +0900</pubDate>
-<description><![CDATA[<h1>ESLint</h1>
-
-<p>JavaScript向けの静的解析ツール（リンター）のデファクト標準。Nicholas C. Zakas氏が2013年6月に公開した（当初の名前はJSCheckで、1ヶ月後にESLintに改名）。MITライセンスで、2019年からは<a href="/notes/openjs-foundation.html">OpenJS Foundation</a>傘下のプロジェクト。2025年末時点で週間ダウンロード数は7,000万を超え、最も広く使われているJSリンターとなっている。 <a class="note-tag" href="/notes/tags/javascript.html">#javascript</a></p>
-
-<h2>プラガブルという設計思想</h2>
-
-<p>先行する<a href="/notes/jslint.html">JSLint</a>・<a href="/notes/jshint.html">JSHint</a>には「独自ルールを追加できない」という制約があり、それへの不満がESLint誕生の動機になった。ESLintではすべてのルールが個別に有効/無効を切り替えられ、独自ルールを実行時にプラグインとして読み込める。公式サイトも &ldquo;Pluggable JavaScript Linter&rdquo; を掲げている。TypeScript対応も<a href="/notes/typescript-eslint.html">typescript-eslint</a>というプラグインとして提供される、というようにエコシステム全体がこのプラグイン機構の上に成り立っている。</p>
-
-<h2>flat config</h2>
-
-<p>長年使われてきた <code>.eslintrc</code> 形式（eslintrc config）を置き換える新しい設定システム。<code>eslint.config.js</code> にJavaScriptの配列としてフラットに設定を書く。最初のRFCからv9.0.0（2024年4月）でのデフォルト化まで約5年をかけ、エコシステム全体が移行できるよう意図的にゆっくりロールアウトされた。次期メジャーバージョンのv10.0.0でeslintrc形式のサポートは完全に削除される予定（2025年11月にalpha、12月にbetaが出ておりリリースが近い）。</p>
-
-<h2>JavaScriptの外への拡張</h2>
-
-<p>2024年に「言語非依存（language-agnostic）なリンターになる」方針を発表し、言語プラグイン機構を導入した。公式プラグインとして @eslint/json（JSON/JSONC/JSON5、2024年10月）、@eslint/markdown（同）、@eslint/css（2025年2月）が提供され、コミュニティのhtml-eslint（2025年5月）も合わせると、JavaScript・CSS・HTMLというWebの三要素すべてをESLintでlintできるようになった。</p>
-
-<h2>Rust製新世代ツールとの関係</h2>
-
-<p><a href="/notes/biome.html">Biome</a>や<a href="/notes/oxc.html">Oxc</a>（oxlint）などRust製の新世代リンターが「ESLint比で何倍高速」と比較対象にする基準点になっている（oxlintはESLintの50〜100倍高速を謳う）。一方ESLint自身もv9.34.0でマルチスレッドlintを導入し、大規模プロジェクトで30〜300%の性能向上を実現するなど、性能面での改善を進めている。</p>
-
-<h2><a href="/notes/javascript-linters-formatters.html">JavaScriptのリンター・フォーマッター</a>の中での位置づけ</h2>
-
-<p>従来世代（JS製・単機能）のリンター側の代表。フォーマッター側の代表である<a href="/notes/prettier.html">Prettier</a>と組み合わせて使われることが多い。</p>
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://eslint.org/">ESLint - Pluggable JavaScript Linter</a></li>
-<li><a href="https://en.wikipedia.org/wiki/ESLint">ESLint - Wikipedia</a></li>
-<li><a href="https://eslint.org/blog/2025/05/eslint-v9.0.0-retrospective/">ESLint v9.0.0: A retrospective - ESLint</a></li>
-<li><a href="https://eslint.org/blog/2024/10/eslint-json-markdown-support/">ESLint now officially supports linting of JSON and Markdown - ESLint</a></li>
-<li><a href="https://eslint.org/blog/2025/02/eslint-css-support/">ESLint now officially supports linting of CSS - ESLint</a></li>
-<li><a href="https://eslint.org/blog/2025/05/eslint-html-plugin/">ESLint can now lint HTML using the html-eslint language plugin - ESLint</a></li>
-<li><a href="https://eslint.org/blog/2026/01/eslint-2025-year-review/">ESLint&rsquo;s 2025 year in review - ESLint</a></li>
-</ul>
-
-]]></description>
-</item>
-<item>
-<title>microVM</title>
-<link>https://64p.org/notes/microvm.html</link>
-<guid isPermaLink="true">https://64p.org/notes/microvm.html</guid>
-<pubDate>Wed, 12 Aug 2026 23:14:00 +0900</pubDate>
-<description><![CDATA[<h1>microVM</h1>
-
-<p>デバイスモデルを最小限まで削ぎ落とした軽量な仮想マシン、およびそれを実現する仕組み。伝統的なVMが持つカーネルレベルの分離を保ちつつ、コンテナ並みの起動速度・リソース効率を狙う。 <a class="note-tag" href="/notes/tags/virtualization.html">#virtualization</a></p>
-
-<h2>特徴</h2>
-
-<ul>
-<li>起動時間はミリ秒〜数百ミリ秒程度（伝統的なVMは秒〜分単位）</li>
-<li>1台あたりのメモリオーバーヘッドが数MiB程度と小さい</li>
-<li>レガシーなデバイスエミュレーション・幅広いハードウェアサポートなど、クラウドワークロードに不要な機能を削ぎ落とし、アタックサーフェスと起動時間を削減している</li>
-<li>各microVMは専用のカーネル・専用のメモリ空間・仮想化されたデバイスを持ち、コンテナのようなカーネル共有はしない</li>
-</ul>
-
-
-<h2>なぜ起動が速いか</h2>
-
-<p><a href="/notes/firecracker.html">Firecracker</a>を例にすると、主に3つの要因が重なっている。</p>
-
-<ol>
-<li><strong>BIOS・ブートローダーを省略した直接カーネルブート</strong> — Linuxカーネル自体はBIOS/ブートローダーを必須としない。「64-bit Linux Boot Protocol」を使い、16-bitリアルモードからではなくカーネルのprotected-modeエントリポイントへ直接ジャンプする。ACPIテーブルもカーネル起動に必要な最小限しか用意しない。</li>
-<li><strong>最小限のデバイスモデル</strong> — USB・PCIバス・レガシーデバイスなど不要なハードウェアエミュレーションを排除。Firecrackerが提供するデバイスは実質5種類のみ(<a href="/notes/virtio.html">virtio</a>-net、virtio-block、virtio-vsock、シリアルコンソール、最小限のキーボードコントローラ)。</li>
-<li><strong>ミニマルなVMMコード</strong> — 汎用ハイパーバイザーが持つ幅広いハードウェアサポートのコードパスを持たないため、実行すべきコード量自体が少ない。</li>
-</ol>
-
-
-<p>これらにより、Firecrackerでは起動125ミリ秒未満・メモリオーバーヘッド5MiB未満を実現している。<a href="/notes/hypeman.html">Hypeman</a>のstandby/restoreのような、起動済みVMのスナップショットからの復元（ミリ秒単位）を使えばさらに短縮できる。</p>
-
-<h2>代表的な実装</h2>
-
-<ul>
-<li><a href="/notes/firecracker.html">Firecracker</a> — AWSが開発。AWS Lambda/Fargateを支える</li>
-<li><a href="/notes/cloud-hypervisor.html">Cloud Hypervisor</a> — Intel主導、Rust製。<a href="/notes/rust-vmm.html">rust-vmm</a>プロジェクトの成果を活用</li>
-</ul>
-
-
-<h2>用途</h2>
-
-<p>サーバーレス実行環境やAIエージェント向けサンドボックスなど、マルチテナントで多数の短命なワークロードを高速に隔離・起動する必要がある場面で採用される。<a href="/notes/hypeman.html">Hypeman</a>はFirecracker/Cloud Hypervisor/<a href="/notes/qemu.html">QEMU</a>/Apple Virtualization.frameworkを切り替え可能な形で統一的に扱うランタイム。</p>
-
-<h2><a href="/notes/microvm-ecosystem.html">コンテナ向け軽量VM技術</a>の中での位置づけ</h2>
-
-<p>コンテナ向け軽量VM技術群の土台となる概念そのもの。</p>
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://www.koyeb.com/blog/what-is-a-microvm">What is a microVM? - Koyeb</a></li>
-<li><a href="https://northflank.com/blog/what-is-aws-firecracker">What is AWS Firecracker? The microVM technology, explained | Northflank</a></li>
-<li><a href="https://github.com/firecracker-microvm/firecracker/blob/main/FAQ.md">firecracker/FAQ.md at main · firecracker-microvm/firecracker</a></li>
-<li><a href="https://unixism.net/2019/10/how-aws-firecracker-works-a-deep-dive/">How AWS Firecracker works: a deep dive – Unixism</a></li>
-<li><a href="https://github.com/firecracker-microvm/firecracker/blob/main/docs/rootfs-and-kernel-setup.md">firecracker/docs/rootfs-and-kernel-setup.md at main · firecracker-microvm/firecracker</a></li>
-</ul>
-
-]]></description>
-</item>
-<item>
-<title>Hypeman</title>
-<link>https://64p.org/notes/hypeman.html</link>
-<guid isPermaLink="true">https://64p.org/notes/hypeman.html</guid>
-<pubDate>Wed, 12 Aug 2026 23:14:00 +0900</pubDate>
-<description><![CDATA[<h1>Hypeman</h1>
-
-<p><a href="https://www.kernel.sh">Kernel</a>社（"Crazy fast, open source infra for AI agents to access the Internet"を掲げる企業）が開発する、OCIコンテナイメージを<a href="/notes/microvm.html">microVM</a>上で動かすマルチハイパーバイザーランタイム。Go製、MITライセンス。2025年10月にリポジトリ作成、star数310（2026年8月時点）。 <a class="note-tag" href="/notes/tags/virtualization.html">#virtualization</a> <a class="note-tag" href="/notes/tags/go.html">#go</a></p>
-
-<h2>コンセプト</h2>
-
-<p>コンテナ（OCIイメージ）を、Dockerのような名前空間分離ではなくVM上で動かす。VMベースにすることでカーネルレベルの分離を確保しつつ、Docker互換のCLI体験(<code>run</code>/<code>exec</code>/<code>stop</code>/<code>ps</code>/<code>logs</code>/<code>pull</code>)を提供する。</p>
-
-<h2>対応ハイパーバイザー</h2>
-
-<ul>
-<li>Linux: <a href="/notes/cloud-hypervisor.html">Cloud Hypervisor</a>、<a href="/notes/firecracker.html">Firecracker</a>、<a href="/notes/qemu.html">QEMU</a>（<a href="/notes/kvm.html">KVM</a>必須）</li>
-<li>macOS: Apple Silicon上のVirtualization.framework（Rosetta経由でlinux/amd64イメージも実行可）</li>
-</ul>
-
-
-<h2>主な機能</h2>
-
-<ul>
-<li><strong>Standby/restore</strong>: VMをディスクにスナップショットしてミリ秒単位で再開できる</li>
-<li><strong>組み込みIngress</strong>: TLS終端・サブドメインルーティング対応のリバースプロキシを内蔵</li>
-<li><strong>GPUパススルー</strong>: vGPU/VFIOデバイス対応</li>
-<li><strong>リモートAPI</strong>: JWT認証されたサーバーと別CLIクライアントによるリモート操作</li>
-<li><strong>リモートレジストリへのpush</strong>: キャッシュ済みイメージをAWS ECR/Docker Hub/ghcrなど任意のOCIレジストリへdocker流の一時的な認証情報貸与方式でエクスポート可能</li>
-</ul>
-
-
-<h2>位置づけ</h2>
-
-<p>Firecracker/Cloud HypervisorのようなVMM(Virtual Machine Monitor)単体を、Docker的な使い勝手のCLI/APIで統一的に扱えるようにするレイヤー。開発元がAI agent向けインフラ企業であることから、サンドボックス実行環境としての用途が想定されると見られる（README上に明記はないため推測）。</p>
-
-<h2><a href="/notes/microvm-ecosystem.html">コンテナ向け軽量VM技術</a>の中での位置づけ</h2>
-
-<p>VMMを直接扱わず、OCIイメージのpull・実行というDocker互換の使い勝手を提供する統合レイヤーの一つ。</p>
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://github.com/kernel/hypeman">GitHub - kernel/hypeman</a></li>
-<li><a href="https://www.kernel.sh">Kernel</a></li>
-</ul>
-
-]]></description>
-</item>
-<item>
-<title>Cloud Hypervisor</title>
-<link>https://64p.org/notes/cloud-hypervisor.html</link>
-<guid isPermaLink="true">https://64p.org/notes/cloud-hypervisor.html</guid>
-<pubDate>Wed, 12 Aug 2026 23:14:00 +0900</pubDate>
-<description><![CDATA[<h1>Cloud Hypervisor</h1>
-
-<p>Rust製のオープンソースVMM(Virtual Machine Monitor)。最小限のハードウェアエミュレーションでモダンなクラウドワークロードを動かすことに特化している。<a href="/notes/kvm.html">KVM</a>およびMicrosoft Hypervisor(MSHV)上で動作し、x86-64・AArch64をサポート。Linux Foundation傘下のプロジェクト。 <a class="note-tag" href="/notes/tags/virtualization.html">#virtualization</a> <a class="note-tag" href="/notes/tags/rust.html">#rust</a></p>
-
-<h2><a href="/notes/rust-vmm.html">rust-vmm</a>との関係</h2>
-
-<p>rust-vmmプロジェクト（仮想化用のRust製クレートを各プロジェクト間で共有・再利用する取り組み）の理念を採用しており、コードの大部分は<a href="/notes/firecracker.html">Firecracker</a>やcrosvmの実装をベースにしている。</p>
-
-<h2>特徴</h2>
-
-<ul>
-<li>CPU・メモリ・デバイスのホットプラグに対応</li>
-<li>Windows/Linux両方のゲストOSを実行可能</li>
-<li>vhost-userによるデバイスオフロード</li>
-<li>起動時間は約200ms</li>
-<li>Intelエンジニアが中心となりつつ、MicrosoftやArmなど他組織からの継続的なコントリビューションもある</li>
-</ul>
-
-
-<h2>用途</h2>
-
-<p><a href="/notes/microvm.html">microVM</a>型のVMMとして、<a href="/notes/hypeman.html">Hypeman</a>など複数ハイパーバイザーを切り替え可能なランタイムの選択肢の一つに採用されている。</p>
-
-<h2><a href="/notes/microvm-ecosystem.html">コンテナ向け軽量VM技術</a>の中での位置づけ</h2>
-
-<p><a href="/notes/firecracker.html">Firecracker</a>と並ぶ、土台となるVMM実装の一つ。</p>
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://github.com/cloud-hypervisor/cloud-hypervisor">GitHub - cloud-hypervisor/cloud-hypervisor</a></li>
-<li><a href="https://www.cloudhypervisor.org/docs/prologue/introduction/">Introduction - Cloud Hypervisor</a></li>
-<li><a href="https://thenewstack.io/rust-based-cloud-hypervisor-heads-to-linux-foundation/">Rust-Based Cloud Hypervisor Heads to Linux Foundation - The New Stack</a></li>
-</ul>
-
 ]]></description>
 </item>
 </channel>
