@@ -6,7 +6,58 @@
 <atom:link href="https://64p.org/notes/rss.xml" rel="self" type="application/rss+xml" />
 <description>ちょっと調べたことや検証結果を、AIの力も借りながらメモしていくコーナーです。</description>
 <language>ja</language>
-<lastBuildDate>Wed, 12 Aug 2026 23:33:47 +0900</lastBuildDate>
+<lastBuildDate>Wed, 12 Aug 2026 23:36:21 +0900</lastBuildDate>
+<item>
+<title>KVM (Kernel-based Virtual Machine)</title>
+<link>https://64p.org/notes/kvm.html</link>
+<guid isPermaLink="true">https://64p.org/notes/kvm.html</guid>
+<pubDate>Wed, 12 Aug 2026 23:36:00 +0900</pubDate>
+<description><![CDATA[<h1>KVM (Kernel-based Virtual Machine)</h1>
+
+<p>LinuxカーネルにビルトインされたCPU仮想化機能。CPUが持つハードウェア仮想化支援機能(Intel VT-x / AMD-V)を、<code>/dev/kvm</code>というデバイスファイル経由でユーザー空間のプログラムに使わせる。2007年、Linuxカーネル2.6.20にマージされた。 <a class="note-tag" href="/notes/tags/virtualization.html">#virtualization</a> <a class="note-tag" href="/notes/tags/linux.html">#linux</a></p>
+
+<h2>KVM単体ではVMは動かない</h2>
+
+<p>KVMは<strong>デバイスのエミュレーションを一切やらない</strong>。ディスクI/O、ネットワークアダプタ、画面出力、USB、PCIデバイス、ファームウェア(BIOS相当)——これらはすべてKVMの管轄外で、QEMUや<a href="/notes/firecracker.html">Firecracker</a>、<a href="/notes/cloud-hypervisor.html">Cloud Hypervisor</a>のような「ユーザー空間のVMM」側が担当する。KVMが提供するのは「CPUを仮想的に走らせる」部分だけ。</p>
+
+<h2><code>/dev/kvm</code>とioctlインターフェース</h2>
+
+<p>VMMと<code>/dev/kvm</code>の間のやり取りはioctl呼び出しで行われる。</p>
+
+<ul>
+<li><code>KVM_CREATE_VM</code> — VM用のファイルディスクリプタを作る</li>
+<li><code>KVM_CREATE_VCPU</code> — 仮想CPU(1つのLinuxスレッドとして実装される)を割り当てる</li>
+<li><code>KVM_SET_USER_MEMORY_REGION</code> — ゲストの物理メモリをVMのアドレス空間にマップする</li>
+<li><code>KVM_RUN</code> — 実際にゲストCPUをホストCPU上で直接実行させる</li>
+</ul>
+
+
+<p>VMMが<code>KVM_RUN</code>を呼ぶと、ゲストのコードがホストCPU上でほぼネイティブ速度で直接実行される。ゲストがI/Oを起こすなど「VM exit」が発生するとKVMから制御がVMM側に戻り、VMM側がそのデバイス動作をエミュレートしてからまたKVMに実行を戻す、というループになっている。</p>
+
+<h2>なぜカーネル内蔵なのか</h2>
+
+<p>カーネルの一部として動くことで、Linuxが既に持っているプロセススケジューラ・メモリ管理・デバイスドライバの資産をそのまま仮想化にも使い回せる、という設計になっている。</p>
+
+<h2>このシリーズの文脈での位置づけ</h2>
+
+<p><a href="/notes/firecracker.html">Firecracker</a>・<a href="/notes/cloud-hypervisor.html">Cloud Hypervisor</a>・<a href="/notes/crosvm.html">crosvm</a>は、いずれもこの「KVMというCPU仮想化の土台」の上に、自前のデバイスモデル(ミニマルなvirtioデバイス群など)を実装したVMMという位置づけになる。<a href="/notes/rust-vmm.html">rust-vmm</a>の<code>kvm-ioctls</code>/<code>kvm-bindings</code>クレートは、この<code>/dev/kvm</code>のioctl呼び出しをRustから安全に扱うためのラッパー。</p>
+
+<h2><a href="/notes/microvm-ecosystem.html">コンテナ向け軽量VM技術</a>の中での位置づけ</h2>
+
+<p><a href="/notes/firecracker.html">Firecracker</a>・<a href="/notes/cloud-hypervisor.html">Cloud Hypervisor</a>・<a href="/notes/crosvm.html">crosvm</a>が共通して依拠する、Linuxカーネル側のCPU仮想化基盤。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/Kernel-based_Virtual_Machine">Kernel-based Virtual Machine - Wikipedia</a></li>
+<li><a href="https://www.redhat.com/en/topics/virtualization/what-is-KVM">What is KVM? | Red Hat</a></li>
+<li><a href="https://lwn.net/Articles/658511/">Using the KVM API - LWN.net</a></li>
+<li><a href="https://docs.kernel.org/virt/kvm/api.html">The Definitive KVM API Documentation</a></li>
+<li><a href="https://medium.com/@kuldeepranjan39/virtualization-d677d8390d31">From Emulation to Virtualization: How QEMU and KVM Work Together</a></li>
+</ul>
+
+]]></description>
+</item>
 <item>
 <title>LLMテキストの電子透かし</title>
 <link>https://64p.org/notes/llm-text-watermarking.html</link>
@@ -257,6 +308,48 @@ flowchart TD
 ]]></description>
 </item>
 <item>
+<title>crosvm</title>
+<link>https://64p.org/notes/crosvm.html</link>
+<guid isPermaLink="true">https://64p.org/notes/crosvm.html</guid>
+<pubDate>Wed, 12 Aug 2026 23:29:00 +0900</pubDate>
+<description><![CDATA[<h1>crosvm</h1>
+
+<p>Googleが開発するRust製の<a href="/notes/microvm.html">軽量VM</a>向けVMM(Virtual Machine Monitor)。元々はChromeOS上でLinux環境(Crostini)やAndroidゲスト(ARCVM)を動かすために開発されたが、現在はAndroidのTerminal App、Cuttlefish、Windowsなど複数の製品・プラットフォームで使われている。 <a class="note-tag" href="/notes/tags/virtualization.html">#virtualization</a> <a class="note-tag" href="/notes/tags/rust.html">#rust</a></p>
+
+<h2>セキュリティ設計: process-per-deviceモデル</h2>
+
+<ul>
+<li>Main Processがゲストの初期化と中核のオーケストレーションを担当</li>
+<li>各virtioデバイスは個別のDevice Processとしてforkされる(process-per-device)</li>
+<li>各デバイスプロセスはMinijailでVFS/PID/User/Networkの名前空間分離により隔離され、そのデバイスに必要なシステムコールのみを許可する厳格なBPFフィルタが適用される</li>
+</ul>
+
+
+<p>強い隔離とメモリ安全な実装によるセキュリティを重視した設計思想を持つ。</p>
+
+<h2>機能</h2>
+
+<p>io_uring・vhost、内部の非同期ランタイム(<code>cros_async</code>)を活用し、モダンなワークロード向けに最適化されている。virtio-fs/virtio-9pによるファイルシステム共有のほか、Console・RNG・Balloon・Vsock・TPM・Pmem・ビデオデコード/エンコードなど幅広いvirtioデバイスに対応する。</p>
+
+<h2><a href="/notes/rust-vmm.html">rust-vmm</a>との関係</h2>
+
+<p><a href="/notes/firecracker.html">Firecracker</a>と並び、rust-vmmプロジェクト発足のきっかけとなった2つのRust製VMMの一つ。<a href="/notes/kvm.html">KVM</a>呼び出しやメモリ管理まわりでFirecrackerと似たコードを別々に持っていたことが、rust-vmmでのクレート共有につながった。</p>
+
+<h2><a href="/notes/microvm-ecosystem.html">コンテナ向け軽量VM技術</a>の中での位置づけ</h2>
+
+<p><a href="/notes/firecracker.html">Firecracker</a>・<a href="/notes/cloud-hypervisor.html">Cloud Hypervisor</a>と並ぶ、土台となるVMM実装の一つ。ChromeOS/Android向けという出自の点で、サーバーレス/クラウド向けの他2つとは主戦場が異なる。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://github.com/google/crosvm">GitHub - google/crosvm</a></li>
+<li><a href="https://github.com/google/crosvm/blob/main/README.md">crosvm/README.md at main · google/crosvm</a></li>
+<li><a href="https://crosvm.dev/doc/crosvm/index.html">crosvm - Rust</a></li>
+</ul>
+
+]]></description>
+</item>
+<item>
 <title>Claudeのテキスト電子透かし導入 (2026-08)</title>
 <link>https://64p.org/notes/claude-text-watermark.html</link>
 <guid isPermaLink="true">https://64p.org/notes/claude-text-watermark.html</guid>
@@ -359,64 +452,22 @@ flowchart TD
 ]]></description>
 </item>
 <item>
-<title>crosvm</title>
-<link>https://64p.org/notes/crosvm.html</link>
-<guid isPermaLink="true">https://64p.org/notes/crosvm.html</guid>
-<pubDate>Wed, 12 Aug 2026 23:29:00 +0900</pubDate>
-<description><![CDATA[<h1>crosvm</h1>
-
-<p>Googleが開発するRust製の<a href="/notes/microvm.html">軽量VM</a>向けVMM(Virtual Machine Monitor)。元々はChromeOS上でLinux環境(Crostini)やAndroidゲスト(ARCVM)を動かすために開発されたが、現在はAndroidのTerminal App、Cuttlefish、Windowsなど複数の製品・プラットフォームで使われている。 <a class="note-tag" href="/notes/tags/virtualization.html">#virtualization</a> <a class="note-tag" href="/notes/tags/rust.html">#rust</a></p>
-
-<h2>セキュリティ設計: process-per-deviceモデル</h2>
-
-<ul>
-<li>Main Processがゲストの初期化と中核のオーケストレーションを担当</li>
-<li>各virtioデバイスは個別のDevice Processとしてforkされる(process-per-device)</li>
-<li>各デバイスプロセスはMinijailでVFS/PID/User/Networkの名前空間分離により隔離され、そのデバイスに必要なシステムコールのみを許可する厳格なBPFフィルタが適用される</li>
-</ul>
-
-
-<p>強い隔離とメモリ安全な実装によるセキュリティを重視した設計思想を持つ。</p>
-
-<h2>機能</h2>
-
-<p>io_uring・vhost、内部の非同期ランタイム(<code>cros_async</code>)を活用し、モダンなワークロード向けに最適化されている。virtio-fs/virtio-9pによるファイルシステム共有のほか、Console・RNG・Balloon・Vsock・TPM・Pmem・ビデオデコード/エンコードなど幅広いvirtioデバイスに対応する。</p>
-
-<h2><a href="/notes/rust-vmm.html">rust-vmm</a>との関係</h2>
-
-<p><a href="/notes/firecracker.html">Firecracker</a>と並び、rust-vmmプロジェクト発足のきっかけとなった2つのRust製VMMの一つ。KVM呼び出しやメモリ管理まわりでFirecrackerと似たコードを別々に持っていたことが、rust-vmmでのクレート共有につながった。</p>
-
-<h2><a href="/notes/microvm-ecosystem.html">コンテナ向け軽量VM技術</a>の中での位置づけ</h2>
-
-<p><a href="/notes/firecracker.html">Firecracker</a>・<a href="/notes/cloud-hypervisor.html">Cloud Hypervisor</a>と並ぶ、土台となるVMM実装の一つ。ChromeOS/Android向けという出自の点で、サーバーレス/クラウド向けの他2つとは主戦場が異なる。</p>
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://github.com/google/crosvm">GitHub - google/crosvm</a></li>
-<li><a href="https://github.com/google/crosvm/blob/main/README.md">crosvm/README.md at main · google/crosvm</a></li>
-<li><a href="https://crosvm.dev/doc/crosvm/index.html">crosvm - Rust</a></li>
-</ul>
-
-]]></description>
-</item>
-<item>
 <title>rust-vmm</title>
 <link>https://64p.org/notes/rust-vmm.html</link>
 <guid isPermaLink="true">https://64p.org/notes/rust-vmm.html</guid>
 <pubDate>Wed, 12 Aug 2026 23:27:00 +0900</pubDate>
 <description><![CDATA[<h1>rust-vmm</h1>
 
-<p>VMM(Virtual Machine Monitor)を作るためのRust製部品(クレート)を共有するプロジェクト。KVM ioctlの呼び出し、VMのメモリ管理、virtioデバイスとのやり取りなど、複数のVMM実装で重複しがちな部分を共通クレートとして切り出し、車輪の再発明を防ぐことを目的とする。 <a class="note-tag" href="/notes/tags/virtualization.html">#virtualization</a> <a class="note-tag" href="/notes/tags/rust.html">#rust</a></p>
+<p>VMM(Virtual Machine Monitor)を作るためのRust製部品(クレート)を共有するプロジェクト。<a href="/notes/kvm.html">KVM</a> ioctlの呼び出し、VMのメモリ管理、virtioデバイスとのやり取りなど、複数のVMM実装で重複しがちな部分を共通クレートとして切り出し、車輪の再発明を防ぐことを目的とする。 <a class="note-tag" href="/notes/tags/virtualization.html">#virtualization</a> <a class="note-tag" href="/notes/tags/rust.html">#rust</a></p>
 
 <h2>成り立ち</h2>
 
-<p>2018年12月、Amazon・Google・Intel・Red Hatの開発者が、VMM作成コードを共有する方法について議論したことから発足した。きっかけは、Rust製VMMである<a href="/notes/crosvm.html">crosvm</a>（Google/ChromeOS発）と<a href="/notes/firecracker.html">Firecracker</a>（AWS発）が、KVM呼び出しやメモリ管理まわりで似たようなコードを別々に持っていたこと。この重複を解消し、以後Rust製VMMを書く際に同じ実装を繰り返さずに済むようにする狙いがあった。</p>
+<p>2018年12月、Amazon・Google・Intel・Red Hatの開発者が、VMM作成コードを共有する方法について議論したことから発足した。きっかけは、Rust製VMMである<a href="/notes/crosvm.html">crosvm</a>（Google/ChromeOS発）と<a href="/notes/firecracker.html">Firecracker</a>（AWS発）が、<a href="/notes/kvm.html">KVM</a>呼び出しやメモリ管理まわりで似たようなコードを別々に持っていたこと。この重複を解消し、以後Rust製VMMを書く際に同じ実装を繰り返さずに済むようにする狙いがあった。</p>
 
 <h2>主なクレート</h2>
 
 <ul>
-<li><code>kvm-bindings</code> / <code>kvm-ioctls</code> — KVMカーネルヘッダへのRust FFIバインディングと、それをラップする機能</li>
+<li><code>kvm-bindings</code> / <code>kvm-ioctls</code> — <a href="/notes/kvm.html">KVM</a>カーネルヘッダへのRust FFIバインディングと、それをラップする機能</li>
 <li><code>vm-memory</code> — VMのゲストメモリを扱うための共通トレイト。VMMの各コンポーネントが実装の詳細を知らずに物理メモリへアクセスできるようにする</li>
 <li>virtioデバイス関連クレートおよび<code>vhost</code>パッケージ — デバイスエミュレーション用</li>
 <li>Microsoft Hyper-V・Xenのハイパーコールインターフェース、Linuxカーネルローダーへの対応も含む</li>
@@ -433,7 +484,7 @@ flowchart TD
 
 <h2>どこまで簡単にVMMを作れるか</h2>
 
-<p>rust-vmm公式が「rust-vmmクレート＋最小限の接着コード」で構成される<code>vmm-reference</code>という参照実装を公開している。これをforkして部品を組み替えれば、KVMベースの最小限のVMMのたたき台はすぐ作れる。難しいのはKVM呼び出し自体よりも「どんなデバイスモデルにするか」の設計判断だという指摘もある。</p>
+<p>rust-vmm公式が「rust-vmmクレート＋最小限の接着コード」で構成される<code>vmm-reference</code>という参照実装を公開している。これをforkして部品を組み替えれば、<a href="/notes/kvm.html">KVM</a>ベースの最小限のVMMのたたき台はすぐ作れる。難しいのはKVM呼び出し自体よりも「どんなデバイスモデルにするか」の設計判断だという指摘もある。</p>
 
 <p>一方で、Firecracker相当の製品に届くにはまだ距離がある。<code>vmm-reference</code>自体、デバイスのホットプラグ・VMの一時停止/再開・スナップショット・ライブマイグレーションを(少なくとも初期時点では)サポートしていないと明言している。加えてFirecrackerが持つjailerによるプロセス隔離やseccompフィルタでのシステムコール制限といったセキュリティハードニング、REST APIサーバー、豊富なテスト・ファジングは、rust-vmmのクレートを組み合わせただけでは付いてこず、Firecracker自身が長年かけて積み上げてきた部分になる。</p>
 
@@ -464,6 +515,13 @@ flowchart TD
 <p>コンテナのカーネル共有による分離の弱さを、VMレベルの分離で補おうとする一群の技術。<a href="/notes/microvm.html">microVM</a>という土台技術の上に、それをコンテナのエコシステム(OCIイメージ・containerd・Kubernetes)と繋ぐレイヤーが複数存在する。</p>
 
 <p><a class="note-tag" href="/notes/tags/virtualization.html">#virtualization</a> <a class="note-tag" href="/notes/tags/moc.html">#moc</a></p>
+
+<h2>さらに下の土台: カーネル側の仮想化基盤</h2>
+
+<ul>
+<li><a href="/notes/kvm.html">KVM</a> — LinuxカーネルにビルトインされたCPU仮想化機能。デバイスエミュレーションは一切行わず、以下のVMM群がその役目を担う</li>
+</ul>
+
 
 <h2>土台: VMM(Virtual Machine Monitor)</h2>
 
@@ -797,6 +855,97 @@ graph LR
 ]]></description>
 </item>
 <item>
+<title>Hypeman</title>
+<link>https://64p.org/notes/hypeman.html</link>
+<guid isPermaLink="true">https://64p.org/notes/hypeman.html</guid>
+<pubDate>Wed, 12 Aug 2026 23:14:00 +0900</pubDate>
+<description><![CDATA[<h1>Hypeman</h1>
+
+<p><a href="https://www.kernel.sh">Kernel</a>社（"Crazy fast, open source infra for AI agents to access the Internet"を掲げる企業）が開発する、OCIコンテナイメージを<a href="/notes/microvm.html">microVM</a>上で動かすマルチハイパーバイザーランタイム。Go製、MITライセンス。2025年10月にリポジトリ作成、star数310（2026年8月時点）。 <a class="note-tag" href="/notes/tags/virtualization.html">#virtualization</a> <a class="note-tag" href="/notes/tags/go.html">#go</a></p>
+
+<h2>コンセプト</h2>
+
+<p>コンテナ（OCIイメージ）を、Dockerのような名前空間分離ではなくVM上で動かす。VMベースにすることでカーネルレベルの分離を確保しつつ、Docker互換のCLI体験(<code>run</code>/<code>exec</code>/<code>stop</code>/<code>ps</code>/<code>logs</code>/<code>pull</code>)を提供する。</p>
+
+<h2>対応ハイパーバイザー</h2>
+
+<ul>
+<li>Linux: <a href="/notes/cloud-hypervisor.html">Cloud Hypervisor</a>、<a href="/notes/firecracker.html">Firecracker</a>、QEMU（<a href="/notes/kvm.html">KVM</a>必須）</li>
+<li>macOS: Apple Silicon上のVirtualization.framework（Rosetta経由でlinux/amd64イメージも実行可）</li>
+</ul>
+
+
+<h2>主な機能</h2>
+
+<ul>
+<li><strong>Standby/restore</strong>: VMをディスクにスナップショットしてミリ秒単位で再開できる</li>
+<li><strong>組み込みIngress</strong>: TLS終端・サブドメインルーティング対応のリバースプロキシを内蔵</li>
+<li><strong>GPUパススルー</strong>: vGPU/VFIOデバイス対応</li>
+<li><strong>リモートAPI</strong>: JWT認証されたサーバーと別CLIクライアントによるリモート操作</li>
+<li><strong>リモートレジストリへのpush</strong>: キャッシュ済みイメージをAWS ECR/Docker Hub/ghcrなど任意のOCIレジストリへdocker流の一時的な認証情報貸与方式でエクスポート可能</li>
+</ul>
+
+
+<h2>位置づけ</h2>
+
+<p>Firecracker/Cloud HypervisorのようなVMM(Virtual Machine Monitor)単体を、Docker的な使い勝手のCLI/APIで統一的に扱えるようにするレイヤー。開発元がAI agent向けインフラ企業であることから、サンドボックス実行環境としての用途が想定されると見られる（README上に明記はないため推測）。</p>
+
+<h2><a href="/notes/microvm-ecosystem.html">コンテナ向け軽量VM技術</a>の中での位置づけ</h2>
+
+<p>VMMを直接扱わず、OCIイメージのpull・実行というDocker互換の使い勝手を提供する統合レイヤーの一つ。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://github.com/kernel/hypeman">GitHub - kernel/hypeman</a></li>
+<li><a href="https://www.kernel.sh">Kernel</a></li>
+</ul>
+
+]]></description>
+</item>
+<item>
+<title>Cloud Hypervisor</title>
+<link>https://64p.org/notes/cloud-hypervisor.html</link>
+<guid isPermaLink="true">https://64p.org/notes/cloud-hypervisor.html</guid>
+<pubDate>Wed, 12 Aug 2026 23:14:00 +0900</pubDate>
+<description><![CDATA[<h1>Cloud Hypervisor</h1>
+
+<p>Rust製のオープンソースVMM(Virtual Machine Monitor)。最小限のハードウェアエミュレーションでモダンなクラウドワークロードを動かすことに特化している。<a href="/notes/kvm.html">KVM</a>およびMicrosoft Hypervisor(MSHV)上で動作し、x86-64・AArch64をサポート。Linux Foundation傘下のプロジェクト。 <a class="note-tag" href="/notes/tags/virtualization.html">#virtualization</a> <a class="note-tag" href="/notes/tags/rust.html">#rust</a></p>
+
+<h2><a href="/notes/rust-vmm.html">rust-vmm</a>との関係</h2>
+
+<p>rust-vmmプロジェクト（仮想化用のRust製クレートを各プロジェクト間で共有・再利用する取り組み）の理念を採用しており、コードの大部分は<a href="/notes/firecracker.html">Firecracker</a>やcrosvmの実装をベースにしている。</p>
+
+<h2>特徴</h2>
+
+<ul>
+<li>CPU・メモリ・デバイスのホットプラグに対応</li>
+<li>Windows/Linux両方のゲストOSを実行可能</li>
+<li>vhost-userによるデバイスオフロード</li>
+<li>起動時間は約200ms</li>
+<li>Intelエンジニアが中心となりつつ、MicrosoftやArmなど他組織からの継続的なコントリビューションもある</li>
+</ul>
+
+
+<h2>用途</h2>
+
+<p><a href="/notes/microvm.html">microVM</a>型のVMMとして、<a href="/notes/hypeman.html">Hypeman</a>など複数ハイパーバイザーを切り替え可能なランタイムの選択肢の一つに採用されている。</p>
+
+<h2><a href="/notes/microvm-ecosystem.html">コンテナ向け軽量VM技術</a>の中での位置づけ</h2>
+
+<p><a href="/notes/firecracker.html">Firecracker</a>と並ぶ、土台となるVMM実装の一つ。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://github.com/cloud-hypervisor/cloud-hypervisor">GitHub - cloud-hypervisor/cloud-hypervisor</a></li>
+<li><a href="https://www.cloudhypervisor.org/docs/prologue/introduction/">Introduction - Cloud Hypervisor</a></li>
+<li><a href="https://thenewstack.io/rust-based-cloud-hypervisor-heads-to-linux-foundation/">Rust-Based Cloud Hypervisor Heads to Linux Foundation - The New Stack</a></li>
+</ul>
+
+]]></description>
+</item>
+<item>
 <title>microVM</title>
 <link>https://64p.org/notes/microvm.html</link>
 <guid isPermaLink="true">https://64p.org/notes/microvm.html</guid>
@@ -852,97 +1001,6 @@ graph LR
 <li><a href="https://github.com/firecracker-microvm/firecracker/blob/main/FAQ.md">firecracker/FAQ.md at main · firecracker-microvm/firecracker</a></li>
 <li><a href="https://unixism.net/2019/10/how-aws-firecracker-works-a-deep-dive/">How AWS Firecracker works: a deep dive – Unixism</a></li>
 <li><a href="https://github.com/firecracker-microvm/firecracker/blob/main/docs/rootfs-and-kernel-setup.md">firecracker/docs/rootfs-and-kernel-setup.md at main · firecracker-microvm/firecracker</a></li>
-</ul>
-
-]]></description>
-</item>
-<item>
-<title>Cloud Hypervisor</title>
-<link>https://64p.org/notes/cloud-hypervisor.html</link>
-<guid isPermaLink="true">https://64p.org/notes/cloud-hypervisor.html</guid>
-<pubDate>Wed, 12 Aug 2026 23:14:00 +0900</pubDate>
-<description><![CDATA[<h1>Cloud Hypervisor</h1>
-
-<p>Rust製のオープンソースVMM(Virtual Machine Monitor)。最小限のハードウェアエミュレーションでモダンなクラウドワークロードを動かすことに特化している。KVMおよびMicrosoft Hypervisor(MSHV)上で動作し、x86-64・AArch64をサポート。Linux Foundation傘下のプロジェクト。 <a class="note-tag" href="/notes/tags/virtualization.html">#virtualization</a> <a class="note-tag" href="/notes/tags/rust.html">#rust</a></p>
-
-<h2><a href="/notes/rust-vmm.html">rust-vmm</a>との関係</h2>
-
-<p>rust-vmmプロジェクト（仮想化用のRust製クレートを各プロジェクト間で共有・再利用する取り組み）の理念を採用しており、コードの大部分は<a href="/notes/firecracker.html">Firecracker</a>やcrosvmの実装をベースにしている。</p>
-
-<h2>特徴</h2>
-
-<ul>
-<li>CPU・メモリ・デバイスのホットプラグに対応</li>
-<li>Windows/Linux両方のゲストOSを実行可能</li>
-<li>vhost-userによるデバイスオフロード</li>
-<li>起動時間は約200ms</li>
-<li>Intelエンジニアが中心となりつつ、MicrosoftやArmなど他組織からの継続的なコントリビューションもある</li>
-</ul>
-
-
-<h2>用途</h2>
-
-<p><a href="/notes/microvm.html">microVM</a>型のVMMとして、<a href="/notes/hypeman.html">Hypeman</a>など複数ハイパーバイザーを切り替え可能なランタイムの選択肢の一つに採用されている。</p>
-
-<h2><a href="/notes/microvm-ecosystem.html">コンテナ向け軽量VM技術</a>の中での位置づけ</h2>
-
-<p><a href="/notes/firecracker.html">Firecracker</a>と並ぶ、土台となるVMM実装の一つ。</p>
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://github.com/cloud-hypervisor/cloud-hypervisor">GitHub - cloud-hypervisor/cloud-hypervisor</a></li>
-<li><a href="https://www.cloudhypervisor.org/docs/prologue/introduction/">Introduction - Cloud Hypervisor</a></li>
-<li><a href="https://thenewstack.io/rust-based-cloud-hypervisor-heads-to-linux-foundation/">Rust-Based Cloud Hypervisor Heads to Linux Foundation - The New Stack</a></li>
-</ul>
-
-]]></description>
-</item>
-<item>
-<title>Hypeman</title>
-<link>https://64p.org/notes/hypeman.html</link>
-<guid isPermaLink="true">https://64p.org/notes/hypeman.html</guid>
-<pubDate>Wed, 12 Aug 2026 23:14:00 +0900</pubDate>
-<description><![CDATA[<h1>Hypeman</h1>
-
-<p><a href="https://www.kernel.sh">Kernel</a>社（"Crazy fast, open source infra for AI agents to access the Internet"を掲げる企業）が開発する、OCIコンテナイメージを<a href="/notes/microvm.html">microVM</a>上で動かすマルチハイパーバイザーランタイム。Go製、MITライセンス。2025年10月にリポジトリ作成、star数310（2026年8月時点）。 <a class="note-tag" href="/notes/tags/virtualization.html">#virtualization</a> <a class="note-tag" href="/notes/tags/go.html">#go</a></p>
-
-<h2>コンセプト</h2>
-
-<p>コンテナ（OCIイメージ）を、Dockerのような名前空間分離ではなくVM上で動かす。VMベースにすることでカーネルレベルの分離を確保しつつ、Docker互換のCLI体験(<code>run</code>/<code>exec</code>/<code>stop</code>/<code>ps</code>/<code>logs</code>/<code>pull</code>)を提供する。</p>
-
-<h2>対応ハイパーバイザー</h2>
-
-<ul>
-<li>Linux: <a href="/notes/cloud-hypervisor.html">Cloud Hypervisor</a>、<a href="/notes/firecracker.html">Firecracker</a>、QEMU（KVM必須）</li>
-<li>macOS: Apple Silicon上のVirtualization.framework（Rosetta経由でlinux/amd64イメージも実行可）</li>
-</ul>
-
-
-<h2>主な機能</h2>
-
-<ul>
-<li><strong>Standby/restore</strong>: VMをディスクにスナップショットしてミリ秒単位で再開できる</li>
-<li><strong>組み込みIngress</strong>: TLS終端・サブドメインルーティング対応のリバースプロキシを内蔵</li>
-<li><strong>GPUパススルー</strong>: vGPU/VFIOデバイス対応</li>
-<li><strong>リモートAPI</strong>: JWT認証されたサーバーと別CLIクライアントによるリモート操作</li>
-<li><strong>リモートレジストリへのpush</strong>: キャッシュ済みイメージをAWS ECR/Docker Hub/ghcrなど任意のOCIレジストリへdocker流の一時的な認証情報貸与方式でエクスポート可能</li>
-</ul>
-
-
-<h2>位置づけ</h2>
-
-<p>Firecracker/Cloud HypervisorのようなVMM(Virtual Machine Monitor)単体を、Docker的な使い勝手のCLI/APIで統一的に扱えるようにするレイヤー。開発元がAI agent向けインフラ企業であることから、サンドボックス実行環境としての用途が想定されると見られる（README上に明記はないため推測）。</p>
-
-<h2><a href="/notes/microvm-ecosystem.html">コンテナ向け軽量VM技術</a>の中での位置づけ</h2>
-
-<p>VMMを直接扱わず、OCIイメージのpull・実行というDocker互換の使い勝手を提供する統合レイヤーの一つ。</p>
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://github.com/kernel/hypeman">GitHub - kernel/hypeman</a></li>
-<li><a href="https://www.kernel.sh">Kernel</a></li>
 </ul>
 
 ]]></description>
@@ -1452,67 +1510,6 @@ bridge vlan add dev veth4 vid 10 tagged          # トランクポート
 <li><a href="https://developers.redhat.com/articles/2022/04/06/introduction-linux-bridging-commands-and-features">An introduction to Linux bridging commands and features - Red Hat Developer</a></li>
 <li><a href="https://docs.kernel.org/networking/bridge.html">Ethernet Bridging — The Linux Kernel documentation</a></li>
 <li><a href="https://blog.sdn.clinic/2018/12/vlan-aware-bridges-on-linux/">(Vlan-aware) Bridges on Linux – SDN Clinic</a></li>
-</ul>
-
-]]></description>
-</item>
-<item>
-<title>Open vSwitch (OVS)</title>
-<link>https://64p.org/notes/open-vswitch.html</link>
-<guid isPermaLink="true">https://64p.org/notes/open-vswitch.html</guid>
-<pubDate>Wed, 12 Aug 2026 19:21:00 +0900</pubDate>
-<description><![CDATA[<h1>Open vSwitch (OVS)</h1>
-
-<p>Apache 2ライセンスで公開されているオープンソースのマルチレイヤ仮想スイッチ。仮想マシン環境で動作するソフトウェアスイッチで、L2（データリンク層）でイーサネットフレームを扱いつつ、OpenFlowにも対応している。<a href="/notes/linux-bridge.html">Linux標準ブリッジ</a>より本格的な仮想スイッチとして、OpenStackなどが実際に採用している。 <a class="note-tag" href="/notes/tags/network.html">#network</a> <a class="note-tag" href="/notes/tags/sdn.html">#sdn</a></p>
-
-<h2>アーキテクチャ</h2>
-
-<ul>
-<li><strong>ovs-vswitchd</strong> — スイッチ機能そのものを実装するデーモン。付随するLinuxカーネルモジュールと組み合わせてフローベースのスイッチングを行う（userspace実装のみでの動作も可能）。</li>
-<li><strong>ovsdb-server</strong> — ovs-vswitchdが設定情報を取得するための軽量なデータベースサーバー。</li>
-<li><strong>カーネルモジュール/datapath</strong> — 実際のパケット転送処理を担う層。</li>
-<li><strong>ovs-ofctl</strong> — OpenFlowスイッチに対してクエリ・制御を行うユーティリティ。</li>
-</ul>
-
-
-<p>OpenFlow 1.0とその多数の拡張をサポートしており、外部のSDNコントローラからフロールールを供給できる（あるいは手動でCLIから投入することも可能）。</p>
-
-<h2>主な機能</h2>
-
-<ul>
-<li>VLAN（<a href="/notes/vlan.html">IEEE 802.1Q</a>）対応</li>
-<li><a href="/notes/vxlan.html">VXLAN</a>、GRE、Geneveなど複数のトンネリングプロトコル対応</li>
-<li>NetFlow、IPFIX、sFlowによるトラフィック可視化</li>
-<li>QoS設定・ポリシング</li>
-<li>ネットワーク状態（L2学習テーブル、L3転送状態、ACLなど）のホスト間移行</li>
-<li>カーネルデータパスのハードウェアチップセットへのオフロード</li>
-</ul>
-
-
-<p>実装形態も複数あり、古典的なカーネルモジュール版のほか、高性能だが設定が複雑なDPDK版、保守性に優れるeBPF版、従来ツールとの互換性を保ちながら高速化するAF_XDP版が存在する。</p>
-
-<h2>従来の<a href="/notes/linux-bridge.html">Linuxブリッジ</a>との違い</h2>
-
-<p>Linuxブリッジが単一ホスト内の単純なL2転送を主眼にしているのに対し、OVSは複数サーバーにまたがる仮想化環境を対象に設計されている。動的なエンドポイント管理、論理的な抽象化の維持、専用ハードウェアとの統合（オフロード）といった、大規模・動的な環境向けの要件に応える点が特徴。</p>
-
-<h2>主なユースケース</h2>
-
-<ul>
-<li><strong>OpenStack</strong> — Neutronのプラグインとして、VM間のネットワークを構成する標準的な仮想スイッチ</li>
-<li><strong>Kubernetes/コンテナ基盤</strong> — CNIプラグイン経由でPod間ネットワークを構築</li>
-<li><strong>SDN環境</strong> — 外部のSDNコントローラから直接OpenFlowで制御される構成</li>
-<li><strong>マルチテナントのトンネリング</strong> — VXLAN等でコンピュートノード間をオーバーレイ接続</li>
-<li><strong>サービスチェーン</strong> — 複数の仮想ネットワーク機能（VNF）間でトラフィックを転送</li>
-</ul>
-
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://docs.openvswitch.org/en/stable/intro/why-ovs/">Why Open vSwitch? — Open vSwitch documentation</a></li>
-<li><a href="https://docs.openvswitch.org/en/latest/intro/what-is-ovs/">What is OVS? — Open vSwitch documentation</a></li>
-<li><a href="https://ubuntu.com/blog/data-centre-networking-what-is-ovs">Data centre networking: what is OVS? | Ubuntu</a></li>
-<li><a href="https://medium.com/@isaac2ngeno5/open-vswitch-ovs-in-openstack-85b71e5539e5">Open vSwitch (OVS) in Openstack | Medium</a></li>
 </ul>
 
 ]]></description>

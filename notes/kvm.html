@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>mockery - Notes - 64p.org</title>
+    <title>KVM (Kernel-based Virtual Machine) - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="alternate" type="application/rss+xml" title="Notes - 64p.org" href="/notes/rss.xml">
@@ -25,7 +25,7 @@
                 <ul class="notes-nav">
                                     <li><a href="/notes/rust-vmm.html">rust-vmm</a></li>
                                     <li><a href="/notes/microvm-ecosystem.html">コンテナ向け軽量VM技術</a></li>
-                                    <li><a href="/notes/kvm.html">KVM (Kernel-based Virtual Machine)</a></li>
+                                    <li><a href="/notes/kvm.html" class="active">KVM (Kernel-based Virtual Machine)</a></li>
                                     <li><a href="/notes/hypeman.html">Hypeman</a></li>
                                     <li><a href="/notes/crosvm.html">crosvm</a></li>
                                     <li><a href="/notes/cloud-hypervisor.html">Cloud Hypervisor</a></li>
@@ -69,7 +69,7 @@
                                     <li><a href="/notes/vlan.html">VLAN</a></li>
                                     <li><a href="/notes/vrrp.html">VRRP (Virtual Router Redundancy Protocol)</a></li>
                                     <li><a href="/notes/testify.html">testify</a></li>
-                                    <li><a href="/notes/mockery.html" class="active">mockery</a></li>
+                                    <li><a href="/notes/mockery.html">mockery</a></li>
                                     <li><a href="/notes/seccomp.html">seccomp</a></li>
                                     <li><a href="/notes/least-privilege.html">最小権限の原則</a></li>
                                     <li><a href="/notes/mold-linker.html">mold(高速リンカ)</a></li>
@@ -329,46 +329,65 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>mockery</h1>
+                <h1>KVM (Kernel-based Virtual Machine)</h1>
 
-<p><a class="note-tag" href="/notes/tags/go.html">#go</a> <a class="note-tag" href="/notes/tags/testing.html">#testing</a></p>
+<p>LinuxカーネルにビルトインされたCPU仮想化機能。CPUが持つハードウェア仮想化支援機能(Intel VT-x / AMD-V)を、<code>/dev/kvm</code>というデバイスファイル経由でユーザー空間のプログラムに使わせる。2007年、Linuxカーネル2.6.20にマージされた。 <a class="note-tag" href="/notes/tags/virtualization.html">#virtualization</a> <a class="note-tag" href="/notes/tags/linux.html">#linux</a></p>
 
-<p>Go のインターフェース定義からモック実装コードを自動生成するCLIツール（vektra/mockery）。<a href="/notes/testify.html">testify</a> の mock パッケージを手で使うと <code>On(...)</code> / <code>Return(...)</code> まわりのボイラープレートが多くなるため、それを丸ごと生成して除去するのが目的。生成されたモックは testify のアサーション・期待値検証パターン（<code>EXPECT()</code> 形式の expecter メソッドを含む）にそのまま乗る。</p>
+<h2>KVM単体ではVMは動かない</h2>
 
-<h2>使い方</h2>
+<p>KVMは<strong>デバイスのエミュレーションを一切やらない</strong>。ディスクI/O、ネットワークアダプタ、画面出力、USB、PCIデバイス、ファームウェア(BIOS相当)——これらはすべてKVMの管轄外で、QEMUや<a href="/notes/firecracker.html">Firecracker</a>、<a href="/notes/cloud-hypervisor.html">Cloud Hypervisor</a>のような「ユーザー空間のVMM」側が担当する。KVMが提供するのは「CPUを仮想的に走らせる」部分だけ。</p>
 
-<p>設定は <code>.mockery.yaml</code> に書き、対象パッケージとインターフェースを宣言してから <code>mockery</code> コマンドを実行する方式。</p>
+<h2><code>/dev/kvm</code>とioctlインターフェース</h2>
 
-<pre><code class="yaml">packages:
-    github.com/org/repo:
-        interfaces:
-            DB:
-</code></pre>
+<p>VMMと<code>/dev/kvm</code>の間のやり取りはioctl呼び出しで行われる。</p>
 
-<p><code>go generate</code> や task runner に組み込んで、インターフェース変更時にモックを再生成し続けるのが典型的な運用。</p>
+<ul>
+<li><code>KVM_CREATE_VM</code> — VM用のファイルディスクリプタを作る</li>
+<li><code>KVM_CREATE_VCPU</code> — 仮想CPU(1つのLinuxスレッドとして実装される)を割り当てる</li>
+<li><code>KVM_SET_USER_MEMORY_REGION</code> — ゲストの物理メモリをVMのアドレス空間にマップする</li>
+<li><code>KVM_RUN</code> — 実際にゲストCPUをホストCPU上で直接実行させる</li>
+</ul>
 
-<h2>v3</h2>
 
-<p>現行のメジャーバージョンは v3 で、テンプレートベースの生成に刷新された。従来の testify スタイルに加えて matryer/moq スタイルのモックも生成でき、独自テンプレートも書ける。モックを対象と同じパッケージに置くケースの自動検出など設定も整理された。同種のツールとしては gomock や moq がある。</p>
+<p>VMMが<code>KVM_RUN</code>を呼ぶと、ゲストのコードがホストCPU上でほぼネイティブ速度で直接実行される。ゲストがI/Oを起こすなど「VM exit」が発生するとKVMから制御がVMM側に戻り、VMM側がそのデバイス動作をエミュレートしてからまたKVMに実行を戻す、というループになっている。</p>
+
+<h2>なぜカーネル内蔵なのか</h2>
+
+<p>カーネルの一部として動くことで、Linuxが既に持っているプロセススケジューラ・メモリ管理・デバイスドライバの資産をそのまま仮想化にも使い回せる、という設計になっている。</p>
+
+<h2>このシリーズの文脈での位置づけ</h2>
+
+<p><a href="/notes/firecracker.html">Firecracker</a>・<a href="/notes/cloud-hypervisor.html">Cloud Hypervisor</a>・<a href="/notes/crosvm.html">crosvm</a>は、いずれもこの「KVMというCPU仮想化の土台」の上に、自前のデバイスモデル(ミニマルなvirtioデバイス群など)を実装したVMMという位置づけになる。<a href="/notes/rust-vmm.html">rust-vmm</a>の<code>kvm-ioctls</code>/<code>kvm-bindings</code>クレートは、この<code>/dev/kvm</code>のioctl呼び出しをRustから安全に扱うためのラッパー。</p>
+
+<h2><a href="/notes/microvm-ecosystem.html">コンテナ向け軽量VM技術</a>の中での位置づけ</h2>
+
+<p><a href="/notes/firecracker.html">Firecracker</a>・<a href="/notes/cloud-hypervisor.html">Cloud Hypervisor</a>・<a href="/notes/crosvm.html">crosvm</a>が共通して依拠する、Linuxカーネル側のCPU仮想化基盤。</p>
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://vektra.github.io/mockery/latest/">mockery 公式ドキュメント</a></li>
-<li><a href="https://github.com/vektra/mockery">vektra/mockery - GitHub</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Kernel-based_Virtual_Machine">Kernel-based Virtual Machine - Wikipedia</a></li>
+<li><a href="https://www.redhat.com/en/topics/virtualization/what-is-KVM">What is KVM? | Red Hat</a></li>
+<li><a href="https://lwn.net/Articles/658511/">Using the KVM API - LWN.net</a></li>
+<li><a href="https://docs.kernel.org/virt/kvm/api.html">The Definitive KVM API Documentation</a></li>
+<li><a href="https://medium.com/@kuldeepranjan39/virtualization-d677d8390d31">From Emulation to Virtualization: How QEMU and KVM Work Together</a></li>
 </ul>
 
 
                                 <div class="notes-backlinks">
                     <h2>🔗 リンクされているノート</h2>
                     <ul>
-                                            <li><a href="/notes/testify.html">testify</a></li>
+                                            <li><a href="/notes/cloud-hypervisor.html">Cloud Hypervisor</a></li>
+                                            <li><a href="/notes/hypeman.html">Hypeman</a></li>
+                                            <li><a href="/notes/crosvm.html">crosvm</a></li>
+                                            <li><a href="/notes/rust-vmm.html">rust-vmm</a></li>
+                                            <li><a href="/notes/microvm-ecosystem.html">コンテナ向け軽量VM技術</a></li>
                     
                     </ul>
                 </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-12 18:42 / 更新日時: 2026-08-12 18:42</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=mockery&url=https%3A%2F%2F64p.org%2Fnotes%2Fmockery.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <span>作成日時: 2026-08-12 23:36 / 更新日時: 2026-08-12 23:36</span>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=KVM%20%28Kernel-based%20Virtual%20Machine%29&url=https%3A%2F%2F64p.org%2Fnotes%2Fkvm.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">

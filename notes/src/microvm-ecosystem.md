@@ -1,12 +1,16 @@
 ---
 created: 2026-08-12 23:25
-updated: 2026-08-12 23:29
+updated: 2026-08-12 23:36
 ---
 # コンテナ向け軽量VM技術
 
 コンテナのカーネル共有による分離の弱さを、VMレベルの分離で補おうとする一群の技術。[[microvm|microVM]]という土台技術の上に、それをコンテナのエコシステム(OCIイメージ・containerd・Kubernetes)と繋ぐレイヤーが複数存在する。
 
 #virtualization #moc
+
+## さらに下の土台: カーネル側の仮想化基盤
+
+- [[kvm|KVM]] — LinuxカーネルにビルトインされたCPU仮想化機能。デバイスエミュレーションは一切行わず、以下のVMM群がその役目を担う
 
 ## 土台: VMM(Virtual Machine Monitor)
 

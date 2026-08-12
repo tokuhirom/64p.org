@@ -1,18 +1,18 @@
 ---
 created: 2026-08-12 23:27
-updated: 2026-08-12 23:33
+updated: 2026-08-12 23:36
 ---
 # rust-vmm
 
-VMM(Virtual Machine Monitor)を作るためのRust製部品(クレート)を共有するプロジェクト。KVM ioctlの呼び出し、VMのメモリ管理、virtioデバイスとのやり取りなど、複数のVMM実装で重複しがちな部分を共通クレートとして切り出し、車輪の再発明を防ぐことを目的とする。 #virtualization #rust
+VMM(Virtual Machine Monitor)を作るためのRust製部品(クレート)を共有するプロジェクト。[[kvm|KVM]] ioctlの呼び出し、VMのメモリ管理、virtioデバイスとのやり取りなど、複数のVMM実装で重複しがちな部分を共通クレートとして切り出し、車輪の再発明を防ぐことを目的とする。 #virtualization #rust
 
 ## 成り立ち
 
-2018年12月、Amazon・Google・Intel・Red Hatの開発者が、VMM作成コードを共有する方法について議論したことから発足した。きっかけは、Rust製VMMである[[crosvm|crosvm]]（Google/ChromeOS発）と[[firecracker|Firecracker]]（AWS発）が、KVM呼び出しやメモリ管理まわりで似たようなコードを別々に持っていたこと。この重複を解消し、以後Rust製VMMを書く際に同じ実装を繰り返さずに済むようにする狙いがあった。
+2018年12月、Amazon・Google・Intel・Red Hatの開発者が、VMM作成コードを共有する方法について議論したことから発足した。きっかけは、Rust製VMMである[[crosvm|crosvm]]（Google/ChromeOS発）と[[firecracker|Firecracker]]（AWS発）が、[[kvm|KVM]]呼び出しやメモリ管理まわりで似たようなコードを別々に持っていたこと。この重複を解消し、以後Rust製VMMを書く際に同じ実装を繰り返さずに済むようにする狙いがあった。
 
 ## 主なクレート
 
-- `kvm-bindings` / `kvm-ioctls` — KVMカーネルヘッダへのRust FFIバインディングと、それをラップする機能
+- `kvm-bindings` / `kvm-ioctls` — [[kvm|KVM]]カーネルヘッダへのRust FFIバインディングと、それをラップする機能
 - `vm-memory` — VMのゲストメモリを扱うための共通トレイト。VMMの各コンポーネントが実装の詳細を知らずに物理メモリへアクセスできるようにする
 - virtioデバイス関連クレートおよび`vhost`パッケージ — デバイスエミュレーション用
 - Microsoft Hyper-V・Xenのハイパーコールインターフェース、Linuxカーネルローダーへの対応も含む
@@ -27,7 +27,7 @@ VMM(Virtual Machine Monitor)を作るためのRust製部品(クレート)を共�
 
 ## どこまで簡単にVMMを作れるか
 
-rust-vmm公式が「rust-vmmクレート＋最小限の接着コード」で構成される`vmm-reference`という参照実装を公開している。これをforkして部品を組み替えれば、KVMベースの最小限のVMMのたたき台はすぐ作れる。難しいのはKVM呼び出し自体よりも「どんなデバイスモデルにするか」の設計判断だという指摘もある。
+rust-vmm公式が「rust-vmmクレート＋最小限の接着コード」で構成される`vmm-reference`という参照実装を公開している。これをforkして部品を組み替えれば、[[kvm|KVM]]ベースの最小限のVMMのたたき台はすぐ作れる。難しいのはKVM呼び出し自体よりも「どんなデバイスモデルにするか」の設計判断だという指摘もある。
 
 一方で、Firecracker相当の製品に届くにはまだ距離がある。`vmm-reference`自体、デバイスのホットプラグ・VMの一時停止/再開・スナップショット・ライブマイグレーションを(少なくとも初期時点では)サポートしていないと明言している。加えてFirecrackerが持つjailerによるプロセス隔離やseccompフィルタでのシステムコール制限といったセキュリティハードニング、REST APIサーバー、豊富なテスト・ファジングは、rust-vmmのクレートを組み合わせただけでは付いてこず、Firecracker自身が長年かけて積み上げてきた部分になる。
 

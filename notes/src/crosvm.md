@@ -1,6 +1,6 @@
 ---
 created: 2026-08-12 23:29
-updated: 2026-08-12 23:29
+updated: 2026-08-12 23:36
 ---
 # crosvm
 
@@ -20,7 +20,7 @@ io_uring・vhost、内部の非同期ランタイム(`cros_async`)を活用し�
 
 ## [[rust-vmm|rust-vmm]]との関係
 
-[[firecracker|Firecracker]]と並び、rust-vmmプロジェクト発足のきっかけとなった2つのRust製VMMの一つ。KVM呼び出しやメモリ管理まわりでFirecrackerと似たコードを別々に持っていたことが、rust-vmmでのクレート共有につながった。
+[[firecracker|Firecracker]]と並び、rust-vmmプロジェクト発足のきっかけとなった2つのRust製VMMの一つ。[[kvm|KVM]]呼び出しやメモリ管理まわりでFirecrackerと似たコードを別々に持っていたことが、rust-vmmでのクレート共有につながった。
 
 ## [[microvm-ecosystem|コンテナ向け軽量VM技術]]の中での位置づけ
 

@@ -24,16 +24,17 @@
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
                                     <li><a href="/notes/rust-vmm.html" class="active">rust-vmm</a></li>
+                                    <li><a href="/notes/microvm-ecosystem.html">コンテナ向け軽量VM技術</a></li>
+                                    <li><a href="/notes/kvm.html">KVM (Kernel-based Virtual Machine)</a></li>
+                                    <li><a href="/notes/hypeman.html">Hypeman</a></li>
+                                    <li><a href="/notes/crosvm.html">crosvm</a></li>
+                                    <li><a href="/notes/cloud-hypervisor.html">Cloud Hypervisor</a></li>
                                     <li><a href="/notes/llm-text-watermarking.html">LLMテキストの電子透かし</a></li>
                                     <li><a href="/notes/eu-ai-act.html">EU AI Act</a></li>
                                     <li><a href="/notes/claude-text-watermark.html">Claudeのテキスト電子透かし導入 (2026-08)</a></li>
                                     <li><a href="/notes/synthid-text.html">SynthID-Text</a></li>
-                                    <li><a href="/notes/microvm-ecosystem.html">コンテナ向け軽量VM技術</a></li>
-                                    <li><a href="/notes/crosvm.html">crosvm</a></li>
                                     <li><a href="/notes/microvm.html">microVM</a></li>
-                                    <li><a href="/notes/cloud-hypervisor.html">Cloud Hypervisor</a></li>
                                     <li><a href="/notes/kata-containers.html">Kata Containers</a></li>
-                                    <li><a href="/notes/hypeman.html">Hypeman</a></li>
                                     <li><a href="/notes/firecracker.html">Firecracker</a></li>
                                     <li><a href="/notes/firecracker-containerd.html">firecracker-containerd</a></li>
                                     <li><a href="/notes/typescript-eslint.html">typescript-eslint</a></li>
@@ -330,16 +331,16 @@
             <article class="notes-content">
                 <h1>rust-vmm</h1>
 
-<p>VMM(Virtual Machine Monitor)を作るためのRust製部品(クレート)を共有するプロジェクト。KVM ioctlの呼び出し、VMのメモリ管理、virtioデバイスとのやり取りなど、複数のVMM実装で重複しがちな部分を共通クレートとして切り出し、車輪の再発明を防ぐことを目的とする。 <a class="note-tag" href="/notes/tags/virtualization.html">#virtualization</a> <a class="note-tag" href="/notes/tags/rust.html">#rust</a></p>
+<p>VMM(Virtual Machine Monitor)を作るためのRust製部品(クレート)を共有するプロジェクト。<a href="/notes/kvm.html">KVM</a> ioctlの呼び出し、VMのメモリ管理、virtioデバイスとのやり取りなど、複数のVMM実装で重複しがちな部分を共通クレートとして切り出し、車輪の再発明を防ぐことを目的とする。 <a class="note-tag" href="/notes/tags/virtualization.html">#virtualization</a> <a class="note-tag" href="/notes/tags/rust.html">#rust</a></p>
 
 <h2>成り立ち</h2>
 
-<p>2018年12月、Amazon・Google・Intel・Red Hatの開発者が、VMM作成コードを共有する方法について議論したことから発足した。きっかけは、Rust製VMMである<a href="/notes/crosvm.html">crosvm</a>（Google/ChromeOS発）と<a href="/notes/firecracker.html">Firecracker</a>（AWS発）が、KVM呼び出しやメモリ管理まわりで似たようなコードを別々に持っていたこと。この重複を解消し、以後Rust製VMMを書く際に同じ実装を繰り返さずに済むようにする狙いがあった。</p>
+<p>2018年12月、Amazon・Google・Intel・Red Hatの開発者が、VMM作成コードを共有する方法について議論したことから発足した。きっかけは、Rust製VMMである<a href="/notes/crosvm.html">crosvm</a>（Google/ChromeOS発）と<a href="/notes/firecracker.html">Firecracker</a>（AWS発）が、<a href="/notes/kvm.html">KVM</a>呼び出しやメモリ管理まわりで似たようなコードを別々に持っていたこと。この重複を解消し、以後Rust製VMMを書く際に同じ実装を繰り返さずに済むようにする狙いがあった。</p>
 
 <h2>主なクレート</h2>
 
 <ul>
-<li><code>kvm-bindings</code> / <code>kvm-ioctls</code> — KVMカーネルヘッダへのRust FFIバインディングと、それをラップする機能</li>
+<li><code>kvm-bindings</code> / <code>kvm-ioctls</code> — <a href="/notes/kvm.html">KVM</a>カーネルヘッダへのRust FFIバインディングと、それをラップする機能</li>
 <li><code>vm-memory</code> — VMのゲストメモリを扱うための共通トレイト。VMMの各コンポーネントが実装の詳細を知らずに物理メモリへアクセスできるようにする</li>
 <li>virtioデバイス関連クレートおよび<code>vhost</code>パッケージ — デバイスエミュレーション用</li>
 <li>Microsoft Hyper-V・Xenのハイパーコールインターフェース、Linuxカーネルローダーへの対応も含む</li>
@@ -356,7 +357,7 @@
 
 <h2>どこまで簡単にVMMを作れるか</h2>
 
-<p>rust-vmm公式が「rust-vmmクレート＋最小限の接着コード」で構成される<code>vmm-reference</code>という参照実装を公開している。これをforkして部品を組み替えれば、KVMベースの最小限のVMMのたたき台はすぐ作れる。難しいのはKVM呼び出し自体よりも「どんなデバイスモデルにするか」の設計判断だという指摘もある。</p>
+<p>rust-vmm公式が「rust-vmmクレート＋最小限の接着コード」で構成される<code>vmm-reference</code>という参照実装を公開している。これをforkして部品を組み替えれば、<a href="/notes/kvm.html">KVM</a>ベースの最小限のVMMのたたき台はすぐ作れる。難しいのはKVM呼び出し自体よりも「どんなデバイスモデルにするか」の設計判断だという指摘もある。</p>
 
 <p>一方で、Firecracker相当の製品に届くにはまだ距離がある。<code>vmm-reference</code>自体、デバイスのホットプラグ・VMの一時停止/再開・スナップショット・ライブマイグレーションを(少なくとも初期時点では)サポートしていないと明言している。加えてFirecrackerが持つjailerによるプロセス隔離やseccompフィルタでのシステムコール制限といったセキュリティハードニング、REST APIサーバー、豊富なテスト・ファジングは、rust-vmmのクレートを組み合わせただけでは付いてこず、Firecracker自身が長年かけて積み上げてきた部分になる。</p>
 
@@ -380,6 +381,7 @@
                     <h2>🔗 リンクされているノート</h2>
                     <ul>
                                             <li><a href="/notes/cloud-hypervisor.html">Cloud Hypervisor</a></li>
+                                            <li><a href="/notes/kvm.html">KVM (Kernel-based Virtual Machine)</a></li>
                                             <li><a href="/notes/crosvm.html">crosvm</a></li>
                                             <li><a href="/notes/microvm.html">microVM</a></li>
                                             <li><a href="/notes/microvm-ecosystem.html">コンテナ向け軽量VM技術</a></li>
@@ -387,7 +389,7 @@
                     </ul>
                 </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-12 23:27 / 更新日時: 2026-08-12 23:33</span>
+                    <span>作成日時: 2026-08-12 23:27 / 更新日時: 2026-08-12 23:36</span>
                     <a class="share-x" href="https://twitter.com/intent/tweet?text=rust-vmm&url=https%3A%2F%2F64p.org%2Fnotes%2Frust-vmm.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
