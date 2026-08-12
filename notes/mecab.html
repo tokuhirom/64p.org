@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>websockify - Notes - 64p.org</title>
+    <title>MeCab - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/highlight.js@11/styles/github.min.css" media="(prefers-color-scheme: light)">
@@ -23,7 +23,7 @@
                 <ul class="notes-nav">
                                     <li><a href="/notes/sqlite-fts5.html">FTS5（SQLite）</a></li>
                                     <li><a href="/notes/sentencepiece.html">SentencePiece</a></li>
-                                    <li><a href="/notes/mecab.html">MeCab</a></li>
+                                    <li><a href="/notes/mecab.html" class="active">MeCab</a></li>
                                     <li><a href="/notes/rbac.html">RBAC (Role-Based Access Control)</a></li>
                                     <li><a href="/notes/microphonetest.html">MicrophoneTest(マイク音質評価Webアプリ)</a></li>
                                     <li><a href="/notes/least-privilege.html">最小権限の原則</a></li>
@@ -116,7 +116,7 @@
                                     <li><a href="/notes/technical-debt-quadrant.html">技術的負債の四象限（Technical Debt Quadrant）</a></li>
                                     <li><a href="/notes/bourbon-confectionery.html">ブルボン（株式会社ブルボン）</a></li>
                                     <li><a href="/notes/wdic.html">通信用語の基礎知識（WDIC）</a></li>
-                                    <li><a href="/notes/websockify.html" class="active">websockify</a></li>
+                                    <li><a href="/notes/websockify.html">websockify</a></li>
                                     <li><a href="/notes/novnc.html">noVNC</a></li>
                                     <li><a href="/notes/browser-raw-tcp-restriction.html">ブラウザの生TCP/UDPソケット制限</a></li>
                                     <li><a href="/notes/vnc.html">VNC</a></li>
@@ -288,45 +288,67 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>websockify</h1>
+                <h1>MeCab</h1>
 
-<p>WebSocket ⇔ TCP のプロキシ／ブリッジ。ブラウザがWebSocket経由で任意のTCPベースのアプリケーション／サーバーに接続できるようにする。<a href="/notes/novnc.html">noVNC</a>の姉妹プロジェクトとして開発された。</p>
+<p><a class="note-tag" href="/notes/tags/nlp.html">#nlp</a></p>
 
-<h2>存在理由</h2>
+<p>京都大学大学院情報学研究科とNTTコミュニケーション科学基礎研究所の共同研究ユニットプロジェクトとして開発された、オープンソースの日本語形態素解析エンジン。開発者は工藤拓。2006年3月26日にバージョン0.90として最初に公開された。名前の由来は開発者の好物である「和布蕪(めかぶ)」から。</p>
+
+<p>工藤拓は後に<a href="/notes/sentencepiece.html">SentencePiece</a>の開発者としても知られ、Google Japanese Inputの開発にも携わった。</p>
+
+<h2>開発の背景</h2>
+
+<p>MeCab以前の代表的な形態素解析器にJumanとChaSenがあった。</p>
 
 <ul>
-<li><a href="/notes/browser-raw-tcp-restriction.html">ブラウザはセキュリティ制約上、生のTCP/UDPソケットを直接開けない</a>ため、HTTP/HTTPSかWebSocketでしか外向き接続を確立できない。一方、標準的なVNCサーバーはポート5900+（<a href="/notes/rfb.html">RFB（Remote Framebuffer）プロトコル</a>プロトコル）でTCPソケット通信を行う。</li>
-<li>websockifyはこの間を仲介するプロトコル変換役として動作し、noVNCクライアントからのWebSocket接続を受け付け、TCPソケット経由でVNCサーバーへデータを転送する。</li>
-<li>重要な点として、websockify自身はVNCプロトコルのデータをパース・改変せず、WebSocketフレームとTCPストリームの間でバイト列を単純に中継するだけ。</li>
+<li><strong>Juman</strong>: 辞書や品詞体系を外部に定義できる自由度はあったが、単語同士の連接コストを人手で調整する必要があり、そのコストが大きかった。</li>
+<li><strong>ChaSen</strong>: 隠れマルコフモデル(HMM)による統計処理を導入したが、複雑な品詞体系を扱うにはHMMでは力不足という限界があった。</li>
 </ul>
 
 
-<h2>実装</h2>
+<h2>CRFの採用</h2>
 
-<p>Python・C・Node.js・Rubyでの実装が存在する。最も一般的なのはPython版で、プロキシ機能に加えて<a href="/notes/novnc.html">noVNC</a>のクライアントファイルを配信するミニWebサーバー機能もオプションで含む。</p>
+<p>MeCab最大の技術的特徴は、コスト値の推定に条件付き確率場(<strong>Conditional Random Fields, CRF</strong>)を採用したこと。HMMと異なり複数の内部状態を定義できるため、「細かい品詞階層と粗い品詞階層の確率値を混ぜる」ようなスムージングが自然かつ自動的に実現でき、人手調整のコストを大幅に削減した。学習コーパスもHMMの1/3程度で同程度の性能が得られるとされる。</p>
+
+<p>そのほかの特徴として、未知語処理を外部から自由に定義できる点、辞書引きにDouble-Array Trie構造を用いた高速性、N-best出力や制約付き解析への対応などが挙げられる。</p>
+
+<h2>辞書</h2>
+
+<p>MeCab本体は言語・辞書・コーパスに依存しない汎用設計になっており、動作には別途辞書が必要。代表的なものに以下がある。</p>
+
+<ul>
+<li><strong>IPAdic</strong>: 標準的によく使われる辞書</li>
+<li><strong>UniDic</strong>: 国立国語研究所が整備する、より詳細な形態素情報を持つ辞書</li>
+<li><strong>mecab-ipadic-NEologd</strong>: IPAdicをベースに、Web上の言語資源から抽出した新語・固有表現を週2回のペースで追加収録するカスタム辞書。IPAdicでは分割されがちな固有名詞をまとめて認識できる一方、ディスク・メモリを多く消費する</li>
+</ul>
+
+
+<h2>後継・代替ツール</h2>
+
+<p>その後登場した日本語形態素解析器として、Works Applications主導の<strong>Sudachi</strong>などがある。MeCabとは別の辞書体系を持ち、代替の選択肢として比較されることが多い。</p>
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://github.com/novnc/websockify">GitHub - novnc/websockify</a></li>
-<li><a href="https://github.com/novnc/websockify/blob/master/README.md">websockify/README.md at master · novnc/websockify</a></li>
-<li><a href="https://linux.die.net/man/1/websockify">websockify(1): WebSockets to TCP socket bridge - Linux man page</a></li>
+<li><a href="https://taku910.github.io/mecab/">MeCab: Yet Another Part-of-Speech and Morphological Analyzer (公式サイト)</a></li>
+<li><a href="https://taku910.github.io/mecab/feature.html">MeCab の開発経緯 (公式サイト)</a></li>
+<li><a href="https://github.com/taku910/mecab">taku910/mecab (GitHub)</a></li>
+<li><a href="https://github.com/neologd/mecab-ipadic-neologd/blob/master/README.ja.md">mecab-ipadic-neologd README (GitHub)</a></li>
+<li><a href="https://www.capa.co.jp/archives/24856">「めかぶ」とは？食べ物ではないとっても賢いMeCab | 株式会社キャパ</a></li>
 </ul>
 
-
-<p><a class="note-tag" href="/notes/tags/protocol.html">#protocol</a> <a class="note-tag" href="/notes/tags/remote-desktop.html">#remote-desktop</a></p>
 
                                 <div class="notes-backlinks">
                     <h2>🔗 リンクされているノート</h2>
                     <ul>
-                                            <li><a href="/notes/novnc.html">noVNC</a></li>
-                                            <li><a href="/notes/browser-raw-tcp-restriction.html">ブラウザの生TCP/UDPソケット制限</a></li>
+                                            <li><a href="/notes/sqlite-fts5.html">FTS5（SQLite）</a></li>
+                                            <li><a href="/notes/sentencepiece.html">SentencePiece</a></li>
                     
                     </ul>
                 </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-11 07:39 / 更新日時: 2026-08-11 07:41</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=websockify&url=https%3A%2F%2F64p.org%2Fnotes%2Fwebsockify.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <span>作成日時: 2026-08-12 13:42 / 更新日時: 2026-08-12 13:42</span>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=MeCab&url=https%3A%2F%2F64p.org%2Fnotes%2Fmecab.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">
