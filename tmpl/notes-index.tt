@@ -5,6 +5,7 @@
     <title>Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
+    <link rel="alternate" type="application/rss+xml" title="Notes - 64p.org" href="/notes/rss.xml">
 </head>
 <body>
     <div class="notes-layout">

@@ -1,0 +1,1566 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<channel>
+<title>Notes - 64p.org</title>
+<link>https://64p.org/notes/</link>
+<atom:link href="https://64p.org/notes/rss.xml" rel="self" type="application/rss+xml" />
+<description>ちょっと調べたことや検証結果を、AIの力も借りながらメモしていくコーナーです。</description>
+<language>ja</language>
+<lastBuildDate>Wed, 12 Aug 2026 22:01:30 +0900</lastBuildDate>
+<item>
+<title>QUIC</title>
+<link>https://64p.org/notes/quic.html</link>
+<guid isPermaLink="true">https://64p.org/notes/quic.html</guid>
+<pubDate>Wed, 12 Aug 2026 20:47:00 +0900</pubDate>
+<description><![CDATA[<h1>QUIC</h1>
+
+<p>UDP上に構築されたトランスポート層プロトコル。TLS 1.3による暗号化を必須で組み込んでおり、平文での通信を許さない設計になっている。GoogleのJim Roskindらによって2012年頃に考案され、IETFにより2021年5月に<strong>RFC 9000</strong>として標準化された。<a href="/notes/http3.html">HTTP/3</a>や<a href="/notes/webtransport.html">WebTransport</a>の基盤として使われる。 <a class="note-tag" href="/notes/tags/protocol.html">#protocol</a></p>
+
+<h2>TCPとの違い</h2>
+
+<ul>
+<li><strong>ハンドシェイク</strong>: TCPは3-wayハンドシェイクの後に別途TLSネゴシエーションが必要で複数RTTを要するが、QUICはトランスポートのハンドシェイクにTLS 1.3を統合しており、既知のサーバーには0-RTTでの再接続も可能</li>
+<li><strong>ストリーム多重化</strong>: 複数の独立したストリームをトランスポート層で多重化できる。1つのストリームでのパケットロスが他のストリームをブロックしない(Head-of-lineブロッキングの回避)。TCPは単一のバイトストリームしか扱えないため、この分離ができない</li>
+<li><strong>コネクションの識別</strong>: IPアドレス+ポートの組ではなく、コネクションIDでコネクションを識別する。そのためWi-Fi⇔モバイル回線のようなネットワーク切り替えでも接続を維持できる</li>
+</ul>
+
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://www.rfc-editor.org/rfc/rfc9000.html">RFC 9000: QUIC: A UDP-Based Multiplexed and Secure Transport</a></li>
+<li><a href="https://blog.apnic.net/2022/11/03/comparing-tcp-and-quic/">Comparing TCP and QUIC - APNIC Blog</a></li>
+</ul>
+
+]]></description>
+</item>
+<item>
+<title>HTTP/3</title>
+<link>https://64p.org/notes/http3.html</link>
+<guid isPermaLink="true">https://64p.org/notes/http3.html</guid>
+<pubDate>Wed, 12 Aug 2026 20:47:00 +0900</pubDate>
+<description><![CDATA[<h1>HTTP/3</h1>
+
+<p>輸送層に<a href="/notes/quic.html">QUIC</a>を使う版のHTTP。TCPの代わりにUDPベースのQUICを使うことで、HTTP/2までTCP由来で残っていたHead-of-lineブロッキング問題(1つのストリームのパケットロストが同一コネクション上の他の全ストリームを止めてしまう問題)を解消する。IETFにより2022年6月に<strong>RFC 9114</strong>として標準化された。 <a class="note-tag" href="/notes/tags/protocol.html">#protocol</a> <a class="note-tag" href="/notes/tags/web.html">#web</a></p>
+
+<h2>HTTP/2との関係</h2>
+
+<ul>
+<li>メソッド・ステータスコード・ヘッダーといったHTTPセマンティクス自体はHTTP/2・HTTP/1.1と同じ</li>
+<li>各ストリーム上でHTTP/2に似たバイナリフレーミングを使う</li>
+<li>リクエスト/レスポンスヘッダーはHTTP/2同様に圧縮される(ただしQUICのストリーム順不同配送に対応するため、圧縮アルゴリズム自体はQPACKに変更されている)</li>
+<li>HTTP/2の機能の一部はQUIC自体に吸収され、残りはQUICの上に実装される、という形で再構成されている</li>
+</ul>
+
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://www.rfc-editor.org/rfc/rfc9114.html">RFC 9114: HTTP/3</a></li>
+<li><a href="https://ably.com/topic/http-2-vs-http-3">HTTP/2 vs HTTP/3: A look at key differences and similarities - Ably</a></li>
+</ul>
+
+]]></description>
+</item>
+<item>
+<title>WebTransport</title>
+<link>https://64p.org/notes/webtransport.html</link>
+<guid isPermaLink="true">https://64p.org/notes/webtransport.html</guid>
+<pubDate>Wed, 12 Aug 2026 20:43:00 +0900</pubDate>
+<description><![CDATA[<h1>WebTransport</h1>
+
+<p><a href="/notes/http3.html">HTTP/3</a>(<a href="/notes/quic.html">QUIC</a>)上に構築された、ブラウザとサーバー間の低遅延双方向通信API。<a href="/notes/websocket.html">WebSocket</a>の後継候補として設計されている。仕様はIETF WEBTRANS Working GroupとW3Cが共同で策定しており、W3C仕様はGoogle・Mozilla・Appleのエディタが名を連ねる。2026年時点でW3C Working Draft、HTTP/3マッピングのIETFドラフトはWorking Group Last Callの段階。 <a class="note-tag" href="/notes/tags/protocol.html">#protocol</a> <a class="note-tag" href="/notes/tags/web.html">#web</a></p>
+
+<h2>WebSocketとの違い</h2>
+
+<ul>
+<li><strong>輸送層</strong>: WebSocketはTCP上、WebTransportはQUIC(UDPベース)上のHTTP/3を使う</li>
+<li><strong>Head-of-lineブロッキング</strong>: TCPではストリーム単位の分離ができず、1つのデータ欠落が他の通信もブロックする。QUICはストリームを多重化できるため、この問題が起きない</li>
+<li><strong>ネットワーク切り替え</strong>: QUICは接続をIPアドレスでなく接続IDで識別するため、Wi-Fi⇔モバイル回線の切り替えでも接続を継続できる</li>
+<li><strong>信頼性の選択</strong>: WebSocketは常に信頼性のある配信のみだが、WebTransportは信頼性あり/なしを通信方式ごとに選べる</li>
+</ul>
+
+
+<h2>3つの通信方式</h2>
+
+<ul>
+<li><strong>データグラム</strong>: 信頼性・順序保証なし。ゲームの状態更新やセンサーデータなど、最新の値だけ届けばよい用途向け</li>
+<li><strong>単方向ストリーム</strong>: 信頼性・順序保証あり、片方向のみ。ファイル送信やライブ配信向け</li>
+<li><strong>双方向ストリーム</strong>: 信頼性・順序保証あり、双方向。チャットやリアルタイム共同編集向け</li>
+</ul>
+
+
+<h2>ブラウザ対応</h2>
+
+<p>Chrome/Edgeは2022年頃(Chrome 97, Edge 98)から対応、Firefoxは114から対応。Safariは2026年3月リリースのSafari 26.4で対応し、主要ブラウザが出揃った。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/WebTransport_API">WebTransport API - MDN</a></li>
+<li><a href="https://datatracker.ietf.org/doc/draft-ietf-webtrans-http3/">WebTransport over HTTP/3 - IETF Datatracker</a></li>
+<li><a href="https://caniuse.com/webtransport">Can I use: WebTransport</a></li>
+</ul>
+
+]]></description>
+</item>
+<item>
+<title>WebSocket</title>
+<link>https://64p.org/notes/websocket.html</link>
+<guid isPermaLink="true">https://64p.org/notes/websocket.html</guid>
+<pubDate>Wed, 12 Aug 2026 20:41:00 +0900</pubDate>
+<description><![CDATA[<h1>WebSocket</h1>
+
+<p>ブラウザとサーバー間で全二重（双方向）通信を実現するプロトコル。単一のTCPコネクション上で、HTTPのリクエスト/レスポンス方式と異なり、両側から任意のタイミングでメッセージを送受信できる。仕様は<a href="https://www.rfc-editor.org/rfc/rfc6455.html">RFC 6455</a>で定義されている。 <a class="note-tag" href="/notes/tags/protocol.html">#protocol</a> <a class="note-tag" href="/notes/tags/web.html">#web</a></p>
+
+<h2>ハンドシェイク</h2>
+
+<p>最初はHTTPのGETリクエストとして開始する。クライアントは<code>Upgrade: websocket</code>ヘッダーとランダムな<code>Sec-WebSocket-Key</code>を送り、サーバーは<code>101 Switching Protocols</code>と、そのキーに固定GUIDを連結してSHA-1・Base64エンコードした<code>Sec-WebSocket-Accept</code>を返す。以後はHTTPではなくWebSocket独自のフレーム形式で通信する。80/443番ポートで動作しHTTPプロキシとの親和性を保てるよう設計されている。</p>
+
+<h2>フレーム構造</h2>
+
+<ul>
+<li>FINビット: メッセージの最終フラグメントかどうか</li>
+<li>Opcode(4bit): <code>0x1</code>=テキスト、<code>0x2</code>=バイナリ、<code>0x8</code>=クローズ、<code>0x9</code>=Ping、<code>0xA</code>=Pong</li>
+<li>MASKビット: クライアント→サーバー方向は必須。ペイロードをマスクすることでキャッシュポイズニング攻撃を防ぐ</li>
+<li>ペイロード長: 0〜125byteは直接、126なら16bit、127なら64bitで拡張長を表現</li>
+</ul>
+
+
+<h2>Ping/Pongとクローズ</h2>
+
+<p>Ping(<code>0x9</code>)を受け取った側は同じペイロードでPong(<code>0xA</code>)を返し、接続の生存確認とレイテンシ計測に使う。切断時はどちらかがクローズフレーム(<code>0x8</code>、16bitのステータスコード付き)を送り、相手も応答クローズフレームを返してからTCP接続を閉じる（<code>1000</code>=正常終了など）。</p>
+
+<h2>ユースケース</h2>
+
+<p>チャット、リアルタイム通知、共同編集ツール、ゲーム通信、株価配信など。将来的にはバックプレッシャー対応や非順序配信を持つ<a href="/notes/webtransport.html">WebTransport</a>(<a href="/notes/http3.html">HTTP/3</a>・<a href="/notes/quic.html">QUIC</a>ベース)が一部用途を置き換える見込み。</p>
+
+<h2>関連</h2>
+
+<ul>
+<li><a href="/notes/websockify.html">websockify</a>はWebSocket⇔TCPのプロキシ／ブリッジ、<a href="/notes/novnc.html">noVNC</a>はWebSocket経由で<a href="/notes/rfb.html">RFB（Remote Framebuffer）プロトコル</a>プロトコルを話すVNCクライアント。<a href="/notes/browser-raw-tcp-restriction.html">ブラウザが生のTCPソケットを直接扱えない</a>制約への対処として、この構成が使われている。</li>
+<li><a href="/notes/htmx.html">htmx</a>はHTML属性からWebSocketを宣言的に扱う拡張を持つ。</li>
+<li><a href="/notes/cro.html">Cro</a>（Rakuのウェブフレームワーク）もWebSocketをサポートしている。</li>
+</ul>
+
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://www.rfc-editor.org/rfc/rfc6455.html">RFC 6455: The WebSocket Protocol</a></li>
+<li><a href="https://websocket.org/guides/websocket-protocol/">WebSocket Protocol: RFC 6455 Handshake, Frames &amp; More - WebSocket.org</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API">WebSocket API - MDN</a></li>
+</ul>
+
+]]></description>
+</item>
+<item>
+<title>Mojo</title>
+<link>https://64p.org/notes/mojo.html</link>
+<guid isPermaLink="true">https://64p.org/notes/mojo.html</guid>
+<pubDate>Wed, 12 Aug 2026 20:37:00 +0900</pubDate>
+<description><![CDATA[<h1>Mojo</h1>
+
+<p>Modular社が開発するプログラミング言語。Pythonに似た構文を持ちつつ、システムプログラミングやGPU/AIワークロード向けの性能を目指す。2023年に初回リリースされ、2026年8月にリリースされた「Modular 26.5」で正式に1.0に到達した。 <a class="note-tag" href="/notes/tags/ai.html">#ai</a> <a class="note-tag" href="/notes/tags/compiler-design.html">#compiler-design</a></p>
+
+<h2>1.0の意味</h2>
+
+<p>1.0到達は、言語の基盤が長期的に安定し、大きな破壊的変更なしにプロジェクトを構築できる段階に入ったことを意味する。1.0以降も破壊的変更は慎重に行いつつ言語開発自体は継続する方針で、2026年中にはコンパイラ・ツールチェーン自体のオープンソース化も予定されている。</p>
+
+<h2>Modular 26.5 / Mojo 1.0での変更点</h2>
+
+<ul>
+<li>言語仕様の一貫性向上。変数宣言・クロージャ・ポインタ型など、これまで複数あった書き方を単一の標準構文に収束させた</li>
+<li>lambda構文のサポート追加</li>
+<li>LSPサーバーの安定性向上</li>
+<li>メモリ安全性診断機能を実装（無効化された参照の検出など）</li>
+</ul>
+
+
+<h2>コミュニティ</h2>
+
+<p>標準ライブラリのオープンソース化以降、約200人の貢献者が1,100件超のプルリクエストを提出し、20万行以上のコードが変更された。</p>
+
+<h2>MAX(推論プラットフォーム)</h2>
+
+<p>Modular社は<a href="/notes/vllm.html">vLLM</a>と同様のLLM推論・サービング領域で「MAX」という推論プラットフォームも開発している。Modular 26.5に合わせてMAXも26.5となり、インストールプロセスの最適化、GLM-5.2・Nemotron-Hなど新しいモデルファミリーへの対応、エージェント向けスキル機能の拡充が行われた。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://www.modular.com/blog/modular-26-5-mojo-1-0-is-here">Modular 26.5: Mojo 1.0 is here</a></li>
+</ul>
+
+]]></description>
+</item>
+<item>
+<title>htmx</title>
+<link>https://64p.org/notes/htmx.html</link>
+<guid isPermaLink="true">https://64p.org/notes/htmx.html</guid>
+<pubDate>Wed, 12 Aug 2026 19:37:00 +0900</pubDate>
+<description><![CDATA[<h1>htmx</h1>
+
+<p>HTMLの属性だけでAJAX・<a href="/notes/websocket.html">WebSocket</a>・DOM更新を宣言的に扱えるようにするJavaScriptライブラリ。「モダンブラウザの機能に、JavaScriptを書かずHTMLから直接アクセスできるようにする」ことを掲げる。依存ライブラリなしの約2,500行のJSで、現行バージョンは2.x系。作者はCarson Gross。 <a class="note-tag" href="/notes/tags/web.html">#web</a> <a class="note-tag" href="/notes/tags/javascript.html">#javascript</a></p>
+
+<h2>仕組み</h2>
+
+<p><code>hx-get</code>/<code>hx-post</code>などのカスタム属性をHTML要素に書くと、イベント発火時にHTTPリクエストが飛び、<strong>サーバーが返したHTMLフラグメントがDOMの指定箇所にスワップされる</strong>。SPAのようにJSONを返してクライアント側でレンダリングするのではなく、サーバーがHTMLを返すのが根本的な違い。</p>
+
+<pre><code class="html">&lt;button hx-post="/clicked" hx-trigger="click" hx-target="#parent-div"&gt;
+  Click Me!
+&lt;/button&gt;
+</code></pre>
+
+<h2>設計思想: ハイパーメディア駆動</h2>
+
+<p>Roy Fieldingの本来の<a href="/notes/restful.html">REST</a>、特に<a href="/notes/hateoas.html">HATEOAS</a>(Hypertext As The Engine Of Application State)に沿った「ハイパーメディア駆動」アーキテクチャを標榜する。アプリケーションの状態遷移をクライアント側のJS状態管理ではなくハイパーテキスト(HTML)自体に担わせることで、元来のWebプログラミングモデルに留まったまま動的なUIを作れる、という主張。挙動がHTML要素の属性として書かれる「locality of behavior」も重視している。</p>
+
+<p>作者らによる書籍<a href="https://hypermedia.systems/">『Hypermedia Systems』</a>がこの思想を体系的に説明しており、日本語訳<a href="https://www.amazon.co.jp/dp/4297149451?tag=tokuhirom-22">『ハイパーメディアシステム──htmxとRESTによるシンプルで軽やかなウェブ開発』</a>(技術評論社)も出ている。</p>
+
+<h2>限界・向いていないケース</h2>
+
+<p>作者Carson Gross自身がエッセイ「When Should You Use Hypermedia?」で適用範囲を整理している。</p>
+
+<p>向いているのは、テキスト・画像主体でCRUD中心のUI。エッセイではSaaSのContexteがReactからhtmxへ移行してコードベースを67%削減した事例が挙げられている。逆に向いていないと明言されているのは:</p>
+
+<ul>
+<li><strong>複雑・動的な依存関係を持つUI</strong> — 代表例はスプレッドシート。セル間の依存がユーザー入力で任意に生まれるようなUIは「サーバーがHTMLを返す」モデルに落とし込めない</li>
+<li><strong>オフライン動作</strong> — レンダリングをサーバーに依存する構造上、オフラインファーストは現実的でない</li>
+<li><strong>高頻度なUI状態更新</strong> — マウス移動追跡のような頻度ではサーバーラウンドトリップは実用にならない</li>
+<li><strong>Reactエコシステム前提のコンポーネントライブラリが必須の場合</strong></li>
+</ul>
+
+
+<p>要するに「アプリの状態遷移がページ・部分HTMLの粒度で表現できるか」が分水嶺。</p>
+
+<h2>感想</h2>
+
+<p>肌感としては、「ちょっと動的なサイト」ぐらいまでならhtmxでいけるが、一般的なSPAで作るようなアプリケーションになると無理があると思っている。</p>
+
+<h2>歴史</h2>
+
+<p>前身は2013年にCarson Grossが作ったintercooler.js。jQuery依存だった同ライブラリを依存ゼロで書き直したものがhtmx。SPAフレームワークの複雑さへの反動もあって2020年代にSNSで広く知られるようになった。</p>
+
+<p>サーバー側は何でもよい(HTMLを返せさえすればよい)ため、SSR中心のフレームワークとの相性がよく、<a href="/notes/topcoat.html">Topcoat</a>のようにhtmx連携を組み込みで持つフレームワークもある。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://htmx.org/docs/">htmx公式ドキュメント</a></li>
+<li><a href="https://htmx.org/essays/when-to-use-hypermedia/">When Should You Use Hypermedia? - htmx.org essays</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Htmx">Htmx - Wikipedia</a></li>
+<li><a href="https://se-radio.net/2025/06/se-radio-671-carson-gross-on-htmx/">SE Radio 671: Carson Gross on HTMX</a></li>
+<li><a href="https://hypermedia.systems/">Hypermedia Systems (書籍サイト)</a></li>
+</ul>
+
+]]></description>
+</item>
+<item>
+<title>Topcoat</title>
+<link>https://64p.org/notes/topcoat.html</link>
+<guid isPermaLink="true">https://64p.org/notes/topcoat.html</guid>
+<pubDate>Wed, 12 Aug 2026 19:33:00 +0900</pubDate>
+<description><![CDATA[<h1>Topcoat</h1>
+
+<p>Tokioチーム(tokio-rs)が2026年7月22日に発表した、Rust製の「バッテリー同梱」フルスタックWebフレームワーク。サーバーサイドレンダリング(SSR)中心で、バックエンド+フロントエンド+API層+ビルドパイプラインという「組み合わせ一式」を1つのRustプロジェクトで置き換えることを狙う。HTTPルータとしては内部でAxumを使っており、Axum/Actixの競合ではなくその上に載る層。早期実験段階で、破壊的変更ありと明言されている。 <a class="note-tag" href="/notes/tags/rust.html">#rust</a> <a class="note-tag" href="/notes/tags/web.html">#web</a></p>
+
+<div class="mermaid">
+flowchart LR
+    subgraph server["Topcoatサーバー (Axum上)"]
+        comp["asyncコンポーネント&lt;br/&gt;(SSRでHTML生成)"] --- db[("DB&lt;br/&gt;(API層なしで直接アクセス)")]
+    end
+    comp --&gt;|"HTML + 変換されたJS"| browser["ブラウザ&lt;br/&gt;(signalでリアクティブ動作。&lt;br/&gt;wasmバンドル・npm・&lt;br/&gt;クライアントビルド不要)"]
+</div>
+
+
+<h2>最大の特徴: RustからJSへのクロスコンパイル</h2>
+
+<p>LeptosやDioxusのようにWebAssemblyをブラウザに送るのではなく、<strong>マクロで選択したRust式だけをJavaScriptに変換する</strong>方式。</p>
+
+<ul>
+<li>Rustとして型チェックされる</li>
+<li>初回レンダリングはサーバー側で評価される</li>
+<li>ブラウザ上ではJSとしてsignalベースでリアクティブに動く</li>
+<li>npm・frontend用ディレクトリ・クライアントビルド工程が不要で、最小構成なら1つのRustファイルからWebページを起動できる</li>
+</ul>
+
+
+<h2>設計思想</h2>
+
+<p>「locality of behavior」を掲げる。コンポーネントが自分のデータ取得・認証・メモ化を自己完結的に持つ構造で、人間の推論にもAI支援開発にも扱いやすくすることを意図している。コンポーネントはasyncで、API層を挟まず直接DBに問い合わせられる。</p>
+
+<h2>同梱物</h2>
+
+<ul>
+<li>コンテンツハッシュ付きURLのアセットパイプライン</li>
+<li>Node.js不要のTailwind CSS組み込み、shadcn/ui風コンポーネントライブラリ</li>
+<li>セッション/クッキー管理、リクエスト単位のメモ化</li>
+<li><a href="/notes/htmx.html">htmx</a> / Fontsource / Iconify 連携</li>
+</ul>
+
+
+<p>同じくtokio-rs製のasync ORM「Toasty」(2026年4月公開)との統合強化、バリデーション、メール機能がロードマップに載っている。</p>
+
+<h2>検証記事での評価</h2>
+
+<p>きっかけは<a href="https://syu-m-5151.hatenablog.com/entry/2026/08/12/163644">nwiizo氏によるTopcoat 0.5.0の検証記事</a>。実際にアプリケーションを構築した上で、signal(ブラウザ側)・procedure(サーバー側検証)・shard(部分SSR)という実行場所の使い分けを整理しつつ、認証・パスワード管理・DBマイグレーションはアプリケーション側の責任として残ると限界を明確化していた。結論は「SSR中心の業務画面や小規模サービス向き、複雑なクライアント状態管理が必要なアプリには不向き」というもの。</p>
+
+<p>なお、10年以上前にAdobeが公開していた同名のCSSライブラリ「Topcoat」があるが、無関係。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://tokio.rs/blog/2026-07-22-announcing-topcoat">Announcing Topcoat: a framework for building full-stack reactive web apps with Rust - Tokio公式ブログ</a></li>
+<li><a href="https://github.com/tokio-rs/topcoat">tokio-rs/topcoat - GitHub</a></li>
+<li><a href="https://crates.io/crates/topcoat">topcoat - crates.io</a></li>
+<li><a href="https://syu-m-5151.hatenablog.com/entry/2026/08/12/163644">Topcoat 0.5.0 検証記事 (syu-m-5151.hatenablog.com)</a></li>
+</ul>
+
+]]></description>
+</item>
+<item>
+<title>Network Namespace (netns)</title>
+<link>https://64p.org/notes/network-namespace.html</link>
+<guid isPermaLink="true">https://64p.org/notes/network-namespace.html</guid>
+<pubDate>Wed, 12 Aug 2026 19:33:00 +0900</pubDate>
+<description><![CDATA[<h1>Network Namespace (netns)</h1>
+
+<p>Linuxカーネルの機能で、プロセスグループごとに独立したネットワークスタックを持たせる分離技術。カーネル内部では各namespaceインスタンスが<code>struct net</code>で表現される。プロセス・ファイルシステム・IPCなどを分離する他のnamespace種別と並ぶ、Linux namespaces機構の一種。<a href="/notes/cgroups.html">cgroups（control groups）</a>によるリソース制御と組み合わせて<a href="/notes/lxc.html">LXC</a>などの軽量仮想化の基盤にもなっている。 <a class="note-tag" href="/notes/tags/network.html">#network</a> <a class="note-tag" href="/notes/tags/linux.html">#linux</a> <a class="note-tag" href="/notes/tags/kernel.html">#kernel</a></p>
+
+<h2>namespaceごとに独立して管理されるもの</h2>
+
+<ul>
+<li>ネットワークインターフェース（lo, eth0など）</li>
+<li>ルーティングテーブル（IPv4/IPv6）</li>
+<li>iptables/nftablesのファイアウォール設定</li>
+<li>netfilterの接続追跡状態</li>
+<li>Unixドメインソケットの名前空間</li>
+<li>ポート番号空間（0-65535）</li>
+<li><code>/proc/net/</code>以下のビュー</li>
+</ul>
+
+
+<p>初期化時に<code>pernet_operations</code>フックを通じて、各サブシステムがper-namespace状態を初期化する。</p>
+
+<h2>管理コマンド: ip netns</h2>
+
+<pre><code class="sh">ip netns add ns1                        # 名前空間を作成
+ip netns exec ns1 &lt;cmd&gt;                  # 名前空間内でコマンド実行
+ip link set &lt;iface&gt; netns ns1            # 既存インターフェースを移動
+ip netns del ns1                         # 削除
+</code></pre>
+
+<h2>veth pairによる接続</h2>
+
+<p>異なるnamespace同士やnamespaceとホストを繋ぐ標準的な手段が<strong>veth pair</strong>（仮想Ethernetペア）。片方に入れたフレームがもう片方から出てくる「パイプ」のように振る舞う。ペアの一端をnamespace Aに、もう一端をnamespace Bやホストに配置して接続する。<a href="/notes/linux-virtual-network-lab.html">実際に構築した例</a>では、veth pairで複数のnamespaceを<a href="/notes/linux-bridge.html">Linuxブリッジ</a>に接続した。</p>
+
+<h2>unprivileged user namespaceとの組み合わせ</h2>
+
+<p><code>unshare --user --map-root-user --net</code>のようにuser namespaceと組み合わせることで、sudoなしでもnetwork namespaceを作成・操作できる。ただし作成したnamespaceはホストの実NICには触れられない。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://kernel-internals.org/net/net-namespaces/">Network Namespaces - Linux Kernel Internals</a></li>
+<li><a href="https://www.commandinline.com/linux-network-namespaces-guide/">Linux Network Namespaces: Isolate Network Stacks | Command in Line</a></li>
+</ul>
+
+]]></description>
+</item>
+<item>
+<title>Linux標準ブリッジ</title>
+<link>https://64p.org/notes/linux-bridge.html</link>
+<guid isPermaLink="true">https://64p.org/notes/linux-bridge.html</guid>
+<pubDate>Wed, 12 Aug 2026 19:30:00 +0900</pubDate>
+<description><![CDATA[<h1>Linux標準ブリッジ</h1>
+
+<p>Linuxカーネルのbridgeモジュールが実装するソフトウェアL2スイッチ。接続されたインターフェース（veth, tapなど）間でEthernetフレームを転送する、カーネル組み込みの機能。仮想マシン・コンテナ・<a href="/notes/network-namespace.html">network namespace</a>間の接続によく使われる。<a href="/notes/linux-virtual-network-lab.html">VLANラボの実験</a>でも「L2スイッチ」役として使った。 <a class="note-tag" href="/notes/tags/network.html">#network</a> <a class="note-tag" href="/notes/tags/linux.html">#linux</a></p>
+
+<h2>管理コマンド: brctl vs iproute2</h2>
+
+<ul>
+<li><strong>brctl</strong>（bridge-utilsパッケージ）— 旧来のコマンド。VLANサポートがなく非推奨。</li>
+<li><strong>iproute2</strong> — 現在の標準。<code>ip link</code>でブリッジの追加・削除・オプション設定を行い、<code>bridge</code>コマンドでFDB（MACアドレステーブル）・MDB・VLAN設定を表示・操作する。</li>
+</ul>
+
+
+<pre><code class="sh">ip link add br0 type bridge
+ip link set br0 up
+</code></pre>
+
+<h2>STP (Spanning Tree Protocol)</h2>
+
+<p>カーネル2.4/2.6系列以降、STPの基本サポートを内蔵している。BPDU（Bridge Protocol Data Unit）を交換してルートブリッジを選出し、ループになる経路のポートをブロックする。RSTPには非対応。</p>
+
+<pre><code class="sh">ip link set br0 type bridge stp_state 1
+</code></pre>
+
+<h2>VLANフィルタリング</h2>
+
+<p>カーネル3.8で導入された機能。それ以前はVLANごとに別々のブリッジを用意する必要があったが、VLANフィルタリングにより単一のブリッジで複数の<a href="/notes/vlan.html">VLAN</a>を扱えるようになった。</p>
+
+<pre><code class="sh">ip link set br0 type bridge vlan_filtering 1
+bridge vlan add dev veth1 vid 10 pvid untagged   # アクセスポート
+bridge vlan add dev veth4 vid 10 tagged          # トランクポート
+</code></pre>
+
+<h2><a href="/notes/open-vswitch.html">Open vSwitch</a>との違い</h2>
+
+<p>Linux標準ブリッジは単一ホスト内の単純なL2転送を主眼にした軽量な実装。Open vSwitchが持つような、複数サーバーにまたがる仮想化環境向けの動的エンドポイント管理・OpenFlowによるリモート制御・<a href="/notes/vxlan.html">VXLAN</a>等のトンネリング統合機能は持たない。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://developers.redhat.com/articles/2022/04/06/introduction-linux-bridging-commands-and-features">An introduction to Linux bridging commands and features - Red Hat Developer</a></li>
+<li><a href="https://docs.kernel.org/networking/bridge.html">Ethernet Bridging — The Linux Kernel documentation</a></li>
+<li><a href="https://blog.sdn.clinic/2018/12/vlan-aware-bridges-on-linux/">(Vlan-aware) Bridges on Linux – SDN Clinic</a></li>
+</ul>
+
+]]></description>
+</item>
+<item>
+<title>Open vSwitch (OVS)</title>
+<link>https://64p.org/notes/open-vswitch.html</link>
+<guid isPermaLink="true">https://64p.org/notes/open-vswitch.html</guid>
+<pubDate>Wed, 12 Aug 2026 19:21:00 +0900</pubDate>
+<description><![CDATA[<h1>Open vSwitch (OVS)</h1>
+
+<p>Apache 2ライセンスで公開されているオープンソースのマルチレイヤ仮想スイッチ。仮想マシン環境で動作するソフトウェアスイッチで、L2（データリンク層）でイーサネットフレームを扱いつつ、OpenFlowにも対応している。<a href="/notes/linux-bridge.html">Linux標準ブリッジ</a>より本格的な仮想スイッチとして、OpenStackなどが実際に採用している。 <a class="note-tag" href="/notes/tags/network.html">#network</a> <a class="note-tag" href="/notes/tags/sdn.html">#sdn</a></p>
+
+<h2>アーキテクチャ</h2>
+
+<ul>
+<li><strong>ovs-vswitchd</strong> — スイッチ機能そのものを実装するデーモン。付随するLinuxカーネルモジュールと組み合わせてフローベースのスイッチングを行う（userspace実装のみでの動作も可能）。</li>
+<li><strong>ovsdb-server</strong> — ovs-vswitchdが設定情報を取得するための軽量なデータベースサーバー。</li>
+<li><strong>カーネルモジュール/datapath</strong> — 実際のパケット転送処理を担う層。</li>
+<li><strong>ovs-ofctl</strong> — OpenFlowスイッチに対してクエリ・制御を行うユーティリティ。</li>
+</ul>
+
+
+<p>OpenFlow 1.0とその多数の拡張をサポートしており、外部のSDNコントローラからフロールールを供給できる（あるいは手動でCLIから投入することも可能）。</p>
+
+<h2>主な機能</h2>
+
+<ul>
+<li>VLAN（<a href="/notes/vlan.html">IEEE 802.1Q</a>）対応</li>
+<li><a href="/notes/vxlan.html">VXLAN</a>、GRE、Geneveなど複数のトンネリングプロトコル対応</li>
+<li>NetFlow、IPFIX、sFlowによるトラフィック可視化</li>
+<li>QoS設定・ポリシング</li>
+<li>ネットワーク状態（L2学習テーブル、L3転送状態、ACLなど）のホスト間移行</li>
+<li>カーネルデータパスのハードウェアチップセットへのオフロード</li>
+</ul>
+
+
+<p>実装形態も複数あり、古典的なカーネルモジュール版のほか、高性能だが設定が複雑なDPDK版、保守性に優れるeBPF版、従来ツールとの互換性を保ちながら高速化するAF_XDP版が存在する。</p>
+
+<h2>従来の<a href="/notes/linux-bridge.html">Linuxブリッジ</a>との違い</h2>
+
+<p>Linuxブリッジが単一ホスト内の単純なL2転送を主眼にしているのに対し、OVSは複数サーバーにまたがる仮想化環境を対象に設計されている。動的なエンドポイント管理、論理的な抽象化の維持、専用ハードウェアとの統合（オフロード）といった、大規模・動的な環境向けの要件に応える点が特徴。</p>
+
+<h2>主なユースケース</h2>
+
+<ul>
+<li><strong>OpenStack</strong> — Neutronのプラグインとして、VM間のネットワークを構成する標準的な仮想スイッチ</li>
+<li><strong>Kubernetes/コンテナ基盤</strong> — CNIプラグイン経由でPod間ネットワークを構築</li>
+<li><strong>SDN環境</strong> — 外部のSDNコントローラから直接OpenFlowで制御される構成</li>
+<li><strong>マルチテナントのトンネリング</strong> — VXLAN等でコンピュートノード間をオーバーレイ接続</li>
+<li><strong>サービスチェーン</strong> — 複数の仮想ネットワーク機能（VNF）間でトラフィックを転送</li>
+</ul>
+
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://docs.openvswitch.org/en/stable/intro/why-ovs/">Why Open vSwitch? — Open vSwitch documentation</a></li>
+<li><a href="https://docs.openvswitch.org/en/latest/intro/what-is-ovs/">What is OVS? — Open vSwitch documentation</a></li>
+<li><a href="https://ubuntu.com/blog/data-centre-networking-what-is-ovs">Data centre networking: what is OVS? | Ubuntu</a></li>
+<li><a href="https://medium.com/@isaac2ngeno5/open-vswitch-ovs-in-openstack-85b71e5539e5">Open vSwitch (OVS) in Openstack | Medium</a></li>
+</ul>
+
+]]></description>
+</item>
+<item>
+<title>Linuxだけで作る仮想ネットワークラボ</title>
+<link>https://64p.org/notes/linux-virtual-network-lab.html</link>
+<guid isPermaLink="true">https://64p.org/notes/linux-virtual-network-lab.html</guid>
+<pubDate>Wed, 12 Aug 2026 18:54:00 +0900</pubDate>
+<description><![CDATA[<h1>Linuxだけで作る仮想ネットワークラボ</h1>
+
+<p><a href="/notes/vlan.html">VLAN</a>や<a href="/notes/vxlan.html">VXLAN</a>を実際に構築して遊ぶのに物理機材は不要。Linuxカーネル自体が両方をネイティブ実装しているので、<a href="/notes/network-namespace.html">network namespace</a>を使えばマシン1台で完結する。しかも<strong>unprivileged user namespaceを使えばsudoすら不要</strong>。以下はClaude Codeに実際にsudoなしで構築・動作確認させたときの実ログ（Pop!_OS、kernel 6.18）。 <a class="note-tag" href="/notes/tags/network.html">#network</a> <a class="note-tag" href="/notes/tags/linux.html">#linux</a></p>
+
+<h2>sudoなしで動かす鍵: unprivileged user namespace</h2>
+
+<pre><code class="sh">unshare --user --map-root-user --net --mount bash
+</code></pre>
+
+<p>これで入ったシェルは「そのnamespace内限定のroot」なので、<code>ip link add</code>（bridge/veth/vxlanいずれも）や<code>ip netns add</code>が素で通る。ホストのネットワークには一切影響せず、exitすれば全部消える。ハマりどころは2つあった。</p>
+
+<ul>
+<li><code>ip netns add</code>は<code>/run/netns</code>を使うので、<code>--mount</code>を付けた上で<code>mount -t tmpfs tmpfs /run</code>しておく必要がある</li>
+<li>tcpdumpはデフォルトで<code>tcpdump</code>ユーザーへ権限降格しようとするが、userns内ではそのuidがマップされておらず<code>Couldn't change to 'tcpdump' uid=114: Operation not permitted</code>で死ぬ。<strong><code>-Z root</code>を付けて降格を止める</strong></li>
+</ul>
+
+
+<h2>ラボ1: VLAN — 同じスイッチ上でL2セグメントが分かれることを確認</h2>
+
+<p><a href="/notes/network-namespace.html">netns</a>を「PC」、VLANフィルタリングを有効にした<a href="/notes/linux-bridge.html">Linuxブリッジ</a>を「L2スイッチ」に見立て、次の構成を作った。</p>
+
+<div class="mermaid">
+flowchart LR
+    pc1["pc1&lt;br/&gt;10.0.0.1"] ---|"veth1&lt;br/&gt;VLAN 10 アクセス"| br0
+    pc2["pc2&lt;br/&gt;10.0.0.2"] ---|"veth2&lt;br/&gt;VLAN 10 アクセス"| br0
+    pc3["pc3&lt;br/&gt;10.0.0.3"] ---|"veth3&lt;br/&gt;VLAN 20 アクセス"| br0
+    pc4["pc4&lt;br/&gt;10.0.0.4 (eth0.10)"] ---|"veth4&lt;br/&gt;VLAN 10 トランク(タグ付き)"| br0
+    br0[["br0&lt;br/&gt;(VLANフィルタリング有効の&lt;br/&gt;Linuxブリッジ = L2スイッチ)"]]
+</div>
+
+
+<p>構築コマンド（userns内。抜粋）:</p>
+
+<pre><code class="sh">ip link add br0 type bridge vlan_filtering 1
+ip link set br0 up
+
+# pc1〜pc3を作ってブリッジに接続(pc2, pc3も同様)
+ip netns add pc1
+ip link add veth1 type veth peer name eth0 netns pc1
+ip link set veth1 master br0 up
+ip netns exec pc1 ip link set eth0 up
+ip netns exec pc1 ip addr add 10.0.0.1/24 dev eth0
+
+# veth1,2をVLAN 10、veth3をVLAN 20のアクセスポートに
+bridge vlan add dev veth1 vid 10 pvid untagged
+bridge vlan del dev veth1 vid 1
+
+# veth4はVLAN 10をタグ付きで通すトランクポートに。pc4側はVLANサブインターフェースで受ける
+bridge vlan add dev veth4 vid 10 tagged
+bridge vlan del dev veth4 vid 1
+ip netns exec pc4 ip link add link eth0 name eth0.10 type vlan id 10
+ip netns exec pc4 ip link set eth0.10 up
+ip netns exec pc4 ip addr add 10.0.0.4/24 dev eth0.10
+</code></pre>
+
+<p>ポートのVLAN割り当てはこうなる。</p>
+
+<pre><code>$ bridge vlan show
+port              vlan-id
+br0               1 PVID Egress Untagged
+veth1             10 PVID Egress Untagged
+veth2             10 PVID Egress Untagged
+veth3             20 PVID Egress Untagged
+veth4             10
+</code></pre>
+
+<p>同一VLAN間はpingが通る。</p>
+
+<pre><code>$ ip netns exec pc1 ping -c 2 10.0.0.2   # pc1 -&gt; pc2 (同じVLAN 10)
+64 bytes from 10.0.0.2: icmp_seq=1 ttl=64 time=0.061 ms
+64 bytes from 10.0.0.2: icmp_seq=2 ttl=64 time=0.041 ms
+2 packets transmitted, 2 received, 0% packet loss, time 1021ms
+</code></pre>
+
+<p>別VLANへは同じスイッチ・同じIPサブネットに居るのに届かない。これがVLAN＝ブロードキャストドメイン分割の本質。</p>
+
+<pre><code>$ ip netns exec pc1 ping -c 2 -W 1 10.0.0.3   # pc1 -&gt; pc3 (別VLAN)
+2 packets transmitted, 0 received, 100% packet loss, time 1019ms
+</code></pre>
+
+<p>トランクポートで観察すると、802.1Qタグ（<code>ethertype 802.1Q</code>、<code>vlan 10</code>）が付いたフレームが実際に流れているのが見える。アクセスポート(veth1)から入ったタグなしフレームに、スイッチがトランクから出すときタグを付けている。</p>
+
+<pre><code>$ ip netns exec pc4 tcpdump -Z root -e -n -i eth0 -c 4
+9e:c6:65:df:45:62 &gt; ff:ff:ff:ff:ff:ff, ethertype 802.1Q (0x8100), length 46: vlan 10, p 0,
+    ethertype ARP (0x0806), Request who-has 10.0.0.4 tell 10.0.0.1, length 28
+12:20:80:28:ae:0f &gt; 9e:c6:65:df:45:62, ethertype 802.1Q (0x8100), length 46: vlan 10, p 0,
+    ethertype ARP (0x0806), Reply 10.0.0.4 is-at 12:20:80:28:ae:0f, length 28
+9e:c6:65:df:45:62 &gt; 12:20:80:28:ae:0f, ethertype 802.1Q (0x8100), length 102: vlan 10, p 0,
+    ethertype IPv4 (0x0800), 10.0.0.1 &gt; 10.0.0.4: ICMP echo request, id 30761, seq 1, length 64
+</code></pre>
+
+<h2>ラボ2: VXLAN — MAC over UDPを実際に覗く</h2>
+
+<p>「物理サーバ2台」をnetns(host1/host2)で用意してvethで直結し（これがL3アンダーレイ 192.168.0.0/24）、その上にVNI 100のVXLANオーバーレイ(10.99.0.0/24)を張った。</p>
+
+<div class="mermaid">
+flowchart LR
+    subgraph host1
+        v1["vxlan100&lt;br/&gt;10.99.0.1"] --- e1["eth0&lt;br/&gt;192.168.0.1"]
+    end
+    subgraph host2
+        e2["eth0&lt;br/&gt;192.168.0.2"] --- v2["vxlan100&lt;br/&gt;10.99.0.2"]
+    end
+    e1 ===|"アンダーレイ(veth直結)&lt;br/&gt;VXLAN: UDP 4789 / VNI 100"| e2
+    v1 -.-|"オーバーレイ 10.99.0.0/24"| v2
+</div>
+
+
+
+
+<pre><code class="sh">ip netns exec host1 ip link add vxlan100 type vxlan id 100 dstport 4789 \
+    local 192.168.0.1 remote 192.168.0.2 dev eth0
+# host2側はlocal/remoteを逆にして同様に作成し、10.99.0.1/24, 10.99.0.2/24を割り当て
+</code></pre>
+
+<p>アンダーレイをtcpdumpしながらオーバーレイのアドレスにpingすると、ARPもICMPも<strong>EthernetフレームまるごとUDP(4789)にカプセル化されて飛ぶ</strong>様子がそのまま見える。</p>
+
+<pre><code>$ ip netns exec host1 ping -c 2 10.99.0.2   # オーバーレイ側でping
+$ ip netns exec host1 tcpdump -Z root -n -i eth0 -c 4 udp port 4789   # アンダーレイ側で観察
+IP 192.168.0.1.43502 &gt; 192.168.0.2.4789: VXLAN, flags [I] (0x08), vni 100
+ARP, Request who-has 10.99.0.2 tell 10.99.0.1, length 28
+IP 192.168.0.2.43502 &gt; 192.168.0.1.4789: VXLAN, flags [I] (0x08), vni 100
+ARP, Reply 10.99.0.2 is-at be:e1:fe:0e:36:4c, length 28
+IP 192.168.0.1.56075 &gt; 192.168.0.2.4789: VXLAN, flags [I] (0x08), vni 100
+IP 10.99.0.1 &gt; 10.99.0.2: ICMP echo request, id 31448, seq 1, length 64
+IP 192.168.0.2.56075 &gt; 192.168.0.1.4789: VXLAN, flags [I] (0x08), vni 100
+IP 10.99.0.2 &gt; 10.99.0.1: ICMP echo reply, id 31448, seq 1, length 64
+</code></pre>
+
+<p>細かいが面白いのは送信元UDPポートで、ARPのフロー(43502)とICMPのフロー(56075)で違う値になっている。<a href="/notes/vxlan.html">VXLANの仕様</a>どおり、内部フレームのハッシュから送信元ポートを決めてECMPで経路分散させる挙動が実際に確認できた。</p>
+
+<p>なお最初に実行したときはIPv6のneighbor solicitationなどがカプセル化される様子ばかりが録れたので、ログを見やすくするため<code>sysctl net.ipv6.conf.vxlan100.disable_ipv6=1</code>してから録り直した。</p>
+
+<h2>制約と、その先</h2>
+
+<p>unprivileged usernsの制約:</p>
+
+<ul>
+<li>namespace内に閉じているので、<strong>ホストの実NICは触れない</strong>。実マシン2台間でVXLANを張るような実験にはやはり実NICへの権限が必要</li>
+<li>ディストリによってはunprivileged usernsが制限されている（Ubuntuは23.10でAppArmorによる制限を導入し、24.04からデフォルト有効。<code>sysctl kernel.apparmor_restrict_unprivileged_userns</code>で確認できる）</li>
+</ul>
+
+
+<p>もっと本格的にやるなら:</p>
+
+<ul>
+<li><strong>containerlab + FRRouting</strong> — leaf-spine構成でBGP EVPNをコントロールプレーンにしたVXLANファブリックをYAML一発で構築できる。お手本: <a href="https://github.com/martimy/clab_vxlan_frr">martimy/clab_vxlan_frr</a>、<a href="https://github.com/darnodo/VXLAN-EVPN">darnodo/VXLAN-EVPN</a>（いずれもDockerが必要なのでsudoなし縛りだとrootless dockerで）</li>
+<li><strong><a href="/notes/open-vswitch.html">Open vSwitch</a></strong> — Linux標準ブリッジより本格的な仮想スイッチ。OpenStackなどが実際に使っている</li>
+<li><strong>GNS3 / EVE-NG</strong> — Cisco IOSなどベンダーOSのイメージを動かすエミュレータ。「実機のCLI操作」の練習向けだが、イメージ入手にライセンスの壁がある</li>
+</ul>
+
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://labs.iximiuz.com/courses/computer-networking-fundamentals/simple-vlan">Networking Lab: Setting Up a VLAN Using a Linux Bridge - iximiuz Labs</a></li>
+<li><a href="https://developers.redhat.com/articles/2026/04/03/introduction-to-linux-interfaces-for-virtual-networking">Introduction to Linux interfaces for virtual networking - Red Hat Developer</a></li>
+<li><a href="https://www.netpilot.io/blog/what-is-containerlab">What Is ContainerLab? The Complete 2026 Guide - NetPilot</a></li>
+<li><a href="https://discourse.ubuntu.com/t/understanding-apparmor-user-namespace-restriction/58007">Understanding AppArmor User Namespace Restriction - Ubuntu Community Hub</a></li>
+</ul>
+
+]]></description>
+</item>
+<item>
+<title>VLAN</title>
+<link>https://64p.org/notes/vlan.html</link>
+<guid isPermaLink="true">https://64p.org/notes/vlan.html</guid>
+<pubDate>Wed, 12 Aug 2026 18:47:00 +0900</pubDate>
+<description><![CDATA[<h1>VLAN</h1>
+
+<p>Virtual Local Area Networkの略。1つの物理的なスイッチ/ネットワークを複数の論理的なL2ネットワーク（ブロードキャストドメイン）に分割する技術。物理配線を変えずにネットワークを分離できるため、部署ごとの分離・セキュリティ境界の設定・ブロードキャストトラフィックの抑制などに使われる。標準は<strong>IEEE 802.1Q</strong>（初版1998年。802.1Q-2003でMSTPを統合、802.1Q-2014で802.1Dを統合、と改訂が続いている）。 <a class="note-tag" href="/notes/tags/network.html">#network</a></p>
+
+<h2>仕組み: 802.1Qタグ</h2>
+
+<p>Ethernetフレームの送信元MACアドレスとEtherTypeの間に<strong>4バイト（32bit）のタグ</strong>を挿入する。</p>
+
+<table>
+<thead>
+<tr>
+<th> フィールド </th>
+<th> ビット数 </th>
+<th> 内容 </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td> TPID </td>
+<td> 16bit </td>
+<td> タグの存在を示す識別子。<code>0x8100</code>固定 </td>
+</tr>
+<tr>
+<td> PCP </td>
+<td> 3bit </td>
+<td> 優先度（802.1pのCoS、QoS用） </td>
+</tr>
+<tr>
+<td> DEI </td>
+<td> 1bit </td>
+<td> 輻輳時にドロップしてよいフレームかの印 </td>
+</tr>
+<tr>
+<td> VID </td>
+<td> 12bit </td>
+<td> VLAN ID本体 </td>
+</tr>
+</tbody>
+</table>
+
+
+<ul>
+<li>VIDは12bitで理論上4096値だが、<code>0</code>（VLAN IDなし・優先度タグのみ）と<code>4095</code>（実装予約）が使えず実質<strong>4094個</strong>。<code>1</code>は多くのベンダーでデフォルト/管理VLANに使われる。</li>
+<li>タグの分だけ最大フレームサイズは1518→1522バイトに拡張される。最小フレームサイズは64バイトのまま。</li>
+</ul>
+
+
+<h2>アクセスポートとトランクポート</h2>
+
+<ul>
+<li><strong>アクセスポート</strong> — 単一VLANに所属するポート。タグなしフレームをやりとりし、スイッチ内部でVLANに割り当てる。PCなど末端機器を繋ぐ。</li>
+<li><strong>トランクポート</strong> — スイッチ間リンクなどで複数VLANのフレームを<strong>タグ付き</strong>で通すポート。タグを見てどのVLANのフレームか判別する。</li>
+<li><strong>ネイティブVLAN</strong> — トランク上で例外的にタグなしで運ばれるVLAN。設定ミスがあると二重タグを使ったVLANホッピング攻撃の足がかりになるため、セキュリティ上の注意点としてよく挙げられる。</li>
+</ul>
+
+
+<h2>発展形と限界</h2>
+
+<ul>
+<li><strong>802.1ad (QinQ)</strong> — タグを二重に積む拡張。ISPが顧客のタグ付きトラフィックをそのまま運ぶために、外側にS-TAG（TPID <code>0x88a8</code>）、内側に顧客のC-TAGを重ねる。</li>
+<li><strong><a href="/notes/vxlan.html">VXLAN</a>へ</strong> — VLAN IDが12bitで4094セグメントしか作れない制約は、クラウド/マルチテナント環境で不足し、24bitのVNIを持つVXLANが生まれる背景になった。</li>
+</ul>
+
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/IEEE_802.1Q">IEEE 802.1Q - Wikipedia</a></li>
+<li><a href="https://documentation.meraki.com/General_Administration/Tools_and_Troubleshooting/Fundamentals_of_802.1Q_VLAN_Tagging">Fundamentals of 802.1Q VLAN Tagging - Cisco Meraki Documentation</a></li>
+</ul>
+
+]]></description>
+</item>
+<item>
+<title>VRRP (Virtual Router Redundancy Protocol)</title>
+<link>https://64p.org/notes/vrrp.html</link>
+<guid isPermaLink="true">https://64p.org/notes/vrrp.html</guid>
+<pubDate>Wed, 12 Aug 2026 18:44:00 +0900</pubDate>
+<description><![CDATA[<h1>VRRP (Virtual Router Redundancy Protocol)</h1>
+
+<p><a class="note-tag" href="/notes/tags/networking.html">#networking</a> <a class="note-tag" href="/notes/tags/protocol.html">#protocol</a> <a class="note-tag" href="/notes/tags/linux.html">#linux</a></p>
+
+<p>複数台のルータ(またはサーバ)で1つの仮想IPアドレス(VIP)を共有し、デフォルトゲートウェイやサービスを冗長化するプロトコル。IETFで標準化されており、現行版はIPv4/IPv6両対応のRFC 5798(VRRPv3。IPv4のみのRFC 3768を obsolete)。</p>
+
+<h2>仕組み</h2>
+
+<ul>
+<li>参加ルータには 0〜255 の priority を設定する(デフォルト100)。priorityが最も高いルータが <strong>MASTER</strong> としてVIP宛の通信を処理し、他は <strong>BACKUP</strong> としてMASTERの生存を監視する。優先度が同じ場合は主IPアドレスが大きい方が採用される。</li>
+<li>MASTERは一定間隔(デフォルト1秒)で <strong>VRRP Advertisement</strong> をマルチキャストアドレス<code>224.0.0.18</code>(IPv4、IPプロトコル番号112)へ送信する。BACKUPはこれを受信できなくなると、自身がMASTERに昇格する。</li>
+<li>Advertisementが途絶えてからMASTERに昇格するまでの待ち時間は次の式で決まる。priorityが高いBACKUPほど短い時間で昇格できる。</li>
+</ul>
+
+
+<pre><code class="``">  Skew_Time = (256 - priority) / 256 × Advertisement間隔
+  Master_Down_Interval = 3 × Advertisement間隔 + Skew_Time
+</code></pre>
+
+<ul>
+<li>priority=255 はVIPのアドレス所有者を示す特別な値で、設定に関わらず常にMASTERになる。priority=0 は「現在のMASTERが降りる」という通知で、これを受け取ったBACKUPは通常より短いSkew_Timeだけ待てばよいため、意図的な停止時のフェイルオーバーを高速化できる。</li>
+<li>稼働中の低priority MASTERに対して、後から復帰した高priorityのBACKUPが制御を奪い返すかどうかは <strong>Preemptモード</strong> で制御する(デフォルトは奪う設定)。ただしpriority=255(アドレス所有者)はPreemptモードの設定に関わらず常に昇格する。</li>
+</ul>
+
+
+<h2>Linuxでの実装: keepalived</h2>
+
+<p>Linuxでは<code>keepalived</code>がVRRPの代表的な実装。HAProxyやNginxなどのロードバランサの前段に2台以上のサーバを並べ、VIPをフェイルオーバーさせる用途でよく使われる。LVS(IPVS)によるL4ロードバランシングの死活監視と、VRRPによるルータ/サーバ冗長化の両方を兼ね備えたデーモンとして設計されている。</p>
+
+<h2>可視化デモ</h2>
+
+<p>MASTER選出・フェイルオーバー・Preemptの挙動を、実際のタイマーで動かしながら確認できるデモを作った。</p>
+
+<p><a href="https://claude.ai/code/artifact/d86922b8-5e59-49a7-b13f-8a434ac28213">https://claude.ai/code/artifact/d86922b8-5e59-49a7-b13f-8a434ac28213</a></p>
+
+<p>lb1/lb2の2ノード構成で、リンクダウンやpriority変更がMASTER選出にどう波及するかを、VRRP AdvertisementとクライアントのVIP宛通信をアニメーションで見ながら確認できる。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://www.rfc-editor.org/rfc/rfc5798">RFC 5798 - Virtual Router Redundancy Protocol (VRRP) Version 3 for IPv4 and IPv6</a></li>
+<li><a href="https://www.keepalived.org/">Keepalived for Linux</a></li>
+</ul>
+
+]]></description>
+</item>
+<item>
+<title>mockery</title>
+<link>https://64p.org/notes/mockery.html</link>
+<guid isPermaLink="true">https://64p.org/notes/mockery.html</guid>
+<pubDate>Wed, 12 Aug 2026 18:42:00 +0900</pubDate>
+<description><![CDATA[<h1>mockery</h1>
+
+<p><a class="note-tag" href="/notes/tags/go.html">#go</a> <a class="note-tag" href="/notes/tags/testing.html">#testing</a></p>
+
+<p>Go のインターフェース定義からモック実装コードを自動生成するCLIツール（vektra/mockery）。<a href="/notes/testify.html">testify</a> の mock パッケージを手で使うと <code>On(...)</code> / <code>Return(...)</code> まわりのボイラープレートが多くなるため、それを丸ごと生成して除去するのが目的。生成されたモックは testify のアサーション・期待値検証パターン（<code>EXPECT()</code> 形式の expecter メソッドを含む）にそのまま乗る。</p>
+
+<h2>使い方</h2>
+
+<p>設定は <code>.mockery.yaml</code> に書き、対象パッケージとインターフェースを宣言してから <code>mockery</code> コマンドを実行する方式。</p>
+
+<pre><code class="yaml">packages:
+    github.com/org/repo:
+        interfaces:
+            DB:
+</code></pre>
+
+<p><code>go generate</code> や task runner に組み込んで、インターフェース変更時にモックを再生成し続けるのが典型的な運用。</p>
+
+<h2>v3</h2>
+
+<p>現行のメジャーバージョンは v3 で、テンプレートベースの生成に刷新された。従来の testify スタイルに加えて matryer/moq スタイルのモックも生成でき、独自テンプレートも書ける。モックを対象と同じパッケージに置くケースの自動検出など設定も整理された。同種のツールとしては gomock や moq がある。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://vektra.github.io/mockery/latest/">mockery 公式ドキュメント</a></li>
+<li><a href="https://github.com/vektra/mockery">vektra/mockery - GitHub</a></li>
+</ul>
+
+]]></description>
+</item>
+<item>
+<title>testify</title>
+<link>https://64p.org/notes/testify.html</link>
+<guid isPermaLink="true">https://64p.org/notes/testify.html</guid>
+<pubDate>Wed, 12 Aug 2026 18:40:00 +0900</pubDate>
+<description><![CDATA[<h1>testify</h1>
+
+<p><a class="note-tag" href="/notes/tags/go.html">#go</a> <a class="note-tag" href="/notes/tags/testing.html">#testing</a></p>
+
+<p>Go の標準 <code>testing</code> パッケージと組み合わせて使うテストツールキット（stretchr/testify）。MITライセンスで、GitHubスター26k超と、Goのテスト用ライブラリとしては最も広く使われている部類。Go標準にはJUnit的なアサーションAPIがなく <code>if got != want { t.Errorf(...) }</code> を繰り返し書くことになるため、それを読みやすく置き換えるのが主目的。</p>
+
+<h2>パッケージ構成</h2>
+
+<ul>
+<li><strong>assert</strong> — <code>assert.Equal(t, expected, actual)</code> のようなアサーション群。失敗時に読みやすい差分メッセージを出す。失敗しても bool を返してテストは継続する。</li>
+<li><strong>require</strong> — assert と同一のインターフェースだが、失敗した時点で <code>t.FailNow()</code> によりテストを即座に打ち切る。「この前提が崩れたら以降は無意味」という検証（<code>require.NoError(t, err)</code> 等）に使うのが定石。</li>
+<li><strong>mock</strong> — <code>mock.Mock</code> を埋め込んだ構造体でインターフェースのモックを作り、<code>On(...).Return(...)</code> で期待動作を設定、<code>AssertExpectations(t)</code> で呼び出しを検証する。手書きはボイラープレートが多いので、モックコードを自動生成する <strong><a href="/notes/mockery.html">mockery</a></strong> と組み合わせるのが一般的（公式ドキュメントでも推奨）。</li>
+<li><strong>suite</strong> — SetupTest / TearDownTest などのフックを持つ xUnit 風のテストスイート構造。</li>
+</ul>
+
+
+<pre><code class="go">func TestSomething(t *testing.T) {
+    result, err := DoSomething()
+    require.NoError(t, err)              // ここで失敗したら即終了
+    assert.Equal(t, "expected", result)  // 失敗しても他のassertは続行
+}
+</code></pre>
+
+<h2>メンテナンス方針</h2>
+
+<p>「v1 として維持し、破壊的変更は受け付けない」ことが README に明記されている。v2 は別リポジトリのディスカッションで検討が進行中。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://github.com/stretchr/testify">stretchr/testify - GitHub</a></li>
+<li><a href="https://pkg.go.dev/github.com/stretchr/testify/mock">mock package - pkg.go.dev</a></li>
+</ul>
+
+]]></description>
+</item>
+<item>
+<title>seccomp</title>
+<link>https://64p.org/notes/seccomp.html</link>
+<guid isPermaLink="true">https://64p.org/notes/seccomp.html</guid>
+<pubDate>Wed, 12 Aug 2026 17:52:00 +0900</pubDate>
+<description><![CDATA[<h1>seccomp</h1>
+
+<p><a class="note-tag" href="/notes/tags/linux.html">#linux</a> <a class="note-tag" href="/notes/tags/kernel.html">#kernel</a> <a class="note-tag" href="/notes/tags/security.html">#security</a></p>
+
+<p>secure computing mode。Linuxカーネルの機能で、プロセスが発行できるシステムコールを制限する仕組み。プロセスの攻撃対象領域（カーネルへの入口）を必要最小限に絞る、<a href="/notes/least-privilege.html">最小権限の原則</a>のシステムコールレベルでの実践と言える。</p>
+
+<h2>strict mode から filter mode へ</h2>
+
+<ul>
+<li><strong>strict mode</strong>: Andrea Arcangeli が「信頼できないコードを計算サンドボックスで動かす」用途（グリッドコンピューティング的なサービス）のために導入した初期形態。<code>prctl(PR_SET_SECCOMP, SECCOMP_MODE_STRICT)</code> を呼ぶと、以後そのプロセスは read / write / exit / sigreturn の4つのシステムコールしか使えなくなる。安全だが、純粋な数値計算のようなワークロード以外では実用にならなかった。</li>
+<li><strong>filter mode (seccomp-bpf)</strong>: Linux 3.5 で入った現在の主流。<a href="/notes/bpf.html">BPF</a>（classic BPF）のプログラムをフィルタとしてプロセスに取り付け、システムコールごとに「システムコール番号と引数」（<code>struct seccomp_data</code>）を評価して許可・拒否を判定する。Linux 3.17 からは専用の <code>seccomp()</code> システムコールで設定できる。</li>
+</ul>
+
+
+<p>フィルタの判定結果は <code>SECCOMP_RET_ALLOW</code>（許可）、<code>SECCOMP_RET_ERRNO</code>（エラーを返す）、<code>SECCOMP_RET_TRAP</code>（シグナル送出）、<code>SECCOMP_RET_KILL_PROCESS</code>（プロセスをkill）などのアクションで表現する。Linux 5.0 では判定をユーザー空間のスーパーバイザに委譲する <code>SECCOMP_RET_USER_NOTIF</code> も入った。</p>
+
+<h2>設計上の面白い点</h2>
+
+<ul>
+<li>BPFプログラムはポインタの参照外しができないため、フィルタはシステムコールの引数の値そのものしか評価できない。これは制約であると同時に、システムコール介入系の仕組みにありがちな TOCTOU（time-of-check-to-time-of-use）攻撃が構造的に成立しないという安全性でもある（ユーザーメモリ上の文字列引数などを検査対象にすると、検査後・実行前に書き換えられうる）。</li>
+<li>一度取り付けたフィルタは外せず、子プロセスにも継承される。フィルタは積み重ねられ、複数ある場合は最も厳しい判定が勝つ。</li>
+</ul>
+
+
+<h2>採用例</h2>
+
+<p>Chrome/Chromium のレンダラサンドボックス（seccomp-bpf の初期の代表的ユーザー）、Docker などのコンテナランタイム（デフォルトの seccomp プロファイルで危険なシステムコールを遮断）、systemd の <code>SystemCallFilter=</code>、Firefox、OpenSSH など。コンテナの文脈では、namespace や <a href="/notes/cgroups.html">cgroups（control groups）</a> による分離と組み合わせて使われる。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://www.man7.org/linux/man-pages/man2/seccomp.2.html">seccomp(2) - Linux manual page</a></li>
+<li><a href="https://www.kernel.org/doc/html/v4.19/userspace-api/seccomp_filter.html">Seccomp BPF (SECure COMPuting with filters) — The Linux Kernel documentation</a></li>
+<li><a href="https://www.armosec.io/blog/seccomp-internals-part-1/">Seccomp: Enhance Security for Linux Applications - ARMO</a></li>
+</ul>
+
+]]></description>
+</item>
+<item>
+<title>VXLAN</title>
+<link>https://64p.org/notes/vxlan.html</link>
+<guid isPermaLink="true">https://64p.org/notes/vxlan.html</guid>
+<pubDate>Wed, 12 Aug 2026 17:51:00 +0900</pubDate>
+<description><![CDATA[<h1>VXLAN</h1>
+
+<p>Virtual eXtensible Local Area Networkの略。L3ネットワークの上にL2のオーバーレイネットワークを構築するトンネリング技術。RFC 7348(2014年、Informational)で標準化されており、Cisco・VMware・Arista・Broadcom・Red Hatなど複数ベンダーが共著者として名を連ねている。 <a class="note-tag" href="/notes/tags/network.html">#network</a> <a class="note-tag" href="/notes/tags/sdn.html">#sdn</a> <a class="note-tag" href="/notes/tags/datacenter.html">#datacenter</a></p>
+
+<h2>生まれた背景</h2>
+
+<p>従来の<a href="/notes/vlan.html">IEEE 802.1Q VLAN</a>はVLAN IDが12bitしかなく、最大4094セグメントしか作れない。クラウド/データセンターの仮想化環境では、これが以下の理由で不足するようになった。</p>
+
+<ul>
+<li>マルチテナント環境で、テナントごとに複数VLANが必要になり数が枯渇する</li>
+<li>1台のサーバに数百台のVMが載ることで、ToR(Top-of-Rack)スイッチのMACアドレステーブルへの圧力が増大する</li>
+<li>複数ラック間でL2セグメントを「延伸」させたいニーズ(VM移行など)がある</li>
+</ul>
+
+
+<p>VXLANは24bitのVNI(VXLAN Network Identifier)を使うことで、理論上1,600万以上のセグメントを識別可能にし、この制約を解消した。</p>
+
+<h2>仕組み</h2>
+
+<p>L2フレームをまるごとUDPパケットに包んでL3ネットワーク上を運ぶ、いわゆる「MAC over UDP」方式。</p>
+
+<pre><code>外側Ethernetヘッダ → 外側IPヘッダ → 外側UDPヘッダ(宛先ポート4789) → VXLANヘッダ(VNI 24bit) → 元のEthernetフレーム
+</code></pre>
+
+<ul>
+<li>カプセル化・逆カプセル化を行う終端ノードを<strong>VTEP(VXLAN Tunnel End Point)</strong>と呼ぶ。ハイパーバイザー上のソフトウェアスイッチとして実装されることが多いが、物理スイッチに実装される場合もある。</li>
+<li>宛先UDPポートはIANA割り当ての<strong>4789</strong>固定。送信元ポートは内部フレームの内容からハッシュ計算した動的ポートで、ECMPによる経路上の負荷分散を意図している。</li>
+</ul>
+
+
+<h2>ブロードキャスト・マルチキャストの扱い</h2>
+
+<p>ARPなどのブロードキャストフレームは、VNIに対応付けられたIPマルチキャストグループへ送信される。応答フレームは、リクエスト受信時に学習した宛先VTEPのIPアドレスへユニキャストで返送されるため、不要なフラッディングを避けられる。コントロールプレーンにEVPNを使う実装では、このマルチキャストが不要な構成も存在する。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://www.rfc-editor.org/rfc/rfc7348">RFC 7348 - Virtual eXtensible Local Area Network (VXLAN)</a></li>
+<li><a href="https://www.rfc-editor.org/info/rfc7348/">RFC 7348 info page</a></li>
+</ul>
+
+]]></description>
+</item>
+<item>
+<title>mold(高速リンカ)</title>
+<link>https://64p.org/notes/mold-linker.html</link>
+<guid isPermaLink="true">https://64p.org/notes/mold-linker.html</guid>
+<pubDate>Wed, 12 Aug 2026 13:50:00 +0900</pubDate>
+<description><![CDATA[<h1>mold(高速リンカ)</h1>
+
+<p>rui314氏(LLVM lldリンカの開発者でもある)が開発した、C++20製の次世代リンカ。GNU ld・LLVM lld・goldといった既存のUnix系リンカの代替として、リンク工程そのものを高速化することを狙ったツール。 <a class="note-tag" href="/notes/tags/rust.html">#rust</a> <a class="note-tag" href="/notes/tags/build.html">#build</a> <a class="note-tag" href="/notes/tags/linker.html">#linker</a></p>
+
+<h2>速度</h2>
+
+<p>MySQLのリンクを例にしたベンチマークでは、GNU ldが10.84秒、lldが1.64秒に対し、moldは0.46秒だったと報告されている。Clang 19でのビルドでもmold 1.35秒に対しlld 5.20秒という差が出ている。高度に並列化されており、リンク処理の全フェーズで利用可能な全コアを使い切る設計。デバッグビルドで編集→再ビルドを繰り返す開発サイクルでの恩恵が大きいとされる。</p>
+
+<h2>対応プラットフォーム</h2>
+
+<p>x86-64, i386, ARM64, ARM32, RISC-V(32/64bit, LE/BE), PowerPC(32/64bit), s390x, LoongArch, SPARC64, m68k, SH-4など幅広いISAに対応。</p>
+
+<h2>ライセンスの変遷</h2>
+
+<ul>
+<li>元々AGPLライセンスのOSSとして公開されていた。</li>
+<li>開発初期の段階で、macOS対応など一部機能は「sold」という商用版(Blue Whale Systems社が販売、per-user課金)にゲートされていた。</li>
+<li>AGPL/商用のデュアルライセンス戦略が期待通りにはマネタイズできず、mold 2.0でAGPLコードをMITライセンスへ再ライセンスし、より広いユーザー獲得を狙う方針に転換した。</li>
+</ul>
+
+
+<h2>Rustプロジェクトでの使い方</h2>
+
+<p>プロジェクト直下の<code>.cargo/config.toml</code>に以下のように書いておくとリンカとして利用できる。</p>
+
+<pre><code class="toml">[target.x86_64-unknown-linux-gnu]
+linker = "clang"
+rustflags = ["-C", "link-arg=-fuse-ld=/path/to/mold"]
+</code></pre>
+
+<h2>自分の利用状況</h2>
+
+<p>Rust製Rakuインタプリタ「<a href="/notes/raku-rakudo-perl6.html">mutsu</a>」のビルドで既にmoldを採用している。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://github.com/rui314/mold">rui314/mold - GitHub</a></li>
+<li><a href="https://github.com/rui314/mold/blob/main/README.md">mold/README.md</a></li>
+<li><a href="https://www.phoronix.com/news/Mold-2.0-Linker">Mold 2.0 High Speed Linker Released: Moves From AGPL To MIT License - Phoronix</a></li>
+<li><a href="https://news.ycombinator.com/item?id=34141912">Mold linker: targeting macOS/iOS now requires a commercial license | Hacker News</a></li>
+</ul>
+
+]]></description>
+</item>
+<item>
+<title>MeCab</title>
+<link>https://64p.org/notes/mecab.html</link>
+<guid isPermaLink="true">https://64p.org/notes/mecab.html</guid>
+<pubDate>Wed, 12 Aug 2026 13:42:00 +0900</pubDate>
+<description><![CDATA[<h1>MeCab</h1>
+
+<p><a class="note-tag" href="/notes/tags/nlp.html">#nlp</a></p>
+
+<p>京都大学大学院情報学研究科とNTTコミュニケーション科学基礎研究所の共同研究ユニットプロジェクトとして開発された、オープンソースの日本語形態素解析エンジン。開発者は工藤拓。2006年3月26日にバージョン0.90として最初に公開された。名前の由来は開発者の好物である「和布蕪(めかぶ)」から。</p>
+
+<p>工藤拓は後に<a href="/notes/sentencepiece.html">SentencePiece</a>の開発者としても知られ、Google Japanese Inputの開発にも携わった。</p>
+
+<h2>開発の背景</h2>
+
+<p>MeCab以前の代表的な形態素解析器にJumanとChaSenがあった。</p>
+
+<ul>
+<li><strong>Juman</strong>: 辞書や品詞体系を外部に定義できる自由度はあったが、単語同士の連接コストを人手で調整する必要があり、そのコストが大きかった。</li>
+<li><strong>ChaSen</strong>: 隠れマルコフモデル(HMM)による統計処理を導入したが、複雑な品詞体系を扱うにはHMMでは力不足という限界があった。</li>
+</ul>
+
+
+<h2>CRFの採用</h2>
+
+<p>MeCab最大の技術的特徴は、コスト値の推定に条件付き確率場(<strong>Conditional Random Fields, CRF</strong>)を採用したこと。HMMと異なり複数の内部状態を定義できるため、「細かい品詞階層と粗い品詞階層の確率値を混ぜる」ようなスムージングが自然かつ自動的に実現でき、人手調整のコストを大幅に削減した。学習コーパスもHMMの1/3程度で同程度の性能が得られるとされる。</p>
+
+<p>そのほかの特徴として、未知語処理を外部から自由に定義できる点、辞書引きにDouble-Array Trie構造を用いた高速性、N-best出力や制約付き解析への対応などが挙げられる。</p>
+
+<h2>辞書</h2>
+
+<p>MeCab本体は言語・辞書・コーパスに依存しない汎用設計になっており、動作には別途辞書が必要。代表的なものに以下がある。</p>
+
+<ul>
+<li><strong>IPAdic</strong>: 標準的によく使われる辞書</li>
+<li><strong>UniDic</strong>: 国立国語研究所が整備する、より詳細な形態素情報を持つ辞書</li>
+<li><strong>mecab-ipadic-NEologd</strong>: IPAdicをベースに、Web上の言語資源から抽出した新語・固有表現を週2回のペースで追加収録するカスタム辞書。IPAdicでは分割されがちな固有名詞をまとめて認識できる一方、ディスク・メモリを多く消費する</li>
+</ul>
+
+
+<h2>後継・代替ツール</h2>
+
+<p>その後登場した日本語形態素解析器として、Works Applications主導の<strong>Sudachi</strong>などがある。MeCabとは別の辞書体系を持ち、代替の選択肢として比較されることが多い。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://taku910.github.io/mecab/">MeCab: Yet Another Part-of-Speech and Morphological Analyzer (公式サイト)</a></li>
+<li><a href="https://taku910.github.io/mecab/feature.html">MeCab の開発経緯 (公式サイト)</a></li>
+<li><a href="https://github.com/taku910/mecab">taku910/mecab (GitHub)</a></li>
+<li><a href="https://github.com/neologd/mecab-ipadic-neologd/blob/master/README.ja.md">mecab-ipadic-neologd README (GitHub)</a></li>
+<li><a href="https://www.capa.co.jp/archives/24856">「めかぶ」とは？食べ物ではないとっても賢いMeCab | 株式会社キャパ</a></li>
+</ul>
+
+]]></description>
+</item>
+<item>
+<title>最小権限の原則</title>
+<link>https://64p.org/notes/least-privilege.html</link>
+<guid isPermaLink="true">https://64p.org/notes/least-privilege.html</guid>
+<pubDate>Wed, 12 Aug 2026 13:40:00 +0900</pubDate>
+<description><![CDATA[<h1>最小権限の原則</h1>
+
+<p><a class="note-tag" href="/notes/tags/security.html">#security</a> <a class="note-tag" href="/notes/tags/access-control.html">#access-control</a></p>
+
+<p>Principle of Least Privilege (PoLP)。システム内のあらゆる主体（ユーザー・プロセス・プログラム）は、その正当な目的を果たすのに必要な最小限の権限だけで動作すべき、というセキュリティ設計原則。Jerome Saltzer が1974年に「Every program and every privileged user of the system should operate using the least amount of privilege necessary to complete the job.」と定式化し、1975年の Saltzer &amp; Schroeder の論文 &ldquo;The Protection of Information in Computer Systems&rdquo; でセキュリティ設計原則の一つとして広まった。Peter Denning は障害耐性（fault tolerance）の側からも根本原則として位置づけている。</p>
+
+<h2>なぜ効くのか</h2>
+
+<ul>
+<li><strong>被害範囲（blast radius）の限定</strong>: あるコンポーネントが侵害されても、そこが持つ権限以上のことはできない。脆弱性が他プロセスや全システムの侵害に波及するのを防ぐ。</li>
+<li><strong>検証しやすさ</strong>: 権限が絞られたコードは影響範囲が限定されるため、動作や相互作用の検証がしやすい。</li>
+<li><strong>障害の封じ込め</strong>: セキュリティに限らず、バグによる誤動作の影響も権限の範囲に閉じる。</li>
+</ul>
+
+
+<h2>実装パターン</h2>
+
+<ul>
+<li><strong>権限の降格</strong>: 特権で起動して初期化後に落とす古典パターン。Version 6 Unix の login.c がスーパーユーザーで起動し、不要になった時点で setuid() で降格していたのが古い実例。</li>
+<li><strong>privilege bracketing</strong>: 権限が必要な瞬間だけ取得し、使い終わったら即座に手放す。</li>
+<li><strong>privilege separation</strong>: 特権が必要な部分を別プロセスに分離し、大部分を無特権で動かす（OpenSSHの設計が代表例）。</li>
+<li><strong>アクセス制御モデルでの運用</strong>: <a href="/notes/rbac.html">RBAC</a> のロール設計やクラウドIAMのポリシーで「業務に必要な権限だけ」を割り当てる。<a href="/notes/apache-polaris.html">Apache Polaris</a> の credential vending（テーブルのストレージパスだけにスコープした短命の認証情報を払い出す）もこの原則の実践。</li>
+<li>サンドボックス、コンテナ、<a href="/notes/seccomp.html">seccomp</a> のようなシステムコール制限も、プロセスの持つ能力を必要最小限に絞る手段と言える。</li>
+</ul>
+
+
+<h2>限界</h2>
+
+<p>「最小」の厳密な定義が一つに定まらないこと、複雑なプログラムでは必要な権限集合を事前に予測するのが非現実的なことが知られている。実務上は「明らかに不要な権限を洗い出して削る」漸進的アプローチになりがちで、これが最小権限が「忘れられた原則」と呼ばれることもある所以。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://nocomplexity.com/documents/securityarchitecture/architecture/saltzer_designprinciples.html">Saltzer and Schroeder&rsquo;s design principles — Security Reference Architecture</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Principle_of_least_privilege">Principle of least privilege - Wikipedia</a></li>
+<li><a href="https://www.cs.cornell.edu/fbs/publications/leastPrivSP.pdf">Least Privilege and More (Fred B. Schneider)</a></li>
+</ul>
+
+]]></description>
+</item>
+<item>
+<title>MicrophoneTest(マイク音質評価Webアプリ)</title>
+<link>https://64p.org/notes/microphonetest.html</link>
+<guid isPermaLink="true">https://64p.org/notes/microphonetest.html</guid>
+<pubDate>Wed, 12 Aug 2026 13:40:00 +0900</pubDate>
+<description><![CDATA[<h1>MicrophoneTest(マイク音質評価Webアプリ)</h1>
+
+<p><a class="note-tag" href="/notes/tags/web-audio.html">#web-audio</a> <a class="note-tag" href="/notes/tags/tool.html">#tool</a></p>
+
+<p><a href="https://github.com/vaaaaanquish">vaaaaanquish</a>氏が公開しているブラウザベースのマイク音質評価ツール。マイクを選んで数秒話すだけで、音声の明瞭さを100点満点でスコアリングしてくれる。</p>
+
+<ul>
+<li>URL: <a href="https://vaaaaanquish.github.io/MicrophoneTest/">https://vaaaaanquish.github.io/MicrophoneTest/</a></li>
+<li>リポジトリ: <a href="https://github.com/vaaaaanquish/MicrophoneTest">https://github.com/vaaaaanquish/MicrophoneTest</a></li>
+</ul>
+
+
+<h2>仕組み</h2>
+
+<p>Web Audio APIとAudioWorklet(<code>recorder-worklet.js</code>)でマイク音声をキャプチャ・処理する。録音データは外部送信せずブラウザ内で完結する。ノイズ抑制やエコーキャンセルなどブラウザ側の補正を無効化した状態で測定するため、マイクの素の性能を評価できる。</p>
+
+<p>8つの指標を文献ベースのアルゴリズムで評価し、重み付け集計した上でITU-T G.107 E-modelを用いてMOS(Mean Opinion Score)に変換する。</p>
+
+<table>
+<thead>
+<tr>
+<th> 指標 </th>
+<th> 手法 </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td> ノイズ(SNR) </td>
+<td> VADベース推定、30dB以上を「クリーン」と判定 </td>
+</tr>
+<tr>
+<td> 残響(RT60) </td>
+<td> Ratnam(2003)の減衰解析法 </td>
+</tr>
+<tr>
+<td> 録音レベル </td>
+<td> ITU-T P.56標準に基づく評価 </td>
+</tr>
+<tr>
+<td> クリッピング </td>
+<td> フルスケール付近のサンプル比率チェック </td>
+</tr>
+<tr>
+<td> 周波数応答 </td>
+<td> 帯域幅・アルファ比率の測定 </td>
+</tr>
+<tr>
+<td> 接続安定性 </td>
+<td> ドロップアウト検出 </td>
+</tr>
+<tr>
+<td> 電源ハム </td>
+<td> Goertzelアルゴリズムによる50/60Hz検出 </td>
+</tr>
+<tr>
+<td> ピークヘッドルーム </td>
+<td> 4倍オーバーサンプリングで算出 </td>
+</tr>
+</tbody>
+</table>
+
+
+<p>ITU勧告・ISO規格・査読済み論文などの学術文献を参照して設計されている。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://vaaaaanquish.github.io/MicrophoneTest/">MicrophoneTest (公開ページ)</a></li>
+<li><a href="https://github.com/vaaaaanquish/MicrophoneTest">vaaaaanquish/MicrophoneTest (GitHub)</a></li>
+</ul>
+
+]]></description>
+</item>
+<item>
+<title>RBAC (Role-Based Access Control)</title>
+<link>https://64p.org/notes/rbac.html</link>
+<guid isPermaLink="true">https://64p.org/notes/rbac.html</guid>
+<pubDate>Wed, 12 Aug 2026 13:38:00 +0900</pubDate>
+<description><![CDATA[<h1>RBAC (Role-Based Access Control)</h1>
+
+<p><a class="note-tag" href="/notes/tags/security.html">#security</a> <a class="note-tag" href="/notes/tags/access-control.html">#access-control</a></p>
+
+<p>ロールベースアクセス制御。ユーザーに権限を直接付与するのではなく、「ロール」（職務・役割）に権限を束ね、ユーザーにはロールを割り当てるアクセス制御モデル。ユーザーの入退社・異動のたびに個別権限を付け替える代わりにロールの付け替えだけで済むため、管理コストが下がり、<a href="/notes/least-privilege.html">最小権限の原則</a>や職務分掌（separation of duties）を実施しやすい。</p>
+
+<h2>歴史</h2>
+
+<p>役割ベースの権限管理自体は1970年代から商用アプリケーションに存在したが、汎用モデルとして定式化したのは Ferraiolo と Kuhn による1992年の論文（NIST）。従来の MAC（強制アクセス制御）・DAC（任意アクセス制御）に代わる第3のモデルとして、ロール・ロール階層・ユーザー/ロール割り当て・制約を集合と写像で形式的に定義した。1996年の Sandhu らのフレームワークと統合された「NIST RBACモデル」が2000年に発表され、2004年に ANSI/INCITS 359 として標準化された。</p>
+
+<h2>他のアクセス制御モデルとの比較</h2>
+
+<ul>
+<li><strong>ACL (Access Control List)</strong>: リソースごとに「誰が何をできるか」を列挙する最も素朴な方式。ユーザーとリソースが少なければ単純で分かりやすいが、規模に対してスケールしない。</li>
+<li><strong>RBAC</strong>: ロールという抽象を挟むことでスケールする。弱点は <strong>role explosion</strong> — きめ細かい権限要件に応えようとするとロールが数百に増殖し、結局個別管理並みに複雑化する。</li>
+<li><strong>ABAC (Attribute-Based Access Control)</strong>: ユーザー・リソース・環境の属性（部署・時刻・場所・デバイス等）をポリシー式で評価して動的に判定する。「マネージャー全員」ではなく「財務部のマネージャーだけ」のような条件が書ける。柔軟だが評価コストと複雑さが高い。</li>
+<li><strong>MAC / DAC</strong>: OSレベルの伝統的モデル。Linux では SELinux などが <a href="/notes/linux-security-modules.html">LSM</a> フレームワーク上で MAC を実装している。</li>
+</ul>
+
+
+<h2>採用例</h2>
+
+<p>Kubernetes の RBAC（Role/ClusterRole と RoleBinding）、各クラウドの IAM、Envoy の RBAC フィルタなど、インフラ系ソフトウェアの権限管理のデファクト。データレイクハウスのカタログ <a href="/notes/apache-polaris.html">Apache Polaris</a> も principal に対するロールベースの権限管理を中核機能にしている。近年は「RBACで大枠を決め、細かい条件は <a href="/notes/common-expression-language.html">CEL</a> のような式言語やABAC的な属性条件で補う」ハイブリッド構成も多い。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://csrc.nist.gov/files/pubs/conference/1992/10/13/rolebased-access-controls/final/docs/ferraiolo-kuhn-92.pdf">Role-Based Access Controls (Ferraiolo &amp; Kuhn, 1992)</a></li>
+<li><a href="https://csrc.nist.gov/projects/role-based-access-control/faqs">Role Based Access Control FAQs | NIST CSRC</a></li>
+<li><a href="https://www.strongdm.com/blog/rbac-vs-abac">RBAC vs. ABAC vs. ACL vs. PBAC vs. DAC | StrongDM</a></li>
+</ul>
+
+]]></description>
+</item>
+<item>
+<title>リファクタリング(Refactoring)</title>
+<link>https://64p.org/notes/refactoring.html</link>
+<guid isPermaLink="true">https://64p.org/notes/refactoring.html</guid>
+<pubDate>Wed, 12 Aug 2026 13:36:00 +0900</pubDate>
+<description><![CDATA[<h1>リファクタリング(Refactoring)</h1>
+
+<p><a class="note-tag" href="/notes/tags/software-engineering.html">#software-engineering</a></p>
+
+<p>外部から見た振る舞いを変えずにコードの内部構造を改善すること。「誰が言い出したか」を軸に由来をまとめる。</p>
+
+<h2>用語の学術的初出</h2>
+
+<p>「refactoring」という語が文献に初めて現れたのは、<strong>Bill Opdyke</strong>と<strong>Ralph Johnson</strong>(イリノイ大学アーバナ・シャンペーン校)による1990年のACM SIGPLAN論文 <em>&ldquo;Refactoring: An Aid in Designing Application Frameworks and Evolving Object-Oriented Systems&rdquo;</em>。OpdykeはJohnsonの指導のもと1992年に博士論文 <em>&ldquo;Refactoring Object-Oriented Frameworks&rdquo;</em> をまとめ、これがrefactoringを技法として体系的に扱った最初の本格的な研究となった。</p>
+
+<h2>命名エピソード ― Opdyke自身の証言</h2>
+
+<p>Martin Fowlerが著書執筆にあたりWard Cunningham、Kent Beck、Bill Opdyke、John Brant、Don Roberts、Ralph Johnsonら当事者に語源を聞き取ったところ、多くは「正確な由来は覚えていない」と答えた中で、Opdykeだけが明確なエピソードを語っている。Johnsonと散歩をしていた際、当時流行していた「ソフトウェアファクトリ(software factory)」という概念について、「ソフトウェア開発は製造(manufacturing)というより設計(design)に近い」という考えから、"factory"をもじって<strong>&ldquo;software refactory&rdquo;</strong>と呼ぶことを提案した、というのがその由来。</p>
+
+<p>用語自体は数学の「因数分解(factoring)」からの類推でもある。<code>x^2+5x+6</code> を <code>(x+2)(x+3)</code> に因数分解するのと同様に、コードを論理的なチャンクに再構成することを &ldquo;well factored&rdquo; と呼ぶ慣習がSmalltalkコミュニティに元々あり、そこに「re-」を足した形になっている。</p>
+
+<h2>実践としての起源は用語より前</h2>
+
+<p>命名者はOpdykeだが、実践自体はそれ以前からSmalltalkコミュニティ(Tektronix、Ward CunninghamやKent Beckら)で非公式に行われていた。Ward Cunninghamは後年、「Kent Beckの貢献は、彼と私が静かに一緒に発見したこと、あるいは他のプログラマから拾い上げたことを、極限まで推し進めたことだ」と語っている。Kent Beck自身も「自分がやったのは他人がすでにやっていたことの再発見にすぎない」「Ward Cunninghamがやっていたことの解釈にすぎない」と謙遜して述べている。</p>
+
+<p>なお同じ概念の最初の印刷物としては、1984年のLeo Brodieの著書(Forthコミュニティ向け)にも独立して現れており、Smalltalk系譜とは別に「factoring」という語が使われていたとされる。</p>
+
+<h2>Martin Fowlerによる普及と体系化</h2>
+
+<p>用語と技法自体は1990年代前半に存在していたが、これを広く世に知らしめたのはMartin Fowler、Kent Beck、John Brant、William Opdyke、Don Robertsの共著による1999年刊行の書籍 <em>Refactoring: Improving the Design of Existing Code</em>(初版は2000年出版、2018年に第2版)。FowlerはKent Beckと共に仕事をする中でリファクタリングが実際にもたらす効果を目の当たりにし、それを体系立てて解説する書籍がまだ存在しなかったことから自ら執筆したと述べている。</p>
+
+<p>リファクタリングはこの少し前から<a href="/notes/extreme-programming.html">Extreme Programming</a>(XP)のプラクティスの一つとして組み込まれており、XPの文脈でも普及が進んだ。<a href="/notes/tdd.html">TDD</a>の<strong>Red-Green-Refactor</strong>サイクルの最終ステップとしても位置づけられている。</p>
+
+<h2>「大規模な変更」をrefactoringと呼ぶことへのFowlerの異論</h2>
+
+<p>Fowlerは"<a href="https://martinfowler.com/bliki/RefactoringMalapropism.html">Refactoring Malapropism</a>&ldquo;という記事で、この用語がしばしば誤用されていると指摘している。「システムが数日間壊れた状態のままrefactoringしている」といった言い回しは誤りだとする。彼の定義するrefactoringは、<strong>外部の振る舞いを変えない小さな変換の積み重ね</strong>であり、その特徴として「システムは数分以上壊れた状態にならない」ことを挙げる。</p>
+
+<p>Fowlerはより広い概念として<strong>restructuring(再構成)</strong>を位置づけ、refactoringはその中の特殊な一技法にすぎないとする。振る舞いが明確に定義されていないもの(ドキュメントの書き直しなど)への適用や、外部の振る舞い自体を変えてしまうような大規模な作り直し・長期間システムが動かない状態を経るような変更は、彼の定義上は"restructuring"であって"refactoring"ではない、という立場。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://martinfowler.com/bliki/EtymologyOfRefactoring.html">bliki: Etymology Of Refactoring (martinfowler.com)</a></li>
+<li><a href="https://en.wikipedia.org/wiki/William_Opdyke">William Opdyke - Wikipedia</a></li>
+<li><a href="https://www.laputan.org/pub/papers/opdyke-thesis.pdf">Refactoring Object-Oriented Frameworks - Opdykeの博士論文 PDF</a></li>
+<li><a href="https://martinfowler.com/books/refactoring.html">Refactoring (martinfowler.com/books)</a></li>
+<li><a href="https://agilealliance.org/glossary/refactoring/">What is Refactoring? | Agile Alliance</a></li>
+<li><a href="https://libquotes.com/ward-cunningham/quote/lbp7q9l">Ward Cunningham Quote (libquotes.com)</a></li>
+<li><a href="https://martinfowler.com/bliki/RefactoringMalapropism.html">bliki: Refactoring Malapropism (martinfowler.com)</a></li>
+</ul>
+
+]]></description>
+</item>
+<item>
+<title>Apache Polaris</title>
+<link>https://64p.org/notes/apache-polaris.html</link>
+<guid isPermaLink="true">https://64p.org/notes/apache-polaris.html</guid>
+<pubDate>Wed, 12 Aug 2026 13:33:00 +0900</pubDate>
+<description><![CDATA[<h1>Apache Polaris</h1>
+
+<p><a class="note-tag" href="/notes/tags/data-engineering.html">#data-engineering</a> <a class="note-tag" href="/notes/tags/security.html">#security</a></p>
+
+<p><a href="/notes/apache-iceberg.html">Apache Iceberg</a> 用のオープンソースのカタログ実装。Iceberg の REST catalog 仕様のベンダー中立な実装で、Spark・Flink・Trino・Apache Doris・StarRocks・<a href="/notes/dremio.html">Dremio</a>・Snowflake など複数のエンジンから同じ Iceberg テーブル群に相互運用的にアクセスできるようにする。Apache 2.0 ライセンス。</p>
+
+<p>もともとは Snowflake が「Polaris Catalog」として2024年6月に発表し、Dremio との共同開発（co-creator）で2024年7月30日にオープンソース化、同年8月に Apache Incubator に寄贈された。約1年半のインキュベーションを経て、2026年2月15日に Apache のトップレベルプロジェクトに昇格した。Google・Microsoft・Confluent など多数の組織がコントリビュートしている。Snowflake のマネージド版は「Snowflake Open Catalog」という名前で提供されている。</p>
+
+<h2>カタログとしての機能</h2>
+
+<p>テーブルのメタデータ位置を管理するだけでなく、ガバナンスレイヤーとしての機能を持つのが特徴。</p>
+
+<ul>
+<li><strong><a href="/notes/rbac.html">RBAC</a></strong>: ロールベースのアクセス制御。principal ごとにカタログ・namespace・テーブル単位の権限を管理する。</li>
+<li><strong>credential vending</strong>: エンジンがテーブルを読み書きする際、Polaris が RBAC を検査したうえで、そのテーブルのストレージパスだけにスコープされた短命のクラウドストレージ認証情報を発行して渡す。エンジン側にオブジェクトストレージの広い権限を直接持たせずに済む。</li>
+<li><strong>カタログフェデレーション</strong>: 外部カタログを配下に束ねられる。</li>
+<li>マルチテナントの namespace、Iceberg SQL view、generic table などにも対応。</li>
+</ul>
+
+
+<h2><a href="/notes/data-lakehouse.html">データレイクハウス</a>の中での位置づけ</h2>
+
+<p>Iceberg スタックの「カタログ」レイヤーの標準実装になりつつあるプロジェクト。同じレイヤーの <a href="/notes/project-nessie.html">Project Nessie</a> が Git ライクなバージョン管理に軸足を置くのに対し、Polaris は REST 仕様準拠の相互運用性とアクセス制御（ガバナンス）に軸足がある。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://polaris.apache.org/">Apache Polaris 公式サイト</a></li>
+<li><a href="https://polaris.apache.org/blog/2026/02/19/apache-polaris-graduates-to-top-level-project/">Apache Polaris Graduates to Top Level Project!</a></li>
+<li><a href="https://www.snowflake.com/en/blog/introducing-polaris-catalog/">Polaris Catalog: An Open Source Catalog for Apache Iceberg | Snowflake</a></li>
+<li><a href="https://www.dremio.com/blog/apache-polaris-the-catalog-standard-for-lakehouses-and-ai/">Apache Polaris: The Catalog Standard for Iceberg Lakehouses and Agentic Analytics | Dremio</a></li>
+</ul>
+
+]]></description>
+</item>
+<item>
+<title>transcribe.cpp</title>
+<link>https://64p.org/notes/transcribe-cpp.html</link>
+<guid isPermaLink="true">https://64p.org/notes/transcribe-cpp.html</guid>
+<pubDate>Wed, 12 Aug 2026 13:02:00 +0900</pubDate>
+<description><![CDATA[<h1>transcribe.cpp</h1>
+
+<p><a class="note-tag" href="/notes/tags/machine-learning.html">#machine-learning</a> <a class="note-tag" href="/notes/tags/speech-recognition.html">#speech-recognition</a> <a class="note-tag" href="/notes/tags/cpp.html">#cpp</a></p>
+
+<p><a href="/notes/ggml.html">ggml</a>（軽量テンソル演算ライブラリ）ベースの音声認識（ASR: Automatic Speech Recognition）推論エンジン。GitHub上で<code>handy-computer/transcribe.cpp</code>として公開されている。whisper.cppの直接的な後継・置き換えを目指すプロジェクトで、多くのユースケースでwhisper.cppとほぼそのまま置き換え可能とされる（既存の<code>.bin</code>ファイルとの互換性も含む）。</p>
+
+<h2>開発の背景</h2>
+
+<p>音声入力アプリ「Handy」の開発者cjpaisによる作品。Handyはこれまでwhisper.cppを推論エンジンとして使っていたが、次バージョンではtranscribe.cppに置き換わる予定という位置づけ。</p>
+
+<h2>whisper.cppとの違い</h2>
+
+<p>whisper.cppはOpenAIのWhisperモデル専用の実装だったのに対し、transcribe.cppはWhisper以外の多数のASRモデルファミリーを横断的にサポートする、より汎用的な後継ライブラリという位置づけ。</p>
+
+<h2>特徴</h2>
+
+<ul>
+<li><strong>対応モデル数</strong>: 16種類以上のモデルファミリー、60以上のバリエーションに対応（<a href="/notes/ggml.html">GGUF</a>形式）
+
+<ul>
+<li>Whisper（tiny〜large-v3-turbo、12バリエーション）に加え、Parakeet、Canary（NVIDIA製）、Moonshine、SenseVoice、Qwen3-ASR、GigaAM、Voxtralなど幅広くカバー</li>
+<li>話者分離（diarization）専用のSortformerにも対応</li>
+</ul>
+</li>
+<li><strong>品質保証</strong>: 公開している全モデルでWER（単語誤り率）を検証済み</li>
+<li><strong>GPUバックエンド</strong>: Metal（Apple Silicon）、Vulkan、CUDA、TinyBLAS（GPU非搭載CPU向け最適化パス）に対応し、AMD/Intel/NVIDIA/Appleを横断してカバー</li>
+<li><strong>言語バインディング</strong>: Python、JavaScript/TypeScript、Rust、Objective-C/Swiftの公式バインディングあり</li>
+</ul>
+
+
+<h2>ビルド</h2>
+
+<pre><code class="sh">cmake -B build &amp;&amp; cmake --build build
+</code></pre>
+
+<p>Apple SiliconではMetalが自動有効化される。Vulkan（Linux/Windows）・CUDA・HIP/ROCmは対応オプションとして用意されている。量子化ツールのビルドには<code>-DTRANSCRIBE_BUILD_TOOLS=ON</code>フラグが必要。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://gigazine.net/news/20260811-transcribe-cpp/">GIGAZINE記事</a></li>
+<li><a href="https://elsolitario.org/en/2026/07/19/transcribe-cpp-asr-library-ggml/">transcribe.cpp: An ASR Alternative to whisper.cpp</a></li>
+<li><a href="https://github.com/handy-computer/transcribe.cpp">GitHub - handy-computer/transcribe.cpp</a></li>
+<li><a href="https://github.com/cjpais/Handy">GitHub - cjpais/Handy</a></li>
+</ul>
+
+]]></description>
+</item>
+<item>
+<title>ggml</title>
+<link>https://64p.org/notes/ggml.html</link>
+<guid isPermaLink="true">https://64p.org/notes/ggml.html</guid>
+<pubDate>Wed, 12 Aug 2026 13:02:00 +0900</pubDate>
+<description><![CDATA[<h1>ggml</h1>
+
+<p><a class="note-tag" href="/notes/tags/machine-learning.html">#machine-learning</a> <a class="note-tag" href="/notes/tags/cpp.html">#cpp</a></p>
+
+<p>Georgi Gerganov氏が2022年から開発している、機械学習推論向けのC/C++製テンソル演算ライブラリ。名前は開発者のイニシャル「GG」+「ML」に由来する。llama.cppやwhisper.cpp、<a href="/notes/transcribe-cpp.html">transcribe.cpp</a>など、C/C++で書かれたローカル推論エコシステム全体を支える計算基盤になっている。</p>
+
+<h2>特徴</h2>
+
+<ul>
+<li><strong>計算グラフベースの実行</strong>: 演算を一度定義し、複数回実行できる計算グラフ抽象を持つ。中核データ構造<code>ggml_tensor</code>は最大4次元のn次元配列とメタデータを表し、実際の計算はグラフのcompute呼び出しまで遅延される。</li>
+<li><strong>メモリ効率</strong>: コンテキストベースのメモリ確保とカスタムアロケータにより、メモリ使用量を細かく制御できる。</li>
+<li><strong>ハードウェア抽象化</strong>: BLAS、CUDA、HIP/ROCm、OpenCL、Metalなど複数のバックエンドをプラガブルに切り替えられる仕組みを持つ。</li>
+<li><strong>量子化サポート</strong>: float型に加え、複数の圧縮フォーマット（量子化型）をサポートする型システムを持つ。</li>
+<li>軽量・移植性・組み込みやすさを重視した設計で、C/C++で書かれている。</li>
+</ul>
+
+
+<h2>GGUFフォーマットとの関係</h2>
+
+<p>当初モデルの保存には独自の「GGML」フォーマットが使われていたが、モデルアーキテクチャごとに専用のロードコードが必要で、メタデータもハードコードされたり別ファイルに分かれていたりと脆弱だった。llama.cppが数十のアーキテクチャと複数の量子化方式に対応するよう成長した2023年8月、後方互換性のない、より高機能な後継フォーマットとして<strong>GGUF</strong>（GGML Universal Format）が導入された。GGUFはモデルのロードに必要な情報（トークナイザーを含む）を単一ファイルに完結させる設計で、数か月のうちにローカルLLM配布の事実上の標準になった。量子化は1.5bit〜8bit整数まで複数段階をサポートする。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://deepwiki.com/ggml-org/llama.cpp/4-ggml-tensor-library">GGML Tensor Library | ggml-org/llama.cpp | DeepWiki</a></li>
+<li><a href="https://deepwiki.com/ggml-org/llama.cpp/4.1-ggml-core-architecture">GGML Core Architecture | ggml-org/llama.cpp | DeepWiki</a></li>
+<li><a href="https://deepwiki.com/ggml-org/ggml">ggml-org/ggml | DeepWiki</a></li>
+<li><a href="https://apxml.com/courses/practical-llm-quantization/chapter-5-quantization-formats-tooling/gguf-format">GGUF File Format Explained (llama.cpp)</a></li>
+</ul>
+
+]]></description>
+</item>
+<item>
+<title>ClickHouse</title>
+<link>https://64p.org/notes/clickhouse.html</link>
+<guid isPermaLink="true">https://64p.org/notes/clickhouse.html</guid>
+<pubDate>Wed, 12 Aug 2026 12:53:00 +0900</pubDate>
+<description><![CDATA[<h1>ClickHouse</h1>
+
+<p><a class="note-tag" href="/notes/tags/database.html">#database</a> <a class="note-tag" href="/notes/tags/olap.html">#olap</a> <a class="note-tag" href="/notes/tags/data-engineering.html">#data-engineering</a></p>
+
+<p><strong>OLAP</strong>（Online Analytical Processing、大量データの集計・分析に最適化されたワークロード）向けに設計されたオープンソースの列指向（columnar）データベース管理システム。対義語はOLTP（Online Transaction Processing、少量レコードの読み書きを高頻度にこなすトランザクション処理）。実装言語はC++（約150万行）で、近年は一部の周辺機能（BLAKE3ハッシュ関数、PRQLというクエリ言語ライブラリの統合など)でRustも部分的に採用され始めているが、コア部分を全面書き換えする方針ではない。</p>
+
+<h2>生まれた経緯</h2>
+
+<p>2009年、ロシアのYandex社内でAlexey Milovidov氏が「非集計の生データからリアルタイムでレポートを生成できるか」という仮説検証として開発を開始した。Yandex.Metrica（ロシア第2位のWebアクセス解析サービス）のバックエンドとして2011年に本番投入され、当時374台構成のクラスタで20.3兆行・約2PBの圧縮データを保持し、1日1000億件超のレコード挿入をコアチーム15名で処理していた。2016年6月、MoscowのHighload++カンファレンスでOSS公開。2021年にMilovidov氏がClickHouse社を設立した（CEO: Aaron Katz、Index Ventures/Benchmark主導のシリーズAで$50M調達）。</p>
+
+<h2>アーキテクチャ</h2>
+
+<ul>
+<li><strong>列指向ストレージ</strong>: 行ではなく列単位でデータを保持する。50カラムのテーブルから3カラムだけ使うクエリなら、その3カラムのファイルしか読まない。</li>
+<li><strong>ベクトル化実行</strong>: 1行ずつでなく、行の集合（バッチ）単位で演算することでCPUキャッシュ効率を最大化する。</li>
+<li><strong>MergeTreeエンジン</strong>: 中核のストレージエンジンファミリー。INSERTのたびに「パート」というディレクトリ単位でデータが書き込まれる（命名規則: <code>{partition_id}_{min_block}_{max_block}_{merge_level}</code>）。パート内部にはカラムごとの圧縮データファイル・インデックスファイル・チェックサムが入り、すべて<code>ORDER BY</code>キーでソート済み。パートは書き込み後イミュータブルで、バックグラウンドで小さいパート同士がマージされてパート数を減らし検索性能を保つ（エンジン名の由来）。</li>
+</ul>
+
+
+<h2>データ配置</h2>
+
+<p>デフォルトはローカルディスク（<code>/var/lib/clickhouse</code>、多くの場合1台の高速NVMe）にパートとして直接格納する形で、オブジェクトストレージへの依存はない。ただし「ディスク」を抽象化する層があり、S3互換オブジェクトストレージをディスクとして設定することも可能。よくあるのは階層ストレージ（tiered storage）構成で、直近のよく参照されるデータは高速なローカルディスクに、古いデータは閾値を超えたらS3などの安価なストレージに自動で移す「hot-cold」運用。</p>
+
+<p>マネージドサービスのClickHouse Cloudでは、SharedMergeTreeというエンジンによってストレージとコンピュートの分離が設定不要でデフォルトで組み込まれており、複数のコンピュートノードが同じオブジェクトストレージ上のデータを共有できる。</p>
+
+<h2>得意・不得意</h2>
+
+<p>リアルタイムダッシュボード、ログ分析・SIEM、BIの高速化、AdTech、時系列分析、プロダクト分析、オブザーバビリティ基盤などの分析ワークロードが主戦場。一方でOLTPやレコード単位の頻繁な更新・削除には不向き。実務では「<a href="/notes/postgresql.html">PostgreSQL</a>/<a href="/notes/mysql.html">MySQL</a>でOLTPを担い、分析・リアルタイム集計はClickHouseに任せる」という併用構成が一般的。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://www.flexera.com/blog/finops/clickhouse-architecture/">ClickHouse architecture 101: A comprehensive overview</a></li>
+<li><a href="https://clickhouse.com/resources/engineering/how-to-choose-a-database-for-real-time-analytics-in-2026">How to choose a database for real-time analytics in 2026 | ClickHouse</a></li>
+<li><a href="https://clickhouse.com/use-cases">Use Cases | ClickHouse</a></li>
+<li><a href="https://clickhouse.com/resources/engineering/what-is-columnar-database">What is a columnar database? | ClickHouse</a></li>
+<li><a href="https://www.stacksync.com/blog/one-engineer-at-yandex-the-origin-story-of-clickhouse">One Engineer at Yandex: The Origin Story of ClickHouse</a></li>
+<li><a href="https://research.contrary.com/company/clickhouse">Report: ClickHouse&rsquo;s Business Breakdown &amp; Founding Story</a></li>
+<li><a href="https://oneuptime.com/blog/post/2026-03-31-clickhouse-what-is-mergetree-engine/view">What Is a MergeTree Engine and How It Works</a></li>
+<li><a href="https://oneuptime.com/blog/post/2026-03-31-clickhouse-part-files-explained/view">How ClickHouse Stores Data on Disk - Part Files Explained</a></li>
+<li><a href="https://severalnines.com/blog/clickhouse-storage-architecture-and-optimization/">ClickHouse Storage Architecture and Optimization | Severalnines</a></li>
+<li><a href="https://docs.gitlab.com/development/database/clickhouse/tiered_storage">Tiered Storages in ClickHouse</a></li>
+<li><a href="https://clickhouse.com/docs/guides/separation-storage-compute">Separation of storage and compute | ClickHouse Docs</a></li>
+<li><a href="https://thenewstack.io/moving-from-c-to-rust-clickhouse-has-some-advice/">Moving From C++ to Rust? ClickHouse Has Some Advice - The New Stack</a></li>
+<li><a href="https://clickhouse.com/blog/rust">A Year of Rust in ClickHouse | ClickHouse</a></li>
+</ul>
+
+]]></description>
+</item>
+<item>
+<title>SentencePiece</title>
+<link>https://64p.org/notes/sentencepiece.html</link>
+<guid isPermaLink="true">https://64p.org/notes/sentencepiece.html</guid>
+<pubDate>Wed, 12 Aug 2026 09:55:00 +0900</pubDate>
+<description><![CDATA[<h1>SentencePiece</h1>
+
+<p><a class="note-tag" href="/notes/tags/llm.html">#llm</a> <a class="note-tag" href="/notes/tags/nlp.html">#nlp</a></p>
+
+<p>Google 製のオープンソースのテキストトークナイザ／デトークナイザライブラリ。工藤拓（<a href="/notes/mecab.html">MeCab</a>の作者としても知られる）と John Richardson により開発され、2018年に論文が公開された。ニューラルネットベースのテキスト生成システム向けに、語彙サイズを事前に固定してサブワード分割を学習する。サブワードアルゴリズムとしては <a href="/notes/byte-pair-encoding.html">BPE</a> と Unigram 言語モデルの両方を実装している。</p>
+
+<h2>特徴</h2>
+
+<ul>
+<li><strong>生のテキストストリームとして扱う</strong>: 従来のトークナイザが「空白で単語に分割してからサブワード化する」前提だったのに対し、SentencePiece はテキストを生の文字ストリームとして扱い、空白も <code>▁</code>（U+2581）という特殊マーカーに変換して語彙学習の対象に含める。</li>
+<li><strong>言語非依存</strong>: 空白で単語が区切られない日本語や中国語でも、言語固有の前処理（分かち書き）なしにそのまま学習・適用できる。</li>
+<li><strong>可逆（lossless）</strong>: トークン列から元のテキストを正確に復元できる。前処理で情報が落ちないため、生成系タスクのデトークナイズが単純になる。</li>
+<li><strong>BPE と Unigram の2方式</strong>: BPE が頻度ベースで決定的にマージしていくのに対し、Unigram 言語モデルは確率的で、学習時に複数のトークン化をサンプリングできる（subword regularization）。</li>
+</ul>
+
+
+<p>T5 や ALBERT、XLNet をはじめ多くの言語モデルのトークナイザとして採用されてきた。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://github.com/google/sentencepiece">google/sentencepiece - GitHub</a></li>
+<li><a href="https://aclanthology.org/D18-2012/">SentencePiece: A simple and language independent subword tokenizer and detokenizer for Neural Text Processing (Kudo &amp; Richardson, 2018)</a></li>
+<li><a href="https://huggingface.co/docs/transformers/tokenizer_summary">Summary of the tokenizers - Hugging Face</a></li>
+</ul>
+
+]]></description>
+</item>
+<item>
+<title>データレイクハウス</title>
+<link>https://64p.org/notes/data-lakehouse.html</link>
+<guid isPermaLink="true">https://64p.org/notes/data-lakehouse.html</guid>
+<pubDate>Wed, 12 Aug 2026 09:55:00 +0900</pubDate>
+<description><![CDATA[<h1>データレイクハウス</h1>
+
+<p><a class="note-tag" href="/notes/tags/moc.html">#moc</a> <a class="note-tag" href="/notes/tags/data-engineering.html">#data-engineering</a></p>
+
+<p>オブジェクトストレージ上のオープンなファイル群（データレイク）に、データウェアハウス並みのテーブル管理機能（ACID・スキーマ管理・ガバナンス）を載せるアーキテクチャ。「lake + warehouse」の造語。オープンなフォーマットと仕様の積み重ねでベンダーロックインを避けられるのが、プロプライエタリなDWHに対する売り。この領域のノートの見取り図。</p>
+
+<h2>スタックの構成要素</h2>
+
+<ul>
+<li><strong>ファイルフォーマット</strong>
+
+<ul>
+<li><a href="/notes/apache-parquet.html">Apache Parquet</a> — ディスク上の列指向ファイルフォーマット。データ本体はこれで置かれることが多い。</li>
+<li><a href="/notes/apache-arrow.html">Apache Arrow</a> — メモリ上の列指向フォーマット。エンジン内部の処理・エンジン間のデータ交換用。</li>
+</ul>
+</li>
+<li><strong>テーブルフォーマット</strong>
+
+<ul>
+<li><a href="/notes/apache-iceberg.html">Apache Iceberg</a> — ファイルの集まりに「SQLテーブル」の抽象を与えるレイヤー。ACID・スキーマ進化・タイムトラベル。同種に Delta Lake / Apache Hudi。</li>
+</ul>
+</li>
+<li><strong>カタログ</strong>
+
+<ul>
+<li><a href="/notes/project-nessie.html">Project Nessie</a> — Iceberg テーブルのカタログに Git ライクなブランチ/コミットの意味論を足したもの。</li>
+<li><a href="/notes/apache-polaris.html">Apache Polaris</a> — Iceberg REST catalog 仕様の標準実装。<a href="/notes/rbac.html">RBAC</a> や credential vending などガバナンス機能に軸足。</li>
+</ul>
+</li>
+<li><strong>クエリエンジン / プラットフォーム</strong>
+
+<ul>
+<li><a href="/notes/dremio.html">Dremio</a> — 上記のオープン部品（Arrow/Iceberg/Nessie/Polaris)を束ねた商用レイクハウスプラットフォーム。ほかに Trino, Spark, Snowflake, Databricks などがこのレイヤーのプレイヤー。</li>
+</ul>
+</li>
+</ul>
+
+]]></description>
+</item>
+<item>
+<title>Dremio</title>
+<link>https://64p.org/notes/dremio.html</link>
+<guid isPermaLink="true">https://64p.org/notes/dremio.html</guid>
+<pubDate>Wed, 12 Aug 2026 09:55:00 +0900</pubDate>
+<description><![CDATA[<h1>Dremio</h1>
+
+<p><a class="note-tag" href="/notes/tags/data-engineering.html">#data-engineering</a> <a class="note-tag" href="/notes/tags/database.html">#database</a></p>
+
+<p>データレイクハウスプラットフォームを提供する米国企業、およびその製品名。2015年に Tomer Shiran と Jacques Nadeau らが創業した。Nadeau は <a href="/notes/apache-arrow.html">Apache Arrow</a> の共同開発者であり、Dremio 社は Apache Arrow と <a href="/notes/apache-polaris.html">Apache Polaris</a> の co-creator を名乗る。<a href="/notes/project-nessie.html">Project Nessie</a> の開発も主導している。</p>
+
+<h2>製品の特徴</h2>
+
+<ul>
+<li><strong>Arrowベースのクエリエンジン</strong>: Apache Arrow のインメモリカラムナー表現をネイティブに使う高速SQLエンジンが中核。データウェアハウスにデータをコピーせず、データレイク（<a href="/notes/apache-iceberg.html">Iceberg</a> テーブル）や各種データソースを直接クエリする。</li>
+<li><strong>データ連合（federation）</strong>: クエリを解析して各データソースにフィルタや集計をプッシュダウンし、最小限のデータだけ取得してメモリ上で結合する。「Query, Don&rsquo;t Move」（データを動かさずクエリする）が設計原則。</li>
+<li><strong>Reflections</strong>: クエリパターンに基づく自動のクエリアクセラレーション（実体化ビューの自動管理に相当）。</li>
+<li><strong>セマンティックレイヤー</strong>: 物理データの上に論理的なビュー階層を定義し、BIツールやAIエージェントから統一的にアクセスさせる。</li>
+<li>カタログは Apache Polaris ベースで、フルマネージドのクラウドサービスとセルフマネージド版の両方がある。</li>
+</ul>
+
+
+<h2><a href="/notes/data-lakehouse.html">データレイクハウス</a>の中での位置づけ</h2>
+
+<p>Parquet/Arrow/Iceberg/Nessie/Polaris というオープンなビルディングブロックを束ねて、Snowflake のようなデータウェアハウス体験をデータレイク上で提供する統合プラットフォーム。オープンソース戦略（Arrow・Nessie・Polaris への貢献）を軸にしているのが特徴。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://www.dremio.com/blog/what-is-dremio/">What is Dremio? The Unified Lakehouse and AI Platform | Dremio</a></li>
+<li><a href="https://www.dremio.com/platform/sql-query-engine/">SQL Query Engine | Dremio</a></li>
+<li><a href="https://www.dremio.com/about/">About Us | Dremio</a></li>
+</ul>
+
+]]></description>
+</item>
+</channel>
+</rss>

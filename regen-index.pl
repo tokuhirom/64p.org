@@ -133,6 +133,16 @@ use File::stat;
 use Time::Piece;
 use POSIX qw(strftime);
 
+# RFC 822 date for RSS <pubDate>/<lastBuildDate>. Built from Time::Piece's
+# ->day/->month accessors (always English) rather than ->strftime('%a %b'),
+# which shells out to POSIX and would emit Japanese abbreviations under a
+# ja_JP locale.
+sub rfc822 {
+    my ($tp) = @_;
+    return sprintf('%s, %02d %s %04d %02d:%02d:%02d +0900',
+        $tp->day, $tp->mday, $tp->month, $tp->year, $tp->hour, $tp->min, $tp->sec);
+}
+
 sub regen {
     # pass 1: slurp every note's raw markdown + slug + title, before any
     # cross-note resolution (wikilinks need to see every title first).
@@ -275,6 +285,21 @@ sub regen {
         },
     );
     spew('notes/index.html', $index);
+
+    # RSS feed: newest-first by `created` (not `updated`), so a light edit to
+    # an old note doesn't bump it back into the feed. Capped at 30 items.
+    my @by_created = sort { $b->{created} cmp $a->{created} } @notes;
+    splice(@by_created, 30) if @by_created > 30;
+    my @rss_items = map {
+        +{ %$_, pub_date => rfc822(Time::Piece->strptime($_->{created}, '%Y-%m-%d %H:%M')) }
+    } @by_created;
+    my $rss = $xslate->render(
+        'notes-rss.tt' => {
+            notes => \@rss_items,
+            now   => rfc822(scalar localtime),
+        },
+    );
+    spew('notes/rss.xml', $rss);
 
     # pass 4: /notes/tags/ - a tag cloud index plus one archive page per tag.
     mkdir 'notes/tags' unless -d 'notes/tags';

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<channel>
+<title>Notes - 64p.org</title>
+<link>https://64p.org/notes/</link>
+<atom:link href="https://64p.org/notes/rss.xml" rel="self" type="application/rss+xml" />
+<description>ちょっと調べたことや検証結果を、AIの力も借りながらメモしていくコーナーです。</description>
+<language>ja</language>
+<lastBuildDate>[% now %]</lastBuildDate>
+[% FOR note IN notes -%]
+<item>
+<title>[% note.title %]</title>
+<link>[% note.url %]</link>
+<guid isPermaLink="true">[% note.url %]</guid>
+<pubDate>[% note.pub_date %]</pubDate>
+<description><![CDATA[[% note.body | raw %]]]></description>
+</item>
+[% END -%]
+</channel>
+</rss>
