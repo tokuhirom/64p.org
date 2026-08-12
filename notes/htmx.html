@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>ルパン三世 カリオストロの城 - Notes - 64p.org</title>
+    <title>htmx - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/highlight.js@11/styles/github.min.css" media="(prefers-color-scheme: light)">
@@ -22,7 +22,7 @@
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
                                     <li><a href="/notes/topcoat.html">Topcoat</a></li>
-                                    <li><a href="/notes/htmx.html">htmx</a></li>
+                                    <li><a href="/notes/htmx.html" class="active">htmx</a></li>
                                     <li><a href="/notes/linux-virtual-network-lab.html">Linuxだけで作る仮想ネットワークラボ</a></li>
                                     <li><a href="/notes/network-namespace.html">Network Namespace (netns)</a></li>
                                     <li><a href="/notes/open-vswitch.html">Open vSwitch (OVS)</a></li>
@@ -139,7 +139,7 @@
                                     <li><a href="/notes/national-museum-of-nature-and-science.html">国立科学博物館</a></li>
                                     <li><a href="/notes/hachiko-hakusei.html">忠犬ハチ公の剥製</a></li>
                                     <li><a href="/notes/apache-druid.html">Apache Druid</a></li>
-                                    <li><a href="/notes/cagliostro-no-shiro.html" class="active">ルパン三世 カリオストロの城</a></li>
+                                    <li><a href="/notes/cagliostro-no-shiro.html">ルパン三世 カリオストロの城</a></li>
                                     <li><a href="/notes/nand-gate.html">NANDゲート</a></li>
                                     <li><a href="/notes/nand-flash.html">NAND型フラッシュメモリ</a></li>
                                     <li><a href="/notes/morse-code.html">モールス信号(モールス符号)</a></li>
@@ -301,53 +301,51 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>ルパン三世 カリオストロの城</h1>
+                <h1>htmx</h1>
 
-<p>1979年公開の日本のアニメーション映画。モンキー・パンチ原作アニメ『ルパン三世』の劇場版第2作。 <a class="note-tag" href="/notes/tags/anime.html">#anime</a> <a class="note-tag" href="/notes/tags/movie.html">#movie</a></p>
+<p>HTMLの属性だけでAJAX・WebSocket・DOM更新を宣言的に扱えるようにするJavaScriptライブラリ。「モダンブラウザの機能に、JavaScriptを書かずHTMLから直接アクセスできるようにする」ことを掲げる。依存ライブラリなしの約2,500行のJSで、現行バージョンは2.x系。作者はCarson Gross。 <a class="note-tag" href="/notes/tags/web.html">#web</a> <a class="note-tag" href="/notes/tags/javascript.html">#javascript</a></p>
 
-<h2>概要</h2>
+<h2>仕組み</h2>
 
-<ul>
-<li>監督: 宮崎駿(本作が劇場映画初監督作品)。当初は大塚康生に監督が依頼されたが本人が気乗りせず、宮崎が監督、大塚が作画監督という体制になった</li>
-<li>製作期間: わずか半年という短さで、宮崎は「この作品で初めて自分の体力の限界を知った」と語っている</li>
-<li>公開年: 1979年(昭和54年)</li>
-</ul>
+<p><code>hx-get</code>/<code>hx-post</code>などのカスタム属性をHTML要素に書くと、イベント発火時にHTTPリクエストが飛び、<strong>サーバーが返したHTMLフラグメントがDOMの指定箇所にスワップされる</strong>。SPAのようにJSONを返してクライアント側でレンダリングするのではなく、サーバーがHTMLを返すのが根本的な違い。</p>
 
+<pre><code class="html">&lt;button hx-post="/clicked" hx-trigger="click" hx-target="#parent-div"&gt;
+  Click Me!
+&lt;/button&gt;
+</code></pre>
 
-<h2>あらすじ</h2>
+<h2>設計思想: ハイパーメディア駆動</h2>
 
-<p>国営カジノから50億円を盗み出したルパンと次元だったが、それが精巧な偽札「ゴート札」だったと発覚。発行元とされるカリオストロ公国へ向かう途中、武装した男たちに追われるウェディング姿の少女クラリスを目撃し救出するが、僅かな隙に奪われてしまう。ルパンたちはクラリスの残した指輪を手がかりに、要塞のようなカリオストロ伯爵の城へ潜入していく。</p>
+<p>Roy Fieldingの本来のREST、特にHATEOAS(Hypertext As The Engine Of Application State)に沿った「ハイパーメディア駆動」アーキテクチャを標榜する。アプリケーションの状態遷移をクライアント側のJS状態管理ではなくハイパーテキスト(HTML)自体に担わせることで、元来のWebプログラミングモデルに留まったまま動的なUIを作れる、という主張。挙動がHTML要素の属性として書かれる「locality of behavior」も重視している。</p>
 
-<h2>主要キャスト</h2>
+<p>作者らによる書籍<a href="https://hypermedia.systems/">『Hypermedia Systems』</a>がこの思想を体系的に説明しており、日本語訳<a href="https://www.amazon.co.jp/dp/4297149451?tag=tokuhirom-22">『ハイパーメディアシステム──htmxとRESTによるシンプルで軽やかなウェブ開発』</a>(技術評論社)も出ている。</p>
 
-<ul>
-<li>ルパン三世: 山田康雄</li>
-<li>峰不二子: 増山江威子</li>
-<li>銭形警部: 納谷悟朗</li>
-<li>クラリス: 島本須美</li>
-</ul>
+<h2>歴史</h2>
 
+<p>前身は2013年にCarson Grossが作ったintercooler.js。jQuery依存だった同ライブラリを依存ゼロで書き直したものがhtmx。SPAフレームワークの複雑さへの反動もあって2020年代にSNSで広く知られるようになった。</p>
 
-<h2>公開当時の興行成績</h2>
-
-<p>興行収入は約6.1億円(配給収入約3.05億円)で、前作(配給収入約10億円)を下回り、評論的にも興行的にも「振るわなかった」。1970年代末のSFアニメブームの主流から外れたファミリー向け内容だったことが要因と分析されている。</p>
-
-<h2>後世の評価</h2>
-
-<p>1981年前後、雑誌『アニメージュ』が宮崎特集を組み始めたことをきっかけに評価が劇的に逆転。同誌の「アニメグランプリ」で「歴代ベストワン作品第1位」を3年連続受賞し、「日本アニメーション史に燦然と輝く名作」としての地位を確立した。演出技法は後続の『ルパン三世』シリーズにも大きな影響を与え続けている。</p>
+<p>サーバー側は何でもよい(HTMLを返せさえすればよい)ため、SSR中心のフレームワークとの相性がよく、<a href="/notes/topcoat.html">Topcoat</a>のようにhtmx連携を組み込みで持つフレームワークもある。</p>
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://ja.wikipedia.org/wiki/%E3%83%AB%E3%83%91%E3%83%B3%E4%B8%89%E4%B8%96_%E3%82%AB%E3%83%AA%E3%82%AA%E3%82%B9%E3%83%88%E3%83%AD%E3%81%AE%E5%9F%8E">ルパン三世 カリオストロの城 - Wikipedia</a></li>
-<li><a href="https://eiga.com/movie/32052/">ルパン三世 カリオストロの城 : 作品情報・声優・キャスト・あらすじ</a></li>
-<li><a href="https://anime.eiga.com/news/column/animehack_editors/124134/">「ルパン三世 カリオストロの城」声優、あらすじまとめ - アニメハック</a></li>
+<li><a href="https://htmx.org/docs/">htmx公式ドキュメント</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Htmx">Htmx - Wikipedia</a></li>
+<li><a href="https://se-radio.net/2025/06/se-radio-671-carson-gross-on-htmx/">SE Radio 671: Carson Gross on HTMX</a></li>
+<li><a href="https://hypermedia.systems/">Hypermedia Systems (書籍サイト)</a></li>
 </ul>
 
 
+                                <div class="notes-backlinks">
+                    <h2>🔗 リンクされているノート</h2>
+                    <ul>
+                                            <li><a href="/notes/topcoat.html">Topcoat</a></li>
+                    
+                    </ul>
+                </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-10 23:17 / 更新日時: 2026-08-10 23:17</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=%E3%83%AB%E3%83%91%E3%83%B3%E4%B8%89%E4%B8%96%20%E3%82%AB%E3%83%AA%E3%82%AA%E3%82%B9%E3%83%88%E3%83%AD%E3%81%AE%E5%9F%8E&url=https%3A%2F%2F64p.org%2Fnotes%2Fcagliostro-no-shiro.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <span>作成日時: 2026-08-12 19:37 / 更新日時: 2026-08-12 19:37</span>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=htmx&url=https%3A%2F%2F64p.org%2Fnotes%2Fhtmx.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">
