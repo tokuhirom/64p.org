@@ -1,6 +1,6 @@
 ---
 created: 2026-08-12 09:55
-updated: 2026-08-12 09:55
+updated: 2026-08-12 13:33
 ---
 # Apache Iceberg
 
@@ -18,7 +18,7 @@ updated: 2026-08-12 09:55
 
 ## エコシステム
 
-Spark, Trino, Flink, Hive, Impala など多数のクエリエンジンが対応しており、特定ベンダーにロックインされないのが強み。テーブルの現在のメタデータ位置を管理する「カタログ」レイヤーが別途必要で、REST catalog 仕様のほか [[project-nessie|Project Nessie]] や Apache Polaris などの実装がある。データファイル自体は [[apache-parquet|Parquet]] が使われることが多い。
+Spark, Trino, Flink, Hive, Impala など多数のクエリエンジンが対応しており、特定ベンダーにロックインされないのが強み。テーブルの現在のメタデータ位置を管理する「カタログ」レイヤーが別途必要で、REST catalog 仕様のほか [[project-nessie|Project Nessie]] や [[apache-polaris|Apache Polaris]] などの実装がある。データファイル自体は [[apache-parquet|Parquet]] が使われることが多い。
 
 ## [[data-lakehouse|データレイクハウス]]の中での位置づけ
 

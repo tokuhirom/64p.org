@@ -1,12 +1,12 @@
 ---
 created: 2026-08-12 09:55
-updated: 2026-08-12 09:55
+updated: 2026-08-12 13:33
 ---
 # Dremio
 
 #data-engineering #database
 
-データレイクハウスプラットフォームを提供する米国企業、およびその製品名。2015年に Tomer Shiran と Jacques Nadeau らが創業した。Nadeau は [[apache-arrow|Apache Arrow]] の共同開発者であり、Dremio 社は Apache Arrow と Apache Polaris の co-creator を名乗る。[[project-nessie|Project Nessie]] の開発も主導している。
+データレイクハウスプラットフォームを提供する米国企業、およびその製品名。2015年に Tomer Shiran と Jacques Nadeau らが創業した。Nadeau は [[apache-arrow|Apache Arrow]] の共同開発者であり、Dremio 社は Apache Arrow と [[apache-polaris|Apache Polaris]] の co-creator を名乗る。[[project-nessie|Project Nessie]] の開発も主導している。
 
 ## 製品の特徴
 
