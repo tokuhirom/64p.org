@@ -1,6 +1,6 @@
 ---
 created: 2026-08-12 09:46
-updated: 2026-08-12 09:46
+updated: 2026-08-12 13:38
 ---
 # CEL (Common Expression Language)
 
@@ -19,7 +19,7 @@ Google が作ったオープンソースの式評価言語。チューリング�
 
 - **Kubernetes**: v1.25 から導入され、CRDのバリデーションルール（v1.29でGA）や ValidatingAdmissionPolicy の記述に使われる。webhookを立てずに kube-apiserver 内で直接バリデーションを実行できるのが利点。
 - **Google Cloud**: IAM Conditions などポリシー条件の記述。
-- **Envoy**: RBACポリシーの条件式。
+- **Envoy**: [[rbac|RBAC]]ポリシーの条件式。
 - **[[betterleaks]]**: シークレットスキャンのルール定義内で、検出したシークレットの検証ロジックを記述するのに使われている。
 
 ## 出典

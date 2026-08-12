@@ -1,6 +1,6 @@
 ---
 created: 2026-08-12 09:55
-updated: 2026-08-12 13:33
+updated: 2026-08-12 13:38
 ---
 # データレイクハウス
 
@@ -17,6 +17,6 @@ updated: 2026-08-12 13:33
     - [[apache-iceberg|Apache Iceberg]] — ファイルの集まりに「SQLテーブル」の抽象を与えるレイヤー。ACID・スキーマ進化・タイムトラベル。同種に Delta Lake / Apache Hudi。
 - **カタログ**
     - [[project-nessie|Project Nessie]] — Iceberg テーブルのカタログに Git ライクなブランチ/コミットの意味論を足したもの。
-    - [[apache-polaris|Apache Polaris]] — Iceberg REST catalog 仕様の標準実装。RBAC や credential vending などガバナンス機能に軸足。
+    - [[apache-polaris|Apache Polaris]] — Iceberg REST catalog 仕様の標準実装。[[rbac|RBAC]] や credential vending などガバナンス機能に軸足。
 - **クエリエンジン / プラットフォーム**
     - [[dremio|Dremio]] — 上記のオープン部品（Arrow/Iceberg/Nessie/Polaris)を束ねた商用レイクハウスプラットフォーム。ほかに Trino, Spark, Snowflake, Databricks などがこのレイヤーのプレイヤー。
