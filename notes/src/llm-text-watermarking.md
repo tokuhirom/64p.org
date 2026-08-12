@@ -1,3 +1,7 @@
+---
+created: 2026-08-12 23:33
+updated: 2026-08-12 23:33
+---
 # LLMテキストの電子透かし
 
 #llm #ai #security #watermarking
@@ -72,7 +76,7 @@ Google DeepMind の [[synthid-text|SynthID-Text]] が採用。候補トークン
 ## 実運用
 
 - Google: [[synthid-text|SynthID-Text]] を Gemini に本番投入（2024〜）。
-- Anthropic: [[claude-text-watermark|Claudeのテキスト透かし]]（2026-08、EU AI Act対応）。
+- Anthropic: [[claude-text-watermark|Claudeのテキスト透かし]]（2026-08、[[eu-ai-act|EU AI Act]]第50条対応）。
 
 ## 出典
 

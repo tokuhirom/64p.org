@@ -6,67 +6,12 @@
 <atom:link href="https://64p.org/notes/rss.xml" rel="self" type="application/rss+xml" />
 <description>ちょっと調べたことや検証結果を、AIの力も借りながらメモしていくコーナーです。</description>
 <language>ja</language>
-<lastBuildDate>Wed, 12 Aug 2026 23:33:21 +0900</lastBuildDate>
-<item>
-<title>SynthID-Text</title>
-<link>https://64p.org/notes/synthid-text.html</link>
-<guid isPermaLink="true">https://64p.org/notes/synthid-text.html</guid>
-<pubDate>Wed, 12 Aug 2026 23:29:00 +0900</pubDate>
-<description><![CDATA[<h1>SynthID-Text</h1>
-
-<p><a class="note-tag" href="/notes/tags/llm.html">#llm</a> <a class="note-tag" href="/notes/tags/ai.html">#ai</a> <a class="note-tag" href="/notes/tags/security.html">#security</a> <a class="note-tag" href="/notes/tags/watermarking.html">#watermarking</a> <a class="note-tag" href="/notes/tags/google.html">#google</a></p>
-
-<p>Google DeepMind による<a href="/notes/llm-text-watermarking.html">LLMテキスト電子透かし</a>の本番実装。論文 &ldquo;Scalable watermarking for identifying large language model outputs&rdquo; は Nature（2024-10）に掲載された。<strong>生成テキスト透かしを大規模本番運用した初の事例</strong>で、Gemini / Gemini Advanced 上で数百万ユーザー規模で稼働した。</p>
-
-<h2>Tournament sampling</h2>
-
-<p>中核のアルゴリズム。次トークンを決めるときに:</p>
-
-<ol>
-<li>元の分布から候補トークンを複数サンプリングする</li>
-<li>候補をペアにして、秘密鍵由来の疑似乱数関数（PRF）のスコアが大きい方を勝ち残らせる</li>
-<li>これをL層のトーナメントとして繰り返し、最後に残ったトークンを出力する</li>
-</ol>
-
-
-<p>基礎に本物のサンプリングが残っているため「同じプロンプトでも毎回違う応答」という多様性が保たれる。Gumbel-max系のdistortion-free手法が抱える出力の決定化問題を回避しつつ、設定次第で:</p>
-
-<ul>
-<li><strong>非歪曲（non-distortionary）</strong>: 出力分布を保存し品質劣化なし</li>
-<li><strong>歪曲（distortionary）</strong>: 品質を少し犠牲にして検出力を上げる</li>
-</ul>
-
-
-<p>の両モードを選べる。論文では両カテゴリで既存手法（KGW系・Gumbel系）より検出力が高いことを示した。</p>
-
-<h2>実運用上の特徴</h2>
-
-<ul>
-<li>学習には一切手を入れず、サンプリング手順だけを差し替える</li>
-<li>検出はLLM本体を使わず軽量に実行できる</li>
-<li>約2,000万件の本番トラフィックでの人間フィードバック評価で品質劣化なしを確認</li>
-<li>実装はオープンソース化されており、Hugging Face Transformers にも組み込まれている</li>
-</ul>
-
-
-<h2><a href="/notes/llm-text-watermarking.html">LLMテキストの電子透かし</a>の中での位置づけ</h2>
-
-<p>ロジット操作型（KGW法）とサンプリング置換型（Gumbel-max）の長所を統合した実用システム。ただしトークン表層の偏りに依存する点は変わらず、強い言い換え・翻訳への耐性は限定的。</p>
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://www.nature.com/articles/s41586-024-08025-4">Scalable watermarking for identifying large language model outputs (Nature, 2024)</a></li>
-<li><a href="https://arxiv.org/abs/2603.03410">On Google&rsquo;s SynthID-Text LLM Watermarking System: Theoretical Analysis and Empirical Validation (2026)</a> — 第三者による理論解析</li>
-</ul>
-
-]]></description>
-</item>
+<lastBuildDate>Wed, 12 Aug 2026 23:33:47 +0900</lastBuildDate>
 <item>
 <title>LLMテキストの電子透かし</title>
 <link>https://64p.org/notes/llm-text-watermarking.html</link>
 <guid isPermaLink="true">https://64p.org/notes/llm-text-watermarking.html</guid>
-<pubDate>Wed, 12 Aug 2026 23:29:00 +0900</pubDate>
+<pubDate>Wed, 12 Aug 2026 23:33:00 +0900</pubDate>
 <description><![CDATA[<h1>LLMテキストの電子透かし</h1>
 
 <p><a class="note-tag" href="/notes/tags/llm.html">#llm</a> <a class="note-tag" href="/notes/tags/ai.html">#ai</a> <a class="note-tag" href="/notes/tags/security.html">#security</a> <a class="note-tag" href="/notes/tags/watermarking.html">#watermarking</a></p>
@@ -161,7 +106,7 @@ flowchart TD
 
 <ul>
 <li>Google: <a href="/notes/synthid-text.html">SynthID-Text</a> を Gemini に本番投入（2024〜）。</li>
-<li>Anthropic: <a href="/notes/claude-text-watermark.html">Claudeのテキスト透かし</a>（2026-08、EU AI Act対応）。</li>
+<li>Anthropic: <a href="/notes/claude-text-watermark.html">Claudeのテキスト透かし</a>（2026-08、<a href="/notes/eu-ai-act.html">EU AI Act</a>第50条対応）。</li>
 </ul>
 
 
@@ -176,6 +121,239 @@ flowchart TD
 <li><a href="https://arxiv.org/abs/2605.10977">PASA: A Principled Embedding-Space Watermarking Approach (ICML 2026)</a></li>
 <li><a href="https://www.usenix.org/system/files/conference/usenixsecurity25/sec25cycle1-prepub-446-qu-watermarking.pdf">Provably Robust Multi-bit Watermarking for AI-generated Text (USENIX Security 2025)</a></li>
 <li><a href="https://arxiv.org/abs/2508.08211">SAEMark: Steering Personalized Multilingual LLM Watermarks with Sparse Autoencoders (NeurIPS 2025)</a></li>
+</ul>
+
+]]></description>
+</item>
+<item>
+<title>EU AI Act</title>
+<link>https://64p.org/notes/eu-ai-act.html</link>
+<guid isPermaLink="true">https://64p.org/notes/eu-ai-act.html</guid>
+<pubDate>Wed, 12 Aug 2026 23:33:00 +0900</pubDate>
+<description><![CDATA[<h1>EU AI Act</h1>
+
+<p><a class="note-tag" href="/notes/tags/ai.html">#ai</a> <a class="note-tag" href="/notes/tags/regulation.html">#regulation</a> <a class="note-tag" href="/notes/tags/eu.html">#eu</a> <a class="note-tag" href="/notes/tags/law.html">#law</a></p>
+
+<p>EUの包括的なAI規制法（Regulation (EU) 2024/1689）。世界初の包括的AI規制とされ、2024-08-01に発効し、義務ごとに段階的に適用が始まっている。EU域内で活動する企業だけでなく、<strong>EU市場にAIシステム・モデルを提供する域外企業にも適用される</strong>（Anthropicが<a href="/notes/claude-text-watermark.html">Claudeの透かし</a>を全世界適用したのはこの文脈）。</p>
+
+<h2>リスクベースアプローチ</h2>
+
+<p>AIシステムをリスクの大きさで4段階に分類し、段階ごとに義務の重さを変えるのが基本設計。</p>
+
+<table>
+<thead>
+<tr>
+<th> リスク区分 </th>
+<th> 例 </th>
+<th> 義務 </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td> 許容できないリスク </td>
+<td> 公的機関によるソーシャルスコアリング、サブリミナルな行動操作、公共空間でのリアルタイム遠隔生体認証（法執行の限定的例外あり） </td>
+<td> 禁止 </td>
+</tr>
+<tr>
+<td> ハイリスク </td>
+<td> 雇用・教育・与信・法執行・重要インフラでのAI（Annex III）、規制対象製品の安全部品（Annex I） </td>
+<td> リスク管理・技術文書・人間による監督などの厳格な要求 </td>
+</tr>
+<tr>
+<td> 限定リスク </td>
+<td> チャットボット、生成AI、感情認識、ディープフェイク </td>
+<td> 透明性義務（第50条） </td>
+</tr>
+<tr>
+<td> 最小リスク </td>
+<td> それ以外（スパムフィルタ等） </td>
+<td> 義務なし </td>
+</tr>
+</tbody>
+</table>
+
+
+<h2>第50条: 透明性義務</h2>
+
+<p>生成AIに直結する条文で、<strong>2026-08-02から適用</strong>。主な内容:</p>
+
+<ul>
+<li>人と直接対話するAIシステム（チャットボット等）は、AIと対話していることを本人に知らせる（明白な場合を除く）</li>
+<li>合成コンテンツ（音声・画像・動画・<strong>テキスト</strong>）を生成するAIシステム（GPAIを含む）のプロバイダーは、出力を<strong>機械可読な形式でマーキングし、人工的に生成・操作されたと検出可能</strong>にする。技術的に実現可能な範囲で、効果的・相互運用可能・頑健・信頼できる方式であること</li>
+<li>感情認識・生体分類システムのデプロイヤーは対象者に稼働を通知する</li>
+<li>ディープフェイクのデプロイヤーは人工生成であることを開示する（芸術・風刺目的には緩和あり）</li>
+</ul>
+
+
+<p>このテキストへの機械可読マーキング義務が<a href="/notes/llm-text-watermarking.html">LLMテキスト電子透かし</a>の商用実装（<a href="/notes/claude-text-watermark.html">Claudeのテキスト電子透かし導入 (2026-08)</a>など）の直接の規制ドライバーになっている。マーキングの技術標準は Code of Practice とEU標準化作業で策定が進められている段階。</p>
+
+<p>適用除外もある: 標準的な編集の補助機能で入力の意味を実質的に変えないもの、犯罪捜査目的で法律上認められたもの、人間に露出しないmachine-to-machine通信など。</p>
+
+<h2>GPAI（汎用AIモデル）への義務</h2>
+
+<p>第53条・第55条で、GPAIモデル（LLMの基盤モデルが典型）のプロバイダーに技術文書・学習データ要約の公開・著作権ポリシーなどを義務付ける。<strong>2025-08-02以降に市場投入されたモデルから適用</strong>（それ以前のモデルは2027-08-02までに対応）。システミックリスクを持つ大規模モデルには追加義務がある。</p>
+
+<ul>
+<li>欧州委員会は2025-07に自主的な遵守ツールとして <strong>General-Purpose AI Code of Practice</strong>（Transparency / Copyright / Safety &amp; Security の3章構成）を公表した。署名は任意だが、署名すれば遵守の立証手段として使える。</li>
+</ul>
+
+
+<h2>タイムライン</h2>
+
+<table>
+<thead>
+<tr>
+<th> 日付 </th>
+<th> 内容 </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td> 2024-08-01 </td>
+<td> 発効 </td>
+</tr>
+<tr>
+<td> 2025-02-02 </td>
+<td> 禁止AI（許容できないリスク）の適用開始 </td>
+</tr>
+<tr>
+<td> 2025-08-02 </td>
+<td> GPAIモデルの義務の適用開始（新規モデル） </td>
+</tr>
+<tr>
+<td> 2026-08-02 </td>
+<td> 第50条（透明性義務）を含む本体の適用開始。GPAI義務の執行（情報要求・モデル回収等）もここから </td>
+</tr>
+<tr>
+<td> 2027-12-02 </td>
+<td> Annex III型ハイリスクシステムの義務の適用（延期後） </td>
+</tr>
+<tr>
+<td> 2028-08-02 </td>
+<td> Annex I型（規制製品組み込み）ハイリスクの義務の適用（延期後） </td>
+</tr>
+</tbody>
+</table>
+
+
+<p>当初ハイリスク義務は2026-08-02適用予定だったが、技術標準や各国監督体制の準備遅れを受けて、<strong>Digital Omnibus on AI</strong>（Regulation (EU) 2026/1744、2026-07-27発効）で上記の通り延期された。第50条の透明性義務と第4条のAIリテラシー義務は延期されず元のスケジュールのまま。</p>
+
+<h2>罰則</h2>
+
+<p>違反区分ごとの段階制で、最大は禁止AI違反の<strong>3,500万ユーロまたは全世界年間売上高の7%のいずれか高い方</strong>。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://artificialintelligenceact.eu/high-level-summary/">High-level summary of the AI Act (artificialintelligenceact.eu)</a></li>
+<li><a href="https://artificialintelligenceact.eu/article/50/">Article 50: Transparency Obligations (artificialintelligenceact.eu)</a></li>
+<li><a href="https://digital-strategy.ec.europa.eu/en/faqs/transparency-obligations-under-article-50-ai-act">Transparency obligations under Article 50 of the AI Act — FAQ (European Commission)</a></li>
+<li><a href="https://www.bakermckenzie.com/en/insight/publications/2025/08/general-purpose-ai-obligations">General-purpose AI Obligations Under the EU AI Act Kick in From 2 August 2025 (Baker McKenzie)</a></li>
+<li><a href="https://artificialintelligenceact.eu/introduction-to-code-of-practice/">An Introduction to the Code of Practice for General-Purpose AI (artificialintelligenceact.eu)</a></li>
+<li><a href="https://www.klgates.com/EU-Digital-Omnibus-on-AI-Enters-Into-Force-7-31-2026">EU Digital Omnibus on AI Enters Into Force (K&amp;L Gates, 2026-07-31)</a></li>
+<li><a href="https://www.gibsondunn.com/eu-ai-act-omnibus-agreement-postponed-high-risk-deadlines-and-other-key-changes/">EU AI Act Omnibus Agreement — Postponed High-Risk Deadlines (Gibson Dunn)</a></li>
+</ul>
+
+]]></description>
+</item>
+<item>
+<title>Claudeのテキスト電子透かし導入 (2026-08)</title>
+<link>https://64p.org/notes/claude-text-watermark.html</link>
+<guid isPermaLink="true">https://64p.org/notes/claude-text-watermark.html</guid>
+<pubDate>Wed, 12 Aug 2026 23:29:00 +0900</pubDate>
+<description><![CDATA[<h1>Claudeのテキスト電子透かし導入 (2026-08)</h1>
+
+<p><a class="note-tag" href="/notes/tags/llm.html">#llm</a> <a class="note-tag" href="/notes/tags/ai.html">#ai</a> <a class="note-tag" href="/notes/tags/security.html">#security</a> <a class="note-tag" href="/notes/tags/watermarking.html">#watermarking</a> <a class="note-tag" href="/notes/tags/anthropic.html">#anthropic</a> <a class="note-tag" href="/notes/tags/claude.html">#claude</a></p>
+
+<p>Anthropic が2026-08-11に、Claude の生成テキストへ知覚不能な<a href="/notes/llm-text-watermarking.html">電子透かし</a>を埋め込むと発表した。<strong>2026-08-02以降にリリースされる新モデルすべてが対象</strong>で、旧モデルへも順次拡張予定とのこと（<a href="/notes/claude-model-tiers.html">現行のモデル階層</a>でいうと2026年8月以降の新モデルから）。</p>
+
+<h2>背景: EU AI Act</h2>
+
+<p>直接の契機は <a href="/notes/eu-ai-act.html">EU AI Act</a> 第50条（透明性義務）。2026-08-02から新規リリースのAIシステムに対して施行され、生成AIの出力に機械可読なマークを埋め込むことを提供者に義務付けている。Anthropic は EU 域内限定ではなく<strong>全世界のトラフィックに一律適用</strong>する方針を取った。</p>
+
+<h2>実装の特徴（公表情報から）</h2>
+
+<ul>
+<li><strong>モデルレベルの埋め込み</strong>: 特定アプリが後付けするのではなくモデル出力自体に入るため、Claude API / claude.ai / Claude Code / Claude Cowork / Claude Tag、さらに AWS・Google Cloud・Microsoft Foundry 経由のアクセスまで経路を問わず適用される。</li>
+<li>テキストの意味・可読性は変えないとしている（アルゴリズムの詳細は非公開）。</li>
+<li>コピペしても透かしは残り、多少の編集にも耐えることがある。</li>
+<li>画像・ファイルには C2PA 標準の署名付きメタデータを使う（テキスト透かしとは別レイヤー）。</li>
+<li>検出用のツールと技術仕様を公開し、サードパーティも検証できるようにする予定。</li>
+</ul>
+
+
+<h2>限界（Anthropic自身が明記）</h2>
+
+<ul>
+<li>大幅な書き換え・言い換え・翻訳・人間の文章との混合で検出不能になりうる。</li>
+<li><strong>検出されるのは「Claudeが処理した」ことまでで、Claudeが著者であることの証明にはならない</strong>。人間が書いたテキストをClaudeに通しただけでもマークは付きうる。逆に、透かしが無いことは人間が書いた証明にもならない。</li>
+</ul>
+
+
+<p>発表を受けた解説記事（<a href="https://zenn.dev/hellorusk/articles/3328866ca9e922">Kaito Sugimotoさん</a>）では、「言い換えで消える」という記述から、2026年時点の研究の主戦場である意味空間型の言い換え耐性（SemStampやPASAの方向）はまだ備えていないのではと推測されている。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://support.claude.com/en/articles/16266773-how-claude-marks-ai-generated-content">How Claude marks AI-generated content (Claude Help Center)</a></li>
+<li><a href="https://techcrunch.com/2026/08/11/anthropic-says-it-will-watermark-text-generated-by-its-ai-models/">Anthropic says it will watermark text generated by its AI models (TechCrunch, 2026-08-11)</a></li>
+<li><a href="https://www.euronews.com/next/2026/08/11/eu-compliance-delivered-globally-anthropic-to-watermark-claudes-output-worldwide">EU compliance, delivered globally (Euronews, 2026-08-11)</a></li>
+<li><a href="https://zenn.dev/hellorusk/articles/3328866ca9e922">30年後の未来では、AIの出力したテキストに電子透かしが入っているかもしれない (Zenn)</a></li>
+</ul>
+
+]]></description>
+</item>
+<item>
+<title>SynthID-Text</title>
+<link>https://64p.org/notes/synthid-text.html</link>
+<guid isPermaLink="true">https://64p.org/notes/synthid-text.html</guid>
+<pubDate>Wed, 12 Aug 2026 23:29:00 +0900</pubDate>
+<description><![CDATA[<h1>SynthID-Text</h1>
+
+<p><a class="note-tag" href="/notes/tags/llm.html">#llm</a> <a class="note-tag" href="/notes/tags/ai.html">#ai</a> <a class="note-tag" href="/notes/tags/security.html">#security</a> <a class="note-tag" href="/notes/tags/watermarking.html">#watermarking</a> <a class="note-tag" href="/notes/tags/google.html">#google</a></p>
+
+<p>Google DeepMind による<a href="/notes/llm-text-watermarking.html">LLMテキスト電子透かし</a>の本番実装。論文 &ldquo;Scalable watermarking for identifying large language model outputs&rdquo; は Nature（2024-10）に掲載された。<strong>生成テキスト透かしを大規模本番運用した初の事例</strong>で、Gemini / Gemini Advanced 上で数百万ユーザー規模で稼働した。</p>
+
+<h2>Tournament sampling</h2>
+
+<p>中核のアルゴリズム。次トークンを決めるときに:</p>
+
+<ol>
+<li>元の分布から候補トークンを複数サンプリングする</li>
+<li>候補をペアにして、秘密鍵由来の疑似乱数関数（PRF）のスコアが大きい方を勝ち残らせる</li>
+<li>これをL層のトーナメントとして繰り返し、最後に残ったトークンを出力する</li>
+</ol>
+
+
+<p>基礎に本物のサンプリングが残っているため「同じプロンプトでも毎回違う応答」という多様性が保たれる。Gumbel-max系のdistortion-free手法が抱える出力の決定化問題を回避しつつ、設定次第で:</p>
+
+<ul>
+<li><strong>非歪曲（non-distortionary）</strong>: 出力分布を保存し品質劣化なし</li>
+<li><strong>歪曲（distortionary）</strong>: 品質を少し犠牲にして検出力を上げる</li>
+</ul>
+
+
+<p>の両モードを選べる。論文では両カテゴリで既存手法（KGW系・Gumbel系）より検出力が高いことを示した。</p>
+
+<h2>実運用上の特徴</h2>
+
+<ul>
+<li>学習には一切手を入れず、サンプリング手順だけを差し替える</li>
+<li>検出はLLM本体を使わず軽量に実行できる</li>
+<li>約2,000万件の本番トラフィックでの人間フィードバック評価で品質劣化なしを確認</li>
+<li>実装はオープンソース化されており、Hugging Face Transformers にも組み込まれている</li>
+</ul>
+
+
+<h2><a href="/notes/llm-text-watermarking.html">LLMテキストの電子透かし</a>の中での位置づけ</h2>
+
+<p>ロジット操作型（KGW法）とサンプリング置換型（Gumbel-max）の長所を統合した実用システム。ただしトークン表層の偏りに依存する点は変わらず、強い言い換え・翻訳への耐性は限定的。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://www.nature.com/articles/s41586-024-08025-4">Scalable watermarking for identifying large language model outputs (Nature, 2024)</a></li>
+<li><a href="https://arxiv.org/abs/2603.03410">On Google&rsquo;s SynthID-Text LLM Watermarking System: Theoretical Analysis and Empirical Validation (2026)</a> — 第三者による理論解析</li>
 </ul>
 
 ]]></description>
@@ -218,53 +396,6 @@ flowchart TD
 <li><a href="https://github.com/google/crosvm">GitHub - google/crosvm</a></li>
 <li><a href="https://github.com/google/crosvm/blob/main/README.md">crosvm/README.md at main · google/crosvm</a></li>
 <li><a href="https://crosvm.dev/doc/crosvm/index.html">crosvm - Rust</a></li>
-</ul>
-
-]]></description>
-</item>
-<item>
-<title>Claudeのテキスト電子透かし導入 (2026-08)</title>
-<link>https://64p.org/notes/claude-text-watermark.html</link>
-<guid isPermaLink="true">https://64p.org/notes/claude-text-watermark.html</guid>
-<pubDate>Wed, 12 Aug 2026 23:29:00 +0900</pubDate>
-<description><![CDATA[<h1>Claudeのテキスト電子透かし導入 (2026-08)</h1>
-
-<p><a class="note-tag" href="/notes/tags/llm.html">#llm</a> <a class="note-tag" href="/notes/tags/ai.html">#ai</a> <a class="note-tag" href="/notes/tags/security.html">#security</a> <a class="note-tag" href="/notes/tags/watermarking.html">#watermarking</a> <a class="note-tag" href="/notes/tags/anthropic.html">#anthropic</a> <a class="note-tag" href="/notes/tags/claude.html">#claude</a></p>
-
-<p>Anthropic が2026-08-11に、Claude の生成テキストへ知覚不能な<a href="/notes/llm-text-watermarking.html">電子透かし</a>を埋め込むと発表した。<strong>2026-08-02以降にリリースされる新モデルすべてが対象</strong>で、旧モデルへも順次拡張予定とのこと（<a href="/notes/claude-model-tiers.html">現行のモデル階層</a>でいうと2026年8月以降の新モデルから）。</p>
-
-<h2>背景: EU AI Act</h2>
-
-<p>直接の契機は EU AI Act 第50条（透明性義務）。2026-08-02から新規リリースのAIシステムに対して施行され、生成AIの出力に機械可読なマークを埋め込むことを提供者に義務付けている。Anthropic は EU 域内限定ではなく<strong>全世界のトラフィックに一律適用</strong>する方針を取った。</p>
-
-<h2>実装の特徴（公表情報から）</h2>
-
-<ul>
-<li><strong>モデルレベルの埋め込み</strong>: 特定アプリが後付けするのではなくモデル出力自体に入るため、Claude API / claude.ai / Claude Code / Claude Cowork / Claude Tag、さらに AWS・Google Cloud・Microsoft Foundry 経由のアクセスまで経路を問わず適用される。</li>
-<li>テキストの意味・可読性は変えないとしている（アルゴリズムの詳細は非公開）。</li>
-<li>コピペしても透かしは残り、多少の編集にも耐えることがある。</li>
-<li>画像・ファイルには C2PA 標準の署名付きメタデータを使う（テキスト透かしとは別レイヤー）。</li>
-<li>検出用のツールと技術仕様を公開し、サードパーティも検証できるようにする予定。</li>
-</ul>
-
-
-<h2>限界（Anthropic自身が明記）</h2>
-
-<ul>
-<li>大幅な書き換え・言い換え・翻訳・人間の文章との混合で検出不能になりうる。</li>
-<li><strong>検出されるのは「Claudeが処理した」ことまでで、Claudeが著者であることの証明にはならない</strong>。人間が書いたテキストをClaudeに通しただけでもマークは付きうる。逆に、透かしが無いことは人間が書いた証明にもならない。</li>
-</ul>
-
-
-<p>発表を受けた解説記事（<a href="https://zenn.dev/hellorusk/articles/3328866ca9e922">Kaito Sugimotoさん</a>）では、「言い換えで消える」という記述から、2026年時点の研究の主戦場である意味空間型の言い換え耐性（SemStampやPASAの方向）はまだ備えていないのではと推測されている。</p>
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://support.claude.com/en/articles/16266773-how-claude-marks-ai-generated-content">How Claude marks AI-generated content (Claude Help Center)</a></li>
-<li><a href="https://techcrunch.com/2026/08/11/anthropic-says-it-will-watermark-text-generated-by-its-ai-models/">Anthropic says it will watermark text generated by its AI models (TechCrunch, 2026-08-11)</a></li>
-<li><a href="https://www.euronews.com/next/2026/08/11/eu-compliance-delivered-globally-anthropic-to-watermark-claudes-output-worldwide">EU compliance, delivered globally (Euronews, 2026-08-11)</a></li>
-<li><a href="https://zenn.dev/hellorusk/articles/3328866ca9e922">30年後の未来では、AIの出力したテキストに電子透かしが入っているかもしれない (Zenn)</a></li>
 </ul>
 
 ]]></description>
@@ -1382,174 +1513,6 @@ bridge vlan add dev veth4 vid 10 tagged          # トランクポート
 <li><a href="https://docs.openvswitch.org/en/latest/intro/what-is-ovs/">What is OVS? — Open vSwitch documentation</a></li>
 <li><a href="https://ubuntu.com/blog/data-centre-networking-what-is-ovs">Data centre networking: what is OVS? | Ubuntu</a></li>
 <li><a href="https://medium.com/@isaac2ngeno5/open-vswitch-ovs-in-openstack-85b71e5539e5">Open vSwitch (OVS) in Openstack | Medium</a></li>
-</ul>
-
-]]></description>
-</item>
-<item>
-<title>Linuxだけで作る仮想ネットワークラボ</title>
-<link>https://64p.org/notes/linux-virtual-network-lab.html</link>
-<guid isPermaLink="true">https://64p.org/notes/linux-virtual-network-lab.html</guid>
-<pubDate>Wed, 12 Aug 2026 18:54:00 +0900</pubDate>
-<description><![CDATA[<h1>Linuxだけで作る仮想ネットワークラボ</h1>
-
-<p><a href="/notes/vlan.html">VLAN</a>や<a href="/notes/vxlan.html">VXLAN</a>を実際に構築して遊ぶのに物理機材は不要。Linuxカーネル自体が両方をネイティブ実装しているので、<a href="/notes/network-namespace.html">network namespace</a>を使えばマシン1台で完結する。しかも<strong>unprivileged user namespaceを使えばsudoすら不要</strong>。以下はClaude Codeに実際にsudoなしで構築・動作確認させたときの実ログ（Pop!_OS、kernel 6.18）。 <a class="note-tag" href="/notes/tags/network.html">#network</a> <a class="note-tag" href="/notes/tags/linux.html">#linux</a></p>
-
-<h2>sudoなしで動かす鍵: unprivileged user namespace</h2>
-
-<pre><code class="sh">unshare --user --map-root-user --net --mount bash
-</code></pre>
-
-<p>これで入ったシェルは「そのnamespace内限定のroot」なので、<code>ip link add</code>（bridge/veth/vxlanいずれも）や<code>ip netns add</code>が素で通る。ホストのネットワークには一切影響せず、exitすれば全部消える。ハマりどころは2つあった。</p>
-
-<ul>
-<li><code>ip netns add</code>は<code>/run/netns</code>を使うので、<code>--mount</code>を付けた上で<code>mount -t tmpfs tmpfs /run</code>しておく必要がある</li>
-<li>tcpdumpはデフォルトで<code>tcpdump</code>ユーザーへ権限降格しようとするが、userns内ではそのuidがマップされておらず<code>Couldn't change to 'tcpdump' uid=114: Operation not permitted</code>で死ぬ。<strong><code>-Z root</code>を付けて降格を止める</strong></li>
-</ul>
-
-
-<h2>ラボ1: VLAN — 同じスイッチ上でL2セグメントが分かれることを確認</h2>
-
-<p><a href="/notes/network-namespace.html">netns</a>を「PC」、VLANフィルタリングを有効にした<a href="/notes/linux-bridge.html">Linuxブリッジ</a>を「L2スイッチ」に見立て、次の構成を作った。</p>
-
-<div class="mermaid">
-flowchart LR
-    pc1["pc1&lt;br/&gt;10.0.0.1"] ---|"veth1&lt;br/&gt;VLAN 10 アクセス"| br0
-    pc2["pc2&lt;br/&gt;10.0.0.2"] ---|"veth2&lt;br/&gt;VLAN 10 アクセス"| br0
-    pc3["pc3&lt;br/&gt;10.0.0.3"] ---|"veth3&lt;br/&gt;VLAN 20 アクセス"| br0
-    pc4["pc4&lt;br/&gt;10.0.0.4 (eth0.10)"] ---|"veth4&lt;br/&gt;VLAN 10 トランク(タグ付き)"| br0
-    br0[["br0&lt;br/&gt;(VLANフィルタリング有効の&lt;br/&gt;Linuxブリッジ = L2スイッチ)"]]
-</div>
-
-
-<p>構築コマンド（userns内。抜粋）:</p>
-
-<pre><code class="sh">ip link add br0 type bridge vlan_filtering 1
-ip link set br0 up
-
-# pc1〜pc3を作ってブリッジに接続(pc2, pc3も同様)
-ip netns add pc1
-ip link add veth1 type veth peer name eth0 netns pc1
-ip link set veth1 master br0 up
-ip netns exec pc1 ip link set eth0 up
-ip netns exec pc1 ip addr add 10.0.0.1/24 dev eth0
-
-# veth1,2をVLAN 10、veth3をVLAN 20のアクセスポートに
-bridge vlan add dev veth1 vid 10 pvid untagged
-bridge vlan del dev veth1 vid 1
-
-# veth4はVLAN 10をタグ付きで通すトランクポートに。pc4側はVLANサブインターフェースで受ける
-bridge vlan add dev veth4 vid 10 tagged
-bridge vlan del dev veth4 vid 1
-ip netns exec pc4 ip link add link eth0 name eth0.10 type vlan id 10
-ip netns exec pc4 ip link set eth0.10 up
-ip netns exec pc4 ip addr add 10.0.0.4/24 dev eth0.10
-</code></pre>
-
-<p>ポートのVLAN割り当てはこうなる。</p>
-
-<pre><code>$ bridge vlan show
-port              vlan-id
-br0               1 PVID Egress Untagged
-veth1             10 PVID Egress Untagged
-veth2             10 PVID Egress Untagged
-veth3             20 PVID Egress Untagged
-veth4             10
-</code></pre>
-
-<p>同一VLAN間はpingが通る。</p>
-
-<pre><code>$ ip netns exec pc1 ping -c 2 10.0.0.2   # pc1 -&gt; pc2 (同じVLAN 10)
-64 bytes from 10.0.0.2: icmp_seq=1 ttl=64 time=0.061 ms
-64 bytes from 10.0.0.2: icmp_seq=2 ttl=64 time=0.041 ms
-2 packets transmitted, 2 received, 0% packet loss, time 1021ms
-</code></pre>
-
-<p>別VLANへは同じスイッチ・同じIPサブネットに居るのに届かない。これがVLAN＝ブロードキャストドメイン分割の本質。</p>
-
-<pre><code>$ ip netns exec pc1 ping -c 2 -W 1 10.0.0.3   # pc1 -&gt; pc3 (別VLAN)
-2 packets transmitted, 0 received, 100% packet loss, time 1019ms
-</code></pre>
-
-<p>トランクポートで観察すると、802.1Qタグ（<code>ethertype 802.1Q</code>、<code>vlan 10</code>）が付いたフレームが実際に流れているのが見える。アクセスポート(veth1)から入ったタグなしフレームに、スイッチがトランクから出すときタグを付けている。</p>
-
-<pre><code>$ ip netns exec pc4 tcpdump -Z root -e -n -i eth0 -c 4
-9e:c6:65:df:45:62 &gt; ff:ff:ff:ff:ff:ff, ethertype 802.1Q (0x8100), length 46: vlan 10, p 0,
-    ethertype ARP (0x0806), Request who-has 10.0.0.4 tell 10.0.0.1, length 28
-12:20:80:28:ae:0f &gt; 9e:c6:65:df:45:62, ethertype 802.1Q (0x8100), length 46: vlan 10, p 0,
-    ethertype ARP (0x0806), Reply 10.0.0.4 is-at 12:20:80:28:ae:0f, length 28
-9e:c6:65:df:45:62 &gt; 12:20:80:28:ae:0f, ethertype 802.1Q (0x8100), length 102: vlan 10, p 0,
-    ethertype IPv4 (0x0800), 10.0.0.1 &gt; 10.0.0.4: ICMP echo request, id 30761, seq 1, length 64
-</code></pre>
-
-<h2>ラボ2: VXLAN — MAC over UDPを実際に覗く</h2>
-
-<p>「物理サーバ2台」をnetns(host1/host2)で用意してvethで直結し（これがL3アンダーレイ 192.168.0.0/24）、その上にVNI 100のVXLANオーバーレイ(10.99.0.0/24)を張った。</p>
-
-<div class="mermaid">
-flowchart LR
-    subgraph host1
-        v1["vxlan100&lt;br/&gt;10.99.0.1"] --- e1["eth0&lt;br/&gt;192.168.0.1"]
-    end
-    subgraph host2
-        e2["eth0&lt;br/&gt;192.168.0.2"] --- v2["vxlan100&lt;br/&gt;10.99.0.2"]
-    end
-    e1 ===|"アンダーレイ(veth直結)&lt;br/&gt;VXLAN: UDP 4789 / VNI 100"| e2
-    v1 -.-|"オーバーレイ 10.99.0.0/24"| v2
-</div>
-
-
-
-
-<pre><code class="sh">ip netns exec host1 ip link add vxlan100 type vxlan id 100 dstport 4789 \
-    local 192.168.0.1 remote 192.168.0.2 dev eth0
-# host2側はlocal/remoteを逆にして同様に作成し、10.99.0.1/24, 10.99.0.2/24を割り当て
-</code></pre>
-
-<p>アンダーレイをtcpdumpしながらオーバーレイのアドレスにpingすると、ARPもICMPも<strong>EthernetフレームまるごとUDP(4789)にカプセル化されて飛ぶ</strong>様子がそのまま見える。</p>
-
-<pre><code>$ ip netns exec host1 ping -c 2 10.99.0.2   # オーバーレイ側でping
-$ ip netns exec host1 tcpdump -Z root -n -i eth0 -c 4 udp port 4789   # アンダーレイ側で観察
-IP 192.168.0.1.43502 &gt; 192.168.0.2.4789: VXLAN, flags [I] (0x08), vni 100
-ARP, Request who-has 10.99.0.2 tell 10.99.0.1, length 28
-IP 192.168.0.2.43502 &gt; 192.168.0.1.4789: VXLAN, flags [I] (0x08), vni 100
-ARP, Reply 10.99.0.2 is-at be:e1:fe:0e:36:4c, length 28
-IP 192.168.0.1.56075 &gt; 192.168.0.2.4789: VXLAN, flags [I] (0x08), vni 100
-IP 10.99.0.1 &gt; 10.99.0.2: ICMP echo request, id 31448, seq 1, length 64
-IP 192.168.0.2.56075 &gt; 192.168.0.1.4789: VXLAN, flags [I] (0x08), vni 100
-IP 10.99.0.2 &gt; 10.99.0.1: ICMP echo reply, id 31448, seq 1, length 64
-</code></pre>
-
-<p>細かいが面白いのは送信元UDPポートで、ARPのフロー(43502)とICMPのフロー(56075)で違う値になっている。<a href="/notes/vxlan.html">VXLANの仕様</a>どおり、内部フレームのハッシュから送信元ポートを決めてECMPで経路分散させる挙動が実際に確認できた。</p>
-
-<p>なお最初に実行したときはIPv6のneighbor solicitationなどがカプセル化される様子ばかりが録れたので、ログを見やすくするため<code>sysctl net.ipv6.conf.vxlan100.disable_ipv6=1</code>してから録り直した。</p>
-
-<h2>制約と、その先</h2>
-
-<p>unprivileged usernsの制約:</p>
-
-<ul>
-<li>namespace内に閉じているので、<strong>ホストの実NICは触れない</strong>。実マシン2台間でVXLANを張るような実験にはやはり実NICへの権限が必要</li>
-<li>ディストリによってはunprivileged usernsが制限されている（Ubuntuは23.10でAppArmorによる制限を導入し、24.04からデフォルト有効。<code>sysctl kernel.apparmor_restrict_unprivileged_userns</code>で確認できる）</li>
-</ul>
-
-
-<p>もっと本格的にやるなら:</p>
-
-<ul>
-<li><strong>containerlab + FRRouting</strong> — leaf-spine構成でBGP EVPNをコントロールプレーンにしたVXLANファブリックをYAML一発で構築できる。お手本: <a href="https://github.com/martimy/clab_vxlan_frr">martimy/clab_vxlan_frr</a>、<a href="https://github.com/darnodo/VXLAN-EVPN">darnodo/VXLAN-EVPN</a>（いずれもDockerが必要なのでsudoなし縛りだとrootless dockerで）</li>
-<li><strong><a href="/notes/open-vswitch.html">Open vSwitch</a></strong> — Linux標準ブリッジより本格的な仮想スイッチ。OpenStackなどが実際に使っている</li>
-<li><strong>GNS3 / EVE-NG</strong> — Cisco IOSなどベンダーOSのイメージを動かすエミュレータ。「実機のCLI操作」の練習向けだが、イメージ入手にライセンスの壁がある</li>
-</ul>
-
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://labs.iximiuz.com/courses/computer-networking-fundamentals/simple-vlan">Networking Lab: Setting Up a VLAN Using a Linux Bridge - iximiuz Labs</a></li>
-<li><a href="https://developers.redhat.com/articles/2026/04/03/introduction-to-linux-interfaces-for-virtual-networking">Introduction to Linux interfaces for virtual networking - Red Hat Developer</a></li>
-<li><a href="https://www.netpilot.io/blog/what-is-containerlab">What Is ContainerLab? The Complete 2026 Guide - NetPilot</a></li>
-<li><a href="https://discourse.ubuntu.com/t/understanding-apparmor-user-namespace-restriction/58007">Understanding AppArmor User Namespace Restriction - Ubuntu Community Hub</a></li>
 </ul>
 
 ]]></description>
