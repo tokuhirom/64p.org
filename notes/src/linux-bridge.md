@@ -4,7 +4,7 @@ updated: 2026-08-12 19:30
 ---
 # Linux標準ブリッジ
 
-Linuxカーネルのbridgeモジュールが実装するソフトウェアL2スイッチ。接続されたインターフェース（veth, tapなど）間でEthernetフレームを転送する、カーネル組み込みの機能。仮想マシン・コンテナ・network namespace間の接続によく使われる。[[linux-virtual-network-lab|VLANラボの実験]]でも「L2スイッチ」役として使った。 #network #linux
+Linuxカーネルのbridgeモジュールが実装するソフトウェアL2スイッチ。接続されたインターフェース（veth, tapなど）間でEthernetフレームを転送する、カーネル組み込みの機能。仮想マシン・コンテナ・[[network-namespace|network namespace]]間の接続によく使われる。[[linux-virtual-network-lab|VLANラボの実験]]でも「L2スイッチ」役として使った。 #network #linux
 
 ## 管理コマンド: brctl vs iproute2
 

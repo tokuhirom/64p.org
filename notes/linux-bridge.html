@@ -21,6 +21,8 @@
                 <a class="notes-tags-link" href="/notes/tags/">🏷️ タグ一覧</a>
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
+                                    <li><a href="/notes/topcoat.html">Topcoat</a></li>
+                                    <li><a href="/notes/network-namespace.html">Network Namespace (netns)</a></li>
                                     <li><a href="/notes/open-vswitch.html">Open vSwitch (OVS)</a></li>
                                     <li><a href="/notes/linux-virtual-network-lab.html">Linuxだけで作る仮想ネットワークラボ</a></li>
                                     <li><a href="/notes/linux-bridge.html" class="active">Linux標準ブリッジ</a></li>
@@ -300,7 +302,7 @@
             <article class="notes-content">
                 <h1>Linux標準ブリッジ</h1>
 
-<p>Linuxカーネルのbridgeモジュールが実装するソフトウェアL2スイッチ。接続されたインターフェース（veth, tapなど）間でEthernetフレームを転送する、カーネル組み込みの機能。仮想マシン・コンテナ・network namespace間の接続によく使われる。<a href="/notes/linux-virtual-network-lab.html">VLANラボの実験</a>でも「L2スイッチ」役として使った。 <a class="note-tag" href="/notes/tags/network.html">#network</a> <a class="note-tag" href="/notes/tags/linux.html">#linux</a></p>
+<p>Linuxカーネルのbridgeモジュールが実装するソフトウェアL2スイッチ。接続されたインターフェース（veth, tapなど）間でEthernetフレームを転送する、カーネル組み込みの機能。仮想マシン・コンテナ・<a href="/notes/network-namespace.html">network namespace</a>間の接続によく使われる。<a href="/notes/linux-virtual-network-lab.html">VLANラボの実験</a>でも「L2スイッチ」役として使った。 <a class="note-tag" href="/notes/tags/network.html">#network</a> <a class="note-tag" href="/notes/tags/linux.html">#linux</a></p>
 
 <h2>管理コマンド: brctl vs iproute2</h2>
 
@@ -347,6 +349,7 @@ bridge vlan add dev veth4 vid 10 tagged          # トランクポート
                     <h2>🔗 リンクされているノート</h2>
                     <ul>
                                             <li><a href="/notes/linux-virtual-network-lab.html">Linuxだけで作る仮想ネットワークラボ</a></li>
+                                            <li><a href="/notes/network-namespace.html">Network Namespace (netns)</a></li>
                                             <li><a href="/notes/open-vswitch.html">Open vSwitch (OVS)</a></li>
                     
                     </ul>

@@ -4,7 +4,7 @@ updated: 2026-08-12 19:30
 ---
 # Linuxだけで作る仮想ネットワークラボ
 
-[[vlan|VLAN]]や[[vxlan|VXLAN]]を実際に構築して遊ぶのに物理機材は不要。Linuxカーネル自体が両方をネイティブ実装しているので、network namespaceを使えばマシン1台で完結する。しかも**unprivileged user namespaceを使えばsudoすら不要**。以下はClaude Codeに実際にsudoなしで構築・動作確認させたときの実ログ（Pop!_OS、kernel 6.18）。 #network #linux
+[[vlan|VLAN]]や[[vxlan|VXLAN]]を実際に構築して遊ぶのに物理機材は不要。Linuxカーネル自体が両方をネイティブ実装しているので、[[network-namespace|network namespace]]を使えばマシン1台で完結する。しかも**unprivileged user namespaceを使えばsudoすら不要**。以下はClaude Codeに実際にsudoなしで構築・動作確認させたときの実ログ（Pop!_OS、kernel 6.18）。 #network #linux
 
 ## sudoなしで動かす鍵: unprivileged user namespace
 

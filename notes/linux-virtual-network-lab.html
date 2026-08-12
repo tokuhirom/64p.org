@@ -21,6 +21,8 @@
                 <a class="notes-tags-link" href="/notes/tags/">🏷️ タグ一覧</a>
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
+                                    <li><a href="/notes/topcoat.html">Topcoat</a></li>
+                                    <li><a href="/notes/network-namespace.html">Network Namespace (netns)</a></li>
                                     <li><a href="/notes/open-vswitch.html">Open vSwitch (OVS)</a></li>
                                     <li><a href="/notes/linux-virtual-network-lab.html" class="active">Linuxだけで作る仮想ネットワークラボ</a></li>
                                     <li><a href="/notes/linux-bridge.html">Linux標準ブリッジ</a></li>
@@ -300,7 +302,7 @@
             <article class="notes-content">
                 <h1>Linuxだけで作る仮想ネットワークラボ</h1>
 
-<p><a href="/notes/vlan.html">VLAN</a>や<a href="/notes/vxlan.html">VXLAN</a>を実際に構築して遊ぶのに物理機材は不要。Linuxカーネル自体が両方をネイティブ実装しているので、network namespaceを使えばマシン1台で完結する。しかも<strong>unprivileged user namespaceを使えばsudoすら不要</strong>。以下はClaude Codeに実際にsudoなしで構築・動作確認させたときの実ログ（Pop!_OS、kernel 6.18）。 <a class="note-tag" href="/notes/tags/network.html">#network</a> <a class="note-tag" href="/notes/tags/linux.html">#linux</a></p>
+<p><a href="/notes/vlan.html">VLAN</a>や<a href="/notes/vxlan.html">VXLAN</a>を実際に構築して遊ぶのに物理機材は不要。Linuxカーネル自体が両方をネイティブ実装しているので、<a href="/notes/network-namespace.html">network namespace</a>を使えばマシン1台で完結する。しかも<strong>unprivileged user namespaceを使えばsudoすら不要</strong>。以下はClaude Codeに実際にsudoなしで構築・動作確認させたときの実ログ（Pop!_OS、kernel 6.18）。 <a class="note-tag" href="/notes/tags/network.html">#network</a> <a class="note-tag" href="/notes/tags/linux.html">#linux</a></p>
 
 <h2>sudoなしで動かす鍵: unprivileged user namespace</h2>
 
@@ -464,6 +466,7 @@ IP 10.99.0.2 &gt; 10.99.0.1: ICMP echo reply, id 31448, seq 1, length 64
                     <h2>🔗 リンクされているノート</h2>
                     <ul>
                                             <li><a href="/notes/linux-bridge.html">Linux標準ブリッジ</a></li>
+                                            <li><a href="/notes/network-namespace.html">Network Namespace (netns)</a></li>
                     
                     </ul>
                 </div>
