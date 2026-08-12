@@ -6,7 +6,77 @@
 <atom:link href="https://64p.org/notes/rss.xml" rel="self" type="application/rss+xml" />
 <description>ちょっと調べたことや検証結果を、AIの力も借りながらメモしていくコーナーです。</description>
 <language>ja</language>
-<lastBuildDate>Thu, 13 Aug 2026 08:35:11 +0900</lastBuildDate>
+<lastBuildDate>Thu, 13 Aug 2026 08:59:24 +0900</lastBuildDate>
+<item>
+<title>MySQL HeatWave</title>
+<link>https://64p.org/notes/mysql-heatwave.html</link>
+<guid isPermaLink="true">https://64p.org/notes/mysql-heatwave.html</guid>
+<pubDate>Thu, 13 Aug 2026 08:59:00 +0900</pubDate>
+<description><![CDATA[<h1>MySQL HeatWave</h1>
+
+<p>Oracleが提供する<a href="/notes/mysql.html">MySQL</a>向けの完全マネージドクラウドサービス。OLTP（トランザクション処理）とOLAP（分析処理）を単一サービス内で統合し、従来はETLで別の分析基盤（Snowflake、BigQueryなど）にデータを移す必要があった構成を不要にする、というのが売り。</p>
+
+<p><a class="note-tag" href="/notes/tags/database.html">#database</a> <a class="note-tag" href="/notes/tags/mysql.html">#mysql</a> <a class="note-tag" href="/notes/tags/cloud.html">#cloud</a> <a class="note-tag" href="/notes/tags/oracle.html">#oracle</a></p>
+
+<h2>アーキテクチャ</h2>
+
+<p>2つのコンポーネントから構成される。</p>
+
+<ul>
+<li><strong>DB System</strong>: MySQL Enterprise Editionが動くクラウドベースのコンピュートインスタンス。暗号化・データマスキング・DBファイアウォールなどのセキュリティ機能を持つ。</li>
+<li><strong>MySQL HeatWave Cluster</strong>: インメモリのアクセラレータ。1つ以上のHeatWaveノードで構成され、分析・ML・GenAI・ベクトルストア・Lakehouse機能を提供する。</li>
+</ul>
+
+
+<p>DB System側でのデータ変更は暗号化された通信で自動的にHeatWave Clusterへ伝播し、常に最新データに対してクエリできる。Object Storage上のデータも自動的に取り込まれる。</p>
+
+<p>技術的な設計特性としては、インメモリのハイブリッド列形式（列指向のクエリ効率と行指向の更新効率を両立）、ノード・コア単位でデータを分割する大規模並列処理、プッシュベースのベクトル化クエリ処理などがある。</p>
+
+<h2>主な機能領域</h2>
+
+<ol>
+<li><strong>HeatWave（分析アクセラレータ）</strong>: MySQLの分析クエリをアプリケーション側の変更なしに高速化するインメモリクエリアクセラレータ。</li>
+<li><strong>HeatWave Lakehouse</strong>: Object Storage上の最大0.5ペタバイトのデータを、MySQL DBにコピーせずにクエリ可能。</li>
+<li><strong>HeatWave ML</strong>: データ移動なしでのインデータベース機械学習。</li>
+<li><strong>HeatWave GenAI / Vector Store</strong>: PDF・PPT・DOC・HTMLなどの非構造化データを自動でパース・チャンク分割・ベクトル埋め込みし、インデータベースLLMによる意味検索やRAGを実現する。ベクトル処理は最大512ノードにスケールアウトし、メモリ帯域で実行される。</li>
+<li><strong>Autopilot</strong>: ML技術を用いたクエリ最適化・自動チューニング機能。</li>
+</ol>
+
+
+<h2>ライセンス</h2>
+
+<p>「MySQL」本体と「HeatWave」は別物として扱う必要がある。</p>
+
+<ul>
+<li><strong>MySQL Community Edition</strong>: GPLv2（オープンソース）</li>
+<li><strong>MySQL Enterprise Edition</strong>: Oracleの商用プロプライエタリライセンス</li>
+<li><strong>HeatWave</strong>: オープンソースではなくOracleのプロプライエタリ製品。単体のダウンロード可能なソフトウェアとしては提供されておらず、Oracle Cloud Infrastructure (OCI)・AWS・Microsoft Azure上の完全マネージドサービスとしてのみ利用できる。オンプレミス版は存在しない（オンプレミスのMySQLと接続するハイブリッド構成は可能だが、HeatWave Cluster自体はクラウド専用）。</li>
+</ul>
+
+
+<p>課金は個別のライセンス購入ではなく、サブスクリプション/従量課金（pay-as-you-go）モデルに組み込まれている。DB System（MySQLインスタンス部分）はOCPU・ストレージ単位の課金、HeatWave Clusterはノード単位の追加課金という構成。</p>
+
+<p>ベクトル検索やML機能などHeatWave固有の機能は、MySQL Community版はもちろんEnterprise版にも存在しない、HeatWaveだけの独自機能。</p>
+
+<h2>パフォーマンス面の主張</h2>
+
+<p>Oracle公式によれば、類似検索（vector similarity search）においてDatabricksより15倍、Google BigQueryより18倍、Snowflakeより30倍高速だとされている。Oracle自身のベンチマークである点には留意。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://docs.oracle.com/en-us/iaas/mysql-database/doc/overview-mysql-heatwave-service.html">Overview of MySQL HeatWave Service</a></li>
+<li><a href="https://dev.mysql.com/doc/heatwave/en/mys-hw-about-heatwave.html">MySQL :: HeatWave User Guide :: 1.1 About MySQL HeatWave</a></li>
+<li><a href="https://dev.mysql.com/doc/heatwave/en/mys-hw-genai-vector-store-overview.html">MySQL :: HeatWave User Guide :: 7.7.1 About MySQL HeatWave Vector Store</a></li>
+<li><a href="https://dev.mysql.com/doc/heatwave/en/mys-hw-supported-cloud-platforms.html">MySQL :: HeatWave User Guide :: 1.4 Supported Cloud Platforms</a></li>
+<li><a href="https://www.oracle.com/mysql/genai/">MySQL HeatWave GenAI | Oracle</a></li>
+<li><a href="https://redresscompliance.com/what-is-heatwave-sql-and-how-is-it-licensed/">What is HeatWave SQL and How is it Licensed?</a></li>
+<li><a href="https://www.oracle.com/europe/heatwave/pricing/">MySQL HeatWave Pricing on OCI &amp; AWS | Oracle Europe</a></li>
+<li><a href="https://www.percona.com/blog/is-oracle-finally-killing-mysql/">Is Oracle Finally Killing MySQL? - Percona</a></li>
+</ul>
+
+]]></description>
+</item>
 <item>
 <title>XDP (eXpress Data Path)</title>
 <link>https://64p.org/notes/xdp.html</link>
@@ -1873,53 +1943,6 @@ flowchart TD
 <li><a href="https://github.com/google/crosvm">GitHub - google/crosvm</a></li>
 <li><a href="https://github.com/google/crosvm/blob/main/README.md">crosvm/README.md at main · google/crosvm</a></li>
 <li><a href="https://crosvm.dev/doc/crosvm/index.html">crosvm - Rust</a></li>
-</ul>
-
-]]></description>
-</item>
-<item>
-<title>Claudeのテキスト電子透かし導入 (2026-08)</title>
-<link>https://64p.org/notes/claude-text-watermark.html</link>
-<guid isPermaLink="true">https://64p.org/notes/claude-text-watermark.html</guid>
-<pubDate>Wed, 12 Aug 2026 23:29:00 +0900</pubDate>
-<description><![CDATA[<h1>Claudeのテキスト電子透かし導入 (2026-08)</h1>
-
-<p><a class="note-tag" href="/notes/tags/llm.html">#llm</a> <a class="note-tag" href="/notes/tags/ai.html">#ai</a> <a class="note-tag" href="/notes/tags/security.html">#security</a> <a class="note-tag" href="/notes/tags/watermarking.html">#watermarking</a> <a class="note-tag" href="/notes/tags/anthropic.html">#anthropic</a> <a class="note-tag" href="/notes/tags/claude.html">#claude</a></p>
-
-<p>Anthropic が2026-08-11に、Claude の生成テキストへ知覚不能な<a href="/notes/llm-text-watermarking.html">電子透かし</a>を埋め込むと発表した。<strong>2026-08-02以降にリリースされる新モデルすべてが対象</strong>で、旧モデルへも順次拡張予定とのこと（<a href="/notes/claude-model-tiers.html">現行のモデル階層</a>でいうと2026年8月以降の新モデルから）。</p>
-
-<h2>背景: EU AI Act</h2>
-
-<p>直接の契機は <a href="/notes/eu-ai-act.html">EU AI Act</a> 第50条（透明性義務）。2026-08-02から新規リリースのAIシステムに対して施行され、生成AIの出力に機械可読なマークを埋め込むことを提供者に義務付けている。Anthropic は EU 域内限定ではなく<strong>全世界のトラフィックに一律適用</strong>する方針を取った。</p>
-
-<h2>実装の特徴（公表情報から）</h2>
-
-<ul>
-<li><strong>モデルレベルの埋め込み</strong>: 特定アプリが後付けするのではなくモデル出力自体に入るため、Claude API / claude.ai / Claude Code / Claude Cowork / Claude Tag、さらに AWS・Google Cloud・Microsoft Foundry 経由のアクセスまで経路を問わず適用される。</li>
-<li>テキストの意味・可読性は変えないとしている（アルゴリズムの詳細は非公開）。</li>
-<li>コピペしても透かしは残り、多少の編集にも耐えることがある。</li>
-<li>画像・ファイルには C2PA 標準の署名付きメタデータを使う（テキスト透かしとは別レイヤー）。</li>
-<li>検出用のツールと技術仕様を公開し、サードパーティも検証できるようにする予定。</li>
-</ul>
-
-
-<h2>限界（Anthropic自身が明記）</h2>
-
-<ul>
-<li>大幅な書き換え・言い換え・翻訳・人間の文章との混合で検出不能になりうる。</li>
-<li><strong>検出されるのは「Claudeが処理した」ことまでで、Claudeが著者であることの証明にはならない</strong>。人間が書いたテキストをClaudeに通しただけでもマークは付きうる。逆に、透かしが無いことは人間が書いた証明にもならない。</li>
-</ul>
-
-
-<p>発表を受けた解説記事（<a href="https://zenn.dev/hellorusk/articles/3328866ca9e922">Kaito Sugimotoさん</a>）では、「言い換えで消える」という記述から、2026年時点の研究の主戦場である意味空間型の言い換え耐性（SemStampやPASAの方向）はまだ備えていないのではと推測されている。</p>
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://support.claude.com/en/articles/16266773-how-claude-marks-ai-generated-content">How Claude marks AI-generated content (Claude Help Center)</a></li>
-<li><a href="https://techcrunch.com/2026/08/11/anthropic-says-it-will-watermark-text-generated-by-its-ai-models/">Anthropic says it will watermark text generated by its AI models (TechCrunch, 2026-08-11)</a></li>
-<li><a href="https://www.euronews.com/next/2026/08/11/eu-compliance-delivered-globally-anthropic-to-watermark-claudes-output-worldwide">EU compliance, delivered globally (Euronews, 2026-08-11)</a></li>
-<li><a href="https://zenn.dev/hellorusk/articles/3328866ca9e922">30年後の未来では、AIの出力したテキストに電子透かしが入っているかもしれない (Zenn)</a></li>
 </ul>
 
 ]]></description>
