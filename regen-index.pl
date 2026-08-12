@@ -180,6 +180,19 @@ sub regen {
     my %tag_notes; # tag => { slug => 1 }
     for my $note (@raw) {
         my @protected;
+        # ```mermaid fenced blocks become client-side rendered diagrams:
+        # emit a raw <div class="mermaid"> (HTML-escaped source inside) and
+        # protect it so wikilink/tag rewriting can't touch the diagram text.
+        # note.tt loads mermaid.js only when has_mermaid is set.
+        $note->{mkdn} =~ s{^```mermaid[ \t]*\n(.*?)\n```[ \t]*$}{
+            my $code = $1;
+            $code =~ s/&/&amp;/g;
+            $code =~ s/</&lt;/g;
+            $code =~ s/>/&gt;/g;
+            $note->{has_mermaid}++;
+            push @protected, qq{<div class="mermaid">\n$code\n</div>};
+            "\x01$#protected\x02";
+        }gmse;
         $note->{mkdn} =~ s{(```.*?```|`[^`\n]*`)}{
             push @protected, $1;
             "\x01$#protected\x02";
@@ -232,6 +245,7 @@ sub regen {
             created   => $_->{created},
             updated   => $_->{updated},
             has_tweet_embed => $_->{has_tweet} ? 1 : 0,
+            has_mermaid => $_->{has_mermaid} ? 1 : 0,
             backlinks => [
                 map { +{ title => $title_by_slug{$_}, link => "/notes/$_.html" } }
                 sort { $title_by_slug{$a} cmp $title_by_slug{$b} }

@@ -317,11 +317,15 @@
 
 <p>netnsを「PC」、VLANフィルタリングを有効にしたLinuxブリッジを「L2スイッチ」に見立て、次の構成を作った。</p>
 
-<pre><code>pc1(10.0.0.1) --veth1-- ┌─────────────┐
-pc2(10.0.0.2) --veth2-- │ br0         │ veth1,2: VLAN 10 アクセスポート
-pc3(10.0.0.3) --veth3-- │ (L2スイッチ) │ veth3:   VLAN 20 アクセスポート
-pc4(10.0.0.4) --veth4-- └─────────────┘ veth4:   VLAN 10 トランクポート(タグ付き)
-</code></pre>
+<div class="mermaid">
+flowchart LR
+    pc1["pc1&lt;br/&gt;10.0.0.1"] ---|"veth1&lt;br/&gt;VLAN 10 アクセス"| br0
+    pc2["pc2&lt;br/&gt;10.0.0.2"] ---|"veth2&lt;br/&gt;VLAN 10 アクセス"| br0
+    pc3["pc3&lt;br/&gt;10.0.0.3"] ---|"veth3&lt;br/&gt;VLAN 20 アクセス"| br0
+    pc4["pc4&lt;br/&gt;10.0.0.4 (eth0.10)"] ---|"veth4&lt;br/&gt;VLAN 10 トランク(タグ付き)"| br0
+    br0[["br0&lt;br/&gt;(VLANフィルタリング有効の&lt;br/&gt;Linuxブリッジ = L2スイッチ)"]]
+</div>
+
 
 <p>構築コマンド（userns内。抜粋）:</p>
 
@@ -387,6 +391,21 @@ veth4             10
 
 <p>「物理サーバ2台」をnetns(host1/host2)で用意してvethで直結し（これがL3アンダーレイ 192.168.0.0/24）、その上にVNI 100のVXLANオーバーレイ(10.99.0.0/24)を張った。</p>
 
+<div class="mermaid">
+flowchart LR
+    subgraph host1
+        v1["vxlan100&lt;br/&gt;10.99.0.1"] --- e1["eth0&lt;br/&gt;192.168.0.1"]
+    end
+    subgraph host2
+        e2["eth0&lt;br/&gt;192.168.0.2"] --- v2["vxlan100&lt;br/&gt;10.99.0.2"]
+    end
+    e1 ===|"アンダーレイ(veth直結)&lt;br/&gt;VXLAN: UDP 4789 / VNI 100"| e2
+    v1 -.-|"オーバーレイ 10.99.0.0/24"| v2
+</div>
+
+
+
+
 <pre><code class="sh">ip netns exec host1 ip link add vxlan100 type vxlan id 100 dstport 4789 \
     local 192.168.0.1 remote 192.168.0.2 dev eth0
 # host2側はlocal/remoteを逆にして同様に作成し、10.99.0.1/24, 10.99.0.2/24を割り当て
@@ -440,7 +459,7 @@ IP 10.99.0.2 &gt; 10.99.0.1: ICMP echo reply, id 31448, seq 1, length 64
 
 
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-12 18:54 / 更新日時: 2026-08-12 18:59</span>
+                    <span>作成日時: 2026-08-12 18:54 / 更新日時: 2026-08-12 19:09</span>
                     <a class="share-x" href="https://twitter.com/intent/tweet?text=Linux%E3%81%A0%E3%81%91%E3%81%A7%E4%BD%9C%E3%82%8B%E4%BB%AE%E6%83%B3%E3%83%8D%E3%83%83%E3%83%88%E3%83%AF%E3%83%BC%E3%82%AF%E3%83%A9%E3%83%9C&url=https%3A%2F%2F64p.org%2Fnotes%2Flinux-virtual-network-lab.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
@@ -453,5 +472,25 @@ IP 10.99.0.2 &gt; 10.99.0.1: ICMP echo reply, id 31448, seq 1, length 64
     <script src="//cdn.jsdelivr.net/npm/highlight.js@11/lib/highlight.min.js"></script>
     <script>hljs.highlightAll();</script>
     <script src="/static/notes.js"></script>
+    <script type="module">
+    import mermaid from '//cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+    var root = document.documentElement;
+    var divs = document.querySelectorAll('div.mermaid');
+    divs.forEach(function (d) { d.dataset.src = d.textContent; });
+    function isDark() {
+        var t = root.getAttribute('data-theme');
+        return t ? t === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+    }
+    function render() {
+        mermaid.initialize({ startOnLoad: false, theme: isDark() ? 'dark' : 'default' });
+        divs.forEach(function (d) {
+            d.textContent = d.dataset.src;
+            d.removeAttribute('data-processed');
+        });
+        mermaid.run({ nodes: divs });
+    }
+    new MutationObserver(render).observe(root, { attributeFilter: ['data-theme'] });
+    render();
+    </script>
 </body>
 </html>
