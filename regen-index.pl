@@ -207,6 +207,28 @@ sub regen {
             push @protected, $1;
             "\x01$#protected\x02";
         }gse;
+        # $$...$$ (display) and \(...\) (inline) math become client-side
+        # KaTeX-rendered elements: emit raw HTML (TeX source escaped inside)
+        # and protect it so wikilink/tag/markdown rewriting can't touch it.
+        # Must run after code protection so $$ or \(...\) inside code stays
+        # literal. note.tt loads KaTeX only when has_math is set.
+        my $escape_math = sub {
+            my $code = shift;
+            $code =~ s/&/&amp;/g;
+            $code =~ s/</&lt;/g;
+            $code =~ s/>/&gt;/g;
+            $code;
+        };
+        $note->{mkdn} =~ s{\$\$(.+?)\$\$}{
+            $note->{has_math}++;
+            push @protected, q{<div class="math-display">} . $escape_math->($1) . q{</div>};
+            "\x01$#protected\x02";
+        }gse;
+        $note->{mkdn} =~ s{\\\((.+?)\\\)}{
+            $note->{has_math}++;
+            push @protected, q{<span class="math-inline">} . $escape_math->($1) . q{</span>};
+            "\x01$#protected\x02";
+        }gse;
         # A bare x.com/twitter.com status URL sitting alone on its own line
         # becomes a live embed via X's official widgets.js, which fetches
         # the actual post content client-side from the URL in the <a href>.
@@ -256,6 +278,7 @@ sub regen {
             updated   => $_->{updated},
             has_tweet_embed => $_->{has_tweet} ? 1 : 0,
             has_mermaid => $_->{has_mermaid} ? 1 : 0,
+            has_math  => $_->{has_math} ? 1 : 0,
             backlinks => [
                 map { +{ title => $title_by_slug{$_}, link => "/notes/$_.html" } }
                 sort { $title_by_slug{$a} cmp $title_by_slug{$b} }
