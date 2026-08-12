@@ -1,6 +1,6 @@
 ---
 created: 2026-08-12 18:54
-updated: 2026-08-12 18:59
+updated: 2026-08-12 19:09
 ---
 # Linuxだけで作る仮想ネットワークラボ
 
@@ -21,11 +21,13 @@ unshare --user --map-root-user --net --mount bash
 
 netnsを「PC」、VLANフィルタリングを有効にしたLinuxブリッジを「L2スイッチ」に見立て、次の構成を作った。
 
-```
-pc1(10.0.0.1) --veth1-- ┌─────────────┐
-pc2(10.0.0.2) --veth2-- │ br0         │ veth1,2: VLAN 10 アクセスポート
-pc3(10.0.0.3) --veth3-- │ (L2スイッチ) │ veth3:   VLAN 20 アクセスポート
-pc4(10.0.0.4) --veth4-- └─────────────┘ veth4:   VLAN 10 トランクポート(タグ付き)
+```mermaid
+flowchart LR
+    pc1["pc1<br/>10.0.0.1"] ---|"veth1<br/>VLAN 10 アクセス"| br0
+    pc2["pc2<br/>10.0.0.2"] ---|"veth2<br/>VLAN 10 アクセス"| br0
+    pc3["pc3<br/>10.0.0.3"] ---|"veth3<br/>VLAN 20 アクセス"| br0
+    pc4["pc4<br/>10.0.0.4 (eth0.10)"] ---|"veth4<br/>VLAN 10 トランク(タグ付き)"| br0
+    br0[["br0<br/>(VLANフィルタリング有効の<br/>Linuxブリッジ = L2スイッチ)"]]
 ```
 
 構築コマンド（userns内。抜粋）:
@@ -96,6 +98,18 @@ $ ip netns exec pc4 tcpdump -Z root -e -n -i eth0 -c 4
 ## ラボ2: VXLAN — MAC over UDPを実際に覗く
 
 「物理サーバ2台」をnetns(host1/host2)で用意してvethで直結し（これがL3アンダーレイ 192.168.0.0/24）、その上にVNI 100のVXLANオーバーレイ(10.99.0.0/24)を張った。
+
+```mermaid
+flowchart LR
+    subgraph host1
+        v1["vxlan100<br/>10.99.0.1"] --- e1["eth0<br/>192.168.0.1"]
+    end
+    subgraph host2
+        e2["eth0<br/>192.168.0.2"] --- v2["vxlan100<br/>10.99.0.2"]
+    end
+    e1 ===|"アンダーレイ(veth直結)<br/>VXLAN: UDP 4789 / VNI 100"| e2
+    v1 -.-|"オーバーレイ 10.99.0.0/24"| v2
+```
 
 ```sh
 ip netns exec host1 ip link add vxlan100 type vxlan id 100 dstport 4789 \
