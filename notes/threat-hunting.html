@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>Freya (freyaui.dev) — Rust製クロスプラットフォームGUIライブラリ - Notes - 64p.org</title>
+    <title>脅威ハンティング (Threat Hunting) - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="alternate" type="application/rss+xml" title="Notes - 64p.org" href="/notes/rss.xml">
@@ -23,7 +23,7 @@
                 <a class="notes-tags-link" href="/notes/rss.xml">📡 RSS</a>
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
-                                    <li><a href="/notes/threat-hunting.html">脅威ハンティング (Threat Hunting)</a></li>
+                                    <li><a href="/notes/threat-hunting.html" class="active">脅威ハンティング (Threat Hunting)</a></li>
                                     <li><a href="/notes/7ai.html">7AI</a></li>
                                     <li><a href="/notes/turso.html">Turso</a></li>
                                     <li><a href="/notes/sqlite.html">SQLite</a></li>
@@ -363,7 +363,7 @@
                                     <li><a href="/notes/skia.html">Skia</a></li>
                                     <li><a href="/notes/rust-gui-libraries.html">Rust GUI ライブラリ一覧</a></li>
                                     <li><a href="/notes/go-gui-libraries.html">Go GUI ライブラリ一覧</a></li>
-                                    <li><a href="/notes/freya.html" class="active">Freya (freyaui.dev) — Rust製クロスプラットフォームGUIライブラリ</a></li>
+                                    <li><a href="/notes/freya.html">Freya (freyaui.dev) — Rust製クロスプラットフォームGUIライブラリ</a></li>
                                     <li><a href="/notes/hacker-news.html">Hacker News (HN) について</a></li>
                                     <li><a href="/notes/edge-manifest-v3.html">Microsoft Edge、拡張機能をManifest V3へ完全移行</a></li>
                                     <li><a href="/notes/tableau.html">Tableau</a></li>
@@ -386,65 +386,59 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>Freya (freyaui.dev) — Rust製クロスプラットフォームGUIライブラリ</h1>
+                <h1>脅威ハンティング (Threat Hunting)</h1>
 
-<p>Rustでクロスプラットフォームのネイティブ（非Web）GUIアプリを作れるライブラリ。 <a class="note-tag" href="/notes/tags/rust.html">#rust</a> <a class="note-tag" href="/notes/tags/gui.html">#gui</a></p>
+<p><a class="note-tag" href="/notes/tags/security.html">#security</a></p>
 
-<h2>概要</h2>
+<p>ネットワークやシステム内に既に潜んでいるが、自動化されたセキュリティツール（EDR・SIEM等のアラート）をすり抜けて未検出のままになっているサイバー脅威を、セキュリティアナリストが能動的に探索するプラクティス。「攻撃者は既に環境内にいる」という前提（assume breach）に立ち、アラートを待つ受動的な運用から、仮説を立てて自ら探しに行く能動的な運用へと発想を反転させる点が特徴。</p>
+
+<p>攻撃者が初期防御を突破してから検知されるまで潜伏し続ける時間（dwell time）を短縮し、大きな実害が出る前にステルスな悪性活動を発見することが目的。</p>
+
+<h2>主なアプローチ</h2>
 
 <ul>
-<li>公式サイト: <a href="https://freyaui.dev/">https://freyaui.dev/</a></li>
-<li>GitHub: <a href="https://github.com/marc2332/freya">https://github.com/marc2332/freya</a> （約3,000スター、活発に開発中）</li>
-<li>作者: marc2332 (Marc Espín)</li>
-<li>ライセンス: MIT</li>
-<li>レンダリングエンジンは <strong>Skia</strong></li>
+<li><strong>仮説駆動型 (hypothesis-driven)</strong> — 新しく観測された攻撃者のTTPs（戦術・技術・手順）などの脅威インテリジェンスをもとに「自組織の環境にもこの行動パターンが存在するのではないか」という仮説を立てて調査する。</li>
+<li><strong>IOC/IOAベース</strong> — 既知のIOC（Indicators of Compromise: 侵害指標）やIOA（Indicators of Attack: 攻撃指標）を手がかりに、隠れた攻撃や進行中の悪性活動を探す。</li>
+<li><strong>高度な分析・機械学習ベース</strong> — 大量のテレメトリデータを分析して異常値（アノマリー）を検出し、そこから潜在的な悪性活動の手がかりを掘り下げる。</li>
 </ul>
 
 
-<h2>Dioxusとの関係</h2>
+<h2>ハンティングの流れ</h2>
+
+<ol>
+<li><strong>トリガー</strong> — 仮説や異常な活動の検出により、調査対象のシステム・領域を特定する</li>
+<li><strong>調査</strong> — EDR等のツールとログ・テレメトリを使い、悪性の侵害が実際にあるかを深掘りする</li>
+<li><strong>解決</strong> — 発見した脅威の情報を運用チームに引き継ぎ、封じ込め・修復・防御の改善につなげる</li>
+</ol>
+
+
+<h2>関連する概念との違い</h2>
 
 <ul>
-<li>v0.1〜0.3は <a href="https://dioxuslabs.com/">Dioxus</a> のコア機能をベースに実装されていた</li>
-<li>v0.4以降は独自のリアクティブコアに置き換え、Dioxusから部分的にインスパイアされつつも独立した実装になっている</li>
+<li><strong>インシデントレスポンス</strong> — IRはアラートや侵害の発覚を起点に事後対応するのに対し、脅威ハンティングはアラートがまだ上がっていない脅威を先回りして探す。SOC（Security Operations Center）の標準的な検知・対応プロセスと並行して行われ、自動化された検知を人間の分析で補完する位置づけ（SOCについては<a href="/notes/noc.html">NOC</a>のノートも参照）。</li>
+<li><strong><a href="/notes/penetration-test.html">ペネトレーションテスト</a></strong> — ペンテストは攻撃者の視点で疑似攻撃を仕掛けて防御の弱点を検証するのに対し、脅威ハンティングは防御側の視点で「既に起きている侵害」の痕跡を探す。</li>
 </ul>
 
-
-<h2>主な機能</h2>
-
-<ul>
-<li>Button、Switch、Slider、Calendar、ColorPickerなど豊富な組み込みコンポーネント</li>
-<li>色・サイズ・位置などに対応したスムーズなアニメーション</li>
-<li>カーソル管理・テキスト選択付きのリッチテキスト編集</li>
-<li>Ropeベースの編集とtree-sitterによるシンタックスハイライトを備えたコードエディタ</li>
-<li>マルチページ対応のルーティング</li>
-<li>WebView埋め込み、PTY対応のターミナル機能</li>
-<li>コンポーネントをリアルタイム検査できる開発者ツール</li>
-</ul>
-
-
-<h2>所感</h2>
-
-<p>同じRust製ネイティブGUIという文脈では <a href="/notes/gpui.html">GPUI</a>（Zed製、GPU駆動）とも比較対象になる。Freyaはコードエディタ・ターミナル・WebView埋め込みなど「開発者向けツールを作る」ための機能セットが特に手厚く、VSCode的なアプリケーションを作る用途に向いていそうな作り。</p>
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://freyaui.dev/">Freya - GUI Library for Rust</a></li>
-<li><a href="https://github.com/marc2332/freya">GitHub - marc2332/freya</a></li>
+<li><a href="https://www.crowdstrike.com/en-us/cybersecurity-101/threat-intelligence/threat-hunting/">What is Cyber Threat Hunting? | CrowdStrike</a></li>
+<li><a href="https://www.wiz.io/academy/detection-and-response/threat-hunting">What is Proactive Threat Hunting? | Wiz</a></li>
+<li><a href="https://www.sophos.com/en-us/cybersecurity-explained/threat-hunting">What Is Threat Hunting? | Sophos</a></li>
 </ul>
 
 
                                 <div class="notes-backlinks">
                     <h2>🔗 リンクされているノート</h2>
                     <ul>
-                                            <li><a href="/notes/rust-gui-libraries.html">Rust GUI ライブラリ一覧</a></li>
-                                            <li><a href="/notes/skia.html">Skia</a></li>
+                                            <li><a href="/notes/7ai.html">7AI</a></li>
                     
                     </ul>
                 </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-09 15:59 / 更新日時: 2026-08-09 15:59</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=Freya%20%28freyaui.dev%29%20%E2%80%94%20Rust%E8%A3%BD%E3%82%AF%E3%83%AD%E3%82%B9%E3%83%97%E3%83%A9%E3%83%83%E3%83%88%E3%83%95%E3%82%A9%E3%83%BC%E3%83%A0GUI%E3%83%A9%E3%82%A4%E3%83%96%E3%83%A9%E3%83%AA&url=https%3A%2F%2F64p.org%2Fnotes%2Ffreya.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <span>作成日時: 2026-08-13 22:30 / 更新日時: 2026-08-13 22:30</span>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=%E8%84%85%E5%A8%81%E3%83%8F%E3%83%B3%E3%83%86%E3%82%A3%E3%83%B3%E3%82%B0%20%28Threat%20Hunting%29&url=https%3A%2F%2F64p.org%2Fnotes%2Fthreat-hunting.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">

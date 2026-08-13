@@ -6,7 +6,56 @@
 <atom:link href="https://64p.org/notes/rss.xml" rel="self" type="application/rss+xml" />
 <description>ちょっと調べたことや検証結果を、AIの力も借りながらメモしていくコーナーです。</description>
 <language>ja</language>
-<lastBuildDate>Thu, 13 Aug 2026 22:28:00 +0900</lastBuildDate>
+<lastBuildDate>Thu, 13 Aug 2026 22:30:18 +0900</lastBuildDate>
+<item>
+<title>脅威ハンティング (Threat Hunting)</title>
+<link>https://64p.org/notes/threat-hunting.html</link>
+<guid isPermaLink="true">https://64p.org/notes/threat-hunting.html</guid>
+<pubDate>Thu, 13 Aug 2026 22:30:00 +0900</pubDate>
+<description><![CDATA[<h1>脅威ハンティング (Threat Hunting)</h1>
+
+<p><a class="note-tag" href="/notes/tags/security.html">#security</a></p>
+
+<p>ネットワークやシステム内に既に潜んでいるが、自動化されたセキュリティツール（EDR・SIEM等のアラート）をすり抜けて未検出のままになっているサイバー脅威を、セキュリティアナリストが能動的に探索するプラクティス。「攻撃者は既に環境内にいる」という前提（assume breach）に立ち、アラートを待つ受動的な運用から、仮説を立てて自ら探しに行く能動的な運用へと発想を反転させる点が特徴。</p>
+
+<p>攻撃者が初期防御を突破してから検知されるまで潜伏し続ける時間（dwell time）を短縮し、大きな実害が出る前にステルスな悪性活動を発見することが目的。</p>
+
+<h2>主なアプローチ</h2>
+
+<ul>
+<li><strong>仮説駆動型 (hypothesis-driven)</strong> — 新しく観測された攻撃者のTTPs（戦術・技術・手順）などの脅威インテリジェンスをもとに「自組織の環境にもこの行動パターンが存在するのではないか」という仮説を立てて調査する。</li>
+<li><strong>IOC/IOAベース</strong> — 既知のIOC（Indicators of Compromise: 侵害指標）やIOA（Indicators of Attack: 攻撃指標）を手がかりに、隠れた攻撃や進行中の悪性活動を探す。</li>
+<li><strong>高度な分析・機械学習ベース</strong> — 大量のテレメトリデータを分析して異常値（アノマリー）を検出し、そこから潜在的な悪性活動の手がかりを掘り下げる。</li>
+</ul>
+
+
+<h2>ハンティングの流れ</h2>
+
+<ol>
+<li><strong>トリガー</strong> — 仮説や異常な活動の検出により、調査対象のシステム・領域を特定する</li>
+<li><strong>調査</strong> — EDR等のツールとログ・テレメトリを使い、悪性の侵害が実際にあるかを深掘りする</li>
+<li><strong>解決</strong> — 発見した脅威の情報を運用チームに引き継ぎ、封じ込め・修復・防御の改善につなげる</li>
+</ol>
+
+
+<h2>関連する概念との違い</h2>
+
+<ul>
+<li><strong>インシデントレスポンス</strong> — IRはアラートや侵害の発覚を起点に事後対応するのに対し、脅威ハンティングはアラートがまだ上がっていない脅威を先回りして探す。SOC（Security Operations Center）の標準的な検知・対応プロセスと並行して行われ、自動化された検知を人間の分析で補完する位置づけ（SOCについては<a href="/notes/noc.html">NOC</a>のノートも参照）。</li>
+<li><strong><a href="/notes/penetration-test.html">ペネトレーションテスト</a></strong> — ペンテストは攻撃者の視点で疑似攻撃を仕掛けて防御の弱点を検証するのに対し、脅威ハンティングは防御側の視点で「既に起きている侵害」の痕跡を探す。</li>
+</ul>
+
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://www.crowdstrike.com/en-us/cybersecurity-101/threat-intelligence/threat-hunting/">What is Cyber Threat Hunting? | CrowdStrike</a></li>
+<li><a href="https://www.wiz.io/academy/detection-and-response/threat-hunting">What is Proactive Threat Hunting? | Wiz</a></li>
+<li><a href="https://www.sophos.com/en-us/cybersecurity-explained/threat-hunting">What Is Threat Hunting? | Sophos</a></li>
+</ul>
+
+]]></description>
+</item>
 <item>
 <title>Turso</title>
 <link>https://64p.org/notes/turso.html</link>
@@ -1409,38 +1458,6 @@ Content-length: 25
 
 <ul>
 <li><a href="https://rollupjs.org/introduction/">Rollup Introduction</a></li>
-</ul>
-
-]]></description>
-</item>
-<item>
-<title>Rolldown</title>
-<link>https://64p.org/notes/rolldown.html</link>
-<guid isPermaLink="true">https://64p.org/notes/rolldown.html</guid>
-<pubDate>Thu, 13 Aug 2026 09:09:00 +0900</pubDate>
-<description><![CDATA[<h1>Rolldown</h1>
-
-<p>Rustで書かれた次世代JavaScript/TypeScriptバンドラー。<a href="/notes/rollup.html">Rollup</a>互換のAPI・プラグインインターフェースを提供しつつ、スコープとしてはesbuildに近いものを目指している。</p>
-
-<p>VoidZero Inc.(Vue.jsの作者Evan You氏が設立した会社)が開発を主導している。パース処理には同社の別プロジェクトであるOxc(Rust製JS/TSパーサー・ツールチェーン)を使用し、Node.jsとの連携にはnapi-rsによるネイティブアドオンを利用している。</p>
-
-<h2>性能</h2>
-
-<p>esbuild相当のネイティブ速度で動作し、Rollup比で10〜30倍高速とされる。実例として、GitLabはビルド時間を2.5分から40秒に短縮し、Excalidrawは16倍高速化したと報告されている。</p>
-
-<h2>Viteとの関係</h2>
-
-<p><a href="/notes/vite.html">Vite</a>はこれまで、開発時にesbuild・本番ビルド時にRollupという2つの異なるバンドラーを使い分ける構成だった。Rolldownはこの二重構成をRust製バンドラー1つに統一することを目指すプロジェクトで、開発ツール(Vite)・バンドラー(Rolldown)・コンパイラ(Oxc)をすべてVoidZeroが同じチームで維持する構成になる。</p>
-
-<p><code>rolldown-vite</code>パッケージとして試験的に利用可能になっており、Vite 8でデフォルトバンドラーとして採用される予定。プラグインはVite/Rollupプラグインであればそのまま試せるレベルの互換性が重視されている。</p>
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://github.com/rolldown/rolldown">rolldown/rolldown - GitHub</a></li>
-<li><a href="https://voidzero.dev/posts/announcing-rolldown-vite">Announcing Rolldown-Vite | VoidZero</a></li>
-<li><a href="https://v7.vite.dev/guide/rolldown">Rolldown Integration | Vite</a></li>
-<li><a href="https://vite.dev/blog/announcing-vite8-beta">Vite 8 Beta: The Rolldown-powered Vite</a></li>
 </ul>
 
 ]]></description>
