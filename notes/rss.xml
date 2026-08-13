@@ -6,7 +6,97 @@
 <atom:link href="https://64p.org/notes/rss.xml" rel="self" type="application/rss+xml" />
 <description>ちょっと調べたことや検証結果を、AIの力も借りながらメモしていくコーナーです。</description>
 <language>ja</language>
-<lastBuildDate>Fri, 14 Aug 2026 05:54:09 +0900</lastBuildDate>
+<lastBuildDate>Fri, 14 Aug 2026 06:11:07 +0900</lastBuildDate>
+<item>
+<title>豆腐百珍</title>
+<link>https://64p.org/notes/tofu-hyakuchin.html</link>
+<guid isPermaLink="true">https://64p.org/notes/tofu-hyakuchin.html</guid>
+<pubDate>Fri, 14 Aug 2026 06:11:00 +0900</pubDate>
+<description><![CDATA[<h1>豆腐百珍</h1>
+
+<p>江戸時代中期に刊行された豆腐料理専門のレシピ本。天明2年（1782年）5月、大坂の版元・春星堂（藤原善七郎）から出版された。</p>
+
+<p>著者は「醒狂道人何必醇（せいきょうどうじん・かひつじゅん）」という号のみが知られ、実際には料理人ではなく文人の筆名とされる。大坂の篆刻家・曽谷学川（そや がくせん）が著者ではないかと推定されている。</p>
+
+<h2>六等の品評ランク</h2>
+
+<p>豆腐料理100品を、味や手間に応じて6段階にランク分けして紹介しているのが最大の特徴。</p>
+
+<table>
+<thead>
+<tr>
+<th> ランク </th>
+<th> 品数 </th>
+<th> 内容 </th>
+<th> 例 </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td> 尋常品 </td>
+<td> 26品 </td>
+<td> 家庭で日常的に作るもの </td>
+<td> 木の芽田楽、飛竜頭（がんもどき） </td>
+</tr>
+<tr>
+<td> 通品 </td>
+<td> 10品 </td>
+<td> 調理が容易なもの </td>
+<td> 奴豆腐、焼き豆腐 </td>
+</tr>
+<tr>
+<td> 佳品 </td>
+<td> 20品 </td>
+<td> 風味・見た目に優れるもの </td>
+<td> なじみ豆腐、今出川豆腐 </td>
+</tr>
+<tr>
+<td> 奇品 </td>
+<td> 19品 </td>
+<td> 変わり種の料理 </td>
+<td> 蜆もどき、玲瓏豆腐 </td>
+</tr>
+<tr>
+<td> 妙品 </td>
+<td> 18品 </td>
+<td> 形・味ともに整ったもの </td>
+<td> 光悦豆腐、阿漕豆腐 </td>
+</tr>
+<tr>
+<td> 絶品 </td>
+<td> 7品 </td>
+<td> 豆腐本来の持ち味を最も生かすもの </td>
+<td> 湯やっこ、鞍馬豆腐 </td>
+</tr>
+</tbody>
+</table>
+
+
+<p>手間のかかる「奇品」より、素材の味を活かすだけの「湯やっこ」などが最高位の「絶品」に置かれている点が興味深い。</p>
+
+<h2>続編とその後の展開</h2>
+
+<p>翌1783年に『豆腐百珍続編』が刊行され、こちらも100品を掲載、加えて豆腐が主でない料理38品や豆腐にまつわる雑話11項を付録として収録している。さらに『豆腐百珍餘録』という続々編も出た。</p>
+
+<p>この成功を受けて「〇〇百珍」という形式の料理本が続々と刊行され、大根・鯛・甘藷（さつまいも）・卵などを題材にした「百珍物」というジャンルが江戸時代に流行した。豆腐・白米・大根は「江戸三白」と呼ばれる人気食材だった。豆腐を串に刺して焼く「豆腐田楽」（<a href="/notes/oden.html">おでん</a>のルーツ）も、この時代に江戸庶民の間で広く食べられていた。</p>
+
+<h2>現代への影響</h2>
+
+<p>2011年には豆腐メーカーの相模屋食料が「とうふ百珍2011」として現代版を公開し、和食に限らず中華・イタリアンの料理人も参加している。単なる歴史的資料ではなく、現在もレシピサイトなどで再現レシピが作られ続けている。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://ja.wikipedia.org/wiki/%E8%B1%86%E8%85%90%E7%99%BE%E7%8F%8D">豆腐百珍 - Wikipedia</a></li>
+<li><a href="https://japanknowledge.com/contents/nipponica/sample_koumoku.html?entryid=154">豆腐百珍 | 日本大百科全書</a></li>
+<li><a href="https://eleminist.com/article/1539">江戸時代の大ベストセラー料理本『豆腐百珍』が現代版として登場</a></li>
+<li><a href="https://www.nvlu.ac.jp/food/blog/blog-051.html/">食のいま 第51号：豆腐百珍（その１） | 日本獣医生命科学大学</a></li>
+</ul>
+
+
+<h1>江戸時代 #料理 #豆腐</h1>
+]]></description>
+</item>
 <item>
 <title>半導体</title>
 <link>https://64p.org/notes/semiconductor.html</link>
@@ -1351,34 +1441,6 @@ graph LR
 <li><a href="https://www.nic.ad.jp/ja/basics/terms/noc.html">NOC (Network Operation Center)とは - JPNIC</a></li>
 <li><a href="https://e-words.jp/w/%E3%83%8D%E3%83%83%E3%83%88%E3%83%AF%E3%83%BC%E3%82%AF%E3%82%AA%E3%83%9A%E3%83%AC%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3%E3%82%BB%E3%83%B3%E3%82%BF%E3%83%BC.html">ネットワークオペレーションセンター（NOC）とは - IT用語辞典 e-Words</a></li>
 <li><a href="https://www.ibm.com/think/topics/network-operations-center">What Is a Network Operations Center? - IBM</a></li>
-</ul>
-
-]]></description>
-</item>
-<item>
-<title>炭素</title>
-<link>https://64p.org/notes/carbon.html</link>
-<guid isPermaLink="true">https://64p.org/notes/carbon.html</guid>
-<pubDate>Thu, 13 Aug 2026 19:48:00 +0900</pubDate>
-<description><![CDATA[<h1>炭素</h1>
-
-<p>原子番号6の非金属元素。元素記号 C。#chemistry</p>
-
-<h2>性質</h2>
-
-<ul>
-<li>最外殻(価電子)に4個の電子を持つ<a href="/notes/tetravalent-element.html">4価元素</a>。このため他の原子(炭素同士も含む)と単結合・二重結合・三重結合など多様な共有結合を安定して形成できる。この結合の自由度の高さが、<a href="/notes/organic-chemistry.html">有機化合物</a>の構造的多様性の源になっている。</li>
-<li>単体として複数の同素体(allotrope)を持ち、性質が大きく異なる。ダイヤモンドは透明で非常に硬く電気を通しにくいのに対し、黒鉛(グラファイト)は不透明で柔らかく電気を通しやすい。石炭のような無定形炭素(amorphous carbon)も存在する。純粋なダイヤモンドは絶縁体に近いが、不純物添加によって<a href="/notes/diamond-semiconductor.html">半導体</a>として使う研究も進んでいる。</li>
-<li>他のどの元素よりも多くの化合物を形成することが知られている。</li>
-</ul>
-
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://www.britannica.com/science/carbon-chemical-element">Carbon | Facts, Uses, &amp; Properties | Britannica</a></li>
-<li><a href="https://www.samaterials.com/blog/carbon-element-properties-and-uses.html">Carbon: Element Properties and Uses</a></li>
-<li><a href="https://www.lenntech.com/periodic/elements/c.htm">Carbon &copy; - Chemical properties, Health and Environmental effects</a></li>
 </ul>
 
 ]]></description>
