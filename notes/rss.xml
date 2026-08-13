@@ -6,7 +6,36 @@
 <atom:link href="https://64p.org/notes/rss.xml" rel="self" type="application/rss+xml" />
 <description>ちょっと調べたことや検証結果を、AIの力も借りながらメモしていくコーナーです。</description>
 <language>ja</language>
-<lastBuildDate>Thu, 13 Aug 2026 19:36:10 +0900</lastBuildDate>
+<lastBuildDate>Thu, 13 Aug 2026 19:42:26 +0900</lastBuildDate>
+<item>
+<title>有機化学</title>
+<link>https://64p.org/notes/organic-chemistry.html</link>
+<guid isPermaLink="true">https://64p.org/notes/organic-chemistry.html</guid>
+<pubDate>Thu, 13 Aug 2026 19:42:00 +0900</pubDate>
+<description><![CDATA[<h1>有機化学</h1>
+
+<p>炭素原子を含む化合物(有機化合物)の組成・構造・性質・反応・合成を研究する化学の分野。#chemistry</p>
+
+<h2>定義・範囲</h2>
+
+<ul>
+<li>有機化合物は炭素を骨格とし、多くは水素も含むが、窒素・酸素・ハロゲン・リン・ケイ素・硫黄など他の元素を含むこともある。</li>
+<li>炭素は他の原子と3次元的に多様な形で結合できる特異な性質を持ち、これが有機化合物の構造的多様性の源になっている。</li>
+<li>歴史的には「生物によって作られる化合物」の研究として始まったが、現在ではプラスチックなど人工的に合成された物質も含む範囲に拡大している。</li>
+<li>化合物の種類・構造ともに極めて多様なため、有機化学は化学の中でも最大の専門分野とされる。石鹸、プラスチック製品、香水、食品添加物など、身の回りの消費財の多くが有機化学と関わっている。</li>
+</ul>
+
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://www.britannica.com/science/organic-chemistry">Organic chemistry | Britannica</a></li>
+<li><a href="https://www.acs.org/careers/chemical-sciences/areas/organic-chemistry.html">Organic Chemistry - American Chemical Society</a></li>
+<li><a href="https://www.merriam-webster.com/dictionary/organic%20chemistry">ORGANIC CHEMISTRY Definition &amp; Meaning - Merriam-Webster</a></li>
+</ul>
+
+]]></description>
+</item>
 <item>
 <title>マイクロサービス (Microservices)</title>
 <link>https://64p.org/notes/microservices.html</link>
@@ -1626,54 +1655,6 @@ e^x = 1 + x + \frac{x^2}{2!} + \frac{x^3}{3!} + \cdots
 <li><a href="https://builtin.com/data-science/gradient-descent">What Is Gradient Descent? - Built In</a></li>
 <li><a href="https://www.ibm.com/think/topics/learning-rate">What is Learning Rate in Machine Learning? - IBM</a></li>
 <li><a href="https://medium.com/munchy-bytes/navigating-the-learning-curve-gradient-descent-stochastic-gradient-descent-in-ml-e8ec03efa673">A Guide to Gradient Descent and Stochastic Gradient Descent - Medium</a></li>
-</ul>
-
-]]></description>
-</item>
-<item>
-<title>微分方程式</title>
-<link>https://64p.org/notes/differential-equation.html</link>
-<guid isPermaLink="true">https://64p.org/notes/differential-equation.html</guid>
-<pubDate>Thu, 13 Aug 2026 00:23:00 +0900</pubDate>
-<description><![CDATA[<h1>微分方程式</h1>
-
-<p><a class="note-tag" href="/notes/tags/math.html">#math</a></p>
-
-<p>未知の<strong>関数</strong>とその導関数（<a href="/notes/derivative.html">微分</a>）の間の関係を記述した方程式。普通の方程式の解が「数」なのに対し、微分方程式の解は「関数」になる。「変化のルール（変化率）から挙動そのもの（関数）を復元する」問題であり、物理・工学でのモデル記述の基本言語。</p>
-
-<h2>例</h2>
-
-<ul>
-<li><strong>指数増殖</strong> — <span class="math-inline">\frac{dy}{dt} = ky</span>（増加率が現在量に比例）。解は <span class="math-inline">y = Ce^{kt}</span>。人口増加・放射性崩壊・複利</li>
-<li><strong>ニュートンの冷却法則</strong> — <span class="math-inline">\frac{dy}{dt} = k(A - y)</span>（温度差に比例して冷める）</li>
-<li><strong>減衰振動</strong> — <span class="math-inline">m\frac{d<sup>2x</sup>}{dt<sup>2</sup>} + c\frac{dx}{dt} + kx = f(t)</span>。バネ・ダンパー系や RLC 回路がこの形</li>
-</ul>
-
-
-<h2>分類</h2>
-
-<ul>
-<li><strong>常微分方程式（ODE）</strong> — 未知関数が1変数で、通常の導関数だけを含む。1次元の力学系のモデルに多い</li>
-<li><strong>偏微分方程式（PDE）</strong> — 未知関数が多変数で、偏導関数を含む。熱・波動・流体・電磁気・量子力学など、空間的な広がりを持つ系のモデルに多い</li>
-<li><strong>階数（order）</strong> — 含まれる導関数の最高階。上の冷却法則は1階、減衰振動は2階</li>
-<li><strong>線形/非線形</strong> — 未知関数とその導関数について線形かどうか。線形なら解の重ね合わせが効き、理論が整っている</li>
-</ul>
-
-
-<h2>解き方</h2>
-
-<ul>
-<li><strong>解析的に解く</strong> — 変数分離などの求積法（<a href="/notes/integral.html">積分</a>に帰着させる）、<a href="/notes/laplace-transform.html">ラプラス変換</a>（微分を代数演算に変えて機械的に解く）、<a href="/notes/fourier-transform.html">フーリエ変換</a>（偏微分方程式向き）など。ただし解析解が求まるのは限られたクラスだけ</li>
-<li><strong>数値的に解く</strong> — オイラー法・ルンゲクッタ法などで数値解を計算する。実務ではこちらが主流</li>
-</ul>
-
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://tutorial.math.lamar.edu/classes/de/definitions.aspx">Differential Equations - Definitions - Paul&rsquo;s Online Notes (Lamar University)</a></li>
-<li><a href="https://web.uvic.ca/~tbazett/diffyqs/classification_section.html">Classification of differential equations - University of Victoria</a></li>
-<li><a href="https://phas.ubc.ca/~berciu/TEACHING/PHYS312/LECTURES/FILES/defs.pdf">Definitions and important facts regarding ODEs and PDEs - UBC</a></li>
 </ul>
 
 ]]></description>

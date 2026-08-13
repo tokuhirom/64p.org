@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>Rollup - Notes - 64p.org</title>
+    <title>有機化学 - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="alternate" type="application/rss+xml" title="Notes - 64p.org" href="/notes/rss.xml">
@@ -23,7 +23,7 @@
                 <a class="notes-tags-link" href="/notes/rss.xml">📡 RSS</a>
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
-                                    <li><a href="/notes/organic-chemistry.html">有機化学</a></li>
+                                    <li><a href="/notes/organic-chemistry.html" class="active">有機化学</a></li>
                                     <li><a href="/notes/microservices.html">マイクロサービス (Microservices)</a></li>
                                     <li><a href="/notes/domain-driven-design.html">DDD (Domain-Driven Design / ドメイン駆動設計)</a></li>
                                     <li><a href="/notes/penetration-test.html">ペネトレーションテスト</a></li>
@@ -45,7 +45,7 @@
                                     <li><a href="/notes/cilium.html">Cilium</a></li>
                                     <li><a href="/notes/vitest.html">Vitest</a></li>
                                     <li><a href="/notes/vite.html">Vite</a></li>
-                                    <li><a href="/notes/rollup.html" class="active">Rollup</a></li>
+                                    <li><a href="/notes/rollup.html">Rollup</a></li>
                                     <li><a href="/notes/rolldown.html">Rolldown</a></li>
                                     <li><a href="/notes/mysql-heatwave.html">MySQL HeatWave</a></li>
                                     <li><a href="/notes/xdp.html">XDP (eXpress Data Path)</a></li>
@@ -371,46 +371,32 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>Rollup</h1>
+                <h1>有機化学</h1>
 
-<p>JavaScriptのモジュールバンドラー。ES6モジュール構文で書いたコードを解析し、CommonJS/AMD/IIFE/UMDなど様々な形式にコンパイルできる。「ES modulesで書けば将来対応のコードを今すぐ書ける」というのが基本コンセプト。</p>
+<p>炭素原子を含む化合物(有機化合物)の組成・構造・性質・反応・合成を研究する化学の分野。#chemistry</p>
 
-<p>Rich Harris氏とLukas Taegert-Atkinson氏が開発・保守している。</p>
-
-<h2>Tree-shaking</h2>
-
-<p>未使用のコードを解析して自動的に除外する仕組み。ES modulesの静的な<code>import</code>/<code>export</code>構文を利用することで、実際に使われている関数だけをバンドルに残せる。この用語自体をRollupが広めたとされる。</p>
-
-<h2>用途</h2>
-
-<p>主にライブラリのビルド用途で使われることが多い。アプリケーション向けの複雑な機能(コード分割、HMRなど)よりも、シンプルで最適化されたバンドル生成に強みがある。</p>
+<h2>定義・範囲</h2>
 
 <ul>
-<li><a href="/notes/vite.html">Vite</a>は本番ビルド時にRollupを使用している(開発時はesbuildを使用)</li>
-<li>Svelteなども内部でRollupを採用</li>
+<li>有機化合物は炭素を骨格とし、多くは水素も含むが、窒素・酸素・ハロゲン・リン・ケイ素・硫黄など他の元素を含むこともある。</li>
+<li>炭素は他の原子と3次元的に多様な形で結合できる特異な性質を持ち、これが有機化合物の構造的多様性の源になっている。</li>
+<li>歴史的には「生物によって作られる化合物」の研究として始まったが、現在ではプラスチックなど人工的に合成された物質も含む範囲に拡大している。</li>
+<li>化合物の種類・構造ともに極めて多様なため、有機化学は化学の中でも最大の専門分野とされる。石鹸、プラスチック製品、香水、食品添加物など、身の回りの消費財の多くが有機化学と関わっている。</li>
 </ul>
 
-
-<p>Rustで書かれた後継バンドラーとして<a href="/notes/rolldown.html">Rolldown</a>が開発されている。</p>
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://rollupjs.org/introduction/">Rollup Introduction</a></li>
+<li><a href="https://www.britannica.com/science/organic-chemistry">Organic chemistry | Britannica</a></li>
+<li><a href="https://www.acs.org/careers/chemical-sciences/areas/organic-chemistry.html">Organic Chemistry - American Chemical Society</a></li>
+<li><a href="https://www.merriam-webster.com/dictionary/organic%20chemistry">ORGANIC CHEMISTRY Definition &amp; Meaning - Merriam-Webster</a></li>
 </ul>
 
 
-                                <div class="notes-backlinks">
-                    <h2>🔗 リンクされているノート</h2>
-                    <ul>
-                                            <li><a href="/notes/rolldown.html">Rolldown</a></li>
-                                            <li><a href="/notes/vite.html">Vite</a></li>
-                    
-                    </ul>
-                </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-13 09:09 / 更新日時: 2026-08-13 09:14</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=Rollup&url=https%3A%2F%2F64p.org%2Fnotes%2Frollup.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <span>作成日時: 2026-08-13 19:42 / 更新日時: 2026-08-13 19:42</span>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=%E6%9C%89%E6%A9%9F%E5%8C%96%E5%AD%A6&url=https%3A%2F%2F64p.org%2Fnotes%2Forganic-chemistry.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">
