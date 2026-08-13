@@ -1,10 +1,10 @@
 ---
 created: 2026-08-10 20:31
-updated: 2026-08-10 20:31
+updated: 2026-08-14 05:39
 ---
 # P型半導体
 
-シリコンなど[[tetravalent-element|4価]]の半導体結晶に、価電子数3の不純物(ホウ素など)を微量添加(ドープ)した半導体。 #electronics
+[[silicon|シリコン]]など[[tetravalent-element|4価]]の半導体結晶に、価電子数3の不純物(ホウ素など)を微量添加(ドープ)した半導体。 #electronics
 
 ## 仕組み
 

@@ -1,10 +1,10 @@
 ---
 created: 2026-08-10 20:31
-updated: 2026-08-10 20:31
+updated: 2026-08-14 05:39
 ---
 # N型半導体
 
-シリコンなど[[tetravalent-element|4価]]の半導体結晶に、価電子数5の不純物(リンなど)を微量添加(ドープ)した半導体。 #electronics
+[[silicon|シリコン]]など[[tetravalent-element|4価]]の半導体結晶に、価電子数5の不純物(リンなど)を微量添加(ドープ)した半導体。 #electronics
 
 ## 仕組み
 

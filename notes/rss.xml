@@ -6,7 +6,160 @@
 <atom:link href="https://64p.org/notes/rss.xml" rel="self" type="application/rss+xml" />
 <description>ちょっと調べたことや検証結果を、AIの力も借りながらメモしていくコーナーです。</description>
 <language>ja</language>
-<lastBuildDate>Fri, 14 Aug 2026 05:37:23 +0900</lastBuildDate>
+<lastBuildDate>Fri, 14 Aug 2026 05:39:49 +0900</lastBuildDate>
+<item>
+<title>シリコン</title>
+<link>https://64p.org/notes/silicon.html</link>
+<guid isPermaLink="true">https://64p.org/notes/silicon.html</guid>
+<pubDate>Fri, 14 Aug 2026 05:39:00 +0900</pubDate>
+<description><![CDATA[<h1>シリコン</h1>
+
+<p>原子番号14の非金属元素。元素記号 Si。<a href="/notes/tetravalent-element.html">4価元素</a>で、現在の半導体産業の主力材料。 <a class="note-tag" href="/notes/tags/electronics.html">#electronics</a> <a class="note-tag" href="/notes/tags/materials-science.html">#materials-science</a></p>
+
+<h2>元素としての性質</h2>
+
+<ul>
+<li>最外殻に4個の価電子を持ち、周囲のシリコン原子と共有結合して結晶構造(ダイヤモンド構造)を作る</li>
+<li>融点は1414℃と高く、化学的にも比較的安定している</li>
+<li>酸素に次いで地殻に多く存在する元素で、資源として豊富かつ安価に入手できる</li>
+</ul>
+
+
+<h2>半導体材料としての特徴</h2>
+
+<ul>
+<li><a href="/notes/bandgap.html">バンドギャップ</a>は約1.1 eVで、常温付近での熱励起と電圧制御のバランスが半導体用途に適している</li>
+<li>大きな単結晶インゴットを比較的容易に育成できるため、<a href="/notes/n-type-semiconductor.html">N型</a>・<a href="/notes/p-type-semiconductor.html">P型</a>半導体や集積回路(IC)の量産に向く</li>
+<li>数十億個規模のトランジスタを1チップに集積する現在の半導体製造プロセスは、シリコンの結晶成長・加工技術の確立を前提に成り立っている</li>
+</ul>
+
+
+<h2>他の半導体材料との比較</h2>
+
+<p>シリコンは低コスト・低〜中耐圧用途で経済的に優れる一方、バンドギャップが狭いため高耐圧・高温動作には向かない。より広いバンドギャップを持つ<a href="/notes/gallium-nitride.html">窒化ガリウム(GaN)</a>や<a href="/notes/diamond-semiconductor.html">ダイヤモンド半導体</a>は、シリコンでは扱いにくい高耐圧・高周波・高温領域を担う位置づけになる。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://www.electrical4u.com/silicon-semiconductor/">Silicon Semiconductor: Properties, Applications, and Advantages | Electrical4U</a></li>
+<li><a href="https://www.samaterials.com/content/essential-electronic-materials-silicon.html">Essential Electronic Materials: Part 1 - Silicon</a></li>
+<li><a href="https://www.carboncollective.co/sustainable-investing/silicon-si">Silicon (Si) | Properties, Usage, Advantages, &amp; Disadvantages</a></li>
+</ul>
+
+]]></description>
+</item>
+<item>
+<title>NEDO(新エネルギー・産業技術総合開発機構)</title>
+<link>https://64p.org/notes/nedo.html</link>
+<guid isPermaLink="true">https://64p.org/notes/nedo.html</guid>
+<pubDate>Fri, 14 Aug 2026 05:39:00 +0900</pubDate>
+<description><![CDATA[<h1>NEDO(新エネルギー・産業技術総合開発機構)</h1>
+
+<p>日本のエネルギー・地球環境問題への対応と産業技術力の強化を目的とする国立研究開発法人。英語名 New Energy and Industrial Technology Development Organization の略称。 <a class="note-tag" href="/notes/tags/japan.html">#japan</a> <a class="note-tag" href="/notes/tags/industry.html">#industry</a></p>
+
+<h2>概要</h2>
+
+<ul>
+<li>1980年10月1日に設立。2003年10月1日に独立行政法人として再編された</li>
+<li>本部は東京都外、神奈川県川崎市に所在</li>
+<li>職員数は約1,000人。国内に北海道・関西・九州の事務所、海外にワシントンD.C.・シリコンバレー・パリ・北京・バンコク・ジャカルタ・ニューデリーの拠点を持つ</li>
+<li>2024年度の予算規模は約1兆4,631億円で、日本最大級の独立行政法人とされる</li>
+</ul>
+
+
+<h2>役割</h2>
+
+<p>自らが研究者を抱えるのではなく、産官学の技術力・研究力を橋渡し・統合する「イノベーション加速機関」として、委託事業や補助金を通じて技術開発を支援する立場をとる。エネルギー・環境分野に加え、半導体などの産業技術分野の開発プロジェクトも手がける(<a href="/notes/diamond-semiconductor.html">ダイヤモンド半導体</a>の国家プロジェクトなど)。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://www.nedo.go.jp/english/introducing/introducing_index.html">About NEDO | NEDO</a></li>
+<li><a href="https://en.wikipedia.org/wiki/New_Energy_and_Industrial_Technology_Development_Organization">New Energy and Industrial Technology Development Organization - Wikipedia</a></li>
+<li><a href="https://www.nedo.go.jp/english/introducing/introducing_profile.html">Background Information | NEDO</a></li>
+</ul>
+
+]]></description>
+</item>
+<item>
+<title>窒化ガリウム(GaN)</title>
+<link>https://64p.org/notes/gallium-nitride.html</link>
+<guid isPermaLink="true">https://64p.org/notes/gallium-nitride.html</guid>
+<pubDate>Fri, 14 Aug 2026 05:39:00 +0900</pubDate>
+<description><![CDATA[<h1>窒化ガリウム(GaN)</h1>
+
+<p>ガリウムと窒素の化合物半導体(III-V族化合物半導体)。元素記号 GaN。<a href="/notes/bandgap.html">バンドギャップ</a>が約3.4 eVと<a href="/notes/silicon.html">シリコン</a>(約1.1 eV)より広く、SiC(炭化ケイ素)と並ぶ代表的な「ワイドバンドギャップ半導体」に位置づけられる。 <a class="note-tag" href="/notes/tags/electronics.html">#electronics</a> <a class="note-tag" href="/notes/tags/materials-science.html">#materials-science</a></p>
+
+<h2>特性</h2>
+
+<ul>
+<li>電子移動度が高い(1200 cm²/Vs超)ため、スイッチングを高速化しやすい</li>
+<li>バンドギャップが広い分、より高い電圧・電界・温度でも絶縁破壊しにくい</li>
+<li>上記の特性から、シリコンより小型・軽量かつ低損失な電力変換デバイスを実現しやすい</li>
+<li>高い接合温度でも性能劣化が少なく、冷却の要件を抑えられる</li>
+</ul>
+
+
+<h2>用途</h2>
+
+<p>コンセントアダプタなどの民生機器から、データセンター電源、送電網・通信インフラ、自動車のパワーエレクトロニクス(電気自動車の電力変換など)まで幅広く使われる。青色LED・青色レーザーの材料としても知られる。</p>
+
+<h2>他の半導体材料との位置づけ</h2>
+
+<p>パワーエレクトロニクス用途では、シリコン・SiC(炭化ケイ素)・GaNがそれぞれ異なる強みを持つ。シリコンは低コストな低耐圧用途で依然として経済的な選択肢であり、SiCは1200V超級の高耐圧システム(電気自動車のトラクションインバータなど)に強い。GaNはその中間から高周波領域で強みを発揮する。さらにバンドギャップが広い<a href="/notes/diamond-semiconductor.html">ダイヤモンド半導体</a>(約5.47 eV)は、GaNやSiCを上回るウルトラワイドバンドギャップ材料として研究段階にある。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://www.ti.com/technologies/gallium-nitride.html">Gallium nitride (GaN) | TI.com</a></li>
+<li><a href="https://www.azom.com/article.aspx?ArticleID=25225">What Makes Gallium Nitride Important for Power Electronics? - AZoM</a></li>
+<li><a href="https://doi.org/10.3390/hardware4010006">Wide Bandgap Semiconductors for Power Electronics: Comparative Properties, Applications, and Reliability of GaN and SiC Devices</a></li>
+<li><a href="https://www.edn.com/a-brief-history-of-gallium-nitride-gan-semiconductors/">A brief history of gallium nitride (GaN) semiconductors - EDN</a></li>
+</ul>
+
+]]></description>
+</item>
+<item>
+<title>バンドギャップ</title>
+<link>https://64p.org/notes/bandgap.html</link>
+<guid isPermaLink="true">https://64p.org/notes/bandgap.html</guid>
+<pubDate>Fri, 14 Aug 2026 05:39:00 +0900</pubDate>
+<description><![CDATA[<h1>バンドギャップ</h1>
+
+<p>固体中で電子が存在できない禁制帯のエネルギー幅。価電子帯(valence band、電子が原子に束縛されて化学結合を担っている帯)の上端と、伝導帯(conduction band、電子が結晶内を自由に動ける帯)の下端との間のエネルギー差を指す。 <a class="note-tag" href="/notes/tags/electronics.html">#electronics</a> <a class="note-tag" href="/notes/tags/materials-science.html">#materials-science</a></p>
+
+<h2>電気伝導との関係</h2>
+
+<ul>
+<li>価電子帯の電子を伝導帯まで励起できれば、その電子(と価電子帯に残る正孔)が電流を運ぶキャリアになる</li>
+<li>熱・光・電圧などのエネルギーがバンドギャップを超えれば電子は伝導帯に移れる</li>
+<li>バンドギャップがない(価電子帯と伝導帯が重なる)のが金属、大きすぎて常温では実用的に電流が流れないのが絶縁体、その中間で外部からのエネルギーにより伝導性を制御できるのが半導体、というのが大まかな分類</li>
+</ul>
+
+
+<h2>半導体材料ごとの違い</h2>
+
+<p>半導体材料はバンドギャップの大きさによって特性が変わる。バンドギャップが広いほど絶縁破壊電界強度が高くなる傾向があり、高耐圧・高温動作に向く。</p>
+
+<ul>
+<li>シリコン(<a href="/notes/silicon.html">シリコン</a>): 約1.1 eV</li>
+<li>窒化ガリウム(<a href="/notes/gallium-nitride.html">GaN</a>): 約3.4 eV(ワイドバンドギャップ半導体)</li>
+<li>ダイヤモンド(<a href="/notes/diamond-semiconductor.html">ダイヤモンド半導体</a>): 約5.47 eV(ウルトラワイドバンドギャップ半導体)</li>
+</ul>
+
+
+<p>半導体全般のバンドギャップはおおむね0.5〜3.5 eV程度の範囲に収まるとされ、この範囲の広さがそのまま用途の違い(低耐圧・省電力向けか、高耐圧・高温動作向けか)につながる。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/Band_gap">Band gap - Wikipedia</a></li>
+<li><a href="https://www.waferworld.com/post/band-gap-in-semiconductors-all-you-need-to-know">Band Gap in Semiconductors: All You Need to Know - Waferworld</a></li>
+<li><a href="https://www.nuclear-power.com/nuclear-engineering/radiation-detection/semiconductor-detectors/what-are-semiconductors-properties-of-semiconductors/conduction-and-valence-band-in-semiconductors/">Conduction and Valence Band in Semiconductors | nuclear-power.com</a></li>
+</ul>
+
+]]></description>
+</item>
 <item>
 <title>ダイヤモンド半導体</title>
 <link>https://64p.org/notes/diamond-semiconductor.html</link>
@@ -14,12 +167,12 @@
 <pubDate>Fri, 14 Aug 2026 05:37:00 +0900</pubDate>
 <description><![CDATA[<h1>ダイヤモンド半導体</h1>
 
-<p>シリコンではなく<a href="/notes/carbon.html">炭素</a>の結晶であるダイヤモンドを基板・活性層に使う半導体デバイス。<a href="/notes/tetravalent-element.html">4価元素</a>である炭素同士のsp3結合でできた結晶を使う点がシリコン半導体と異なる。 <a class="note-tag" href="/notes/tags/electronics.html">#electronics</a> <a class="note-tag" href="/notes/tags/materials-science.html">#materials-science</a></p>
+<p><a href="/notes/silicon.html">シリコン</a>ではなく<a href="/notes/carbon.html">炭素</a>の結晶であるダイヤモンドを基板・活性層に使う半導体デバイス。<a href="/notes/tetravalent-element.html">4価元素</a>である炭素同士のsp3結合でできた結晶を使う点がシリコン半導体と異なる。 <a class="note-tag" href="/notes/tags/electronics.html">#electronics</a> <a class="note-tag" href="/notes/tags/materials-science.html">#materials-science</a></p>
 
 <h2>物性</h2>
 
 <ul>
-<li>バンドギャップが約5.47 eVと非常に広い(シリコンは1.1 eV程度)。SiC(炭化ケイ素)やGaN(窒化ガリウム)などの「ワイドバンドギャップ半導体」よりもさらに広く、「ウルトラワイドバンドギャップ半導体」に位置づけられる</li>
+<li><a href="/notes/bandgap.html">バンドギャップ</a>が約5.47 eVと非常に広い(シリコンは1.1 eV程度)。SiC(炭化ケイ素)や<a href="/notes/gallium-nitride.html">GaN(窒化ガリウム)</a>などの「ワイドバンドギャップ半導体」よりもさらに広く、「ウルトラワイドバンドギャップ半導体」に位置づけられる</li>
 <li>絶縁破壊電界強度が高い(文献により10〜20 MV/cm)。同じ厚みでもより高い電圧に耐えられる</li>
 <li>熱伝導率が既知の物質中で最高クラス(22 W/cm·K)で放熱性に極めて優れる</li>
 <li>キャリア移動度も高い(電子移動度約4000 cm²/V·s、正孔移動度約3800 cm²/V·s)</li>
@@ -41,7 +194,7 @@
 
 <p>一方、<a href="/notes/n-type-semiconductor.html">n型</a>ダイヤモンドの実現が難しく、これがバイポーラデバイス開発のボトルネックになっている。ドーピングプロセス自体も複雑でコストが高い。実際の製品化までは、少なくともあと5年程度かかると見られている。</p>
 
-<p>日本では経済産業省・NEDOなどが国家プロジェクトとして開発を後押ししている分野でもある。</p>
+<p>日本では経済産業省・<a href="/notes/nedo.html">NEDO</a>などが国家プロジェクトとして開発を後押ししている分野でもある。</p>
 
 <h2>出典</h2>
 
@@ -1212,246 +1365,6 @@ graph LR
 <li><a href="https://microservices.io/patterns/microservices.html">Microservices Pattern: Microservice Architecture pattern | microservices.io</a></li>
 <li><a href="https://martinfowler.com/articles/microservice-trade-offs.html">Microservice Trade-Offs | Martin Fowler</a></li>
 <li><a href="https://martinfowler.com/bliki/MonolithFirst.html">bliki: Monolith First | Martin Fowler</a></li>
-</ul>
-
-]]></description>
-</item>
-<item>
-<title>ペネトレーションテスト</title>
-<link>https://64p.org/notes/penetration-test.html</link>
-<guid isPermaLink="true">https://64p.org/notes/penetration-test.html</guid>
-<pubDate>Thu, 13 Aug 2026 17:10:00 +0900</pubDate>
-<description><![CDATA[<h1>ペネトレーションテスト</h1>
-
-<p><a class="note-tag" href="/notes/tags/security.html">#security</a></p>
-
-<p>実際の攻撃者が使うのと同じツール・手法を用いて対象システムに疑似的な攻撃を仕掛け、セキュリティ上の脆弱性を発見・実証するテスト手法。「ペンテスト」とも呼ばれる。<a href="/notes/metasploit.html">Metasploit</a>や<a href="/notes/burp-suite.html">Burp Suite</a>のようなツール、<a href="/notes/kali-linux.html">Kali Linux</a>のようなディストリビューションが実務で使われる。</p>
-
-<h2>定義</h2>
-
-<ul>
-<li><strong>NIST (SP 800-115)</strong>: システム・デバイス・プロセスが、積極的な侵害の試みにどの程度耐えられるかを検証するテスト、と定義している。単発の脆弱性を見つけるだけでなく、複数の脆弱性を組み合わせて、より深い侵入・権限昇格が可能かどうかまで検証することが多い。</li>
-<li><strong>OWASP</strong>: Webアプリケーションを対象としたペンテスト手法を体系化した「Web Security Testing Guide (WSTG)」を公開している。入力値検証・認証機構・セッション管理・設定の不備など、Webアプリ特有の観点からテスト項目を網羅している。</li>
-</ul>
-
-
-<h2>脆弱性診断(Vulnerability Assessment)との違い</h2>
-
-<p>脆弱性診断が既知の脆弱性を網羅的に洗い出すスキャン中心の手法であるのに対し、ペネトレーションテストはそれらの脆弱性を実際に悪用(exploit)して、どこまで侵入できるか・実害に繋がるかを人手で検証する点が特徴とされる。</p>
-
-<h2>実施の前提</h2>
-
-<p>対象システムの所有者からの正式な許可(スコープ・期間・手法を定めた契約)が前提となる。許可なく行うと不正アクセス行為となる。<a href="/notes/hack-the-box.html">Hack The Box</a>のような学習プラットフォームでは、許可された仮想環境上で技術を練習できる。</p>
-
-<h2><a href="/notes/security-operations.html">セキュリティ運用</a>の中での位置づけ</h2>
-
-<p>防御側の運用（SOC・脅威ハンティング）が「既に起きた侵害」を探すのに対し、攻撃者の視点から疑似攻撃を仕掛けて防御の弱点を先に見つける検証手法。</p>
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://www.ibm.com/think/insights/pen-testing-methodology">Top Penetration Testing Methodologies | IBM</a></li>
-<li><a href="https://csrc.nist.gov/glossary/term/penetration_testing">penetration testing - Glossary | CSRC (NIST)</a></li>
-<li><a href="https://owasp.org/www-project-web-security-testing-guide/latest/3-The_OWASP_Testing_Framework/1-Penetration_Testing_Methodologies">Penetration Testing Methodologies (OWASP)</a></li>
-</ul>
-
-]]></description>
-</item>
-<item>
-<title>mutsuでCro::HTTPのhello worldを動かす実験</title>
-<link>https://64p.org/notes/mutsu-cro-http-experiment.html</link>
-<guid isPermaLink="true">https://64p.org/notes/mutsu-cro-http-experiment.html</guid>
-<pubDate>Thu, 13 Aug 2026 15:04:00 +0900</pubDate>
-<description><![CDATA[<h1>mutsuでCro::HTTPのhello worldを動かす実験</h1>
-
-<p>Rust製の自作<a href="/notes/raku-rakudo-perl6.html">Raku</a>インタプリタ<a href="https://github.com/tokuhirom/mutsu">mutsu</a>の0.21.0で<a href="/notes/cro.html">Cro</a>::HTTPが使えるようになったので、hello world的なHTTPサーバを実際に書いて動かしてみた記録。</p>
-
-<p><a class="note-tag" href="/notes/tags/raku.html">#raku</a> <a class="note-tag" href="/notes/tags/mutsu.html">#mutsu</a> <a class="note-tag" href="/notes/tags/web-framework.html">#web-framework</a> <a class="note-tag" href="/notes/tags/experiment.html">#experiment</a></p>
-
-<h2>目的</h2>
-
-<p>mutsu 0.21.0のCro::HTTPサポートで、典型的なCroのサンプルコード（ルーティング定義＋サーバ起動）がそのまま動くかを確認する。</p>
-
-<h2>環境</h2>
-
-<ul>
-<li>mutsu 0.21.0（miseでグローバルインストール: <code>~/.local/share/mise/installs/github-tokuhirom-mutsu/0.21.0/bin/mutsu</code>）</li>
-<li>Linux (Pop!_OS, kernel 6.18)</li>
-</ul>
-
-
-<h2>コード</h2>
-
-<p>Cro公式のGetting startedにあるような、<code>Cro::HTTP::Router</code>の<code>route</code>/<code>get</code>でルーティングを定義して<code>Cro::HTTP::Server</code>で起動する典型パターン。パスパラメータ付きのルートも入れた。</p>
-
-<pre><code class="raku">use Cro::HTTP::Router;
-use Cro::HTTP::Server;
-
-my $application = route {
-    get -&gt; {
-        content 'text/plain', "Hello, world from mutsu!\n";
-    }
-    get -&gt; 'greet', $name {
-        content 'text/plain', "Hello, $name!\n";
-    }
-};
-
-my Cro::Service $service = Cro::HTTP::Server.new(
-    :host&lt;localhost&gt;, :port&lt;20000&gt;, :$application
-);
-$service.start;
-say "Started server at http://localhost:20000/";
-
-react {
-    whenever signal(SIGINT) {
-        $service.stop;
-        exit;
-    }
-}
-</code></pre>
-
-<p>これを<code>mutsu cro-hello.raku</code>で起動するだけ。zef等でのモジュールインストールは不要で、Cro::HTTPはmutsu本体にバンドルされている。</p>
-
-<h2>実行結果</h2>
-
-<p>両ルートとも期待どおり動いた。</p>
-
-<pre><code class="console">$ curl http://localhost:20000/
-Hello, world from mutsu!
-$ curl http://localhost:20000/greet/tokuhirom
-Hello, tokuhirom!
-</code></pre>
-
-<p>レスポンスヘッダも正しく付く。</p>
-
-<pre><code class="console">$ curl -si http://localhost:20000/ | head -4
-HTTP/1.1 200 OK
-Content-type: text/plain; charset=utf-8
-Content-length: 25
-</code></pre>
-
-<h2>読み取れること</h2>
-
-<ul>
-<li><code>route</code>/<code>get</code>のDSL、<code>content</code>によるレスポンス生成、パスパラメータ（<code>get -&gt; 'greet', $name</code>のようなシグネチャベースのルーティング）が動く。</li>
-<li><code>Cro::HTTP::Server</code>の起動・停止（<code>$service.start</code>/<code>$service.stop</code>）が動く。</li>
-<li><code>react whenever signal(SIGINT)</code>によるシグナル待ち受けの常駐パターンも動くので、Ctrl-Cで綺麗に落とせる。</li>
-<li>Content-typeへの<code>charset=utf-8</code>付与やContent-lengthの計算など、HTTP/1.1レスポンスの基本部分が揃っている。</li>
-</ul>
-
-
-<h2>躓いた点</h2>
-
-<p>特になし。Cro公式ドキュメント風のコードが初回でそのまま動いた。</p>
-]]></description>
-</item>
-<item>
-<title>MessagePack</title>
-<link>https://64p.org/notes/messagepack.html</link>
-<guid isPermaLink="true">https://64p.org/notes/messagepack.html</guid>
-<pubDate>Thu, 13 Aug 2026 13:07:00 +0900</pubDate>
-<description><![CDATA[<h1>MessagePack</h1>
-
-<p>「JSONのようだが、高速かつ小さい」ことを謳う、効率的なバイナリシリアライゼーション形式。マップ(オブジェクト)・配列・文字列・整数・浮動小数点数・真偽値・nullといったJSONと同じ論理データモデルを、テキストではなくコンパクトなバイナリ表現でエンコードする。2008年に<a href="/notes/embulk.html">Embulk</a>・<a href="/notes/fluentd.html">Fluentd</a>の開発者でもある古橋貞之(Sadayuki Furuhashi)氏が考案した。</p>
-
-<p><a class="note-tag" href="/notes/tags/data-engineering.html">#data-engineering</a> <a class="note-tag" href="/notes/tags/serialization.html">#serialization</a></p>
-
-<h2>生まれた背景</h2>
-
-<p>分散システムの開発において、JSONのパース処理がボトルネックになっていたことが開発の動機。JSONと同様にスキーマフリーでありながら、バイナリで高速なフォーマットを求めて作られた。</p>
-
-<h2>特徴</h2>
-
-<ul>
-<li>小さな整数は1バイトにエンコードされ、典型的な短い文字列も文字列本体+1バイト程度で表現できるなど、コンパクトさを重視した設計。JSONと比べておよそ50%小さくなる。</li>
-<li>バイナリ形式のためテキストパースが不要で、処理が高速。</li>
-<li>JSONが対応していないバイナリデータをネイティブにサポートする。</li>
-<li>50以上のプログラミング言語・環境で実装が提供されている。</li>
-</ul>
-
-
-<h2>採用事例</h2>
-
-<ul>
-<li><a href="/notes/fluentd.html">Fluentd</a>は内部データ表現に全面的にMessagePackを採用しており、パイプラインの各ステージ間でゼロコピーのデータ受け渡しを実現している。</li>
-<li>RedisはLuaスクリプティングでMessagePackを採用している。</li>
-<li>Treasure Data社の分析基盤パイプラインもMessagePack上に構築されている。</li>
-</ul>
-
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://msgpack.org/">MessagePack: It&rsquo;s like JSON. but fast and small.</a></li>
-<li><a href="https://en.wikipedia.org/wiki/MessagePack">MessagePack - Wikipedia</a></li>
-</ul>
-
-]]></description>
-</item>
-<item>
-<title>Fluent Bit</title>
-<link>https://64p.org/notes/fluent-bit.html</link>
-<guid isPermaLink="true">https://64p.org/notes/fluent-bit.html</guid>
-<pubDate>Thu, 13 Aug 2026 13:05:00 +0900</pubDate>
-<description><![CDATA[<h1>Fluent Bit</h1>
-
-<p>ログ・メトリクス・トレースを収集する軽量なテレメトリエージェント。<a href="/notes/fluentd.html">Fluentd</a>のアーキテクチャを踏襲しつつ、組み込み機器やエッジデバイスなどFluentdの実行が困難な低リソース環境向けに開発された。作者はEduardo Silva、現在はChronosphere社がスポンサーとなっている。CNCF傘下のFluentdプロジェクトのサブプロジェクトという位置づけで、Fluent Bit自体もCNCF Graduatedレベルにある。ライセンスはApache License v2.0。</p>
-
-<p><a class="note-tag" href="/notes/tags/data-engineering.html">#data-engineering</a> <a class="note-tag" href="/notes/tags/cncf.html">#cncf</a> <a class="note-tag" href="/notes/tags/observability.html">#observability</a></p>
-
-<h2>Fluentdとの違い</h2>
-
-<table>
-<thead>
-<tr>
-<th> </th>
-<th> Fluentd </th>
-<th> Fluent Bit </th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td> 実装言語 </td>
-<td> Ruby(コアの一部はC) </td>
-<td> C言語のみ </td>
-</tr>
-<tr>
-<td> プラグイン </td>
-<td> Ruby gemとして実行後にインストール </td>
-<td> コアにコンパイルして組み込み </td>
-</tr>
-<tr>
-<td> メモリ使用量 </td>
-<td> 単一インスタンスで約40MB </td>
-<td> 単一インスタンスで1MB未満 </td>
-</tr>
-<tr>
-<td> 対応シグナル </td>
-<td> ログ中心(OpenTelemetryにも対応) </td>
-<td> ログ・メトリクス・トレースの3種に対応 </td>
-</tr>
-</tbody>
-</table>
-
-
-<p>同一ワークロードでの比較では、FluentdはFluent Bitのおよそ4倍のCPU、4〜6倍のメモリを消費するというベンチマーク結果がある。</p>
-
-<h2>主な機能</h2>
-
-<ul>
-<li>JSON・正規表現・LTSV・Logfmtなど複数フォーマットのログパーサーに対応。</li>
-<li>PrometheusおよびOpenTelemetryと互換性のあるメトリクス収集・出力。</li>
-<li>バックプレッシャーハンドリングと、メモリ/ファイルシステムでのデータバッファリング。</li>
-<li>高スループット・低リソース消費を重視した設計で、Kubernetesのノードレベルやエッジ層でのログ収集用途によく使われる。</li>
-</ul>
-
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://docs.fluentbit.io/manual">Fluent Bit: Official Manual</a></li>
-<li><a href="https://docs.fluentbit.io/manual/2.0/about/fluentd-and-fluent-bit">Fluentd &amp; Fluent Bit | Fluent Bit: Official Manual</a></li>
-<li><a href="https://betterstack.com/community/logging/fluentd-vs-fluent-bit/">Fluentd vs Fluent Bit: How to Choose in 2026 | Better Stack Community</a></li>
 </ul>
 
 ]]></description>
