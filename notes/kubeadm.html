@@ -23,16 +23,20 @@
                 <a class="notes-tags-link" href="/notes/rss.xml">📡 RSS</a>
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
-                                    <li><a href="/notes/traefik.html">Traefik</a></li>
                                     <li><a href="/notes/raft.html">Raft (合意アルゴリズム)</a></li>
-                                    <li><a href="/notes/lets-encrypt.html">Let&#39;s Encrypt</a></li>
+                                    <li><a href="/notes/paxos.html">Paxos</a></li>
+                                    <li><a href="/notes/open-vswitch.html">Open vSwitch (OVS)</a></li>
                                     <li><a href="/notes/kubernetes.html">Kubernetes</a></li>
                                     <li><a href="/notes/kubeadm.html" class="active">kubeadm</a></li>
-                                    <li><a href="/notes/kind.html">kind (Kubernetes in Docker)</a></li>
+                                    <li><a href="/notes/k3s.html">k3s</a></li>
                                     <li><a href="/notes/etcd.html">etcd</a></li>
+                                    <li><a href="/notes/coreos.html">CoreOS</a></li>
+                                    <li><a href="/notes/cni.html">CNI (Container Network Interface)</a></li>
+                                    <li><a href="/notes/traefik.html">Traefik</a></li>
+                                    <li><a href="/notes/lets-encrypt.html">Let&#39;s Encrypt</a></li>
+                                    <li><a href="/notes/kind.html">kind (Kubernetes in Docker)</a></li>
                                     <li><a href="/notes/acme.html">ACME (Automatic Certificate Management Environment)</a></li>
                                     <li><a href="/notes/minikube.html">minikube</a></li>
-                                    <li><a href="/notes/k3s.html">k3s</a></li>
                                     <li><a href="/notes/cgroups.html">cgroups（control groups）</a></li>
                                     <li><a href="/notes/apache-mesos.html">Apache Mesos</a></li>
                                     <li><a href="/notes/systemd-journald-excessive-io.html">systemd-journaldの過剰なI/O</a></li>
@@ -40,7 +44,6 @@
                                     <li><a href="/notes/service-mesh.html">Service Mesh</a></li>
                                     <li><a href="/notes/rbac.html">RBAC (Role-Based Access Control)</a></li>
                                     <li><a href="/notes/podman.html">Podman</a></li>
-                                    <li><a href="/notes/open-vswitch.html">Open vSwitch (OVS)</a></li>
                                     <li><a href="/notes/microvm-ecosystem.html">コンテナ向け軽量VM技術</a></li>
                                     <li><a href="/notes/kubernetes-on-oxide.html">Kubernetes on Oxide</a></li>
                                     <li><a href="/notes/kubernetes-cloud-controller-manager.html">Cloud Controller Manager (CCM)</a></li>
@@ -435,7 +438,7 @@
 
 <h2>スコープの割り切り</h2>
 
-<p>kubeadmは「minimum viable cluster」を立ち上げることだけに責任を持つ。マシンのプロビジョニングはスコープ外で、CNIプラグイン（ネットワーク）のインストールもユーザーが後から行う。この割り切りによってオンプレ・クラウドVM・ベアメタル・ラップトップのどこでも動き、kubespray・<a href="/notes/cluster-api.html">Cluster API</a>・<a href="/notes/minikube.html">minikube</a>・<a href="/notes/kind.html">kind</a>といった上位ツールが土台として使える部品になっている（kindがnode imageコンテナ内で各ノードをブートストラップするのに使っているのもkubeadm）。</p>
+<p>kubeadmは「minimum viable cluster」を立ち上げることだけに責任を持つ。マシンのプロビジョニングはスコープ外で、<a href="/notes/cni.html">CNI</a>プラグイン（ネットワーク）のインストールもユーザーが後から行う。この割り切りによってオンプレ・クラウドVM・ベアメタル・ラップトップのどこでも動き、kubespray・<a href="/notes/cluster-api.html">Cluster API</a>・<a href="/notes/minikube.html">minikube</a>・<a href="/notes/kind.html">kind</a>といった上位ツールが土台として使える部品になっている（kindがnode imageコンテナ内で各ノードをブートストラップするのに使っているのもkubeadm）。</p>
 
 <p>kubeadmで構築したクラスタはKubernetesのConformanceテストを通る。</p>
 
@@ -450,13 +453,14 @@
                                 <div class="notes-backlinks">
                     <h2>🔗 リンクされているノート</h2>
                     <ul>
+                                            <li><a href="/notes/cni.html">CNI (Container Network Interface)</a></li>
                                             <li><a href="/notes/kubernetes.html">Kubernetes</a></li>
                                             <li><a href="/notes/kind.html">kind (Kubernetes in Docker)</a></li>
                     
                     </ul>
                 </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-14 08:33 / 更新日時: 2026-08-14 08:33</span>
+                    <span>作成日時: 2026-08-14 08:33 / 更新日時: 2026-08-14 08:39</span>
                     <a class="share-x" href="https://twitter.com/intent/tweet?text=kubeadm&url=https%3A%2F%2F64p.org%2Fnotes%2Fkubeadm.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>

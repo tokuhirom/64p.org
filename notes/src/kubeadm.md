@@ -1,6 +1,6 @@
 ---
 created: 2026-08-14 08:33
-updated: 2026-08-14 08:33
+updated: 2026-08-14 08:39
 ---
 # kubeadm
 
@@ -11,7 +11,7 @@ updated: 2026-08-14 08:33
 
 ## スコープの割り切り
 
-kubeadmは「minimum viable cluster」を立ち上げることだけに責任を持つ。マシンのプロビジョニングはスコープ外で、CNIプラグイン（ネットワーク）のインストールもユーザーが後から行う。この割り切りによってオンプレ・クラウドVM・ベアメタル・ラップトップのどこでも動き、kubespray・[[cluster-api|Cluster API]]・[[minikube]]・[[kind|kind]]といった上位ツールが土台として使える部品になっている（kindがnode imageコンテナ内で各ノードをブートストラップするのに使っているのもkubeadm）。
+kubeadmは「minimum viable cluster」を立ち上げることだけに責任を持つ。マシンのプロビジョニングはスコープ外で、[[cni|CNI]]プラグイン（ネットワーク）のインストールもユーザーが後から行う。この割り切りによってオンプレ・クラウドVM・ベアメタル・ラップトップのどこでも動き、kubespray・[[cluster-api|Cluster API]]・[[minikube]]・[[kind|kind]]といった上位ツールが土台として使える部品になっている（kindがnode imageコンテナ内で各ノードをブートストラップするのに使っているのもkubeadm）。
 
 kubeadmで構築したクラスタはKubernetesのConformanceテストを通る。
 

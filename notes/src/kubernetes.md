@@ -1,6 +1,6 @@
 ---
 created: 2026-08-14 08:25
-updated: 2026-08-14 08:33
+updated: 2026-08-14 08:39
 ---
 # Kubernetes
 
@@ -19,6 +19,7 @@ updated: 2026-08-14 08:33
 - [[cluster-api]] — Kubernetesクラスタ自体をKubernetesのリソースとして宣言的に管理する仕組み
 - [[kubernetes-cloud-controller-manager]] — クラウドプロバイダー固有の制御ループを本体から分離したコンポーネント
 - [[container-storage-interface]] — ストレージベンダーがプラグインを書くための標準インターフェース
+- [[cni|CNI]] — Podネットワークを実装するプラグインの標準インターフェース。ストレージにおけるCSIのネットワーク版にあたる
 - [[etcd]] — クラスタの全状態を保存するプライマリデータストア
 - [[kubeadm]] — クラスタを手作業で組む際の公式ブートストラップツール。kind・Cluster APIなど上位ツールの土台でもある
 

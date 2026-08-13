@@ -23,16 +23,20 @@
                 <a class="notes-tags-link" href="/notes/rss.xml">📡 RSS</a>
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
-                                    <li><a href="/notes/traefik.html">Traefik</a></li>
                                     <li><a href="/notes/raft.html" class="active">Raft (合意アルゴリズム)</a></li>
-                                    <li><a href="/notes/lets-encrypt.html">Let&#39;s Encrypt</a></li>
+                                    <li><a href="/notes/paxos.html">Paxos</a></li>
+                                    <li><a href="/notes/open-vswitch.html">Open vSwitch (OVS)</a></li>
                                     <li><a href="/notes/kubernetes.html">Kubernetes</a></li>
                                     <li><a href="/notes/kubeadm.html">kubeadm</a></li>
-                                    <li><a href="/notes/kind.html">kind (Kubernetes in Docker)</a></li>
+                                    <li><a href="/notes/k3s.html">k3s</a></li>
                                     <li><a href="/notes/etcd.html">etcd</a></li>
+                                    <li><a href="/notes/coreos.html">CoreOS</a></li>
+                                    <li><a href="/notes/cni.html">CNI (Container Network Interface)</a></li>
+                                    <li><a href="/notes/traefik.html">Traefik</a></li>
+                                    <li><a href="/notes/lets-encrypt.html">Let&#39;s Encrypt</a></li>
+                                    <li><a href="/notes/kind.html">kind (Kubernetes in Docker)</a></li>
                                     <li><a href="/notes/acme.html">ACME (Automatic Certificate Management Environment)</a></li>
                                     <li><a href="/notes/minikube.html">minikube</a></li>
-                                    <li><a href="/notes/k3s.html">k3s</a></li>
                                     <li><a href="/notes/cgroups.html">cgroups（control groups）</a></li>
                                     <li><a href="/notes/apache-mesos.html">Apache Mesos</a></li>
                                     <li><a href="/notes/systemd-journald-excessive-io.html">systemd-journaldの過剰なI/O</a></li>
@@ -40,7 +44,6 @@
                                     <li><a href="/notes/service-mesh.html">Service Mesh</a></li>
                                     <li><a href="/notes/rbac.html">RBAC (Role-Based Access Control)</a></li>
                                     <li><a href="/notes/podman.html">Podman</a></li>
-                                    <li><a href="/notes/open-vswitch.html">Open vSwitch (OVS)</a></li>
                                     <li><a href="/notes/microvm-ecosystem.html">コンテナ向け軽量VM技術</a></li>
                                     <li><a href="/notes/kubernetes-on-oxide.html">Kubernetes on Oxide</a></li>
                                     <li><a href="/notes/kubernetes-cloud-controller-manager.html">Cloud Controller Manager (CCM)</a></li>
@@ -429,7 +432,7 @@
 
 <h2>設計目標: 理解しやすさ</h2>
 
-<p>先行するPaxosと等価な結果を同等の効率で出せるが、構造がまったく異なる。Paxosが「難解で、実システムを作るには大きなギャップがある」とされてきたのに対し、Raftは<strong>理解しやすさ</strong>そのものを第一の設計目標にした。論文には2大学の学生43名にPaxosとRaftを両方教えたユーザースタディが載っており、33名がPaxosよりRaftの設問に良い成績を出した。</p>
+<p>先行する<a href="/notes/paxos.html">Paxos</a>と等価な結果を同等の効率で出せるが、構造がまったく異なる。Paxosが「難解で、実システムを作るには大きなギャップがある」とされてきたのに対し、Raftは<strong>理解しやすさ</strong>そのものを第一の設計目標にした。論文には2大学の学生43名にPaxosとRaftを両方教えたユーザースタディが載っており、33名がPaxosよりRaftの設問に良い成績を出した。</p>
 
 <p>そのために問題を独立したサブ問題に分解している:</p>
 
@@ -469,12 +472,13 @@ stateDiagram-v2
                                 <div class="notes-backlinks">
                     <h2>🔗 リンクされているノート</h2>
                     <ul>
+                                            <li><a href="/notes/paxos.html">Paxos</a></li>
                                             <li><a href="/notes/etcd.html">etcd</a></li>
                     
                     </ul>
                 </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-14 08:33 / 更新日時: 2026-08-14 08:33</span>
+                    <span>作成日時: 2026-08-14 08:33 / 更新日時: 2026-08-14 08:39</span>
                     <a class="share-x" href="https://twitter.com/intent/tweet?text=Raft%20%28%E5%90%88%E6%84%8F%E3%82%A2%E3%83%AB%E3%82%B4%E3%83%AA%E3%82%BA%E3%83%A0%29&url=https%3A%2F%2F64p.org%2Fnotes%2Fraft.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>

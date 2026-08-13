@@ -1,6 +1,6 @@
 ---
 created: 2026-08-14 08:20
-updated: 2026-08-14 08:25
+updated: 2026-08-14 08:39
 ---
 # k3s
 
@@ -15,7 +15,7 @@ Rancher Labs（現SUSE）が開発した軽量[[kubernetes|Kubernetes]]ディス
 同梱されるもの:
 
 - コンテナランタイム: containerd（cri-dockerdも選択可）
-- ネットワーク: Flannel（CNI）、CoreDNS、kube-router（NetworkPolicy）
+- ネットワーク: Flannel（[[cni|CNI]]）、CoreDNS、kube-router（NetworkPolicy）
 - Ingress / LB: [[traefik|Traefik]]、ServiceLB
 - ストレージ: local-path-provisioner
 - iptables・socatなどのユーティリティ

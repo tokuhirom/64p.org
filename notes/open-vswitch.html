@@ -23,16 +23,20 @@
                 <a class="notes-tags-link" href="/notes/rss.xml">📡 RSS</a>
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
-                                    <li><a href="/notes/traefik.html">Traefik</a></li>
                                     <li><a href="/notes/raft.html">Raft (合意アルゴリズム)</a></li>
-                                    <li><a href="/notes/lets-encrypt.html">Let&#39;s Encrypt</a></li>
+                                    <li><a href="/notes/paxos.html">Paxos</a></li>
+                                    <li><a href="/notes/open-vswitch.html" class="active">Open vSwitch (OVS)</a></li>
                                     <li><a href="/notes/kubernetes.html">Kubernetes</a></li>
                                     <li><a href="/notes/kubeadm.html">kubeadm</a></li>
-                                    <li><a href="/notes/kind.html">kind (Kubernetes in Docker)</a></li>
+                                    <li><a href="/notes/k3s.html">k3s</a></li>
                                     <li><a href="/notes/etcd.html">etcd</a></li>
+                                    <li><a href="/notes/coreos.html">CoreOS</a></li>
+                                    <li><a href="/notes/cni.html">CNI (Container Network Interface)</a></li>
+                                    <li><a href="/notes/traefik.html">Traefik</a></li>
+                                    <li><a href="/notes/lets-encrypt.html">Let&#39;s Encrypt</a></li>
+                                    <li><a href="/notes/kind.html">kind (Kubernetes in Docker)</a></li>
                                     <li><a href="/notes/acme.html">ACME (Automatic Certificate Management Environment)</a></li>
                                     <li><a href="/notes/minikube.html">minikube</a></li>
-                                    <li><a href="/notes/k3s.html">k3s</a></li>
                                     <li><a href="/notes/cgroups.html">cgroups（control groups）</a></li>
                                     <li><a href="/notes/apache-mesos.html">Apache Mesos</a></li>
                                     <li><a href="/notes/systemd-journald-excessive-io.html">systemd-journaldの過剰なI/O</a></li>
@@ -40,7 +44,6 @@
                                     <li><a href="/notes/service-mesh.html">Service Mesh</a></li>
                                     <li><a href="/notes/rbac.html">RBAC (Role-Based Access Control)</a></li>
                                     <li><a href="/notes/podman.html">Podman</a></li>
-                                    <li><a href="/notes/open-vswitch.html" class="active">Open vSwitch (OVS)</a></li>
                                     <li><a href="/notes/microvm-ecosystem.html">コンテナ向け軽量VM技術</a></li>
                                     <li><a href="/notes/kubernetes-on-oxide.html">Kubernetes on Oxide</a></li>
                                     <li><a href="/notes/kubernetes-cloud-controller-manager.html">Cloud Controller Manager (CCM)</a></li>
@@ -461,7 +464,7 @@
 
 <ul>
 <li><strong>OpenStack</strong> — Neutronのプラグインとして、VM間のネットワークを構成する標準的な仮想スイッチ</li>
-<li><strong><a href="/notes/kubernetes.html">Kubernetes</a>/コンテナ基盤</strong> — CNIプラグイン経由でPod間ネットワークを構築</li>
+<li><strong><a href="/notes/kubernetes.html">Kubernetes</a>/コンテナ基盤</strong> — <a href="/notes/cni.html">CNI</a>プラグイン経由でPod間ネットワークを構築</li>
 <li><strong>SDN環境</strong> — 外部のSDNコントローラから直接OpenFlowで制御される構成</li>
 <li><strong>マルチテナントのトンネリング</strong> — VXLAN等でコンピュートノード間をオーバーレイ接続</li>
 <li><strong>サービスチェーン</strong> — 複数の仮想ネットワーク機能（VNF）間でトラフィックを転送</li>
@@ -489,7 +492,7 @@
                     </ul>
                 </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-12 19:21 / 更新日時: 2026-08-14 08:21</span>
+                    <span>作成日時: 2026-08-12 19:21 / 更新日時: 2026-08-14 08:39</span>
                     <a class="share-x" href="https://twitter.com/intent/tweet?text=Open%20vSwitch%20%28OVS%29&url=https%3A%2F%2F64p.org%2Fnotes%2Fopen-vswitch.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>

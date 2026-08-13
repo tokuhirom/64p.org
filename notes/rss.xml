@@ -6,7 +6,124 @@
 <atom:link href="https://64p.org/notes/rss.xml" rel="self" type="application/rss+xml" />
 <description>ちょっと調べたことや検証結果を、AIの力も借りながらメモしていくコーナーです。</description>
 <language>ja</language>
-<lastBuildDate>Fri, 14 Aug 2026 08:33:37 +0900</lastBuildDate>
+<lastBuildDate>Fri, 14 Aug 2026 08:39:45 +0900</lastBuildDate>
+<item>
+<title>Paxos</title>
+<link>https://64p.org/notes/paxos.html</link>
+<guid isPermaLink="true">https://64p.org/notes/paxos.html</guid>
+<pubDate>Fri, 14 Aug 2026 08:39:00 +0900</pubDate>
+<description><![CDATA[<h1>Paxos</h1>
+
+<p>Leslie Lamportが考案した、故障するノードを含む分散システムで単一の値に合意するためのアルゴリズム。分散合意アルゴリズムの古典であり、長らく教育・実装の標準だった。 <a class="note-tag" href="/notes/tags/distributed-systems.html">#distributed-systems</a></p>
+
+<h2>「The Part-Time Parliament」の逸話</h2>
+
+<p>論文はギリシャ・Paxos島の古代議会の寓話という体裁で書かれ、1990年に投稿されたが、当時の査読者・読者はその語り口のせいで本質的な貢献を理解できず、まともに取り合わなかった。結局掲載されたのは8年後の1998年（ACM TOCS）。あまりに理解されないので、Lamport自身が寓話を排して普通の言葉で書き直した「Paxos Made Simple」（2001）を出したことでも知られる。</p>
+
+<h2>Single-decree と Multi-Paxos</h2>
+
+<ul>
+<li>基本のPaxos（single-decree）は「1つの値への合意」を扱う。proposer/acceptor/learnerの役割と2フェーズ（prepare/accept）からなり、この範囲では証明も比較的きれい</li>
+<li>しかし実システムで必要なのは「値の列（レプリケートログ）への合意」で、そのための拡張が<strong>Multi-Paxos</strong>。安定したリーダーを選出してprepareフェーズを省略し、通常時は1往復でエントリを確定させる。この実用拡張のところが格段に複雑で、Paxosの「難解」という評判の多くはこのギャップに由来する</li>
+</ul>
+
+
+<h2>実システムでの採用</h2>
+
+<p>Googleの分散ロックサービス<strong>Chubby</strong>（Bigtableなどが依存）がMulti-Paxosでレプリカの一貫性を保っているのが有名。Chubbyの開発者は「Paxosアルゴリズムの記述と実世界のシステムの要求の間には大きなギャップがある」と述べており（論文「Paxos Made Live」）、この実装の難しさへの不満が、理解しやすさを第一目標に据えた<a href="/notes/raft.html">Raft</a>が生まれる動機になった。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://lamport.azurewebsites.net/pubs/lamport-paxos.pdf">The Part-Time Parliament - Leslie Lamport</a></li>
+<li><a href="https://blog.acolyer.org/2015/03/03/the-part-time-parliament/">The Part-Time Parliament - the morning paper</a></li>
+<li><a href="https://towardsdatascience.com/the-strange-story-of-the-paxos-algorithm-52a9f3f53ae0/">The Strange Story of the Paxos Algorithm - Towards Data Science</a></li>
+</ul>
+
+]]></description>
+</item>
+<item>
+<title>CoreOS</title>
+<link>https://64p.org/notes/coreos.html</link>
+<guid isPermaLink="true">https://64p.org/notes/coreos.html</guid>
+<pubDate>Fri, 14 Aug 2026 08:39:00 +0900</pubDate>
+<description><![CDATA[<h1>CoreOS</h1>
+
+<p>2013年創業のコンテナインフラ企業。同名のOS（後にContainer Linuxと改名）を軸に、コンテナ時代の基盤ソフトウェアを数多く生み出した。2018年1月にRed Hatが2.5億ドルで買収した。 <a class="note-tag" href="/notes/tags/infrastructure.html">#infrastructure</a> <a class="note-tag" href="/notes/tags/linux.html">#linux</a></p>
+
+<h2>Container Linux</h2>
+
+<p>コンテナを動かすことに特化した軽量Linuxディストリビューション。パッケージマネージャを持たず、アプリケーションはすべてコンテナで動かす前提で、OS自体は自動アップデートされるという、当時としては先進的な設計だった。Red Hat買収後の2020年5月にEOLとなり、公式後継は<strong>Fedora CoreOS</strong>（Red Hat OpenShiftのノードOSであるRHEL CoreOSの上流）。</p>
+
+<h2>生み出したソフトウェア</h2>
+
+<p>会社としてのCoreOSの影響は、OS本体よりも周辺プロジェクトの方が大きく残っている。</p>
+
+<ul>
+<li><strong><a href="/notes/etcd.html">etcd</a></strong> — 分散キーバリューストア。<a href="/notes/kubernetes.html">Kubernetes</a>のプライマリデータストアになり、CNCFへ寄贈された</li>
+<li><strong>rkt</strong> — Dockerに対抗したコンテナランタイム。ランタイム自体は廃れたが、OCI（Open Container Initiative）標準化を後押しした</li>
+<li><strong><a href="/notes/cni.html">CNI</a></strong> — rktの文脈で提唱されたコンテナネットワークの標準インターフェース。Kubernetesのネットワークプラグイン機構として生き残った</li>
+<li><strong>flannel</strong> — シンプルなオーバーレイネットワーク。<a href="/notes/k3s.html">k3s</a>のデフォルトCNIプラグインとして今も現役</li>
+<li><strong>Tectonic</strong> — Kubernetesディストリビューション。買収後にRed Hat OpenShiftへ統合された</li>
+<li><strong>Quay</strong> — コンテナレジストリ。Red Hat製品として継続</li>
+</ul>
+
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://www.redhat.com/en/about/press-releases/red-hat-acquire-coreos-expanding-its-kubernetes-and-containers-leadership">Red Hat to Acquire CoreOS - Red Hat</a></li>
+<li><a href="https://www.redhat.com/en/blog/faq-red-hat-acquire-coreos">FAQ: Red Hat to acquire CoreOS - Red Hat</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Container_Linux">Container Linux - Wikipedia</a></li>
+<li><a href="https://www.datacenterknowledge.com/open-source/fork-available-red-hat-ends-life-coreos-container-linux">Fork Available as Red Hat Ends Life of CoreOS Container Linux - Data Center Knowledge</a></li>
+</ul>
+
+]]></description>
+</item>
+<item>
+<title>CNI (Container Network Interface)</title>
+<link>https://64p.org/notes/cni.html</link>
+<guid isPermaLink="true">https://64p.org/notes/cni.html</guid>
+<pubDate>Fri, 14 Aug 2026 08:39:00 +0900</pubDate>
+<description><![CDATA[<h1>CNI (Container Network Interface)</h1>
+
+<p>Linuxコンテナのネットワーク設定を行うための、ベンダー中立な標準インターフェース仕様と基本プラグイン群。<a href="/notes/coreos.html">CoreOS</a>がコンテナランタイムrktのプラグイン機構として提唱したものが原型で、2017年5月にCNCFの10番目のホストプロジェクトになった。<a href="/notes/kubernetes.html">Kubernetes</a>のほか、Mesos・Cloud Foundryなどでも採用されている。 <a class="note-tag" href="/notes/tags/networking.html">#networking</a> <a class="note-tag" href="/notes/tags/kubernetes.html">#kubernetes</a></p>
+
+<h2>Kubernetesとの関係</h2>
+
+<p>Kubernetesは「全Podが一意なIPを持ち、NATなしで相互に通信できる」というネットワークモデルを定義するだけで、その実装は持たない。実装はCNIプラグインに委ねられていて、kubeletがPodを作るときにプラグインを呼び出し、以下を任せる。</p>
+
+<ul>
+<li><strong>IPAM</strong> — PodへのIPアドレスの割り当て</li>
+<li><strong>インターフェース作成とルーティング</strong> — Podのネットワークインターフェースを作り、ノードをまたぐPod間でパケットが届くようにする</li>
+</ul>
+
+
+<p><a href="/notes/kubeadm.html">kubeadm</a>でクラスタを組んだ直後にCNIプラグインのインストールが必要なのは、この「モデルと実装の分離」のため。</p>
+
+<h2>主なプラグイン</h2>
+
+<ul>
+<li><strong>Flannel</strong> — CoreOS発のシンプルなオーバーレイネットワーク。NetworkPolicyなどの高度な機能はないが軽量で、<a href="/notes/k3s.html">k3s</a>のデフォルト</li>
+<li><strong>Calico</strong> — L3ルーティングベースでオーバーレイなしでも動く。NetworkPolicyによるセキュリティ制御が充実</li>
+<li><strong><a href="/notes/cilium.html">Cilium</a></strong> — eBPFでカーネルレベルにネットワーキングを実装し、iptablesを迂回する。L7（HTTP/gRPC/Kafka）レベルのポリシーまで扱える</li>
+</ul>
+
+
+<h2>DockerのCNMとの対比</h2>
+
+<p>同時期にDockerはlibnetworkによる「CNM（Container Network Model）」という別のプラグインモデルを提唱していたが、KubernetesはCNIを採用した。コンテナネットワークの標準を巡る2陣営の競争があった。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://www.cncf.io/blog/2017/05/23/cncf-hosts-container-networking-interface-cni/">CNCF Hosts Container Networking Interface (CNI) - CNCF</a></li>
+<li><a href="https://thenewstack.io/container-networking-landscape-cni-coreos-cnm-docker/">The Container Networking Landscape: CNI from CoreOS and CNM from Docker - The New Stack</a></li>
+<li><a href="https://oneuptime.com/blog/post/2026-02-20-kubernetes-cni-comparison/view">Comparing Kubernetes CNI Plugins - OneUptime</a></li>
+</ul>
+
+]]></description>
+</item>
 <item>
 <title>Raft (合意アルゴリズム)</title>
 <link>https://64p.org/notes/raft.html</link>
@@ -18,7 +135,7 @@
 
 <h2>設計目標: 理解しやすさ</h2>
 
-<p>先行するPaxosと等価な結果を同等の効率で出せるが、構造がまったく異なる。Paxosが「難解で、実システムを作るには大きなギャップがある」とされてきたのに対し、Raftは<strong>理解しやすさ</strong>そのものを第一の設計目標にした。論文には2大学の学生43名にPaxosとRaftを両方教えたユーザースタディが載っており、33名がPaxosよりRaftの設問に良い成績を出した。</p>
+<p>先行する<a href="/notes/paxos.html">Paxos</a>と等価な結果を同等の効率で出せるが、構造がまったく異なる。Paxosが「難解で、実システムを作るには大きなギャップがある」とされてきたのに対し、Raftは<strong>理解しやすさ</strong>そのものを第一の設計目標にした。論文には2大学の学生43名にPaxosとRaftを両方教えたユーザースタディが載っており、33名がPaxosよりRaftの設問に良い成績を出した。</p>
 
 <p>そのために問題を独立したサブ問題に分解している:</p>
 
@@ -57,6 +174,36 @@ stateDiagram-v2
 ]]></description>
 </item>
 <item>
+<title>kubeadm</title>
+<link>https://64p.org/notes/kubeadm.html</link>
+<guid isPermaLink="true">https://64p.org/notes/kubeadm.html</guid>
+<pubDate>Fri, 14 Aug 2026 08:33:00 +0900</pubDate>
+<description><![CDATA[<h1>kubeadm</h1>
+
+<p><a href="/notes/kubernetes.html">Kubernetes</a>公式のクラスタ・ブートストラップツール。<code>kubeadm init</code> と <code>kubeadm join</code> という2つのコマンドを、クラスタ構築のベストプラクティスの「fast path」として提供する。 <a class="note-tag" href="/notes/tags/kubernetes.html">#kubernetes</a></p>
+
+<ul>
+<li><strong><code>kubeadm init</code></strong> — 最初のノードでコントロールプレーンを立ち上げる。証明書の生成、kube-apiserverなどコントロールプレーンコンポーネントのstatic Pod化、<a href="/notes/etcd.html">etcd</a>のセットアップまでを行う</li>
+<li><strong><code>kubeadm join</code></strong> — bootstrap tokenを使ってワーカーノード（またはコントロールプレーンの追加ノード）をクラスタに参加させる</li>
+</ul>
+
+
+<h2>スコープの割り切り</h2>
+
+<p>kubeadmは「minimum viable cluster」を立ち上げることだけに責任を持つ。マシンのプロビジョニングはスコープ外で、<a href="/notes/cni.html">CNI</a>プラグイン（ネットワーク）のインストールもユーザーが後から行う。この割り切りによってオンプレ・クラウドVM・ベアメタル・ラップトップのどこでも動き、kubespray・<a href="/notes/cluster-api.html">Cluster API</a>・<a href="/notes/minikube.html">minikube</a>・<a href="/notes/kind.html">kind</a>といった上位ツールが土台として使える部品になっている（kindがnode imageコンテナ内で各ノードをブートストラップするのに使っているのもkubeadm）。</p>
+
+<p>kubeadmで構築したクラスタはKubernetesのConformanceテストを通る。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://kubernetes.io/docs/reference/setup-tools/kubeadm/">Kubeadm | Kubernetes</a></li>
+<li><a href="https://oneuptime.com/blog/post/2026-02-02-kubernetes-kubeadm-cluster-bootstrap/view">How to Bootstrap Kubernetes Clusters with kubeadm - OneUptime</a></li>
+</ul>
+
+]]></description>
+</item>
+<item>
 <title>Let&#39;s Encrypt</title>
 <link>https://64p.org/notes/lets-encrypt.html</link>
 <guid isPermaLink="true">https://64p.org/notes/lets-encrypt.html</guid>
@@ -86,36 +233,6 @@ stateDiagram-v2
 <li><a href="https://letsencrypt.org/2015/11/09/why-90-days">Why ninety-day lifetimes for certificates? - Let&rsquo;s Encrypt</a></li>
 <li><a href="https://letsencrypt.org/docs/cert-lifetimes/">Certificate Lifetime Rationale and Plans - Let&rsquo;s Encrypt</a></li>
 <li><a href="https://letsencrypt.org/2025/12/02/from-90-to-45">Decreasing Certificate Lifetimes to 45 Days - Let&rsquo;s Encrypt</a></li>
-</ul>
-
-]]></description>
-</item>
-<item>
-<title>kubeadm</title>
-<link>https://64p.org/notes/kubeadm.html</link>
-<guid isPermaLink="true">https://64p.org/notes/kubeadm.html</guid>
-<pubDate>Fri, 14 Aug 2026 08:33:00 +0900</pubDate>
-<description><![CDATA[<h1>kubeadm</h1>
-
-<p><a href="/notes/kubernetes.html">Kubernetes</a>公式のクラスタ・ブートストラップツール。<code>kubeadm init</code> と <code>kubeadm join</code> という2つのコマンドを、クラスタ構築のベストプラクティスの「fast path」として提供する。 <a class="note-tag" href="/notes/tags/kubernetes.html">#kubernetes</a></p>
-
-<ul>
-<li><strong><code>kubeadm init</code></strong> — 最初のノードでコントロールプレーンを立ち上げる。証明書の生成、kube-apiserverなどコントロールプレーンコンポーネントのstatic Pod化、<a href="/notes/etcd.html">etcd</a>のセットアップまでを行う</li>
-<li><strong><code>kubeadm join</code></strong> — bootstrap tokenを使ってワーカーノード（またはコントロールプレーンの追加ノード）をクラスタに参加させる</li>
-</ul>
-
-
-<h2>スコープの割り切り</h2>
-
-<p>kubeadmは「minimum viable cluster」を立ち上げることだけに責任を持つ。マシンのプロビジョニングはスコープ外で、CNIプラグイン（ネットワーク）のインストールもユーザーが後から行う。この割り切りによってオンプレ・クラウドVM・ベアメタル・ラップトップのどこでも動き、kubespray・<a href="/notes/cluster-api.html">Cluster API</a>・<a href="/notes/minikube.html">minikube</a>・<a href="/notes/kind.html">kind</a>といった上位ツールが土台として使える部品になっている（kindがnode imageコンテナ内で各ノードをブートストラップするのに使っているのもkubeadm）。</p>
-
-<p>kubeadmで構築したクラスタはKubernetesのConformanceテストを通る。</p>
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://kubernetes.io/docs/reference/setup-tools/kubeadm/">Kubeadm | Kubernetes</a></li>
-<li><a href="https://oneuptime.com/blog/post/2026-02-02-kubernetes-kubeadm-cluster-bootstrap/view">How to Bootstrap Kubernetes Clusters with kubeadm - OneUptime</a></li>
 </ul>
 
 ]]></description>
@@ -180,6 +297,7 @@ stateDiagram-v2
 <li><a href="/notes/cluster-api.html">Cluster API (CAPI)</a> — Kubernetesクラスタ自体をKubernetesのリソースとして宣言的に管理する仕組み</li>
 <li><a href="/notes/kubernetes-cloud-controller-manager.html">Cloud Controller Manager (CCM)</a> — クラウドプロバイダー固有の制御ループを本体から分離したコンポーネント</li>
 <li><a href="/notes/container-storage-interface.html">Container Storage Interface (CSI)</a> — ストレージベンダーがプラグインを書くための標準インターフェース</li>
+<li><a href="/notes/cni.html">CNI</a> — Podネットワークを実装するプラグインの標準インターフェース。ストレージにおけるCSIのネットワーク版にあたる</li>
 <li><a href="/notes/etcd.html">etcd</a> — クラスタの全状態を保存するプライマリデータストア</li>
 <li><a href="/notes/kubeadm.html">kubeadm</a> — クラスタを手作業で組む際の公式ブートストラップツール。kind・Cluster APIなど上位ツールの土台でもある</li>
 </ul>
@@ -197,6 +315,39 @@ stateDiagram-v2
 <ul>
 <li><a href="/notes/apache-mesos.html">Apache Mesos</a> — two-level schedulingを特徴とするクラスタマネージャ。オーケストレーション競争でKubernetesと争い、2025年にApache Attic入りした</li>
 <li><a href="/notes/google-borg.html">Borg</a> — Kubernetesの源流となったGoogle社内のクラスタ管理システム</li>
+</ul>
+
+]]></description>
+</item>
+<item>
+<title>etcd</title>
+<link>https://64p.org/notes/etcd.html</link>
+<guid isPermaLink="true">https://64p.org/notes/etcd.html</guid>
+<pubDate>Fri, 14 Aug 2026 08:24:00 +0900</pubDate>
+<description><![CDATA[<h1>etcd</h1>
+
+<p>分散システム向けの、信頼性の高いキーバリューストア。Go製で、合意アルゴリズムに<strong><a href="/notes/raft.html">Raft</a></strong>を使い、リーダーノードの故障を含むマシン障害に耐えながら強い一貫性を保つ。名前はUnixの設定ディレクトリ <code>/etc</code> に distributed の「d」を付けたもの（「分散された/etc」）。 <a class="note-tag" href="/notes/tags/infrastructure.html">#infrastructure</a> <a class="note-tag" href="/notes/tags/distributed-systems.html">#distributed-systems</a></p>
+
+<h2>経緯</h2>
+
+<ul>
+<li>2013年、<a href="/notes/coreos.html">CoreOS</a>社で開発が始まり、2014年にオープンソース化</li>
+<li>2018年、CoreOSがRed Hatに買収され、同年12月にプロジェクトはCNCFへ移管</li>
+<li>2020年11月、CNCFのgraduatedプロジェクトに昇格</li>
+</ul>
+
+
+<h2>Kubernetesのプライマリデータストア</h2>
+
+<p><a href="/notes/kubernetes.html">Kubernetes</a>のクラスタ状態（あらゆるAPIオブジェクト）はすべてetcdに保存・複製される。kube-apiserverの背後にいる唯一のステートフルなコンポーネントであり、etcdのバックアップがそのままクラスタのバックアップになる。一方で運用（クラスタ構成・スナップショット・ディスク性能への敏感さ）には手間がかかるため、<a href="/notes/k3s.html">k3s</a>は「kine」というシムでetcd APIをSQL（デフォルトはsqlite3）に変換し、小規模構成でetcdなしで動けるようにしている。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://github.com/etcd-io/etcd">etcd-io/etcd - GitHub</a></li>
+<li><a href="https://www.cncf.io/reports/etcd-project-journey-report/">etcd Project Journey Report - CNCF</a></li>
+<li><a href="https://www.redhat.com/en/topics/containers/what-is-etcd">What is etcd? - Red Hat</a></li>
+<li><a href="https://www.infoq.com/news/2020/11/etcd-cncf-graduation/">etcd Becomes a CNCF Graduated Project - InfoQ</a></li>
 </ul>
 
 ]]></description>
@@ -272,39 +423,6 @@ stateDiagram-v2
 ]]></description>
 </item>
 <item>
-<title>etcd</title>
-<link>https://64p.org/notes/etcd.html</link>
-<guid isPermaLink="true">https://64p.org/notes/etcd.html</guid>
-<pubDate>Fri, 14 Aug 2026 08:24:00 +0900</pubDate>
-<description><![CDATA[<h1>etcd</h1>
-
-<p>分散システム向けの、信頼性の高いキーバリューストア。Go製で、合意アルゴリズムに<strong><a href="/notes/raft.html">Raft</a></strong>を使い、リーダーノードの故障を含むマシン障害に耐えながら強い一貫性を保つ。名前はUnixの設定ディレクトリ <code>/etc</code> に distributed の「d」を付けたもの（「分散された/etc」）。 <a class="note-tag" href="/notes/tags/infrastructure.html">#infrastructure</a> <a class="note-tag" href="/notes/tags/distributed-systems.html">#distributed-systems</a></p>
-
-<h2>経緯</h2>
-
-<ul>
-<li>2013年、CoreOS社で開発が始まり、2014年にオープンソース化</li>
-<li>2018年、CoreOSがRed Hatに買収され、同年12月にプロジェクトはCNCFへ移管</li>
-<li>2020年11月、CNCFのgraduatedプロジェクトに昇格</li>
-</ul>
-
-
-<h2>Kubernetesのプライマリデータストア</h2>
-
-<p><a href="/notes/kubernetes.html">Kubernetes</a>のクラスタ状態（あらゆるAPIオブジェクト）はすべてetcdに保存・複製される。kube-apiserverの背後にいる唯一のステートフルなコンポーネントであり、etcdのバックアップがそのままクラスタのバックアップになる。一方で運用（クラスタ構成・スナップショット・ディスク性能への敏感さ）には手間がかかるため、<a href="/notes/k3s.html">k3s</a>は「kine」というシムでetcd APIをSQL（デフォルトはsqlite3）に変換し、小規模構成でetcdなしで動けるようにしている。</p>
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://github.com/etcd-io/etcd">etcd-io/etcd - GitHub</a></li>
-<li><a href="https://www.cncf.io/reports/etcd-project-journey-report/">etcd Project Journey Report - CNCF</a></li>
-<li><a href="https://www.redhat.com/en/topics/containers/what-is-etcd">What is etcd? - Red Hat</a></li>
-<li><a href="https://www.infoq.com/news/2020/11/etcd-cncf-graduation/">etcd Becomes a CNCF Graduated Project - InfoQ</a></li>
-</ul>
-
-]]></description>
-</item>
-<item>
 <title>Borg (Googleのクラスタ管理システム)</title>
 <link>https://64p.org/notes/google-borg.html</link>
 <guid isPermaLink="true">https://64p.org/notes/google-borg.html</guid>
@@ -340,6 +458,57 @@ stateDiagram-v2
 <li><a href="https://research.google/pubs/large-scale-cluster-management-at-google-with-borg/">Large-scale cluster management at Google with Borg - Google Research</a></li>
 <li><a href="https://queue.acm.org/detail.cfm?id=2898444">Borg, Omega, and Kubernetes - ACM Queue</a></li>
 <li><a href="https://en.wikipedia.org/wiki/Borg_(cluster_manager">Borg (cluster manager) - Wikipedia</a>)</li>
+</ul>
+
+]]></description>
+</item>
+<item>
+<title>k3s</title>
+<link>https://64p.org/notes/k3s.html</link>
+<guid isPermaLink="true">https://64p.org/notes/k3s.html</guid>
+<pubDate>Fri, 14 Aug 2026 08:20:00 +0900</pubDate>
+<description><![CDATA[<h1>k3s</h1>
+
+<p>Rancher Labs（現SUSE）が開発した軽量<a href="/notes/kubernetes.html">Kubernetes</a>ディストリビューション。CNCFの適合性認証（conformant）を受けた完全なKubernetesでありながら、100MB未満の単一バイナリとして配布され、コマンド一発でインストールできる。 <a class="note-tag" href="/notes/tags/kubernetes.html">#kubernetes</a></p>
+
+<p>名前の由来: Kubernetesの略記「K8s」（10文字）に対し、「半分のメモリフットプリント」を目指したので5文字ぶんの「K3s」。K8sと違って元になる長い正式名称はない。</p>
+
+<h2>アーキテクチャ</h2>
+
+<p>通常のKubernetesがetcd・kube-apiserver・kubeletなど多数のプロセス・依存物で構成されるのに対し、k3sはコントロールプレーン全コンポーネントを単一バイナリ・単一プロセスに封じ込め、証明書配布のようなクラスタ運用の面倒ごとも自動化している。ロールは server（コントロールプレーン）と agent（ワーカー）の2つだけ。</p>
+
+<p>同梱されるもの:</p>
+
+<ul>
+<li>コンテナランタイム: containerd（cri-dockerdも選択可）</li>
+<li>ネットワーク: Flannel（<a href="/notes/cni.html">CNI</a>）、CoreDNS、kube-router（NetworkPolicy）</li>
+<li>Ingress / LB: <a href="/notes/traefik.html">Traefik</a>、ServiceLB</li>
+<li>ストレージ: local-path-provisioner</li>
+<li>iptables・socatなどのユーティリティ</li>
+</ul>
+
+
+<h2>データストア: kine</h2>
+
+<p>デフォルトのデータストアは<a href="/notes/etcd.html">etcd</a>ではなく<strong>sqlite3</strong>。「kine」というシムがetcd APIをSQLに変換することで、sqlite3のほかMySQL・PostgreSQLもバックエンドにできる。HA構成ではembedded etcdまたは外部データストアを使う。etcdの運用負担を避けられるのがシングルノード・小規模構成での利点。</p>
+
+<h2>ユースケース</h2>
+
+<p>エッジ、IoT、ARMボード、CI、開発環境、エアギャップ環境、ホームラボなど、リソースが限られていたり運用をシンプルにしたい場面が主戦場。2026年時点でエッジのKubernetesデプロイの35%以上がk3sという調査もある。</p>
+
+<p>派生ツールとして、k3sをDockerコンテナ内で動かす<strong>k3d</strong>があり、ローカル開発用途で<a href="/notes/minikube.html">minikube</a>や<a href="/notes/kind.html">kind</a>と並ぶ選択肢になっている。</p>
+
+<h2><a href="/notes/kubernetes.html">Kubernetes</a>の中での位置づけ</h2>
+
+<p>「フル機能のKubernetesを、構成を割り切ることで軽く・運用しやすくする」ディストリビューション。upstreamそのものをローカルに立てる<a href="/notes/minikube.html">minikube</a>とは役割が異なり、こちらは本番（特にエッジ）でもそのまま使われる。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://docs.k3s.io/">K3s - Lightweight Kubernetes</a></li>
+<li><a href="https://github.com/k3s-io/k3s">k3s-io/k3s - GitHub</a></li>
+<li><a href="https://www.civo.com/academy/kubernetes-introduction/introduction-to-k3s">What is k3s? Lightweight Kubernetes in a Single Binary - Civo</a></li>
+<li><a href="https://dasroot.net/posts/2026/04/k3s-k0s-lightweight-kubernetes-edge-development/">K3s and K0s: Lightweight Kubernetes for Edge and Development - dasroot.net</a></li>
 </ul>
 
 ]]></description>
@@ -385,57 +554,6 @@ stateDiagram-v2
 <li><a href="https://minikube.sigs.k8s.io/docs/">minikube documentation</a></li>
 <li><a href="https://www.armosec.io/blog/best-local-kubernetes-tools/">Local Kubernetes Tools Compared: Kind vs. Minikube vs. k3d - ARMO</a></li>
 <li><a href="https://reintech.ai/blog/kind-vs-minikube-vs-k3d-local-kubernetes-comparison">Kind vs Minikube vs k3d: Best Local Kubernetes in 2026 - Reintech</a></li>
-</ul>
-
-]]></description>
-</item>
-<item>
-<title>k3s</title>
-<link>https://64p.org/notes/k3s.html</link>
-<guid isPermaLink="true">https://64p.org/notes/k3s.html</guid>
-<pubDate>Fri, 14 Aug 2026 08:20:00 +0900</pubDate>
-<description><![CDATA[<h1>k3s</h1>
-
-<p>Rancher Labs（現SUSE）が開発した軽量<a href="/notes/kubernetes.html">Kubernetes</a>ディストリビューション。CNCFの適合性認証（conformant）を受けた完全なKubernetesでありながら、100MB未満の単一バイナリとして配布され、コマンド一発でインストールできる。 <a class="note-tag" href="/notes/tags/kubernetes.html">#kubernetes</a></p>
-
-<p>名前の由来: Kubernetesの略記「K8s」（10文字）に対し、「半分のメモリフットプリント」を目指したので5文字ぶんの「K3s」。K8sと違って元になる長い正式名称はない。</p>
-
-<h2>アーキテクチャ</h2>
-
-<p>通常のKubernetesがetcd・kube-apiserver・kubeletなど多数のプロセス・依存物で構成されるのに対し、k3sはコントロールプレーン全コンポーネントを単一バイナリ・単一プロセスに封じ込め、証明書配布のようなクラスタ運用の面倒ごとも自動化している。ロールは server（コントロールプレーン）と agent（ワーカー）の2つだけ。</p>
-
-<p>同梱されるもの:</p>
-
-<ul>
-<li>コンテナランタイム: containerd（cri-dockerdも選択可）</li>
-<li>ネットワーク: Flannel（CNI）、CoreDNS、kube-router（NetworkPolicy）</li>
-<li>Ingress / LB: <a href="/notes/traefik.html">Traefik</a>、ServiceLB</li>
-<li>ストレージ: local-path-provisioner</li>
-<li>iptables・socatなどのユーティリティ</li>
-</ul>
-
-
-<h2>データストア: kine</h2>
-
-<p>デフォルトのデータストアは<a href="/notes/etcd.html">etcd</a>ではなく<strong>sqlite3</strong>。「kine」というシムがetcd APIをSQLに変換することで、sqlite3のほかMySQL・PostgreSQLもバックエンドにできる。HA構成ではembedded etcdまたは外部データストアを使う。etcdの運用負担を避けられるのがシングルノード・小規模構成での利点。</p>
-
-<h2>ユースケース</h2>
-
-<p>エッジ、IoT、ARMボード、CI、開発環境、エアギャップ環境、ホームラボなど、リソースが限られていたり運用をシンプルにしたい場面が主戦場。2026年時点でエッジのKubernetesデプロイの35%以上がk3sという調査もある。</p>
-
-<p>派生ツールとして、k3sをDockerコンテナ内で動かす<strong>k3d</strong>があり、ローカル開発用途で<a href="/notes/minikube.html">minikube</a>や<a href="/notes/kind.html">kind</a>と並ぶ選択肢になっている。</p>
-
-<h2><a href="/notes/kubernetes.html">Kubernetes</a>の中での位置づけ</h2>
-
-<p>「フル機能のKubernetesを、構成を割り切ることで軽く・運用しやすくする」ディストリビューション。upstreamそのものをローカルに立てる<a href="/notes/minikube.html">minikube</a>とは役割が異なり、こちらは本番（特にエッジ）でもそのまま使われる。</p>
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://docs.k3s.io/">K3s - Lightweight Kubernetes</a></li>
-<li><a href="https://github.com/k3s-io/k3s">k3s-io/k3s - GitHub</a></li>
-<li><a href="https://www.civo.com/academy/kubernetes-introduction/introduction-to-k3s">What is k3s? Lightweight Kubernetes in a Single Binary - Civo</a></li>
-<li><a href="https://dasroot.net/posts/2026/04/k3s-k0s-lightweight-kubernetes-edge-development/">K3s and K0s: Lightweight Kubernetes for Edge and Development - dasroot.net</a></li>
 </ul>
 
 ]]></description>
@@ -1208,132 +1326,6 @@ sequenceDiagram
 <li><a href="https://en.wikipedia.org/wiki/Band_gap">Band gap - Wikipedia</a></li>
 <li><a href="https://www.waferworld.com/post/band-gap-in-semiconductors-all-you-need-to-know">Band Gap in Semiconductors: All You Need to Know - Waferworld</a></li>
 <li><a href="https://www.nuclear-power.com/nuclear-engineering/radiation-detection/semiconductor-detectors/what-are-semiconductors-properties-of-semiconductors/conduction-and-valence-band-in-semiconductors/">Conduction and Valence Band in Semiconductors | nuclear-power.com</a></li>
-</ul>
-
-]]></description>
-</item>
-<item>
-<title>NEDO(新エネルギー・産業技術総合開発機構)</title>
-<link>https://64p.org/notes/nedo.html</link>
-<guid isPermaLink="true">https://64p.org/notes/nedo.html</guid>
-<pubDate>Fri, 14 Aug 2026 05:39:00 +0900</pubDate>
-<description><![CDATA[<h1>NEDO(新エネルギー・産業技術総合開発機構)</h1>
-
-<p>日本のエネルギー・地球環境問題への対応と産業技術力の強化を目的とする国立研究開発法人。英語名 New Energy and Industrial Technology Development Organization の略称。 <a class="note-tag" href="/notes/tags/japan.html">#japan</a> <a class="note-tag" href="/notes/tags/industry.html">#industry</a></p>
-
-<h2>概要</h2>
-
-<ul>
-<li>1980年10月1日に設立。2003年10月1日に独立行政法人として再編された</li>
-<li>本部は東京都外、神奈川県川崎市に所在</li>
-<li>職員数は約1,000人。国内に北海道・関西・九州の事務所、海外にワシントンD.C.・シリコンバレー・パリ・北京・バンコク・ジャカルタ・ニューデリーの拠点を持つ</li>
-<li>2024年度の予算規模は約1兆4,631億円で、日本最大級の独立行政法人とされる</li>
-</ul>
-
-
-<h2>役割</h2>
-
-<p>自らが研究者を抱えるのではなく、産官学の技術力・研究力を橋渡し・統合する「イノベーション加速機関」として、委託事業や補助金を通じて技術開発を支援する立場をとる。エネルギー・環境分野に加え、半導体などの産業技術分野の開発プロジェクトも手がける(<a href="/notes/diamond-semiconductor.html">ダイヤモンド半導体</a>の国家プロジェクトなど)。</p>
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://www.nedo.go.jp/english/introducing/introducing_index.html">About NEDO | NEDO</a></li>
-<li><a href="https://en.wikipedia.org/wiki/New_Energy_and_Industrial_Technology_Development_Organization">New Energy and Industrial Technology Development Organization - Wikipedia</a></li>
-<li><a href="https://www.nedo.go.jp/english/introducing/introducing_profile.html">Background Information | NEDO</a></li>
-</ul>
-
-]]></description>
-</item>
-<item>
-<title>ダイヤモンド半導体</title>
-<link>https://64p.org/notes/diamond-semiconductor.html</link>
-<guid isPermaLink="true">https://64p.org/notes/diamond-semiconductor.html</guid>
-<pubDate>Fri, 14 Aug 2026 05:37:00 +0900</pubDate>
-<description><![CDATA[<h1>ダイヤモンド半導体</h1>
-
-<p><a href="/notes/silicon.html">シリコン</a>ではなく<a href="/notes/carbon.html">炭素</a>の結晶であるダイヤモンドを基板・活性層に使う半導体デバイス。<a href="/notes/tetravalent-element.html">4価元素</a>である炭素同士のsp3結合でできた結晶を使う点がシリコン半導体と異なる。 <a class="note-tag" href="/notes/tags/electronics.html">#electronics</a> <a class="note-tag" href="/notes/tags/materials-science.html">#materials-science</a></p>
-
-<h2>物性</h2>
-
-<ul>
-<li><a href="/notes/bandgap.html">バンドギャップ</a>が約5.47 eVと非常に広い(シリコンは1.1 eV程度)。SiC(炭化ケイ素)や<a href="/notes/gallium-nitride.html">GaN(窒化ガリウム)</a>などの「ワイドバンドギャップ半導体」よりもさらに広く、「ウルトラワイドバンドギャップ半導体」に位置づけられる</li>
-<li>絶縁破壊電界強度が高い(文献により10〜20 MV/cm)。同じ厚みでもより高い電圧に耐えられる</li>
-<li>熱伝導率が既知の物質中で最高クラス(22 W/cm·K)で放熱性に極めて優れる</li>
-<li>キャリア移動度も高い(電子移動度約4000 cm²/V·s、正孔移動度約3800 cm²/V·s)</li>
-<li>これらを総合したJohnson性能指数でSiC・GaNを上回り、高周波・高耐圧・高出力デバイス向けの「究極の半導体」と呼ばれることがある</li>
-</ul>
-
-
-<h2>製造方法</h2>
-
-<ul>
-<li>高温高圧合成(HPHT: High Pressure High Temperature)</li>
-<li>化学気相成長(CVD)、特にマイクロ波プラズマCVD(MPCVD)による人工ダイヤモンド成長</li>
-</ul>
-
-
-<h2>用途と課題</h2>
-
-<p>現状は主にパワーエレクトロニクス分野の研究開発が中心で、<a href="/notes/p-type-semiconductor.html">p型</a>ショットキーバリアダイオード(SBD)やユニポーラ型FETが主な対象。実験レベルでは耐圧10 kV級のデバイスも報告されている。</p>
-
-<p>一方、<a href="/notes/n-type-semiconductor.html">n型</a>ダイヤモンドの実現が難しく、これがバイポーラデバイス開発のボトルネックになっている。ドーピングプロセス自体も複雑でコストが高い。実際の製品化までは、少なくともあと5年程度かかると見られている。</p>
-
-<p>日本では経済産業省・<a href="/notes/nedo.html">NEDO</a>などが国家プロジェクトとして開発を後押ししている分野でもある。</p>
-
-<h2><a href="/notes/semiconductor.html">半導体</a>の中での位置づけ</h2>
-
-<p>GaNやSiCよりさらに広いバンドギャップを持つ「ウルトラワイドバンドギャップ半導体」。研究開発段階だが、より高耐圧・高温動作の実現が期待される。</p>
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://www.ewadirect.com/proceedings/ace/article/view/22582">Overview of Diamond Semiconductor Development and Research Directions</a></li>
-<li><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC11278176/">A Review of Diamond Materials and Applications in Power Semiconductor Devices</a></li>
-<li><a href="https://www.japan.go.jp/kizuna/2025/02/diamond_semiconductors.html">Diamond Semiconductors: Turning Crisis into Innovation with Ultimate Deep Tech | JapanGov</a></li>
-<li><a href="https://hmntl.illinois.edu/news/60581">Next generation semiconductors: Diamond device shows highest breakdown voltage | Illinois HMNTL</a></li>
-<li><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10673564/">Power Electronics Revolutionized: A Comprehensive Analysis of Emerging Wide and Ultrawide Bandgap Devices</a></li>
-<li><a href="https://www.patsnap.com/resources/blog/rd-blog/diamond-semiconductor-power-device-technology-2026/">Diamond Semiconductor Power Device Technology 2026 | PatSnap</a></li>
-</ul>
-
-]]></description>
-</item>
-<item>
-<title>伊能忠敬</title>
-<link>https://64p.org/notes/ino-tadataka.html</link>
-<guid isPermaLink="true">https://64p.org/notes/ino-tadataka.html</guid>
-<pubDate>Fri, 14 Aug 2026 05:00:00 +0900</pubDate>
-<description><![CDATA[<h1>伊能忠敬</h1>
-
-<p>江戸時代後期、日本全国を実測して初めて精度の高い日本地図を作り上げた測量家（1745年-1818年）。#japan <a class="note-tag" href="/notes/tags/history.html">#history</a></p>
-
-<h2>生涯</h2>
-
-<p>上総国（現・千葉県九十九里町）出身。18歳で下総国佐原（現・千葉県香取市）の伊能家に婿養子として入り、酒造業・米穀取引などの家業を発展させた後、50歳で家督を息子に譲って隠居した。</p>
-
-<p>隠居後の1795年、江戸に出て幕府天文方の高橋至時（たかはし よしとき）に師事し、天文学・暦学・測量術を学んだ。55歳から71歳で亡くなるまでの17年間に10回の測量旅行を行い、日本全国の海岸線を歩いて測量した総距離は約4万kmにおよぶ（地球一周分に相当する）。</p>
-
-<h2>測量の動機</h2>
-
-<p>忠敬が測量を始めた直接の目的は、地球の大きさ（子午線1度の距離）を知ることだったとされる。当時、地球の大きさを正確に測る方法として、異なる緯度間の距離を実測して比較する手法が知られており、蝦夷地（北海道）への測量旅行はその第一歩として企画された。結果として得られた実測データが、そのまま精密な日本地図の作成に繋がっていった。</p>
-
-<h2>大日本沿海輿地全図</h2>
-
-<p>忠敬は地図の完成を見ないまま1818年に没し、弟子の高橋景保（至時の息子）らが作業を引き継いで1821年に完成させた。「大日本沿海輿地全図（伊能図）」と呼ばれ、縮尺別に大図（全214図）・中図（全8図）・小図（全3図）から構成される。現代の測量・衛星写真による地図と比較しても、沿岸部の形状はほぼ一致する精度を持つ。</p>
-
-<h2>シーボルト事件</h2>
-
-<p>伊能図は国防上の理由から国外への持ち出しが禁じられていた。1828年、ドイツ人医師フィリップ・フランツ・フォン・シーボルトが伊能図の写しなどを国外に持ち出そうとして発覚し、国外追放処分となった（シーボルト事件）。この事件は、伊能図がそれだけ軍事的にも価値のある精度を持っていたことを示している。</p>
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://www.nippon.com/ja/japan-topics/b07210/">伊能忠敬：隠居後に前人未到の全国測量を成し遂げ、精密な日本地図を作成 | nippon.com</a></li>
-<li><a href="https://www.nippon.com/en/japan-topics/b07210/mapping-a-nation-japan%E2%80%99s-most-famous-cartographer-ino-tadataka.html">Mapping a Nation: Japan&rsquo;s Most Famous Cartographer, Inō Tadataka | Nippon.com</a></li>
-<li><a href="https://www.gsi.go.jp/KIDS/MEMORI/inou.htm">測量・地図ミニ人物伝：伊能忠敬 | 国土地理院</a></li>
-<li><a href="https://www.city.katori.lg.jp/sightseeing/museum/tadataka.html">伊能忠敬とは：香取市ウェブサイト</a></li>
-<li><a href="https://www.topcon.co.jp/media/infrastructure/surveying/">日本地図を作った伊能忠敬測量の目的は地球の大きさを測ることだった!? | Through the LENS by TOPCON</a></li>
-<li><a href="https://ja.wikipedia.org/wiki/%E3%82%B7%E3%83%BC%E3%83%9C%E3%83%AB%E3%83%88%E4%BA%8B%E4%BB%B6">シーボルト事件 - Wikipedia</a></li>
 </ul>
 
 ]]></description>
