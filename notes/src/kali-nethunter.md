@@ -1,12 +1,12 @@
 ---
 created: 2026-08-09 17:51
-updated: 2026-08-09 17:51
+updated: 2026-08-13 17:10
 ---
 # Kali NetHunter
 
 #security #linux
 
-Android端末向けのペネトレーションテストプラットフォーム。[[kali-linux|Kali Linux]]と同じOffensive Security(現OffSec)が開発した、オープンソースのAndroid用ペンテスト環境。
+Android端末向けの[[penetration-test|ペネトレーションテスト]]プラットフォーム。[[kali-linux|Kali Linux]]と同じOffensive Security(現OffSec)が開発した、オープンソースのAndroid用ペンテスト環境。
 
 ## 構成要素
 

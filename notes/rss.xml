@@ -6,7 +6,44 @@
 <atom:link href="https://64p.org/notes/rss.xml" rel="self" type="application/rss+xml" />
 <description>ちょっと調べたことや検証結果を、AIの力も借りながらメモしていくコーナーです。</description>
 <language>ja</language>
-<lastBuildDate>Thu, 13 Aug 2026 15:04:47 +0900</lastBuildDate>
+<lastBuildDate>Thu, 13 Aug 2026 17:10:42 +0900</lastBuildDate>
+<item>
+<title>ペネトレーションテスト</title>
+<link>https://64p.org/notes/penetration-test.html</link>
+<guid isPermaLink="true">https://64p.org/notes/penetration-test.html</guid>
+<pubDate>Thu, 13 Aug 2026 17:10:00 +0900</pubDate>
+<description><![CDATA[<h1>ペネトレーションテスト</h1>
+
+<p><a class="note-tag" href="/notes/tags/security.html">#security</a></p>
+
+<p>実際の攻撃者が使うのと同じツール・手法を用いて対象システムに疑似的な攻撃を仕掛け、セキュリティ上の脆弱性を発見・実証するテスト手法。「ペンテスト」とも呼ばれる。<a href="/notes/metasploit.html">Metasploit</a>や<a href="/notes/burp-suite.html">Burp Suite</a>のようなツール、<a href="/notes/kali-linux.html">Kali Linux</a>のようなディストリビューションが実務で使われる。</p>
+
+<h2>定義</h2>
+
+<ul>
+<li><strong>NIST (SP 800-115)</strong>: システム・デバイス・プロセスが、積極的な侵害の試みにどの程度耐えられるかを検証するテスト、と定義している。単発の脆弱性を見つけるだけでなく、複数の脆弱性を組み合わせて、より深い侵入・権限昇格が可能かどうかまで検証することが多い。</li>
+<li><strong>OWASP</strong>: Webアプリケーションを対象としたペンテスト手法を体系化した「Web Security Testing Guide (WSTG)」を公開している。入力値検証・認証機構・セッション管理・設定の不備など、Webアプリ特有の観点からテスト項目を網羅している。</li>
+</ul>
+
+
+<h2>脆弱性診断(Vulnerability Assessment)との違い</h2>
+
+<p>脆弱性診断が既知の脆弱性を網羅的に洗い出すスキャン中心の手法であるのに対し、ペネトレーションテストはそれらの脆弱性を実際に悪用(exploit)して、どこまで侵入できるか・実害に繋がるかを人手で検証する点が特徴とされる。</p>
+
+<h2>実施の前提</h2>
+
+<p>対象システムの所有者からの正式な許可(スコープ・期間・手法を定めた契約)が前提となる。許可なく行うと不正アクセス行為となる。<a href="/notes/hack-the-box.html">Hack The Box</a>のような学習プラットフォームでは、許可された仮想環境上で技術を練習できる。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://www.ibm.com/think/insights/pen-testing-methodology">Top Penetration Testing Methodologies | IBM</a></li>
+<li><a href="https://csrc.nist.gov/glossary/term/penetration_testing">penetration testing - Glossary | CSRC (NIST)</a></li>
+<li><a href="https://owasp.org/www-project-web-security-testing-guide/latest/3-The_OWASP_Testing_Framework/1-Penetration_Testing_Methodologies">Penetration Testing Methodologies (OWASP)</a></li>
+</ul>
+
+]]></description>
+</item>
 <item>
 <title>mutsuでCro::HTTPのhello worldを動かす実験</title>
 <link>https://64p.org/notes/mutsu-cro-http-experiment.html</link>
@@ -1634,60 +1671,6 @@ e^x = 1 + x + \frac{x^2}{2!} + \frac{x^3}{3!} + \cdots
 <li><a href="https://en.wikipedia.org/wiki/Riemann_sum">Riemann sum - Wikipedia</a></li>
 <li><a href="https://math.libretexts.org/Bookshelves/Calculus/Calculus_(OpenStax">The Fundamental Theorem of Calculus - Mathematics LibreTexts</a>/05:<em>Integration/5.03:</em>The_Fundamental_Theorem_of_Calculus)</li>
 <li><a href="https://www.ma.ic.ac.uk/~ajm8/M1M1/integ.pdf">M1M1: The Riemann Integral and the Fundamental Theorem of Calculus - Imperial College</a></li>
-</ul>
-
-]]></description>
-</item>
-<item>
-<title>微分</title>
-<link>https://64p.org/notes/derivative.html</link>
-<guid isPermaLink="true">https://64p.org/notes/derivative.html</guid>
-<pubDate>Thu, 13 Aug 2026 00:20:00 +0900</pubDate>
-<description><![CDATA[<h1>微分</h1>
-
-<p><a class="note-tag" href="/notes/tags/math.html">#math</a></p>
-
-<p>関数の<strong>瞬間の変化率</strong>を取り出す操作。グラフでいえば、その点での接線の傾き。</p>
-
-<h2>定義 — 差分商の極限</h2>
-
-<p>区間での平均変化率（割線の傾き）は差分商 <span class="math-inline">\frac{f(a+h) - f(a)}{h}</span> で表せる。<span class="math-inline">h</span> を 0 に近づけると割線は接線に近づき、その極限が点 <span class="math-inline">a</span> での微分係数。</p>
-
-<div class="math-display">
-f'(a) = \lim_{h \to 0} \frac{f(a+h) - f(a)}{h}
-</div>
-
-
-<p>各点にその微分係数を対応させた関数 <span class="math-inline">f'(x)</span> を<strong>導関数</strong>と呼ぶ。記法はラグランジュの <span class="math-inline">f'(x)</span> のほか、ライプニッツの <span class="math-inline">\frac{dy}{dx}</span>（「微小な <span class="math-inline">y</span> の変化 ÷ 微小な <span class="math-inline">x</span> の変化」という定義の形をそのまま残した記法）がよく使われる。</p>
-
-<h2>直感</h2>
-
-<p>「位置を微分すると速度、速度を微分すると加速度」が典型例。車の速度メーターが表示しているのは、まさに位置関数の瞬間の変化率。平均時速（区間の差分商）ではなく「今この瞬間」の値を極限で定義するのが微分のアイデア。</p>
-
-<h2>積分との関係</h2>
-
-<p>微分の逆演算が<a href="/notes/integral.html">積分</a>（不定積分・原始関数を求める操作）。両者が互いに逆であることを述べるのが微積分学の基本定理で、詳細は<a href="/notes/integral.html">積分</a>側に書いた。</p>
-
-<ul>
-<li>微分 = 瞬間の変化率（累積量 → 変化率）</li>
-<li>積分 = 変化の累積（変化率 → 累積量）</li>
-</ul>
-
-
-<h2>応用</h2>
-
-<ul>
-<li><strong>最適化</strong> — 導関数が 0 になる点が極値の候補。機械学習の<a href="/notes/gradient-descent.html">勾配降下法</a>もこの延長</li>
-<li><strong><a href="/notes/differential-equation.html">微分方程式</a></strong> — 未知関数とその導関数の関係式。物理・工学のモデル記述の基本言語。<a href="/notes/laplace-transform.html">ラプラス変換</a>は微分を代数演算に変えてこれを解く道具</li>
-<li><strong>近似</strong> — 接線による一次近似（<span class="math-inline">f(a+h) \approx f(a) + f'(a)h</span>）、<a href="/notes/taylor-series.html">テイラー展開</a>への入り口</li>
-</ul>
-
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://math.libretexts.org/Bookshelves/Calculus/Calculus_(OpenStax">Defining the Derivative - Mathematics LibreTexts</a>/03:<em>Derivatives/3.01:</em>Defining_the_Derivative)</li>
-<li><a href="https://courses.lumenlearning.com/precalculus/chapter/derivatives/">Derivatives | Precalculus - Lumen Learning</a></li>
 </ul>
 
 ]]></description>

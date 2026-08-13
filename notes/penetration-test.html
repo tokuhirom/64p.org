@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>ミューテックス(mutex) - Notes - 64p.org</title>
+    <title>ペネトレーションテスト - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="alternate" type="application/rss+xml" title="Notes - 64p.org" href="/notes/rss.xml">
@@ -23,7 +23,7 @@
                 <a class="notes-tags-link" href="/notes/rss.xml">📡 RSS</a>
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
-                                    <li><a href="/notes/penetration-test.html">ペネトレーションテスト</a></li>
+                                    <li><a href="/notes/penetration-test.html" class="active">ペネトレーションテスト</a></li>
                                     <li><a href="/notes/metasploit.html">Metasploit</a></li>
                                     <li><a href="/notes/kali-nethunter.html">Kali NetHunter</a></li>
                                     <li><a href="/notes/kali-linux.html">Kali Linux</a></li>
@@ -246,7 +246,7 @@
                                     <li><a href="/notes/rta-in-japan.html">RTA in Japan(RiJ)</a></li>
                                     <li><a href="/notes/ruff.html">Ruff</a></li>
                                     <li><a href="/notes/semaphore.html">セマフォ</a></li>
-                                    <li><a href="/notes/mutex.html" class="active">ミューテックス(mutex)</a></li>
+                                    <li><a href="/notes/mutex.html">ミューテックス(mutex)</a></li>
                                     <li><a href="/notes/xinu.html">Xinu</a></li>
                                     <li><a href="/notes/chicken-rice-japan.html">チキンライス(日本の洋食)</a></li>
                                     <li><a href="/notes/chicken-rice-hainanese.html">海南鶏飯(シンガポール式チキンライス)</a></li>
@@ -369,37 +369,50 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>ミューテックス(mutex)</h1>
+                <h1>ペネトレーションテスト</h1>
 
-<p>mutual exclusion(相互排他)の略。クリティカルセクション(共有資源を扱う処理区間)に、同時に1つのタスク/スレッドしか入れないようにする排他制御・同期機構。 <a class="note-tag" href="/notes/tags/concurrency.html">#concurrency</a> <a class="note-tag" href="/notes/tags/kernel.html">#kernel</a></p>
+<p><a class="note-tag" href="/notes/tags/security.html">#security</a></p>
 
-<h2><a href="/notes/semaphore.html">セマフォ</a>との違い: 所有権</h2>
+<p>実際の攻撃者が使うのと同じツール・手法を用いて対象システムに疑似的な攻撃を仕掛け、セキュリティ上の脆弱性を発見・実証するテスト手法。「ペンテスト」とも呼ばれる。<a href="/notes/metasploit.html">Metasploit</a>や<a href="/notes/burp-suite.html">Burp Suite</a>のようなツール、<a href="/notes/kali-linux.html">Kali Linux</a>のようなディストリビューションが実務で使われる。</p>
 
-<p><a href="/notes/semaphore.html">セマフォ</a>は複数タスクが同時にクリティカルセクションに入ることを許容できるカウンタ機構で、ロックする側とアンロックする側が別のスレッドであっても構わない。</p>
+<h2>定義</h2>
 
-<p>一方ミューテックスには「所有者」の概念がある。ロックをかけたスレッドだけがそのロックを解除(アンロック)できる。この所有権の有無が、ミューテックスとセマフォを区別する最も重要な違い。</p>
+<ul>
+<li><strong>NIST (SP 800-115)</strong>: システム・デバイス・プロセスが、積極的な侵害の試みにどの程度耐えられるかを検証するテスト、と定義している。単発の脆弱性を見つけるだけでなく、複数の脆弱性を組み合わせて、より深い侵入・権限昇格が可能かどうかまで検証することが多い。</li>
+<li><strong>OWASP</strong>: Webアプリケーションを対象としたペンテスト手法を体系化した「Web Security Testing Guide (WSTG)」を公開している。入力値検証・認証機構・セッション管理・設定の不備など、Webアプリ特有の観点からテスト項目を網羅している。</li>
+</ul>
 
-<p>資源数が1のセマフォ(バイナリセマフォ)は動作としてはミューテックスに近いが、所有権を持たない点で厳密には異なる。</p>
+
+<h2>脆弱性診断(Vulnerability Assessment)との違い</h2>
+
+<p>脆弱性診断が既知の脆弱性を網羅的に洗い出すスキャン中心の手法であるのに対し、ペネトレーションテストはそれらの脆弱性を実際に悪用(exploit)して、どこまで侵入できるか・実害に繋がるかを人手で検証する点が特徴とされる。</p>
+
+<h2>実施の前提</h2>
+
+<p>対象システムの所有者からの正式な許可(スコープ・期間・手法を定めた契約)が前提となる。許可なく行うと不正アクセス行為となる。<a href="/notes/hack-the-box.html">Hack The Box</a>のような学習プラットフォームでは、許可された仮想環境上で技術を練習できる。</p>
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://ja.wikipedia.org/wiki/%E3%83%9F%E3%83%A5%E3%83%BC%E3%83%86%E3%83%83%E3%82%AF%E3%82%B9">ミューテックス - Wikipedia</a></li>
-<li><a href="https://qiita.com/gts/items/3aa525a98d5529246af1">セマフォとミューテックスの違いを丁寧に解説 - Qiita</a></li>
-<li><a href="https://tonkun-tech.com/semaphore-mutex/">セマフォとミューテックスの動作と違い｜とんくんソフトウェア技術部</a></li>
+<li><a href="https://www.ibm.com/think/insights/pen-testing-methodology">Top Penetration Testing Methodologies | IBM</a></li>
+<li><a href="https://csrc.nist.gov/glossary/term/penetration_testing">penetration testing - Glossary | CSRC (NIST)</a></li>
+<li><a href="https://owasp.org/www-project-web-security-testing-guide/latest/3-The_OWASP_Testing_Framework/1-Penetration_Testing_Methodologies">Penetration Testing Methodologies (OWASP)</a></li>
 </ul>
 
 
                                 <div class="notes-backlinks">
                     <h2>🔗 リンクされているノート</h2>
                     <ul>
-                                            <li><a href="/notes/semaphore.html">セマフォ</a></li>
+                                            <li><a href="/notes/hack-the-box.html">Hack The Box</a></li>
+                                            <li><a href="/notes/kali-linux.html">Kali Linux</a></li>
+                                            <li><a href="/notes/kali-nethunter.html">Kali NetHunter</a></li>
+                                            <li><a href="/notes/metasploit.html">Metasploit</a></li>
                     
                     </ul>
                 </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-10 19:08 / 更新日時: 2026-08-10 19:08</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=%E3%83%9F%E3%83%A5%E3%83%BC%E3%83%86%E3%83%83%E3%82%AF%E3%82%B9%28mutex%29&url=https%3A%2F%2F64p.org%2Fnotes%2Fmutex.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <span>作成日時: 2026-08-13 17:10 / 更新日時: 2026-08-13 17:10</span>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=%E3%83%9A%E3%83%8D%E3%83%88%E3%83%AC%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3%E3%83%86%E3%82%B9%E3%83%88&url=https%3A%2F%2F64p.org%2Fnotes%2Fpenetration-test.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">
