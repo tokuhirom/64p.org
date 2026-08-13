@@ -6,7 +6,7 @@
 <atom:link href="https://64p.org/notes/rss.xml" rel="self" type="application/rss+xml" />
 <description>ちょっと調べたことや検証結果を、AIの力も借りながらメモしていくコーナーです。</description>
 <language>ja</language>
-<lastBuildDate>Fri, 14 Aug 2026 08:40:01 +0900</lastBuildDate>
+<lastBuildDate>Fri, 14 Aug 2026 08:46:06 +0900</lastBuildDate>
 <item>
 <title>CNI (Container Network Interface)</title>
 <link>https://64p.org/notes/cni.html</link>
@@ -162,6 +162,18 @@ stateDiagram-v2
 <h2>採用例</h2>
 
 <p><a href="/notes/etcd.html">etcd</a>がRaftで一貫性を保っているのが代表例（つまり<a href="/notes/kubernetes.html">Kubernetes</a>のクラスタ状態はRaftの上に載っている）。ほかにHashiCorp ConsulやTiKV、CockroachDBなど、Go/Rust系の分散システムでの採用が多い。</p>
+
+<h2>ビジュアルデモ</h2>
+
+<p>ノードの状態遷移やログ複製の様子をブラウザ上で動かして体感できるデモがいくつかある。</p>
+
+<ul>
+<li><a href="https://thesecretlivesofdata.com/raft/">The Secret Lives of Data: Raft</a> — 一番有名で完成度が高いインタラクティブデモ。リーダー選挙・ログレプリケーション・ネットワーク分断をボタン一つで再生でき、各ノードの状態(Follower/Candidate/Leader)がアニメーションで見える</li>
+<li><a href="https://kanaka.github.io/raft.js/">Raft Visualization Demo (kanaka.github.io/raft.js)</a> — タイムライン形式でクラスタの状態遷移を自由に眺められるデモ</li>
+<li><a href="https://toolkit.whysonil.dev/tools/simulators/raft-consensus">RAFT Consensus Algorithm Visualizer (toolkit.whysonil.dev)</a> — 障害耐性シナリオのシミュレートに強いツール</li>
+<li><a href="https://observablehq.com/@stwind/raft-consensus-simulator">Raft Consensus Simulator (Observable)</a> — Observableのノートブック形式のシミュレータ</li>
+</ul>
+
 
 <h2>出典</h2>
 

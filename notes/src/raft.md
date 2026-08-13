@@ -1,6 +1,6 @@
 ---
 created: 2026-08-14 08:33
-updated: 2026-08-14 08:39
+updated: 2026-08-14 08:46
 ---
 # Raft (合意アルゴリズム)
 
@@ -31,6 +31,15 @@ stateDiagram-v2
 ## 採用例
 
 [[etcd]]がRaftで一貫性を保っているのが代表例（つまり[[kubernetes|Kubernetes]]のクラスタ状態はRaftの上に載っている）。ほかにHashiCorp ConsulやTiKV、CockroachDBなど、Go/Rust系の分散システムでの採用が多い。
+
+## ビジュアルデモ
+
+ノードの状態遷移やログ複製の様子をブラウザ上で動かして体感できるデモがいくつかある。
+
+- [The Secret Lives of Data: Raft](https://thesecretlivesofdata.com/raft/) — 一番有名で完成度が高いインタラクティブデモ。リーダー選挙・ログレプリケーション・ネットワーク分断をボタン一つで再生でき、各ノードの状態(Follower/Candidate/Leader)がアニメーションで見える
+- [Raft Visualization Demo (kanaka.github.io/raft.js)](https://kanaka.github.io/raft.js/) — タイムライン形式でクラスタの状態遷移を自由に眺められるデモ
+- [RAFT Consensus Algorithm Visualizer (toolkit.whysonil.dev)](https://toolkit.whysonil.dev/tools/simulators/raft-consensus) — 障害耐性シナリオのシミュレートに強いツール
+- [Raft Consensus Simulator (Observable)](https://observablehq.com/@stwind/raft-consensus-simulator) — Observableのノートブック形式のシミュレータ
 
 ## 出典
 

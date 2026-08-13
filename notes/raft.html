@@ -23,8 +23,8 @@
                 <a class="notes-tags-link" href="/notes/rss.xml">📡 RSS</a>
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
-                                    <li><a href="/notes/cni.html">CNI (Container Network Interface)</a></li>
                                     <li><a href="/notes/raft.html" class="active">Raft (合意アルゴリズム)</a></li>
+                                    <li><a href="/notes/cni.html">CNI (Container Network Interface)</a></li>
                                     <li><a href="/notes/paxos.html">Paxos</a></li>
                                     <li><a href="/notes/open-vswitch.html">Open vSwitch (OVS)</a></li>
                                     <li><a href="/notes/kubernetes.html">Kubernetes</a></li>
@@ -460,6 +460,18 @@ stateDiagram-v2
 
 <p><a href="/notes/etcd.html">etcd</a>がRaftで一貫性を保っているのが代表例（つまり<a href="/notes/kubernetes.html">Kubernetes</a>のクラスタ状態はRaftの上に載っている）。ほかにHashiCorp ConsulやTiKV、CockroachDBなど、Go/Rust系の分散システムでの採用が多い。</p>
 
+<h2>ビジュアルデモ</h2>
+
+<p>ノードの状態遷移やログ複製の様子をブラウザ上で動かして体感できるデモがいくつかある。</p>
+
+<ul>
+<li><a href="https://thesecretlivesofdata.com/raft/">The Secret Lives of Data: Raft</a> — 一番有名で完成度が高いインタラクティブデモ。リーダー選挙・ログレプリケーション・ネットワーク分断をボタン一つで再生でき、各ノードの状態(Follower/Candidate/Leader)がアニメーションで見える</li>
+<li><a href="https://kanaka.github.io/raft.js/">Raft Visualization Demo (kanaka.github.io/raft.js)</a> — タイムライン形式でクラスタの状態遷移を自由に眺められるデモ</li>
+<li><a href="https://toolkit.whysonil.dev/tools/simulators/raft-consensus">RAFT Consensus Algorithm Visualizer (toolkit.whysonil.dev)</a> — 障害耐性シナリオのシミュレートに強いツール</li>
+<li><a href="https://observablehq.com/@stwind/raft-consensus-simulator">Raft Consensus Simulator (Observable)</a> — Observableのノートブック形式のシミュレータ</li>
+</ul>
+
+
 <h2>出典</h2>
 
 <ul>
@@ -478,7 +490,7 @@ stateDiagram-v2
                     </ul>
                 </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-14 08:33 / 更新日時: 2026-08-14 08:39</span>
+                    <span>作成日時: 2026-08-14 08:33 / 更新日時: 2026-08-14 08:46</span>
                     <a class="share-x" href="https://twitter.com/intent/tweet?text=Raft%20%28%E5%90%88%E6%84%8F%E3%82%A2%E3%83%AB%E3%82%B4%E3%83%AA%E3%82%BA%E3%83%A0%29&url=https%3A%2F%2F64p.org%2Fnotes%2Fraft.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
