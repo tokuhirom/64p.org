@@ -6,7 +6,47 @@
 <atom:link href="https://64p.org/notes/rss.xml" rel="self" type="application/rss+xml" />
 <description>ちょっと調べたことや検証結果を、AIの力も借りながらメモしていくコーナーです。</description>
 <language>ja</language>
-<lastBuildDate>Thu, 13 Aug 2026 20:47:05 +0900</lastBuildDate>
+<lastBuildDate>Thu, 13 Aug 2026 20:49:19 +0900</lastBuildDate>
+<item>
+<title>ハサミジャガー</title>
+<link>https://64p.org/notes/hasami-jaguar.html</link>
+<guid isPermaLink="true">https://64p.org/notes/hasami-jaguar.html</guid>
+<pubDate>Thu, 13 Aug 2026 20:49:00 +0900</pubDate>
+<description><![CDATA[<h1>ハサミジャガー</h1>
+
+<p><a class="note-tag" href="/notes/tags/tokusatsu.html">#tokusatsu</a> <a class="note-tag" href="/notes/tags/kamen-rider.html">#kamen-rider</a></p>
+
+<p>『仮面ライダーV3』(1973年)の第1話「ライダー3号 その名はV3!」・第2話「ダブルライダーの遺言状」に登場する、悪の秘密結社デストロンの改造人間(怪人)。鳴き声は「シザース!」。</p>
+
+<h2>姿と能力</h2>
+
+<ul>
+<li>頭部と胴体の右半分が黒斑のオレンジ色ジャガー、左半分が金属の機械という左右非対称のデザイン。</li>
+<li>両腕の先端が刃になっており、交差させると巨大なハサミになる。挟み込んだ対象に破壊エネルギーを発生させ、人間を溶解させるほどの威力を持つ。壁越しの奇襲攻撃も得意。</li>
+<li>弱点は刃の付け根。機械化された左肩により腕力が特に強い。</li>
+</ul>
+
+
+<h2>物語上の役割</h2>
+
+<p>デストロンの「東京壊滅作戦」の実行役で、姿を目撃した者を消していた。主人公・風見志郎の両親と妹を殺害した張本人であり、志郎が仮面ライダーV3へと改造される直接のきっかけを作った、V3という物語の起点となる怪人。</p>
+
+<p>最期はV3との戦闘で作戦内容を漏らしてしまい、作戦失敗後に襲いかかったところをV3の必殺技「V3回転ダブルキック」を受けて爆散した。</p>
+
+<h2>同モチーフの別キャラクター</h2>
+
+<p>『仮面ライダーウィザード』には同じくハサミ+ジャガーがモチーフの「シザーズジャガー」というファントムが登場するが、これは別キャラクター。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://www.kamen-rider-official.com/zukan/phantoms/1269">ハサミジャガー | 仮面ライダー図鑑 | 東映</a></li>
+<li><a href="https://dic.pixiv.net/a/%E3%83%8F%E3%82%B5%E3%83%9F%E3%82%B8%E3%83%A3%E3%82%AC%E3%83%BC">ハサミジャガー - ピクシブ百科事典</a></li>
+<li><a href="https://www.kamen-rider-official.com/zukan/phantoms/1401">シザーズジャガー | 仮面ライダー図鑑 | 東映</a></li>
+</ul>
+
+]]></description>
+</item>
 <item>
 <title>NOC (Network Operations Center)</title>
 <link>https://64p.org/notes/noc.html</link>
@@ -1519,100 +1559,6 @@ await db.query("select 'Hello world' as message;");
 <ul>
 <li><a href="https://pglite.dev/docs/about">What is PGlite | PGlite</a></li>
 <li><a href="https://github.com/electric-sql/pglite">GitHub - electric-sql/pglite</a></li>
-</ul>
-
-]]></description>
-</item>
-<item>
-<title>librosa</title>
-<link>https://64p.org/notes/librosa.html</link>
-<guid isPermaLink="true">https://64p.org/notes/librosa.html</guid>
-<pubDate>Thu, 13 Aug 2026 00:24:00 +0900</pubDate>
-<description><![CDATA[<h1>librosa</h1>
-
-<p>Pythonの音声・音楽信号処理ライブラリ。MIR（Music Information Retrieval、音楽情報検索）システム構築に必要な基礎的なアルゴリズムとツール群を提供する。NumPy/SciPyの上に構築されており、matplotlibと連携した可視化もできる。ISCライセンス。</p>
-
-<p>2015年のSciPyカンファレンスで発表された論文「librosa: Audio and music signal analysis in python」がベースになっている、研究由来のライブラリ。</p>
-
-<p>インストールは以下のいずれか。</p>
-
-<pre><code class="sh">pip install librosa
-conda install -c conda-forge librosa
-</code></pre>
-
-<h2>モジュール構成</h2>
-
-<table>
-<thead>
-<tr>
-<th> モジュール </th>
-<th> 役割 </th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td> <code>librosa.core</code>（トップレベル<code>librosa.*</code>からも直接呼べる） </td>
-<td> 音声ファイルの読み込み(<code>load</code>)、各種スペクトログラム計算など基礎機能 </td>
-</tr>
-<tr>
-<td> <code>librosa.feature</code> </td>
-<td> MFCC、クロマ特徴量、メルスペクトログラム、スペクトル重心など特徴量抽出。<code>delta()</code>で差分特徴量も可 </td>
-</tr>
-<tr>
-<td> <code>librosa.beat</code> </td>
-<td> テンポ推定・ビート検出（<code>beat_track()</code>） </td>
-</tr>
-<tr>
-<td> <code>librosa.onset</code> </td>
-<td> オンセット（音の立ち上がり）検出 </td>
-</tr>
-<tr>
-<td> <code>librosa.effects</code> </td>
-<td> ピッチシフト、タイムストレッチなど時間領域の加工 </td>
-</tr>
-<tr>
-<td> <code>librosa.decompose</code> </td>
-<td> 調波・打楽器成分分離(HPSS)、汎用スペクトログラム分解 </td>
-</tr>
-<tr>
-<td> <code>librosa.segment</code> </td>
-<td> 構造セグメンテーション </td>
-</tr>
-<tr>
-<td> <code>librosa.sequence</code> </td>
-<td> ビタービ復号などの系列モデリング </td>
-</tr>
-<tr>
-<td> <code>librosa.display</code> </td>
-<td> matplotlibベースの波形・スペクトログラム可視化 </td>
-</tr>
-<tr>
-<td> <code>librosa.util</code> </td>
-<td> 正規化・パディング等のユーティリティ </td>
-</tr>
-</tbody>
-</table>
-
-
-<h2>主な用途</h2>
-
-<ul>
-<li>音楽情報検索(MIR): ジャンル分類、テンポ・拍検出、コード認識など</li>
-<li>機械学習の前処理: MFCCやメルスペクトログラムを算出し、音声認識・音響イベント検出モデルの入力にする</li>
-<li>音声加工: ハーモニック/パーカッシブ分離、ピッチ・テンポ変換</li>
-<li>対応フォーマットはWAV/OGG/MP3/FLACなど</li>
-</ul>
-
-
-<p>典型的なワークフローは、<code>librosa.load()</code>で波形を読み込み → <code>librosa.feature.*</code>で特徴量抽出 → 必要に応じて<code>librosa.beat.beat_track()</code>や<code>librosa.effects.hpss()</code>で解析、という流れになる。</p>
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://github.com/librosa/librosa">librosa GitHub</a></li>
-<li><a href="https://librosa.org/doc/0.11.0/tutorial.html">librosa Tutorial (0.11.0)</a></li>
-<li><a href="https://kaavyamaha12.medium.com/extracting-audio-features-using-librosa-3be4ff1fe57f">Extracting audio features using Librosa</a></li>
-<li><a href="https://medium.com/@rijuldahiya/a-comprehensive-guide-to-audio-processing-with-librosa-in-python-a49276387a4b">A Comprehensive Guide to Audio Processing with Librosa in Python</a></li>
 </ul>
 
 ]]></description>
