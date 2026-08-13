@@ -6,7 +6,74 @@
 <atom:link href="https://64p.org/notes/rss.xml" rel="self" type="application/rss+xml" />
 <description>ちょっと調べたことや検証結果を、AIの力も借りながらメモしていくコーナーです。</description>
 <language>ja</language>
-<lastBuildDate>Thu, 13 Aug 2026 08:59:24 +0900</lastBuildDate>
+<lastBuildDate>Thu, 13 Aug 2026 09:09:49 +0900</lastBuildDate>
+<item>
+<title>Rollup</title>
+<link>https://64p.org/notes/rollup.html</link>
+<guid isPermaLink="true">https://64p.org/notes/rollup.html</guid>
+<pubDate>Thu, 13 Aug 2026 09:09:00 +0900</pubDate>
+<description><![CDATA[<h1>Rollup</h1>
+
+<p>JavaScriptのモジュールバンドラー。ES6モジュール構文で書いたコードを解析し、CommonJS/AMD/IIFE/UMDなど様々な形式にコンパイルできる。「ES modulesで書けば将来対応のコードを今すぐ書ける」というのが基本コンセプト。</p>
+
+<p>Rich Harris氏とLukas Taegert-Atkinson氏が開発・保守している。</p>
+
+<h2>Tree-shaking</h2>
+
+<p>未使用のコードを解析して自動的に除外する仕組み。ES modulesの静的な<code>import</code>/<code>export</code>構文を利用することで、実際に使われている関数だけをバンドルに残せる。この用語自体をRollupが広めたとされる。</p>
+
+<h2>用途</h2>
+
+<p>主にライブラリのビルド用途で使われることが多い。アプリケーション向けの複雑な機能(コード分割、HMRなど)よりも、シンプルで最適化されたバンドル生成に強みがある。</p>
+
+<ul>
+<li>Viteは本番ビルド時にRollupを使用している(開発時はesbuildを使用)</li>
+<li>Svelteなども内部でRollupを採用</li>
+</ul>
+
+
+<p>Rustで書かれた後継バンドラーとして<a href="/notes/rolldown.html">Rolldown</a>が開発されている。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://rollupjs.org/introduction/">Rollup Introduction</a></li>
+</ul>
+
+]]></description>
+</item>
+<item>
+<title>Rolldown</title>
+<link>https://64p.org/notes/rolldown.html</link>
+<guid isPermaLink="true">https://64p.org/notes/rolldown.html</guid>
+<pubDate>Thu, 13 Aug 2026 09:09:00 +0900</pubDate>
+<description><![CDATA[<h1>Rolldown</h1>
+
+<p>Rustで書かれた次世代JavaScript/TypeScriptバンドラー。<a href="/notes/rollup.html">Rollup</a>互換のAPI・プラグインインターフェースを提供しつつ、スコープとしてはesbuildに近いものを目指している。</p>
+
+<p>VoidZero Inc.(Vue.jsの作者Evan You氏が設立した会社)が開発を主導している。パース処理には同社の別プロジェクトであるOxc(Rust製JS/TSパーサー・ツールチェーン)を使用し、Node.jsとの連携にはnapi-rsによるネイティブアドオンを利用している。</p>
+
+<h2>性能</h2>
+
+<p>esbuild相当のネイティブ速度で動作し、Rollup比で10〜30倍高速とされる。実例として、GitLabはビルド時間を2.5分から40秒に短縮し、Excalidrawは16倍高速化したと報告されている。</p>
+
+<h2>Viteとの関係</h2>
+
+<p>Viteはこれまで、開発時にesbuild・本番ビルド時にRollupという2つの異なるバンドラーを使い分ける構成だった。Rolldownはこの二重構成をRust製バンドラー1つに統一することを目指すプロジェクトで、開発ツール(Vite)・バンドラー(Rolldown)・コンパイラ(Oxc)をすべてVoidZeroが同じチームで維持する構成になる。</p>
+
+<p><code>rolldown-vite</code>パッケージとして試験的に利用可能になっており、Vite 8でデフォルトバンドラーとして採用される予定。プラグインはVite/Rollupプラグインであればそのまま試せるレベルの互換性が重視されている。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://github.com/rolldown/rolldown">rolldown/rolldown - GitHub</a></li>
+<li><a href="https://voidzero.dev/posts/announcing-rolldown-vite">Announcing Rolldown-Vite | VoidZero</a></li>
+<li><a href="https://v7.vite.dev/guide/rolldown">Rolldown Integration | Vite</a></li>
+<li><a href="https://vite.dev/blog/announcing-vite8-beta">Vite 8 Beta: The Rolldown-powered Vite</a></li>
+</ul>
+
+]]></description>
+</item>
 <item>
 <title>MySQL HeatWave</title>
 <link>https://64p.org/notes/mysql-heatwave.html</link>
@@ -1770,179 +1837,6 @@ flowchart TD
 <li><a href="https://arxiv.org/abs/2605.10977">PASA: A Principled Embedding-Space Watermarking Approach (ICML 2026)</a></li>
 <li><a href="https://www.usenix.org/system/files/conference/usenixsecurity25/sec25cycle1-prepub-446-qu-watermarking.pdf">Provably Robust Multi-bit Watermarking for AI-generated Text (USENIX Security 2025)</a></li>
 <li><a href="https://arxiv.org/abs/2508.08211">SAEMark: Steering Personalized Multilingual LLM Watermarks with Sparse Autoencoders (NeurIPS 2025)</a></li>
-</ul>
-
-]]></description>
-</item>
-<item>
-<title>EU AI Act</title>
-<link>https://64p.org/notes/eu-ai-act.html</link>
-<guid isPermaLink="true">https://64p.org/notes/eu-ai-act.html</guid>
-<pubDate>Wed, 12 Aug 2026 23:33:00 +0900</pubDate>
-<description><![CDATA[<h1>EU AI Act</h1>
-
-<p><a class="note-tag" href="/notes/tags/ai.html">#ai</a> <a class="note-tag" href="/notes/tags/regulation.html">#regulation</a> <a class="note-tag" href="/notes/tags/eu.html">#eu</a> <a class="note-tag" href="/notes/tags/law.html">#law</a></p>
-
-<p>EUの包括的なAI規制法（Regulation (EU) 2024/1689）。世界初の包括的AI規制とされ、2024-08-01に発効し、義務ごとに段階的に適用が始まっている。EU域内で活動する企業だけでなく、<strong>EU市場にAIシステム・モデルを提供する域外企業にも適用される</strong>（Anthropicが<a href="/notes/claude-text-watermark.html">Claudeの透かし</a>を全世界適用したのはこの文脈）。</p>
-
-<h2>リスクベースアプローチ</h2>
-
-<p>AIシステムをリスクの大きさで4段階に分類し、段階ごとに義務の重さを変えるのが基本設計。</p>
-
-<table>
-<thead>
-<tr>
-<th> リスク区分 </th>
-<th> 例 </th>
-<th> 義務 </th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td> 許容できないリスク </td>
-<td> 公的機関によるソーシャルスコアリング、サブリミナルな行動操作、公共空間でのリアルタイム遠隔生体認証（法執行の限定的例外あり） </td>
-<td> 禁止 </td>
-</tr>
-<tr>
-<td> ハイリスク </td>
-<td> 雇用・教育・与信・法執行・重要インフラでのAI（Annex III）、規制対象製品の安全部品（Annex I） </td>
-<td> リスク管理・技術文書・人間による監督などの厳格な要求 </td>
-</tr>
-<tr>
-<td> 限定リスク </td>
-<td> チャットボット、生成AI、感情認識、ディープフェイク </td>
-<td> 透明性義務（第50条） </td>
-</tr>
-<tr>
-<td> 最小リスク </td>
-<td> それ以外（スパムフィルタ等） </td>
-<td> 義務なし </td>
-</tr>
-</tbody>
-</table>
-
-
-<h2>第50条: 透明性義務</h2>
-
-<p>生成AIに直結する条文で、<strong>2026-08-02から適用</strong>。主な内容:</p>
-
-<ul>
-<li>人と直接対話するAIシステム（チャットボット等）は、AIと対話していることを本人に知らせる（明白な場合を除く）</li>
-<li>合成コンテンツ（音声・画像・動画・<strong>テキスト</strong>）を生成するAIシステム（GPAIを含む）のプロバイダーは、出力を<strong>機械可読な形式でマーキングし、人工的に生成・操作されたと検出可能</strong>にする。技術的に実現可能な範囲で、効果的・相互運用可能・頑健・信頼できる方式であること</li>
-<li>感情認識・生体分類システムのデプロイヤーは対象者に稼働を通知する</li>
-<li>ディープフェイクのデプロイヤーは人工生成であることを開示する（芸術・風刺目的には緩和あり）</li>
-</ul>
-
-
-<p>このテキストへの機械可読マーキング義務が<a href="/notes/llm-text-watermarking.html">LLMテキスト電子透かし</a>の商用実装（<a href="/notes/claude-text-watermark.html">Claudeのテキスト電子透かし導入 (2026-08)</a>など）の直接の規制ドライバーになっている。マーキングの技術標準は Code of Practice とEU標準化作業で策定が進められている段階。</p>
-
-<p>適用除外もある: 標準的な編集の補助機能で入力の意味を実質的に変えないもの、犯罪捜査目的で法律上認められたもの、人間に露出しないmachine-to-machine通信など。</p>
-
-<h2>GPAI（汎用AIモデル）への義務</h2>
-
-<p>第53条・第55条で、GPAIモデル（LLMの基盤モデルが典型）のプロバイダーに技術文書・学習データ要約の公開・著作権ポリシーなどを義務付ける。<strong>2025-08-02以降に市場投入されたモデルから適用</strong>（それ以前のモデルは2027-08-02までに対応）。システミックリスクを持つ大規模モデルには追加義務がある。</p>
-
-<ul>
-<li>欧州委員会は2025-07に自主的な遵守ツールとして <strong>General-Purpose AI Code of Practice</strong>（Transparency / Copyright / Safety &amp; Security の3章構成）を公表した。署名は任意だが、署名すれば遵守の立証手段として使える。</li>
-</ul>
-
-
-<h2>タイムライン</h2>
-
-<table>
-<thead>
-<tr>
-<th> 日付 </th>
-<th> 内容 </th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td> 2024-08-01 </td>
-<td> 発効 </td>
-</tr>
-<tr>
-<td> 2025-02-02 </td>
-<td> 禁止AI（許容できないリスク）の適用開始 </td>
-</tr>
-<tr>
-<td> 2025-08-02 </td>
-<td> GPAIモデルの義務の適用開始（新規モデル） </td>
-</tr>
-<tr>
-<td> 2026-08-02 </td>
-<td> 第50条（透明性義務）を含む本体の適用開始。GPAI義務の執行（情報要求・モデル回収等）もここから </td>
-</tr>
-<tr>
-<td> 2027-12-02 </td>
-<td> Annex III型ハイリスクシステムの義務の適用（延期後） </td>
-</tr>
-<tr>
-<td> 2028-08-02 </td>
-<td> Annex I型（規制製品組み込み）ハイリスクの義務の適用（延期後） </td>
-</tr>
-</tbody>
-</table>
-
-
-<p>当初ハイリスク義務は2026-08-02適用予定だったが、技術標準や各国監督体制の準備遅れを受けて、<strong>Digital Omnibus on AI</strong>（Regulation (EU) 2026/1744、2026-07-27発効）で上記の通り延期された。第50条の透明性義務と第4条のAIリテラシー義務は延期されず元のスケジュールのまま。</p>
-
-<h2>罰則</h2>
-
-<p>違反区分ごとの段階制で、最大は禁止AI違反の<strong>3,500万ユーロまたは全世界年間売上高の7%のいずれか高い方</strong>。</p>
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://artificialintelligenceact.eu/high-level-summary/">High-level summary of the AI Act (artificialintelligenceact.eu)</a></li>
-<li><a href="https://artificialintelligenceact.eu/article/50/">Article 50: Transparency Obligations (artificialintelligenceact.eu)</a></li>
-<li><a href="https://digital-strategy.ec.europa.eu/en/faqs/transparency-obligations-under-article-50-ai-act">Transparency obligations under Article 50 of the AI Act — FAQ (European Commission)</a></li>
-<li><a href="https://www.bakermckenzie.com/en/insight/publications/2025/08/general-purpose-ai-obligations">General-purpose AI Obligations Under the EU AI Act Kick in From 2 August 2025 (Baker McKenzie)</a></li>
-<li><a href="https://artificialintelligenceact.eu/introduction-to-code-of-practice/">An Introduction to the Code of Practice for General-Purpose AI (artificialintelligenceact.eu)</a></li>
-<li><a href="https://www.klgates.com/EU-Digital-Omnibus-on-AI-Enters-Into-Force-7-31-2026">EU Digital Omnibus on AI Enters Into Force (K&amp;L Gates, 2026-07-31)</a></li>
-<li><a href="https://www.gibsondunn.com/eu-ai-act-omnibus-agreement-postponed-high-risk-deadlines-and-other-key-changes/">EU AI Act Omnibus Agreement — Postponed High-Risk Deadlines (Gibson Dunn)</a></li>
-</ul>
-
-]]></description>
-</item>
-<item>
-<title>crosvm</title>
-<link>https://64p.org/notes/crosvm.html</link>
-<guid isPermaLink="true">https://64p.org/notes/crosvm.html</guid>
-<pubDate>Wed, 12 Aug 2026 23:29:00 +0900</pubDate>
-<description><![CDATA[<h1>crosvm</h1>
-
-<p>Googleが開発するRust製の<a href="/notes/microvm.html">軽量VM</a>向けVMM(Virtual Machine Monitor)。元々はChromeOS上でLinux環境(Crostini)やAndroidゲスト(ARCVM)を動かすために開発されたが、現在はAndroidのTerminal App、Cuttlefish、Windowsなど複数の製品・プラットフォームで使われている。 <a class="note-tag" href="/notes/tags/virtualization.html">#virtualization</a> <a class="note-tag" href="/notes/tags/rust.html">#rust</a></p>
-
-<h2>セキュリティ設計: process-per-deviceモデル</h2>
-
-<ul>
-<li>Main Processがゲストの初期化と中核のオーケストレーションを担当</li>
-<li>各<a href="/notes/virtio.html">virtio</a>デバイスは個別のDevice Processとしてforkされる(process-per-device)</li>
-<li>各デバイスプロセスはMinijailでVFS/PID/User/Networkの名前空間分離により隔離され、そのデバイスに必要なシステムコールのみを許可する厳格なBPFフィルタが適用される</li>
-</ul>
-
-
-<p>強い隔離とメモリ安全な実装によるセキュリティを重視した設計思想を持つ。</p>
-
-<h2>機能</h2>
-
-<p>io_uring・vhost、内部の非同期ランタイム(<code>cros_async</code>)を活用し、モダンなワークロード向けに最適化されている。virtio-fs/virtio-9pによるファイルシステム共有のほか、Console・RNG・Balloon・Vsock・TPM・Pmem・ビデオデコード/エンコードなど幅広い<a href="/notes/virtio.html">virtio</a>デバイスに対応する。</p>
-
-<h2><a href="/notes/rust-vmm.html">rust-vmm</a>との関係</h2>
-
-<p><a href="/notes/firecracker.html">Firecracker</a>と並び、rust-vmmプロジェクト発足のきっかけとなった2つのRust製VMMの一つ。<a href="/notes/kvm.html">KVM</a>呼び出しやメモリ管理まわりでFirecrackerと似たコードを別々に持っていたことが、rust-vmmでのクレート共有につながった。</p>
-
-<h2><a href="/notes/microvm-ecosystem.html">コンテナ向け軽量VM技術</a>の中での位置づけ</h2>
-
-<p><a href="/notes/firecracker.html">Firecracker</a>・<a href="/notes/cloud-hypervisor.html">Cloud Hypervisor</a>と並ぶ、土台となるVMM実装の一つ。ChromeOS/Android向けという出自の点で、サーバーレス/クラウド向けの他2つとは主戦場が異なる。</p>
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://github.com/google/crosvm">GitHub - google/crosvm</a></li>
-<li><a href="https://github.com/google/crosvm/blob/main/README.md">crosvm/README.md at main · google/crosvm</a></li>
-<li><a href="https://crosvm.dev/doc/crosvm/index.html">crosvm - Rust</a></li>
 </ul>
 
 ]]></description>
