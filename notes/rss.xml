@@ -6,7 +6,163 @@
 <atom:link href="https://64p.org/notes/rss.xml" rel="self" type="application/rss+xml" />
 <description>ちょっと調べたことや検証結果を、AIの力も借りながらメモしていくコーナーです。</description>
 <language>ja</language>
-<lastBuildDate>Fri, 14 Aug 2026 06:11:07 +0900</lastBuildDate>
+<lastBuildDate>Fri, 14 Aug 2026 08:09:31 +0900</lastBuildDate>
+<item>
+<title>Kubernetes on Oxide</title>
+<link>https://64p.org/notes/kubernetes-on-oxide.html</link>
+<guid isPermaLink="true">https://64p.org/notes/kubernetes-on-oxide.html</guid>
+<pubDate>Fri, 14 Aug 2026 08:09:00 +0900</pubDate>
+<description><![CDATA[<h1>Kubernetes on Oxide</h1>
+
+<p><a href="https://oxide.computer/">Oxide Computer</a>は、ハードウェアとソフトウェアを一体設計するクラウドインフラ企業。「The cloud you own（自分で所有するクラウド）」をコンセプトに、顧客が自社データセンター内で本格的なクラウドインフラをラック単位で所有・運用できる製品を提供している。同社のブログ記事<a href="https://oxide.computer/blog/kubernetes-on-oxide">Kubernetes on Oxide</a>は、OxideプラットフォームへのKubernetes統合の取り組みをまとめたもの。</p>
+
+<h2>経緯</h2>
+
+<p>2024年末、顧客からKubernetesを動かしたいという要望が出たが、公式な統合手段が存在しなかった。Solutions Software Engineerを採用し、顧客フィードバックを起点に段階的に統合機能を作っていくアプローチを取った。</p>
+
+<h2>3つのクラスタ・プロビジョニング統合</h2>
+
+<ol>
+<li><strong>Rancher Node Driver</strong> — Rancher経由でOxideインスタンスをKubernetesノードとしてプロビジョニング。顧客が出したPRを土台に改善・公開</li>
+<li><strong>Omni Infrastructure Provider</strong> — Talos LinuxベースのクラスタをOmni経由でプロビジョニング。Talos開発元のSidero Labsと協業し7週間で実装</li>
+<li><strong>Cluster API Provider（CAPOx）</strong> — <a href="/notes/cluster-api.html">Kubernetesネイティブな宣言的クラスタ管理</a>をCluster API経由で実現。Packerプラグインとも連携</li>
+</ol>
+
+
+<h2>ランタイム統合: <a href="/notes/kubernetes-cloud-controller-manager.html">Cloud Controller Manager（CCM）</a></h2>
+
+<p>クラスタ内で稼働し、Kubernetesリソースと実際のOxideインフラを同期させる役割。
+- <strong>ノード調整</strong>: OxideインスタンスとKubernetesのNodeオブジェクトを同期
+- <strong>LoadBalancerサービス</strong>: OxideのFloating IPを使った負荷分散（現状はProxyモードで実装）</p>
+
+<h2>未解決の課題: <a href="/notes/container-storage-interface.html">CSI</a>ドライバとディスクホットプラグ</h2>
+
+<p><a href="/notes/container-storage-interface.html">Container Storage Interface（CSI）</a>ドライバの開発中に、Oxide側の制約と衝突する問題が発覚した。</p>
+
+<blockquote><p>&ldquo;Oxide requires an instance to be stopped before attaching or detaching a disk&rdquo;</p></blockquote>
+
+<p>Kubernetesはディスクのホットアタッチ（起動中のノードへの動的なディスク接続）を前提とした設計になっているため、この制約と衝突する。解決には<a href="/notes/kvm.html">ハイパーバイザー</a>からAPI層まで、スタック全体にディスクのホットプラグ対応を追加する必要があるとしている。</p>
+
+<h2>考えたこと</h2>
+
+<p>ハードウェア〜ハイパーバイザー〜APIまで一気通貫で自社設計しているOxideならではの、「Kubernetesが暗黙に前提としている振る舞い（ディスクのホットアタッチ等）が、独自インフラだと素直には成立しない」という摩擦が具体的に語られている点が興味深い。パブリッククラウドのAPIの背後で当然のように提供されている機能が、実はハイパーバイザーレベルでの作り込みを要求するものだと分かる例になっている。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://oxide.computer/blog/kubernetes-on-oxide">Kubernetes on Oxide</a></li>
+</ul>
+
+
+<p><a class="note-tag" href="/notes/tags/kubernetes.html">#kubernetes</a> <a class="note-tag" href="/notes/tags/oxide.html">#oxide</a> <a class="note-tag" href="/notes/tags/infrastructure.html">#infrastructure</a></p>
+]]></description>
+</item>
+<item>
+<title>Cloud Controller Manager (CCM)</title>
+<link>https://64p.org/notes/kubernetes-cloud-controller-manager.html</link>
+<guid isPermaLink="true">https://64p.org/notes/kubernetes-cloud-controller-manager.html</guid>
+<pubDate>Fri, 14 Aug 2026 08:09:00 +0900</pubDate>
+<description><![CDATA[<h1>Cloud Controller Manager (CCM)</h1>
+
+<p>クラウド固有の制御ロジックを埋め込んだKubernetesのコントロールプレーンコンポーネント。クラスタをクラウドプロバイダーのAPIと連携させる役割を担い、「クラスタ内部だけで完結するコンポーネント」と「クラウド基盤と対話するコンポーネント」を分離するために存在する。</p>
+
+<h2>目的</h2>
+
+<p>CCMが登場する以前は、各クラウドベンダー向けの連携コードがKubernetes本体（kube-controller-manager）に直接組み込まれていた（in-tree cloud provider）。これをプラグイン機構として切り出すことで、クラウドベンダーがKubernetes本体のリリースサイクルとは独立した速度で自社向け機能をリリースできるようになった。</p>
+
+<h2>主に持つコントローラ</h2>
+
+<ul>
+<li><strong>Node Controller</strong> — クラウド上に新しいサーバーが作られたことを検知し、対応するKubernetesのNodeオブジェクトを更新する。クラウドAPIから得た一意な識別子や、リージョン・利用可能なCPU/メモリなどのラベル・アノテーションを付与する</li>
+<li><strong>Route Controller</strong> — ノード間通信のため、クラウドプロバイダー側のネットワークルートを設定する</li>
+<li><strong>Service Controller</strong> — <code>type: LoadBalancer</code>のServiceに対応して、クラウド側のロードバランサーを管理する</li>
+</ul>
+
+
+<h2><a href="/notes/kubernetes-on-oxide.html">Oxide Computer</a>での実装</h2>
+
+<p>Oxide向けのCCMは、OxideインスタンスとKubernetesのNodeオブジェクトの同期（Node Controller相当）と、Oxideの Floating IPを使ったLoadBalancerサービスの実現（Service Controller相当）を担当している。ロードバランサーは記事執筆時点でProxyモードで実装されている。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://kubernetes.io/docs/concepts/architecture/cloud-controller/">Cloud Controller Manager | Kubernetes</a></li>
+<li><a href="https://kubernetes.io/docs/tasks/administer-cluster/developing-cloud-controller-manager/">Developing Cloud Controller Manager | Kubernetes</a></li>
+</ul>
+
+
+<p><a class="note-tag" href="/notes/tags/kubernetes.html">#kubernetes</a></p>
+]]></description>
+</item>
+<item>
+<title>Container Storage Interface (CSI)</title>
+<link>https://64p.org/notes/container-storage-interface.html</link>
+<guid isPermaLink="true">https://64p.org/notes/container-storage-interface.html</guid>
+<pubDate>Fri, 14 Aug 2026 08:09:00 +0900</pubDate>
+<description><![CDATA[<h1>Container Storage Interface (CSI)</h1>
+
+<p>コンテナオーケストレーションシステム（Kubernetes、Mesos、Cloud Foundryなど）に対して、任意のブロック/ファイルストレージシステムを統一的な方法で公開するための標準仕様。Kubernetes、Mesos、Docker、Cloud Foundryのコミュニティメンバーの協力によって策定された、Kubernetes本体からは独立した仕様（<a href="https://github.com/container-storage-interface/spec/blob/master/spec.md">spec本体</a>はKubernetesリポジトリの外にある）。</p>
+
+<h2>目的</h2>
+
+<p>ストレージベンダーが、Kubernetesのコア実装に手を入れることなく、独自のプラグイン（CSIドライバ）を書いてデプロイするだけで自社のストレージシステムをKubernetesから使えるようにすること。プロビジョニング、アタッチ/デタッチ、マウント/アンマウントといったストレージ操作を、環境をまたいで一貫したインターフェースで扱えるようにする。</p>
+
+<h2>Kubernetesでの経緯</h2>
+
+<p>Kubernetes v1.9でCSI仕様のalpha実装が公開され、v1.13でGA（General Availability）に到達した。それ以前はKubernetes本体のコードにストレージベンダーごとの実装を直接組み込む方式（in-treeプラグイン）だったが、CSIによってベンダー実装をKubernetesのリリースサイクルから切り離せるようになった。</p>
+
+<h2><a href="/notes/kubernetes-on-oxide.html">Oxide Computer</a>での事例</h2>
+
+<p>CSIドライバが前提とする「稼働中のノードへディスクを動的にアタッチ/デタッチする」という振る舞い（ホットアタッチ）は、Oxide Computerのように独自にハードウェア〜<a href="/notes/kvm.html">ハイパーバイザー</a>〜APIまで一気通貫で設計しているプラットフォームでは自明には成立しない。Oxideの制約「ディスクの着脱前にインスタンスを停止する必要がある」とCSIの前提が衝突し、ハイパーバイザー層まで遡った対応が必要になった。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://kubernetes.io/blog/2018/01/introducing-container-storage-interface/">Introducing Container Storage Interface (CSI) Alpha for Kubernetes | Kubernetes</a></li>
+<li><a href="https://kubernetes.io/blog/2019/01/15/container-storage-interface-ga/">Container Storage Interface (CSI) for Kubernetes GA | Kubernetes</a></li>
+<li><a href="https://kubernetes-csi.github.io/docs/">Introduction - Kubernetes CSI Developer Documentation</a></li>
+</ul>
+
+
+<p><a class="note-tag" href="/notes/tags/kubernetes.html">#kubernetes</a> <a class="note-tag" href="/notes/tags/storage.html">#storage</a></p>
+]]></description>
+</item>
+<item>
+<title>Cluster API (CAPI)</title>
+<link>https://64p.org/notes/cluster-api.html</link>
+<guid isPermaLink="true">https://64p.org/notes/cluster-api.html</guid>
+<pubDate>Fri, 14 Aug 2026 08:09:00 +0900</pubDate>
+<description><![CDATA[<h1>Cluster API (CAPI)</h1>
+
+<p>Kubernetesクラスタ自体のライフサイクル（作成・アップグレード・運用）を、Kubernetes流の宣言的APIで管理するためのサブプロジェクト。CNCFのCluster Lifecycle Special Interest Group（SIG）配下にある。</p>
+
+<h2>発想</h2>
+
+<p>Kubernetesがコンテナ（Pod）を宣言的なYAMLとコントローラのreconcileループで管理するのと同じパターンを、「クラスタそのもの」の管理に適用したもの。Kubernetesのバージョン、ノード数、マシンタイプ、ネットワーキングなどの「望ましい状態」をYAMLで定義し、CAPIのコントローラが実環境をその定義に近づけ続ける（reconcile）。</p>
+
+<h2>management clusterというアーキテクチャ</h2>
+
+<p>CAPIは「他のKubernetesクラスタを作成・管理するための専用Kubernetesクラスタ（management cluster）」を用意し、そこでCAPIのコントローラ群を動かす。management clusterが単一のコントロールプレーンとなり、配下の複数の「workload cluster」群（＝実際にワークロードが載るクラスタ）を管理する構造になっている。</p>
+
+<h2>プラガブルなプロバイダー機構</h2>
+
+<p>インフラストラクチャプロバイダー・ブートストラッププロバイダー・コントロールプレーンプロバイダーという3種類のプラグインを差し替えることで、AWS・Azure・GCP・VMware・ベアメタルなど多様な基盤に対応する。</p>
+
+<h2><a href="/notes/kubernetes-on-oxide.html">Oxide Computer</a>でのCAPOx</h2>
+
+<p>Oxide向けのインフラストラクチャプロバイダーは「CAPOx（Cluster API Provider Oxide）」と呼ばれ、Oxideプラットフォーム上でのKubernetesクラスタの宣言的な作成・管理をCluster APIの枠組みで実現する。同じくOxide向けの<a href="/notes/kubernetes-on-oxide.html">Rancher Node Driver</a>や<a href="/notes/kubernetes-on-oxide.html">Omni Infrastructure Provider</a>とは別の、独立したプロビジョニング手段として提供されている。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://www.spectrocloud.com/blog/getting-started-with-kubernetes-cluster-api-capi">Getting started with Kubernetes Cluster API (CAPI) - Spectro Cloud</a></li>
+<li><a href="https://www.suse.com/c/rancher_blog/kubernetes-cluster-management-building-infrastructure-agnostic-clusters-with-cluster-api/">Efficient kubernetes cluster management with CAPI | SUSE Communities</a></li>
+</ul>
+
+
+<p><a class="note-tag" href="/notes/tags/kubernetes.html">#kubernetes</a></p>
+]]></description>
+</item>
 <item>
 <title>豆腐百珍</title>
 <link>https://64p.org/notes/tofu-hyakuchin.html</link>
@@ -1259,188 +1415,6 @@ graph LR
 <li><a href="https://ja.wikipedia.org/wiki/%E3%82%B7%E3%83%A7%E3%83%83%E3%82%AB%E3%83%BC%E9%A6%96%E9%A0%98">ショッカー首領 - Wikipedia</a></li>
 <li><a href="https://ja.wikipedia.org/wiki/%E3%82%B7%E3%83%A7%E3%83%83%E3%82%AB%E3%83%BC">ショッカー - Wikipedia</a></li>
 <li><a href="https://ja.wikipedia.org/wiki/%E3%82%B2%E3%83%AB%E3%82%B7%E3%83%A7%E3%83%83%E3%82%AB%E3%83%BC">ゲルショッカー - Wikipedia</a></li>
-</ul>
-
-]]></description>
-</item>
-<item>
-<title>仮面ライダーV3</title>
-<link>https://64p.org/notes/kamen-rider-v3.html</link>
-<guid isPermaLink="true">https://64p.org/notes/kamen-rider-v3.html</guid>
-<pubDate>Thu, 13 Aug 2026 20:54:00 +0900</pubDate>
-<description><![CDATA[<h1>仮面ライダーV3</h1>
-
-<p><a class="note-tag" href="/notes/tags/tokusatsu.html">#tokusatsu</a> <a class="note-tag" href="/notes/tags/kamen-rider.html">#kamen-rider</a></p>
-
-<p>1973年2月17日〜1974年2月9日に毎日放送・NET系列で放送された特撮テレビドラマ。全52話。『仮面ライダー』(1971〜1973年)の直接の続編で、1号・2号に続く3人目のライダーが主役。敵組織は<a href="/notes/destron.html">デストロン</a>。</p>
-
-<h2>V3誕生の経緯</h2>
-
-<p>主人公・風見志郎は城南大学生物学部の学生で、本郷猛(仮面ライダー1号)の後輩。デストロンの悪事を目撃したために狙われ、両親と妹を怪人<a href="/notes/hasami-jaguar.html">ハサミジャガー</a>に殺される。身を挺して1号・2号を救った志郎は、2人の改造手術によって仮面ライダーV3として蘇る。「技の1号」「力の2号」双方の特性を受け継ぐことから「力と技のV3」と呼ばれる。</p>
-
-<h2>覚えておきたい要素</h2>
-
-<ul>
-<li><strong>26の秘密</strong> — V3の体に隠された必殺技・特殊能力を、戦いの中で解き明かしていくという序盤の謎解き要素。V3が弱く見えてしまう問題が生じ、途中で軌道修正された。</li>
-<li><strong>ライダーマン</strong> — 第43話から登場する4人目のライダー・結城丈二。元デストロンの科学者で、ヨロイ元帥の裏切りにより右腕を失い、自ら改造してライダーマンとなる。V3・デストロンとの三つ巴のドラマを生んだ。</li>
-</ul>
-
-
-<h2>人気</h2>
-
-<p>視聴率は関東平均20.2%・関西平均27%を記録し、制作局の毎日放送(関西)ではシリーズ最高の38%に到達。変身ヒーローブームを牽引した、シリーズ中でも知名度の高い作品。</p>
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://ja.wikipedia.org/wiki/%E4%BB%AE%E9%9D%A2%E3%83%A9%E3%82%A4%E3%83%80%E3%83%BCV3">仮面ライダーV3 - Wikipedia</a></li>
-<li><a href="https://www.kamen-rider-official.com/series/v3/">仮面ライダーV3 | 仮面ライダーWEB【公式】 | 東映</a></li>
-<li><a href="https://www.kamen-rider-official.com/zukan/kamen_rider_members/282">仮面ライダーV3 | 仮面ライダー図鑑 | 東映</a></li>
-</ul>
-
-]]></description>
-</item>
-<item>
-<title>デストロン (仮面ライダーV3)</title>
-<link>https://64p.org/notes/destron.html</link>
-<guid isPermaLink="true">https://64p.org/notes/destron.html</guid>
-<pubDate>Thu, 13 Aug 2026 20:54:00 +0900</pubDate>
-<description><![CDATA[<h1>デストロン (仮面ライダーV3)</h1>
-
-<p><a class="note-tag" href="/notes/tags/tokusatsu.html">#tokusatsu</a> <a class="note-tag" href="/notes/tags/kamen-rider.html">#kamen-rider</a></p>
-
-<p><a href="/notes/kamen-rider-v3.html">仮面ライダーV3</a>に登場する悪の秘密結社。ゲルショッカー壊滅後、その首領が新たに結成した組織で、ショッカー以上の戦力と科学力による世界征服を企てる(組織の系譜は<a href="/notes/showa-rider-evil-organizations.html">昭和仮面ライダーの悪の組織の系譜</a>参照)。物語冒頭で風見志郎の家族を殺した<a href="/notes/hasami-jaguar.html">ハサミジャガー</a>もデストロンの怪人。</p>
-
-<h2>首領</h2>
-
-<p>劇中では一切姿を見せず、アジトのサソリのレリーフを通して命令を発する。最終回でV3の前に現れた姿は、胸の空洞に奇怪な心臓が蠢く白い骸骨。V3に骸骨を分解され心臓を破壊されてもなお頭蓋骨内のテープレコーダーらしきものから声を発し続け、最後は秘密基地もろとも自爆した。この骸骨が本当の正体だったのかは曖昧なまま終わる。</p>
-
-<h2>幹部</h2>
-
-<p>物語の進行に応じて、それぞれ配下の怪人部隊を率いる大幹部が交代で登場する。</p>
-
-<table>
-<thead>
-<tr>
-<th> 幹部 </th>
-<th> 登場話 </th>
-<th> 怪人態 </th>
-<th> 率いた部隊 </th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td> ドクトルG </td>
-<td> 13〜30話 </td>
-<td> カニレーザー </td>
-<td> 機械合成怪人(生物と機械の融合) </td>
-</tr>
-<tr>
-<td> キバ男爵 </td>
-<td> 31〜35話 </td>
-<td> 吸血マンモス </td>
-<td> キバ一族(呪術的な動物怪人) </td>
-</tr>
-<tr>
-<td> ツバサ大僧正 </td>
-<td> 36〜40話 </td>
-<td> 死人コウモリ </td>
-<td> ツバサ一族(ほぼ全員が飛行能力持ち) </td>
-</tr>
-<tr>
-<td> ヨロイ元帥 </td>
-<td> 41〜52話 </td>
-<td> ザリガーナ </td>
-<td> ヨロイ一族(強固な防御力とパワー) </td>
-</tr>
-</tbody>
-</table>
-
-
-<h2>戦闘員</h2>
-
-<p>白いサソリ模様の入った黒タイツと白マスクを着用。常人の5倍の体力と、他人に変身する能力を持つ。所属部隊ごとに装備が異なり、ツバサ一族配下の戦闘員は袖に長いフリンジを付けて飛行できた。</p>
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://ja.wikipedia.org/wiki/%E4%BB%AE%E9%9D%A2%E3%83%A9%E3%82%A4%E3%83%80%E3%83%BCV3">仮面ライダーV3 - Wikipedia</a></li>
-<li><a href="https://www.kamen-rider-official.com/zukan/phantoms/1264">デストロン首領 | 仮面ライダー図鑑 | 東映</a></li>
-</ul>
-
-]]></description>
-</item>
-<item>
-<title>ハサミジャガー</title>
-<link>https://64p.org/notes/hasami-jaguar.html</link>
-<guid isPermaLink="true">https://64p.org/notes/hasami-jaguar.html</guid>
-<pubDate>Thu, 13 Aug 2026 20:49:00 +0900</pubDate>
-<description><![CDATA[<h1>ハサミジャガー</h1>
-
-<p><a class="note-tag" href="/notes/tags/tokusatsu.html">#tokusatsu</a> <a class="note-tag" href="/notes/tags/kamen-rider.html">#kamen-rider</a></p>
-
-<p><a href="/notes/kamen-rider-v3.html">仮面ライダーV3</a>(1973年)の第1話「ライダー3号 その名はV3!」・第2話「ダブルライダーの遺言状」に登場する、悪の秘密結社<a href="/notes/destron.html">デストロン</a>の改造人間(怪人)。鳴き声は「シザース!」。</p>
-
-<h2>姿と能力</h2>
-
-<ul>
-<li>頭部と胴体の右半分が黒斑のオレンジ色ジャガー、左半分が金属の機械という左右非対称のデザイン。</li>
-<li>両腕の先端が刃になっており、交差させると巨大なハサミになる。挟み込んだ対象に破壊エネルギーを発生させ、人間を溶解させるほどの威力を持つ。壁越しの奇襲攻撃も得意。</li>
-<li>弱点は刃の付け根。機械化された左肩により腕力が特に強い。</li>
-</ul>
-
-
-<h2>物語上の役割</h2>
-
-<p>デストロンの「東京壊滅作戦」の実行役で、姿を目撃した者を消していた。主人公・風見志郎の両親と妹を殺害した張本人であり、志郎が仮面ライダーV3へと改造される直接のきっかけを作った、V3という物語の起点となる怪人。</p>
-
-<p>最期はV3との戦闘で作戦内容を漏らしてしまい、作戦失敗後に襲いかかったところをV3の必殺技「V3回転ダブルキック」を受けて爆散した。</p>
-
-<h2>同モチーフの別キャラクター</h2>
-
-<p>『仮面ライダーウィザード』には同じくハサミ+ジャガーがモチーフの「シザーズジャガー」というファントムが登場するが、これは別キャラクター。</p>
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://www.kamen-rider-official.com/zukan/phantoms/1269">ハサミジャガー | 仮面ライダー図鑑 | 東映</a></li>
-<li><a href="https://dic.pixiv.net/a/%E3%83%8F%E3%82%B5%E3%83%9F%E3%82%B8%E3%83%A3%E3%82%AC%E3%83%BC">ハサミジャガー - ピクシブ百科事典</a></li>
-<li><a href="https://www.kamen-rider-official.com/zukan/phantoms/1401">シザーズジャガー | 仮面ライダー図鑑 | 東映</a></li>
-</ul>
-
-]]></description>
-</item>
-<item>
-<title>NOC (Network Operations Center)</title>
-<link>https://64p.org/notes/noc.html</link>
-<guid isPermaLink="true">https://64p.org/notes/noc.html</guid>
-<pubDate>Thu, 13 Aug 2026 20:47:00 +0900</pubDate>
-<description><![CDATA[<h1>NOC (Network Operations Center)</h1>
-
-<p>通信ネットワークの監視・管理・運用を専門に行う拠点（組織・部署）のこと。ネットワークオペレーションセンターとも呼ぶ。</p>
-
-<h2>主な役割</h2>
-
-<ul>
-<li><strong>監視</strong>: トラフィック量、帯域使用率、ルーター・スイッチ・サーバーなど各機材の稼働状況を専用ソフトウェアでリアルタイム監視し、ダッシュボードで可視化する</li>
-<li><strong>異常検知・通知</strong>: しきい値超過や障害を検知すると自動でアラートを発報し、担当者にメール・チャット・画面表示などで通知する</li>
-<li><strong>障害対応</strong>: 実際に障害が発生した際の一次対応・エスカレーション・関係各所との調整を行う</li>
-<li><strong>予防保守</strong>: 障害が起きる前の予防的な措置（キャパシティ管理など）も含まれる</li>
-</ul>
-
-
-<p>大規模な企業・ISP・データセンターなどでは24時間365日体制で運用されることが多く、ネットワークの可用性とパフォーマンスを維持するための中枢として機能する。</p>
-
-<h2>SOCとの違い</h2>
-
-<p>似た概念に <a href="/notes/soc.html">SOC (Security Operations Center)</a> がある。NOCはネットワークの可用性・パフォーマンス維持が主目的なのに対し、SOCはセキュリティインシデントの検知・対応に特化している点が異なる。</p>
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://www.nic.ad.jp/ja/basics/terms/noc.html">NOC (Network Operation Center)とは - JPNIC</a></li>
-<li><a href="https://e-words.jp/w/%E3%83%8D%E3%83%83%E3%83%88%E3%83%AF%E3%83%BC%E3%82%AF%E3%82%AA%E3%83%9A%E3%83%AC%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3%E3%82%BB%E3%83%B3%E3%82%BF%E3%83%BC.html">ネットワークオペレーションセンター（NOC）とは - IT用語辞典 e-Words</a></li>
-<li><a href="https://www.ibm.com/think/topics/network-operations-center">What Is a Network Operations Center? - IBM</a></li>
 </ul>
 
 ]]></description>
