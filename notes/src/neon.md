@@ -1,12 +1,14 @@
 ---
 created: 2026-08-10 17:10
-updated: 2026-08-10 17:10
+updated: 2026-08-13 22:28
 ---
 # Neon
 
 [[postgresql|PostgreSQL]]互換のサーバーレスクラウドデータベース。2021年にCEOのNikita Shamgunov、エンジニアのHeikki LinnakangasとStas Kelvichによって設立された。
 
 #database #postgresql #serverless
+
+[[sqlite|SQLite]]互換で同様にサーバーレス・エッジ指向の[[turso|Turso]]と比較されることがある。
 
 ## アーキテクチャ
 

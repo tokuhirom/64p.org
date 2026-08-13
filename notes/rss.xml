@@ -6,7 +6,48 @@
 <atom:link href="https://64p.org/notes/rss.xml" rel="self" type="application/rss+xml" />
 <description>ちょっと調べたことや検証結果を、AIの力も借りながらメモしていくコーナーです。</description>
 <language>ja</language>
-<lastBuildDate>Thu, 13 Aug 2026 22:19:30 +0900</lastBuildDate>
+<lastBuildDate>Thu, 13 Aug 2026 22:28:00 +0900</lastBuildDate>
+<item>
+<title>Turso</title>
+<link>https://64p.org/notes/turso.html</link>
+<guid isPermaLink="true">https://64p.org/notes/turso.html</guid>
+<pubDate>Thu, 13 Aug 2026 22:28:00 +0900</pubDate>
+<description><![CDATA[<h1>Turso</h1>
+
+<p>turso.tech社が提供する、<a href="/notes/sqlite.html">SQLite</a>互換のデータベース製品群。名称が指す対象が時期によって変化しており、現在は「libSQL」「Turso Cloud」「Turso Database」という3つの要素が絡み合っている。</p>
+
+<p><a class="note-tag" href="/notes/tags/database.html">#database</a> <a class="note-tag" href="/notes/tags/sqlite.html">#sqlite</a> <a class="note-tag" href="/notes/tags/serverless.html">#serverless</a> <a class="note-tag" href="/notes/tags/edge-computing.html">#edge-computing</a></p>
+
+<h2>libSQL</h2>
+
+<p>Turso社がメンテナンスする<a href="/notes/sqlite.html">SQLite</a>のオープンソースフォーク。ファイルフォーマット・APIともにSQLiteと完全な後方互換性を保ちつつ、SQLite本家に取り込まれなかった機能を追加している。組み込みデータベースとしてだけでなく、WebSocket/HTTP経由でSQLを実行できるリモートサーバーとしても動作できる点が特徴。外部システムがWALの変更を消費・適用できる「virtual WAL interface」を持ち、分散同期の基盤になっている。</p>
+
+<h2>Turso Cloud</h2>
+
+<p>libSQLを使って構築された、現行のマネージドデータベースサービス。エッジの35以上のリージョンでlibSQLサーバーを稼働させ、プライマリリージョンで作成したデータベースを他リージョンへレプリケートする。読み取りは最寄りのレプリカへ、書き込みはプライマリへ向かう構成。</p>
+
+<p>「embedded replicas」という仕組みも提供しており、クラウド上のプライマリDBと同期するローカルのSQLiteファイルをアプリケーション側に持たせることで、ローカルディスク並みの速度（ベンチマークで200ナノ秒未満とされる）での読み取りを実現する。</p>
+
+<h2>Turso Database</h2>
+
+<p>Rustで新規にゼロから書き直されている、SQLite互換の新データベース（2026年8月時点でベータ）。libSQLとは別物で、将来的にTurso Cloudへ組み込む方向で開発が進められている。</p>
+
+<h2>用途</h2>
+
+<p>コンテンツ配信・分析ダッシュボード・ドキュメントツールのような「読み取りが多く書き込みは中程度」なアプリケーションに向いているとされる。リアルタイムコラボレーションやトレーディング、マルチプレイヤーゲームのような高並行書き込みが必要な用途は、<a href="/notes/postgresql.html">PostgreSQL</a>系（<a href="/notes/neon.html">Neon</a>など）の方が適しているとされる。SQLiteのベクトル検索拡張<code>sqlite-vec</code>にも対応しており、AI関連のユースケースでの利用も謳われている。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://docs.turso.tech/libsql">libSQL - Turso</a></li>
+<li><a href="https://x.com/penberg/status/2032373944007688226">Pekka Enberg氏によるTurso/Turso Cloud/libSQLの関係の説明 (X)</a></li>
+<li><a href="https://turso.tech/what-is-turso">What is Turso? — The SQLite-compatible database for the agentic era</a></li>
+<li><a href="https://github.com/tursodatabase/libsql">GitHub - tursodatabase/libsql</a></li>
+<li><a href="https://www.sabaoon.dev/blog/edge-database-landscape-2026">The Edge Database Landscape in 2026: Postgres, Turso, and the SQLite Renaissance | Sabaoon</a></li>
+</ul>
+
+]]></description>
+</item>
 <item>
 <title>トイル (Toil)</title>
 <link>https://64p.org/notes/toil.html</link>
@@ -1400,76 +1441,6 @@ Content-length: 25
 <li><a href="https://voidzero.dev/posts/announcing-rolldown-vite">Announcing Rolldown-Vite | VoidZero</a></li>
 <li><a href="https://v7.vite.dev/guide/rolldown">Rolldown Integration | Vite</a></li>
 <li><a href="https://vite.dev/blog/announcing-vite8-beta">Vite 8 Beta: The Rolldown-powered Vite</a></li>
-</ul>
-
-]]></description>
-</item>
-<item>
-<title>MySQL HeatWave</title>
-<link>https://64p.org/notes/mysql-heatwave.html</link>
-<guid isPermaLink="true">https://64p.org/notes/mysql-heatwave.html</guid>
-<pubDate>Thu, 13 Aug 2026 08:59:00 +0900</pubDate>
-<description><![CDATA[<h1>MySQL HeatWave</h1>
-
-<p>Oracleが提供する<a href="/notes/mysql.html">MySQL</a>向けの完全マネージドクラウドサービス。OLTP（トランザクション処理）とOLAP（分析処理）を単一サービス内で統合し、従来はETLで別の分析基盤（Snowflake、BigQueryなど）にデータを移す必要があった構成を不要にする、というのが売り。</p>
-
-<p><a class="note-tag" href="/notes/tags/database.html">#database</a> <a class="note-tag" href="/notes/tags/mysql.html">#mysql</a> <a class="note-tag" href="/notes/tags/cloud.html">#cloud</a> <a class="note-tag" href="/notes/tags/oracle.html">#oracle</a></p>
-
-<h2>アーキテクチャ</h2>
-
-<p>2つのコンポーネントから構成される。</p>
-
-<ul>
-<li><strong>DB System</strong>: MySQL Enterprise Editionが動くクラウドベースのコンピュートインスタンス。暗号化・データマスキング・DBファイアウォールなどのセキュリティ機能を持つ。</li>
-<li><strong>MySQL HeatWave Cluster</strong>: インメモリのアクセラレータ。1つ以上のHeatWaveノードで構成され、分析・ML・GenAI・ベクトルストア・Lakehouse機能を提供する。</li>
-</ul>
-
-
-<p>DB System側でのデータ変更は暗号化された通信で自動的にHeatWave Clusterへ伝播し、常に最新データに対してクエリできる。Object Storage上のデータも自動的に取り込まれる。</p>
-
-<p>技術的な設計特性としては、インメモリのハイブリッド列形式（列指向のクエリ効率と行指向の更新効率を両立）、ノード・コア単位でデータを分割する大規模並列処理、プッシュベースのベクトル化クエリ処理などがある。</p>
-
-<h2>主な機能領域</h2>
-
-<ol>
-<li><strong>HeatWave（分析アクセラレータ）</strong>: MySQLの分析クエリをアプリケーション側の変更なしに高速化するインメモリクエリアクセラレータ。</li>
-<li><strong>HeatWave Lakehouse</strong>: Object Storage上の最大0.5ペタバイトのデータを、MySQL DBにコピーせずにクエリ可能。</li>
-<li><strong>HeatWave ML</strong>: データ移動なしでのインデータベース機械学習。</li>
-<li><strong>HeatWave GenAI / Vector Store</strong>: PDF・PPT・DOC・HTMLなどの非構造化データを自動でパース・チャンク分割・ベクトル埋め込みし、インデータベースLLMによる意味検索やRAGを実現する。ベクトル処理は最大512ノードにスケールアウトし、メモリ帯域で実行される。</li>
-<li><strong>Autopilot</strong>: ML技術を用いたクエリ最適化・自動チューニング機能。</li>
-</ol>
-
-
-<h2>ライセンス</h2>
-
-<p>「MySQL」本体と「HeatWave」は別物として扱う必要がある。</p>
-
-<ul>
-<li><strong>MySQL Community Edition</strong>: GPLv2（オープンソース）</li>
-<li><strong>MySQL Enterprise Edition</strong>: Oracleの商用プロプライエタリライセンス</li>
-<li><strong>HeatWave</strong>: オープンソースではなくOracleのプロプライエタリ製品。単体のダウンロード可能なソフトウェアとしては提供されておらず、Oracle Cloud Infrastructure (OCI)・AWS・Microsoft Azure上の完全マネージドサービスとしてのみ利用できる。オンプレミス版は存在しない（オンプレミスのMySQLと接続するハイブリッド構成は可能だが、HeatWave Cluster自体はクラウド専用）。</li>
-</ul>
-
-
-<p>課金は個別のライセンス購入ではなく、サブスクリプション/従量課金（pay-as-you-go）モデルに組み込まれている。DB System（MySQLインスタンス部分）はOCPU・ストレージ単位の課金、HeatWave Clusterはノード単位の追加課金という構成。</p>
-
-<p>ベクトル検索やML機能などHeatWave固有の機能は、MySQL Community版はもちろんEnterprise版にも存在しない、HeatWaveだけの独自機能。</p>
-
-<h2>パフォーマンス面の主張</h2>
-
-<p>Oracle公式によれば、類似検索（vector similarity search）においてDatabricksより15倍、Google BigQueryより18倍、Snowflakeより30倍高速だとされている。Oracle自身のベンチマークである点には留意。</p>
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://docs.oracle.com/en-us/iaas/mysql-database/doc/overview-mysql-heatwave-service.html">Overview of MySQL HeatWave Service</a></li>
-<li><a href="https://dev.mysql.com/doc/heatwave/en/mys-hw-about-heatwave.html">MySQL :: HeatWave User Guide :: 1.1 About MySQL HeatWave</a></li>
-<li><a href="https://dev.mysql.com/doc/heatwave/en/mys-hw-genai-vector-store-overview.html">MySQL :: HeatWave User Guide :: 7.7.1 About MySQL HeatWave Vector Store</a></li>
-<li><a href="https://dev.mysql.com/doc/heatwave/en/mys-hw-supported-cloud-platforms.html">MySQL :: HeatWave User Guide :: 1.4 Supported Cloud Platforms</a></li>
-<li><a href="https://www.oracle.com/mysql/genai/">MySQL HeatWave GenAI | Oracle</a></li>
-<li><a href="https://redresscompliance.com/what-is-heatwave-sql-and-how-is-it-licensed/">What is HeatWave SQL and How is it Licensed?</a></li>
-<li><a href="https://www.oracle.com/europe/heatwave/pricing/">MySQL HeatWave Pricing on OCI &amp; AWS | Oracle Europe</a></li>
-<li><a href="https://www.percona.com/blog/is-oracle-finally-killing-mysql/">Is Oracle Finally Killing MySQL? - Percona</a></li>
 </ul>
 
 ]]></description>
