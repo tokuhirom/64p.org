@@ -23,6 +23,7 @@
                 <a class="notes-tags-link" href="/notes/rss.xml">📡 RSS</a>
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
+                                    <li><a href="/notes/cni.html" class="active">CNI (Container Network Interface)</a></li>
                                     <li><a href="/notes/raft.html">Raft (合意アルゴリズム)</a></li>
                                     <li><a href="/notes/paxos.html">Paxos</a></li>
                                     <li><a href="/notes/open-vswitch.html">Open vSwitch (OVS)</a></li>
@@ -31,7 +32,6 @@
                                     <li><a href="/notes/k3s.html">k3s</a></li>
                                     <li><a href="/notes/etcd.html">etcd</a></li>
                                     <li><a href="/notes/coreos.html">CoreOS</a></li>
-                                    <li><a href="/notes/cni.html" class="active">CNI (Container Network Interface)</a></li>
                                     <li><a href="/notes/traefik.html">Traefik</a></li>
                                     <li><a href="/notes/lets-encrypt.html">Let&#39;s Encrypt</a></li>
                                     <li><a href="/notes/kind.html">kind (Kubernetes in Docker)</a></li>
@@ -428,7 +428,7 @@
             <article class="notes-content">
                 <h1>CNI (Container Network Interface)</h1>
 
-<p>Linuxコンテナのネットワーク設定を行うための、ベンダー中立な標準インターフェース仕様と基本プラグイン群。<a href="/notes/coreos.html">CoreOS</a>がコンテナランタイムrktのプラグイン機構として提唱したものが原型で、2017年5月にCNCFの10番目のホストプロジェクトになった。<a href="/notes/kubernetes.html">Kubernetes</a>のほか、Mesos・Cloud Foundryなどでも採用されている。 <a class="note-tag" href="/notes/tags/networking.html">#networking</a> <a class="note-tag" href="/notes/tags/kubernetes.html">#kubernetes</a></p>
+<p>Linuxコンテナのネットワーク設定を行うための、ベンダー中立な標準インターフェース仕様と基本プラグイン群。<a href="/notes/coreos.html">CoreOS</a>がコンテナランタイムrktのプラグイン機構として提唱したものが原型で、2017年5月にCNCFの10番目のホストプロジェクトになった。<a href="/notes/kubernetes.html">Kubernetes</a>のほか、<a href="/notes/apache-mesos.html">Mesos</a>・Cloud Foundryなどでも採用されている。 <a class="note-tag" href="/notes/tags/networking.html">#networking</a> <a class="note-tag" href="/notes/tags/kubernetes.html">#kubernetes</a></p>
 
 <h2>Kubernetesとの関係</h2>
 
@@ -476,7 +476,7 @@
                     </ul>
                 </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-14 08:39 / 更新日時: 2026-08-14 08:39</span>
+                    <span>作成日時: 2026-08-14 08:39 / 更新日時: 2026-08-14 08:40</span>
                     <a class="share-x" href="https://twitter.com/intent/tweet?text=CNI%20%28Container%20Network%20Interface%29&url=https%3A%2F%2F64p.org%2Fnotes%2Fcni.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
