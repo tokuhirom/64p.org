@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>ポリンキーの「三角形の秘密」 - Notes - 64p.org</title>
+    <title>Fluent Bit - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="alternate" type="application/rss+xml" title="Notes - 64p.org" href="/notes/rss.xml">
@@ -24,7 +24,7 @@
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
                                     <li><a href="/notes/fluentd.html">Fluentd</a></li>
-                                    <li><a href="/notes/fluent-bit.html">Fluent Bit</a></li>
+                                    <li><a href="/notes/fluent-bit.html" class="active">Fluent Bit</a></li>
                                     <li><a href="/notes/embulk.html">Embulk</a></li>
                                     <li><a href="/notes/dbt.html">dbt (data build tool)</a></li>
                                     <li><a href="/notes/monad.html">モナド</a></li>
@@ -314,7 +314,7 @@
                                     <li><a href="/notes/openjdk-projects.html">OpenJDKの主要プロジェクト</a></li>
                                     <li><a href="/notes/project-valhalla.html">Project Valhalla</a></li>
                                     <li><a href="/notes/project-amber.html">Project Amber</a></li>
-                                    <li><a href="/notes/polinky-triangle-secret.html" class="active">ポリンキーの「三角形の秘密」</a></li>
+                                    <li><a href="/notes/polinky-triangle-secret.html">ポリンキーの「三角形の秘密」</a></li>
                                     <li><a href="/notes/shokudai-ookonnyaku.html">ショクダイオオコンニャク</a></li>
                                     <li><a href="/notes/imabari-towel.html">今治タオル</a></li>
                                     <li><a href="/notes/sakpilot.html">SakPilot</a></li>
@@ -366,53 +366,78 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>ポリンキーの「三角形の秘密」</h1>
+                <h1>Fluent Bit</h1>
 
-<p><a class="note-tag" href="/notes/tags/pop-culture.html">#pop-culture</a></p>
+<p>ログ・メトリクス・トレースを収集する軽量なテレメトリエージェント。<a href="/notes/fluentd.html">Fluentd</a>のアーキテクチャを踏襲しつつ、組み込み機器やエッジデバイスなどFluentdの実行が困難な低リソース環境向けに開発された。作者はEduardo Silva、現在はChronosphere社がスポンサーとなっている。CNCF傘下のFluentdプロジェクトのサブプロジェクトという位置づけで、Fluent Bit自体もCNCF Graduatedレベルにある。ライセンスはApache License v2.0。</p>
 
-<p>湖池屋のスナック菓子「ポリンキー」(1990年発売)にまつわる、伝説のCMキャッチコピー。</p>
+<p><a class="note-tag" href="/notes/tags/data-engineering.html">#data-engineering</a> <a class="note-tag" href="/notes/tags/cncf.html">#cncf</a> <a class="note-tag" href="/notes/tags/observability.html">#observability</a></p>
 
-<h2>「秘密」の正体</h2>
+<h2>Fluentdとの違い</h2>
 
-<p>CMソングの歌詞は「♪ポリンキー ポリンキー 三角形の秘密はね 教えてあげないよ、ジャン♪」というもので、発売から35年以上経った今も公式には明かされていない、というのがこの話題のオチ。湖池屋自身も公式に秘密を明かさないことをずっと貫いており、これ自体が意図的なマーケティング戦略として続いている。</p>
+<table>
+<thead>
+<tr>
+<th> </th>
+<th> Fluentd </th>
+<th> Fluent Bit </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td> 実装言語 </td>
+<td> Ruby(コアの一部はC) </td>
+<td> C言語のみ </td>
+</tr>
+<tr>
+<td> プラグイン </td>
+<td> Ruby gemとして実行後にインストール </td>
+<td> コアにコンパイルして組み込み </td>
+</tr>
+<tr>
+<td> メモリ使用量 </td>
+<td> 単一インスタンスで約40MB </td>
+<td> 単一インスタンスで1MB未満 </td>
+</tr>
+<tr>
+<td> 対応シグナル </td>
+<td> ログ中心(OpenTelemetryにも対応) </td>
+<td> ログ・メトリクス・トレースの3種に対応 </td>
+</tr>
+</tbody>
+</table>
 
-<h2>有識者による考察(非公式)</h2>
 
-<p>オモコロの記事で数学者・柳谷晃氏が考察したところによると、製造効率の観点から以下のような仮説が立てられている。</p>
+<p>同一ワークロードでの比較では、FluentdはFluent Bitのおよそ4倍のCPU、4〜6倍のメモリを消費するというベンチマーク結果がある。</p>
+
+<h2>主な機能</h2>
 
 <ul>
-<li>もともと穴の空いた菱形の生地を作り、60°の角度で等間隔にカット</li>
-<li>それを折りたたんで正三角形にし、真ん中だけ油を塗ってくっつかないようにして揚げる</li>
-<li>菱形から正三角形にする工程が製造コスト上もっとも効率的だったのではないか</li>
+<li>JSON・正規表現・LTSV・Logfmtなど複数フォーマットのログパーサーに対応。</li>
+<li>PrometheusおよびOpenTelemetryと互換性のあるメトリクス収集・出力。</li>
+<li>バックプレッシャーハンドリングと、メモリ/ファイルシステムでのデータバッファリング。</li>
+<li>高スループット・低リソース消費を重視した設計で、Kubernetesのノードレベルやエッジ層でのログ収集用途によく使われる。</li>
 </ul>
 
-
-<p>正三角形という形自体も、3本の線対称軸を持つことから「高貴で清潔、美味しそう」な印象を与える効果があるとも言及されている。</p>
-
-<h2>最近の動き(2025年)</h2>
-
-<p>発売35周年を記念して初代CM「ポリンキー劇場」を完全再現した新CMが放送された。「ミステリーオブポリンキー」という関連動画も公開されたが、この時も公式な「秘密」は明言されていない。</p>
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://netatopi.jp/article/1000383.html">ポリンキー ポリンキー 三角形の秘密はね♪～伝説のCM「ポリンキー劇場」の最新作公開！ - ネタとぴ</a></li>
-<li><a href="https://omocoro.jp/kiji/74695/">【ポリンキー】三角形の秘密を数学者とガチで解きにいった時の話 | オモコロ</a></li>
-<li><a href="https://www.nikkan-gendai.com/articles/view/money/288246">湖池屋「ポリンキー」の"三角形のヒミツ"は解決できるか？｜日刊ゲンダイDIGITAL</a></li>
-<li><a href="https://prtimes.jp/main/html/rd/p/000001512.000003039.html">社会現象を巻き起こした伝説のCMが、令和の時代に完全再現で復活！ | 株式会社湖池屋プレスリリース</a></li>
+<li><a href="https://docs.fluentbit.io/manual">Fluent Bit: Official Manual</a></li>
+<li><a href="https://docs.fluentbit.io/manual/2.0/about/fluentd-and-fluent-bit">Fluentd &amp; Fluent Bit | Fluent Bit: Official Manual</a></li>
+<li><a href="https://betterstack.com/community/logging/fluentd-vs-fluent-bit/">Fluentd vs Fluent Bit: How to Choose in 2026 | Better Stack Community</a></li>
 </ul>
 
 
                                 <div class="notes-backlinks">
                     <h2>🔗 リンクされているノート</h2>
                     <ul>
-                                            <li><a href="/notes/don-tacos.html">ドンタコス</a></li>
+                                            <li><a href="/notes/fluentd.html">Fluentd</a></li>
                     
                     </ul>
                 </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-09 18:58 / 更新日時: 2026-08-09 18:58</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=%E3%83%9D%E3%83%AA%E3%83%B3%E3%82%AD%E3%83%BC%E3%81%AE%E3%80%8C%E4%B8%89%E8%A7%92%E5%BD%A2%E3%81%AE%E7%A7%98%E5%AF%86%E3%80%8D&url=https%3A%2F%2F64p.org%2Fnotes%2Fpolinky-triangle-secret.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <span>作成日時: 2026-08-13 13:05 / 更新日時: 2026-08-13 13:05</span>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=Fluent%20Bit&url=https%3A%2F%2F64p.org%2Fnotes%2Ffluent-bit.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">

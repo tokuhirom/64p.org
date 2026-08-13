@@ -6,7 +6,75 @@
 <atom:link href="https://64p.org/notes/rss.xml" rel="self" type="application/rss+xml" />
 <description>ちょっと調べたことや検証結果を、AIの力も借りながらメモしていくコーナーです。</description>
 <language>ja</language>
-<lastBuildDate>Thu, 13 Aug 2026 13:03:49 +0900</lastBuildDate>
+<lastBuildDate>Thu, 13 Aug 2026 13:05:09 +0900</lastBuildDate>
+<item>
+<title>Fluent Bit</title>
+<link>https://64p.org/notes/fluent-bit.html</link>
+<guid isPermaLink="true">https://64p.org/notes/fluent-bit.html</guid>
+<pubDate>Thu, 13 Aug 2026 13:05:00 +0900</pubDate>
+<description><![CDATA[<h1>Fluent Bit</h1>
+
+<p>ログ・メトリクス・トレースを収集する軽量なテレメトリエージェント。<a href="/notes/fluentd.html">Fluentd</a>のアーキテクチャを踏襲しつつ、組み込み機器やエッジデバイスなどFluentdの実行が困難な低リソース環境向けに開発された。作者はEduardo Silva、現在はChronosphere社がスポンサーとなっている。CNCF傘下のFluentdプロジェクトのサブプロジェクトという位置づけで、Fluent Bit自体もCNCF Graduatedレベルにある。ライセンスはApache License v2.0。</p>
+
+<p><a class="note-tag" href="/notes/tags/data-engineering.html">#data-engineering</a> <a class="note-tag" href="/notes/tags/cncf.html">#cncf</a> <a class="note-tag" href="/notes/tags/observability.html">#observability</a></p>
+
+<h2>Fluentdとの違い</h2>
+
+<table>
+<thead>
+<tr>
+<th> </th>
+<th> Fluentd </th>
+<th> Fluent Bit </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td> 実装言語 </td>
+<td> Ruby(コアの一部はC) </td>
+<td> C言語のみ </td>
+</tr>
+<tr>
+<td> プラグイン </td>
+<td> Ruby gemとして実行後にインストール </td>
+<td> コアにコンパイルして組み込み </td>
+</tr>
+<tr>
+<td> メモリ使用量 </td>
+<td> 単一インスタンスで約40MB </td>
+<td> 単一インスタンスで1MB未満 </td>
+</tr>
+<tr>
+<td> 対応シグナル </td>
+<td> ログ中心(OpenTelemetryにも対応) </td>
+<td> ログ・メトリクス・トレースの3種に対応 </td>
+</tr>
+</tbody>
+</table>
+
+
+<p>同一ワークロードでの比較では、FluentdはFluent Bitのおよそ4倍のCPU、4〜6倍のメモリを消費するというベンチマーク結果がある。</p>
+
+<h2>主な機能</h2>
+
+<ul>
+<li>JSON・正規表現・LTSV・Logfmtなど複数フォーマットのログパーサーに対応。</li>
+<li>PrometheusおよびOpenTelemetryと互換性のあるメトリクス収集・出力。</li>
+<li>バックプレッシャーハンドリングと、メモリ/ファイルシステムでのデータバッファリング。</li>
+<li>高スループット・低リソース消費を重視した設計で、Kubernetesのノードレベルやエッジ層でのログ収集用途によく使われる。</li>
+</ul>
+
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://docs.fluentbit.io/manual">Fluent Bit: Official Manual</a></li>
+<li><a href="https://docs.fluentbit.io/manual/2.0/about/fluentd-and-fluent-bit">Fluentd &amp; Fluent Bit | Fluent Bit: Official Manual</a></li>
+<li><a href="https://betterstack.com/community/logging/fluentd-vs-fluent-bit/">Fluentd vs Fluent Bit: How to Choose in 2026 | Better Stack Community</a></li>
+</ul>
+
+]]></description>
+</item>
 <item>
 <title>Fluentd</title>
 <link>https://64p.org/notes/fluentd.html</link>
@@ -32,7 +100,7 @@
 
 <ul>
 <li>2016年11月8日にCNCF(Cloud Native Computing Foundation)のIncubatingプロジェクトとして採択され、2019年4月11日にGraduatedレベルへ昇格した。</li>
-<li>組み込み機器やエッジデバイスなど、Fluentdの実行が困難な軽量環境向けに、Fluentdのアーキテクチャを踏襲した軽量版として<strong>Fluent Bit</strong>が開発された。Fluent BitはFluentdの傘下にあるCNCF Graduatedのサブプロジェクトという位置づけ。</li>
+<li>組み込み機器やエッジデバイスなど、Fluentdの実行が困難な軽量環境向けに、Fluentdのアーキテクチャを踏襲した軽量版として<a href="/notes/fluent-bit.html">Fluent Bit</a>が開発された。Fluent BitはFluentdの傘下にあるCNCF Graduatedのサブプロジェクトという位置づけ。</li>
 <li>Fluent Bitはログだけでなくメトリクスやトレースの収集・処理・転送にも対応するよう発展しており、現在はFluentdより広く採用されている。</li>
 </ul>
 
@@ -1582,80 +1650,6 @@ X_k = \sum_{n=0}^{N-1} x_n\, e^{-i 2\pi k n / N}
 
 <ul>
 <li><a href="https://en.wikipedia.org/wiki/Fast_Fourier_transform">Fast Fourier transform - Wikipedia</a></li>
-</ul>
-
-]]></description>
-</item>
-<item>
-<title>VM exit</title>
-<link>https://64p.org/notes/vm-exit.html</link>
-<guid isPermaLink="true">https://64p.org/notes/vm-exit.html</guid>
-<pubDate>Thu, 13 Aug 2026 00:11:00 +0900</pubDate>
-<description><![CDATA[<h1>VM exit</h1>
-
-<p>ゲスト(VM内で動くコード)が、CPU自身では処理できない・処理してはいけない操作をしようとした瞬間に、制御が強制的にゲストからホスト側(<a href="/notes/kvm.html">KVM</a>およびその上のVMM)に戻される現象。 <a class="note-tag" href="/notes/tags/virtualization.html">#virtualization</a></p>
-
-<h2>発生する操作</h2>
-
-<p><a href="/notes/kvm.html">KVM</a>は「ゲストのCPU命令をホストCPU上でほぼそのままネイティブ実行する」というのが基本方針だが、以下のような操作だけは例外的にトラップしてユーザー空間のVMMに処理を投げる。</p>
-
-<ul>
-<li><strong>I/O命令</strong>(<code>outb</code>/<code>inb</code>などポートへの読み書き) — <code>KVM_EXIT_IO</code></li>
-<li><strong>メモリマップドI/O(MMIO)へのアクセス</strong> — <code>KVM_EXIT_MMIO</code></li>
-<li><strong>HLT命令</strong>(CPUを停止させる) — <code>KVM_EXIT_HLT</code></li>
-<li><strong>特権命令の実行</strong>(CR3の書き換えなど、ハードウェア全体に影響する操作)</li>
-<li><strong>割り込み・例外</strong></li>
-</ul>
-
-
-<h2><code>kvm_run</code>構造体</h2>
-
-<p>VMMが<code>KVM_RUN</code>ioctlを呼んでゲストを実行させると、VM exitが起きた際の理由は<code>struct kvm_run</code>(vCPUのファイルディスクリプタにmmapされた共有メモリ)の<code>exit_reason</code>フィールドに書き込まれる。I/Oの場合は<code>run-&gt;io</code>に方向(入力/出力)・サイズ・ポート番号・値の個数が、MMIOの場合は<code>run-&gt;mmio</code>にゲスト物理アドレスや読み書きするデータが入る。VMM側はこの<code>exit_reason</code>を見て該当するデバイスエミュレーションを行い、また<code>KVM_RUN</code>を呼んでゲストの実行を再開させる。</p>
-
-<h2>なぜ重要か: 性能設計の中心テーマ</h2>
-
-<p>VM exit1回ごとに、ゲストモードからホストモードへのコンテキストスイッチというオーバーヘッドが乗る。そのため「VM exitの回数をいかに減らすか」が仮想化I/Oの性能設計の中心的なテーマになる。<a href="/notes/virtio.html">virtio</a>が「共有メモリのリングバッファにまとめて書き、通知は1回だけ」という設計を取っているのも、まさにこのVM exit削減が狙い。</p>
-
-<h2>実際に動かしてみる</h2>
-
-<p><a href="/notes/kvm-hello-world-experiment.html">kvm-hello-world実験</a>と<a href="/notes/virtqueue-toy-experiment.html">virtqueue風トイ実験</a>で、VM exit回数を<code>strace</code>で実測して比較した。</p>
-
-<table>
-<thead>
-<tr>
-<th> 実験 </th>
-<th> 送信データ量 </th>
-<th> VM exit(<code>KVM_RUN</code>)回数 </th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td> 1文字ごとに<code>outb</code>で通知 </td>
-<td> 14バイト </td>
-<td> 15回 </td>
-</tr>
-<tr>
-<td> まとめて書いて1回だけ通知 </td>
-<td> 64バイト </td>
-<td> 2回 </td>
-</tr>
-</tbody>
-</table>
-
-
-<p>送信データ量は後者の方が大きいにもかかわらず、VM exit回数は15回→2回まで減った。データをまとめてVM exitを減らすことが、そのままI/Oスループットの改善に直結することを数字で確認できる。</p>
-
-<h2><a href="/notes/microvm-ecosystem.html">コンテナ向け軽量VM技術</a>の中での位置づけ</h2>
-
-<p><a href="/notes/kvm.html">KVM</a>とユーザー空間VMMの間の連携を成立させている核心のメカニズム。<a href="/notes/virtio.html">virtio</a>のようなI/O設計は、このVM exitをいかに減らすかという課題への回答になっている。</p>
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://lwn.net/Articles/658511/">Using the KVM API - LWN.net</a></li>
-<li><a href="https://linux-kernel-labs.github.io/refs/heads/master/so2/assign7-kvm-vmm.html">Assignment 7 - SO2 Virtual Machine Manager with KVM — The Linux Kernel documentation</a></li>
-<li><a href="https://kernel-internals.org/virtualization/kvm-exits/">KVM Exit Handling - Linux Kernel Internals</a></li>
-<li><a href="https://access.redhat.com/solutions/6994095">Analyzing VM exit reasons and statistics with kvmexit command - Red Hat Customer Portal</a></li>
 </ul>
 
 ]]></description>
