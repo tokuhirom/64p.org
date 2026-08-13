@@ -6,7 +6,280 @@
 <atom:link href="https://64p.org/notes/rss.xml" rel="self" type="application/rss+xml" />
 <description>ちょっと調べたことや検証結果を、AIの力も借りながらメモしていくコーナーです。</description>
 <language>ja</language>
-<lastBuildDate>Fri, 14 Aug 2026 08:18:46 +0900</lastBuildDate>
+<lastBuildDate>Fri, 14 Aug 2026 08:20:07 +0900</lastBuildDate>
+<item>
+<title>熱拡散ドーピング</title>
+<link>https://64p.org/notes/thermal-diffusion-doping.html</link>
+<guid isPermaLink="true">https://64p.org/notes/thermal-diffusion-doping.html</guid>
+<pubDate>Fri, 14 Aug 2026 08:20:00 +0900</pubDate>
+<description><![CDATA[<h1>熱拡散ドーピング</h1>
+
+<p>不純物(ドーパント)を基板表面に供給し、高温下での熱拡散によって半導体結晶内部へ浸透させる<a href="/notes/doping.html">ドーピング</a>手法。ダイオード・トランジスタなど半導体デバイスの製造で古くから使われてきた。 <a class="note-tag" href="/notes/tags/electronics.html">#electronics</a></p>
+
+<h2>プロセス</h2>
+
+<ul>
+<li>固体・液体・気体いずれかの形でドーパント源を用意する(例: リンの気体ソースとして三塩化オキシリン POCl3 を使う)</li>
+<li>850℃~1050℃程度の高温下に600~900秒程度さらし、ドーパントを表面から結晶内部へ拡散させる</li>
+<li>マスク材にはSiO2やSi3N4など高温に耐える膜のみが使える</li>
+</ul>
+
+
+<h2>制約</h2>
+
+<p>熱拡散は等方的に進むため、意図しない横方向への拡散(lateral diffusion)が起きやすい。これに対し<a href="/notes/ion-implantation.html">イオン注入</a>はビームを直接打ち込むため横方向の広がりを抑えやすく、より精密な制御が可能。</p>
+
+<h2><a href="/notes/doping.html">ドーピング</a>の中での位置づけ</h2>
+
+<p>半導体基板に不純物を導入する2つの主要な手法のうち、高温での拡散現象を利用する化学的な手法。イオン注入より古くから使われてきたが、精密な濃度・深さ制御ではイオン注入に譲る。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://www.scribd.com/document/443876691/Doping-thermal-and-ion-implantation-nptel">Doping Techniques in IC Fabrication (NPTEL)</a></li>
+<li><a href="https://arxiv.org/pdf/1603.01307">Thermal Diffusion Boron Doping of Single-Crystal Diamond (arXiv)</a></li>
+</ul>
+
+]]></description>
+</item>
+<item>
+<title>minikube</title>
+<link>https://64p.org/notes/minikube.html</link>
+<guid isPermaLink="true">https://64p.org/notes/minikube.html</guid>
+<pubDate>Fri, 14 Aug 2026 08:20:00 +0900</pubDate>
+<description><![CDATA[<h1>minikube</h1>
+
+<p>ローカルマシン上に<a href="/notes/kubernetes.html">Kubernetes</a>クラスタを立てるためのツール。Kubernetesプロジェクト公式のサブプロジェクト（<code>kubernetes/minikube</code>、サイトは sigs.k8s.io 配下）として開発されている。「手元でKubernetesを触ってみる」ための定番の入り口。 <a class="note-tag" href="/notes/tags/kubernetes.html">#kubernetes</a></p>
+
+<h2>特徴</h2>
+
+<ul>
+<li><strong>ドライバー機構</strong> — クラスタの実体をVM・コンテナ・ベアメタルのいずれでも動かせる。docker / podman / kvm2 / virtualbox / hyperv / qemu / vfkit / none（ベアメタル）など多数のドライバーから選ぶ。コンテナ系（docker）は軽く起動も速い一方、kvm2などVM系はVMを丸ごと起動するぶん重いが、ホストとの分離度は高い</li>
+<li><strong>アドオン機構</strong> — <code>minikube addons enable ingress</code> のように、ingress・dashboard・metrics-server・registryなどをコマンド一発で追加できる</li>
+<li><strong>Kubernetesバージョン選択</strong> — 最新版に加えて6つ前までのマイナーバージョンを指定でき、特定バージョンでの検証がしやすい</li>
+<li><strong>マルチノード</strong> — <code>minikube start --nodes 3</code> のように複数ノードのクラスタも作れる</li>
+<li>クロスプラットフォーム（Linux / macOS / Windows）、複数コンテナランタイム（containerd / CRI-O / docker）、GPU（NVIDIA / AMD / Apple）対応</li>
+</ul>
+
+
+<h2>kind・k3d との比較</h2>
+
+<p>ローカルKubernetes環境の選択肢としては kind・k3d がよく比較対象になる。</p>
+
+<ul>
+<li><strong>minikube</strong> — ドライバーの選択肢が多く、非Docker環境（VM・ベアメタル）でも動く。歴史が長くドキュメントが充実</li>
+<li><strong>kind</strong>（Kubernetes in Docker）— DockerコンテナをノードとしてupstreamのKubernetesを動かす。マルチノードクラスタの構築が容易で、CIやオペレーター/CRDのテスト用途に向く</li>
+<li><strong>k3d</strong> — 軽量ディストリビューション<a href="/notes/k3s.html">k3s</a>をDockerコンテナ内で動かすラッパー。起動が速くフットプリントが小さい</li>
+</ul>
+
+
+<h2><a href="/notes/kubernetes.html">Kubernetes</a>の中での位置づけ</h2>
+
+<p>ローカル開発・学習用途の公式ツール。<a href="/notes/k3s.html">k3s</a>がコンポーネントを差し替え・同梱した軽量「ディストリビューション」であるのに対し、minikubeはupstreamのKubernetesそのものをローカルに立てるための「環境構築ツール」という違いがある。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://minikube.sigs.k8s.io/docs/">minikube documentation</a></li>
+<li><a href="https://www.armosec.io/blog/best-local-kubernetes-tools/">Local Kubernetes Tools Compared: Kind vs. Minikube vs. k3d - ARMO</a></li>
+<li><a href="https://reintech.ai/blog/kind-vs-minikube-vs-k3d-local-kubernetes-comparison">Kind vs Minikube vs k3d: Best Local Kubernetes in 2026 - Reintech</a></li>
+</ul>
+
+]]></description>
+</item>
+<item>
+<title>Kubernetes</title>
+<link>https://64p.org/notes/kubernetes.html</link>
+<guid isPermaLink="true">https://64p.org/notes/kubernetes.html</guid>
+<pubDate>Fri, 14 Aug 2026 08:20:00 +0900</pubDate>
+<description><![CDATA[<h1>Kubernetes</h1>
+
+<p>コンテナオーケストレーター。Googleが社内クラスタ管理システムBorgの知見をもとに2014年に公開し、CNCF設立時の最初のホストプロジェクトとなった。2010年代後半のオーケストレーション競争（vs Docker Swarm, <a href="/notes/apache-mesos.html">Apache Mesos</a>）を制し、コンテナ基盤の事実上の標準になっている。</p>
+
+<p>このノートはKubernetes関連ノートを束ねるハブノート。 <a class="note-tag" href="/notes/tags/kubernetes.html">#kubernetes</a> <a class="note-tag" href="/notes/tags/infrastructure.html">#infrastructure</a> <a class="note-tag" href="/notes/tags/moc.html">#moc</a></p>
+
+<h2>ローカル・軽量環境</h2>
+
+<ul>
+<li><a href="/notes/minikube.html">minikube</a> — upstreamのKubernetesをローカルに立てる公式ツール。多様なドライバー（VM/コンテナ/ベアメタル）を選べる</li>
+<li><a href="/notes/k3s.html">k3s</a> — 単一バイナリの軽量ディストリビューション。エッジ・IoT・ホームラボ向けで、本番でも使われる</li>
+</ul>
+
+
+<h2>アーキテクチャ・拡張機構</h2>
+
+<ul>
+<li><a href="/notes/cluster-api.html">Cluster API (CAPI)</a> — Kubernetesクラスタ自体をKubernetesのリソースとして宣言的に管理する仕組み</li>
+<li><a href="/notes/kubernetes-cloud-controller-manager.html">Cloud Controller Manager (CCM)</a> — クラウドプロバイダー固有の制御ループを本体から分離したコンポーネント</li>
+<li><a href="/notes/container-storage-interface.html">Container Storage Interface (CSI)</a> — ストレージベンダーがプラグインを書くための標準インターフェース</li>
+</ul>
+
+
+<h2>事例</h2>
+
+<ul>
+<li><a href="/notes/kubernetes-on-oxide.html">Kubernetes on Oxide</a> — Oxide Computerのオンプレクラウド基盤へのKubernetes統合の取り組み</li>
+</ul>
+
+
+<h2>前史・周辺</h2>
+
+<ul>
+<li><a href="/notes/apache-mesos.html">Apache Mesos</a> — two-level schedulingを特徴とするクラスタマネージャ。オーケストレーション競争でKubernetesと争い、2025年にApache Attic入りした</li>
+</ul>
+
+]]></description>
+</item>
+<item>
+<title>k3s</title>
+<link>https://64p.org/notes/k3s.html</link>
+<guid isPermaLink="true">https://64p.org/notes/k3s.html</guid>
+<pubDate>Fri, 14 Aug 2026 08:20:00 +0900</pubDate>
+<description><![CDATA[<h1>k3s</h1>
+
+<p>Rancher Labs（現SUSE）が開発した軽量<a href="/notes/kubernetes.html">Kubernetes</a>ディストリビューション。CNCFの適合性認証（conformant）を受けた完全なKubernetesでありながら、100MB未満の単一バイナリとして配布され、コマンド一発でインストールできる。 <a class="note-tag" href="/notes/tags/kubernetes.html">#kubernetes</a></p>
+
+<p>名前の由来: Kubernetesの略記「K8s」（10文字）に対し、「半分のメモリフットプリント」を目指したので5文字ぶんの「K3s」。K8sと違って元になる長い正式名称はない。</p>
+
+<h2>アーキテクチャ</h2>
+
+<p>通常のKubernetesがetcd・kube-apiserver・kubeletなど多数のプロセス・依存物で構成されるのに対し、k3sはコントロールプレーン全コンポーネントを単一バイナリ・単一プロセスに封じ込め、証明書配布のようなクラスタ運用の面倒ごとも自動化している。ロールは server（コントロールプレーン）と agent（ワーカー）の2つだけ。</p>
+
+<p>同梱されるもの:</p>
+
+<ul>
+<li>コンテナランタイム: containerd（cri-dockerdも選択可）</li>
+<li>ネットワーク: Flannel（CNI）、CoreDNS、kube-router（NetworkPolicy）</li>
+<li>Ingress / LB: Traefik、ServiceLB</li>
+<li>ストレージ: local-path-provisioner</li>
+<li>iptables・socatなどのユーティリティ</li>
+</ul>
+
+
+<h2>データストア: kine</h2>
+
+<p>デフォルトのデータストアはetcdではなく<strong>sqlite3</strong>。「kine」というシムがetcd APIをSQLに変換することで、sqlite3のほかMySQL・PostgreSQLもバックエンドにできる。HA構成ではembedded etcdまたは外部データストアを使う。etcdの運用負担を避けられるのがシングルノード・小規模構成での利点。</p>
+
+<h2>ユースケース</h2>
+
+<p>エッジ、IoT、ARMボード、CI、開発環境、エアギャップ環境、ホームラボなど、リソースが限られていたり運用をシンプルにしたい場面が主戦場。2026年時点でエッジのKubernetesデプロイの35%以上がk3sという調査もある。</p>
+
+<p>派生ツールとして、k3sをDockerコンテナ内で動かす<strong>k3d</strong>があり、ローカル開発用途で<a href="/notes/minikube.html">minikube</a>やkindと並ぶ選択肢になっている。</p>
+
+<h2><a href="/notes/kubernetes.html">Kubernetes</a>の中での位置づけ</h2>
+
+<p>「フル機能のKubernetesを、構成を割り切ることで軽く・運用しやすくする」ディストリビューション。upstreamそのものをローカルに立てる<a href="/notes/minikube.html">minikube</a>とは役割が異なり、こちらは本番（特にエッジ）でもそのまま使われる。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://docs.k3s.io/">K3s - Lightweight Kubernetes</a></li>
+<li><a href="https://github.com/k3s-io/k3s">k3s-io/k3s - GitHub</a></li>
+<li><a href="https://www.civo.com/academy/kubernetes-introduction/introduction-to-k3s">What is k3s? Lightweight Kubernetes in a Single Binary - Civo</a></li>
+<li><a href="https://dasroot.net/posts/2026/04/k3s-k0s-lightweight-kubernetes-edge-development/">K3s and K0s: Lightweight Kubernetes for Edge and Development - dasroot.net</a></li>
+</ul>
+
+]]></description>
+</item>
+<item>
+<title>イオン注入</title>
+<link>https://64p.org/notes/ion-implantation.html</link>
+<guid isPermaLink="true">https://64p.org/notes/ion-implantation.html</guid>
+<pubDate>Fri, 14 Aug 2026 08:20:00 +0900</pubDate>
+<description><![CDATA[<h1>イオン注入</h1>
+
+<p>不純物原子をイオン化して加速し、高いエネルギーで半導体基板に打ち込む<a href="/notes/doping.html">ドーピング</a>手法。1970年代初頭以降、半導体製造における主流のドーピング手法になっている。 <a class="note-tag" href="/notes/tags/electronics.html">#electronics</a></p>
+
+<h2>プロセス</h2>
+
+<ol>
+<li>イオン源で目的の不純物(ドーパント)をイオン化する</li>
+<li>イオンを加速し、狙ったエネルギーを持つイオンビームを形成する</li>
+<li>イオンビームを基板表面に照射し、イオンを結晶格子内部に打ち込む</li>
+</ol>
+
+
+<p>ビーム電流と注入時間の組み合わせで不純物濃度を、イオンのエネルギーで打ち込み深さ(接合の深さ)を、それぞれ独立に制御できる点が特徴。</p>
+
+<h2>アニール(熱処理)</h2>
+
+<p>イオンの打ち込みは基板結晶に損傷を与えるため、注入後に1000℃以上の高温アニール処理を行い、結晶構造の損傷を修復するとともに、不純物原子を格子位置に配置してドーパントとして活性化させる。</p>
+
+<h2><a href="/notes/doping.html">ドーピング</a>の中での位置づけ</h2>
+
+<p>半導体基板に不純物を導入する2つの主要な手法のうち、イオンビームを直接打ち込む物理的な手法。<a href="/notes/thermal-diffusion-doping.html">熱拡散</a>に比べて不純物の横方向への広がりが少なく、濃度・深さの精密な制御に向く。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://www.coherent.com/news/blog/ion-implantation">Ion Implantation for Semiconductor Devices - Coherent</a></li>
+<li><a href="https://www.hamamatsu.com/us/en/applications/semiconductor-manufacturing/ion-implantation.html">Ion implantation | Hamamatsu Photonics</a></li>
+</ul>
+
+]]></description>
+</item>
+<item>
+<title>Apache Mesos</title>
+<link>https://64p.org/notes/apache-mesos.html</link>
+<guid isPermaLink="true">https://64p.org/notes/apache-mesos.html</guid>
+<pubDate>Fri, 14 Aug 2026 08:20:00 +0900</pubDate>
+<description><![CDATA[<h1>Apache Mesos</h1>
+
+<p>データセンター内の多数のマシンを1つのリソースプールに抽象化するクラスタマネージャ。UC Berkeleyの研究プロジェクトとして始まり、NSDI 2011の論文「Mesos: A Platform for Fine-Grained Resource Sharing in the Data Center」で発表された。GoogleのBorgやFacebookのTupperwareといった先行のモノリシックなクラスタ管理システムに学びつつ、対照的にモジュラーな設計を採ったのが特徴。2013年6月にApacheのTop-Level Projectになった。 <a class="note-tag" href="/notes/tags/infrastructure.html">#infrastructure</a></p>
+
+<h2>Two-level scheduling</h2>
+
+<p>Mesosの設計の核。Mesos本体（master）はスケジューリングの全権を持たず、「リソースオファー」だけを行う。masterが各フレームワークに空きリソース（CPU・メモリ）を提示し、それを使ってタスクをどこに配置するかはフレームワーク側のスケジューラが決める、という2階層の分業になっている。</p>
+
+<div class="mermaid">
+sequenceDiagram
+    participant A as Agent(各マシン)
+    participant M as Mesos Master
+    participant F as Framework&lt;br/&gt;(例: Marathon)
+    A-&gt;&gt;M: 空きリソースを報告
+    M-&gt;&gt;F: リソースオファー&lt;br/&gt;(node1: 4CPU/8GB ...)
+    F-&gt;&gt;F: どこに何を置くか決定
+    F-&gt;&gt;M: タスク起動要求
+    M-&gt;&gt;A: タスクを起動
+</div>
+
+
+<p>これにより、性質の異なるワークロード（バッチ処理・長時間稼働サービス・cronジョブなど）が同じクラスタを共有でき、フレームワークごとに最適なスケジューリング戦略を実装できる。</p>
+
+<h2>フレームワーク</h2>
+
+<p>Mesos単体ではコンテナやサービスは動かせず、上に載せるフレームワークが必要。</p>
+
+<ul>
+<li><strong>Marathon</strong> — 長時間稼働サービス用。「Mesosがデータセンターのカーネルなら、Marathonはinit/upstartデーモン」と説明された</li>
+<li><strong>Chronos</strong> — 分散cron</li>
+<li><strong>Spark</strong> — のちのApache Spark。NSDI 2011のMesos論文自体の中で、Mesos上に構築した新フレームワークの実例として登場している</li>
+</ul>
+
+
+<h2>盛衰</h2>
+
+<p>2010年代半ば、コンテナオーケストレーションの主導権をDocker Swarm・<a href="/notes/kubernetes.html">Kubernetes</a>と争った。TwitterやAirbnbなどでの大規模採用で知られたが、競争はKubernetesの勝利に終わる。</p>
+
+<ul>
+<li>商用化を担ったMesosphere社は2018年からDC/OSにKubernetesサポートを追加し始め、2019年8月には社名を<strong>D2iQ</strong>（Day Two IQ）に変更してKubernetes中心の事業へピボットした</li>
+<li>2021年4月、活動低下を受けてApache Atticへの移行が提案・投票されたが、このときはコミュニティの反対で一旦回避された</li>
+<li>2025年8月に正式にretireし、同年10月にAttic移行が完了。以後リポジトリはread-onlyで、リリースもセキュリティパッチも提供されない</li>
+</ul>
+
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://attic.apache.org/projects/mesos.html">Mesos - The Apache Attic</a></li>
+<li><a href="https://www.usenix.org/legacy/events/nsdi11/tech/full_papers/Hindman_new.pdf">Mesos: A Platform for Fine-Grained Resource Sharing in the Data Center (NSDI 2011)</a></li>
+<li><a href="https://thenewstack.io/apache-mesos-narrowly-avoids-a-move-to-the-attic-for-now/">Apache Mesos Narrowly Avoids a Move to the Attic (for Now) - The New Stack</a></li>
+<li><a href="https://techcrunch.com/2019/08/05/mesosphere-changes-name-to-d2iq-shifts-focus-to-kubernetes-cloud-native/">Mesosphere changes name to D2IQ, shifts focus to Kubernetes, cloud native - TechCrunch</a></li>
+<li><a href="https://cyberdefenders.org/cybersecurity-glossary/kubernetes-vs-mesos/">Kubernetes vs. Mesos: Why the Comparison Ended - CyberDefenders</a></li>
+</ul>
+
+]]></description>
+</item>
 <item>
 <title>ドーピング</title>
 <link>https://64p.org/notes/doping.html</link>
@@ -27,6 +300,14 @@
 
 
 <p>N型・P型を接合すると<a href="/notes/pn-junction.html">PN接合</a>ができ、ダイオード・トランジスタなどあらゆる半導体デバイスの基本構造になる。</p>
+
+<h2>不純物を導入する手法</h2>
+
+<ul>
+<li><a href="/notes/ion-implantation.html">イオン注入</a> — イオン化した不純物をビームとして打ち込む物理的な手法。1970年代以降の主流</li>
+<li><a href="/notes/thermal-diffusion-doping.html">熱拡散</a> — 不純物を表面に供給し、高温下での拡散で内部に浸透させる化学的な手法。イオン注入より古くから使われてきた</li>
+</ul>
+
 
 <h2><a href="/notes/semiconductor.html">半導体</a>の中での位置づけ</h2>
 
@@ -1126,298 +1407,6 @@
 <li><a href="https://www.crowdstrike.com/en-us/cybersecurity-101/threat-intelligence/threat-hunting/">What is Cyber Threat Hunting? | CrowdStrike</a></li>
 <li><a href="https://www.wiz.io/academy/detection-and-response/threat-hunting">What is Proactive Threat Hunting? | Wiz</a></li>
 <li><a href="https://www.sophos.com/en-us/cybersecurity-explained/threat-hunting">What Is Threat Hunting? | Sophos</a></li>
-</ul>
-
-]]></description>
-</item>
-<item>
-<title>Turso</title>
-<link>https://64p.org/notes/turso.html</link>
-<guid isPermaLink="true">https://64p.org/notes/turso.html</guid>
-<pubDate>Thu, 13 Aug 2026 22:28:00 +0900</pubDate>
-<description><![CDATA[<h1>Turso</h1>
-
-<p>turso.tech社が提供する、<a href="/notes/sqlite.html">SQLite</a>互換のデータベース製品群。名称が指す対象が時期によって変化しており、現在は「libSQL」「Turso Cloud」「Turso Database」という3つの要素が絡み合っている。</p>
-
-<p><a class="note-tag" href="/notes/tags/database.html">#database</a> <a class="note-tag" href="/notes/tags/sqlite.html">#sqlite</a> <a class="note-tag" href="/notes/tags/serverless.html">#serverless</a> <a class="note-tag" href="/notes/tags/edge-computing.html">#edge-computing</a></p>
-
-<h2>libSQL</h2>
-
-<p>Turso社がメンテナンスする<a href="/notes/sqlite.html">SQLite</a>のオープンソースフォーク。ファイルフォーマット・APIともにSQLiteと完全な後方互換性を保ちつつ、SQLite本家に取り込まれなかった機能を追加している。組み込みデータベースとしてだけでなく、WebSocket/HTTP経由でSQLを実行できるリモートサーバーとしても動作できる点が特徴。外部システムがWALの変更を消費・適用できる「virtual WAL interface」を持ち、分散同期の基盤になっている。</p>
-
-<h2>Turso Cloud</h2>
-
-<p>libSQLを使って構築された、現行のマネージドデータベースサービス。エッジの35以上のリージョンでlibSQLサーバーを稼働させ、プライマリリージョンで作成したデータベースを他リージョンへレプリケートする。読み取りは最寄りのレプリカへ、書き込みはプライマリへ向かう構成。</p>
-
-<p>「embedded replicas」という仕組みも提供しており、クラウド上のプライマリDBと同期するローカルのSQLiteファイルをアプリケーション側に持たせることで、ローカルディスク並みの速度（ベンチマークで200ナノ秒未満とされる）での読み取りを実現する。</p>
-
-<h2>Turso Database</h2>
-
-<p>Rustで新規にゼロから書き直されている、SQLite互換の新データベース（2026年8月時点でベータ）。libSQLとは別物で、将来的にTurso Cloudへ組み込む方向で開発が進められている。</p>
-
-<h2>用途</h2>
-
-<p>コンテンツ配信・分析ダッシュボード・ドキュメントツールのような「読み取りが多く書き込みは中程度」なアプリケーションに向いているとされる。リアルタイムコラボレーションやトレーディング、マルチプレイヤーゲームのような高並行書き込みが必要な用途は、<a href="/notes/postgresql.html">PostgreSQL</a>系（<a href="/notes/neon.html">Neon</a>など）の方が適しているとされる。SQLiteのベクトル検索拡張<code>sqlite-vec</code>にも対応しており、AI関連のユースケースでの利用も謳われている。</p>
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://docs.turso.tech/libsql">libSQL - Turso</a></li>
-<li><a href="https://x.com/penberg/status/2032373944007688226">Pekka Enberg氏によるTurso/Turso Cloud/libSQLの関係の説明 (X)</a></li>
-<li><a href="https://turso.tech/what-is-turso">What is Turso? — The SQLite-compatible database for the agentic era</a></li>
-<li><a href="https://github.com/tursodatabase/libsql">GitHub - tursodatabase/libsql</a></li>
-<li><a href="https://www.sabaoon.dev/blog/edge-database-landscape-2026">The Edge Database Landscape in 2026: Postgres, Turso, and the SQLite Renaissance | Sabaoon</a></li>
-</ul>
-
-]]></description>
-</item>
-<item>
-<title>トイル (Toil)</title>
-<link>https://64p.org/notes/toil.html</link>
-<guid isPermaLink="true">https://64p.org/notes/toil.html</guid>
-<pubDate>Thu, 13 Aug 2026 22:19:00 +0900</pubDate>
-<description><![CDATA[<h1>トイル (Toil)</h1>
-
-<p><a class="note-tag" href="/notes/tags/devops.html">#devops</a> <a class="note-tag" href="/notes/tags/sre.html">#sre</a></p>
-
-<p>Google SRE本による定義: 「本番サービスの運用に紐づく作業のうち、手作業(manual)・反復的(repetitive)・自動化可能(automatable)・戦術的(tactical)・恒久的価値がない(no enduring value)・サービス規模に比例して線形に増加する(O(n) growth)という性質を持つ仕事」。単なる「やりたくない仕事」ではなく、明確に定義された作業カテゴリ。</p>
-
-<h2>6つの特徴</h2>
-
-<table>
-<thead>
-<tr>
-<th> 特徴 </th>
-<th> 意味 </th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td> Manual </td>
-<td> 人間の手作業が必要 </td>
-</tr>
-<tr>
-<td> Repetitive </td>
-<td> 同じ作業が何度も繰り返される </td>
-</tr>
-<tr>
-<td> Automatable </td>
-<td> 機械が人間と同等にこなせる </td>
-</tr>
-<tr>
-<td> Tactical </td>
-<td> アラート対応のような反応的な作業で、戦略性がない </td>
-</tr>
-<tr>
-<td> No enduring value </td>
-<td> 終えてもサービスの状態は恒久的には改善されない </td>
-</tr>
-<tr>
-<td> O(n) growth </td>
-<td> サービス規模の拡大に比例して増える </td>
-</tr>
-</tbody>
-</table>
-
-
-<h2>オーバーヘッドとの違い</h2>
-
-<p>トイルは「本番サービス運用に直接紐づく」作業に限定される。チーム会議やHR関連の事務作業のように、サービス運用に直結しない業務は「オーバーヘッド」として区別され、トイルには含まれない。</p>
-
-<h2>50%ルール</h2>
-
-<p>GoogleのSRE組織では、各SREが費やすトイルの時間を全体の50%以下に抑えることを目標としている。残りの50%以上は、将来的なトイル削減やサービス改善につながる「エンジニアリング」に充てるべきとされる。実際の平均は約33%だが、チームによっては80%に達することもある。</p>
-
-<h2>トイル削減が重要な理由</h2>
-
-<ul>
-<li>個人への影響: エンジニアリングプロジェクトに割く時間が減りキャリアが停滞する、機械的作業の繰り返しで士気が低下し燃え尽きにつながる。</li>
-<li>組織への影響: エンジニアリング組織としてのアイデンティティが曖昧になる、機能開発が遅延する、優秀な人材が流出する。</li>
-</ul>
-
-
-<h2><a href="/notes/devops.html">DevOps</a>・<a href="/notes/platform-engineering.html">Platform Engineering</a>との関連</h2>
-
-<p>「Shadow Ops」（開発者が本来の開発業務を犠牲にしてインフラ管理に忙殺される状態）は、まさにトイルが個人に集中してしまっている状態と言える。Platform Engineeringが目指すセルフサービス化・自動化は、トイルを組織的に削減する取り組みとして位置づけられる。</p>
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://sre.google/sre-book/eliminating-toil/">Eliminating Toil - Google SRE Book</a></li>
-<li><a href="https://research.google/pubs/the-site-reliability-engineering-workbook-chapter-eliminating-toil/">The Site Reliability Engineering Workbook Chapter: Eliminating Toil - Google Research</a></li>
-<li><a href="https://en.wikipedia.org/wiki/Site_reliability_engineering">Site reliability engineering - Wikipedia</a></li>
-</ul>
-
-]]></description>
-</item>
-<item>
-<title>DevOps</title>
-<link>https://64p.org/notes/devops.html</link>
-<guid isPermaLink="true">https://64p.org/notes/devops.html</guid>
-<pubDate>Thu, 13 Aug 2026 22:17:00 +0900</pubDate>
-<description><![CDATA[<h1>DevOps</h1>
-
-<p><a class="note-tag" href="/notes/tags/devops.html">#devops</a></p>
-
-<p>Development（開発）とOperations（運用）を組み合わせた造語。両チームの壁を取り払い、ソフトウェアの計画・開発・テスト・デプロイ・運用を継続的かつ協調的に行う文化・実践の総称。</p>
-
-<h2>起源</h2>
-
-<ul>
-<li>2008年、ベルギー人コンサルタントのPatrick Deboisがトロントの Agile Conference で Andrew Clay Shafer と出会い、「agile systems administration」という概念を探求し始めた。両者とも、Agileの理想（開発の高速化）が運用側の壁で頭打ちになっている現状に問題意識を持っていた。</li>
-<li>転機は2009年、Velocity ConferenceでFlickrのJohn AllspawとPaul Hammondが行った講演「10+ Deploys per Day: Dev and Ops Cooperation at Flickr」。両者は開発と運用の対立を描き、「アプリケーション開発と運用は、シームレスで透明かつ完全に統合されているべきだ」と主張した。</li>
-<li>この講演の映像を見たDeboisが感銘を受け、自らベルギー・ゲントで「Devopsdays」という独自カンファレンスを開催（2009年）。これが"DevOps"という名前が定着するきっかけとなった。</li>
-<li>背景には、開発と運用が別チームで縦割りになっているウォーターフォール的な体制への不満があった。開発者が作ったものを運用に「投げる」ことで、コミュニケーション不足・遅延・障害が頻発していた。</li>
-</ul>
-
-
-<h2>CALMSフレームワーク</h2>
-
-<p>「The DevOps Handbook」共著者のJez Humbleが提唱した、DevOps成熟度を測る5つの柱。</p>
-
-<ul>
-<li><strong>Culture（文化）</strong> — ツールや自動化より前に、開発とOpsが協働する文化そのものが土台。</li>
-<li><strong>Automation（自動化）</strong> — CI/CDやテストなど手作業の自動化。</li>
-<li><strong>Lean（リーン）</strong> — 仕掛かり作業(WIP)の最小化・作業の可視化など、ムダを省き価値の流れを最適化。</li>
-<li><strong>Measurement（計測）</strong> — デプロイやプロセスに関するデータを収集し、改善点を把握する。</li>
-<li><strong>Sharing（共有）</strong> — 知識がサイロ化せず、チーム間で自由に流通する状態を作る。</li>
-</ul>
-
-
-<h2>関連する拡張・派生</h2>
-
-<ul>
-<li><a href="/notes/devsecops.html">DevSecOps</a> — DevOpsに「セキュリティ」を明示的な第3の柱として組み込む拡張。</li>
-<li><a href="/notes/platform-engineering.html">Platform Engineering</a> — DevOpsの理想「You build it, you run it」を全開発者に求めるのは難しく、多くの組織で開発者がインフラ管理に忙殺される「Shadow Ops」状態が発生する。運用の専門性をプラットフォームチームに集約し、開発者からは抽象化して隠すことでこのギャップを埋める実践。</li>
-<li><a href="/notes/toil.html">トイル</a> — Shadow Opsで開発者に集中してしまう手作業・反復的な運用作業は、Google SREが言う「トイル」そのもの。</li>
-</ul>
-
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://devops.com/the-origins-of-devops-whats-in-a-name/">The Origins of DevOps: What&rsquo;s in a Name? - DevOps.com</a></li>
-<li><a href="https://www.bmc.com/blogs/devops-history/">A Brief History of DevOps - BMC Software</a></li>
-<li><a href="https://www.atlassian.com/devops/frameworks/calms-framework">CALMS Framework - Atlassian</a></li>
-<li><a href="https://www.techtarget.com/whatis/definition/CALMS">What is CALMS for DevOps? - TechTarget</a></li>
-</ul>
-
-]]></description>
-</item>
-<item>
-<title>Platform Engineering</title>
-<link>https://64p.org/notes/platform-engineering.html</link>
-<guid isPermaLink="true">https://64p.org/notes/platform-engineering.html</guid>
-<pubDate>Thu, 13 Aug 2026 22:12:00 +0900</pubDate>
-<description><![CDATA[<h1>Platform Engineering</h1>
-
-<p><a class="note-tag" href="/notes/tags/devops.html">#devops</a></p>
-
-<p>クラウドネイティブ時代のソフトウェア開発組織に対して、セルフサービス型のツールチェーンとワークフローを設計・構築する規律。開発生産性、アプリケーションのサイクルタイム、市場投入速度の改善を目的とする。</p>
-
-<h2><a href="/notes/devops.html">DevOps</a>との関係 — Shadow Ops問題</h2>
-
-<p>DevOpsの理想は「You build it, you run it」（作った人が運用もする）だが、これを本当に実現できているのはGoogleのような一部の先進組織のみ。多くの組織では、経験豊富な開発者が本来の開発業務ではなくインフラ管理に時間を取られる「Shadow Ops（影のOps）」という状態が発生している。これは開発者に<a href="/notes/toil.html">トイル</a>が集中してしまっている状態とも言える。調査では、低パフォーマンス組織の44%がこの問題を抱える一方、高パフォーマンス組織はほぼ100%がtrue DevOpsを実現できているという。</p>
-
-<p>Platform Engineeringは、この「開発者全員にインフラ運用スキルを求める」というDevOpsの理想と現実のギャップを埋めるために生まれた実践。<a href="/notes/devsecops.html">DevSecOps</a>がDevOpsに「セキュリティ」という第3の柱を足す方向の拡張であるのに対し、Platform Engineeringは「運用の専門性をプラットフォームチームに集約し、開発者からは抽象化して隠す」方向の拡張という違いがある。</p>
-
-<h2>中核概念</h2>
-
-<h3>Internal Developer Platform (IDP)</h3>
-
-<p>プラットフォームエンジニアが提供する統合製品。アプリケーションライフサイクル全体（環境構築〜本番運用）をカバーし、認知負荷を軽減しつつ適切な抽象化レベルを開発者に提供する。開発者はHelmチャートのような詳細制御か、プリプロビジョニングされた環境での即時利用かを選べる。</p>
-
-<h3>Golden Path（黄金経路）/ Paved Road</h3>
-
-<p>ほとんどのワークロードに対する標準化されたワークフロー。「強制ではないが最も楽で推奨される道」を用意することで、標準化と自由度のバランスを取る。</p>
-
-<h3>Self-Service</h3>
-
-<p>複数の技術・ツールを単一のセルフサービス体験に統合し、開発者が都度Opsチームに依頼せず自律的に環境やリソースを扱えるようにする。</p>
-
-<h2>導入タイミング</h2>
-
-<p>開発者数が20〜30人規模に達した頃が、IDP構築を検討し始める目安とされている。</p>
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://platformengineering.org/blog/what-is-platform-engineering">What is platform engineering? - platformengineering.org</a></li>
-<li><a href="https://en.wikipedia.org/wiki/Platform_engineering">Platform engineering - Wikipedia</a></li>
-<li><a href="https://www.redhat.com/en/topics/platform-engineering/what-is-platform-engineering">What is platform engineering? - Red Hat</a></li>
-<li><a href="https://www.cncf.io/blog/2025/11/19/what-is-platform-engineering/">What is platform engineering? - CNCF</a></li>
-</ul>
-
-]]></description>
-</item>
-<item>
-<title>UEFI</title>
-<link>https://64p.org/notes/uefi.html</link>
-<guid isPermaLink="true">https://64p.org/notes/uefi.html</guid>
-<pubDate>Thu, 13 Aug 2026 22:06:00 +0900</pubDate>
-<description><![CDATA[<h1>UEFI</h1>
-
-<p>Unified Extensible Firmware Interfaceの略。<a href="/notes/bios.html">BIOS</a>の後継として開発されたファームウェア仕様で、コンピュータの電源投入時に最初に実行される。BIOSがIBM PC由来の独自アーキテクチャだったのに対し、UEFIはUnified EFI Forumという業界コンソーシアムにより仕様が管理されている。 <a class="note-tag" href="/notes/tags/hardware.html">#hardware</a></p>
-
-<h2>GPTとEFIシステムパーティション</h2>
-
-<p>UEFIは従来のMBR(Master Boot Record)パーティションテーブルに加えて、2TB超のディスクにも対応する<strong>GPT (GUID Partition Table)</strong> をサポートする。ディスク上には<strong>EFIシステムパーティション(ESP)</strong>と呼ばれる専用領域が確保され、そこにブートローダーやOSカーネルなどの「UEFIアプリケーション」が格納される。</p>
-
-<h2>ブートマネージャー</h2>
-
-<p>UEFI実装はブート設定をNVRAM変数として保持しており、電源投入時にその設定に基づいてOSローダーを実行する。BIOSがブートセクタの実行に依存していたのに対し、UEFIはブートマネージャーを備えることで、ブートセクタに依存しない柔軟なブート方式を提供する。</p>
-
-<h2>Secure Boot</h2>
-
-<p><strong>Secure Boot</strong>は、デジタル署名によって承認されたUEFIドライバー・OSブートローダーのみをロードする仕組み。プラットフォームキー(PK)とキー交換キー(KEK)による階層構造で信頼チェーンを管理し、ファームウェアから署名済みドライバー・カーネルモジュールまでの信頼を確立する。</p>
-
-<h2><a href="/notes/bios.html">BIOS</a>との関係</h2>
-
-<p>UEFIはBIOSと同じ「起動前のハードウェア初期化とOSへの引き渡し」という役割を担うが、GUI対応・大容量ディスクからの起動・Secure Bootなど、BIOSの制約を解消した拡張版にあたる。ただし慣習的に、UEFI搭載機でも設定画面が「BIOS設定」と呼ばれ続けていることが多く、両者は現在でも同義語的に使われがちである。</p>
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://en.wikipedia.org/wiki/UEFI">Unified Extensible Firmware Interface - Wikipedia (en)</a></li>
-<li><a href="https://ja.wikipedia.org/wiki/Unified_Extensible_Firmware_Interface">Unified Extensible Firmware Interface - Wikipedia (ja)</a></li>
-<li><a href="https://zenn.dev/jamoyazii/articles/d04d93155f7043">UEFIについて調べてみた（SecureBoot編）</a></li>
-<li><a href="https://docs.redhat.com/ja/documentation/red_hat_enterprise_linux/7/html/system_administrators_guide/sec-uefi_secure_boot">26.11. Unified Extensible Firmware Interface (UEFI) セキュアブート | Red Hat Enterprise Linux 7</a></li>
-</ul>
-
-]]></description>
-</item>
-<item>
-<title>BIOS</title>
-<link>https://64p.org/notes/bios.html</link>
-<guid isPermaLink="true">https://64p.org/notes/bios.html</guid>
-<pubDate>Thu, 13 Aug 2026 22:06:00 +0900</pubDate>
-<description><![CDATA[<h1>BIOS</h1>
-
-<p>Basic Input/Output Systemの略、「基本入出力システム」。パソコンの電源投入直後にマザーボード上のROM/フラッシュメモリから最初に実行されるファームウェア。OSが起動する前段階を担当する。 <a class="note-tag" href="/notes/tags/hardware.html">#hardware</a></p>
-
-<h2>主な役割</h2>
-
-<ul>
-<li><strong>POST (Power-On Self-Test)</strong> — CPU・メモリ・キーボードなど主要ハードウェアの自己診断。</li>
-<li><strong>ハードウェアの初期化</strong> — 各種デバイスを使える状態にセットアップする。</li>
-<li><strong>ブートローダーの起動</strong> — 起動デバイス(HDD/SSD・USBメモリ・CDなど)からOSの起動プログラムを見つけて実行し、制御をOSに引き渡す。</li>
-<li><strong>起動デバイスの順序制御</strong> — どのドライブから優先的に起動するかをBIOS設定画面で指定できる。</li>
-</ul>
-
-
-<h2><a href="/notes/uefi.html">UEFI</a>との関係</h2>
-
-<p>近年の多くのPCでは、BIOSに代わり後継規格の<a href="/notes/uefi.html">UEFI</a>(Unified Extensible Firmware Interface)が使われている。UEFIはBIOSと同じ役割(起動前のハードウェア初期化とOSへの引き渡し)を担うが、GUI対応・2TB超のディスクからの起動・<a href="/notes/uefi.html">Secure Boot</a>など、BIOSの制約を解消した拡張版にあたる。ただし慣習的に、UEFI搭載機でも設定画面が「BIOS設定」と呼ばれ続けていることが多く、両者は現在でも同義語的に使われがちである。</p>
-
-<p>オープンソースのファームウェア実装として<a href="/notes/coreboot.html">coreboot</a>があり、BIOS/UEFIの置き換えを標榜している。</p>
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://premioinc.com/ja/blogs/blog/what-is-bios-basic-input-output-system-bios-vs-uefi">BIOS（Basic Input Output System）とは何ですか？BIOSとUEFIの違いは何ですか？</a></li>
-<li><a href="https://xexeq.jp/blogs/media/it-glossary231">BIOS(Basic Input/Output System)とは？意味をわかりやすく簡単に解説</a></li>
-<li><a href="https://ja.wikipedia.org/wiki/Basic_Input/Output_System">Basic Input/Output System - Wikipedia</a></li>
-<li><a href="https://it-notes.stylemap.co.jp/hardware/what-is-bios-a-guide-to-the-basic-input-output-system/">BIOSとは？基本入出力システムの役割と仕組みを解説</a></li>
 </ul>
 
 ]]></description>
