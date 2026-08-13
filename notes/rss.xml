@@ -6,7 +6,50 @@
 <atom:link href="https://64p.org/notes/rss.xml" rel="self" type="application/rss+xml" />
 <description>ちょっと調べたことや検証結果を、AIの力も借りながらメモしていくコーナーです。</description>
 <language>ja</language>
-<lastBuildDate>Thu, 13 Aug 2026 13:05:09 +0900</lastBuildDate>
+<lastBuildDate>Thu, 13 Aug 2026 13:07:27 +0900</lastBuildDate>
+<item>
+<title>MessagePack</title>
+<link>https://64p.org/notes/messagepack.html</link>
+<guid isPermaLink="true">https://64p.org/notes/messagepack.html</guid>
+<pubDate>Thu, 13 Aug 2026 13:07:00 +0900</pubDate>
+<description><![CDATA[<h1>MessagePack</h1>
+
+<p>「JSONのようだが、高速かつ小さい」ことを謳う、効率的なバイナリシリアライゼーション形式。マップ(オブジェクト)・配列・文字列・整数・浮動小数点数・真偽値・nullといったJSONと同じ論理データモデルを、テキストではなくコンパクトなバイナリ表現でエンコードする。2008年に<a href="/notes/embulk.html">Embulk</a>・<a href="/notes/fluentd.html">Fluentd</a>の開発者でもある古橋貞之(Sadayuki Furuhashi)氏が考案した。</p>
+
+<p><a class="note-tag" href="/notes/tags/data-engineering.html">#data-engineering</a> <a class="note-tag" href="/notes/tags/serialization.html">#serialization</a></p>
+
+<h2>生まれた背景</h2>
+
+<p>分散システムの開発において、JSONのパース処理がボトルネックになっていたことが開発の動機。JSONと同様にスキーマフリーでありながら、バイナリで高速なフォーマットを求めて作られた。</p>
+
+<h2>特徴</h2>
+
+<ul>
+<li>小さな整数は1バイトにエンコードされ、典型的な短い文字列も文字列本体+1バイト程度で表現できるなど、コンパクトさを重視した設計。JSONと比べておよそ50%小さくなる。</li>
+<li>バイナリ形式のためテキストパースが不要で、処理が高速。</li>
+<li>JSONが対応していないバイナリデータをネイティブにサポートする。</li>
+<li>50以上のプログラミング言語・環境で実装が提供されている。</li>
+</ul>
+
+
+<h2>採用事例</h2>
+
+<ul>
+<li><a href="/notes/fluentd.html">Fluentd</a>は内部データ表現に全面的にMessagePackを採用しており、パイプラインの各ステージ間でゼロコピーのデータ受け渡しを実現している。</li>
+<li>RedisはLuaスクリプティングでMessagePackを採用している。</li>
+<li>Treasure Data社の分析基盤パイプラインもMessagePack上に構築されている。</li>
+</ul>
+
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://msgpack.org/">MessagePack: It&rsquo;s like JSON. but fast and small.</a></li>
+<li><a href="https://en.wikipedia.org/wiki/MessagePack">MessagePack - Wikipedia</a></li>
+</ul>
+
+]]></description>
+</item>
 <item>
 <title>Fluent Bit</title>
 <link>https://64p.org/notes/fluent-bit.html</link>
@@ -82,7 +125,7 @@
 <pubDate>Thu, 13 Aug 2026 13:03:00 +0900</pubDate>
 <description><![CDATA[<h1>Fluentd</h1>
 
-<p>多様なデータソースからのログを収集し、JSON形式に構造化した上でファイル・RDBMS・NoSQL・IaaS/SaaS・Hadoopなど様々な出力先へ転送する、オープンソースのデータコレクタ(統一ロギングレイヤー)。Treasure Data社の古橋貞之(Sadayuki Furuhashi)氏が開発した。同氏は<a href="/notes/embulk.html">Embulk</a>やMessagePackの開発者でもあり、Fluentdがストリーム型のログ収集を担うのに対し、Embulkはバルク(一括)型のデータ転送を担う位置づけになっている。</p>
+<p>多様なデータソースからのログを収集し、JSON形式に構造化した上でファイル・RDBMS・NoSQL・IaaS/SaaS・Hadoopなど様々な出力先へ転送する、オープンソースのデータコレクタ(統一ロギングレイヤー)。Treasure Data社の古橋貞之(Sadayuki Furuhashi)氏が開発した。同氏は<a href="/notes/embulk.html">Embulk</a>や<a href="/notes/messagepack.html">MessagePack</a>の開発者でもあり、Fluentdがストリーム型のログ収集を担うのに対し、Embulkはバルク(一括)型のデータ転送を担う位置づけになっている。</p>
 
 <p><a class="note-tag" href="/notes/tags/data-engineering.html">#data-engineering</a> <a class="note-tag" href="/notes/tags/ruby.html">#ruby</a> <a class="note-tag" href="/notes/tags/cncf.html">#cncf</a></p>
 
@@ -124,7 +167,7 @@
 <pubDate>Thu, 13 Aug 2026 12:59:00 +0900</pubDate>
 <description><![CDATA[<h1>Embulk</h1>
 
-<p>異なるデータベース・ストレージ・ファイル形式・クラウドサービス間でのバルクデータ転送を行う、プラグイン型のオープンソースデータローダー。Treasure Data社の古橋貞之(Sadayuki Furuhashi)氏が開発した。同氏は<a href="/notes/fluentd.html">Fluentd</a>やMessagePackの開発者でもあり、Fluentdがストリーム型のログ収集を担うのに対し、Embulkはバルク(一括)型のデータ転送を担う位置づけになっている。</p>
+<p>異なるデータベース・ストレージ・ファイル形式・クラウドサービス間でのバルクデータ転送を行う、プラグイン型のオープンソースデータローダー。Treasure Data社の古橋貞之(Sadayuki Furuhashi)氏が開発した。同氏は<a href="/notes/fluentd.html">Fluentd</a>や<a href="/notes/messagepack.html">MessagePack</a>の開発者でもあり、Fluentdがストリーム型のログ収集を担うのに対し、Embulkはバルク(一括)型のデータ転送を担う位置づけになっている。</p>
 
 <p><a class="note-tag" href="/notes/tags/data-engineering.html">#data-engineering</a> <a class="note-tag" href="/notes/tags/ruby.html">#ruby</a> <a class="note-tag" href="/notes/tags/java.html">#java</a></p>
 
@@ -1593,65 +1636,6 @@ graph LR
 <h2>まだ独立ノートになっていない隣接概念</h2>
 
 <p>DFT・フーリエ級数・z変換・DCT（JPEG/MP3で使われる）・OFDM など。</p>
-]]></description>
-</item>
-<item>
-<title>FFT（高速フーリエ変換）</title>
-<link>https://64p.org/notes/fft.html</link>
-<guid isPermaLink="true">https://64p.org/notes/fft.html</guid>
-<pubDate>Thu, 13 Aug 2026 00:11:00 +0900</pubDate>
-<description><![CDATA[<h1>FFT（高速フーリエ変換）</h1>
-
-<p><a class="note-tag" href="/notes/tags/math.html">#math</a> <a class="note-tag" href="/notes/tags/signal-processing.html">#signal-processing</a> <a class="note-tag" href="/notes/tags/algorithm.html">#algorithm</a></p>
-
-<p>DFT（離散フーリエ変換）を高速に計算するアルゴリズム。<a href="/notes/fourier-transform.html">フーリエ変換</a>のサンプリングされた離散データ版であるDFT</p>
-
-<div class="math-display">
-X_k = \sum_{n=0}^{N-1} x_n\, e^{-i 2\pi k n / N}
-</div>
-
-
-<p>を素朴に計算すると <span class="math-inline">O(N<sup>2</sup>)</span> かかるが、FFTは <span class="math-inline">O(N \log N)</span> で計算する。N=4096 で実測400倍ほどの高速化になり、この差が「DFTを実用にした」と言ってよい。Gilbert Strang は「我々の生涯で最も重要な数値アルゴリズム」と評し、IEEEの「20世紀のトップ10アルゴリズム」にも選ばれている。</p>
-
-<h2>Cooley-Tukeyアルゴリズムの核心</h2>
-
-<p>分割統治。サイズ <span class="math-inline">N = N_1 \times N_2</span> のDFTを、サイズ <span class="math-inline">N_2</span> の小さいDFT <span class="math-inline">N_1</span> 個に再帰的に分解し、「回転因子（twiddle factor）」と呼ばれる1のべき根 <span class="math-inline">e^{-i 2\pi k / N}</span> の掛け算 <span class="math-inline">O(N)</span> 回で結合する。</p>
-
-<p>最も普及しているのは radix-2（時間間引き）版: 入力を偶数番目と奇数番目に分けると、サイズNのDFTがサイズN/2のDFT2つと回転因子の掛け算に分解できる。これを再帰すると <span class="math-inline">T(N) = 2T(N/2) + O(N) = O(N \log N)</span>。2つの半分の結果を足し引きで結合する演算パターンが蝶の形に見えることから「バタフライ演算」と呼ばれる。radix-2はNが2のべき乗に限られるが、混合基数版は任意の合成数を扱える。</p>
-
-<h2>歴史</h2>
-
-<ul>
-<li>起源は Carl Friedrich Gauss（1805年頃）。小惑星軌道の補間のために同等の手法を使っていたが、計算量の解析はしていなかった</li>
-<li>その後も Yates (1932)、Danielson &amp; Lanczos (1942, X線結晶構造解析) などで部分的に再発明されている</li>
-<li>現代のFFTは Cooley &amp; Tukey が1965年に（Gaussを知らずに）再発見・発表したもの。Tukey がケネディ政権の会議でソ連の核実験を地震計センサー網で検出する議論中に着想し、同僚の Richard Garwin が汎用性に気づいてIBMの Cooley に持ち込んだ。Tukey がIBM社員でなかったためアルゴリズムはパブリックドメインになり、それがデジタル信号処理での普及を後押しした</li>
-</ul>
-
-
-<h2>バリエーション</h2>
-
-<ul>
-<li><strong>prime-factor FFT</strong> — 互いに素な因数分解に中国剰余定理を使い、回転因子なしで分解</li>
-<li><strong>Raderのアルゴリズム / Bluesteinのchirp-z</strong> — 素数サイズのDFTを巡回畳み込みに変換して処理</li>
-<li><strong>split-radix</strong> — Cooley-Tukeyより算術演算数を減らす</li>
-<li><strong>実数入力の最適化</strong> — 入力が実数なら出力が共役対称になるので、計算量・メモリをほぼ半減できる</li>
-</ul>
-
-
-<h2>応用</h2>
-
-<p>スペクトル解析・フィルタリング（overlap-add/save法）、多倍長整数や多項式の乗算、JPEG/MP3などのエンコード（高速DCT経由）、4G LTE/5GのOFDM変調など。実装では FFTW（"Fastest Fourier Transform in the West"）が有名で、NumPy/SciPy・MATLAB・Julia などの標準機能の背後にもFFTライブラリがいる。</p>
-
-<h2><a href="/notes/frequency-domain-transforms.html">周波数領域の変換</a>の中での位置づけ</h2>
-
-<p><a href="/notes/fourier-transform.html">フーリエ変換</a>・<a href="/notes/laplace-transform.html">ラプラス変換</a>が連続の数学理論なのに対し、こちらは離散版（DFT）を計算機で高速に計算するためのアルゴリズム。理論を実用に変えたのがこのノートの主役。</p>
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://en.wikipedia.org/wiki/Fast_Fourier_transform">Fast Fourier transform - Wikipedia</a></li>
-</ul>
-
 ]]></description>
 </item>
 </channel>

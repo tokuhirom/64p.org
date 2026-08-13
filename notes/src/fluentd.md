@@ -1,10 +1,10 @@
 ---
 created: 2026-08-13 13:03
-updated: 2026-08-13 13:05
+updated: 2026-08-13 13:07
 ---
 # Fluentd
 
-多様なデータソースからのログを収集し、JSON形式に構造化した上でファイル・RDBMS・NoSQL・IaaS/SaaS・Hadoopなど様々な出力先へ転送する、オープンソースのデータコレクタ(統一ロギングレイヤー)。Treasure Data社の古橋貞之(Sadayuki Furuhashi)氏が開発した。同氏は[[embulk|Embulk]]やMessagePackの開発者でもあり、Fluentdがストリーム型のログ収集を担うのに対し、Embulkはバルク(一括)型のデータ転送を担う位置づけになっている。
+多様なデータソースからのログを収集し、JSON形式に構造化した上でファイル・RDBMS・NoSQL・IaaS/SaaS・Hadoopなど様々な出力先へ転送する、オープンソースのデータコレクタ(統一ロギングレイヤー)。Treasure Data社の古橋貞之(Sadayuki Furuhashi)氏が開発した。同氏は[[embulk|Embulk]]や[[messagepack|MessagePack]]の開発者でもあり、Fluentdがストリーム型のログ収集を担うのに対し、Embulkはバルク(一括)型のデータ転送を担う位置づけになっている。
 
 #data-engineering #ruby #cncf
 

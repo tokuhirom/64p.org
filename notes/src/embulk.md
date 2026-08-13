@@ -1,10 +1,10 @@
 ---
 created: 2026-08-13 12:59
-updated: 2026-08-13 12:59
+updated: 2026-08-13 13:07
 ---
 # Embulk
 
-異なるデータベース・ストレージ・ファイル形式・クラウドサービス間でのバルクデータ転送を行う、プラグイン型のオープンソースデータローダー。Treasure Data社の古橋貞之(Sadayuki Furuhashi)氏が開発した。同氏は[[fluentd|Fluentd]]やMessagePackの開発者でもあり、Fluentdがストリーム型のログ収集を担うのに対し、Embulkはバルク(一括)型のデータ転送を担う位置づけになっている。
+異なるデータベース・ストレージ・ファイル形式・クラウドサービス間でのバルクデータ転送を行う、プラグイン型のオープンソースデータローダー。Treasure Data社の古橋貞之(Sadayuki Furuhashi)氏が開発した。同氏は[[fluentd|Fluentd]]や[[messagepack|MessagePack]]の開発者でもあり、Fluentdがストリーム型のログ収集を担うのに対し、Embulkはバルク(一括)型のデータ転送を担う位置づけになっている。
 
 #data-engineering #ruby #java
 
