@@ -1,6 +1,6 @@
 ---
 created: 2026-08-14 08:20
-updated: 2026-08-14 08:20
+updated: 2026-08-14 08:25
 ---
 # minikube
 
@@ -19,7 +19,7 @@ updated: 2026-08-14 08:20
 ローカルKubernetes環境の選択肢としては kind・k3d がよく比較対象になる。
 
 - **minikube** — ドライバーの選択肢が多く、非Docker環境（VM・ベアメタル）でも動く。歴史が長くドキュメントが充実
-- **kind**（Kubernetes in Docker）— DockerコンテナをノードとしてupstreamのKubernetesを動かす。マルチノードクラスタの構築が容易で、CIやオペレーター/CRDのテスト用途に向く
+- **[[kind|kind]]**（Kubernetes in Docker）— DockerコンテナをノードとしてupstreamのKubernetesを動かす。マルチノードクラスタの構築が容易で、CIやオペレーター/CRDのテスト用途に向く
 - **k3d** — 軽量ディストリビューション[[k3s]]をDockerコンテナ内で動かすラッパー。起動が速くフットプリントが小さい
 
 ## [[kubernetes]]の中での位置づけ

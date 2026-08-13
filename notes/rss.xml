@@ -6,7 +6,53 @@
 <atom:link href="https://64p.org/notes/rss.xml" rel="self" type="application/rss+xml" />
 <description>ちょっと調べたことや検証結果を、AIの力も借りながらメモしていくコーナーです。</description>
 <language>ja</language>
-<lastBuildDate>Fri, 14 Aug 2026 08:24:50 +0900</lastBuildDate>
+<lastBuildDate>Fri, 14 Aug 2026 08:25:19 +0900</lastBuildDate>
+<item>
+<title>Kubernetes</title>
+<link>https://64p.org/notes/kubernetes.html</link>
+<guid isPermaLink="true">https://64p.org/notes/kubernetes.html</guid>
+<pubDate>Fri, 14 Aug 2026 08:25:00 +0900</pubDate>
+<description><![CDATA[<h1>Kubernetes</h1>
+
+<p>コンテナオーケストレーター。Googleが社内クラスタ管理システム<a href="/notes/google-borg.html">Borg</a>の知見をもとに2014年に公開し、CNCF設立時の最初のホストプロジェクトとなった。2010年代後半のオーケストレーション競争（vs Docker Swarm, <a href="/notes/apache-mesos.html">Apache Mesos</a>）を制し、コンテナ基盤の事実上の標準になっている。</p>
+
+<p>このノートはKubernetes関連ノートを束ねるハブノート。 <a class="note-tag" href="/notes/tags/kubernetes.html">#kubernetes</a> <a class="note-tag" href="/notes/tags/infrastructure.html">#infrastructure</a> <a class="note-tag" href="/notes/tags/moc.html">#moc</a></p>
+
+<h2>ローカル・軽量環境</h2>
+
+<ul>
+<li><a href="/notes/minikube.html">minikube</a> — upstreamのKubernetesをローカルに立てる公式ツール。多様なドライバー（VM/コンテナ/ベアメタル）を選べる</li>
+<li><a href="/notes/k3s.html">k3s</a> — 単一バイナリの軽量ディストリビューション。エッジ・IoT・ホームラボ向けで、本番でも使われる</li>
+<li><a href="/notes/kind.html">kind</a> — Kubernetes本体のテスト用に生まれた、Dockerコンテナをノードとするクラスタツール。CI・使い捨てクラスタ向き</li>
+</ul>
+
+
+<h2>アーキテクチャ・拡張機構</h2>
+
+<ul>
+<li><a href="/notes/cluster-api.html">Cluster API (CAPI)</a> — Kubernetesクラスタ自体をKubernetesのリソースとして宣言的に管理する仕組み</li>
+<li><a href="/notes/kubernetes-cloud-controller-manager.html">Cloud Controller Manager (CCM)</a> — クラウドプロバイダー固有の制御ループを本体から分離したコンポーネント</li>
+<li><a href="/notes/container-storage-interface.html">Container Storage Interface (CSI)</a> — ストレージベンダーがプラグインを書くための標準インターフェース</li>
+<li><a href="/notes/etcd.html">etcd</a> — クラスタの全状態を保存するプライマリデータストア</li>
+</ul>
+
+
+<h2>事例</h2>
+
+<ul>
+<li><a href="/notes/kubernetes-on-oxide.html">Kubernetes on Oxide</a> — Oxide Computerのオンプレクラウド基盤へのKubernetes統合の取り組み</li>
+</ul>
+
+
+<h2>前史・周辺</h2>
+
+<ul>
+<li><a href="/notes/apache-mesos.html">Apache Mesos</a> — two-level schedulingを特徴とするクラスタマネージャ。オーケストレーション競争でKubernetesと争い、2025年にApache Attic入りした</li>
+<li><a href="/notes/google-borg.html">Borg</a> — Kubernetesの源流となったGoogle社内のクラスタ管理システム</li>
+</ul>
+
+]]></description>
+</item>
 <item>
 <title>Traefik</title>
 <link>https://64p.org/notes/traefik.html</link>
@@ -151,41 +197,6 @@
 ]]></description>
 </item>
 <item>
-<title>熱拡散ドーピング</title>
-<link>https://64p.org/notes/thermal-diffusion-doping.html</link>
-<guid isPermaLink="true">https://64p.org/notes/thermal-diffusion-doping.html</guid>
-<pubDate>Fri, 14 Aug 2026 08:20:00 +0900</pubDate>
-<description><![CDATA[<h1>熱拡散ドーピング</h1>
-
-<p>不純物(ドーパント)を基板表面に供給し、高温下での熱拡散によって半導体結晶内部へ浸透させる<a href="/notes/doping.html">ドーピング</a>手法。ダイオード・トランジスタなど半導体デバイスの製造で古くから使われてきた。 <a class="note-tag" href="/notes/tags/electronics.html">#electronics</a></p>
-
-<h2>プロセス</h2>
-
-<ul>
-<li>固体・液体・気体いずれかの形でドーパント源を用意する(例: リンの気体ソースとして三塩化オキシリン POCl3 を使う)</li>
-<li>850℃~1050℃程度の高温下に600~900秒程度さらし、ドーパントを表面から結晶内部へ拡散させる</li>
-<li>マスク材にはSiO2やSi3N4など高温に耐える膜のみが使える</li>
-</ul>
-
-
-<h2>制約</h2>
-
-<p>熱拡散は等方的に進むため、意図しない横方向への拡散(lateral diffusion)が起きやすい。これに対し<a href="/notes/ion-implantation.html">イオン注入</a>はビームを直接打ち込むため横方向の広がりを抑えやすく、より精密な制御が可能。</p>
-
-<h2><a href="/notes/doping.html">ドーピング</a>の中での位置づけ</h2>
-
-<p>半導体基板に不純物を導入する2つの主要な手法のうち、高温での拡散現象を利用する化学的な手法。イオン注入より古くから使われてきたが、精密な濃度・深さ制御ではイオン注入に譲る。</p>
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://www.scribd.com/document/443876691/Doping-thermal-and-ion-implantation-nptel">Doping Techniques in IC Fabrication (NPTEL)</a></li>
-<li><a href="https://arxiv.org/pdf/1603.01307">Thermal Diffusion Boron Doping of Single-Crystal Diamond (arXiv)</a></li>
-</ul>
-
-]]></description>
-</item>
-<item>
 <title>minikube</title>
 <link>https://64p.org/notes/minikube.html</link>
 <guid isPermaLink="true">https://64p.org/notes/minikube.html</guid>
@@ -211,7 +222,7 @@
 
 <ul>
 <li><strong>minikube</strong> — ドライバーの選択肢が多く、非Docker環境（VM・ベアメタル）でも動く。歴史が長くドキュメントが充実</li>
-<li><strong>kind</strong>（Kubernetes in Docker）— DockerコンテナをノードとしてupstreamのKubernetesを動かす。マルチノードクラスタの構築が容易で、CIやオペレーター/CRDのテスト用途に向く</li>
+<li><strong><a href="/notes/kind.html">kind</a></strong>（Kubernetes in Docker）— DockerコンテナをノードとしてupstreamのKubernetesを動かす。マルチノードクラスタの構築が容易で、CIやオペレーター/CRDのテスト用途に向く</li>
 <li><strong>k3d</strong> — 軽量ディストリビューション<a href="/notes/k3s.html">k3s</a>をDockerコンテナ内で動かすラッパー。起動が速くフットプリントが小さい</li>
 </ul>
 
@@ -226,49 +237,6 @@
 <li><a href="https://minikube.sigs.k8s.io/docs/">minikube documentation</a></li>
 <li><a href="https://www.armosec.io/blog/best-local-kubernetes-tools/">Local Kubernetes Tools Compared: Kind vs. Minikube vs. k3d - ARMO</a></li>
 <li><a href="https://reintech.ai/blog/kind-vs-minikube-vs-k3d-local-kubernetes-comparison">Kind vs Minikube vs k3d: Best Local Kubernetes in 2026 - Reintech</a></li>
-</ul>
-
-]]></description>
-</item>
-<item>
-<title>Kubernetes</title>
-<link>https://64p.org/notes/kubernetes.html</link>
-<guid isPermaLink="true">https://64p.org/notes/kubernetes.html</guid>
-<pubDate>Fri, 14 Aug 2026 08:20:00 +0900</pubDate>
-<description><![CDATA[<h1>Kubernetes</h1>
-
-<p>コンテナオーケストレーター。Googleが社内クラスタ管理システムBorgの知見をもとに2014年に公開し、CNCF設立時の最初のホストプロジェクトとなった。2010年代後半のオーケストレーション競争（vs Docker Swarm, <a href="/notes/apache-mesos.html">Apache Mesos</a>）を制し、コンテナ基盤の事実上の標準になっている。</p>
-
-<p>このノートはKubernetes関連ノートを束ねるハブノート。 <a class="note-tag" href="/notes/tags/kubernetes.html">#kubernetes</a> <a class="note-tag" href="/notes/tags/infrastructure.html">#infrastructure</a> <a class="note-tag" href="/notes/tags/moc.html">#moc</a></p>
-
-<h2>ローカル・軽量環境</h2>
-
-<ul>
-<li><a href="/notes/minikube.html">minikube</a> — upstreamのKubernetesをローカルに立てる公式ツール。多様なドライバー（VM/コンテナ/ベアメタル）を選べる</li>
-<li><a href="/notes/k3s.html">k3s</a> — 単一バイナリの軽量ディストリビューション。エッジ・IoT・ホームラボ向けで、本番でも使われる</li>
-</ul>
-
-
-<h2>アーキテクチャ・拡張機構</h2>
-
-<ul>
-<li><a href="/notes/cluster-api.html">Cluster API (CAPI)</a> — Kubernetesクラスタ自体をKubernetesのリソースとして宣言的に管理する仕組み</li>
-<li><a href="/notes/kubernetes-cloud-controller-manager.html">Cloud Controller Manager (CCM)</a> — クラウドプロバイダー固有の制御ループを本体から分離したコンポーネント</li>
-<li><a href="/notes/container-storage-interface.html">Container Storage Interface (CSI)</a> — ストレージベンダーがプラグインを書くための標準インターフェース</li>
-</ul>
-
-
-<h2>事例</h2>
-
-<ul>
-<li><a href="/notes/kubernetes-on-oxide.html">Kubernetes on Oxide</a> — Oxide Computerのオンプレクラウド基盤へのKubernetes統合の取り組み</li>
-</ul>
-
-
-<h2>前史・周辺</h2>
-
-<ul>
-<li><a href="/notes/apache-mesos.html">Apache Mesos</a> — two-level schedulingを特徴とするクラスタマネージャ。オーケストレーション競争でKubernetesと争い、2025年にApache Attic入りした</li>
 </ul>
 
 ]]></description>
@@ -293,7 +261,7 @@
 <ul>
 <li>コンテナランタイム: containerd（cri-dockerdも選択可）</li>
 <li>ネットワーク: Flannel（CNI）、CoreDNS、kube-router（NetworkPolicy）</li>
-<li>Ingress / LB: Traefik、ServiceLB</li>
+<li>Ingress / LB: <a href="/notes/traefik.html">Traefik</a>、ServiceLB</li>
 <li>ストレージ: local-path-provisioner</li>
 <li>iptables・socatなどのユーティリティ</li>
 </ul>
@@ -301,13 +269,13 @@
 
 <h2>データストア: kine</h2>
 
-<p>デフォルトのデータストアはetcdではなく<strong>sqlite3</strong>。「kine」というシムがetcd APIをSQLに変換することで、sqlite3のほかMySQL・PostgreSQLもバックエンドにできる。HA構成ではembedded etcdまたは外部データストアを使う。etcdの運用負担を避けられるのがシングルノード・小規模構成での利点。</p>
+<p>デフォルトのデータストアは<a href="/notes/etcd.html">etcd</a>ではなく<strong>sqlite3</strong>。「kine」というシムがetcd APIをSQLに変換することで、sqlite3のほかMySQL・PostgreSQLもバックエンドにできる。HA構成ではembedded etcdまたは外部データストアを使う。etcdの運用負担を避けられるのがシングルノード・小規模構成での利点。</p>
 
 <h2>ユースケース</h2>
 
 <p>エッジ、IoT、ARMボード、CI、開発環境、エアギャップ環境、ホームラボなど、リソースが限られていたり運用をシンプルにしたい場面が主戦場。2026年時点でエッジのKubernetesデプロイの35%以上がk3sという調査もある。</p>
 
-<p>派生ツールとして、k3sをDockerコンテナ内で動かす<strong>k3d</strong>があり、ローカル開発用途で<a href="/notes/minikube.html">minikube</a>やkindと並ぶ選択肢になっている。</p>
+<p>派生ツールとして、k3sをDockerコンテナ内で動かす<strong>k3d</strong>があり、ローカル開発用途で<a href="/notes/minikube.html">minikube</a>や<a href="/notes/kind.html">kind</a>と並ぶ選択肢になっている。</p>
 
 <h2><a href="/notes/kubernetes.html">Kubernetes</a>の中での位置づけ</h2>
 
@@ -325,50 +293,13 @@
 ]]></description>
 </item>
 <item>
-<title>イオン注入</title>
-<link>https://64p.org/notes/ion-implantation.html</link>
-<guid isPermaLink="true">https://64p.org/notes/ion-implantation.html</guid>
-<pubDate>Fri, 14 Aug 2026 08:20:00 +0900</pubDate>
-<description><![CDATA[<h1>イオン注入</h1>
-
-<p>不純物原子をイオン化して加速し、高いエネルギーで半導体基板に打ち込む<a href="/notes/doping.html">ドーピング</a>手法。1970年代初頭以降、半導体製造における主流のドーピング手法になっている。 <a class="note-tag" href="/notes/tags/electronics.html">#electronics</a></p>
-
-<h2>プロセス</h2>
-
-<ol>
-<li>イオン源で目的の不純物(ドーパント)をイオン化する</li>
-<li>イオンを加速し、狙ったエネルギーを持つイオンビームを形成する</li>
-<li>イオンビームを基板表面に照射し、イオンを結晶格子内部に打ち込む</li>
-</ol>
-
-
-<p>ビーム電流と注入時間の組み合わせで不純物濃度を、イオンのエネルギーで打ち込み深さ(接合の深さ)を、それぞれ独立に制御できる点が特徴。</p>
-
-<h2>アニール(熱処理)</h2>
-
-<p>イオンの打ち込みは基板結晶に損傷を与えるため、注入後に1000℃以上の高温アニール処理を行い、結晶構造の損傷を修復するとともに、不純物原子を格子位置に配置してドーパントとして活性化させる。</p>
-
-<h2><a href="/notes/doping.html">ドーピング</a>の中での位置づけ</h2>
-
-<p>半導体基板に不純物を導入する2つの主要な手法のうち、イオンビームを直接打ち込む物理的な手法。<a href="/notes/thermal-diffusion-doping.html">熱拡散</a>に比べて不純物の横方向への広がりが少なく、濃度・深さの精密な制御に向く。</p>
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://www.coherent.com/news/blog/ion-implantation">Ion Implantation for Semiconductor Devices - Coherent</a></li>
-<li><a href="https://www.hamamatsu.com/us/en/applications/semiconductor-manufacturing/ion-implantation.html">Ion implantation | Hamamatsu Photonics</a></li>
-</ul>
-
-]]></description>
-</item>
-<item>
 <title>Apache Mesos</title>
 <link>https://64p.org/notes/apache-mesos.html</link>
 <guid isPermaLink="true">https://64p.org/notes/apache-mesos.html</guid>
 <pubDate>Fri, 14 Aug 2026 08:20:00 +0900</pubDate>
 <description><![CDATA[<h1>Apache Mesos</h1>
 
-<p>データセンター内の多数のマシンを1つのリソースプールに抽象化するクラスタマネージャ。UC Berkeleyの研究プロジェクトとして始まり、NSDI 2011の論文「Mesos: A Platform for Fine-Grained Resource Sharing in the Data Center」で発表された。GoogleのBorgやFacebookのTupperwareといった先行のモノリシックなクラスタ管理システムに学びつつ、対照的にモジュラーな設計を採ったのが特徴。2013年6月にApacheのTop-Level Projectになった。 <a class="note-tag" href="/notes/tags/infrastructure.html">#infrastructure</a></p>
+<p>データセンター内の多数のマシンを1つのリソースプールに抽象化するクラスタマネージャ。UC Berkeleyの研究プロジェクトとして始まり、NSDI 2011の論文「Mesos: A Platform for Fine-Grained Resource Sharing in the Data Center」で発表された。Googleの<a href="/notes/google-borg.html">Borg</a>やFacebookのTupperwareといった先行のモノリシックなクラスタ管理システムに学びつつ、対照的にモジュラーな設計を採ったのが特徴。2013年6月にApacheのTop-Level Projectになった。 <a class="note-tag" href="/notes/tags/infrastructure.html">#infrastructure</a></p>
 
 <h2>Two-level scheduling</h2>
 
@@ -419,6 +350,78 @@ sequenceDiagram
 <li><a href="https://thenewstack.io/apache-mesos-narrowly-avoids-a-move-to-the-attic-for-now/">Apache Mesos Narrowly Avoids a Move to the Attic (for Now) - The New Stack</a></li>
 <li><a href="https://techcrunch.com/2019/08/05/mesosphere-changes-name-to-d2iq-shifts-focus-to-kubernetes-cloud-native/">Mesosphere changes name to D2IQ, shifts focus to Kubernetes, cloud native - TechCrunch</a></li>
 <li><a href="https://cyberdefenders.org/cybersecurity-glossary/kubernetes-vs-mesos/">Kubernetes vs. Mesos: Why the Comparison Ended - CyberDefenders</a></li>
+</ul>
+
+]]></description>
+</item>
+<item>
+<title>熱拡散ドーピング</title>
+<link>https://64p.org/notes/thermal-diffusion-doping.html</link>
+<guid isPermaLink="true">https://64p.org/notes/thermal-diffusion-doping.html</guid>
+<pubDate>Fri, 14 Aug 2026 08:20:00 +0900</pubDate>
+<description><![CDATA[<h1>熱拡散ドーピング</h1>
+
+<p>不純物(ドーパント)を基板表面に供給し、高温下での熱拡散によって半導体結晶内部へ浸透させる<a href="/notes/doping.html">ドーピング</a>手法。ダイオード・トランジスタなど半導体デバイスの製造で古くから使われてきた。 <a class="note-tag" href="/notes/tags/electronics.html">#electronics</a></p>
+
+<h2>プロセス</h2>
+
+<ul>
+<li>固体・液体・気体いずれかの形でドーパント源を用意する(例: リンの気体ソースとして三塩化オキシリン POCl3 を使う)</li>
+<li>850℃~1050℃程度の高温下に600~900秒程度さらし、ドーパントを表面から結晶内部へ拡散させる</li>
+<li>マスク材にはSiO2やSi3N4など高温に耐える膜のみが使える</li>
+</ul>
+
+
+<h2>制約</h2>
+
+<p>熱拡散は等方的に進むため、意図しない横方向への拡散(lateral diffusion)が起きやすい。これに対し<a href="/notes/ion-implantation.html">イオン注入</a>はビームを直接打ち込むため横方向の広がりを抑えやすく、より精密な制御が可能。</p>
+
+<h2><a href="/notes/doping.html">ドーピング</a>の中での位置づけ</h2>
+
+<p>半導体基板に不純物を導入する2つの主要な手法のうち、高温での拡散現象を利用する化学的な手法。イオン注入より古くから使われてきたが、精密な濃度・深さ制御ではイオン注入に譲る。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://www.scribd.com/document/443876691/Doping-thermal-and-ion-implantation-nptel">Doping Techniques in IC Fabrication (NPTEL)</a></li>
+<li><a href="https://arxiv.org/pdf/1603.01307">Thermal Diffusion Boron Doping of Single-Crystal Diamond (arXiv)</a></li>
+</ul>
+
+]]></description>
+</item>
+<item>
+<title>イオン注入</title>
+<link>https://64p.org/notes/ion-implantation.html</link>
+<guid isPermaLink="true">https://64p.org/notes/ion-implantation.html</guid>
+<pubDate>Fri, 14 Aug 2026 08:20:00 +0900</pubDate>
+<description><![CDATA[<h1>イオン注入</h1>
+
+<p>不純物原子をイオン化して加速し、高いエネルギーで半導体基板に打ち込む<a href="/notes/doping.html">ドーピング</a>手法。1970年代初頭以降、半導体製造における主流のドーピング手法になっている。 <a class="note-tag" href="/notes/tags/electronics.html">#electronics</a></p>
+
+<h2>プロセス</h2>
+
+<ol>
+<li>イオン源で目的の不純物(ドーパント)をイオン化する</li>
+<li>イオンを加速し、狙ったエネルギーを持つイオンビームを形成する</li>
+<li>イオンビームを基板表面に照射し、イオンを結晶格子内部に打ち込む</li>
+</ol>
+
+
+<p>ビーム電流と注入時間の組み合わせで不純物濃度を、イオンのエネルギーで打ち込み深さ(接合の深さ)を、それぞれ独立に制御できる点が特徴。</p>
+
+<h2>アニール(熱処理)</h2>
+
+<p>イオンの打ち込みは基板結晶に損傷を与えるため、注入後に1000℃以上の高温アニール処理を行い、結晶構造の損傷を修復するとともに、不純物原子を格子位置に配置してドーパントとして活性化させる。</p>
+
+<h2><a href="/notes/doping.html">ドーピング</a>の中での位置づけ</h2>
+
+<p>半導体基板に不純物を導入する2つの主要な手法のうち、イオンビームを直接打ち込む物理的な手法。<a href="/notes/thermal-diffusion-doping.html">熱拡散</a>に比べて不純物の横方向への広がりが少なく、濃度・深さの精密な制御に向く。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://www.coherent.com/news/blog/ion-implantation">Ion Implantation for Semiconductor Devices - Coherent</a></li>
+<li><a href="https://www.hamamatsu.com/us/en/applications/semiconductor-manufacturing/ion-implantation.html">Ion implantation | Hamamatsu Photonics</a></li>
 </ul>
 
 ]]></description>

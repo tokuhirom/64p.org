@@ -1,6 +1,6 @@
 ---
 created: 2026-08-14 08:20
-updated: 2026-08-14 08:20
+updated: 2026-08-14 08:25
 ---
 # k3s
 
@@ -16,19 +16,19 @@ Rancher Labs（現SUSE）が開発した軽量[[kubernetes|Kubernetes]]ディス
 
 - コンテナランタイム: containerd（cri-dockerdも選択可）
 - ネットワーク: Flannel（CNI）、CoreDNS、kube-router（NetworkPolicy）
-- Ingress / LB: Traefik、ServiceLB
+- Ingress / LB: [[traefik|Traefik]]、ServiceLB
 - ストレージ: local-path-provisioner
 - iptables・socatなどのユーティリティ
 
 ## データストア: kine
 
-デフォルトのデータストアはetcdではなく**sqlite3**。「kine」というシムがetcd APIをSQLに変換することで、sqlite3のほかMySQL・PostgreSQLもバックエンドにできる。HA構成ではembedded etcdまたは外部データストアを使う。etcdの運用負担を避けられるのがシングルノード・小規模構成での利点。
+デフォルトのデータストアは[[etcd]]ではなく**sqlite3**。「kine」というシムがetcd APIをSQLに変換することで、sqlite3のほかMySQL・PostgreSQLもバックエンドにできる。HA構成ではembedded etcdまたは外部データストアを使う。etcdの運用負担を避けられるのがシングルノード・小規模構成での利点。
 
 ## ユースケース
 
 エッジ、IoT、ARMボード、CI、開発環境、エアギャップ環境、ホームラボなど、リソースが限られていたり運用をシンプルにしたい場面が主戦場。2026年時点でエッジのKubernetesデプロイの35%以上がk3sという調査もある。
 
-派生ツールとして、k3sをDockerコンテナ内で動かす**k3d**があり、ローカル開発用途で[[minikube]]やkindと並ぶ選択肢になっている。
+派生ツールとして、k3sをDockerコンテナ内で動かす**k3d**があり、ローカル開発用途で[[minikube]]や[[kind|kind]]と並ぶ選択肢になっている。
 
 ## [[kubernetes]]の中での位置づけ
 

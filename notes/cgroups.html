@@ -23,6 +23,11 @@
                 <a class="notes-tags-link" href="/notes/rss.xml">📡 RSS</a>
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
+                                    <li><a href="/notes/minikube.html">minikube</a></li>
+                                    <li><a href="/notes/kubernetes.html">Kubernetes</a></li>
+                                    <li><a href="/notes/k3s.html">k3s</a></li>
+                                    <li><a href="/notes/cgroups.html" class="active">cgroups（control groups）</a></li>
+                                    <li><a href="/notes/apache-mesos.html">Apache Mesos</a></li>
                                     <li><a href="/notes/traefik.html">Traefik</a></li>
                                     <li><a href="/notes/systemd-journald-excessive-io.html">systemd-journaldの過剰なI/O</a></li>
                                     <li><a href="/notes/kind.html">kind (Kubernetes in Docker)</a></li>
@@ -42,14 +47,9 @@
                                     <li><a href="/notes/common-expression-language.html">CEL (Common Expression Language)</a></li>
                                     <li><a href="/notes/cluster-api.html">Cluster API (CAPI)</a></li>
                                     <li><a href="/notes/cilium.html">Cilium</a></li>
-                                    <li><a href="/notes/cgroups.html" class="active">cgroups（control groups）</a></li>
                                     <li><a href="/notes/thermal-diffusion-doping.html">熱拡散ドーピング</a></li>
-                                    <li><a href="/notes/minikube.html">minikube</a></li>
-                                    <li><a href="/notes/kubernetes.html">Kubernetes</a></li>
-                                    <li><a href="/notes/k3s.html">k3s</a></li>
                                     <li><a href="/notes/ion-implantation.html">イオン注入</a></li>
                                     <li><a href="/notes/doping.html">ドーピング</a></li>
-                                    <li><a href="/notes/apache-mesos.html">Apache Mesos</a></li>
                                     <li><a href="/notes/tetravalent-element.html">4価元素・14族元素</a></li>
                                     <li><a href="/notes/semiconductor.html">半導体</a></li>
                                     <li><a href="/notes/p-type-semiconductor.html">P型半導体</a></li>
@@ -426,7 +426,7 @@
 <h2>起源</h2>
 
 <ul>
-<li>2006年、Google社のエンジニア（主にPaul MenageとRohit Seth）が「process containers」という名前で開発を開始。彼らは社内で巨大な共有Linuxクラスタを運用しており、これが後のBorg・<a href="/notes/kubernetes.html">Kubernetes</a>へと繋がっていく。</li>
+<li>2006年、Google社のエンジニア（主にPaul MenageとRohit Seth）が「process containers」という名前で開発を開始。彼らは社内で巨大な共有Linuxクラスタを運用しており、これが後の<a href="/notes/google-borg.html">Borg</a>・<a href="/notes/kubernetes.html">Kubernetes</a>へと繋がっていく。</li>
 <li>カーネルに既にあった<code>cpusets</code>という仕組みを応用する形で開発された。</li>
 <li>2007年後半、Linuxカーネル内での「container」という語の多義性による混乱を避けるため「control groups（cgroups）」に改称。</li>
 <li>2008年1月リリースのLinuxカーネル2.6.24でメインラインにマージされた。</li>
@@ -508,7 +508,7 @@
                     </ul>
                 </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-11 09:41 / 更新日時: 2026-08-14 08:21</span>
+                    <span>作成日時: 2026-08-11 09:41 / 更新日時: 2026-08-14 08:25</span>
                     <a class="share-x" href="https://twitter.com/intent/tweet?text=cgroups%EF%BC%88control%20groups%EF%BC%89&url=https%3A%2F%2F64p.org%2Fnotes%2Fcgroups.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>

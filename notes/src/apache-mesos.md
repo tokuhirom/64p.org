@@ -1,10 +1,10 @@
 ---
 created: 2026-08-14 08:20
-updated: 2026-08-14 08:20
+updated: 2026-08-14 08:25
 ---
 # Apache Mesos
 
-データセンター内の多数のマシンを1つのリソースプールに抽象化するクラスタマネージャ。UC Berkeleyの研究プロジェクトとして始まり、NSDI 2011の論文「Mesos: A Platform for Fine-Grained Resource Sharing in the Data Center」で発表された。GoogleのBorgやFacebookのTupperwareといった先行のモノリシックなクラスタ管理システムに学びつつ、対照的にモジュラーな設計を採ったのが特徴。2013年6月にApacheのTop-Level Projectになった。 #infrastructure
+データセンター内の多数のマシンを1つのリソースプールに抽象化するクラスタマネージャ。UC Berkeleyの研究プロジェクトとして始まり、NSDI 2011の論文「Mesos: A Platform for Fine-Grained Resource Sharing in the Data Center」で発表された。Googleの[[google-borg|Borg]]やFacebookのTupperwareといった先行のモノリシックなクラスタ管理システムに学びつつ、対照的にモジュラーな設計を採ったのが特徴。2013年6月にApacheのTop-Level Projectになった。 #infrastructure
 
 ## Two-level scheduling
 

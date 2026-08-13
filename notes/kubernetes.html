@@ -23,6 +23,11 @@
                 <a class="notes-tags-link" href="/notes/rss.xml">📡 RSS</a>
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
+                                    <li><a href="/notes/minikube.html">minikube</a></li>
+                                    <li><a href="/notes/kubernetes.html" class="active">Kubernetes</a></li>
+                                    <li><a href="/notes/k3s.html">k3s</a></li>
+                                    <li><a href="/notes/cgroups.html">cgroups（control groups）</a></li>
+                                    <li><a href="/notes/apache-mesos.html">Apache Mesos</a></li>
                                     <li><a href="/notes/traefik.html">Traefik</a></li>
                                     <li><a href="/notes/systemd-journald-excessive-io.html">systemd-journaldの過剰なI/O</a></li>
                                     <li><a href="/notes/kind.html">kind (Kubernetes in Docker)</a></li>
@@ -42,14 +47,9 @@
                                     <li><a href="/notes/common-expression-language.html">CEL (Common Expression Language)</a></li>
                                     <li><a href="/notes/cluster-api.html">Cluster API (CAPI)</a></li>
                                     <li><a href="/notes/cilium.html">Cilium</a></li>
-                                    <li><a href="/notes/cgroups.html">cgroups（control groups）</a></li>
                                     <li><a href="/notes/thermal-diffusion-doping.html">熱拡散ドーピング</a></li>
-                                    <li><a href="/notes/minikube.html">minikube</a></li>
-                                    <li><a href="/notes/kubernetes.html" class="active">Kubernetes</a></li>
-                                    <li><a href="/notes/k3s.html">k3s</a></li>
                                     <li><a href="/notes/ion-implantation.html">イオン注入</a></li>
                                     <li><a href="/notes/doping.html">ドーピング</a></li>
-                                    <li><a href="/notes/apache-mesos.html">Apache Mesos</a></li>
                                     <li><a href="/notes/tetravalent-element.html">4価元素・14族元素</a></li>
                                     <li><a href="/notes/semiconductor.html">半導体</a></li>
                                     <li><a href="/notes/p-type-semiconductor.html">P型半導体</a></li>
@@ -421,7 +421,7 @@
             <article class="notes-content">
                 <h1>Kubernetes</h1>
 
-<p>コンテナオーケストレーター。Googleが社内クラスタ管理システムBorgの知見をもとに2014年に公開し、CNCF設立時の最初のホストプロジェクトとなった。2010年代後半のオーケストレーション競争（vs Docker Swarm, <a href="/notes/apache-mesos.html">Apache Mesos</a>）を制し、コンテナ基盤の事実上の標準になっている。</p>
+<p>コンテナオーケストレーター。Googleが社内クラスタ管理システム<a href="/notes/google-borg.html">Borg</a>の知見をもとに2014年に公開し、CNCF設立時の最初のホストプロジェクトとなった。2010年代後半のオーケストレーション競争（vs Docker Swarm, <a href="/notes/apache-mesos.html">Apache Mesos</a>）を制し、コンテナ基盤の事実上の標準になっている。</p>
 
 <p>このノートはKubernetes関連ノートを束ねるハブノート。 <a class="note-tag" href="/notes/tags/kubernetes.html">#kubernetes</a> <a class="note-tag" href="/notes/tags/infrastructure.html">#infrastructure</a> <a class="note-tag" href="/notes/tags/moc.html">#moc</a></p>
 
@@ -430,6 +430,7 @@
 <ul>
 <li><a href="/notes/minikube.html">minikube</a> — upstreamのKubernetesをローカルに立てる公式ツール。多様なドライバー（VM/コンテナ/ベアメタル）を選べる</li>
 <li><a href="/notes/k3s.html">k3s</a> — 単一バイナリの軽量ディストリビューション。エッジ・IoT・ホームラボ向けで、本番でも使われる</li>
+<li><a href="/notes/kind.html">kind</a> — Kubernetes本体のテスト用に生まれた、Dockerコンテナをノードとするクラスタツール。CI・使い捨てクラスタ向き</li>
 </ul>
 
 
@@ -439,6 +440,7 @@
 <li><a href="/notes/cluster-api.html">Cluster API (CAPI)</a> — Kubernetesクラスタ自体をKubernetesのリソースとして宣言的に管理する仕組み</li>
 <li><a href="/notes/kubernetes-cloud-controller-manager.html">Cloud Controller Manager (CCM)</a> — クラウドプロバイダー固有の制御ループを本体から分離したコンポーネント</li>
 <li><a href="/notes/container-storage-interface.html">Container Storage Interface (CSI)</a> — ストレージベンダーがプラグインを書くための標準インターフェース</li>
+<li><a href="/notes/etcd.html">etcd</a> — クラスタの全状態を保存するプライマリデータストア</li>
 </ul>
 
 
@@ -453,6 +455,7 @@
 
 <ul>
 <li><a href="/notes/apache-mesos.html">Apache Mesos</a> — two-level schedulingを特徴とするクラスタマネージャ。オーケストレーション競争でKubernetesと争い、2025年にApache Attic入りした</li>
+<li><a href="/notes/google-borg.html">Borg</a> — Kubernetesの源流となったGoogle社内のクラスタ管理システム</li>
 </ul>
 
 
@@ -485,7 +488,7 @@
                     </ul>
                 </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-14 08:20 / 更新日時: 2026-08-14 08:20</span>
+                    <span>作成日時: 2026-08-14 08:25 / 更新日時: 2026-08-14 08:25</span>
                     <a class="share-x" href="https://twitter.com/intent/tweet?text=Kubernetes&url=https%3A%2F%2F64p.org%2Fnotes%2Fkubernetes.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>

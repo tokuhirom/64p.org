@@ -23,6 +23,11 @@
                 <a class="notes-tags-link" href="/notes/rss.xml">📡 RSS</a>
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
+                                    <li><a href="/notes/minikube.html">minikube</a></li>
+                                    <li><a href="/notes/kubernetes.html">Kubernetes</a></li>
+                                    <li><a href="/notes/k3s.html" class="active">k3s</a></li>
+                                    <li><a href="/notes/cgroups.html">cgroups（control groups）</a></li>
+                                    <li><a href="/notes/apache-mesos.html">Apache Mesos</a></li>
                                     <li><a href="/notes/traefik.html">Traefik</a></li>
                                     <li><a href="/notes/systemd-journald-excessive-io.html">systemd-journaldの過剰なI/O</a></li>
                                     <li><a href="/notes/kind.html">kind (Kubernetes in Docker)</a></li>
@@ -42,14 +47,9 @@
                                     <li><a href="/notes/common-expression-language.html">CEL (Common Expression Language)</a></li>
                                     <li><a href="/notes/cluster-api.html">Cluster API (CAPI)</a></li>
                                     <li><a href="/notes/cilium.html">Cilium</a></li>
-                                    <li><a href="/notes/cgroups.html">cgroups（control groups）</a></li>
                                     <li><a href="/notes/thermal-diffusion-doping.html">熱拡散ドーピング</a></li>
-                                    <li><a href="/notes/minikube.html">minikube</a></li>
-                                    <li><a href="/notes/kubernetes.html">Kubernetes</a></li>
-                                    <li><a href="/notes/k3s.html" class="active">k3s</a></li>
                                     <li><a href="/notes/ion-implantation.html">イオン注入</a></li>
                                     <li><a href="/notes/doping.html">ドーピング</a></li>
-                                    <li><a href="/notes/apache-mesos.html">Apache Mesos</a></li>
                                     <li><a href="/notes/tetravalent-element.html">4価元素・14族元素</a></li>
                                     <li><a href="/notes/semiconductor.html">半導体</a></li>
                                     <li><a href="/notes/p-type-semiconductor.html">P型半導体</a></li>
@@ -434,7 +434,7 @@
 <ul>
 <li>コンテナランタイム: containerd（cri-dockerdも選択可）</li>
 <li>ネットワーク: Flannel（CNI）、CoreDNS、kube-router（NetworkPolicy）</li>
-<li>Ingress / LB: Traefik、ServiceLB</li>
+<li>Ingress / LB: <a href="/notes/traefik.html">Traefik</a>、ServiceLB</li>
 <li>ストレージ: local-path-provisioner</li>
 <li>iptables・socatなどのユーティリティ</li>
 </ul>
@@ -442,13 +442,13 @@
 
 <h2>データストア: kine</h2>
 
-<p>デフォルトのデータストアはetcdではなく<strong>sqlite3</strong>。「kine」というシムがetcd APIをSQLに変換することで、sqlite3のほかMySQL・PostgreSQLもバックエンドにできる。HA構成ではembedded etcdまたは外部データストアを使う。etcdの運用負担を避けられるのがシングルノード・小規模構成での利点。</p>
+<p>デフォルトのデータストアは<a href="/notes/etcd.html">etcd</a>ではなく<strong>sqlite3</strong>。「kine」というシムがetcd APIをSQLに変換することで、sqlite3のほかMySQL・PostgreSQLもバックエンドにできる。HA構成ではembedded etcdまたは外部データストアを使う。etcdの運用負担を避けられるのがシングルノード・小規模構成での利点。</p>
 
 <h2>ユースケース</h2>
 
 <p>エッジ、IoT、ARMボード、CI、開発環境、エアギャップ環境、ホームラボなど、リソースが限られていたり運用をシンプルにしたい場面が主戦場。2026年時点でエッジのKubernetesデプロイの35%以上がk3sという調査もある。</p>
 
-<p>派生ツールとして、k3sをDockerコンテナ内で動かす<strong>k3d</strong>があり、ローカル開発用途で<a href="/notes/minikube.html">minikube</a>やkindと並ぶ選択肢になっている。</p>
+<p>派生ツールとして、k3sをDockerコンテナ内で動かす<strong>k3d</strong>があり、ローカル開発用途で<a href="/notes/minikube.html">minikube</a>や<a href="/notes/kind.html">kind</a>と並ぶ選択肢になっている。</p>
 
 <h2><a href="/notes/kubernetes.html">Kubernetes</a>の中での位置づけ</h2>
 
@@ -476,7 +476,7 @@
                     </ul>
                 </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-14 08:20 / 更新日時: 2026-08-14 08:20</span>
+                    <span>作成日時: 2026-08-14 08:20 / 更新日時: 2026-08-14 08:25</span>
                     <a class="share-x" href="https://twitter.com/intent/tweet?text=k3s&url=https%3A%2F%2F64p.org%2Fnotes%2Fk3s.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
