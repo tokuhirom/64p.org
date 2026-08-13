@@ -6,7 +6,60 @@
 <atom:link href="https://64p.org/notes/rss.xml" rel="self" type="application/rss+xml" />
 <description>ちょっと調べたことや検証結果を、AIの力も借りながらメモしていくコーナーです。</description>
 <language>ja</language>
-<lastBuildDate>Thu, 13 Aug 2026 22:12:35 +0900</lastBuildDate>
+<lastBuildDate>Thu, 13 Aug 2026 22:17:44 +0900</lastBuildDate>
+<item>
+<title>DevOps</title>
+<link>https://64p.org/notes/devops.html</link>
+<guid isPermaLink="true">https://64p.org/notes/devops.html</guid>
+<pubDate>Thu, 13 Aug 2026 22:17:00 +0900</pubDate>
+<description><![CDATA[<h1>DevOps</h1>
+
+<p><a class="note-tag" href="/notes/tags/devops.html">#devops</a></p>
+
+<p>Development（開発）とOperations（運用）を組み合わせた造語。両チームの壁を取り払い、ソフトウェアの計画・開発・テスト・デプロイ・運用を継続的かつ協調的に行う文化・実践の総称。</p>
+
+<h2>起源</h2>
+
+<ul>
+<li>2008年、ベルギー人コンサルタントのPatrick Deboisがトロントの Agile Conference で Andrew Clay Shafer と出会い、「agile systems administration」という概念を探求し始めた。両者とも、Agileの理想（開発の高速化）が運用側の壁で頭打ちになっている現状に問題意識を持っていた。</li>
+<li>転機は2009年、Velocity ConferenceでFlickrのJohn AllspawとPaul Hammondが行った講演「10+ Deploys per Day: Dev and Ops Cooperation at Flickr」。両者は開発と運用の対立を描き、「アプリケーション開発と運用は、シームレスで透明かつ完全に統合されているべきだ」と主張した。</li>
+<li>この講演の映像を見たDeboisが感銘を受け、自らベルギー・ゲントで「Devopsdays」という独自カンファレンスを開催（2009年）。これが"DevOps"という名前が定着するきっかけとなった。</li>
+<li>背景には、開発と運用が別チームで縦割りになっているウォーターフォール的な体制への不満があった。開発者が作ったものを運用に「投げる」ことで、コミュニケーション不足・遅延・障害が頻発していた。</li>
+</ul>
+
+
+<h2>CALMSフレームワーク</h2>
+
+<p>「The DevOps Handbook」共著者のJez Humbleが提唱した、DevOps成熟度を測る5つの柱。</p>
+
+<ul>
+<li><strong>Culture（文化）</strong> — ツールや自動化より前に、開発とOpsが協働する文化そのものが土台。</li>
+<li><strong>Automation（自動化）</strong> — CI/CDやテストなど手作業の自動化。</li>
+<li><strong>Lean（リーン）</strong> — 仕掛かり作業(WIP)の最小化・作業の可視化など、ムダを省き価値の流れを最適化。</li>
+<li><strong>Measurement（計測）</strong> — デプロイやプロセスに関するデータを収集し、改善点を把握する。</li>
+<li><strong>Sharing（共有）</strong> — 知識がサイロ化せず、チーム間で自由に流通する状態を作る。</li>
+</ul>
+
+
+<h2>関連する拡張・派生</h2>
+
+<ul>
+<li><a href="/notes/devsecops.html">DevSecOps</a> — DevOpsに「セキュリティ」を明示的な第3の柱として組み込む拡張。</li>
+<li><a href="/notes/platform-engineering.html">Platform Engineering</a> — DevOpsの理想「You build it, you run it」を全開発者に求めるのは難しく、多くの組織で開発者がインフラ管理に忙殺される「Shadow Ops」状態が発生する。運用の専門性をプラットフォームチームに集約し、開発者からは抽象化して隠すことでこのギャップを埋める実践。</li>
+</ul>
+
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://devops.com/the-origins-of-devops-whats-in-a-name/">The Origins of DevOps: What&rsquo;s in a Name? - DevOps.com</a></li>
+<li><a href="https://www.bmc.com/blogs/devops-history/">A Brief History of DevOps - BMC Software</a></li>
+<li><a href="https://www.atlassian.com/devops/frameworks/calms-framework">CALMS Framework - Atlassian</a></li>
+<li><a href="https://www.techtarget.com/whatis/definition/CALMS">What is CALMS for DevOps? - TechTarget</a></li>
+</ul>
+
+]]></description>
+</item>
 <item>
 <title>Platform Engineering</title>
 <link>https://64p.org/notes/platform-engineering.html</link>
@@ -18,7 +71,7 @@
 
 <p>クラウドネイティブ時代のソフトウェア開発組織に対して、セルフサービス型のツールチェーンとワークフローを設計・構築する規律。開発生産性、アプリケーションのサイクルタイム、市場投入速度の改善を目的とする。</p>
 
-<h2>DevOpsとの関係 — Shadow Ops問題</h2>
+<h2><a href="/notes/devops.html">DevOps</a>との関係 — Shadow Ops問題</h2>
 
 <p>DevOpsの理想は「You build it, you run it」（作った人が運用もする）だが、これを本当に実現できているのはGoogleのような一部の先進組織のみ。多くの組織では、経験豊富な開発者が本来の開発業務ではなくインフラ管理に時間を取られる「Shadow Ops（影のOps）」という状態が発生している。調査では、低パフォーマンス組織の44%がこの問題を抱える一方、高パフォーマンス組織はほぼ100%がtrue DevOpsを実現できているという。</p>
 
@@ -1394,40 +1447,6 @@ Content-length: 25
 <li><a href="https://www.tigera.io/learn/guides/ebpf/ebpf-xdp/">eBPF XDP: The Basics and a Quick Tutorial - Tigera</a></li>
 <li><a href="https://docs.kernel.org/networking/af_xdp.html">AF_XDP — The Linux Kernel documentation</a></li>
 <li><a href="https://www.datadoghq.com/blog/xdp-intro/">A gentle introduction to XDP - Datadog</a></li>
-</ul>
-
-]]></description>
-</item>
-<item>
-<title>Cilium</title>
-<link>https://64p.org/notes/cilium.html</link>
-<guid isPermaLink="true">https://64p.org/notes/cilium.html</guid>
-<pubDate>Thu, 13 Aug 2026 08:33:00 +0900</pubDate>
-<description><![CDATA[<h1>Cilium</h1>
-
-<p>Docker/Kubernetesなどのコンテナプラットフォーム上で、アプリケーションサービス間のネットワーク接続を透過的に保護するオープンソースソフトウェア。土台は<a href="/notes/bpf.html">eBPF</a>で、Linuxカーネル内で動的にネットワーキング・セキュリティロジックを挿入できるこの技術により、アプリケーションコードやコンテナ設定を変更することなくポリシーの適用・更新ができる。 <a class="note-tag" href="/notes/tags/networking.html">#networking</a> <a class="note-tag" href="/notes/tags/kubernetes.html">#kubernetes</a> <a class="note-tag" href="/notes/tags/security.html">#security</a></p>
-
-<h2>主な機能</h2>
-
-<ul>
-<li><strong>ネットワーキング</strong>: オーバーレイネットワーク・ネイティブルーティングなど柔軟なルーティングオプションを提供。eBPFベースの分散ロードバランシングにより、従来iptablesベースだったkube-proxyを置き換えられる</li>
-<li><strong>セキュリティ(Network Policy)</strong>: IPアドレスへの依存から脱却し、ID・ラベルベースのセキュリティモデルを実現。Kubernetes標準のNetworkPolicy(L3/L4)に加え、CiliumNetworkPolicyとしてL7(HTTPメソッド/パスフィルタ、DNSベースのegress、FQDNポリシー)まで対応する</li>
-<li><strong>Hubble(Observability)</strong>: 完全に分散されたネットワーク可視化プラットフォーム。ノードごとにフローをキャプチャし、Hubble relayでクラスタ全体に集約、CLI/UIで閲覧できる。サービス依存関係マップ・HTTPフロー・DNS問題の検出・レイテンシ分析が可能</li>
-<li><strong><a href="/notes/service-mesh.html">Service Mesh</a></strong>: サイドカーを使わない設計が特徴。L3/L4はeBPFで処理し、L7が必要な場合のみノードレベルのEnvoyを使う。WireGuardやIPsecによる透過的暗号化、SPIFFE/SPIRE連携によるmTLSもサポートする</li>
-</ul>
-
-
-<h2>エコシステムでの位置づけ</h2>
-
-<p>CNCFのプロジェクトとして2023年にGraduated(卒業)ステータスに到達している。Google Kubernetes Engine(GKE Autopilot)のデフォルトCNI、Amazon EKSの推奨CNI、Azure AKSの組み込みオプションとして採用されるなど、主要クラウドのマネージドKubernetesに組み込まれている。動作にはLinux 5.4以降が必要(本番運用では5.15以降が推奨)。</p>
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://docs.cilium.io/en/stable/overview/intro/">docs.cilium.io - Cilium &amp; Hubble overview</a></li>
-<li><a href="https://oneuptime.com/blog/post/2026-01-07-ebpf-cilium-kubernetes-networking/view">How to Deploy Cilium CNI for eBPF-Powered Kubernetes Networking</a></li>
-<li><a href="https://oneuptime.com/blog/post/2026-01-27-cilium-service-mesh/view">How to Implement Cilium Service Mesh</a></li>
-<li><a href="https://notes.kodekloud.com/docs/Prep-Course-Cilium-Certified-Associate-CCA-Certification/Cilium-Overview/Architecture/page">Architecture - KodeKloud</a></li>
 </ul>
 
 ]]></description>

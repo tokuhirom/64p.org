@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>HATEOAS（Hypermedia As The Engine Of Application State） - Notes - 64p.org</title>
+    <title>DevOps - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="alternate" type="application/rss+xml" title="Notes - 64p.org" href="/notes/rss.xml">
@@ -25,7 +25,7 @@
                 <ul class="notes-nav">
                                     <li><a href="/notes/platform-engineering.html">Platform Engineering</a></li>
                                     <li><a href="/notes/devsecops.html">DevSecOps</a></li>
-                                    <li><a href="/notes/devops.html">DevOps</a></li>
+                                    <li><a href="/notes/devops.html" class="active">DevOps</a></li>
                                     <li><a href="/notes/uefi.html">UEFI</a></li>
                                     <li><a href="/notes/system76.html">System76</a></li>
                                     <li><a href="/notes/microvm.html">microVM</a></li>
@@ -228,7 +228,7 @@
                                     <li><a href="/notes/kita-maimai-kaburi.html">キタマイマイカブリ</a></li>
                                     <li><a href="/notes/kappa-yokai.html">河童（かっぱ）</a></li>
                                     <li><a href="/notes/restful.html">RESTful（REST: Representational State Transfer）</a></li>
-                                    <li><a href="/notes/hateoas.html" class="active">HATEOAS（Hypermedia As The Engine Of Application State）</a></li>
+                                    <li><a href="/notes/hateoas.html">HATEOAS（Hypermedia As The Engine Of Application State）</a></li>
                                     <li><a href="/notes/lxd.html">LXD</a></li>
                                     <li><a href="/notes/ward-cunningham.html">Ward Cunningham</a></li>
                                     <li><a href="/notes/agile-manifesto.html">アジャイルソフトウェア開発宣言（Manifesto for Agile Software Development）</a></li>
@@ -383,58 +383,64 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>HATEOAS（Hypermedia As The Engine Of Application State）</h1>
+                <h1>DevOps</h1>
 
-<p><a href="/notes/restful.html">REST</a>の4つの「統一インターフェース制約」のうち最後の1つ。Roy Fieldingの2000年の博士論文で初めて言及された。</p>
+<p><a class="note-tag" href="/notes/tags/devops.html">#devops</a></p>
 
-<h2>原典での定義</h2>
+<p>Development（開発）とOperations（運用）を組み合わせた造語。両チームの壁を取り払い、ソフトウェアの計画・開発・テスト・デプロイ・運用を継続的かつ協調的に行う文化・実践の総称。</p>
 
-<p>論文セクション5.1.5（Uniform Interface）で、REST全体を定義する4つのインターフェース制約の一つとして登場する。</p>
-
-<blockquote><p>&ldquo;REST is defined by four interface constraints: identification of resources; manipulation of resources through representations; self-descriptive messages; and, hypermedia as the engine of application state.&rdquo;</p></blockquote>
-
-<p>つまり、クライアントは事前に固定されたAPI仕様書やURI構造の知識に頼るのではなく、サーバーから返されるレスポンス（ハイパーメディア＝リンクなど）そのものから、次に取りうる操作（アフォーダンス）を発見しながら進んでいくべき、という制約。</p>
-
-<h2>Richardson Maturity Model（成熟度モデル）とHATEOAS</h2>
-
-<p>HATEOASを段階的な指標として整理したのが、Leonard Richardson（書籍 <em>&ldquo;RESTful Web Services&rdquo;</em> の共著者）。2008年11月20日、QCon San Franciscoでの講演 <em>&ldquo;Justice Will Take Us Millions Of Intricate Moves&rdquo;</em> の第3幕（Act 3）で発表した「成熟度ヒューリスティック」が原型。</p>
+<h2>起源</h2>
 
 <ul>
-<li><strong>Level 0</strong>: 単一のエンドポイントにPOSTだけを投げるRPCスタイル</li>
-<li><strong>Level 1</strong>: リソースごとにURIを分ける</li>
-<li><strong>Level 2</strong>: HTTPメソッド（GET/POST/PUT/DELETE等）を正しく使い分ける</li>
-<li><strong>Level 3</strong>: HATEOAS対応。レスポンスにハイパーメディアリンクを含み、クライアントが動的に次のアクションを発見できる（このモデルの最上位段階）</li>
+<li>2008年、ベルギー人コンサルタントのPatrick Deboisがトロントの Agile Conference で Andrew Clay Shafer と出会い、「agile systems administration」という概念を探求し始めた。両者とも、Agileの理想（開発の高速化）が運用側の壁で頭打ちになっている現状に問題意識を持っていた。</li>
+<li>転機は2009年、Velocity ConferenceでFlickrのJohn AllspawとPaul Hammondが行った講演「10+ Deploys per Day: Dev and Ops Cooperation at Flickr」。両者は開発と運用の対立を描き、「アプリケーション開発と運用は、シームレスで透明かつ完全に統合されているべきだ」と主張した。</li>
+<li>この講演の映像を見たDeboisが感銘を受け、自らベルギー・ゲントで「Devopsdays」という独自カンファレンスを開催（2009年）。これが"DevOps"という名前が定着するきっかけとなった。</li>
+<li>背景には、開発と運用が別チームで縦割りになっているウォーターフォール的な体制への不満があった。開発者が作ったものを運用に「投げる」ことで、コミュニケーション不足・遅延・障害が頻発していた。</li>
 </ul>
 
 
-<h2>Fieldingによる軽視への批判</h2>
+<h2>CALMSフレームワーク</h2>
 
-<p>Fieldingは2008年、"REST APIs must be hypertext-driven" という記事で、世に「REST API」を名乗るものの多くがHATEOASを欠いた単なるRPCに過ぎないと批判している。固定的なリソース名・階層構造を仕様書などの帯域外情報で定義し、URI構造自体に意味を持たせるAPIは、クライアント・サーバ間を過度に結合させてしまう問題があると指摘した。</p>
+<p>「The DevOps Handbook」共著者のJez Humbleが提唱した、DevOps成熟度を測る5つの柱。</p>
+
+<ul>
+<li><strong>Culture（文化）</strong> — ツールや自動化より前に、開発とOpsが協働する文化そのものが土台。</li>
+<li><strong>Automation（自動化）</strong> — CI/CDやテストなど手作業の自動化。</li>
+<li><strong>Lean（リーン）</strong> — 仕掛かり作業(WIP)の最小化・作業の可視化など、ムダを省き価値の流れを最適化。</li>
+<li><strong>Measurement（計測）</strong> — デプロイやプロセスに関するデータを収集し、改善点を把握する。</li>
+<li><strong>Sharing（共有）</strong> — 知識がサイロ化せず、チーム間で自由に流通する状態を作る。</li>
+</ul>
+
+
+<h2>関連する拡張・派生</h2>
+
+<ul>
+<li><a href="/notes/devsecops.html">DevSecOps</a> — DevOpsに「セキュリティ」を明示的な第3の柱として組み込む拡張。</li>
+<li><a href="/notes/platform-engineering.html">Platform Engineering</a> — DevOpsの理想「You build it, you run it」を全開発者に求めるのは難しく、多くの組織で開発者がインフラ管理に忙殺される「Shadow Ops」状態が発生する。運用の専門性をプラットフォームチームに集約し、開発者からは抽象化して隠すことでこのギャップを埋める実践。</li>
+</ul>
+
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://roy.gbiv.com/pubs/dissertation/rest_arch_style.htm">Fielding Dissertation: Chapter 5 - Representational State Transfer (REST)</a></li>
-<li><a href="https://www.crummy.com/writing/speaking/2008-QCon/">Justice Will Take Us Millions Of Intricate Moves - Leonard Richardson (crummy.com, 2008 QCon)</a></li>
-<li><a href="https://martinfowler.com/articles/richardsonMaturityModel.html">Richardson Maturity Model - Martin Fowler</a></li>
-<li><a href="https://en.wikipedia.org/wiki/Richardson_Maturity_Model">Richardson Maturity Model - Wikipedia (English)</a></li>
-<li><a href="https://roy.gbiv.com/untangled/2008/rest-apis-must-be-hypertext-driven">REST APIs must be hypertext-driven - Roy Fielding&rsquo;s blog (2008)</a></li>
+<li><a href="https://devops.com/the-origins-of-devops-whats-in-a-name/">The Origins of DevOps: What&rsquo;s in a Name? - DevOps.com</a></li>
+<li><a href="https://www.bmc.com/blogs/devops-history/">A Brief History of DevOps - BMC Software</a></li>
+<li><a href="https://www.atlassian.com/devops/frameworks/calms-framework">CALMS Framework - Atlassian</a></li>
+<li><a href="https://www.techtarget.com/whatis/definition/CALMS">What is CALMS for DevOps? - TechTarget</a></li>
 </ul>
 
-
-<p><a class="note-tag" href="/notes/tags/software-engineering.html">#software-engineering</a> <a class="note-tag" href="/notes/tags/protocol.html">#protocol</a></p>
 
                                 <div class="notes-backlinks">
                     <h2>🔗 リンクされているノート</h2>
                     <ul>
-                                            <li><a href="/notes/restful.html">RESTful（REST: Representational State Transfer）</a></li>
-                                            <li><a href="/notes/htmx.html">htmx</a></li>
+                                            <li><a href="/notes/devsecops.html">DevSecOps</a></li>
+                                            <li><a href="/notes/platform-engineering.html">Platform Engineering</a></li>
                     
                     </ul>
                 </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-11 08:09 / 更新日時: 2026-08-11 08:09</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=HATEOAS%EF%BC%88Hypermedia%20As%20The%20Engine%20Of%20Application%20State%EF%BC%89&url=https%3A%2F%2F64p.org%2Fnotes%2Fhateoas.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <span>作成日時: 2026-08-13 22:17 / 更新日時: 2026-08-13 22:17</span>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=DevOps&url=https%3A%2F%2F64p.org%2Fnotes%2Fdevops.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">
