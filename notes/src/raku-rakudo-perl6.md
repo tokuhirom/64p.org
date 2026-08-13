@@ -1,6 +1,6 @@
 ---
 created: 2026-08-09 13:26
-updated: 2026-08-13 07:30
+updated: 2026-08-13 15:04
 ---
 
 # Raku / Rakudo / Perl 6
@@ -57,6 +57,7 @@ Rust製のRakuインタプリタ「[mutsu](https://github.com/tokuhirom/mutsu)�
 - 公式テストスイート [Roast](https://github.com/Raku/roast) の1,464ファイル中1,433ファイルをパスする水準（開発が速く進んでいるため変動する）。
 - クラス・ロール・継承、多重ディスパッチ、grammar/regex、gather/take、Promise（`start`/`await`）、enum、subset型、MAINサブによるCLI引数パースなど、主要機能を幅広くサポート。
 - Zefパッケージマネージャを`mzef`として同梱し、mise・Docker・ソースビルドでインストール可能。
+- 0.21.0からは[[cro|Cro]]::HTTPをバンドルしており、HTTPサーバが書ける（[[mutsu-cro-http-experiment|動作実験]]）。
 - サイト（[tokuhirom.github.io/mutsu](https://tokuhirom.github.io/mutsu/)）は[[wasm|WebAssembly]]化したmutsu自身で動いており、チュートリアルやプレイグラウンドを提供している。
 - まだ本番用途には非推奨（not yet suitable for production use）。RakuASTは未完成、コンパイル時診断の一部が未実装など既知の制限あり。
 

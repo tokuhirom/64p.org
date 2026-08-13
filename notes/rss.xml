@@ -6,7 +6,95 @@
 <atom:link href="https://64p.org/notes/rss.xml" rel="self" type="application/rss+xml" />
 <description>ちょっと調べたことや検証結果を、AIの力も借りながらメモしていくコーナーです。</description>
 <language>ja</language>
-<lastBuildDate>Thu, 13 Aug 2026 13:07:27 +0900</lastBuildDate>
+<lastBuildDate>Thu, 13 Aug 2026 15:04:47 +0900</lastBuildDate>
+<item>
+<title>mutsuでCro::HTTPのhello worldを動かす実験</title>
+<link>https://64p.org/notes/mutsu-cro-http-experiment.html</link>
+<guid isPermaLink="true">https://64p.org/notes/mutsu-cro-http-experiment.html</guid>
+<pubDate>Thu, 13 Aug 2026 15:04:00 +0900</pubDate>
+<description><![CDATA[<h1>mutsuでCro::HTTPのhello worldを動かす実験</h1>
+
+<p>Rust製の自作<a href="/notes/raku-rakudo-perl6.html">Raku</a>インタプリタ<a href="https://github.com/tokuhirom/mutsu">mutsu</a>の0.21.0で<a href="/notes/cro.html">Cro</a>::HTTPが使えるようになったので、hello world的なHTTPサーバを実際に書いて動かしてみた記録。</p>
+
+<p><a class="note-tag" href="/notes/tags/raku.html">#raku</a> <a class="note-tag" href="/notes/tags/mutsu.html">#mutsu</a> <a class="note-tag" href="/notes/tags/web-framework.html">#web-framework</a> <a class="note-tag" href="/notes/tags/experiment.html">#experiment</a></p>
+
+<h2>目的</h2>
+
+<p>mutsu 0.21.0のCro::HTTPサポートで、典型的なCroのサンプルコード（ルーティング定義＋サーバ起動）がそのまま動くかを確認する。</p>
+
+<h2>環境</h2>
+
+<ul>
+<li>mutsu 0.21.0（miseでグローバルインストール: <code>~/.local/share/mise/installs/github-tokuhirom-mutsu/0.21.0/bin/mutsu</code>）</li>
+<li>Linux (Pop!_OS, kernel 6.18)</li>
+</ul>
+
+
+<h2>コード</h2>
+
+<p>Cro公式のGetting startedにあるような、<code>Cro::HTTP::Router</code>の<code>route</code>/<code>get</code>でルーティングを定義して<code>Cro::HTTP::Server</code>で起動する典型パターン。パスパラメータ付きのルートも入れた。</p>
+
+<pre><code class="raku">use Cro::HTTP::Router;
+use Cro::HTTP::Server;
+
+my $application = route {
+    get -&gt; {
+        content 'text/plain', "Hello, world from mutsu!\n";
+    }
+    get -&gt; 'greet', $name {
+        content 'text/plain', "Hello, $name!\n";
+    }
+};
+
+my Cro::Service $service = Cro::HTTP::Server.new(
+    :host&lt;localhost&gt;, :port&lt;20000&gt;, :$application
+);
+$service.start;
+say "Started server at http://localhost:20000/";
+
+react {
+    whenever signal(SIGINT) {
+        $service.stop;
+        exit;
+    }
+}
+</code></pre>
+
+<p>これを<code>mutsu cro-hello.raku</code>で起動するだけ。zef等でのモジュールインストールは不要で、Cro::HTTPはmutsu本体にバンドルされている。</p>
+
+<h2>実行結果</h2>
+
+<p>両ルートとも期待どおり動いた。</p>
+
+<pre><code class="console">$ curl http://localhost:20000/
+Hello, world from mutsu!
+$ curl http://localhost:20000/greet/tokuhirom
+Hello, tokuhirom!
+</code></pre>
+
+<p>レスポンスヘッダも正しく付く。</p>
+
+<pre><code class="console">$ curl -si http://localhost:20000/ | head -4
+HTTP/1.1 200 OK
+Content-type: text/plain; charset=utf-8
+Content-length: 25
+</code></pre>
+
+<h2>読み取れること</h2>
+
+<ul>
+<li><code>route</code>/<code>get</code>のDSL、<code>content</code>によるレスポンス生成、パスパラメータ（<code>get -&gt; 'greet', $name</code>のようなシグネチャベースのルーティング）が動く。</li>
+<li><code>Cro::HTTP::Server</code>の起動・停止（<code>$service.start</code>/<code>$service.stop</code>）が動く。</li>
+<li><code>react whenever signal(SIGINT)</code>によるシグナル待ち受けの常駐パターンも動くので、Ctrl-Cで綺麗に落とせる。</li>
+<li>Content-typeへの<code>charset=utf-8</code>付与やContent-lengthの計算など、HTTP/1.1レスポンスの基本部分が揃っている。</li>
+</ul>
+
+
+<h2>躓いた点</h2>
+
+<p>特になし。Cro公式ドキュメント風のコードが初回でそのまま動いた。</p>
+]]></description>
+</item>
 <item>
 <title>MessagePack</title>
 <link>https://64p.org/notes/messagepack.html</link>
@@ -1602,40 +1690,6 @@ f'(a) = \lim_{h \to 0} \frac{f(a+h) - f(a)}{h}
 <li><a href="https://courses.lumenlearning.com/precalculus/chapter/derivatives/">Derivatives | Precalculus - Lumen Learning</a></li>
 </ul>
 
-]]></description>
-</item>
-<item>
-<title>周波数領域の変換</title>
-<link>https://64p.org/notes/frequency-domain-transforms.html</link>
-<guid isPermaLink="true">https://64p.org/notes/frequency-domain-transforms.html</guid>
-<pubDate>Thu, 13 Aug 2026 00:14:00 +0900</pubDate>
-<description><![CDATA[<h1>周波数領域の変換</h1>
-
-<p>時間領域（あるいは空間領域）の信号・関数を、周波数領域に写してから扱う手法群のハブノート。「時間領域では難しい操作（<a href="/notes/differential-equation.html">微分方程式</a>・畳み込み・スペクトル分析）が、変換先では簡単な代数演算になる」という共通の発想でつながっている。</p>
-
-<p><a class="note-tag" href="/notes/tags/math.html">#math</a> <a class="note-tag" href="/notes/tags/signal-processing.html">#signal-processing</a> <a class="note-tag" href="/notes/tags/moc.html">#moc</a></p>
-
-<div class="mermaid">
-graph LR
-    ft[フーリエ変換] --&gt;|"減衰因子 e^(-σt) で一般化"| lt[ラプラス変換]
-    ft --&gt;|離散化| dft[DFT]
-    dft --&gt;|"O(N log N) で計算"| fft[FFT]
-    lt --&gt;|"離散時間版 z = e^(sT)"| zt[z変換]
-</div>
-
-
-<h2>配下ノート</h2>
-
-<ul>
-<li><a href="/notes/fourier-transform.html">フーリエ変換</a> — 信号を正弦波の重ね合わせに分解する、この分野の基本となる<a href="/notes/integral.html">積分</a>変換</li>
-<li><a href="/notes/laplace-transform.html">ラプラス変換</a> — フーリエ変換に減衰因子を加えて発散する信号にも適用できるようにした一般化。微分方程式の求解・制御理論・回路解析向き</li>
-<li><a href="/notes/fft.html">FFT（高速フーリエ変換）</a> — 離散版（DFT）を <span class="math-inline">O(N \log N)</span> で計算するアルゴリズム。連続の理論を計算機で実用にした立役者</li>
-</ul>
-
-
-<h2>まだ独立ノートになっていない隣接概念</h2>
-
-<p>DFT・フーリエ級数・z変換・DCT（JPEG/MP3で使われる）・OFDM など。</p>
 ]]></description>
 </item>
 </channel>
