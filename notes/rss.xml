@@ -6,7 +6,56 @@
 <atom:link href="https://64p.org/notes/rss.xml" rel="self" type="application/rss+xml" />
 <description>ちょっと調べたことや検証結果を、AIの力も借りながらメモしていくコーナーです。</description>
 <language>ja</language>
-<lastBuildDate>Fri, 14 Aug 2026 05:00:45 +0900</lastBuildDate>
+<lastBuildDate>Fri, 14 Aug 2026 05:37:23 +0900</lastBuildDate>
+<item>
+<title>ダイヤモンド半導体</title>
+<link>https://64p.org/notes/diamond-semiconductor.html</link>
+<guid isPermaLink="true">https://64p.org/notes/diamond-semiconductor.html</guid>
+<pubDate>Fri, 14 Aug 2026 05:37:00 +0900</pubDate>
+<description><![CDATA[<h1>ダイヤモンド半導体</h1>
+
+<p>シリコンではなく<a href="/notes/carbon.html">炭素</a>の結晶であるダイヤモンドを基板・活性層に使う半導体デバイス。<a href="/notes/tetravalent-element.html">4価元素</a>である炭素同士のsp3結合でできた結晶を使う点がシリコン半導体と異なる。 <a class="note-tag" href="/notes/tags/electronics.html">#electronics</a> <a class="note-tag" href="/notes/tags/materials-science.html">#materials-science</a></p>
+
+<h2>物性</h2>
+
+<ul>
+<li>バンドギャップが約5.47 eVと非常に広い(シリコンは1.1 eV程度)。SiC(炭化ケイ素)やGaN(窒化ガリウム)などの「ワイドバンドギャップ半導体」よりもさらに広く、「ウルトラワイドバンドギャップ半導体」に位置づけられる</li>
+<li>絶縁破壊電界強度が高い(文献により10〜20 MV/cm)。同じ厚みでもより高い電圧に耐えられる</li>
+<li>熱伝導率が既知の物質中で最高クラス(22 W/cm·K)で放熱性に極めて優れる</li>
+<li>キャリア移動度も高い(電子移動度約4000 cm²/V·s、正孔移動度約3800 cm²/V·s)</li>
+<li>これらを総合したJohnson性能指数でSiC・GaNを上回り、高周波・高耐圧・高出力デバイス向けの「究極の半導体」と呼ばれることがある</li>
+</ul>
+
+
+<h2>製造方法</h2>
+
+<ul>
+<li>高温高圧合成(HPHT: High Pressure High Temperature)</li>
+<li>化学気相成長(CVD)、特にマイクロ波プラズマCVD(MPCVD)による人工ダイヤモンド成長</li>
+</ul>
+
+
+<h2>用途と課題</h2>
+
+<p>現状は主にパワーエレクトロニクス分野の研究開発が中心で、<a href="/notes/p-type-semiconductor.html">p型</a>ショットキーバリアダイオード(SBD)やユニポーラ型FETが主な対象。実験レベルでは耐圧10 kV級のデバイスも報告されている。</p>
+
+<p>一方、<a href="/notes/n-type-semiconductor.html">n型</a>ダイヤモンドの実現が難しく、これがバイポーラデバイス開発のボトルネックになっている。ドーピングプロセス自体も複雑でコストが高い。実際の製品化までは、少なくともあと5年程度かかると見られている。</p>
+
+<p>日本では経済産業省・NEDOなどが国家プロジェクトとして開発を後押ししている分野でもある。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://www.ewadirect.com/proceedings/ace/article/view/22582">Overview of Diamond Semiconductor Development and Research Directions</a></li>
+<li><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC11278176/">A Review of Diamond Materials and Applications in Power Semiconductor Devices</a></li>
+<li><a href="https://www.japan.go.jp/kizuna/2025/02/diamond_semiconductors.html">Diamond Semiconductors: Turning Crisis into Innovation with Ultimate Deep Tech | JapanGov</a></li>
+<li><a href="https://hmntl.illinois.edu/news/60581">Next generation semiconductors: Diamond device shows highest breakdown voltage | Illinois HMNTL</a></li>
+<li><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10673564/">Power Electronics Revolutionized: A Comprehensive Analysis of Emerging Wide and Ultrawide Bandgap Devices</a></li>
+<li><a href="https://www.patsnap.com/resources/blog/rd-blog/diamond-semiconductor-power-device-technology-2026/">Diamond Semiconductor Power Device Technology 2026 | PatSnap</a></li>
+</ul>
+
+]]></description>
+</item>
 <item>
 <title>伊能忠敬</title>
 <link>https://64p.org/notes/ino-tadataka.html</link>
@@ -1069,7 +1118,7 @@ graph LR
 
 <ul>
 <li>最外殻(価電子)に4個の電子を持つ<a href="/notes/tetravalent-element.html">4価元素</a>。このため他の原子(炭素同士も含む)と単結合・二重結合・三重結合など多様な共有結合を安定して形成できる。この結合の自由度の高さが、<a href="/notes/organic-chemistry.html">有機化合物</a>の構造的多様性の源になっている。</li>
-<li>単体として複数の同素体(allotrope)を持ち、性質が大きく異なる。ダイヤモンドは透明で非常に硬く電気を通しにくいのに対し、黒鉛(グラファイト)は不透明で柔らかく電気を通しやすい。石炭のような無定形炭素(amorphous carbon)も存在する。</li>
+<li>単体として複数の同素体(allotrope)を持ち、性質が大きく異なる。ダイヤモンドは透明で非常に硬く電気を通しにくいのに対し、黒鉛(グラファイト)は不透明で柔らかく電気を通しやすい。石炭のような無定形炭素(amorphous carbon)も存在する。純粋なダイヤモンドは絶縁体に近いが、不純物添加によって<a href="/notes/diamond-semiconductor.html">半導体</a>として使う研究も進んでいる。</li>
 <li>他のどの元素よりも多くの化合物を形成することが知られている。</li>
 </ul>
 
@@ -1403,48 +1452,6 @@ Content-length: 25
 <li><a href="https://docs.fluentbit.io/manual">Fluent Bit: Official Manual</a></li>
 <li><a href="https://docs.fluentbit.io/manual/2.0/about/fluentd-and-fluent-bit">Fluentd &amp; Fluent Bit | Fluent Bit: Official Manual</a></li>
 <li><a href="https://betterstack.com/community/logging/fluentd-vs-fluent-bit/">Fluentd vs Fluent Bit: How to Choose in 2026 | Better Stack Community</a></li>
-</ul>
-
-]]></description>
-</item>
-<item>
-<title>Fluentd</title>
-<link>https://64p.org/notes/fluentd.html</link>
-<guid isPermaLink="true">https://64p.org/notes/fluentd.html</guid>
-<pubDate>Thu, 13 Aug 2026 13:03:00 +0900</pubDate>
-<description><![CDATA[<h1>Fluentd</h1>
-
-<p>多様なデータソースからのログを収集し、JSON形式に構造化した上でファイル・RDBMS・NoSQL・IaaS/SaaS・Hadoopなど様々な出力先へ転送する、オープンソースのデータコレクタ(統一ロギングレイヤー)。Treasure Data社の古橋貞之(Sadayuki Furuhashi)氏が開発した。同氏は<a href="/notes/embulk.html">Embulk</a>や<a href="/notes/messagepack.html">MessagePack</a>の開発者でもあり、Fluentdがストリーム型のログ収集を担うのに対し、Embulkはバルク(一括)型のデータ転送を担う位置づけになっている。</p>
-
-<p><a class="note-tag" href="/notes/tags/data-engineering.html">#data-engineering</a> <a class="note-tag" href="/notes/tags/ruby.html">#ruby</a> <a class="note-tag" href="/notes/tags/cncf.html">#cncf</a></p>
-
-<h2>主な機能</h2>
-
-<ul>
-<li>複数のデータソースとデータ出力を繋ぐプラグイン型アーキテクチャ。500以上のコミュニティ提供プラグインが存在する。</li>
-<li>ログ収集・フィルタリング・バッファリング・出力という一連の処理を、JSON形式によるデータ構造化で統一的に扱う。</li>
-<li>メモリおよびファイルベースのバッファリングによるデータ損失防止と、フェイルオーバー機能。</li>
-<li>C言語とRubyの組み合わせで実装されており、30〜40MBのメモリで動作し、コア当たり13,000イベント/秒を処理できる。</li>
-</ul>
-
-
-<h2>CNCFとFluent Bit</h2>
-
-<ul>
-<li>2016年11月8日にCNCF(Cloud Native Computing Foundation)のIncubatingプロジェクトとして採択され、2019年4月11日にGraduatedレベルへ昇格した。</li>
-<li>組み込み機器やエッジデバイスなど、Fluentdの実行が困難な軽量環境向けに、Fluentdのアーキテクチャを踏襲した軽量版として<a href="/notes/fluent-bit.html">Fluent Bit</a>が開発された。Fluent BitはFluentdの傘下にあるCNCF Graduatedのサブプロジェクトという位置づけ。</li>
-<li>Fluent Bitはログだけでなくメトリクスやトレースの収集・処理・転送にも対応するよう発展しており、現在はFluentdより広く採用されている。</li>
-</ul>
-
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://www.fluentd.org/">Fluentd | Open Source Data Collector | Unified Logging Layer</a></li>
-<li><a href="https://www.fluentd.org/architecture">Fluentd Architecture</a></li>
-<li><a href="https://www.cncf.io/projects/fluentd/">Fluentd | CNCF</a></li>
-<li><a href="https://www.fluentd.org/blog/fluentd-cncf-graduation/">Fluentd has Graduated! | Fluentd Blog</a></li>
-<li><a href="https://docs.fluentbit.io/manual/2.0/about/fluentd-and-fluent-bit">Fluentd &amp; Fluent Bit | Fluent Bit: Official Manual</a></li>
 </ul>
 
 ]]></description>
