@@ -6,7 +6,86 @@
 <atom:link href="https://64p.org/notes/rss.xml" rel="self" type="application/rss+xml" />
 <description>ちょっと調べたことや検証結果を、AIの力も借りながらメモしていくコーナーです。</description>
 <language>ja</language>
-<lastBuildDate>Thu, 13 Aug 2026 22:17:44 +0900</lastBuildDate>
+<lastBuildDate>Thu, 13 Aug 2026 22:19:30 +0900</lastBuildDate>
+<item>
+<title>トイル (Toil)</title>
+<link>https://64p.org/notes/toil.html</link>
+<guid isPermaLink="true">https://64p.org/notes/toil.html</guid>
+<pubDate>Thu, 13 Aug 2026 22:19:00 +0900</pubDate>
+<description><![CDATA[<h1>トイル (Toil)</h1>
+
+<p><a class="note-tag" href="/notes/tags/devops.html">#devops</a> <a class="note-tag" href="/notes/tags/sre.html">#sre</a></p>
+
+<p>Google SRE本による定義: 「本番サービスの運用に紐づく作業のうち、手作業(manual)・反復的(repetitive)・自動化可能(automatable)・戦術的(tactical)・恒久的価値がない(no enduring value)・サービス規模に比例して線形に増加する(O(n) growth)という性質を持つ仕事」。単なる「やりたくない仕事」ではなく、明確に定義された作業カテゴリ。</p>
+
+<h2>6つの特徴</h2>
+
+<table>
+<thead>
+<tr>
+<th> 特徴 </th>
+<th> 意味 </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td> Manual </td>
+<td> 人間の手作業が必要 </td>
+</tr>
+<tr>
+<td> Repetitive </td>
+<td> 同じ作業が何度も繰り返される </td>
+</tr>
+<tr>
+<td> Automatable </td>
+<td> 機械が人間と同等にこなせる </td>
+</tr>
+<tr>
+<td> Tactical </td>
+<td> アラート対応のような反応的な作業で、戦略性がない </td>
+</tr>
+<tr>
+<td> No enduring value </td>
+<td> 終えてもサービスの状態は恒久的には改善されない </td>
+</tr>
+<tr>
+<td> O(n) growth </td>
+<td> サービス規模の拡大に比例して増える </td>
+</tr>
+</tbody>
+</table>
+
+
+<h2>オーバーヘッドとの違い</h2>
+
+<p>トイルは「本番サービス運用に直接紐づく」作業に限定される。チーム会議やHR関連の事務作業のように、サービス運用に直結しない業務は「オーバーヘッド」として区別され、トイルには含まれない。</p>
+
+<h2>50%ルール</h2>
+
+<p>GoogleのSRE組織では、各SREが費やすトイルの時間を全体の50%以下に抑えることを目標としている。残りの50%以上は、将来的なトイル削減やサービス改善につながる「エンジニアリング」に充てるべきとされる。実際の平均は約33%だが、チームによっては80%に達することもある。</p>
+
+<h2>トイル削減が重要な理由</h2>
+
+<ul>
+<li>個人への影響: エンジニアリングプロジェクトに割く時間が減りキャリアが停滞する、機械的作業の繰り返しで士気が低下し燃え尽きにつながる。</li>
+<li>組織への影響: エンジニアリング組織としてのアイデンティティが曖昧になる、機能開発が遅延する、優秀な人材が流出する。</li>
+</ul>
+
+
+<h2><a href="/notes/devops.html">DevOps</a>・<a href="/notes/platform-engineering.html">Platform Engineering</a>との関連</h2>
+
+<p>「Shadow Ops」（開発者が本来の開発業務を犠牲にしてインフラ管理に忙殺される状態）は、まさにトイルが個人に集中してしまっている状態と言える。Platform Engineeringが目指すセルフサービス化・自動化は、トイルを組織的に削減する取り組みとして位置づけられる。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://sre.google/sre-book/eliminating-toil/">Eliminating Toil - Google SRE Book</a></li>
+<li><a href="https://research.google/pubs/the-site-reliability-engineering-workbook-chapter-eliminating-toil/">The Site Reliability Engineering Workbook Chapter: Eliminating Toil - Google Research</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Site_reliability_engineering">Site reliability engineering - Wikipedia</a></li>
+</ul>
+
+]]></description>
+</item>
 <item>
 <title>DevOps</title>
 <link>https://64p.org/notes/devops.html</link>
@@ -46,6 +125,7 @@
 <ul>
 <li><a href="/notes/devsecops.html">DevSecOps</a> — DevOpsに「セキュリティ」を明示的な第3の柱として組み込む拡張。</li>
 <li><a href="/notes/platform-engineering.html">Platform Engineering</a> — DevOpsの理想「You build it, you run it」を全開発者に求めるのは難しく、多くの組織で開発者がインフラ管理に忙殺される「Shadow Ops」状態が発生する。運用の専門性をプラットフォームチームに集約し、開発者からは抽象化して隠すことでこのギャップを埋める実践。</li>
+<li><a href="/notes/toil.html">トイル</a> — Shadow Opsで開発者に集中してしまう手作業・反復的な運用作業は、Google SREが言う「トイル」そのもの。</li>
 </ul>
 
 
@@ -73,7 +153,7 @@
 
 <h2><a href="/notes/devops.html">DevOps</a>との関係 — Shadow Ops問題</h2>
 
-<p>DevOpsの理想は「You build it, you run it」（作った人が運用もする）だが、これを本当に実現できているのはGoogleのような一部の先進組織のみ。多くの組織では、経験豊富な開発者が本来の開発業務ではなくインフラ管理に時間を取られる「Shadow Ops（影のOps）」という状態が発生している。調査では、低パフォーマンス組織の44%がこの問題を抱える一方、高パフォーマンス組織はほぼ100%がtrue DevOpsを実現できているという。</p>
+<p>DevOpsの理想は「You build it, you run it」（作った人が運用もする）だが、これを本当に実現できているのはGoogleのような一部の先進組織のみ。多くの組織では、経験豊富な開発者が本来の開発業務ではなくインフラ管理に時間を取られる「Shadow Ops（影のOps）」という状態が発生している。これは開発者に<a href="/notes/toil.html">トイル</a>が集中してしまっている状態とも言える。調査では、低パフォーマンス組織の44%がこの問題を抱える一方、高パフォーマンス組織はほぼ100%がtrue DevOpsを実現できているという。</p>
 
 <p>Platform Engineeringは、この「開発者全員にインフラ運用スキルを求める」というDevOpsの理想と現実のギャップを埋めるために生まれた実践。<a href="/notes/devsecops.html">DevSecOps</a>がDevOpsに「セキュリティ」という第3の柱を足す方向の拡張であるのに対し、Platform Engineeringは「運用の専門性をプラットフォームチームに集約し、開発者からは抽象化して隠す」方向の拡張という違いがある。</p>
 
@@ -1390,63 +1470,6 @@ Content-length: 25
 <li><a href="https://redresscompliance.com/what-is-heatwave-sql-and-how-is-it-licensed/">What is HeatWave SQL and How is it Licensed?</a></li>
 <li><a href="https://www.oracle.com/europe/heatwave/pricing/">MySQL HeatWave Pricing on OCI &amp; AWS | Oracle Europe</a></li>
 <li><a href="https://www.percona.com/blog/is-oracle-finally-killing-mysql/">Is Oracle Finally Killing MySQL? - Percona</a></li>
-</ul>
-
-]]></description>
-</item>
-<item>
-<title>XDP (eXpress Data Path)</title>
-<link>https://64p.org/notes/xdp.html</link>
-<guid isPermaLink="true">https://64p.org/notes/xdp.html</guid>
-<pubDate>Thu, 13 Aug 2026 08:35:00 +0900</pubDate>
-<description><![CDATA[<h1>XDP (eXpress Data Path)</h1>
-
-<p>Linuxカーネルに統合された高性能パケット処理フレームワーク。<a href="/notes/bpf.html">eBPF</a>を利用し、パケットがNICドライバに届いた直後、カーネルが<code>sk_buff</code>を確保するより前の最も早い段階でカスタムのパケット処理を実行できる。 <a class="note-tag" href="/notes/tags/networking.html">#networking</a> <a class="note-tag" href="/notes/tags/linux.html">#linux</a> <a class="note-tag" href="/notes/tags/kernel.html">#kernel</a></p>
-
-<h2>実行モード</h2>
-
-<ul>
-<li><strong>Native XDP</strong>: ドライバのRXパス内で直接実行される、最も高速なデフォルトモード。mlx5, i40e, ixgbeなど主要な高性能NICドライバが対応</li>
-<li><strong>Generic XDP</strong>: <code>sk_buff</code>ベースで動作し、ドライバを問わず任意の環境で使えるが低速。ネイティブ対応がない場合のフォールバックで、主に開発・テスト用途</li>
-<li><strong>Offloaded XDP</strong>: SmartNICなどの専用ハードウェア上でXDPプログラム自体を実行するモード。ホストCPUを消費せずに済むが、対応NICと利用可能なeBPF機能に制約がある</li>
-</ul>
-
-
-<h2>アクション(戻り値)</h2>
-
-<p>XDPプログラムはパケットごとに以下のいずれかのアクションを返す。</p>
-
-<ul>
-<li><strong>XDP_PASS</strong>: パケットを通常のネットワークスタックに渡す(内容の書き換えも可能)</li>
-<li><strong>XDP_DROP</strong>: パケットを破棄する。DDoS対策やファイアウォールで、不正トラフィックを最小オーバーヘッドで早期に落とす用途に使われる</li>
-<li><strong>XDP_TX</strong>: 受信したのと同じNICからパケットを送り返す</li>
-<li><strong>XDP_REDIRECT</strong>: 別のNICやCPU、あるいは後述のAF_XDPソケットへパケットを転送する</li>
-<li><strong>XDP_ABORTED</strong>: プログラムのエラーを示し、パケットは破棄される(トレースポイントで検知可能)</li>
-</ul>
-
-
-<h2>AF_XDP</h2>
-
-<p>ユーザー空間アプリケーションがXDPプログラムから直接パケットを受け取るための、高性能パケット処理に最適化されたアドレスファミリ。XDPプログラムが<code>bpf_redirect_map()</code>でXSKMAP内のAF_XDPソケットへパケットを転送する仕組み。RXとTXが同じUMEM(ユーザーメモリ領域)を共有することで、パケットをRXとTX間でコピーする必要がないゼロコピーモードを実現できる。高スループットが要求されるパケット処理フレームワークやネットワーク監視ツールなどで使われる。</p>
-
-<h2>ユースケース</h2>
-
-<ul>
-<li><strong>DDoS対策・ファイアウォール</strong>: <code>XDP_DROP</code>で不正トラフィックを早期に破棄</li>
-<li><strong>ロードバランシング・転送</strong>: <code>XDP_TX</code>/<code>XDP_REDIRECT</code>によるパケット転送</li>
-<li><strong>モニタリング</strong>: パケットヘッダや流特性の抽出</li>
-</ul>
-
-
-<p><a href="/notes/cilium.html">Cilium</a>の高性能ロードバランシングや、<a href="/notes/open-vswitch.html">Open vSwitch</a>のAF_XDP版実装など、eBPFエコシステムのネットワーキング用途で広く使われている。</p>
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://kernel-internals.org/net/xdp/">XDP (eXpress Data Path) - Linux Kernel Internals</a></li>
-<li><a href="https://www.tigera.io/learn/guides/ebpf/ebpf-xdp/">eBPF XDP: The Basics and a Quick Tutorial - Tigera</a></li>
-<li><a href="https://docs.kernel.org/networking/af_xdp.html">AF_XDP — The Linux Kernel documentation</a></li>
-<li><a href="https://www.datadoghq.com/blog/xdp-intro/">A gentle introduction to XDP - Datadog</a></li>
 </ul>
 
 ]]></description>

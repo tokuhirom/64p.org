@@ -1,6 +1,6 @@
 ---
 created: 2026-08-13 22:17
-updated: 2026-08-13 22:17
+updated: 2026-08-13 22:19
 ---
 # DevOps
 
@@ -29,6 +29,7 @@ Development（開発）とOperations（運用）を組み合わせた造語。�
 
 - [[devsecops|DevSecOps]] — DevOpsに「セキュリティ」を明示的な第3の柱として組み込む拡張。
 - [[platform-engineering|Platform Engineering]] — DevOpsの理想「You build it, you run it」を全開発者に求めるのは難しく、多くの組織で開発者がインフラ管理に忙殺される「Shadow Ops」状態が発生する。運用の専門性をプラットフォームチームに集約し、開発者からは抽象化して隠すことでこのギャップを埋める実践。
+- [[toil|トイル]] — Shadow Opsで開発者に集中してしまう手作業・反復的な運用作業は、Google SREが言う「トイル」そのもの。
 
 ## 出典
 
