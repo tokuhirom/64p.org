@@ -6,7 +6,42 @@
 <atom:link href="https://64p.org/notes/rss.xml" rel="self" type="application/rss+xml" />
 <description>ちょっと調べたことや検証結果を、AIの力も借りながらメモしていくコーナーです。</description>
 <language>ja</language>
-<lastBuildDate>Fri, 14 Aug 2026 08:14:08 +0900</lastBuildDate>
+<lastBuildDate>Fri, 14 Aug 2026 08:18:46 +0900</lastBuildDate>
+<item>
+<title>ドーピング</title>
+<link>https://64p.org/notes/doping.html</link>
+<guid isPermaLink="true">https://64p.org/notes/doping.html</guid>
+<pubDate>Fri, 14 Aug 2026 08:18:00 +0900</pubDate>
+<description><![CDATA[<h1>ドーピング</h1>
+
+<p><a href="/notes/semiconductor.html">半導体</a>結晶に微量の不純物原子を意図的に添加し、電気伝導性を制御する技術。 <a class="note-tag" href="/notes/tags/electronics.html">#electronics</a></p>
+
+<p><a href="/notes/tetravalent-element.html">4価</a>のシリコンなど半導体材料に対して、価電子数の異なる原子を結晶格子中に置換させることで、伝導を担うキャリア(電子または正孔)の濃度を人為的に増やす。</p>
+
+<h2>ドナーとアクセプタ</h2>
+
+<ul>
+<li>価電子数5の不純物(リン・ヒ素・アンチモンなど)をドープ → 電子が1個余り、自由電子が多数キャリアになる。この不純物を「ドナー(donor)」と呼び、<a href="/notes/n-type-semiconductor.html">N型半導体</a>ができる</li>
+<li>価電子数3の不純物(ホウ素・アルミニウムなど)をドープ → 電子が1個不足し、正孔が多数キャリアになる。この不純物を「アクセプタ(acceptor)」と呼び、<a href="/notes/p-type-semiconductor.html">P型半導体</a>ができる</li>
+</ul>
+
+
+<p>N型・P型を接合すると<a href="/notes/pn-junction.html">PN接合</a>ができ、ダイオード・トランジスタなどあらゆる半導体デバイスの基本構造になる。</p>
+
+<h2><a href="/notes/semiconductor.html">半導体</a>の中での位置づけ</h2>
+
+<p>不純物添加によって半導体の伝導性を能動的に制御する技術そのもの。<a href="/notes/n-type-semiconductor.html">N型半導体</a>・<a href="/notes/p-type-semiconductor.html">P型半導体</a>という2つの結果は、このドーピングという1つの操作をどちらの極性の不純物で行うかの違いにすぎない。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://www.pveducation.org/pvcdrom/pn-junctions/doping">Doping | PVEducation</a></li>
+<li><a href="https://www.halbleiter.org/en/fundamentals/doping/">Doping: n- and p-semiconductors - Halbleiter.org</a></li>
+<li><a href="https://eureka.patsnap.com/article/how-doping-creates-p-type-and-n-type-semiconductors">How Doping Creates P-Type and N-Type Semiconductors</a></li>
+</ul>
+
+]]></description>
+</item>
 <item>
 <title>systemd-journaldの過剰なI/O</title>
 <link>https://64p.org/notes/systemd-journald-excessive-io.html</link>
@@ -367,6 +402,7 @@
 <h2>ドーピングと接合</h2>
 
 <ul>
+<li><a href="/notes/doping.html">ドーピング</a> — 不純物添加によって半導体の伝導性を制御する技術そのもの</li>
 <li><a href="/notes/n-type-semiconductor.html">N型半導体</a> — 5価の不純物をドープし、自由電子を多数キャリアとする</li>
 <li><a href="/notes/p-type-semiconductor.html">P型半導体</a> — 3価の不純物をドープし、正孔を多数キャリアとする</li>
 <li><a href="/notes/pn-junction.html">PN接合</a> — N型とP型を接合してできる整流構造。ダイオード・トランジスタの基本構造</li>
@@ -1382,54 +1418,6 @@
 <li><a href="https://xexeq.jp/blogs/media/it-glossary231">BIOS(Basic Input/Output System)とは？意味をわかりやすく簡単に解説</a></li>
 <li><a href="https://ja.wikipedia.org/wiki/Basic_Input/Output_System">Basic Input/Output System - Wikipedia</a></li>
 <li><a href="https://it-notes.stylemap.co.jp/hardware/what-is-bios-a-guide-to-the-basic-input-output-system/">BIOSとは？基本入出力システムの役割と仕組みを解説</a></li>
-</ul>
-
-]]></description>
-</item>
-<item>
-<title>flaky test</title>
-<link>https://64p.org/notes/flaky-test.html</link>
-<guid isPermaLink="true">https://64p.org/notes/flaky-test.html</guid>
-<pubDate>Thu, 13 Aug 2026 21:24:00 +0900</pubDate>
-<description><![CDATA[<h1>flaky test</h1>
-
-<p>コードに変更がないにもかかわらず、実行するたびに成功したり失敗したりする、非決定的な挙動を示すテストのこと。</p>
-
-<h2>主な原因</h2>
-
-<ul>
-<li><strong>並行性の問題</strong> — スレッド間の競合状態など</li>
-<li><strong>タイミング依存</strong> — 非同期処理やアニメーションの完了を待たずにアサーションする</li>
-<li><strong>外部システムへの依存</strong> — ネットワーク接続、外部API、DBなどの不安定さ</li>
-<li><strong>テスト間の分離不足</strong> — 前のテストの状態(グローバル変数、DBレコード等)が後続テストに影響する</li>
-<li><strong>テスト設定の不整合</strong> — 実行環境によってパラメータや設定が変わる</li>
-<li><strong>環境差異</strong> — ハードウェアやOS、CI環境とローカル環境の違い</li>
-<li><strong>甘いテスト設計</strong> — 前提条件を十分に検証・保証できていない</li>
-</ul>
-
-
-<h2>影響</h2>
-
-<ul>
-<li><strong>偽陽性(false positive)</strong> — アプリ自体は正常なのにテストが失敗と報告する</li>
-<li><strong>不要なビルド失敗</strong> — 再実行やデプロイ遅延を招く</li>
-<li>CI/CDで信頼性が下がり、チームが「失敗しても無視して再実行/マージする」習慣がつくと、本物のバグを見逃すリスクが高まる</li>
-<li>デバッグに無駄な工数がかかり、リリースサイクルが遅延する</li>
-</ul>
-
-
-<h2>関連</h2>
-
-<p><a href="/notes/playwright.html">Playwright</a>の自動待機(auto-waiting)機能やアサーションの自動リトライは、タイミング依存によるflakinessを減らすための対策の一つ。</p>
-
-<p><a class="note-tag" href="/notes/tags/testing.html">#testing</a></p>
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://en.wikipedia.org/wiki/Flaky_test">Flaky test - Wikipedia</a></li>
-<li><a href="https://www.datadoghq.com/knowledge-center/flaky-tests/">What is a Flaky Test? Causes, Identification &amp; Remediation | Datadog</a></li>
-<li><a href="https://www.jetbrains.com/teamcity/ci-cd-guide/concepts/flaky-tests/">What are Flaky Tests? | TeamCity CI/CD Guide | JetBrains</a></li>
 </ul>
 
 ]]></description>
