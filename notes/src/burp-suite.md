@@ -1,6 +1,6 @@
 ---
 created: 2026-08-09 18:04
-updated: 2026-08-11 13:47
+updated: 2026-08-14 01:23
 ---
 # Burp Suite
 
@@ -32,6 +32,10 @@ Webアプリケーションの脆弱性診断・セキュリティテストの�
 | Professional | 個人テスター | フル機能のScanner、完全版Intruder、プロジェクト保存、OAST |
 | Burp Suite DAST | 組織向け | 継続的な自動スキャン、CI/CD連携 |
 | Burp AT | Professionalユーザー向け | AIによる脆弱性追跡機能(2026年7月追加) |
+
+## [[security-operations|セキュリティ運用]]の中での位置づけ
+
+攻撃側視点の検証のうち、Webアプリケーション診断に特化した定番プロキシツール。
 
 ## 出典
 

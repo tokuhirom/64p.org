@@ -6,7 +6,70 @@
 <atom:link href="https://64p.org/notes/rss.xml" rel="self" type="application/rss+xml" />
 <description>ちょっと調べたことや検証結果を、AIの力も借りながらメモしていくコーナーです。</description>
 <language>ja</language>
-<lastBuildDate>Thu, 13 Aug 2026 22:36:59 +0900</lastBuildDate>
+<lastBuildDate>Fri, 14 Aug 2026 01:23:47 +0900</lastBuildDate>
+<item>
+<title>セキュリティ運用</title>
+<link>https://64p.org/notes/security-operations.html</link>
+<guid isPermaLink="true">https://64p.org/notes/security-operations.html</guid>
+<pubDate>Fri, 14 Aug 2026 01:23:00 +0900</pubDate>
+<description><![CDATA[<h1>セキュリティ運用</h1>
+
+<p><a class="note-tag" href="/notes/tags/security.html">#security</a> <a class="note-tag" href="/notes/tags/moc.html">#moc</a></p>
+
+<p>セキュリティインシデントの監視・検知・対応と、それを支えるツール・知識体系・攻撃側視点の検証手法についてのノートを束ねるハブノート。</p>
+
+<h2>防御側の組織と活動</h2>
+
+<ul>
+<li><a href="/notes/soc.html">SOC</a> — 監視・検知・対応を専門に担う組織。Tier 1（トリアージ）〜Tier 3（脅威ハンティング）のティア構成</li>
+<li><a href="/notes/threat-hunting.html">脅威ハンティング</a> — アラートを待たず、既に潜んでいる脅威を仮説駆動で能動的に探す活動</li>
+<li><a href="/notes/7ai.html">7AI</a> — SOC業務（トリアージ・調査・ハンティング）をAIエージェントで自動化する企業の実例</li>
+<li><a href="/notes/noc.html">NOC</a> — 隣接概念。セキュリティ特化のSOCに対し、ネットワークの可用性・パフォーマンス維持を担う</li>
+</ul>
+
+
+<h2>検知・対応のツール</h2>
+
+<ul>
+<li><a href="/notes/siem.html">SIEM</a> — 環境全体のログを集約・相関分析してアラートを上げる「広さ」担当の基盤</li>
+<li><a href="/notes/edr.html">EDR</a> — エンドポイントの挙動を記録・監視し隔離等の対応まで行う「深さ」担当のツール</li>
+</ul>
+
+
+<h2>知識体系・指標</h2>
+
+<ul>
+<li><a href="/notes/mitre-attack.html">MITRE ATT&amp;CK</a> — 攻撃者のTTPs（戦術・技術・手順）を体系化したナレッジベース。検知・ハンティングの共通語彙</li>
+<li><a href="/notes/ioc-ioa.html">IOC/IOA</a> — 検知の手がかりとなる指標。事後の侵害証拠（IOC）と進行中の攻撃兆候（IOA）</li>
+</ul>
+
+
+<h2>攻撃側視点での検証（オフェンシブセキュリティ）</h2>
+
+<ul>
+<li><a href="/notes/penetration-test.html">ペネトレーションテスト</a> — 攻撃者と同じ手法で疑似攻撃し、防御の弱点を実証する手法</li>
+<li><a href="/notes/metasploit.html">Metasploit</a> — exploitの開発・実行を担う代表的なペンテストフレームワーク</li>
+<li><a href="/notes/burp-suite.html">Burp Suite</a> — Webアプリ診断の定番プロキシツール</li>
+<li><a href="/notes/kali-linux.html">Kali Linux</a> — ペンテストツールを同梱したLinuxディストリビューション（モバイル版は<a href="/notes/kali-nethunter.html">Kali NetHunter</a>）</li>
+<li><a href="/notes/hack-the-box.html">Hack The Box</a> — 許可された仮想環境でペンテスト技術を練習できる学習プラットフォーム</li>
+</ul>
+
+
+<h2>脅威の実例</h2>
+
+<ul>
+<li><a href="/notes/ransomware.html">ランサムウェア</a> — データ暗号化と身代金要求を組み合わせた代表的な脅威。国内被害は<a href="/notes/japan-ransomware-incidents.html">国内ランサムウェア被害事例</a>（ハブノート）にまとめている</li>
+</ul>
+
+
+<h2>関連領域</h2>
+
+<ul>
+<li><a href="/notes/devsecops.html">DevSecOps</a> — 運用段階ではなく開発パイプラインの側にセキュリティを組み込むアプローチ</li>
+</ul>
+
+]]></description>
+</item>
 <item>
 <title>SOC (Security Operations Center)</title>
 <link>https://64p.org/notes/soc.html</link>
@@ -38,6 +101,10 @@
 <li>Tier 1のアラートトリアージは反復作業（トイル）になりやすく、AIエージェントによる自動化（<a href="/notes/7ai.html">7AI</a>など）が近年のトレンドになっている</li>
 </ul>
 
+
+<h2><a href="/notes/security-operations.html">セキュリティ運用</a>の中での位置づけ</h2>
+
+<p>セキュリティ運用の中核となる組織。SIEM・EDRといったツール群を使いこなし、脅威ハンティングまで含む防御側の活動全体を実行する主体。</p>
 
 <h2>出典</h2>
 
@@ -74,6 +141,10 @@
 <h2>位置づけ</h2>
 
 <p>エンドポイント層を深く見る<a href="/notes/edr.html">EDR</a>に対し、SIEMは環境全体のログを横断的に見る広さが持ち味で、両者は補完関係にある。SIEMのアラートをすり抜けた脅威を能動的に探す活動が<a href="/notes/threat-hunting.html">脅威ハンティング</a>であり、その際のデータ基盤としてもSIEMが使われる。ログ分析基盤としての性質上、大量データの高速集計が求められ、分析用DB（<a href="/notes/clickhouse.html">ClickHouse</a>等）が下回りに使われることもある。</p>
+
+<h2><a href="/notes/security-operations.html">セキュリティ運用</a>の中での位置づけ</h2>
+
+<p>環境全体のログを横断的に相関分析する「広さ」担当の検知基盤。エンドポイントを深く見るEDRと補完関係にある。</p>
 
 <h2>出典</h2>
 
@@ -115,6 +186,10 @@
 <li>レッドチーム演習・<a href="/notes/penetration-test.html">ペネトレーションテスト</a>の攻撃シナリオ設計に使う</li>
 </ul>
 
+
+<h2><a href="/notes/security-operations.html">セキュリティ運用</a>の中での位置づけ</h2>
+
+<p>防御側（検知評価・ハンティング仮説）と攻撃側視点の検証（レッドチーム・ペンテスト）の双方が共通語彙として参照する知識体系。</p>
 
 <h2>出典</h2>
 
@@ -186,6 +261,10 @@
 
 <p>IOCベースの検知は既知の脅威にしか効かないため、未知の攻撃には行動ベースのIOAで補う、という組み合わせで使われる。</p>
 
+<h2><a href="/notes/security-operations.html">セキュリティ運用</a>の中での位置づけ</h2>
+
+<p>検知・調査の「手がかり」となる指標のペア。SIEM/EDRでの機械的な照合にも、脅威ハンティングの起点にも使われる。</p>
+
 <h2>出典</h2>
 
 <ul>
@@ -220,6 +299,10 @@
 <h2>位置づけ</h2>
 
 <p><a href="/notes/soc.html">SOC</a>の運用では、EDRがエンドポイント層の検知・対応を担い、各種ログを横断的に相関分析する<a href="/notes/siem.html">SIEM</a>と補完し合う。EDRの適用範囲をネットワーク・クラウド・メール等まで広げた発展形はXDR (Extended Detection and Response) と呼ばれる。</p>
+
+<h2><a href="/notes/security-operations.html">セキュリティ運用</a>の中での位置づけ</h2>
+
+<p>エンドポイント層を深く監視・対応する「深さ」担当のツール。ログ横断のSIEMと補完関係にあり、脅威ハンティングの調査でも中心的に使われる。</p>
 
 <h2>出典</h2>
 
@@ -269,6 +352,10 @@
 <li><strong><a href="/notes/penetration-test.html">ペネトレーションテスト</a></strong> — ペンテストは攻撃者の視点で疑似攻撃を仕掛けて防御の弱点を検証するのに対し、脅威ハンティングは防御側の視点で「既に起きている侵害」の痕跡を探す。</li>
 </ul>
 
+
+<h2><a href="/notes/security-operations.html">セキュリティ運用</a>の中での位置づけ</h2>
+
+<p>SOCの標準的な検知・対応プロセス（アラート駆動）を補完する、能動的な脅威探索の活動。SOCのティア構成では最上位のTier 3が担うことが多い。</p>
 
 <h2>出典</h2>
 
@@ -1017,6 +1104,10 @@ graph LR
 
 <p>対象システムの所有者からの正式な許可(スコープ・期間・手法を定めた契約)が前提となる。許可なく行うと不正アクセス行為となる。<a href="/notes/hack-the-box.html">Hack The Box</a>のような学習プラットフォームでは、許可された仮想環境上で技術を練習できる。</p>
 
+<h2><a href="/notes/security-operations.html">セキュリティ運用</a>の中での位置づけ</h2>
+
+<p>防御側の運用（SOC・脅威ハンティング）が「既に起きた侵害」を探すのに対し、攻撃者の視点から疑似攻撃を仕掛けて防御の弱点を先に見つける検証手法。</p>
+
 <h2>出典</h2>
 
 <ul>
@@ -1353,125 +1444,6 @@ Content-length: 25
 <li><a href="https://docs.getdbt.com/blog/dbt-fusion-engine">Meet the dbt Fusion Engine | dbt Developer Blog</a></li>
 <li><a href="https://www.fivetran.com/press/fivetran-dbt-labs-complete-merger-to-create-the-data-infrastructure-for-trusted-ai-agents">Fivetran and dbt Labs Complete Merger | Fivetran Press</a></li>
 <li><a href="https://hevodata.com/learn/what-is-data-build-tool-dbt/">What is Data Build Tool(dbt): Guide for Data Engineers | Hevo Data</a></li>
-</ul>
-
-]]></description>
-</item>
-<item>
-<title>モナド</title>
-<link>https://64p.org/notes/monad.html</link>
-<guid isPermaLink="true">https://64p.org/notes/monad.html</guid>
-<pubDate>Thu, 13 Aug 2026 09:43:00 +0900</pubDate>
-<description><![CDATA[<h1>モナド</h1>
-
-<p><a class="note-tag" href="/notes/tags/functional-programming.html">#functional-programming</a> <a class="note-tag" href="/notes/tags/haskell.html">#haskell</a></p>
-
-<p>値を文脈（コンテキスト）付きで包み、その文脈を保ったまま計算を繋げていくための仕組み。関数型プログラミング（特にHaskell）で、失敗しうる計算・状態・入出力など「純粋な関数だけでは表現しにくいもの」を統一的に扱うための型クラス／デザインパターン。<a href="/notes/currying.html">Currying(カリー化)</a>と並んで関数型プログラミングの基本語彙のひとつ。</p>
-
-<p>一言でまとめると「<strong>包んだ値に対する計算の連結方法を、型ごとに定義できる共通インターフェース</strong>」。</p>
-
-<h2>構成要素</h2>
-
-<p>モナド <code>M</code> は2つの操作を持つ。</p>
-
-<ul>
-<li><strong>return</strong> (unit) — 普通の値 <code>a</code> をモナドの値 <code>M a</code> に包む。例: <code>return 5</code> → <code>Just 5</code></li>
-<li><strong>bind</strong> (<code>&gt;&gt;=</code>) — <code>M a</code> と「<code>a → M b</code> な関数」を受け取り、包みを開けて関数を適用し、結果をまた <code>M b</code> として返す。これで「文脈付き計算の連結」ができる</li>
-</ul>
-
-
-<h2>モナド則</h2>
-
-<p>正しいモナドは3つの法則を満たす必要がある。Haskellコンパイラは検査しないので、インスタンスを書くプログラマの責任。</p>
-
-<ol>
-<li><strong>左単位元</strong>: <code>return x &gt;&gt;= f</code> ≡ <code>f x</code></li>
-<li><strong>右単位元</strong>: <code>m &gt;&gt;= return</code> ≡ <code>m</code></li>
-<li><strong>結合律</strong>: <code>(m &gt;&gt;= f) &gt;&gt;= g</code> ≡ <code>(\x -&gt; f x &gt;&gt;= g)</code> に <code>m</code> を bind したものと同じ</li>
-</ol>
-
-
-<p>この3つが成り立つおかげで、<code>do</code>記法で書いた逐次的なコードが直感通りに動くことが保証される。</p>
-
-<h2>代表的なモナド</h2>
-
-<table>
-<thead>
-<tr>
-<th> モナド </th>
-<th> 文脈 </th>
-<th> 何が嬉しいか </th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td> <code>Maybe</code> </td>
-<td> 失敗するかもしれない </td>
-<td> <code>Nothing</code> が出たら以降を自動スキップ。nullチェックの連鎖が消える </td>
-</tr>
-<tr>
-<td> <code>Either</code> </td>
-<td> エラー情報付きの失敗 </td>
-<td> エラーを値として伝搬 </td>
-</tr>
-<tr>
-<td> <code>List</code> </td>
-<td> 非決定性（複数の結果） </td>
-<td> 全組み合わせの計算が自然に書ける </td>
-</tr>
-<tr>
-<td> <code>IO</code> </td>
-<td> 副作用 </td>
-<td> 純粋な言語の中に入出力を閉じ込める </td>
-</tr>
-<tr>
-<td> <code>State</code> </td>
-<td> 状態の引き回し </td>
-<td> 状態渡しの定型コードを隠蔽 </td>
-</tr>
-</tbody>
-</table>
-
-
-<p><code>Maybe</code> の例。bindが <code>Nothing</code> を自動で伝搬してくれるので、手書きなら「結果を確認して、Nothingでなければ次へ…」となるif連鎖が消える。</p>
-
-<pre><code class="haskell">lookupUser name &gt;&gt;= lookupAddress &gt;&gt;= lookupZipCode
--- どこかで Nothing になれば、最終結果も Nothing
-</code></pre>
-
-<p>JavaScriptの <code>Promise.then</code> やRustの <code>Option</code>/<code>Result</code> の <code>and_then</code> も、実質的に同じ構造（bind相当）を持っている。</p>
-
-<h2>共通インターフェースだと何が嬉しいのか</h2>
-
-<p>モナドの価値は個々の <code>Maybe</code> や <code>IO</code> そのものではなく、それらを貫く共通の「形」に名前を付けた点にある。形に対する道具（汎用関数・構文・リファクタリング則）を一度作れば全部の型で使い回せる。</p>
-
-<h3>1. 定型処理（配管コード）がロジックから消える</h3>
-
-<p>「失敗チェックして次へ」「状態を次の関数に手渡し」「エラーを上に伝搬」といった処理は、本来やりたい計算とは無関係の"配管"。これを <code>bind</code> の定義に一度だけ押し込むと、利用側のコードにはビジネスロジックだけが残る。</p>
-
-<h3>2. 汎用関数が「無料で」ついてくる</h3>
-
-<p><code>bind</code> と <code>return</code> だけを使って書かれた関数は、すべてのモナドに対して自動で動く。Haskellの <code>Control.Monad</code> には <code>mapM</code>/<code>forM</code>（for-eachループ相当）、<code>sequence</code>（<code>[M a]</code> → <code>M [a]</code>）、<code>replicateM</code>、<code>when</code>、<code>foldM</code> などが揃っていて、自分の型に <code>Monad</code> インスタンスを定義した瞬間、これら全部が使えるようになる。<code>Iterator</code> インターフェースを実装すれば <code>map</code>/<code>filter</code> が全部使えるのと同型の嬉しさ。</p>
-
-<h3>3. 言語側の構文サポートが1つで済む</h3>
-
-<p>Haskellの <code>do</code> 記法は「モナドという単一のインターフェース」への糖衣構文なので、言語は構文を1つ用意するだけで、失敗処理にも状態にも非同期にも同じ書き味を提供できる。共通化しない場合、JavaScriptが <code>Promise</code> 専用に <code>async/await</code> を、Rustが <code>Result</code> 専用に <code>?</code> を用意したように、文脈の種類ごとに専用構文を言語に足していくことになる。</p>
-
-<h3>4. 文脈の差し替えがロジックの書き換えなしにできる</h3>
-
-<p>ロジックがインターフェース越しに書かれていれば、「<code>Maybe</code> を <code>Either</code> に変えたい」「後からログ蓄積を足したい」というとき、モナドの定義側を差し替えるだけでロジック側はそのまま動く。モナド則が保証されているおかげで、差し替えやリファクタリングをしても挙動の予測が崩れない。</p>
-
-<h2>圏論との関係</h2>
-
-<p>「モナドは自己関手の圏におけるモノイド対象」という圏論由来の定義もあるが、プログラミングで使う分には上記の「共通インターフェース」理解で十分。</p>
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://en.wikipedia.org/wiki/Monad_(functional_programming">Monad (functional programming) - Wikipedia</a>)</li>
-<li><a href="https://en.wikibooks.org/wiki/Haskell/Understanding_monads">Haskell/Understanding monads - Wikibooks</a></li>
-<li><a href="https://wiki.haskell.org/Monad">Monad - HaskellWiki</a></li>
-<li><a href="https://wiki.haskell.org/Monads_as_computation">Monads as computation - HaskellWiki</a></li>
 </ul>
 
 ]]></description>

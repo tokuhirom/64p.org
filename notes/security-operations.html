@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>betterleaks - Notes - 64p.org</title>
+    <title>セキュリティ運用 - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="alternate" type="application/rss+xml" title="Notes - 64p.org" href="/notes/rss.xml">
@@ -26,7 +26,7 @@
                                     <li><a href="/notes/threat-hunting.html">脅威ハンティング (Threat Hunting)</a></li>
                                     <li><a href="/notes/soc.html">SOC (Security Operations Center)</a></li>
                                     <li><a href="/notes/siem.html">SIEM (Security Information and Event Management)</a></li>
-                                    <li><a href="/notes/security-operations.html">セキュリティ運用</a></li>
+                                    <li><a href="/notes/security-operations.html" class="active">セキュリティ運用</a></li>
                                     <li><a href="/notes/ransomware.html">ランサムウェア</a></li>
                                     <li><a href="/notes/penetration-test.html">ペネトレーションテスト</a></li>
                                     <li><a href="/notes/mitre-attack.html">MITRE ATT&amp;CK</a></li>
@@ -181,7 +181,7 @@
                                     <li><a href="/notes/shannon-entropy.html">シャノンエントロピー</a></li>
                                     <li><a href="/notes/gitleaks.html">gitleaks</a></li>
                                     <li><a href="/notes/byte-pair-encoding.html">BPE (Byte Pair Encoding)</a></li>
-                                    <li><a href="/notes/betterleaks.html" class="active">betterleaks</a></li>
+                                    <li><a href="/notes/betterleaks.html">betterleaks</a></li>
                                     <li><a href="/notes/loophub.html">LoopHub</a></li>
                                     <li><a href="/notes/hunk-cli.html">hunk(AIエージェント向けCLI diffビューア)</a></li>
                                     <li><a href="/notes/guillain-barre-syndrome.html">ギラン・バレー症候群(Guillain-Barré Syndrome, GBS)</a></li>
@@ -392,69 +392,86 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>betterleaks</h1>
+                <h1>セキュリティ運用</h1>
 
-<p><a class="note-tag" href="/notes/tags/security.html">#security</a> <a class="note-tag" href="/notes/tags/git.html">#git</a> <a class="note-tag" href="/notes/tags/secret-scanning.html">#secret-scanning</a></p>
+<p><a class="note-tag" href="/notes/tags/security.html">#security</a> <a class="note-tag" href="/notes/tags/moc.html">#moc</a></p>
 
-<p><a href="/notes/gitleaks.html">gitleaks</a> の作者 Zach Rice による後継のオープンソースシークレットスキャナ。2026年3月19日に公開された。Go製（CGO・Hyperscan依存なしのpure Go）、MITライセンス。Rice は Aikido Security（ベルギーのセキュリティ企業）でシークレットスキャン部門の責任者を務めており、開発は Aikido の支援を受けている。gitleaks リポジトリと名前の完全なコントロールを Rice がすでに持っていなかったことが、別プロジェクトとして立ち上げた理由とされる。</p>
+<p>セキュリティインシデントの監視・検知・対応と、それを支えるツール・知識体系・攻撃側視点の検証手法についてのノートを束ねるハブノート。</p>
 
-<p>gitleaks の drop-in replacement を謳っており、既存のCLIオプションや設定はそのまま動くとされる。</p>
-
-<h2>Token Efficiency: エントロピーに代わる誤検知フィルタ</h2>
-
-<p>gitleaks がランダム文字列らしさの判定に<a href="/notes/shannon-entropy.html">シャノンエントロピー</a>を使っていたのに対し、betterleaks は <strong><a href="/notes/byte-pair-encoding.html">BPE（byte pair encoding）</a>トークン化に基づく「Token Efficiency」</strong> を使う。</p>
+<h2>防御側の組織と活動</h2>
 
 <ul>
-<li>自然言語はBPEトークナイザで長いトークンに効率よく圧縮される（高いtoken efficiency）。</li>
-<li>シークレットのようなランダム文字列は短いトークンに細切れになり、圧縮効率が悪い（低いtoken efficiency）。</li>
-<li>この差を誤検知フィルタの信号として使う。CredData データセットでの recall はエントロピーの 70.4% に対して 98.6% と報告されている。</li>
+<li><a href="/notes/soc.html">SOC</a> — 監視・検知・対応を専門に担う組織。Tier 1（トリアージ）〜Tier 3（脅威ハンティング）のティア構成</li>
+<li><a href="/notes/threat-hunting.html">脅威ハンティング</a> — アラートを待たず、既に潜んでいる脅威を仮説駆動で能動的に探す活動</li>
+<li><a href="/notes/7ai.html">7AI</a> — SOC業務（トリアージ・調査・ハンティング）をAIエージェントで自動化する企業の実例</li>
+<li><a href="/notes/noc.html">NOC</a> — 隣接概念。セキュリティ特化のSOCに対し、ネットワークの可用性・パフォーマンス維持を担う</li>
 </ul>
 
 
-<p>LLMのトークナイザで使われるBPEを、シークレット検出の統計的シグナルとして転用しているのが面白いところ。</p>
-
-<h2>その他の特徴</h2>
+<h2>検知・対応のツール</h2>
 
 <ul>
-<li><strong>式ベースのルールフィルタ</strong>: 検出候補の属性を式で評価してコンテキストに応じたフィルタリングができる（記事では <a href="/notes/common-expression-language.html">CEL: Common Expression Language</a> で検証ロジックを書けると紹介されている）。</li>
-<li><strong>シークレットの有効性検証</strong>: ルール定義から非同期HTTPリクエストを発行し、検出したシークレットが実際に有効かを検証できる。</li>
-<li><strong>多様なスキャン対象</strong>: git / ディレクトリ / stdin に加えて、GitHub・GitLab・Hugging Face・S3 などのリモートソースを直接スキャンできる。</li>
+<li><a href="/notes/siem.html">SIEM</a> — 環境全体のログを集約・相関分析してアラートを上げる「広さ」担当の基盤</li>
+<li><a href="/notes/edr.html">EDR</a> — エンドポイントの挙動を記録・監視し隔離等の対応まで行う「深さ」担当のツール</li>
 </ul>
 
 
-<pre><code class="sh">betterleaks git /path/to/repo
-betterleaks dir /path/to/dir
-betterleaks github https://github.com/betterleaks
-cat file.txt | betterleaks stdin
-</code></pre>
-
-<h2>今後の計画（v2）</h2>
-
-<p>LLM支援によるシークレット分類、プロバイダAPI経由での自動失効（auto revocation）、漏れたシークレットの権限マッピング、さらなるデータソース対応などが予定されている。</p>
-
-<h2>出典</h2>
+<h2>知識体系・指標</h2>
 
 <ul>
-<li><a href="https://github.com/betterleaks/betterleaks">betterleaks/betterleaks - GitHub</a></li>
-<li><a href="https://www.helpnetsecurity.com/2026/03/19/betterleaks-open-source-secrets-scanner/">Betterleaks: Open-source secrets scanner - Help Net Security</a></li>
-<li><a href="https://www.bleepingcomputer.com/news/security/betterleaks-a-new-open-source-secrets-scanner-to-replace-gitleaks/">Betterleaks, a new open-source secrets scanner to replace Gitleaks - BleepingComputer</a></li>
-<li><a href="https://betterleaks.com/">Betterleaks — A Better Secrets Scanner</a></li>
+<li><a href="/notes/mitre-attack.html">MITRE ATT&amp;CK</a> — 攻撃者のTTPs（戦術・技術・手順）を体系化したナレッジベース。検知・ハンティングの共通語彙</li>
+<li><a href="/notes/ioc-ioa.html">IOC/IOA</a> — 検知の手がかりとなる指標。事後の侵害証拠（IOC）と進行中の攻撃兆候（IOA）</li>
+</ul>
+
+
+<h2>攻撃側視点での検証（オフェンシブセキュリティ）</h2>
+
+<ul>
+<li><a href="/notes/penetration-test.html">ペネトレーションテスト</a> — 攻撃者と同じ手法で疑似攻撃し、防御の弱点を実証する手法</li>
+<li><a href="/notes/metasploit.html">Metasploit</a> — exploitの開発・実行を担う代表的なペンテストフレームワーク</li>
+<li><a href="/notes/burp-suite.html">Burp Suite</a> — Webアプリ診断の定番プロキシツール</li>
+<li><a href="/notes/kali-linux.html">Kali Linux</a> — ペンテストツールを同梱したLinuxディストリビューション（モバイル版は<a href="/notes/kali-nethunter.html">Kali NetHunter</a>）</li>
+<li><a href="/notes/hack-the-box.html">Hack The Box</a> — 許可された仮想環境でペンテスト技術を練習できる学習プラットフォーム</li>
+</ul>
+
+
+<h2>脅威の実例</h2>
+
+<ul>
+<li><a href="/notes/ransomware.html">ランサムウェア</a> — データ暗号化と身代金要求を組み合わせた代表的な脅威。国内被害は<a href="/notes/japan-ransomware-incidents.html">国内ランサムウェア被害事例</a>（ハブノート）にまとめている</li>
+</ul>
+
+
+<h2>関連領域</h2>
+
+<ul>
+<li><a href="/notes/devsecops.html">DevSecOps</a> — 運用段階ではなく開発パイプラインの側にセキュリティを組み込むアプローチ</li>
 </ul>
 
 
                                 <div class="notes-backlinks">
                     <h2>🔗 リンクされているノート</h2>
                     <ul>
-                                            <li><a href="/notes/byte-pair-encoding.html">BPE (Byte Pair Encoding)</a></li>
-                                            <li><a href="/notes/common-expression-language.html">CEL (Common Expression Language)</a></li>
-                                            <li><a href="/notes/gitleaks.html">gitleaks</a></li>
-                                            <li><a href="/notes/shannon-entropy.html">シャノンエントロピー</a></li>
+                                            <li><a href="/notes/7ai.html">7AI</a></li>
+                                            <li><a href="/notes/burp-suite.html">Burp Suite</a></li>
+                                            <li><a href="/notes/edr.html">EDR (Endpoint Detection and Response)</a></li>
+                                            <li><a href="/notes/hack-the-box.html">Hack The Box</a></li>
+                                            <li><a href="/notes/ioc-ioa.html">IOC (侵害指標) と IOA (攻撃指標)</a></li>
+                                            <li><a href="/notes/kali-linux.html">Kali Linux</a></li>
+                                            <li><a href="/notes/kali-nethunter.html">Kali NetHunter</a></li>
+                                            <li><a href="/notes/mitre-attack.html">MITRE ATT&amp;CK</a></li>
+                                            <li><a href="/notes/metasploit.html">Metasploit</a></li>
+                                            <li><a href="/notes/siem.html">SIEM (Security Information and Event Management)</a></li>
+                                            <li><a href="/notes/soc.html">SOC (Security Operations Center)</a></li>
+                                            <li><a href="/notes/penetration-test.html">ペネトレーションテスト</a></li>
+                                            <li><a href="/notes/ransomware.html">ランサムウェア</a></li>
+                                            <li><a href="/notes/threat-hunting.html">脅威ハンティング (Threat Hunting)</a></li>
                     
                     </ul>
                 </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-12 09:43 / 更新日時: 2026-08-12 09:46</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=betterleaks&url=https%3A%2F%2F64p.org%2Fnotes%2Fbetterleaks.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <span>作成日時: 2026-08-14 01:23 / 更新日時: 2026-08-14 01:23</span>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=%E3%82%BB%E3%82%AD%E3%83%A5%E3%83%AA%E3%83%86%E3%82%A3%E9%81%8B%E7%94%A8&url=https%3A%2F%2F64p.org%2Fnotes%2Fsecurity-operations.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">

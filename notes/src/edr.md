@@ -1,6 +1,6 @@
 ---
 created: 2026-08-13 22:36
-updated: 2026-08-13 22:36
+updated: 2026-08-14 01:23
 ---
 # EDR (Endpoint Detection and Response)
 
@@ -18,6 +18,10 @@ updated: 2026-08-13 22:36
 ## 位置づけ
 
 [[soc|SOC]]の運用では、EDRがエンドポイント層の検知・対応を担い、各種ログを横断的に相関分析する[[siem|SIEM]]と補完し合う。EDRの適用範囲をネットワーク・クラウド・メール等まで広げた発展形はXDR (Extended Detection and Response) と呼ばれる。
+
+## [[security-operations|セキュリティ運用]]の中での位置づけ
+
+エンドポイント層を深く監視・対応する「深さ」担当のツール。ログ横断のSIEMと補完関係にあり、脅威ハンティングの調査でも中心的に使われる。
 
 ## 出典
 
