@@ -6,7 +6,40 @@
 <atom:link href="https://64p.org/notes/rss.xml" rel="self" type="application/rss+xml" />
 <description>ちょっと調べたことや検証結果を、AIの力も借りながらメモしていくコーナーです。</description>
 <language>ja</language>
-<lastBuildDate>Fri, 14 Aug 2026 05:39:49 +0900</lastBuildDate>
+<lastBuildDate>Fri, 14 Aug 2026 05:47:23 +0900</lastBuildDate>
+<item>
+<title>日本企業のAI導入の遅れ</title>
+<link>https://64p.org/notes/japan-ai-adoption-lag.html</link>
+<guid isPermaLink="true">https://64p.org/notes/japan-ai-adoption-lag.html</guid>
+<pubDate>Fri, 14 Aug 2026 05:47:00 +0900</pubDate>
+<description><![CDATA[<h1>日本企業のAI導入の遅れ</h1>
+
+<p>BBCの記事 &ldquo;<a href="https://www.bbc.com/news/articles/cwymw4434v7o">Why Japanese firms are being so slow to use AI</a>&rdquo;(2026-08-12)が、労働力不足・高齢化・生産性の低さといった構造課題を抱えながらも、日本企業でのAI導入が米英に比べて遅れている状況を報じている。</p>
+
+<h2>記事の要点</h2>
+
+<ul>
+<li>OECDの調査(2025年末)によると、業務でAIを使っている日本の労働者は8.4%にとどまる。対して米国は50%、英国は32%。シンガポールでは56%が「週に複数回」AIを使うという。</li>
+<li>記事は日本のAIへの対応を、能楽のように「舞台上の全員が行動の必要性に同意しつつも、実際には静止したまま」という比喩で表現している。</li>
+<li>米国発スタートアップKuse AIの共同創業者Austin Xu氏は、日本企業のプロセス・合意形成文化がスピードを遅らせており、特に顧客対応領域ではAIのミスへの許容度がほぼゼロだと指摘。米国では「まずやらせてみて、後から直す」という姿勢だが、日本企業はAIを信頼する前により多くの実証を求める傾向があるという。</li>
+<li>京都先端科学大学のParrisa Haghirian教授も、日本企業はエラー・不確実性・レピュテーションリスクに敏感であり、生成AIの利用は文章作成・要約・情報収集といった低リスク業務に限られ、意思決定や中核業務への適用は少ないと述べている。</li>
+<li>医療分野は特に遅れが目立ち、匿名の病院職員は紙のカルテが「石器時代のように」積み上がっている状況を語っている。</li>
+<li>日本政府は2025年に「AI推進法」(AI Promotion Act)を成立させ、規制を軽くして投資を促す方針。「世界で最もAI開発・利用に友好的な国」を目指すとしている。日本の労働生産性はG7の中で最下位が続いている。</li>
+<li>財務省によれば、AIを導入している企業の割合は5年前の11%から75%に増加したとされるが、批評家は「実際にAIを使っている社員はごく一部で、利用の深さも限定的」と指摘。</li>
+<li>明治大学のYasushi Ogasawara教授は、日本の労働力にテック人材が不足していることを課題に挙げる。日本人はスマートフォンなど機器を使うのは好きだが、デジタルリテラシー自体は低いという。今年発表されたある報告では、2030年までに日本のIT人材が約80万人不足すると予測されている。企業の約60%が20年以上前の古いシステムを使い続けているとも指摘。</li>
+<li>Ogasawara氏はまた、日本企業はAIによる雇用喪失より完全雇用の維持を優先する圧力が強いとも述べている。</li>
+<li>一方で新卒採用では「AIリテラシー」を重視する動きも出てきている。大手商社兼松の新入社員Uta Yamaguchi氏は、メール作成・複雑な文書の要約・会議の記録と要約に日常的にAIを使っていると述べつつ、米国と違い複数ステップの作業を自律的にこなすAIエージェントは日本ではほぼ普及していないとも語る。</li>
+<li>Ogasawara氏は「日本社会は痛みのない改革を期待するため、抜本的な改革は難しいと言わざるを得ない」と締めくくっている。</li>
+</ul>
+
+
+<h2>考えたこと</h2>
+
+<p>記事は「リスク回避」「合意形成文化」を主要因として挙げているが、個人的には<a href="/notes/handa-hospital-ransomware-2021.html">医療機関のランサムウェア被害</a>や<a href="/notes/kojima-press-ransomware-2022.html">サプライチェーン攻撃</a>の記事を読んだ時にも感じた「IT投資そのものへの優先度の低さ」が根底にあるように思う。デジタル化・AI化以前に紙のカルテが残っている病院がある、という記述はその象徴。EU側は<a href="/notes/eu-ai-act.html">EU AI Act</a>のようにリスクベースで規制の枠組みを先に整備してから利用を促す方向だが、日本は逆に規制を緩めることで利用を促そうとしている点も対照的。</p>
+
+<p><a class="note-tag" href="/notes/tags/ai.html">#ai</a> <a class="note-tag" href="/notes/tags/japan.html">#japan</a> <a class="note-tag" href="/notes/tags/productivity.html">#productivity</a></p>
+]]></description>
+</item>
 <item>
 <title>シリコン</title>
 <link>https://64p.org/notes/silicon.html</link>
@@ -1311,60 +1344,6 @@ graph LR
 <li><a href="https://www.britannica.com/science/organic-chemistry">Organic chemistry | Britannica</a></li>
 <li><a href="https://www.acs.org/careers/chemical-sciences/areas/organic-chemistry.html">Organic Chemistry - American Chemical Society</a></li>
 <li><a href="https://www.merriam-webster.com/dictionary/organic%20chemistry">ORGANIC CHEMISTRY Definition &amp; Meaning - Merriam-Webster</a></li>
-</ul>
-
-]]></description>
-</item>
-<item>
-<title>マイクロサービス (Microservices)</title>
-<link>https://64p.org/notes/microservices.html</link>
-<guid isPermaLink="true">https://64p.org/notes/microservices.html</guid>
-<pubDate>Thu, 13 Aug 2026 19:36:00 +0900</pubDate>
-<description><![CDATA[<h1>マイクロサービス (Microservices)</h1>
-
-<p><a class="note-tag" href="/notes/tags/software-engineering.html">#software-engineering</a> <a class="note-tag" href="/notes/tags/distributed-systems.html">#distributed-systems</a></p>
-
-<p>アプリケーションを、疎結合で細粒度の独立したサービス群に分割し、それぞれが軽量なプロトコル（主にHTTP/REST、gRPCなど）で通信するアーキテクチャスタイル。各サービスは独立したプロセスとして動作し、多くの場合サービスごとに専用のデータベースを持つ。</p>
-
-<h2>主な特徴</h2>
-
-<ol>
-<li><strong>単一責務のコンポーネント</strong> — 各サービスは特定のビジネス機能を1つだけ担う。<a href="/notes/domain-driven-design.html">DDD</a>の「<a href="/notes/domain-driven-design.html">境界づけられたコンテキスト（Bounded Context）</a>」に沿ってサービス境界を引くことが多い</li>
-<li><strong>分散化</strong> — サービス間の依存が少なく、疎結合</li>
-<li><strong>耐障害性</strong> — 1サービスの障害がシステム全体を止めない設計を目指す</li>
-<li><strong>独立したスケーラビリティ</strong> — チームごとに独立して開発・デプロイ・スケールできる</li>
-<li><strong>技術的な自由度</strong> — サービスごとに異なる言語・DB・実行環境を選べる（polyglot）</li>
-</ol>
-
-
-<h2>モノリスとの対比（Martin Fowlerの整理）</h2>
-
-<p>Martin Fowlerの &ldquo;Microservice Trade-Offs&rdquo; によれば、モノリスは全体を一括デプロイする必要があるが、マイクロサービスは各サービスを独立してデプロイでき、単純なサービスほど障害を起こしにくい。一方で通信がネットワーク越し（<a href="/notes/restful.html">RESTful</a>なHTTPリクエスト/レスポンス等）になるため、信頼性・セキュリティの面でモノリス内呼び出しより劣る場面がある。</p>
-
-<p>Fowlerはこれを <strong>&ldquo;MicroservicePremium&rdquo;</strong>（マイクロサービス採用に伴う追加コスト）と呼び、十分複雑なシステムでなければ割に合わないと指摘している。</p>
-
-<p>また &ldquo;Monolith First&rdquo; というエントリでは、成功しているマイクロサービス事例のほとんどは最初モノリスとして作られ、肥大化してから分割されたものであり、新規プロジェクトを最初からマイクロサービスで始めるべきではない、という立場を取っている。</p>
-
-<h2>代表的な関連パターン</h2>
-
-<p><a href="https://microservices.io/">microservices.io</a> で整理されているパターンの一部。</p>
-
-<ul>
-<li><strong>API Gateway</strong> — クライアントからの単一窓口となり、複数サービスへのルーティングを担う</li>
-<li><strong>Service Discovery</strong> — サービスインスタンスの動的な位置解決</li>
-<li><strong>Circuit Breaker</strong> — 依存サービスの障害が連鎖しないよう遮断する</li>
-<li><strong>Saga</strong> — サービス間にまたがる分散トランザクションの整合性を、ローカルトランザクションの連鎖と補償トランザクションで確保する</li>
-</ul>
-
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://www.techtarget.com/searchapparchitecture/definition/microservices">What are Microservices? | TechTarget</a></li>
-<li><a href="https://en.wikipedia.org/wiki/Microservices">Microservices - Wikipedia</a></li>
-<li><a href="https://microservices.io/patterns/microservices.html">Microservices Pattern: Microservice Architecture pattern | microservices.io</a></li>
-<li><a href="https://martinfowler.com/articles/microservice-trade-offs.html">Microservice Trade-Offs | Martin Fowler</a></li>
-<li><a href="https://martinfowler.com/bliki/MonolithFirst.html">bliki: Monolith First | Martin Fowler</a></li>
 </ul>
 
 ]]></description>

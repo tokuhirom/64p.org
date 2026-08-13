@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>Hack The Box - Notes - 64p.org</title>
+    <title>日本企業のAI導入の遅れ - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="alternate" type="application/rss+xml" title="Notes - 64p.org" href="/notes/rss.xml">
@@ -23,7 +23,7 @@
                 <a class="notes-tags-link" href="/notes/rss.xml">📡 RSS</a>
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
-                                    <li><a href="/notes/japan-ai-adoption-lag.html">日本企業のAI導入の遅れ</a></li>
+                                    <li><a href="/notes/japan-ai-adoption-lag.html" class="active">日本企業のAI導入の遅れ</a></li>
                                     <li><a href="/notes/tetravalent-element.html">4価元素・14族元素</a></li>
                                     <li><a href="/notes/silicon.html">シリコン</a></li>
                                     <li><a href="/notes/p-type-semiconductor.html">P型半導体</a></li>
@@ -46,7 +46,7 @@
                                     <li><a href="/notes/kali-nethunter.html">Kali NetHunter</a></li>
                                     <li><a href="/notes/kali-linux.html">Kali Linux</a></li>
                                     <li><a href="/notes/ioc-ioa.html">IOC (侵害指標) と IOA (攻撃指標)</a></li>
-                                    <li><a href="/notes/hack-the-box.html" class="active">Hack The Box</a></li>
+                                    <li><a href="/notes/hack-the-box.html">Hack The Box</a></li>
                                     <li><a href="/notes/edr.html">EDR (Endpoint Detection and Response)</a></li>
                                     <li><a href="/notes/burp-suite.html">Burp Suite</a></li>
                                     <li><a href="/notes/7ai.html">7AI</a></li>
@@ -400,61 +400,36 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>Hack The Box</h1>
+                <h1>日本企業のAI導入の遅れ</h1>
 
-<p>サイバーセキュリティのスキル向上を目的とした、オンラインの実践学習プラットフォーム。<a href="/notes/penetration-test.html">ペネトレーションテスト</a>(侵入テスト)や倫理的ハッキングの技術を、実際の攻撃・防御を模した環境で体験しながら学べる。 <a class="note-tag" href="/notes/tags/security.html">#security</a></p>
+<p>BBCの記事 &ldquo;<a href="https://www.bbc.com/news/articles/cwymw4434v7o">Why Japanese firms are being so slow to use AI</a>&rdquo;(2026-08-12)が、労働力不足・高齢化・生産性の低さといった構造課題を抱えながらも、日本企業でのAI導入が米英に比べて遅れている状況を報じている。</p>
 
-<h2>仕組み</h2>
+<h2>記事の要点</h2>
 
 <ul>
-<li>仮想環境上に用意された脆弱な<strong>マシン(サーバー)</strong>に実際に侵入し、隠された<strong>Flag</strong>(目標データ)を取得することがゴール</li>
-<li>難易度は初心者向けの「Starting Point」から、超上級者向けの「Pro Labs」まで幅広く用意されている</li>
-<li>マシン攻略の実績に応じてポイントが付与され、ポイントに応じたランク(称号)が与えられる、ゲーミフィケーション的な要素がある</li>
+<li>OECDの調査(2025年末)によると、業務でAIを使っている日本の労働者は8.4%にとどまる。対して米国は50%、英国は32%。シンガポールでは56%が「週に複数回」AIを使うという。</li>
+<li>記事は日本のAIへの対応を、能楽のように「舞台上の全員が行動の必要性に同意しつつも、実際には静止したまま」という比喩で表現している。</li>
+<li>米国発スタートアップKuse AIの共同創業者Austin Xu氏は、日本企業のプロセス・合意形成文化がスピードを遅らせており、特に顧客対応領域ではAIのミスへの許容度がほぼゼロだと指摘。米国では「まずやらせてみて、後から直す」という姿勢だが、日本企業はAIを信頼する前により多くの実証を求める傾向があるという。</li>
+<li>京都先端科学大学のParrisa Haghirian教授も、日本企業はエラー・不確実性・レピュテーションリスクに敏感であり、生成AIの利用は文章作成・要約・情報収集といった低リスク業務に限られ、意思決定や中核業務への適用は少ないと述べている。</li>
+<li>医療分野は特に遅れが目立ち、匿名の病院職員は紙のカルテが「石器時代のように」積み上がっている状況を語っている。</li>
+<li>日本政府は2025年に「AI推進法」(AI Promotion Act)を成立させ、規制を軽くして投資を促す方針。「世界で最もAI開発・利用に友好的な国」を目指すとしている。日本の労働生産性はG7の中で最下位が続いている。</li>
+<li>財務省によれば、AIを導入している企業の割合は5年前の11%から75%に増加したとされるが、批評家は「実際にAIを使っている社員はごく一部で、利用の深さも限定的」と指摘。</li>
+<li>明治大学のYasushi Ogasawara教授は、日本の労働力にテック人材が不足していることを課題に挙げる。日本人はスマートフォンなど機器を使うのは好きだが、デジタルリテラシー自体は低いという。今年発表されたある報告では、2030年までに日本のIT人材が約80万人不足すると予測されている。企業の約60%が20年以上前の古いシステムを使い続けているとも指摘。</li>
+<li>Ogasawara氏はまた、日本企業はAIによる雇用喪失より完全雇用の維持を優先する圧力が強いとも述べている。</li>
+<li>一方で新卒採用では「AIリテラシー」を重視する動きも出てきている。大手商社兼松の新入社員Uta Yamaguchi氏は、メール作成・複雑な文書の要約・会議の記録と要約に日常的にAIを使っていると述べつつ、米国と違い複数ステップの作業を自律的にこなすAIエージェントは日本ではほぼ普及していないとも語る。</li>
+<li>Ogasawara氏は「日本社会は痛みのない改革を期待するため、抜本的な改革は難しいと言わざるを得ない」と締めくくっている。</li>
 </ul>
 
 
-<h2>主なコンテンツ</h2>
+<h2>考えたこと</h2>
 
-<ul>
-<li><strong>Labs</strong> — 脆弱な仮想マシンへの侵入練習(実践的なペネトレーションテストのトレーニング)</li>
-<li><strong>HTB Academy</strong> — 体系的なセキュリティ学習コンテンツ(座学寄り)</li>
-<li>個人向けだけでなく、企業のセキュリティ人材育成用途でも利用されている</li>
-</ul>
+<p>記事は「リスク回避」「合意形成文化」を主要因として挙げているが、個人的には<a href="/notes/handa-hospital-ransomware-2021.html">医療機関のランサムウェア被害</a>や<a href="/notes/kojima-press-ransomware-2022.html">サプライチェーン攻撃</a>の記事を読んだ時にも感じた「IT投資そのものへの優先度の低さ」が根底にあるように思う。デジタル化・AI化以前に紙のカルテが残っている病院がある、という記述はその象徴。EU側は<a href="/notes/eu-ai-act.html">EU AI Act</a>のようにリスクベースで規制の枠組みを先に整備してから利用を促す方向だが、日本は逆に規制を緩めることで利用を促そうとしている点も対照的。</p>
 
+<p><a class="note-tag" href="/notes/tags/ai.html">#ai</a> <a class="note-tag" href="/notes/tags/japan.html">#japan</a> <a class="note-tag" href="/notes/tags/productivity.html">#productivity</a></p>
 
-<h2>料金</h2>
-
-<p>無料プランと有料(サブスクリプション)プランがあり、有料プランではより多くのマシンやコンテンツにアクセスできる。</p>
-
-<h2>関連</h2>
-
-<p>侵入テストの実践では<a href="/notes/kali-linux.html">Kali Linux</a>や<a href="/notes/metasploit.html">Metasploit</a>のようなツールがよく使われる。</p>
-
-<h2><a href="/notes/security-operations.html">セキュリティ運用</a>の中での位置づけ</h2>
-
-<p>攻撃側視点の検証技術（ペンテスト等）を、許可された仮想環境で合法的に練習できる学習プラットフォーム。</p>
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://hakuhakublog.tech/hack-the-box/">Hack The Boxとは？料金やHTB Academyも解説 - セキュリティエンジニアへの道しるべ</a></li>
-<li><a href="https://hack-lab-256.com/hack-the-box-starter/1640/">Hack The Boxの始め方｜無料と有料プラン・LabsとAcademyの違いを徹底比較</a></li>
-<li><a href="https://jpn.nec.com/cybersecurity/blog/200619/index.html">トレーニングコンテンツ：「Hack The Box」を触り始めてみた: NECセキュリティブログ</a></li>
-<li><a href="https://jp.security.ntt/insights_resources/tech_blog/102hdvh/">HACK THE BOX を利用したスキル研鑽について | NTTセキュリティ・ジャパン</a></li>
-</ul>
-
-
-                                <div class="notes-backlinks">
-                    <h2>🔗 リンクされているノート</h2>
-                    <ul>
-                                            <li><a href="/notes/security-operations.html">セキュリティ運用</a></li>
-                                            <li><a href="/notes/penetration-test.html">ペネトレーションテスト</a></li>
-                    
-                    </ul>
-                </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-10 20:41 / 更新日時: 2026-08-14 01:23</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=Hack%20The%20Box&url=https%3A%2F%2F64p.org%2Fnotes%2Fhack-the-box.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <span>作成日時: 2026-08-14 05:47 / 更新日時: 2026-08-14 05:47</span>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=%E6%97%A5%E6%9C%AC%E4%BC%81%E6%A5%AD%E3%81%AEAI%E5%B0%8E%E5%85%A5%E3%81%AE%E9%81%85%E3%82%8C&url=https%3A%2F%2F64p.org%2Fnotes%2Fjapan-ai-adoption-lag.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">
