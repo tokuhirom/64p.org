@@ -6,7 +6,155 @@
 <atom:link href="https://64p.org/notes/rss.xml" rel="self" type="application/rss+xml" />
 <description>ちょっと調べたことや検証結果を、AIの力も借りながらメモしていくコーナーです。</description>
 <language>ja</language>
-<lastBuildDate>Thu, 13 Aug 2026 20:49:19 +0900</lastBuildDate>
+<lastBuildDate>Thu, 13 Aug 2026 20:54:33 +0900</lastBuildDate>
+<item>
+<title>昭和仮面ライダーの悪の組織の系譜</title>
+<link>https://64p.org/notes/showa-rider-evil-organizations.html</link>
+<guid isPermaLink="true">https://64p.org/notes/showa-rider-evil-organizations.html</guid>
+<pubDate>Thu, 13 Aug 2026 20:54:00 +0900</pubDate>
+<description><![CDATA[<h1>昭和仮面ライダーの悪の組織の系譜</h1>
+
+<p><a class="note-tag" href="/notes/tags/tokusatsu.html">#tokusatsu</a> <a class="note-tag" href="/notes/tags/kamen-rider.html">#kamen-rider</a></p>
+
+<p>昭和の仮面ライダーシリーズでは作品ごとに敵の秘密結社が入れ替わるが、初期3組織は同一の首領が率いているという連続性がある。</p>
+
+<div class="mermaid">
+graph LR
+    S[ショッカー&lt;br&gt;仮面ライダー 前半] --&gt; G[ゲルショッカー&lt;br&gt;仮面ライダー 後半]
+    G --&gt; D["デストロン&lt;br&gt;仮面ライダーV3"]
+</div>
+
+
+<ul>
+<li><strong>ショッカー</strong> — 『仮面ライダー』(1971年)の敵。ナチス残党という設定の、世界征服を目的とする秘密結社。第79話で壊滅。</li>
+<li><strong>ゲルショッカー</strong> — ショッカー壊滅後、首領が再建した後継組織。『仮面ライダー』最終回で壊滅。</li>
+<li><strong><a href="/notes/destron.html">デストロン</a></strong> — ゲルショッカー壊滅後、同じ首領が結成。<a href="/notes/kamen-rider-v3.html">仮面ライダーV3</a>の敵。</li>
+</ul>
+
+
+<p>首領の正体は昭和シリーズの映像作品中では明かされずじまいで、各作品の最終回で骸骨や一つ目の怪物といった「姿」を見せてもなお正体は謎のまま、という引きが繰り返された。</p>
+
+<h2>岩石大首領による後付けの統合</h2>
+
+<p>その後のシリーズの敵組織(『X』のGOD、『アマゾン』のゲドン・ガランダー帝国、『ストロンガー』のブラックサタン・デルザー軍団)は表向き別組織だが、『仮面ライダーストロンガー』最終話で登場した岩石大首領が「ショッカーからデルザー軍団までを操っていた黒幕」であることが明かされ、昭和第1期シリーズの敵組織はすべて同一の大首領の支配下にあったと統合された。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://ja.wikipedia.org/wiki/%E3%82%B7%E3%83%A7%E3%83%83%E3%82%AB%E3%83%BC%E9%A6%96%E9%A0%98">ショッカー首領 - Wikipedia</a></li>
+<li><a href="https://ja.wikipedia.org/wiki/%E3%82%B7%E3%83%A7%E3%83%83%E3%82%AB%E3%83%BC">ショッカー - Wikipedia</a></li>
+<li><a href="https://ja.wikipedia.org/wiki/%E3%82%B2%E3%83%AB%E3%82%B7%E3%83%A7%E3%83%83%E3%82%AB%E3%83%BC">ゲルショッカー - Wikipedia</a></li>
+</ul>
+
+]]></description>
+</item>
+<item>
+<title>仮面ライダーV3</title>
+<link>https://64p.org/notes/kamen-rider-v3.html</link>
+<guid isPermaLink="true">https://64p.org/notes/kamen-rider-v3.html</guid>
+<pubDate>Thu, 13 Aug 2026 20:54:00 +0900</pubDate>
+<description><![CDATA[<h1>仮面ライダーV3</h1>
+
+<p><a class="note-tag" href="/notes/tags/tokusatsu.html">#tokusatsu</a> <a class="note-tag" href="/notes/tags/kamen-rider.html">#kamen-rider</a></p>
+
+<p>1973年2月17日〜1974年2月9日に毎日放送・NET系列で放送された特撮テレビドラマ。全52話。『仮面ライダー』(1971〜1973年)の直接の続編で、1号・2号に続く3人目のライダーが主役。敵組織は<a href="/notes/destron.html">デストロン</a>。</p>
+
+<h2>V3誕生の経緯</h2>
+
+<p>主人公・風見志郎は城南大学生物学部の学生で、本郷猛(仮面ライダー1号)の後輩。デストロンの悪事を目撃したために狙われ、両親と妹を怪人<a href="/notes/hasami-jaguar.html">ハサミジャガー</a>に殺される。身を挺して1号・2号を救った志郎は、2人の改造手術によって仮面ライダーV3として蘇る。「技の1号」「力の2号」双方の特性を受け継ぐことから「力と技のV3」と呼ばれる。</p>
+
+<h2>覚えておきたい要素</h2>
+
+<ul>
+<li><strong>26の秘密</strong> — V3の体に隠された必殺技・特殊能力を、戦いの中で解き明かしていくという序盤の謎解き要素。V3が弱く見えてしまう問題が生じ、途中で軌道修正された。</li>
+<li><strong>ライダーマン</strong> — 第43話から登場する4人目のライダー・結城丈二。元デストロンの科学者で、ヨロイ元帥の裏切りにより右腕を失い、自ら改造してライダーマンとなる。V3・デストロンとの三つ巴のドラマを生んだ。</li>
+</ul>
+
+
+<h2>人気</h2>
+
+<p>視聴率は関東平均20.2%・関西平均27%を記録し、制作局の毎日放送(関西)ではシリーズ最高の38%に到達。変身ヒーローブームを牽引した、シリーズ中でも知名度の高い作品。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://ja.wikipedia.org/wiki/%E4%BB%AE%E9%9D%A2%E3%83%A9%E3%82%A4%E3%83%80%E3%83%BCV3">仮面ライダーV3 - Wikipedia</a></li>
+<li><a href="https://www.kamen-rider-official.com/series/v3/">仮面ライダーV3 | 仮面ライダーWEB【公式】 | 東映</a></li>
+<li><a href="https://www.kamen-rider-official.com/zukan/kamen_rider_members/282">仮面ライダーV3 | 仮面ライダー図鑑 | 東映</a></li>
+</ul>
+
+]]></description>
+</item>
+<item>
+<title>デストロン (仮面ライダーV3)</title>
+<link>https://64p.org/notes/destron.html</link>
+<guid isPermaLink="true">https://64p.org/notes/destron.html</guid>
+<pubDate>Thu, 13 Aug 2026 20:54:00 +0900</pubDate>
+<description><![CDATA[<h1>デストロン (仮面ライダーV3)</h1>
+
+<p><a class="note-tag" href="/notes/tags/tokusatsu.html">#tokusatsu</a> <a class="note-tag" href="/notes/tags/kamen-rider.html">#kamen-rider</a></p>
+
+<p><a href="/notes/kamen-rider-v3.html">仮面ライダーV3</a>に登場する悪の秘密結社。ゲルショッカー壊滅後、その首領が新たに結成した組織で、ショッカー以上の戦力と科学力による世界征服を企てる(組織の系譜は<a href="/notes/showa-rider-evil-organizations.html">昭和仮面ライダーの悪の組織の系譜</a>参照)。物語冒頭で風見志郎の家族を殺した<a href="/notes/hasami-jaguar.html">ハサミジャガー</a>もデストロンの怪人。</p>
+
+<h2>首領</h2>
+
+<p>劇中では一切姿を見せず、アジトのサソリのレリーフを通して命令を発する。最終回でV3の前に現れた姿は、胸の空洞に奇怪な心臓が蠢く白い骸骨。V3に骸骨を分解され心臓を破壊されてもなお頭蓋骨内のテープレコーダーらしきものから声を発し続け、最後は秘密基地もろとも自爆した。この骸骨が本当の正体だったのかは曖昧なまま終わる。</p>
+
+<h2>幹部</h2>
+
+<p>物語の進行に応じて、それぞれ配下の怪人部隊を率いる大幹部が交代で登場する。</p>
+
+<table>
+<thead>
+<tr>
+<th> 幹部 </th>
+<th> 登場話 </th>
+<th> 怪人態 </th>
+<th> 率いた部隊 </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td> ドクトルG </td>
+<td> 13〜30話 </td>
+<td> カニレーザー </td>
+<td> 機械合成怪人(生物と機械の融合) </td>
+</tr>
+<tr>
+<td> キバ男爵 </td>
+<td> 31〜35話 </td>
+<td> 吸血マンモス </td>
+<td> キバ一族(呪術的な動物怪人) </td>
+</tr>
+<tr>
+<td> ツバサ大僧正 </td>
+<td> 36〜40話 </td>
+<td> 死人コウモリ </td>
+<td> ツバサ一族(ほぼ全員が飛行能力持ち) </td>
+</tr>
+<tr>
+<td> ヨロイ元帥 </td>
+<td> 41〜52話 </td>
+<td> ザリガーナ </td>
+<td> ヨロイ一族(強固な防御力とパワー) </td>
+</tr>
+</tbody>
+</table>
+
+
+<h2>戦闘員</h2>
+
+<p>白いサソリ模様の入った黒タイツと白マスクを着用。常人の5倍の体力と、他人に変身する能力を持つ。所属部隊ごとに装備が異なり、ツバサ一族配下の戦闘員は袖に長いフリンジを付けて飛行できた。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://ja.wikipedia.org/wiki/%E4%BB%AE%E9%9D%A2%E3%83%A9%E3%82%A4%E3%83%80%E3%83%BCV3">仮面ライダーV3 - Wikipedia</a></li>
+<li><a href="https://www.kamen-rider-official.com/zukan/phantoms/1264">デストロン首領 | 仮面ライダー図鑑 | 東映</a></li>
+</ul>
+
+]]></description>
+</item>
 <item>
 <title>ハサミジャガー</title>
 <link>https://64p.org/notes/hasami-jaguar.html</link>
@@ -16,7 +164,7 @@
 
 <p><a class="note-tag" href="/notes/tags/tokusatsu.html">#tokusatsu</a> <a class="note-tag" href="/notes/tags/kamen-rider.html">#kamen-rider</a></p>
 
-<p>『仮面ライダーV3』(1973年)の第1話「ライダー3号 その名はV3!」・第2話「ダブルライダーの遺言状」に登場する、悪の秘密結社デストロンの改造人間(怪人)。鳴き声は「シザース!」。</p>
+<p><a href="/notes/kamen-rider-v3.html">仮面ライダーV3</a>(1973年)の第1話「ライダー3号 その名はV3!」・第2話「ダブルライダーの遺言状」に登場する、悪の秘密結社<a href="/notes/destron.html">デストロン</a>の改造人間(怪人)。鳴き声は「シザース!」。</p>
 
 <h2>姿と能力</h2>
 
@@ -1419,146 +1567,6 @@ world proxy {
 <li><a href="https://component-model.bytecodealliance.org/design/wit.html">WIT Reference | The WebAssembly Component Model</a></li>
 <li><a href="https://component-model.bytecodealliance.org/design/wit-example.html">WIT By Example | The WebAssembly Component Model</a></li>
 <li><a href="https://component-model.bytecodealliance.org/design/packages.html">WIT package | The WebAssembly Component Model</a></li>
-</ul>
-
-]]></description>
-</item>
-<item>
-<title>WebAssembly (Wasm)</title>
-<link>https://64p.org/notes/wasm.html</link>
-<guid isPermaLink="true">https://64p.org/notes/wasm.html</guid>
-<pubDate>Thu, 13 Aug 2026 07:30:00 +0900</pubDate>
-<description><![CDATA[<h1>WebAssembly (Wasm)</h1>
-
-<p>スタックベースの仮想機械向けバイナリ命令フォーマット。プログラミング言語の移植可能なコンパイルターゲットとして設計されている。</p>
-
-<p><a class="note-tag" href="/notes/tags/wasm.html">#wasm</a> <a class="note-tag" href="/notes/tags/webassembly.html">#webassembly</a></p>
-
-<h2>設計目標</h2>
-
-<ul>
-<li><strong>高速</strong>: ネイティブに近い実行速度を目指す。</li>
-<li><strong>安全</strong>: メモリセーフでサンドボックス化された実行環境。ウェブ埋め込み時はブラウザのセキュリティポリシーが適用される。</li>
-<li><strong>移植可能</strong>: ブラウザ以外の環境(サーバー、エッジ、組込機器など)でも動作する。</li>
-<li><strong>オープン</strong>: デバッグ・テスト・学習用のテキスト形式も定義されている。</li>
-</ul>
-
-
-<h2>フォーマット</h2>
-
-<p>デプロイ用のバイナリ形式(<code>.wasm</code>)と、人間が読めるテキスト形式(<code>.wat</code>)の2つが定義されている。</p>
-
-<h2>仕様の現状</h2>
-
-<p>コア仕様は WebAssembly 3.0(2026年7月28日版)が最新。2025年9月にW3C標準として正式に勧告された。</p>
-
-<h2>対応言語</h2>
-
-<p>Rust、C/C++、Go、AssemblyScriptなど多数の言語からコンパイル可能。<a href="/notes/raku-rakudo-perl6.html">mutsu</a>もWebAssembly化されて公式サイト上のプレイグラウンドで動いている。</p>
-
-<h2>Component Model</h2>
-
-<p>複数のWasmモジュール(異なる言語で書かれたものも含む)を組み合わせてアプリケーションを構築するための仕組み。<a href="/notes/wit.html">WIT(WebAssembly Interface Types)</a>というIDLで複雑な型のやり取りを扱う。ブラウザの外でWasmを動かす際のOS機能アクセスは<a href="/notes/wasi.html">WASI</a>が担う。</p>
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://webassembly.github.io/spec/core/intro/introduction.html">Introduction — WebAssembly 3.0</a></li>
-<li><a href="https://webassembly.org/">webassembly.org</a></li>
-<li><a href="https://devnewsletter.com/p/state-of-webassembly-2026/">State of WebAssembly 2026</a></li>
-</ul>
-
-]]></description>
-</item>
-<item>
-<title>WASI (WebAssembly System Interface)</title>
-<link>https://64p.org/notes/wasi.html</link>
-<guid isPermaLink="true">https://64p.org/notes/wasi.html</guid>
-<pubDate>Thu, 13 Aug 2026 07:30:00 +0900</pubDate>
-<description><![CDATA[<h1>WASI (WebAssembly System Interface)</h1>
-
-<p><a href="/notes/wasm.html">WebAssembly</a>にコンパイルされたソフトウェアがファイル・ネットワーク・時刻・乱数などOS機能にアクセスするための標準API仕様群。ブラウザのサンドボックスの外(サーバー・エッジ・組込機器)でWasmを動かす際の「システムコール」に相当する。</p>
-
-<p><a class="note-tag" href="/notes/tags/wasm.html">#wasm</a> <a class="note-tag" href="/notes/tags/webassembly.html">#webassembly</a> <a class="note-tag" href="/notes/tags/wasi.html">#wasi</a></p>
-
-<h2>必要性</h2>
-
-<p>HTTPマイクロサービスのような重い仕組みなしに、異なる言語で書かれたコンポーネント同士を安全に組み合わせられるようにする。プラグインモデルやマルチ言語SDKを持つプロジェクトに向く。</p>
-
-<h2>バージョン推移</h2>
-
-<p>Preview 1 → Preview 2(WASI 0.2、モジュール化されComponent Model上に構築、<a href="/notes/wit.html">WIT</a>で定義された安定版) → Preview 3(WASI 0.3、2026年2月導入。WITの<code>stream&lt;T&gt;</code>/<code>future&lt;T&gt;</code>によるネイティブ非同期I/Oサポートを追加)。</p>
-
-<h2>セキュリティモデル</h2>
-
-<p>capability-basedサンドボックス。Wasmモジュール/コンポーネントは起動時に権限を一切持たず、ホスト側が明示的に許可した操作しか実行できない。</p>
-
-<h2>代表的なランタイム</h2>
-
-<p>Wasmtime、WasmEdge、WAMR、wazero(Go製)、Wasmer、wasmi/wasm3(組込向け軽量実装)など。</p>
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://wasi.dev/">Introduction · WASI.dev</a></li>
-<li><a href="https://eunomia.dev/blog/2025/02/16/wasi-and-the-webassembly-component-model-current-status/">WASI and the WebAssembly Component Model: Current Status</a></li>
-</ul>
-
-]]></description>
-</item>
-<item>
-<title>PGlite</title>
-<link>https://64p.org/notes/pglite.html</link>
-<guid isPermaLink="true">https://64p.org/notes/pglite.html</guid>
-<pubDate>Thu, 13 Aug 2026 00:41:00 +0900</pubDate>
-<description><![CDATA[<h1>PGlite</h1>
-
-<p><a href="/notes/postgresql.html">PostgreSQL</a>を<a href="/notes/wasm.html">WebAssembly</a>にコンパイルし、TypeScript/JavaScriptクライアントライブラリとしてパッケージ化したもの。ElectricSQLプロジェクトが開発している。ブラウザ・Node.js・Bun・Denoで動作し、gzip後3MB以下と軽量。</p>
-
-<p><a class="note-tag" href="/notes/tags/postgresql.html">#postgresql</a> <a class="note-tag" href="/notes/tags/wasm.html">#wasm</a> <a class="note-tag" href="/notes/tags/database.html">#database</a> <a class="note-tag" href="/notes/tags/javascript.html">#javascript</a></p>
-
-<h2>アーキテクチャ上の特徴</h2>
-
-<p>従来の「ブラウザでPostgresを動かす」系のプロジェクトはLinux仮想マシンをWasm上でエミュレートしてその中でPostgresを走らせる方式が多かったが、PGliteはLinux VMを使わず、Postgres自体を直接Wasmにコンパイルしている。単一ユーザー・単一コネクション向けの設計になっており、従来のマルチプロセス型Postgresとは前提が異なる。</p>
-
-<h2>基本的な使い方</h2>
-
-<pre><code class="javascript">import { PGlite } from "@electric-sql/pglite";
-const db = new PGlite();
-await db.query("select 'Hello world' as message;");
-</code></pre>
-
-<h2>永続化</h2>
-
-<ul>
-<li>インメモリ（一時利用向け、デフォルト）</li>
-<li>ファイルシステム（Node/Bun/Deno）: <code>new PGlite("./path/to/pgdata")</code></li>
-<li>IndexedDB（ブラウザ）: <code>new PGlite("idb://my-pgdata")</code></li>
-</ul>
-
-
-<h2>拡張機能</h2>
-
-<p><a href="/notes/pgvector.html">pgvector</a>やPostGISなど複数のPostgres拡張に対応する。</p>
-
-<h2>想定用途</h2>
-
-<ul>
-<li>テストごとに独立したPostgresインスタンスを立てるテスト環境</li>
-<li>サーバー不要なローカル開発・Web container統合</li>
-<li>ブラウザ内でpgvectorを使ったエッジAI・ローカルRAG</li>
-</ul>
-
-
-<h2>ライセンス</h2>
-
-<p>Apache 2.0とPostgreSQL Licenseのデュアルライセンス。</p>
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://pglite.dev/docs/about">What is PGlite | PGlite</a></li>
-<li><a href="https://github.com/electric-sql/pglite">GitHub - electric-sql/pglite</a></li>
 </ul>
 
 ]]></description>
