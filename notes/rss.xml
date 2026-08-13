@@ -6,7 +6,35 @@
 <atom:link href="https://64p.org/notes/rss.xml" rel="self" type="application/rss+xml" />
 <description>ちょっと調べたことや検証結果を、AIの力も借りながらメモしていくコーナーです。</description>
 <language>ja</language>
-<lastBuildDate>Thu, 13 Aug 2026 19:42:26 +0900</lastBuildDate>
+<lastBuildDate>Thu, 13 Aug 2026 19:48:26 +0900</lastBuildDate>
+<item>
+<title>炭素</title>
+<link>https://64p.org/notes/carbon.html</link>
+<guid isPermaLink="true">https://64p.org/notes/carbon.html</guid>
+<pubDate>Thu, 13 Aug 2026 19:48:00 +0900</pubDate>
+<description><![CDATA[<h1>炭素</h1>
+
+<p>原子番号6の非金属元素。元素記号 C。#chemistry</p>
+
+<h2>性質</h2>
+
+<ul>
+<li>最外殻(価電子)に4個の電子を持つ<a href="/notes/tetravalent-element.html">4価元素</a>。このため他の原子(炭素同士も含む)と単結合・二重結合・三重結合など多様な共有結合を安定して形成できる。この結合の自由度の高さが、<a href="/notes/organic-chemistry.html">有機化合物</a>の構造的多様性の源になっている。</li>
+<li>単体として複数の同素体(allotrope)を持ち、性質が大きく異なる。ダイヤモンドは透明で非常に硬く電気を通しにくいのに対し、黒鉛(グラファイト)は不透明で柔らかく電気を通しやすい。石炭のような無定形炭素(amorphous carbon)も存在する。</li>
+<li>他のどの元素よりも多くの化合物を形成することが知られている。</li>
+</ul>
+
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://www.britannica.com/science/carbon-chemical-element">Carbon | Facts, Uses, &amp; Properties | Britannica</a></li>
+<li><a href="https://www.samaterials.com/blog/carbon-element-properties-and-uses.html">Carbon: Element Properties and Uses</a></li>
+<li><a href="https://www.lenntech.com/periodic/elements/c.htm">Carbon &copy; - Chemical properties, Health and Environmental effects</a></li>
+</ul>
+
+]]></description>
+</item>
 <item>
 <title>有機化学</title>
 <link>https://64p.org/notes/organic-chemistry.html</link>
@@ -14,7 +42,7 @@
 <pubDate>Thu, 13 Aug 2026 19:42:00 +0900</pubDate>
 <description><![CDATA[<h1>有機化学</h1>
 
-<p>炭素原子を含む化合物(有機化合物)の組成・構造・性質・反応・合成を研究する化学の分野。#chemistry</p>
+<p><a href="/notes/carbon.html">炭素</a>原子を含む化合物(有機化合物)の組成・構造・性質・反応・合成を研究する化学の分野。#chemistry</p>
 
 <h2>定義・範囲</h2>
 
@@ -1600,61 +1628,6 @@ e^x = 1 + x + \frac{x^2}{2!} + \frac{x^3}{3!} + \cdots
 <li><a href="https://mathresearch.utsa.edu/wiki/index.php?title=Taylor_and_Maclaurin_Series">Taylor and Maclaurin Series - UTSA</a></li>
 <li><a href="https://courses.lumenlearning.com/calculus2/chapter/taylors-theorem-with-remainder/">Taylor&rsquo;s Theorem with Remainder and Convergence - Lumen Learning</a></li>
 <li><a href="https://www.parabola.unsw.edu.au/sites/default/files/2025-04/vol61_no1_7.pdf">An introduction to Taylor series and their applications - Parabola (UNSW)</a></li>
-</ul>
-
-]]></description>
-</item>
-<item>
-<title>勾配降下法</title>
-<link>https://64p.org/notes/gradient-descent.html</link>
-<guid isPermaLink="true">https://64p.org/notes/gradient-descent.html</guid>
-<pubDate>Thu, 13 Aug 2026 00:23:00 +0900</pubDate>
-<description><![CDATA[<h1>勾配降下法</h1>
-
-<p><a class="note-tag" href="/notes/tags/math.html">#math</a> <a class="note-tag" href="/notes/tags/machine-learning.html">#machine-learning</a></p>
-
-<p>微分可能な関数の（局所）最小値を反復計算で探す最適化アルゴリズム。機械学習で損失関数を最小化するパラメータを求める際の基本手法。</p>
-
-<div class="math-display">
-\theta_{t+1} = \theta_t - \eta \, \nabla f(\theta_t)
-</div>
-
-
-<p>勾配 <span class="math-inline">\nabla f</span> は<a href="/notes/derivative.html">微分</a>係数の多変数版（各変数での偏微分を並べたベクトル）で、「その点で関数が最も急に増える方向」を指す。その<strong>逆方向</strong>に少しずつ進めば関数値が下がっていく、というのが全体のアイデア。霧の中で山を下るとき、足元の傾きだけを頼りに一番急な下り方向へ一歩ずつ進むのに例えられる。</p>
-
-<h2>学習率</h2>
-
-<p>ステップ幅を決める係数 <span class="math-inline">\eta</span> を<strong>学習率</strong>と呼ぶ。代表的なハイパーパラメータで、トレードオフがある。</p>
-
-<ul>
-<li>小さすぎる — 収束までの反復回数が膨大になり学習が遅い</li>
-<li>大きすぎる — 最小値を飛び越えて振動・発散する</li>
-</ul>
-
-
-<h2>バリエーション</h2>
-
-<p>勾配を計算するときに使うデータ量で分類される。</p>
-
-<ul>
-<li><strong>バッチ勾配降下法</strong> — 全訓練データで勾配を計算。正確だが1ステップが重い</li>
-<li><strong>確率的勾配降下法（SGD）</strong> — 1サンプルだけで勾配を近似。1ステップが軽く、ノイズが局所解からの脱出に効くこともある</li>
-<li><strong>ミニバッチ勾配降下法</strong> — 小さなサブセットで勾配を近似する折衷案。深層学習の実務ではこれが標準</li>
-</ul>
-
-
-<p>学習率を自動調整する発展形として Momentum、AdaGrad、Adam などがある。</p>
-
-<h2>機械学習との関係</h2>
-
-<p>ニューラルネットワークの学習は「損失関数をパラメータで偏微分した勾配を誤差逆伝播法（backpropagation）で効率よく計算し、勾配降下法でパラメータを更新する」の反復。導関数が 0 になる点を解析的に解けない巨大な関数でも、勾配さえ計算できれば数値的に最小化へ向かえるのがポイント。</p>
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://builtin.com/data-science/gradient-descent">What Is Gradient Descent? - Built In</a></li>
-<li><a href="https://www.ibm.com/think/topics/learning-rate">What is Learning Rate in Machine Learning? - IBM</a></li>
-<li><a href="https://medium.com/munchy-bytes/navigating-the-learning-curve-gradient-descent-stochastic-gradient-descent-in-ml-e8ec03efa673">A Guide to Gradient Descent and Stochastic Gradient Descent - Medium</a></li>
 </ul>
 
 ]]></description>
