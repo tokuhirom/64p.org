@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>セマフォ - Notes - 64p.org</title>
+    <title>半導体 - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="alternate" type="application/rss+xml" title="Notes - 64p.org" href="/notes/rss.xml">
@@ -25,7 +25,7 @@
                 <ul class="notes-nav">
                                     <li><a href="/notes/tetravalent-element.html">4価元素・14族元素</a></li>
                                     <li><a href="/notes/silicon.html">シリコン</a></li>
-                                    <li><a href="/notes/semiconductor.html">半導体</a></li>
+                                    <li><a href="/notes/semiconductor.html" class="active">半導体</a></li>
                                     <li><a href="/notes/pn-junction.html">PN接合</a></li>
                                     <li><a href="/notes/peltier-element.html">ペルチェ素子</a></li>
                                     <li><a href="/notes/p-type-semiconductor.html">P型半導体</a></li>
@@ -285,7 +285,7 @@
                                     <li><a href="/notes/rta.html">RTA(Real Time Attack)</a></li>
                                     <li><a href="/notes/rta-in-japan.html">RTA in Japan(RiJ)</a></li>
                                     <li><a href="/notes/ruff.html">Ruff</a></li>
-                                    <li><a href="/notes/semaphore.html" class="active">セマフォ</a></li>
+                                    <li><a href="/notes/semaphore.html">セマフォ</a></li>
                                     <li><a href="/notes/mutex.html">ミューテックス(mutex)</a></li>
                                     <li><a href="/notes/xinu.html">Xinu</a></li>
                                     <li><a href="/notes/chicken-rice-japan.html">チキンライス(日本の洋食)</a></li>
@@ -401,42 +401,67 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>セマフォ</h1>
+                <h1>半導体</h1>
 
-<p>複数のプロセス/スレッドが並行動作する環境で、共有資源への同時アクセスを制御する仕組み。 <a class="note-tag" href="/notes/tags/concurrency.html">#concurrency</a> <a class="note-tag" href="/notes/tags/kernel.html">#kernel</a></p>
+<p>電気伝導性が導体と絶縁体の中間にあり、温度・光・電圧・不純物添加などの外部条件によって伝導性を制御できる物質。現代のエレクトロニクス(IC、トランジスタ、メモリ、パワーデバイスなど)の基盤となる材料区分。</p>
 
-<h2>仕組み</h2>
+<p><a class="note-tag" href="/notes/tags/electronics.html">#electronics</a> <a class="note-tag" href="/notes/tags/materials-science.html">#materials-science</a> <a class="note-tag" href="/notes/tags/moc.html">#moc</a></p>
 
-<p>共有メモリ上のカウンタとして実装される。カウンタの初期値は同時アクセスを許可する数。クリティカルセクション(共有資源を使う処理)に入る際にP操作(wait)でカウンタを-1し、処理終了時にV操作(signal)で+1する。カウンタが0のとき新たに入ろうとするプロセスは、カウンタが正の値に戻るまで待たされる。</p>
-
-<h2><a href="/notes/mutex.html">ミューテックス</a>との関係</h2>
-
-<p>資源数が1のセマフォ(バイナリセマフォ)は、実質的に<a href="/notes/mutex.html">ミューテックス</a>(mutex、排他ロック)と同じ。ミューテックスはセマフォの特殊ケースとみなせる。</p>
-
-<h2>位置づけ</h2>
-
-<p>排他制御(複数プロセスの共有資源への同時アクセスによる競合を防ぐ仕組み)を実現する代表的な手法のひとつ。OSやリアルタイムOS(RTOS)のカーネル機能として提供されることが多い。</p>
-
-<h2>出典</h2>
+<h2>基礎概念</h2>
 
 <ul>
-<li><a href="https://ja.wikipedia.org/wiki/%E3%82%BB%E3%83%9E%E3%83%95%E3%82%A9">セマフォ - Wikipedia</a></li>
-<li><a href="https://qiita.com/momotaro98/items/5e37eefc62d726a30aee">排他制御に関する用語を大雑把に理解しよう「ロックとセマフォ」「共有ロックと排他ロック」「楽観的ロックと悲観的ロック」 - Qiita</a></li>
-<li><a href="https://fielddesign.jp/technology/rtos/rtos_sem/">リアルタイムOSのセマフォ - フィールドデザイン</a></li>
-<li><a href="https://itmanabi.com/semaphore/">セマフォの仕組みを学んでみよう - ITの学び</a></li>
+<li><a href="/notes/bandgap.html">バンドギャップ</a> — 価電子帯と伝導帯の間のエネルギー差。金属・半導体・絶縁体を分ける基準であり、半導体材料ごとの特性差(耐圧・動作温度など)を決める指標</li>
+<li><a href="/notes/tetravalent-element.html">4価元素・14族元素</a> — シリコンなど代表的な半導体材料が属する元素グループ。価電子が4個であることがドーピングによる半導体化を可能にする</li>
+</ul>
+
+
+<h2>ドーピングと接合</h2>
+
+<ul>
+<li><a href="/notes/n-type-semiconductor.html">N型半導体</a> — 5価の不純物をドープし、自由電子を多数キャリアとする</li>
+<li><a href="/notes/p-type-semiconductor.html">P型半導体</a> — 3価の不純物をドープし、正孔を多数キャリアとする</li>
+<li><a href="/notes/pn-junction.html">PN接合</a> — N型とP型を接合してできる整流構造。ダイオード・トランジスタの基本構造</li>
+<li><a href="/notes/peltier-element.html">ペルチェ素子</a> — PN接合に電流を流すことで熱を移動させる熱電デバイス</li>
+</ul>
+
+
+<h2>材料ごとの半導体</h2>
+
+<p>バンドギャップの広さで用途が分かれる。</p>
+
+<ul>
+<li><a href="/notes/silicon.html">シリコン</a> — バンドギャップ約1.1 eV。安価・大量生産に向き、現行の半導体産業の主力材料</li>
+<li><a href="/notes/gallium-nitride.html">窒化ガリウム(GaN)</a> — バンドギャップ約3.4 eVの「ワイドバンドギャップ半導体」。高耐圧・高周波のパワーエレクトロニクス向け</li>
+<li><a href="/notes/diamond-semiconductor.html">ダイヤモンド半導体</a> — バンドギャップ約5.47 eVの「ウルトラワイドバンドギャップ半導体」。研究開発段階だが、より高耐圧・高温動作が期待される</li>
+</ul>
+
+
+<h2>応用デバイス</h2>
+
+<ul>
+<li><a href="/notes/nand-flash.html">NAND型フラッシュメモリ</a> — 半導体メモリの一種。SSD・USBメモリ・スマートフォンストレージなどで使われる不揮発性メモリ</li>
 </ul>
 
 
                                 <div class="notes-backlinks">
                     <h2>🔗 リンクされているノート</h2>
                     <ul>
-                                            <li><a href="/notes/mutex.html">ミューテックス(mutex)</a></li>
+                                            <li><a href="/notes/tetravalent-element.html">4価元素・14族元素</a></li>
+                                            <li><a href="/notes/nand-flash.html">NAND型フラッシュメモリ</a></li>
+                                            <li><a href="/notes/n-type-semiconductor.html">N型半導体</a></li>
+                                            <li><a href="/notes/pn-junction.html">PN接合</a></li>
+                                            <li><a href="/notes/p-type-semiconductor.html">P型半導体</a></li>
+                                            <li><a href="/notes/silicon.html">シリコン</a></li>
+                                            <li><a href="/notes/diamond-semiconductor.html">ダイヤモンド半導体</a></li>
+                                            <li><a href="/notes/bandgap.html">バンドギャップ</a></li>
+                                            <li><a href="/notes/peltier-element.html">ペルチェ素子</a></li>
+                                            <li><a href="/notes/gallium-nitride.html">窒化ガリウム(GaN)</a></li>
                     
                     </ul>
                 </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-10 19:08 / 更新日時: 2026-08-10 19:08</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=%E3%82%BB%E3%83%9E%E3%83%95%E3%82%A9&url=https%3A%2F%2F64p.org%2Fnotes%2Fsemaphore.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <span>作成日時: 2026-08-14 05:54 / 更新日時: 2026-08-14 05:54</span>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=%E5%8D%8A%E5%B0%8E%E4%BD%93&url=https%3A%2F%2F64p.org%2Fnotes%2Fsemiconductor.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">

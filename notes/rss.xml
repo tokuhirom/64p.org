@@ -6,7 +6,55 @@
 <atom:link href="https://64p.org/notes/rss.xml" rel="self" type="application/rss+xml" />
 <description>ちょっと調べたことや検証結果を、AIの力も借りながらメモしていくコーナーです。</description>
 <language>ja</language>
-<lastBuildDate>Fri, 14 Aug 2026 05:47:23 +0900</lastBuildDate>
+<lastBuildDate>Fri, 14 Aug 2026 05:54:09 +0900</lastBuildDate>
+<item>
+<title>半導体</title>
+<link>https://64p.org/notes/semiconductor.html</link>
+<guid isPermaLink="true">https://64p.org/notes/semiconductor.html</guid>
+<pubDate>Fri, 14 Aug 2026 05:54:00 +0900</pubDate>
+<description><![CDATA[<h1>半導体</h1>
+
+<p>電気伝導性が導体と絶縁体の中間にあり、温度・光・電圧・不純物添加などの外部条件によって伝導性を制御できる物質。現代のエレクトロニクス(IC、トランジスタ、メモリ、パワーデバイスなど)の基盤となる材料区分。</p>
+
+<p><a class="note-tag" href="/notes/tags/electronics.html">#electronics</a> <a class="note-tag" href="/notes/tags/materials-science.html">#materials-science</a> <a class="note-tag" href="/notes/tags/moc.html">#moc</a></p>
+
+<h2>基礎概念</h2>
+
+<ul>
+<li><a href="/notes/bandgap.html">バンドギャップ</a> — 価電子帯と伝導帯の間のエネルギー差。金属・半導体・絶縁体を分ける基準であり、半導体材料ごとの特性差(耐圧・動作温度など)を決める指標</li>
+<li><a href="/notes/tetravalent-element.html">4価元素・14族元素</a> — シリコンなど代表的な半導体材料が属する元素グループ。価電子が4個であることがドーピングによる半導体化を可能にする</li>
+</ul>
+
+
+<h2>ドーピングと接合</h2>
+
+<ul>
+<li><a href="/notes/n-type-semiconductor.html">N型半導体</a> — 5価の不純物をドープし、自由電子を多数キャリアとする</li>
+<li><a href="/notes/p-type-semiconductor.html">P型半導体</a> — 3価の不純物をドープし、正孔を多数キャリアとする</li>
+<li><a href="/notes/pn-junction.html">PN接合</a> — N型とP型を接合してできる整流構造。ダイオード・トランジスタの基本構造</li>
+<li><a href="/notes/peltier-element.html">ペルチェ素子</a> — PN接合に電流を流すことで熱を移動させる熱電デバイス</li>
+</ul>
+
+
+<h2>材料ごとの半導体</h2>
+
+<p>バンドギャップの広さで用途が分かれる。</p>
+
+<ul>
+<li><a href="/notes/silicon.html">シリコン</a> — バンドギャップ約1.1 eV。安価・大量生産に向き、現行の半導体産業の主力材料</li>
+<li><a href="/notes/gallium-nitride.html">窒化ガリウム(GaN)</a> — バンドギャップ約3.4 eVの「ワイドバンドギャップ半導体」。高耐圧・高周波のパワーエレクトロニクス向け</li>
+<li><a href="/notes/diamond-semiconductor.html">ダイヤモンド半導体</a> — バンドギャップ約5.47 eVの「ウルトラワイドバンドギャップ半導体」。研究開発段階だが、より高耐圧・高温動作が期待される</li>
+</ul>
+
+
+<h2>応用デバイス</h2>
+
+<ul>
+<li><a href="/notes/nand-flash.html">NAND型フラッシュメモリ</a> — 半導体メモリの一種。SSD・USBメモリ・スマートフォンストレージなどで使われる不揮発性メモリ</li>
+</ul>
+
+]]></description>
+</item>
 <item>
 <title>日本企業のAI導入の遅れ</title>
 <link>https://64p.org/notes/japan-ai-adoption-lag.html</link>
@@ -71,45 +119,16 @@
 
 <p>シリコンは低コスト・低〜中耐圧用途で経済的に優れる一方、バンドギャップが狭いため高耐圧・高温動作には向かない。より広いバンドギャップを持つ<a href="/notes/gallium-nitride.html">窒化ガリウム(GaN)</a>や<a href="/notes/diamond-semiconductor.html">ダイヤモンド半導体</a>は、シリコンでは扱いにくい高耐圧・高周波・高温領域を担う位置づけになる。</p>
 
+<h2><a href="/notes/semiconductor.html">半導体</a>の中での位置づけ</h2>
+
+<p>バンドギャップが約1.1 eVと中庸で、安価・大量生産に向くため現行の半導体産業の主力材料になっている。GaN・ダイヤモンド半導体など広バンドギャップ材料との比較基準にもなる。</p>
+
 <h2>出典</h2>
 
 <ul>
 <li><a href="https://www.electrical4u.com/silicon-semiconductor/">Silicon Semiconductor: Properties, Applications, and Advantages | Electrical4U</a></li>
 <li><a href="https://www.samaterials.com/content/essential-electronic-materials-silicon.html">Essential Electronic Materials: Part 1 - Silicon</a></li>
 <li><a href="https://www.carboncollective.co/sustainable-investing/silicon-si">Silicon (Si) | Properties, Usage, Advantages, &amp; Disadvantages</a></li>
-</ul>
-
-]]></description>
-</item>
-<item>
-<title>NEDO(新エネルギー・産業技術総合開発機構)</title>
-<link>https://64p.org/notes/nedo.html</link>
-<guid isPermaLink="true">https://64p.org/notes/nedo.html</guid>
-<pubDate>Fri, 14 Aug 2026 05:39:00 +0900</pubDate>
-<description><![CDATA[<h1>NEDO(新エネルギー・産業技術総合開発機構)</h1>
-
-<p>日本のエネルギー・地球環境問題への対応と産業技術力の強化を目的とする国立研究開発法人。英語名 New Energy and Industrial Technology Development Organization の略称。 <a class="note-tag" href="/notes/tags/japan.html">#japan</a> <a class="note-tag" href="/notes/tags/industry.html">#industry</a></p>
-
-<h2>概要</h2>
-
-<ul>
-<li>1980年10月1日に設立。2003年10月1日に独立行政法人として再編された</li>
-<li>本部は東京都外、神奈川県川崎市に所在</li>
-<li>職員数は約1,000人。国内に北海道・関西・九州の事務所、海外にワシントンD.C.・シリコンバレー・パリ・北京・バンコク・ジャカルタ・ニューデリーの拠点を持つ</li>
-<li>2024年度の予算規模は約1兆4,631億円で、日本最大級の独立行政法人とされる</li>
-</ul>
-
-
-<h2>役割</h2>
-
-<p>自らが研究者を抱えるのではなく、産官学の技術力・研究力を橋渡し・統合する「イノベーション加速機関」として、委託事業や補助金を通じて技術開発を支援する立場をとる。エネルギー・環境分野に加え、半導体などの産業技術分野の開発プロジェクトも手がける(<a href="/notes/diamond-semiconductor.html">ダイヤモンド半導体</a>の国家プロジェクトなど)。</p>
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://www.nedo.go.jp/english/introducing/introducing_index.html">About NEDO | NEDO</a></li>
-<li><a href="https://en.wikipedia.org/wiki/New_Energy_and_Industrial_Technology_Development_Organization">New Energy and Industrial Technology Development Organization - Wikipedia</a></li>
-<li><a href="https://www.nedo.go.jp/english/introducing/introducing_profile.html">Background Information | NEDO</a></li>
 </ul>
 
 ]]></description>
@@ -140,6 +159,10 @@
 <h2>他の半導体材料との位置づけ</h2>
 
 <p>パワーエレクトロニクス用途では、シリコン・SiC(炭化ケイ素)・GaNがそれぞれ異なる強みを持つ。シリコンは低コストな低耐圧用途で依然として経済的な選択肢であり、SiCは1200V超級の高耐圧システム(電気自動車のトラクションインバータなど)に強い。GaNはその中間から高周波領域で強みを発揮する。さらにバンドギャップが広い<a href="/notes/diamond-semiconductor.html">ダイヤモンド半導体</a>(約5.47 eV)は、GaNやSiCを上回るウルトラワイドバンドギャップ材料として研究段階にある。</p>
+
+<h2><a href="/notes/semiconductor.html">半導体</a>の中での位置づけ</h2>
+
+<p>シリコンより広いバンドギャップを持つ「ワイドバンドギャップ半導体」の代表例。高耐圧・高周波のパワーエレクトロニクス向け。</p>
 
 <h2>出典</h2>
 
@@ -183,12 +206,49 @@
 
 <p>半導体全般のバンドギャップはおおむね0.5〜3.5 eV程度の範囲に収まるとされ、この範囲の広さがそのまま用途の違い(低耐圧・省電力向けか、高耐圧・高温動作向けか)につながる。</p>
 
+<h2><a href="/notes/semiconductor.html">半導体</a>の中での位置づけ</h2>
+
+<p>半導体を導体・絶縁体と区別する基準であり、材料ごとの特性差を決める基礎概念。</p>
+
 <h2>出典</h2>
 
 <ul>
 <li><a href="https://en.wikipedia.org/wiki/Band_gap">Band gap - Wikipedia</a></li>
 <li><a href="https://www.waferworld.com/post/band-gap-in-semiconductors-all-you-need-to-know">Band Gap in Semiconductors: All You Need to Know - Waferworld</a></li>
 <li><a href="https://www.nuclear-power.com/nuclear-engineering/radiation-detection/semiconductor-detectors/what-are-semiconductors-properties-of-semiconductors/conduction-and-valence-band-in-semiconductors/">Conduction and Valence Band in Semiconductors | nuclear-power.com</a></li>
+</ul>
+
+]]></description>
+</item>
+<item>
+<title>NEDO(新エネルギー・産業技術総合開発機構)</title>
+<link>https://64p.org/notes/nedo.html</link>
+<guid isPermaLink="true">https://64p.org/notes/nedo.html</guid>
+<pubDate>Fri, 14 Aug 2026 05:39:00 +0900</pubDate>
+<description><![CDATA[<h1>NEDO(新エネルギー・産業技術総合開発機構)</h1>
+
+<p>日本のエネルギー・地球環境問題への対応と産業技術力の強化を目的とする国立研究開発法人。英語名 New Energy and Industrial Technology Development Organization の略称。 <a class="note-tag" href="/notes/tags/japan.html">#japan</a> <a class="note-tag" href="/notes/tags/industry.html">#industry</a></p>
+
+<h2>概要</h2>
+
+<ul>
+<li>1980年10月1日に設立。2003年10月1日に独立行政法人として再編された</li>
+<li>本部は東京都外、神奈川県川崎市に所在</li>
+<li>職員数は約1,000人。国内に北海道・関西・九州の事務所、海外にワシントンD.C.・シリコンバレー・パリ・北京・バンコク・ジャカルタ・ニューデリーの拠点を持つ</li>
+<li>2024年度の予算規模は約1兆4,631億円で、日本最大級の独立行政法人とされる</li>
+</ul>
+
+
+<h2>役割</h2>
+
+<p>自らが研究者を抱えるのではなく、産官学の技術力・研究力を橋渡し・統合する「イノベーション加速機関」として、委託事業や補助金を通じて技術開発を支援する立場をとる。エネルギー・環境分野に加え、半導体などの産業技術分野の開発プロジェクトも手がける(<a href="/notes/diamond-semiconductor.html">ダイヤモンド半導体</a>の国家プロジェクトなど)。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://www.nedo.go.jp/english/introducing/introducing_index.html">About NEDO | NEDO</a></li>
+<li><a href="https://en.wikipedia.org/wiki/New_Energy_and_Industrial_Technology_Development_Organization">New Energy and Industrial Technology Development Organization - Wikipedia</a></li>
+<li><a href="https://www.nedo.go.jp/english/introducing/introducing_profile.html">Background Information | NEDO</a></li>
 </ul>
 
 ]]></description>
@@ -228,6 +288,10 @@
 <p>一方、<a href="/notes/n-type-semiconductor.html">n型</a>ダイヤモンドの実現が難しく、これがバイポーラデバイス開発のボトルネックになっている。ドーピングプロセス自体も複雑でコストが高い。実際の製品化までは、少なくともあと5年程度かかると見られている。</p>
 
 <p>日本では経済産業省・<a href="/notes/nedo.html">NEDO</a>などが国家プロジェクトとして開発を後押ししている分野でもある。</p>
+
+<h2><a href="/notes/semiconductor.html">半導体</a>の中での位置づけ</h2>
+
+<p>GaNやSiCよりさらに広いバンドギャップを持つ「ウルトラワイドバンドギャップ半導体」。研究開発段階だが、より高耐圧・高温動作の実現が期待される。</p>
 
 <h2>出典</h2>
 
@@ -1315,35 +1379,6 @@ graph LR
 <li><a href="https://www.britannica.com/science/carbon-chemical-element">Carbon | Facts, Uses, &amp; Properties | Britannica</a></li>
 <li><a href="https://www.samaterials.com/blog/carbon-element-properties-and-uses.html">Carbon: Element Properties and Uses</a></li>
 <li><a href="https://www.lenntech.com/periodic/elements/c.htm">Carbon &copy; - Chemical properties, Health and Environmental effects</a></li>
-</ul>
-
-]]></description>
-</item>
-<item>
-<title>有機化学</title>
-<link>https://64p.org/notes/organic-chemistry.html</link>
-<guid isPermaLink="true">https://64p.org/notes/organic-chemistry.html</guid>
-<pubDate>Thu, 13 Aug 2026 19:42:00 +0900</pubDate>
-<description><![CDATA[<h1>有機化学</h1>
-
-<p><a href="/notes/carbon.html">炭素</a>原子を含む化合物(有機化合物)の組成・構造・性質・反応・合成を研究する化学の分野。#chemistry</p>
-
-<h2>定義・範囲</h2>
-
-<ul>
-<li>有機化合物は炭素を骨格とし、多くは水素も含むが、窒素・酸素・ハロゲン・リン・ケイ素・硫黄など他の元素を含むこともある。</li>
-<li>炭素は他の原子と3次元的に多様な形で結合できる特異な性質を持ち、これが有機化合物の構造的多様性の源になっている。</li>
-<li>歴史的には「生物によって作られる化合物」の研究として始まったが、現在ではプラスチックなど人工的に合成された物質も含む範囲に拡大している。</li>
-<li>化合物の種類・構造ともに極めて多様なため、有機化学は化学の中でも最大の専門分野とされる。石鹸、プラスチック製品、香水、食品添加物など、身の回りの消費財の多くが有機化学と関わっている。</li>
-</ul>
-
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://www.britannica.com/science/organic-chemistry">Organic chemistry | Britannica</a></li>
-<li><a href="https://www.acs.org/careers/chemical-sciences/areas/organic-chemistry.html">Organic Chemistry - American Chemical Society</a></li>
-<li><a href="https://www.merriam-webster.com/dictionary/organic%20chemistry">ORGANIC CHEMISTRY Definition &amp; Meaning - Merriam-Webster</a></li>
 </ul>
 
 ]]></description>
