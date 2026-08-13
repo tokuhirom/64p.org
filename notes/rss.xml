@@ -6,7 +6,99 @@
 <atom:link href="https://64p.org/notes/rss.xml" rel="self" type="application/rss+xml" />
 <description>ちょっと調べたことや検証結果を、AIの力も借りながらメモしていくコーナーです。</description>
 <language>ja</language>
-<lastBuildDate>Fri, 14 Aug 2026 08:09:31 +0900</lastBuildDate>
+<lastBuildDate>Fri, 14 Aug 2026 08:14:08 +0900</lastBuildDate>
+<item>
+<title>systemd-journaldの過剰なI/O</title>
+<link>https://64p.org/notes/systemd-journald-excessive-io.html</link>
+<guid isPermaLink="true">https://64p.org/notes/systemd-journald-excessive-io.html</guid>
+<pubDate>Fri, 14 Aug 2026 08:14:00 +0900</pubDate>
+<description><![CDATA[<h1>systemd-journaldの過剰なI/O</h1>
+
+<p>systemd-journaldはsystemdのログ収集デーモンで、ログをテキストのsyslog形式ではなく独自のバイナリ形式(journal file)でディスクに書き込む。この形式・書き込み方式が原因で、実際のログ出力量に対して不釣り合いに大きなディスクI/Oが発生することがある。</p>
+
+<h2>報告されている事例</h2>
+
+<p><a href="https://github.com/systemd/systemd/issues/40262">systemd/systemd#40262</a>(2026年1月3日、報告者XANi)では、Debian 13・systemd 257.9・XFS上のVMで、1秒あたり2行程度のログ書き込みに対して約50 IOPSが観測されたと報告されている。従来のsyslogでの書き込みと比べて桁違いに大きいI/O負荷になっているという指摘。</p>
+
+<p>報告者は同種の過去のIssue(iotopの測定精度不足として却下されたもの)を踏まえた上で、カーネルレベルの計測を含めても journal のフォーマット自体が非効率であると主張している。挙げられている論点は次の2点。</p>
+
+<ul>
+<li>実際に書き込まれるログのデータ量に対し、journalファイルのサイズが数倍に膨らむ</li>
+<li>不正シャットダウン時にjournalファイルが破損しやすい</li>
+</ul>
+
+
+<p>本Issueは2026年8月時点でOpen(未解決)、<code>bug</code>・<code>journal</code>ラベルが付いている。</p>
+
+<p><a class="note-tag" href="/notes/tags/systemd.html">#systemd</a> <a class="note-tag" href="/notes/tags/logging.html">#logging</a></p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://github.com/systemd/systemd/issues/40262">Excessive IO caused by systemd-journald · Issue #40262 · systemd/systemd</a></li>
+</ul>
+
+]]></description>
+</item>
+<item>
+<title>PiにおけるCompaction(会話履歴圧縮)</title>
+<link>https://64p.org/notes/compaction-in-pi.html</link>
+<guid isPermaLink="true">https://64p.org/notes/compaction-in-pi.html</guid>
+<pubDate>Fri, 14 Aug 2026 08:14:00 +0900</pubDate>
+<description><![CDATA[<h1>PiにおけるCompaction(会話履歴圧縮)</h1>
+
+<p><a href="https://github.com/earendil-works/pi">Pi</a>は earendil-works が開発しているAIエージェントツールキットで、統一LLM API・agent loop・TUI・コーディングエージェントCLIから構成される。Claude CodeやCodexと似た立ち位置のコーディングエージェントで、npmパッケージ<code>@earendil-works/pi-coding-agent</code>として配布されている。</p>
+
+<p>以下は<a href="https://earendil.com/posts/compaction-in-pi/">Compaction in Pi</a>という記事の内容整理。</p>
+
+<h2>課題: コンテキストウィンドウの上限</h2>
+
+<p>LLMには一度に処理できる入力トークン数の上限(コンテキストウィンドウ)がある。コーディングエージェントとの対話ではシステムプロンプト・ツール定義・会話履歴が毎ターン蓄積していき、いずれこの上限に達する。</p>
+
+<p>上限に達したときの選択肢は基本的に2つ。</p>
+
+<ol>
+<li>新しい空の会話を開始する(それまでの文脈を失う)</li>
+<li>会話内容を圧縮した表現に置き換える(<strong>Compaction</strong>)</li>
+</ol>
+
+
+<h2>Piの圧縮方式</h2>
+
+<ul>
+<li>古い会話履歴に達すると自動的にトリガーされるほか、<code>/compact</code>コマンドで手動でも実行できる。デフォルトのトークン予算(2万トークン程度)は、会話のおよそ5〜20ターン分に相当する。</li>
+<li>圧縮対象となる古いターンをまとめて抽出・直列化し、要約する。直近の数ターンは圧縮せずそのまま残す。</li>
+<li>圧縮は通常の会話ターンとは別の、専用のリクエストとして実行される。
+
+<ul>
+<li>システムプロンプトも通常時の「コーディングアシスタント」用ではなく、「コンテキスト要約アシスタント」用の別のものを使う。</li>
+<li>出力は「目標」「進捗」「重要な決定」といったセクション構成を持つ要約として指定される。</li>
+<li>既存の会話履歴をそのまま引き継がないスタンドアロンなリクエストのため、要約自体を通常の対話と異なるLLMモデルで処理することもできる。</li>
+</ul>
+</li>
+<li>圧縮結果はプレーンテキストとしてセッションに追加保存される。プレーンテキストであることで、人間が読めることと、異なるモデル間での可搬性が保たれる。</li>
+</ul>
+
+
+<h2>プロンプトキャッシングとの相互作用</h2>
+
+<p>LLMプロバイダの<a href="https://www.anthropic.com/news/prompt-caching">プロンプトキャッシング</a>は、繰り返しリクエストされる入力のプレフィックスをキャッシュしてコストを下げる機能。Compactionを実行すると会話履歴のプレフィックスが変わるため、それまで蓄積していたキャッシュは無効化される。圧縮後の新しいプレフィックスは、以降のターンで改めてキャッシュの恩恵を受ける形になる。</p>
+
+<h2>考えたこと</h2>
+
+<p>Claude Codeでも長時間セッションで自動的に文脈が要約される仕組みがあり(このセッション自体もその挙動に依存している)、Piの実装はその一般的なパターンを外部から観測・言語化したものと言える。圧縮を「通常会話とは別のスタンドアロンリクエスト」として切り出す設計は、要約専用に安いモデルを割り当てたり、圧縮プロンプトだけを独立にチューニングできる点で理にかなっている。</p>
+
+<p><a class="note-tag" href="/notes/tags/llm.html">#llm</a> <a class="note-tag" href="/notes/tags/ai-agent.html">#ai-agent</a> <a class="note-tag" href="/notes/tags/context-window.html">#context-window</a></p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://earendil.com/posts/compaction-in-pi/">Compaction in Pi</a></li>
+<li><a href="https://github.com/earendil-works/pi">earendil-works/pi (GitHub)</a></li>
+</ul>
+
+]]></description>
+</item>
 <item>
 <title>Kubernetes on Oxide</title>
 <link>https://64p.org/notes/kubernetes-on-oxide.html</link>
@@ -1338,83 +1430,6 @@
 <li><a href="https://en.wikipedia.org/wiki/Flaky_test">Flaky test - Wikipedia</a></li>
 <li><a href="https://www.datadoghq.com/knowledge-center/flaky-tests/">What is a Flaky Test? Causes, Identification &amp; Remediation | Datadog</a></li>
 <li><a href="https://www.jetbrains.com/teamcity/ci-cd-guide/concepts/flaky-tests/">What are Flaky Tests? | TeamCity CI/CD Guide | JetBrains</a></li>
-</ul>
-
-]]></description>
-</item>
-<item>
-<title>Playwright</title>
-<link>https://64p.org/notes/playwright.html</link>
-<guid isPermaLink="true">https://64p.org/notes/playwright.html</guid>
-<pubDate>Thu, 13 Aug 2026 21:20:00 +0900</pubDate>
-<description><![CDATA[<h1>Playwright</h1>
-
-<p>Microsoftが開発しているオープンソースのブラウザ自動化・E2Eテストフレームワーク。2020年リリース。Chromium・Firefox・WebKitの3エンジンを単一のAPIで操作できる。Node.js/Python/Java/.NETなど複数言語向けのライブラリが提供されている。</p>
-
-<h2>特徴</h2>
-
-<ul>
-<li><strong>自動待機(auto-waiting)</strong> — 要素が操作可能になるまで自動的に待つため、<a href="/notes/flaky-test.html">flaky(不安定)なテスト</a>を減らせる</li>
-<li><strong>アサーションの自動リトライ</strong> — 条件が満たされるまで再試行する</li>
-<li><strong>ネットワークインターセプト</strong> — リクエスト/レスポンスを傍受・モックできる</li>
-<li><strong>ブラウザコンテキストの分離</strong>と<strong>並列実行</strong>により高速・大規模なテストスイートを実現できる</li>
-<li>ヘッドレス実行に対応</li>
-</ul>
-
-
-<h2>用途</h2>
-
-<p>実際のブラウザを操作してナビゲーション・クリック・フォーム送信・UI検証などのユーザー操作をプログラムから再現する。クロスブラウザでのE2Eテストのほか、Chrome DevTools Protocol (CDP) 経由の汎用ブラウザ自動化ツールとしても使われる。<a href="/notes/herdr-browser.html">herdr-browser</a>がCDPツールの例として言及している。</p>
-
-<p><a class="note-tag" href="/notes/tags/testing.html">#testing</a> <a class="note-tag" href="/notes/tags/browser-automation.html">#browser-automation</a></p>
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://github.com/microsoft/playwright">GitHub - microsoft/playwright</a></li>
-<li><a href="https://www.checklyhq.com/docs/learn/playwright/what-is-playwright/">Beginner&rsquo;s Guide to Playwright Automation - Checkly Docs</a></li>
-<li><a href="https://www.browserstack.com/guide/playwright-tutorial">Playwright Automation Framework: Tutorial [2026] | BrowserStack</a></li>
-</ul>
-
-]]></description>
-</item>
-<item>
-<title>昭和仮面ライダーの悪の組織の系譜</title>
-<link>https://64p.org/notes/showa-rider-evil-organizations.html</link>
-<guid isPermaLink="true">https://64p.org/notes/showa-rider-evil-organizations.html</guid>
-<pubDate>Thu, 13 Aug 2026 20:54:00 +0900</pubDate>
-<description><![CDATA[<h1>昭和仮面ライダーの悪の組織の系譜</h1>
-
-<p><a class="note-tag" href="/notes/tags/tokusatsu.html">#tokusatsu</a> <a class="note-tag" href="/notes/tags/kamen-rider.html">#kamen-rider</a></p>
-
-<p>昭和の仮面ライダーシリーズでは作品ごとに敵の秘密結社が入れ替わるが、初期3組織は同一の首領が率いているという連続性がある。</p>
-
-<div class="mermaid">
-graph LR
-    S[ショッカー&lt;br&gt;仮面ライダー 前半] --&gt; G[ゲルショッカー&lt;br&gt;仮面ライダー 後半]
-    G --&gt; D["デストロン&lt;br&gt;仮面ライダーV3"]
-</div>
-
-
-<ul>
-<li><strong>ショッカー</strong> — 『仮面ライダー』(1971年)の敵。ナチス残党という設定の、世界征服を目的とする秘密結社。第79話で壊滅。</li>
-<li><strong>ゲルショッカー</strong> — ショッカー壊滅後、首領が再建した後継組織。『仮面ライダー』最終回で壊滅。</li>
-<li><strong><a href="/notes/destron.html">デストロン</a></strong> — ゲルショッカー壊滅後、同じ首領が結成。<a href="/notes/kamen-rider-v3.html">仮面ライダーV3</a>の敵。</li>
-</ul>
-
-
-<p>首領の正体は昭和シリーズの映像作品中では明かされずじまいで、各作品の最終回で骸骨や一つ目の怪物といった「姿」を見せてもなお正体は謎のまま、という引きが繰り返された。</p>
-
-<h2>岩石大首領による後付けの統合</h2>
-
-<p>その後のシリーズの敵組織(『X』のGOD、『アマゾン』のゲドン・ガランダー帝国、『ストロンガー』のブラックサタン・デルザー軍団)は表向き別組織だが、『仮面ライダーストロンガー』最終話で登場した岩石大首領が「ショッカーからデルザー軍団までを操っていた黒幕」であることが明かされ、昭和第1期シリーズの敵組織はすべて同一の大首領の支配下にあったと統合された。</p>
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://ja.wikipedia.org/wiki/%E3%82%B7%E3%83%A7%E3%83%83%E3%82%AB%E3%83%BC%E9%A6%96%E9%A0%98">ショッカー首領 - Wikipedia</a></li>
-<li><a href="https://ja.wikipedia.org/wiki/%E3%82%B7%E3%83%A7%E3%83%83%E3%82%AB%E3%83%BC">ショッカー - Wikipedia</a></li>
-<li><a href="https://ja.wikipedia.org/wiki/%E3%82%B2%E3%83%AB%E3%82%B7%E3%83%A7%E3%83%83%E3%82%AB%E3%83%BC">ゲルショッカー - Wikipedia</a></li>
 </ul>
 
 ]]></description>
