@@ -6,7 +6,57 @@
 <atom:link href="https://64p.org/notes/rss.xml" rel="self" type="application/rss+xml" />
 <description>ちょっと調べたことや検証結果を、AIの力も借りながらメモしていくコーナーです。</description>
 <language>ja</language>
-<lastBuildDate>Fri, 14 Aug 2026 01:23:47 +0900</lastBuildDate>
+<lastBuildDate>Fri, 14 Aug 2026 04:59:08 +0900</lastBuildDate>
+<item>
+<title>おでん</title>
+<link>https://64p.org/notes/oden.html</link>
+<guid isPermaLink="true">https://64p.org/notes/oden.html</guid>
+<pubDate>Fri, 14 Aug 2026 04:59:00 +0900</pubDate>
+<description><![CDATA[<h1>おでん</h1>
+
+<p>大根・卵・練り物・こんにゃくなどの具材を、だし汁でじっくり煮込む日本の料理。#food <a class="note-tag" href="/notes/tags/japan.html">#japan</a></p>
+
+<h2>由来</h2>
+
+<p>ルーツは室町時代に流行した「豆腐田楽（とうふでんがく）」。豆腐を串に刺して焼き、味噌を塗って食べる料理で、平安時代にはすでに原型が存在したとする説もある。</p>
+
+<p>名前の「おでん」は、この「田楽（でんがく）」を指す女房言葉（室町時代から宮中に仕える女房が使い始めた言葉）に由来する。「田楽」の「田」を「でん」と読み、丁寧語の接頭辞「お」を付けて「お田（おでん）」となった。</p>
+
+<p>江戸時代に入ると、串に刺した豆腐やこんにゃくを煮込む「煮込み田楽」へと変化し、屋台で食べるファストフードとして江戸庶民に広まった。「田楽」と「おでん」はこの過程で分化し、串を焼いて味噌を塗るものを「田楽」、煮込むものを「おでん」と呼び分けるようになった。</p>
+
+<h2>地域による違い</h2>
+
+<p>出汁・醤油の系統や練り物の産地の違いから、地域ごとに味付けや具材が大きく異なる。</p>
+
+<ul>
+<li><strong>関東</strong>: 濃口醤油ベースの、色の濃い出汁。</li>
+<li><strong>関西</strong>: 昆布や薄口醤油を使った、上品な色の出汁。</li>
+<li><strong>静岡おでん</strong>: 牛すじと濃口醤油による黒い出汁が特徴。黒はんぺん・なると巻・牛すじ・豚もつなどを串に刺して煮込み、だし粉と青のりをかけて食べる。</li>
+<li><strong>愛知（味噌おでん）</strong>: 八丁味噌と三温糖などで作る甘辛い汁で煮込む。豚もつ・牛すじ・大根・角麩などが具材。</li>
+</ul>
+
+
+<h2>コンビニおでん</h2>
+
+<p>1979年頃、コンビニエンスストアで調理済みおでんの販売が始まった。当初は練り物中心の具材構成だったが、その後具材の種類が数十種類に増え、地域限定の具材を扱う店舗も現れた。</p>
+
+<p>コンビニおでんは海外にも展開しており、1997年にはローソンが上海で販売を開始し中国進出の先駆けとなった。韓国には戦前の日本から串おでんの形式が伝わり、現在では「オデン（어묵/오뎅）」として韓国のストリートフードの一部になっている。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://www.kibun.co.jp/knowledge/oden/history/rekishi/index.html">歴史：おでんの歴史 | おでん教室 | 紀文アカデミー | 紀文食品</a></li>
+<li><a href="https://ja.wikipedia.org/wiki/%E3%81%8A%E3%81%A7%E3%82%93">おでん - Wikipedia</a></li>
+<li><a href="https://watobi.jp/word/5658.html">「おでん」の由来 ｜ WA・TO・BI - 和食の扉 -</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Oden">Oden - Wikipedia (English)</a></li>
+<li><a href="https://www.yamaki.co.jp/katsuobushi-plus/news/202312_oden/">多彩な日本各地のおでん。地方ごとの味わいの違いをご紹介！</a></li>
+<li><a href="https://nihonumai.com/oden-regional-flavors/">地域でこんなに違う！「おでん」の種と出汁の東西格差と、知られざる味噌文化 | 日本のうまいもの</a></li>
+<li><a href="https://intojapanwaraku.com/rock/culture-rock/29047/">コンビニおでんの意外なルーツ！おでんと茶の湯との関係とは？ ｜ 和樂web</a></li>
+<li><a href="https://hitomono-gatari.com/oden/">おでんのルーツ！変わり種具材と地域差！コンビニではいつから？ | ルーツアーカイブ</a></li>
+</ul>
+
+]]></description>
+</item>
 <item>
 <title>セキュリティ運用</title>
 <link>https://64p.org/notes/security-operations.html</link>
@@ -1395,55 +1445,6 @@ Content-length: 25
 <li><a href="https://www.embulk.org/">Embulk 公式サイト</a></li>
 <li><a href="https://github.com/embulk/embulk">embulk/embulk - GitHub</a></li>
 <li><a href="https://en.wikipedia.org/wiki/Treasure_Data">Treasure Data - Wikipedia</a></li>
-</ul>
-
-]]></description>
-</item>
-<item>
-<title>dbt (data build tool)</title>
-<link>https://64p.org/notes/dbt.html</link>
-<guid isPermaLink="true">https://64p.org/notes/dbt.html</guid>
-<pubDate>Thu, 13 Aug 2026 12:59:00 +0900</pubDate>
-<description><![CDATA[<h1>dbt (data build tool)</h1>
-
-<p>ELT (Extract-Load-Transform) パイプラインの「T (変換)」部分を担うオープンソースのデータ変換フレームワーク。開発元はdbt Labs(旧Fishtown Analytics)。データの抽出・ロードは行わず、既にウェアハウスにロード済みのデータに対する変換処理に特化している。</p>
-
-<p><a class="note-tag" href="/notes/tags/data-engineering.html">#data-engineering</a> <a class="note-tag" href="/notes/tags/sql.html">#sql</a> <a class="note-tag" href="/notes/tags/rust.html">#rust</a></p>
-
-<h2>中核的な仕組み</h2>
-
-<ul>
-<li>アナリストやエンジニアがSQLの<code>SELECT</code>文(またはPython DataFrame)でビジネスロジックを記述すると、dbtがそれをテーブルやビューとして具体化(materialize)し、DDLやトランザクション、スキーマ変更などのボイラープレートを自動処理する。</li>
-<li>モデル間の依存関係を<code>ref()</code>関数で表現すると、dbtがDAG(有向非巡回グラフ)を構築し、依存順に実行する。</li>
-<li>データ品質テストと自動ドキュメント生成の機能を持つ。</li>
-<li>バージョン管理・ブランチ・プルリクエスト・CI/CD・パッケージ管理といったソフトウェアエンジニアリングのプラクティスを、SQLしか書けないアナリストでもデータパイプラインに適用できるようにする、というのが最大の価値提案。</li>
-</ul>
-
-
-<h2>提供形態</h2>
-
-<ul>
-<li><strong>dbt Core</strong> — ローカル/CLIで使うOSS版。</li>
-<li><strong>dbt platform</strong>(旧dbt Cloud) — スケジューリング・CI/CD・ドキュメントホスティング・監視をまとめたホスティングサービス。</li>
-</ul>
-
-
-<h2>最近の動向</h2>
-
-<ul>
-<li><strong>dbt Fusion Engine</strong> — 2025年5月にパブリックベータ公開された、Rustでゼロから書き直された新エンジン。SDF由来のSQL静的解析技術を組み込み、Python依存を排除している。大規模プロジェクト(1万モデル規模)でパース速度が最大30倍になるなど大幅に高速化された。</li>
-<li><strong>dbt 2.0</strong> — 2026年6月にアルファ公開。dbt CoreをFusionと同じRustエンジン上に再構築し、「2エンジン時代」を終わらせるリリース。Apache 2.0ライセンスでOSSのまま維持する方針。</li>
-<li><strong>Fivetran + dbt Labs 合併</strong> — 2025年10月に発表、2026年6月に完了した全株式交換の合併。CEOはFivetranのGeorge Fraser、社長はdbt LabsのTristan Handy。ELTの「E/L」(Fivetran)と「T」(dbt)を1社に統合し、AI向けデータ基盤としての立ち位置を狙う。dbt CoreはOSSのまま維持するとコミットしている。</li>
-</ul>
-
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://docs.getdbt.com/docs/introduction">Introduction | dbt Docs</a></li>
-<li><a href="https://docs.getdbt.com/blog/dbt-fusion-engine">Meet the dbt Fusion Engine | dbt Developer Blog</a></li>
-<li><a href="https://www.fivetran.com/press/fivetran-dbt-labs-complete-merger-to-create-the-data-infrastructure-for-trusted-ai-agents">Fivetran and dbt Labs Complete Merger | Fivetran Press</a></li>
-<li><a href="https://hevodata.com/learn/what-is-data-build-tool-dbt/">What is Data Build Tool(dbt): Guide for Data Engineers | Hevo Data</a></li>
 </ul>
 
 ]]></description>
