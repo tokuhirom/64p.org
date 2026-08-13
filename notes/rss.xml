@@ -6,7 +6,61 @@
 <atom:link href="https://64p.org/notes/rss.xml" rel="self" type="application/rss+xml" />
 <description>ちょっと調べたことや検証結果を、AIの力も借りながらメモしていくコーナーです。</description>
 <language>ja</language>
-<lastBuildDate>Thu, 13 Aug 2026 17:10:42 +0900</lastBuildDate>
+<lastBuildDate>Thu, 13 Aug 2026 19:36:10 +0900</lastBuildDate>
+<item>
+<title>マイクロサービス (Microservices)</title>
+<link>https://64p.org/notes/microservices.html</link>
+<guid isPermaLink="true">https://64p.org/notes/microservices.html</guid>
+<pubDate>Thu, 13 Aug 2026 19:36:00 +0900</pubDate>
+<description><![CDATA[<h1>マイクロサービス (Microservices)</h1>
+
+<p><a class="note-tag" href="/notes/tags/software-engineering.html">#software-engineering</a> <a class="note-tag" href="/notes/tags/distributed-systems.html">#distributed-systems</a></p>
+
+<p>アプリケーションを、疎結合で細粒度の独立したサービス群に分割し、それぞれが軽量なプロトコル（主にHTTP/REST、gRPCなど）で通信するアーキテクチャスタイル。各サービスは独立したプロセスとして動作し、多くの場合サービスごとに専用のデータベースを持つ。</p>
+
+<h2>主な特徴</h2>
+
+<ol>
+<li><strong>単一責務のコンポーネント</strong> — 各サービスは特定のビジネス機能を1つだけ担う。<a href="/notes/domain-driven-design.html">DDD</a>の「<a href="/notes/domain-driven-design.html">境界づけられたコンテキスト（Bounded Context）</a>」に沿ってサービス境界を引くことが多い</li>
+<li><strong>分散化</strong> — サービス間の依存が少なく、疎結合</li>
+<li><strong>耐障害性</strong> — 1サービスの障害がシステム全体を止めない設計を目指す</li>
+<li><strong>独立したスケーラビリティ</strong> — チームごとに独立して開発・デプロイ・スケールできる</li>
+<li><strong>技術的な自由度</strong> — サービスごとに異なる言語・DB・実行環境を選べる（polyglot）</li>
+</ol>
+
+
+<h2>モノリスとの対比（Martin Fowlerの整理）</h2>
+
+<p>Martin Fowlerの &ldquo;Microservice Trade-Offs&rdquo; によれば、モノリスは全体を一括デプロイする必要があるが、マイクロサービスは各サービスを独立してデプロイでき、単純なサービスほど障害を起こしにくい。一方で通信がネットワーク越し（<a href="/notes/restful.html">RESTful</a>なHTTPリクエスト/レスポンス等）になるため、信頼性・セキュリティの面でモノリス内呼び出しより劣る場面がある。</p>
+
+<p>Fowlerはこれを <strong>&ldquo;MicroservicePremium&rdquo;</strong>（マイクロサービス採用に伴う追加コスト）と呼び、十分複雑なシステムでなければ割に合わないと指摘している。</p>
+
+<p>また &ldquo;Monolith First&rdquo; というエントリでは、成功しているマイクロサービス事例のほとんどは最初モノリスとして作られ、肥大化してから分割されたものであり、新規プロジェクトを最初からマイクロサービスで始めるべきではない、という立場を取っている。</p>
+
+<h2>代表的な関連パターン</h2>
+
+<p><a href="https://microservices.io/">microservices.io</a> で整理されているパターンの一部。</p>
+
+<ul>
+<li><strong>API Gateway</strong> — クライアントからの単一窓口となり、複数サービスへのルーティングを担う</li>
+<li><strong>Service Discovery</strong> — サービスインスタンスの動的な位置解決</li>
+<li><strong>Circuit Breaker</strong> — 依存サービスの障害が連鎖しないよう遮断する</li>
+<li><strong>Saga</strong> — サービス間にまたがる分散トランザクションの整合性を、ローカルトランザクションの連鎖と補償トランザクションで確保する</li>
+</ul>
+
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://www.techtarget.com/searchapparchitecture/definition/microservices">What are Microservices? | TechTarget</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Microservices">Microservices - Wikipedia</a></li>
+<li><a href="https://microservices.io/patterns/microservices.html">Microservices Pattern: Microservice Architecture pattern | microservices.io</a></li>
+<li><a href="https://martinfowler.com/articles/microservice-trade-offs.html">Microservice Trade-Offs | Martin Fowler</a></li>
+<li><a href="https://martinfowler.com/bliki/MonolithFirst.html">bliki: Monolith First | Martin Fowler</a></li>
+</ul>
+
+]]></description>
+</item>
 <item>
 <title>ペネトレーションテスト</title>
 <link>https://64p.org/notes/penetration-test.html</link>
@@ -1620,57 +1674,6 @@ e^x = 1 + x + \frac{x^2}{2!} + \frac{x^3}{3!} + \cdots
 <li><a href="https://tutorial.math.lamar.edu/classes/de/definitions.aspx">Differential Equations - Definitions - Paul&rsquo;s Online Notes (Lamar University)</a></li>
 <li><a href="https://web.uvic.ca/~tbazett/diffyqs/classification_section.html">Classification of differential equations - University of Victoria</a></li>
 <li><a href="https://phas.ubc.ca/~berciu/TEACHING/PHYS312/LECTURES/FILES/defs.pdf">Definitions and important facts regarding ODEs and PDEs - UBC</a></li>
-</ul>
-
-]]></description>
-</item>
-<item>
-<title>積分</title>
-<link>https://64p.org/notes/integral.html</link>
-<guid isPermaLink="true">https://64p.org/notes/integral.html</guid>
-<pubDate>Thu, 13 Aug 2026 00:20:00 +0900</pubDate>
-<description><![CDATA[<h1>積分</h1>
-
-<p><a class="note-tag" href="/notes/tags/math.html">#math</a></p>
-
-<p>「細かく刻んで足し合わせる」操作の極限。歴史的・概念的に別物だった2つの顔（定積分と不定積分）があり、それが微積分学の基本定理で結ばれている。</p>
-
-<h2>定積分 — 総量を求める</h2>
-
-<p>曲線 <span class="math-inline">y = f(x)</span> と x軸に挟まれた領域の面積を求めるのが出発点。区間 <span class="math-inline">[a, b]</span> を <span class="math-inline">n</span> 個の細い短冊に切り、各短冊を「幅 <span class="math-inline">\Delta x</span> × 高さ <span class="math-inline">f(x_i)</span>」の長方形で近似して全部足したものが<strong>リーマン和</strong>。短冊を無限に細くした極限が定積分。</p>
-
-<div class="math-display">
-\int_a^b f(x)\, dx = \lim_{n \to \infty} \sum_{i=1}^{n} f(x_i)\, \Delta x
-</div>
-
-
-<p><span class="math-inline">\int</span> という記号自体が Sum の S を縦に伸ばしたもの（ライプニッツ由来）。面積に限らず「密度を足し合わせて質量」「速度を足し合わせて移動距離」など、<em>変化する量 × 微小区間の総和</em>はすべてこの形になる。</p>
-
-<h2>不定積分 — 微分の逆演算</h2>
-
-<p>「<a href="/notes/derivative.html">微分</a>すると <span class="math-inline">f(x)</span> になる関数 <span class="math-inline">F(x)</span>（<strong>原始関数</strong>）を探す」操作。たとえば <span class="math-inline">x<sup>2</sup></span> を微分すると <span class="math-inline">2x</span> なので、<span class="math-inline">2x</span> の原始関数は <span class="math-inline">x<sup>2</sup> + C</span>（<span class="math-inline">C</span> は積分定数）。こちらは面積とは無関係に見える、純粋に代数的な逆問題。</p>
-
-<h2>微積分学の基本定理</h2>
-
-<p>一見無関係なこの2つが実は同じものだ、というのが<strong>微積分学の基本定理</strong>。<span class="math-inline">f</span> が <span class="math-inline">[a, b]</span> 上で連続なら、その任意の原始関数 <span class="math-inline">F</span> について</p>
-
-<div class="math-display">
-\int_a^b f(x)\, dx = F(b) - F(a)
-</div>
-
-
-<p>「無限個の長方形を足す」という極限計算が、「原始関数を1つ見つけて端点の差を取る」だけで済む。ニュートンとライプニッツの最大の発見で、積分が実用的な計算手段になった理由。<a href="/notes/derivative.html">微分</a>は「瞬間の変化率」、積分は「変化の累積」で、互いに逆向きの操作になっている。</p>
-
-<h2>積分変換への接続</h2>
-
-<p>関数に核（カーネル）を掛けて積分することで別の領域の関数に写す操作を積分変換と呼ぶ。<a href="/notes/fourier-transform.html">フーリエ変換</a>や<a href="/notes/laplace-transform.html">ラプラス変換</a>（→ <a href="/notes/frequency-domain-transforms.html">周波数領域の変換</a>）は、<span class="math-inline">\int f(t)\, e^{-st}\, dt</span> のような形でまさに定積分を道具として使っている。</p>
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://en.wikipedia.org/wiki/Riemann_sum">Riemann sum - Wikipedia</a></li>
-<li><a href="https://math.libretexts.org/Bookshelves/Calculus/Calculus_(OpenStax">The Fundamental Theorem of Calculus - Mathematics LibreTexts</a>/05:<em>Integration/5.03:</em>The_Fundamental_Theorem_of_Calculus)</li>
-<li><a href="https://www.ma.ic.ac.uk/~ajm8/M1M1/integ.pdf">M1M1: The Riemann Integral and the Fundamental Theorem of Calculus - Imperial College</a></li>
 </ul>
 
 ]]></description>
