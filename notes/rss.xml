@@ -6,7 +6,43 @@
 <atom:link href="https://64p.org/notes/rss.xml" rel="self" type="application/rss+xml" />
 <description>ちょっと調べたことや検証結果を、AIの力も借りながらメモしていくコーナーです。</description>
 <language>ja</language>
-<lastBuildDate>Thu, 13 Aug 2026 20:54:33 +0900</lastBuildDate>
+<lastBuildDate>Thu, 13 Aug 2026 21:20:49 +0900</lastBuildDate>
+<item>
+<title>Playwright</title>
+<link>https://64p.org/notes/playwright.html</link>
+<guid isPermaLink="true">https://64p.org/notes/playwright.html</guid>
+<pubDate>Thu, 13 Aug 2026 21:20:00 +0900</pubDate>
+<description><![CDATA[<h1>Playwright</h1>
+
+<p>Microsoftが開発しているオープンソースのブラウザ自動化・E2Eテストフレームワーク。2020年リリース。Chromium・Firefox・WebKitの3エンジンを単一のAPIで操作できる。Node.js/Python/Java/.NETなど複数言語向けのライブラリが提供されている。</p>
+
+<h2>特徴</h2>
+
+<ul>
+<li><strong>自動待機(auto-waiting)</strong> — 要素が操作可能になるまで自動的に待つため、flaky(不安定)なテストを減らせる</li>
+<li><strong>アサーションの自動リトライ</strong> — 条件が満たされるまで再試行する</li>
+<li><strong>ネットワークインターセプト</strong> — リクエスト/レスポンスを傍受・モックできる</li>
+<li><strong>ブラウザコンテキストの分離</strong>と<strong>並列実行</strong>により高速・大規模なテストスイートを実現できる</li>
+<li>ヘッドレス実行に対応</li>
+</ul>
+
+
+<h2>用途</h2>
+
+<p>実際のブラウザを操作してナビゲーション・クリック・フォーム送信・UI検証などのユーザー操作をプログラムから再現する。クロスブラウザでのE2Eテストのほか、Chrome DevTools Protocol (CDP) 経由の汎用ブラウザ自動化ツールとしても使われる。<a href="/notes/herdr-browser.html">herdr-browser</a>がCDPツールの例として言及している。</p>
+
+<p><a class="note-tag" href="/notes/tags/testing.html">#testing</a> <a class="note-tag" href="/notes/tags/browser-automation.html">#browser-automation</a></p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://github.com/microsoft/playwright">GitHub - microsoft/playwright</a></li>
+<li><a href="https://www.checklyhq.com/docs/learn/playwright/what-is-playwright/">Beginner&rsquo;s Guide to Playwright Automation - Checkly Docs</a></li>
+<li><a href="https://www.browserstack.com/guide/playwright-tutorial">Playwright Automation Framework: Tutorial [2026] | BrowserStack</a></li>
+</ul>
+
+]]></description>
+</item>
 <item>
 <title>昭和仮面ライダーの悪の組織の系譜</title>
 <link>https://64p.org/notes/showa-rider-evil-organizations.html</link>
@@ -1464,109 +1500,6 @@ sudo: a terminal is required to read the password; either use the -S option to r
 <li><a href="https://github.com/iconify/iconify">GitHub - iconify/iconify</a></li>
 <li><a href="https://iconify.design/docs/api/collections.html">List of icon sets | Iconify</a></li>
 <li><a href="https://github.com/iconify/icon-sets/blob/master/collections.md">icon-sets/collections.md · GitHub</a></li>
-</ul>
-
-]]></description>
-</item>
-<item>
-<title>WIT (WebAssembly Interface Types)</title>
-<link>https://64p.org/notes/wit.html</link>
-<guid isPermaLink="true">https://64p.org/notes/wit.html</guid>
-<pubDate>Thu, 13 Aug 2026 07:42:00 +0900</pubDate>
-<description><![CDATA[<h1>WIT (WebAssembly Interface Types)</h1>
-
-<p><a href="/notes/wasm.html">WebAssembly</a>のComponent Model(複数のWasmモジュールを組み合わせる仕組み)で使われるIDL(インターフェース定義言語)。コンポーネント同士の「契約」——何をインポートし何をエクスポートするか——を、実装ではなく仕様のみとして記述する。</p>
-
-<p><a class="note-tag" href="/notes/tags/wasm.html">#wasm</a> <a class="note-tag" href="/notes/tags/webassembly.html">#webassembly</a> <a class="note-tag" href="/notes/tags/wit.html">#wit</a></p>
-
-<h2>3つの構成要素: package / interface / world</h2>
-
-<p><strong>package</strong>: 複数の<code>.wit</code>ファイルにまたがるinterfaceとworldのグループ。同じディレクトリ内の<code>.wit</code>ファイルはすべて同じpackageに属する。</p>
-
-<pre><code class="wit">package documentation:example@1.0.1;
-</code></pre>
-
-<p>名前空間:名前の形式で、任意でsemver準拠のバージョンを付けられる。</p>
-
-<p><strong>interface</strong>: 型と関数の名前付き集合。</p>
-
-<pre><code class="wit">interface wall-clock {
-    record datetime {
-        seconds: u64,
-        nanoseconds: u32,
-    }
-    now: func() -&gt; datetime;
-}
-</code></pre>
-
-<p><strong>world</strong>: コンポーネント全体の契約。importとexportを列挙する、最上位の記述単位。</p>
-
-<pre><code class="wit">world command {
-  import stdin;
-  import stdout;
-  export run;
-}
-</code></pre>
-
-<p><code>use</code>でinterface間の型を共有し、<code>include</code>でworld同士を合成できる。</p>
-
-<h2>型システム</h2>
-
-<p>プリミティブ型は<code>bool</code>/<code>s8〜s64</code>/<code>u8〜u64</code>/<code>f32</code>/<code>f64</code>/<code>char</code>/<code>string</code>。</p>
-
-<p>複合型:</p>
-
-<ul>
-<li><strong>record</strong>: 構造体的な集合(<code>{ id: u64, name: string }</code>)</li>
-<li><strong>variant</strong>: 判別共用体(タグ付きunion)</li>
-<li><strong>enum</strong>: タグのみのvariant</li>
-<li><strong>flags</strong>: ビットフィールド</li>
-<li><strong>resource</strong>: コンストラクタ・メソッドを持つオブジェクト的な型(ハンドルとして渡される)</li>
-</ul>
-
-
-<p>ジェネリック型: <code>list&lt;T&gt;</code>、<code>option&lt;T&gt;</code>、<code>result&lt;T, E&gt;</code>、<code>tuple&lt;T, U&gt;</code>、そして非同期I/O向けの<code>stream&lt;T&gt;</code>/<code>future&lt;T&gt;</code>(WASI 0.3で導入)。</p>
-
-<p>識別子はASCIIのケバブケースのみ許容される(<code>my-function</code>のような形式)。</p>
-
-<h2>具体例: HTTPハンドラの定義</h2>
-
-<pre><code class="wit">// types.wit
-interface types {
-    record request { method: string, path: string }
-    record response { status: u32, body: list&lt;u8&gt; }
-}
-
-// handler.wit
-interface incoming-handler {
-    use types.{request, response};
-    handle: func(req: request) -&gt; response;
-}
-
-package wasi:http@0.2.0;
-
-world proxy {
-    export incoming-handler;
-    import outgoing-handler;
-}
-</code></pre>
-
-<p><a href="/notes/wasi.html">WASI</a> 0.2以降のインターフェースはこの形でWITとして定義されている。</p>
-
-<h2>ツールチェーン</h2>
-
-<ul>
-<li><strong>wit-bindgen</strong>: <code>.wit</code>ファイルから各言語(Rust/C/Go(TinyGo)/Java(TeaVM)/C#など)向けのバインディングコードを生成するツール群。Rustでは<code>wit-bindgen</code>クレートの<code>generate!</code>マクロとして使うことが多い。</li>
-<li><strong>wasm-tools</strong>: 生成されたバインディング経由でビルドしたcore wasmモジュールを、<code>wasm-tools component new</code>でコンポーネント(WITの契約を満たすWasmバイナリ)に変換する。</li>
-</ul>
-
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://component-model.bytecodealliance.org/design/wit.html">WIT Reference | The WebAssembly Component Model</a></li>
-<li><a href="https://component-model.bytecodealliance.org/design/wit-example.html">WIT By Example | The WebAssembly Component Model</a></li>
-<li><a href="https://component-model.bytecodealliance.org/design/packages.html">WIT package | The WebAssembly Component Model</a></li>
 </ul>
 
 ]]></description>
