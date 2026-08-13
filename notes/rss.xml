@@ -6,7 +6,42 @@
 <atom:link href="https://64p.org/notes/rss.xml" rel="self" type="application/rss+xml" />
 <description>ちょっと調べたことや検証結果を、AIの力も借りながらメモしていくコーナーです。</description>
 <language>ja</language>
-<lastBuildDate>Thu, 13 Aug 2026 19:48:26 +0900</lastBuildDate>
+<lastBuildDate>Thu, 13 Aug 2026 20:47:05 +0900</lastBuildDate>
+<item>
+<title>NOC (Network Operations Center)</title>
+<link>https://64p.org/notes/noc.html</link>
+<guid isPermaLink="true">https://64p.org/notes/noc.html</guid>
+<pubDate>Thu, 13 Aug 2026 20:47:00 +0900</pubDate>
+<description><![CDATA[<h1>NOC (Network Operations Center)</h1>
+
+<p>通信ネットワークの監視・管理・運用を専門に行う拠点（組織・部署）のこと。ネットワークオペレーションセンターとも呼ぶ。</p>
+
+<h2>主な役割</h2>
+
+<ul>
+<li><strong>監視</strong>: トラフィック量、帯域使用率、ルーター・スイッチ・サーバーなど各機材の稼働状況を専用ソフトウェアでリアルタイム監視し、ダッシュボードで可視化する</li>
+<li><strong>異常検知・通知</strong>: しきい値超過や障害を検知すると自動でアラートを発報し、担当者にメール・チャット・画面表示などで通知する</li>
+<li><strong>障害対応</strong>: 実際に障害が発生した際の一次対応・エスカレーション・関係各所との調整を行う</li>
+<li><strong>予防保守</strong>: 障害が起きる前の予防的な措置（キャパシティ管理など）も含まれる</li>
+</ul>
+
+
+<p>大規模な企業・ISP・データセンターなどでは24時間365日体制で運用されることが多く、ネットワークの可用性とパフォーマンスを維持するための中枢として機能する。</p>
+
+<h2>SOCとの違い</h2>
+
+<p>似た概念に SOC (Security Operations Center) がある。NOCはネットワークの可用性・パフォーマンス維持が主目的なのに対し、SOCはセキュリティインシデントの検知・対応に特化している点が異なる。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://www.nic.ad.jp/ja/basics/terms/noc.html">NOC (Network Operation Center)とは - JPNIC</a></li>
+<li><a href="https://e-words.jp/w/%E3%83%8D%E3%83%83%E3%83%88%E3%83%AF%E3%83%BC%E3%82%AF%E3%82%AA%E3%83%9A%E3%83%AC%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3%E3%82%BB%E3%83%B3%E3%82%BF%E3%83%BC.html">ネットワークオペレーションセンター（NOC）とは - IT用語辞典 e-Words</a></li>
+<li><a href="https://www.ibm.com/think/topics/network-operations-center">What Is a Network Operations Center? - IBM</a></li>
+</ul>
+
+]]></description>
+</item>
 <item>
 <title>炭素</title>
 <link>https://64p.org/notes/carbon.html</link>
@@ -1578,56 +1613,6 @@ conda install -c conda-forge librosa
 <li><a href="https://librosa.org/doc/0.11.0/tutorial.html">librosa Tutorial (0.11.0)</a></li>
 <li><a href="https://kaavyamaha12.medium.com/extracting-audio-features-using-librosa-3be4ff1fe57f">Extracting audio features using Librosa</a></li>
 <li><a href="https://medium.com/@rijuldahiya/a-comprehensive-guide-to-audio-processing-with-librosa-in-python-a49276387a4b">A Comprehensive Guide to Audio Processing with Librosa in Python</a></li>
-</ul>
-
-]]></description>
-</item>
-<item>
-<title>テイラー展開</title>
-<link>https://64p.org/notes/taylor-series.html</link>
-<guid isPermaLink="true">https://64p.org/notes/taylor-series.html</guid>
-<pubDate>Thu, 13 Aug 2026 00:23:00 +0900</pubDate>
-<description><![CDATA[<h1>テイラー展開</h1>
-
-<p><a class="note-tag" href="/notes/tags/math.html">#math</a></p>
-
-<p>関数を、1点での<a href="/notes/derivative.html">微分</a>係数の情報だけを使って多項式（冪級数）で表現する手法。</p>
-
-<div class="math-display">
-f(x) = \sum_{n=0}^{\infty} \frac{f^{(n)}(a)}{n!} (x-a)^n = f(a) + f'(a)(x-a) + \frac{f''(a)}{2!}(x-a)^2 + \cdots
-</div>
-
-
-<p>点 <span class="math-inline">a</span> を中心に展開したものをテイラー級数、特に <span class="math-inline">a = 0</span> を中心にしたものを<strong>マクローリン級数</strong>と呼ぶ。</p>
-
-<h2>直感 — 接線近似の高次版</h2>
-
-<p><a href="/notes/derivative.html">微分</a>による一次近似 <span class="math-inline">f(a+h) \approx f(a) + f'(a)h</span>（接線で代用する）の精度を、2次・3次…の項を足して上げていったもの。1次で「傾き」、2次で「曲がり具合」、と高階の導関数が形の情報を順に補っていき、次数を上げるほど元の関数に近づく。</p>
-
-<h2>剰余項と収束</h2>
-
-<p>有限次で打ち切った<strong>テイラー多項式</strong>と元の関数との差が剰余項 <span class="math-inline">R_n(x)</span>。剰余項が <span class="math-inline">n \to \infty</span> で 0 に収束する範囲でのみ、テイラー級数は元の関数に一致する。<span class="math-inline">e<sup>x</sup></span>, <span class="math-inline">\sin x</span>, <span class="math-inline">\cos x</span> は全実数で収束する代表例。</p>
-
-<div class="math-display">
-e^x = 1 + x + \frac{x^2}{2!} + \frac{x^3}{3!} + \cdots
-</div>
-
-
-<h2>用途</h2>
-
-<ul>
-<li><strong>数値計算</strong> — 関数電卓やライブラリが <span class="math-inline">\sin</span> や <span class="math-inline">e<sup>x</sup></span> を計算する際の基礎（実装では精度最適化した多項式近似が使われるが、発想の原点）</li>
-<li><strong>物理の近似</strong> — 「<span class="math-inline">\theta</span> が小さいとき <span class="math-inline">\sin\theta \approx \theta</span>」のような微小量近似は、テイラー展開を1次で打ち切ったもの</li>
-<li><strong>オイラーの公式</strong> — <span class="math-inline">e^{ix}</span>, <span class="math-inline">\cos x</span>, <span class="math-inline">\sin x</span> のマクローリン級数を見比べると <span class="math-inline">e^{ix} = \cos x + i \sin x</span> が導ける。<a href="/notes/fourier-transform.html">フーリエ変換</a>の核 <span class="math-inline">e^{-i\omega t}</span> の背後にある関係式</li>
-</ul>
-
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://mathresearch.utsa.edu/wiki/index.php?title=Taylor_and_Maclaurin_Series">Taylor and Maclaurin Series - UTSA</a></li>
-<li><a href="https://courses.lumenlearning.com/calculus2/chapter/taylors-theorem-with-remainder/">Taylor&rsquo;s Theorem with Remainder and Convergence - Lumen Learning</a></li>
-<li><a href="https://www.parabola.unsw.edu.au/sites/default/files/2025-04/vol61_no1_7.pdf">An introduction to Taylor series and their applications - Parabola (UNSW)</a></li>
 </ul>
 
 ]]></description>
