@@ -6,7 +6,53 @@
 <atom:link href="https://64p.org/notes/rss.xml" rel="self" type="application/rss+xml" />
 <description>ちょっと調べたことや検証結果を、AIの力も借りながらメモしていくコーナーです。</description>
 <language>ja</language>
-<lastBuildDate>Thu, 13 Aug 2026 22:06:54 +0900</lastBuildDate>
+<lastBuildDate>Thu, 13 Aug 2026 22:12:35 +0900</lastBuildDate>
+<item>
+<title>Platform Engineering</title>
+<link>https://64p.org/notes/platform-engineering.html</link>
+<guid isPermaLink="true">https://64p.org/notes/platform-engineering.html</guid>
+<pubDate>Thu, 13 Aug 2026 22:12:00 +0900</pubDate>
+<description><![CDATA[<h1>Platform Engineering</h1>
+
+<p><a class="note-tag" href="/notes/tags/devops.html">#devops</a></p>
+
+<p>クラウドネイティブ時代のソフトウェア開発組織に対して、セルフサービス型のツールチェーンとワークフローを設計・構築する規律。開発生産性、アプリケーションのサイクルタイム、市場投入速度の改善を目的とする。</p>
+
+<h2>DevOpsとの関係 — Shadow Ops問題</h2>
+
+<p>DevOpsの理想は「You build it, you run it」（作った人が運用もする）だが、これを本当に実現できているのはGoogleのような一部の先進組織のみ。多くの組織では、経験豊富な開発者が本来の開発業務ではなくインフラ管理に時間を取られる「Shadow Ops（影のOps）」という状態が発生している。調査では、低パフォーマンス組織の44%がこの問題を抱える一方、高パフォーマンス組織はほぼ100%がtrue DevOpsを実現できているという。</p>
+
+<p>Platform Engineeringは、この「開発者全員にインフラ運用スキルを求める」というDevOpsの理想と現実のギャップを埋めるために生まれた実践。<a href="/notes/devsecops.html">DevSecOps</a>がDevOpsに「セキュリティ」という第3の柱を足す方向の拡張であるのに対し、Platform Engineeringは「運用の専門性をプラットフォームチームに集約し、開発者からは抽象化して隠す」方向の拡張という違いがある。</p>
+
+<h2>中核概念</h2>
+
+<h3>Internal Developer Platform (IDP)</h3>
+
+<p>プラットフォームエンジニアが提供する統合製品。アプリケーションライフサイクル全体（環境構築〜本番運用）をカバーし、認知負荷を軽減しつつ適切な抽象化レベルを開発者に提供する。開発者はHelmチャートのような詳細制御か、プリプロビジョニングされた環境での即時利用かを選べる。</p>
+
+<h3>Golden Path（黄金経路）/ Paved Road</h3>
+
+<p>ほとんどのワークロードに対する標準化されたワークフロー。「強制ではないが最も楽で推奨される道」を用意することで、標準化と自由度のバランスを取る。</p>
+
+<h3>Self-Service</h3>
+
+<p>複数の技術・ツールを単一のセルフサービス体験に統合し、開発者が都度Opsチームに依頼せず自律的に環境やリソースを扱えるようにする。</p>
+
+<h2>導入タイミング</h2>
+
+<p>開発者数が20〜30人規模に達した頃が、IDP構築を検討し始める目安とされている。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://platformengineering.org/blog/what-is-platform-engineering">What is platform engineering? - platformengineering.org</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Platform_engineering">Platform engineering - Wikipedia</a></li>
+<li><a href="https://www.redhat.com/en/topics/platform-engineering/what-is-platform-engineering">What is platform engineering? - Red Hat</a></li>
+<li><a href="https://www.cncf.io/blog/2025/11/19/what-is-platform-engineering/">What is platform engineering? - CNCF</a></li>
+</ul>
+
+]]></description>
+</item>
 <item>
 <title>UEFI</title>
 <link>https://64p.org/notes/uefi.html</link>
@@ -1382,61 +1428,6 @@ Content-length: 25
 <li><a href="https://oneuptime.com/blog/post/2026-01-07-ebpf-cilium-kubernetes-networking/view">How to Deploy Cilium CNI for eBPF-Powered Kubernetes Networking</a></li>
 <li><a href="https://oneuptime.com/blog/post/2026-01-27-cilium-service-mesh/view">How to Implement Cilium Service Mesh</a></li>
 <li><a href="https://notes.kodekloud.com/docs/Prep-Course-Cilium-Certified-Associate-CCA-Certification/Cilium-Overview/Architecture/page">Architecture - KodeKloud</a></li>
-</ul>
-
-]]></description>
-</item>
-<item>
-<title>bpftrace</title>
-<link>https://64p.org/notes/bpftrace.html</link>
-<guid isPermaLink="true">https://64p.org/notes/bpftrace.html</guid>
-<pubDate>Thu, 13 Aug 2026 08:32:00 +0900</pubDate>
-<description><![CDATA[<h1>bpftrace</h1>
-
-<p>Linux向けの高レベルなトレーシング言語兼フロントエンド。ユーザーが書いたトレーシングスクリプトをコンパイルし、<a href="/notes/bpf.html">eBPF</a>バイトコードとしてカーネル空間で安全に実行する。eBPFのオブザーバビリティ用途を代表するツールの一つ。 <a class="note-tag" href="/notes/tags/linux.html">#linux</a> <a class="note-tag" href="/notes/tags/kernel.html">#kernel</a> <a class="note-tag" href="/notes/tags/observability.html">#observability</a></p>
-
-<h2>設計</h2>
-
-<ul>
-<li>言語デザインはawk、C、および先行するトレーサーであるDTrace・SystemTapから影響を受けている</li>
-<li>バックエンドとしてLLVM(スクリプトのコンパイル)とlibbpf(BPFサブシステムとのやり取り)を使用する</li>
-</ul>
-
-
-<h2>probeの種類</h2>
-
-<ul>
-<li><strong>kprobe/kretprobe</strong>: カーネル関数の呼び出し時/リターン時に発火する。動的で、デバッグ・調査向け</li>
-<li><strong>uprobe/uretprobe</strong>: ユーザー空間関数版のkprobe。アプリケーション内部の可視化に使う</li>
-<li><strong>tracepoint</strong>: カーネルソースコードに静的に定義されたプローブ地点。kprobeと異なりカーネルバージョン間で安定しているため、本番監視向け</li>
-<li><strong>usdt</strong> (User Statically-Defined Tracing): ユーザー空間アプリケーションに静的に埋め込まれたトレースポイント</li>
-</ul>
-
-
-<p>使い分けの目安として、本番監視には安定したtracepoint、デバッグ・調査にはkprobe、アプリケーション内部を見たい場合はuprobeを使うとされる。</p>
-
-<h2>実行モード</h2>
-
-<ul>
-<li><strong>Dynamic Mode</strong>: スクリプトを即座にコンパイル・実行する通常の使い方</li>
-<li><strong>Listing Mode</strong> (<code>-l</code>): 実行せず利用可能なprobe地点を列挙する</li>
-<li><strong>Ahead-of-Time Mode</strong> (<code>--aot</code>): スクリプトを移植可能な実行ファイルに事前コンパイルする</li>
-<li><strong>Test Mode</strong> (<code>--test-mode</code>): カーネル実行なしでの検証・ベンチマーク用</li>
-</ul>
-
-
-<h2>実験</h2>
-
-<p>実際にインストールして動かした記録は<a href="/notes/bpftrace-experiment.html">bpftraceを動かしてeBPFトレーシングを体感する</a>を参照。</p>
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://bpftrace.org/">bpftrace: dynamic tracing for Linux</a></li>
-<li><a href="https://github.com/bpftrace/bpftrace">GitHub - bpftrace/bpftrace</a></li>
-<li><a href="https://deepwiki.com/bpftrace/bpftrace">bpftrace/bpftrace | DeepWiki</a></li>
-<li><a href="https://www.brendangregg.com/blog/2019-08-19/bpftrace.html">A thorough introduction to bpftrace - Brendan Gregg</a></li>
-<li><a href="https://bpftrace.org/hol/kernel-probes">Working with kernel probes - bpftrace docs</a></li>
 </ul>
 
 ]]></description>

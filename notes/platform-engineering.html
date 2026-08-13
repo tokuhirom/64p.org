@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>Ruff - Notes - 64p.org</title>
+    <title>Platform Engineering - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="alternate" type="application/rss+xml" title="Notes - 64p.org" href="/notes/rss.xml">
@@ -23,7 +23,7 @@
                 <a class="notes-tags-link" href="/notes/rss.xml">📡 RSS</a>
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
-                                    <li><a href="/notes/platform-engineering.html">Platform Engineering</a></li>
+                                    <li><a href="/notes/platform-engineering.html" class="active">Platform Engineering</a></li>
                                     <li><a href="/notes/uefi.html">UEFI</a></li>
                                     <li><a href="/notes/system76.html">System76</a></li>
                                     <li><a href="/notes/microvm.html">microVM</a></li>
@@ -262,7 +262,7 @@
                                     <li><a href="/notes/don-tacos.html">ドンタコス</a></li>
                                     <li><a href="/notes/rta.html">RTA(Real Time Attack)</a></li>
                                     <li><a href="/notes/rta-in-japan.html">RTA in Japan(RiJ)</a></li>
-                                    <li><a href="/notes/ruff.html" class="active">Ruff</a></li>
+                                    <li><a href="/notes/ruff.html">Ruff</a></li>
                                     <li><a href="/notes/semaphore.html">セマフォ</a></li>
                                     <li><a href="/notes/mutex.html">ミューテックス(mutex)</a></li>
                                     <li><a href="/notes/xinu.html">Xinu</a></li>
@@ -382,50 +382,49 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>Ruff</h1>
+                <h1>Platform Engineering</h1>
 
-<p>Rustで書かれた、非常に高速なPython用リンター兼コードフォーマッター。Astral社(パッケージマネージャ<code>uv</code>と同じ開発元)が開発している。 <a class="note-tag" href="/notes/tags/python.html">#python</a> <a class="note-tag" href="/notes/tags/rust.html">#rust</a></p>
+<p><a class="note-tag" href="/notes/tags/devops.html">#devops</a></p>
 
-<h2>特徴</h2>
+<p>クラウドネイティブ時代のソフトウェア開発組織に対して、セルフサービス型のツールチェーンとワークフローを設計・構築する規律。開発生産性、アプリケーションのサイクルタイム、市場投入速度の改善を目的とする。</p>
 
-<ul>
-<li>既存のリンター(Flake8など)やフォーマッター(Blackなど)と比べて10〜100倍高速</li>
-<li>Flake8、Black、isort、pyupgrade、pydocstyleなど複数ツールの機能を1つのスタンドアロンバイナリに統合しており、これらの多くに対するドロップイン置き換えを目指している</li>
-<li>900以上の組み込みルールを持ち、flake8-bugbearなど人気のFlake8プラグインをネイティブに再実装している</li>
-<li>ランタイム依存のないスタンドアロンバイナリとして配布されるため、インストールが速くバージョン競合の心配もない</li>
-<li>設定は<code>pyproject.toml</code>、<code>ruff.toml</code>、<code>.ruff.toml</code>で行う</li>
-</ul>
+<h2>DevOpsとの関係 — Shadow Ops問題</h2>
 
+<p>DevOpsの理想は「You build it, you run it」（作った人が運用もする）だが、これを本当に実現できているのはGoogleのような一部の先進組織のみ。多くの組織では、経験豊富な開発者が本来の開発業務ではなくインフラ管理に時間を取られる「Shadow Ops（影のOps）」という状態が発生している。調査では、低パフォーマンス組織の44%がこの問題を抱える一方、高パフォーマンス組織はほぼ100%がtrue DevOpsを実現できているという。</p>
 
-<h2>位置づけ</h2>
+<p>Platform Engineeringは、この「開発者全員にインフラ運用スキルを求める」というDevOpsの理想と現実のギャップを埋めるために生まれた実践。<a href="/notes/devsecops.html">DevSecOps</a>がDevOpsに「セキュリティ」という第3の柱を足す方向の拡張であるのに対し、Platform Engineeringは「運用の専門性をプラットフォームチームに集約し、開発者からは抽象化して隠す」方向の拡張という違いがある。</p>
 
-<p>Lintと整形(フォーマット)を1つのCLIに統合した、高性能なPython開発ツール。</p>
+<h2>中核概念</h2>
 
-<h2><a href="/notes/oxc.html">Oxc</a>との類似性</h2>
+<h3>Internal Developer Platform (IDP)</h3>
 
-<p>Rust製・高速・複数の既存ツールを1つに統合するという思想面で、JavaScript/TypeScript向けの<a href="/notes/oxc.html">Oxc</a>と似た立ち位置にある。対象言語エコシステムは異なる。</p>
+<p>プラットフォームエンジニアが提供する統合製品。アプリケーションライフサイクル全体（環境構築〜本番運用）をカバーし、認知負荷を軽減しつつ適切な抽象化レベルを開発者に提供する。開発者はHelmチャートのような詳細制御か、プリプロビジョニングされた環境での即時利用かを選べる。</p>
+
+<h3>Golden Path（黄金経路）/ Paved Road</h3>
+
+<p>ほとんどのワークロードに対する標準化されたワークフロー。「強制ではないが最も楽で推奨される道」を用意することで、標準化と自由度のバランスを取る。</p>
+
+<h3>Self-Service</h3>
+
+<p>複数の技術・ツールを単一のセルフサービス体験に統合し、開発者が都度Opsチームに依頼せず自律的に環境やリソースを扱えるようにする。</p>
+
+<h2>導入タイミング</h2>
+
+<p>開発者数が20〜30人規模に達した頃が、IDP構築を検討し始める目安とされている。</p>
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://github.com/astral-sh/ruff">GitHub - astral-sh/ruff</a></li>
-<li><a href="https://docs.astral.sh/ruff/">Ruff - Astral Docs</a></li>
-<li><a href="https://realpython.com/ruff-python/">Ruff: A Modern Python Linter for Error-Free and Maintainable Code – Real Python</a></li>
-<li><a href="https://docs.astral.sh/ruff/formatter/">The Ruff Formatter - Astral Docs</a></li>
+<li><a href="https://platformengineering.org/blog/what-is-platform-engineering">What is platform engineering? - platformengineering.org</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Platform_engineering">Platform engineering - Wikipedia</a></li>
+<li><a href="https://www.redhat.com/en/topics/platform-engineering/what-is-platform-engineering">What is platform engineering? - Red Hat</a></li>
+<li><a href="https://www.cncf.io/blog/2025/11/19/what-is-platform-engineering/">What is platform engineering? - CNCF</a></li>
 </ul>
 
 
-                                <div class="notes-backlinks">
-                    <h2>🔗 リンクされているノート</h2>
-                    <ul>
-                                            <li><a href="/notes/javascript-linters-formatters.html">JavaScriptのリンター・フォーマッター</a></li>
-                                            <li><a href="/notes/oxc.html">Oxc(Oxidation Compiler)</a></li>
-                    
-                    </ul>
-                </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-10 19:14 / 更新日時: 2026-08-10 19:19</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=Ruff&url=https%3A%2F%2F64p.org%2Fnotes%2Fruff.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <span>作成日時: 2026-08-13 22:12 / 更新日時: 2026-08-13 22:12</span>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=Platform%20Engineering&url=https%3A%2F%2F64p.org%2Fnotes%2Fplatform-engineering.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">
