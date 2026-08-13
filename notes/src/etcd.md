@@ -1,10 +1,10 @@
 ---
 created: 2026-08-14 08:24
-updated: 2026-08-14 08:24
+updated: 2026-08-14 08:33
 ---
 # etcd
 
-分散システム向けの、信頼性の高いキーバリューストア。Go製で、合意アルゴリズムに**Raft**を使い、リーダーノードの故障を含むマシン障害に耐えながら強い一貫性を保つ。名前はUnixの設定ディレクトリ `/etc` に distributed の「d」を付けたもの（「分散された/etc」）。 #infrastructure #distributed-systems
+分散システム向けの、信頼性の高いキーバリューストア。Go製で、合意アルゴリズムに**[[raft|Raft]]**を使い、リーダーノードの故障を含むマシン障害に耐えながら強い一貫性を保つ。名前はUnixの設定ディレクトリ `/etc` に distributed の「d」を付けたもの（「分散された/etc」）。 #infrastructure #distributed-systems
 
 ## 経緯
 

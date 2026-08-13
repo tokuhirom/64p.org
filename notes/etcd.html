@@ -23,16 +23,20 @@
                 <a class="notes-tags-link" href="/notes/rss.xml">📡 RSS</a>
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
-                                    <li><a href="/notes/minikube.html">minikube</a></li>
+                                    <li><a href="/notes/traefik.html">Traefik</a></li>
+                                    <li><a href="/notes/raft.html">Raft (合意アルゴリズム)</a></li>
+                                    <li><a href="/notes/lets-encrypt.html">Let&#39;s Encrypt</a></li>
                                     <li><a href="/notes/kubernetes.html">Kubernetes</a></li>
+                                    <li><a href="/notes/kubeadm.html">kubeadm</a></li>
+                                    <li><a href="/notes/kind.html">kind (Kubernetes in Docker)</a></li>
+                                    <li><a href="/notes/etcd.html" class="active">etcd</a></li>
+                                    <li><a href="/notes/acme.html">ACME (Automatic Certificate Management Environment)</a></li>
+                                    <li><a href="/notes/minikube.html">minikube</a></li>
                                     <li><a href="/notes/k3s.html">k3s</a></li>
                                     <li><a href="/notes/cgroups.html">cgroups（control groups）</a></li>
                                     <li><a href="/notes/apache-mesos.html">Apache Mesos</a></li>
-                                    <li><a href="/notes/traefik.html">Traefik</a></li>
                                     <li><a href="/notes/systemd-journald-excessive-io.html">systemd-journaldの過剰なI/O</a></li>
-                                    <li><a href="/notes/kind.html">kind (Kubernetes in Docker)</a></li>
                                     <li><a href="/notes/google-borg.html">Borg (Googleのクラスタ管理システム)</a></li>
-                                    <li><a href="/notes/etcd.html" class="active">etcd</a></li>
                                     <li><a href="/notes/service-mesh.html">Service Mesh</a></li>
                                     <li><a href="/notes/rbac.html">RBAC (Role-Based Access Control)</a></li>
                                     <li><a href="/notes/podman.html">Podman</a></li>
@@ -421,7 +425,7 @@
             <article class="notes-content">
                 <h1>etcd</h1>
 
-<p>分散システム向けの、信頼性の高いキーバリューストア。Go製で、合意アルゴリズムに<strong>Raft</strong>を使い、リーダーノードの故障を含むマシン障害に耐えながら強い一貫性を保つ。名前はUnixの設定ディレクトリ <code>/etc</code> に distributed の「d」を付けたもの（「分散された/etc」）。 <a class="note-tag" href="/notes/tags/infrastructure.html">#infrastructure</a> <a class="note-tag" href="/notes/tags/distributed-systems.html">#distributed-systems</a></p>
+<p>分散システム向けの、信頼性の高いキーバリューストア。Go製で、合意アルゴリズムに<strong><a href="/notes/raft.html">Raft</a></strong>を使い、リーダーノードの故障を含むマシン障害に耐えながら強い一貫性を保つ。名前はUnixの設定ディレクトリ <code>/etc</code> に distributed の「d」を付けたもの（「分散された/etc」）。 <a class="note-tag" href="/notes/tags/infrastructure.html">#infrastructure</a> <a class="note-tag" href="/notes/tags/distributed-systems.html">#distributed-systems</a></p>
 
 <h2>経緯</h2>
 
@@ -450,12 +454,14 @@
                     <h2>🔗 リンクされているノート</h2>
                     <ul>
                                             <li><a href="/notes/kubernetes.html">Kubernetes</a></li>
+                                            <li><a href="/notes/raft.html">Raft (合意アルゴリズム)</a></li>
                                             <li><a href="/notes/k3s.html">k3s</a></li>
+                                            <li><a href="/notes/kubeadm.html">kubeadm</a></li>
                     
                     </ul>
                 </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-14 08:24 / 更新日時: 2026-08-14 08:24</span>
+                    <span>作成日時: 2026-08-14 08:24 / 更新日時: 2026-08-14 08:33</span>
                     <a class="share-x" href="https://twitter.com/intent/tweet?text=etcd&url=https%3A%2F%2F64p.org%2Fnotes%2Fetcd.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>

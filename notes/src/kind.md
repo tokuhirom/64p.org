@@ -1,6 +1,6 @@
 ---
 created: 2026-08-14 08:24
-updated: 2026-08-14 08:24
+updated: 2026-08-14 08:33
 ---
 # kind (Kubernetes in Docker)
 
@@ -9,7 +9,7 @@ Dockerコンテナを「ノード」として[[kubernetes|Kubernetes]]クラス�
 ## 仕組み
 
 - **node image** — systemd・containerd・kubeadm・kubeletなど、コンテナの中でKubernetesノードとして振る舞うのに必要な一式を焼き込んだDockerイメージ。ベースとなるbase-imageの上に、Kubernetesのビルド成果物を載せて作られる
-- このnode imageのコンテナを1ノード1コンテナで起動し、**kubeadm**で各ノードをブートストラップしてクラスタを組む
+- このnode imageのコンテナを1ノード1コンテナで起動し、**[[kubeadm|kubeadm]]**で各ノードをブートストラップしてクラスタを組む
 - VMを使わないため起動が速く、マルチノードクラスタ（コントロールプレーン複数のHA構成も含む）を気軽に作れる
 - Kubernetesのリリース前バイナリ（CI artifacts）からnode imageをビルドする機能があり、「まだリリースされていないKubernetes」のテストができる
 

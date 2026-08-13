@@ -6,7 +6,154 @@
 <atom:link href="https://64p.org/notes/rss.xml" rel="self" type="application/rss+xml" />
 <description>ちょっと調べたことや検証結果を、AIの力も借りながらメモしていくコーナーです。</description>
 <language>ja</language>
-<lastBuildDate>Fri, 14 Aug 2026 08:25:19 +0900</lastBuildDate>
+<lastBuildDate>Fri, 14 Aug 2026 08:33:37 +0900</lastBuildDate>
+<item>
+<title>Raft (合意アルゴリズム)</title>
+<link>https://64p.org/notes/raft.html</link>
+<guid isPermaLink="true">https://64p.org/notes/raft.html</guid>
+<pubDate>Fri, 14 Aug 2026 08:33:00 +0900</pubDate>
+<description><![CDATA[<h1>Raft (合意アルゴリズム)</h1>
+
+<p>複製ログ（replicated log）を複数ノード間で一貫させるための合意（コンセンサス）アルゴリズム。StanfordのDiego OngaroとJohn Ousterhoutが設計し、USENIX ATC 2014の論文「In Search of an Understandable Consensus Algorithm」で発表された。 <a class="note-tag" href="/notes/tags/distributed-systems.html">#distributed-systems</a></p>
+
+<h2>設計目標: 理解しやすさ</h2>
+
+<p>先行するPaxosと等価な結果を同等の効率で出せるが、構造がまったく異なる。Paxosが「難解で、実システムを作るには大きなギャップがある」とされてきたのに対し、Raftは<strong>理解しやすさ</strong>そのものを第一の設計目標にした。論文には2大学の学生43名にPaxosとRaftを両方教えたユーザースタディが載っており、33名がPaxosよりRaftの設問に良い成績を出した。</p>
+
+<p>そのために問題を独立したサブ問題に分解している:</p>
+
+<ul>
+<li><strong>リーダー選出（leader election）</strong> — 強いリーダーを1人選び、ログの書き込みをリーダー経由に一本化する</li>
+<li><strong>ログ複製（log replication）</strong> — リーダーがクライアントの要求をログに追記し、フォロワーへ複製する</li>
+<li><strong>安全性（safety）</strong> — コミット済みエントリが失われない・食い違わないことの保証</li>
+</ul>
+
+
+<h2>ノードの状態遷移</h2>
+
+<div class="mermaid">
+stateDiagram-v2
+    [*] --&gt; Follower
+    Follower --&gt; Candidate: 選挙タイムアウト&lt;br/&gt;(リーダーから音沙汰なし)
+    Candidate --&gt; Leader: 過半数の票を獲得
+    Candidate --&gt; Follower: 他のリーダーを発見
+    Candidate --&gt; Candidate: 票が割れて再選挙
+    Leader --&gt; Follower: より新しいterm&lt;br/&gt;のノードを発見
+</div>
+
+
+<h2>採用例</h2>
+
+<p><a href="/notes/etcd.html">etcd</a>がRaftで一貫性を保っているのが代表例（つまり<a href="/notes/kubernetes.html">Kubernetes</a>のクラスタ状態はRaftの上に載っている）。ほかにHashiCorp ConsulやTiKV、CockroachDBなど、Go/Rust系の分散システムでの採用が多い。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://raft.github.io/raft.pdf">In Search of an Understandable Consensus Algorithm (Extended Version)</a></li>
+<li><a href="https://www.usenix.org/conference/atc14/technical-sessions/presentation/ongaro">In Search of an Understandable Consensus Algorithm - USENIX ATC 2014</a></li>
+<li><a href="https://raft.github.io/">The Raft Consensus Algorithm</a></li>
+</ul>
+
+]]></description>
+</item>
+<item>
+<title>Let&#39;s Encrypt</title>
+<link>https://64p.org/notes/lets-encrypt.html</link>
+<guid isPermaLink="true">https://64p.org/notes/lets-encrypt.html</guid>
+<pubDate>Fri, 14 Aug 2026 08:33:00 +0900</pubDate>
+<description><![CDATA[<h1>Let&rsquo;s Encrypt</h1>
+
+<p>非営利団体ISRG（Internet Security Research Group）が運営する、無料・自動化された認証局（CA）。証明書の費用と手作業という「WebのHTTPS化の障壁」を取り除くことを目的に、2015年にサービスを開始した。発行は<a href="/notes/acme.html">ACMEプロトコル</a>で完全に自動化されている。 <a class="note-tag" href="/notes/tags/security.html">#security</a> <a class="note-tag" href="/notes/tags/web.html">#web</a></p>
+
+<h2>90日ライフタイムという設計</h2>
+
+<p>開始当初から証明書の有効期間は90日で、これは今もデフォルト。ISRGのJosh Aasは2015年に理由を「自動化を強く促すのに十分短く、手動でもぎりぎり運用できる長さ」と説明している。有効期間が短いほど、鍵の漏洩や誤発行があったときに悪用できる期間が限られるという利点もある。</p>
+
+<h2>さらに短命へ</h2>
+
+<ul>
+<li>2026年1月から、有効期間<strong>6日</strong>の短命証明書が一般提供されている</li>
+<li>業界ルール（CA/Browser Forum）で2029年3月15日から証明書の最大有効期間が47日に制限されるため、Let&rsquo;s Encryptは2028年2月までに最大有効期間を45日へ短縮する計画を出している</li>
+</ul>
+
+
+<p>証明書の寿命がどんどん短くなっていく流れは、「証明書の更新は自動化されているのが当たり前」という前提が業界標準になったことの現れと言える。手動更新を前提とした運用は今後成り立たなくなっていく。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://letsencrypt.org/">Let&rsquo;s Encrypt</a></li>
+<li><a href="https://letsencrypt.org/2015/11/09/why-90-days">Why ninety-day lifetimes for certificates? - Let&rsquo;s Encrypt</a></li>
+<li><a href="https://letsencrypt.org/docs/cert-lifetimes/">Certificate Lifetime Rationale and Plans - Let&rsquo;s Encrypt</a></li>
+<li><a href="https://letsencrypt.org/2025/12/02/from-90-to-45">Decreasing Certificate Lifetimes to 45 Days - Let&rsquo;s Encrypt</a></li>
+</ul>
+
+]]></description>
+</item>
+<item>
+<title>kubeadm</title>
+<link>https://64p.org/notes/kubeadm.html</link>
+<guid isPermaLink="true">https://64p.org/notes/kubeadm.html</guid>
+<pubDate>Fri, 14 Aug 2026 08:33:00 +0900</pubDate>
+<description><![CDATA[<h1>kubeadm</h1>
+
+<p><a href="/notes/kubernetes.html">Kubernetes</a>公式のクラスタ・ブートストラップツール。<code>kubeadm init</code> と <code>kubeadm join</code> という2つのコマンドを、クラスタ構築のベストプラクティスの「fast path」として提供する。 <a class="note-tag" href="/notes/tags/kubernetes.html">#kubernetes</a></p>
+
+<ul>
+<li><strong><code>kubeadm init</code></strong> — 最初のノードでコントロールプレーンを立ち上げる。証明書の生成、kube-apiserverなどコントロールプレーンコンポーネントのstatic Pod化、<a href="/notes/etcd.html">etcd</a>のセットアップまでを行う</li>
+<li><strong><code>kubeadm join</code></strong> — bootstrap tokenを使ってワーカーノード（またはコントロールプレーンの追加ノード）をクラスタに参加させる</li>
+</ul>
+
+
+<h2>スコープの割り切り</h2>
+
+<p>kubeadmは「minimum viable cluster」を立ち上げることだけに責任を持つ。マシンのプロビジョニングはスコープ外で、CNIプラグイン（ネットワーク）のインストールもユーザーが後から行う。この割り切りによってオンプレ・クラウドVM・ベアメタル・ラップトップのどこでも動き、kubespray・<a href="/notes/cluster-api.html">Cluster API</a>・<a href="/notes/minikube.html">minikube</a>・<a href="/notes/kind.html">kind</a>といった上位ツールが土台として使える部品になっている（kindがnode imageコンテナ内で各ノードをブートストラップするのに使っているのもkubeadm）。</p>
+
+<p>kubeadmで構築したクラスタはKubernetesのConformanceテストを通る。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://kubernetes.io/docs/reference/setup-tools/kubeadm/">Kubeadm | Kubernetes</a></li>
+<li><a href="https://oneuptime.com/blog/post/2026-02-02-kubernetes-kubeadm-cluster-bootstrap/view">How to Bootstrap Kubernetes Clusters with kubeadm - OneUptime</a></li>
+</ul>
+
+]]></description>
+</item>
+<item>
+<title>ACME (Automatic Certificate Management Environment)</title>
+<link>https://64p.org/notes/acme.html</link>
+<guid isPermaLink="true">https://64p.org/notes/acme.html</guid>
+<pubDate>Fri, 14 Aug 2026 08:33:00 +0900</pubDate>
+<description><![CDATA[<h1>ACME (Automatic Certificate Management Environment)</h1>
+
+<p>TLS証明書の取得・ドメイン所有権の検証・更新を、人手を介さず自動化するためのプロトコル。<a href="/notes/lets-encrypt.html">Let&rsquo;s Encrypt</a>を実現するために開発され、2019年3月に<strong>RFC 8555</strong>としてIETF標準になった。 <a class="note-tag" href="/notes/tags/protocol.html">#protocol</a> <a class="note-tag" href="/notes/tags/security.html">#security</a></p>
+
+<h2>チャレンジ: ドメイン所有権の証明方法</h2>
+
+<p>CAがクライアントに「このドメインを本当に支配しているか」を証明させる仕組み。クライアントがチャレンジ種別を選び、証明となるデータを配置してからCAに検証を依頼する。</p>
+
+<ul>
+<li><strong>HTTP-01</strong> — CAが <code>http://&lt;ドメイン&gt;/.well-known/acme-challenge/&lt;トークン&gt;</code> を取得して検証する。ポート80がインターネットから到達可能である必要がある。最も手軽だがワイルドカード証明書は取れない</li>
+<li><strong>DNS-01</strong> — 指定されたTXTレコードをDNSに設定して検証する。ワイルドカード証明書に対応し、ポートを開ける必要がない。DNSプロバイダーのAPI連携が必要になる</li>
+<li><strong>TLS-ALPN-01</strong> — ポート443のTLSハンドシェイク（ALPN拡張）だけで検証する。リバースプロキシがTLS終端している構成向け</li>
+</ul>
+
+
+<h2>クライアント</h2>
+
+<p>certbot（EFF製、最も広く使われる）、acme.sh、legoなどの専用クライアントのほか、Caddyや<a href="/notes/traefik.html">Traefik</a>のようにサーバー自体がACMEクライアントを内蔵していて、証明書の取得から更新までを完全に自動でやってくれるものもある。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://datatracker.ietf.org/doc/html/rfc8555">RFC 8555 - Automatic Certificate Management Environment (ACME)</a></li>
+<li><a href="https://evertrust.io/guide/acme-protocol/">ACME Protocol Explained - EverTrust</a></li>
+<li><a href="https://www.namesilo.com/blog/en/domain-security/acme-challenges-deep-dive-http-01-vs-dns-01-vs-tls-alpn-01">ACME Challenges Deep Dive: HTTP-01 vs DNS-01 vs TLS-ALPN-01 - NameSilo</a></li>
+</ul>
+
+]]></description>
+</item>
 <item>
 <title>Kubernetes</title>
 <link>https://64p.org/notes/kubernetes.html</link>
@@ -34,6 +181,7 @@
 <li><a href="/notes/kubernetes-cloud-controller-manager.html">Cloud Controller Manager (CCM)</a> — クラウドプロバイダー固有の制御ループを本体から分離したコンポーネント</li>
 <li><a href="/notes/container-storage-interface.html">Container Storage Interface (CSI)</a> — ストレージベンダーがプラグインを書くための標準インターフェース</li>
 <li><a href="/notes/etcd.html">etcd</a> — クラスタの全状態を保存するプライマリデータストア</li>
+<li><a href="/notes/kubeadm.html">kubeadm</a> — クラスタを手作業で組む際の公式ブートストラップツール。kind・Cluster APIなど上位ツールの土台でもある</li>
 </ul>
 
 
@@ -68,7 +216,7 @@
 
 <ul>
 <li>プロバイダー: <a href="/notes/kubernetes.html">Kubernetes</a>（Ingress / Gateway API / CRD）、Docker、Docker Swarm、Nomad、Amazon ECS、Consul、file、HTTPなど</li>
-<li>ACME（Let&rsquo;s Encrypt）組み込みで、TLS証明書の取得・更新を自動化できる</li>
+<li><a href="/notes/acme.html">ACME</a>（<a href="/notes/lets-encrypt.html">Let&rsquo;s Encrypt</a>）組み込みで、TLS証明書の取得・更新を自動化できる</li>
 <li>HTTP/2・HTTP/3・gRPC・WebSocket・TCP・UDP対応、ミドルウェアチェーンによる拡張、ビルトインのダッシュボード</li>
 </ul>
 
@@ -103,7 +251,7 @@
 
 <ul>
 <li><strong>node image</strong> — systemd・containerd・kubeadm・kubeletなど、コンテナの中でKubernetesノードとして振る舞うのに必要な一式を焼き込んだDockerイメージ。ベースとなるbase-imageの上に、Kubernetesのビルド成果物を載せて作られる</li>
-<li>このnode imageのコンテナを1ノード1コンテナで起動し、<strong>kubeadm</strong>で各ノードをブートストラップしてクラスタを組む</li>
+<li>このnode imageのコンテナを1ノード1コンテナで起動し、<strong><a href="/notes/kubeadm.html">kubeadm</a></strong>で各ノードをブートストラップしてクラスタを組む</li>
 <li>VMを使わないため起動が速く、マルチノードクラスタ（コントロールプレーン複数のHA構成も含む）を気軽に作れる</li>
 <li>Kubernetesのリリース前バイナリ（CI artifacts）からnode imageをビルドする機能があり、「まだリリースされていないKubernetes」のテストができる</li>
 </ul>
@@ -119,6 +267,39 @@
 <li><a href="https://kind.sigs.k8s.io/">kind - Kubernetes</a></li>
 <li><a href="https://github.com/kubernetes-sigs/kind">kubernetes-sigs/kind - GitHub</a></li>
 <li><a href="https://kind.sigs.k8s.io/docs/design/initial/">Initial design - kind</a></li>
+</ul>
+
+]]></description>
+</item>
+<item>
+<title>etcd</title>
+<link>https://64p.org/notes/etcd.html</link>
+<guid isPermaLink="true">https://64p.org/notes/etcd.html</guid>
+<pubDate>Fri, 14 Aug 2026 08:24:00 +0900</pubDate>
+<description><![CDATA[<h1>etcd</h1>
+
+<p>分散システム向けの、信頼性の高いキーバリューストア。Go製で、合意アルゴリズムに<strong><a href="/notes/raft.html">Raft</a></strong>を使い、リーダーノードの故障を含むマシン障害に耐えながら強い一貫性を保つ。名前はUnixの設定ディレクトリ <code>/etc</code> に distributed の「d」を付けたもの（「分散された/etc」）。 <a class="note-tag" href="/notes/tags/infrastructure.html">#infrastructure</a> <a class="note-tag" href="/notes/tags/distributed-systems.html">#distributed-systems</a></p>
+
+<h2>経緯</h2>
+
+<ul>
+<li>2013年、CoreOS社で開発が始まり、2014年にオープンソース化</li>
+<li>2018年、CoreOSがRed Hatに買収され、同年12月にプロジェクトはCNCFへ移管</li>
+<li>2020年11月、CNCFのgraduatedプロジェクトに昇格</li>
+</ul>
+
+
+<h2>Kubernetesのプライマリデータストア</h2>
+
+<p><a href="/notes/kubernetes.html">Kubernetes</a>のクラスタ状態（あらゆるAPIオブジェクト）はすべてetcdに保存・複製される。kube-apiserverの背後にいる唯一のステートフルなコンポーネントであり、etcdのバックアップがそのままクラスタのバックアップになる。一方で運用（クラスタ構成・スナップショット・ディスク性能への敏感さ）には手間がかかるため、<a href="/notes/k3s.html">k3s</a>は「kine」というシムでetcd APIをSQL（デフォルトはsqlite3）に変換し、小規模構成でetcdなしで動けるようにしている。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://github.com/etcd-io/etcd">etcd-io/etcd - GitHub</a></li>
+<li><a href="https://www.cncf.io/reports/etcd-project-journey-report/">etcd Project Journey Report - CNCF</a></li>
+<li><a href="https://www.redhat.com/en/topics/containers/what-is-etcd">What is etcd? - Red Hat</a></li>
+<li><a href="https://www.infoq.com/news/2020/11/etcd-cncf-graduation/">etcd Becomes a CNCF Graduated Project - InfoQ</a></li>
 </ul>
 
 ]]></description>
@@ -159,39 +340,6 @@
 <li><a href="https://research.google/pubs/large-scale-cluster-management-at-google-with-borg/">Large-scale cluster management at Google with Borg - Google Research</a></li>
 <li><a href="https://queue.acm.org/detail.cfm?id=2898444">Borg, Omega, and Kubernetes - ACM Queue</a></li>
 <li><a href="https://en.wikipedia.org/wiki/Borg_(cluster_manager">Borg (cluster manager) - Wikipedia</a>)</li>
-</ul>
-
-]]></description>
-</item>
-<item>
-<title>etcd</title>
-<link>https://64p.org/notes/etcd.html</link>
-<guid isPermaLink="true">https://64p.org/notes/etcd.html</guid>
-<pubDate>Fri, 14 Aug 2026 08:24:00 +0900</pubDate>
-<description><![CDATA[<h1>etcd</h1>
-
-<p>分散システム向けの、信頼性の高いキーバリューストア。Go製で、合意アルゴリズムに<strong>Raft</strong>を使い、リーダーノードの故障を含むマシン障害に耐えながら強い一貫性を保つ。名前はUnixの設定ディレクトリ <code>/etc</code> に distributed の「d」を付けたもの（「分散された/etc」）。 <a class="note-tag" href="/notes/tags/infrastructure.html">#infrastructure</a> <a class="note-tag" href="/notes/tags/distributed-systems.html">#distributed-systems</a></p>
-
-<h2>経緯</h2>
-
-<ul>
-<li>2013年、CoreOS社で開発が始まり、2014年にオープンソース化</li>
-<li>2018年、CoreOSがRed Hatに買収され、同年12月にプロジェクトはCNCFへ移管</li>
-<li>2020年11月、CNCFのgraduatedプロジェクトに昇格</li>
-</ul>
-
-
-<h2>Kubernetesのプライマリデータストア</h2>
-
-<p><a href="/notes/kubernetes.html">Kubernetes</a>のクラスタ状態（あらゆるAPIオブジェクト）はすべてetcdに保存・複製される。kube-apiserverの背後にいる唯一のステートフルなコンポーネントであり、etcdのバックアップがそのままクラスタのバックアップになる。一方で運用（クラスタ構成・スナップショット・ディスク性能への敏感さ）には手間がかかるため、<a href="/notes/k3s.html">k3s</a>は「kine」というシムでetcd APIをSQL（デフォルトはsqlite3）に変換し、小規模構成でetcdなしで動けるようにしている。</p>
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://github.com/etcd-io/etcd">etcd-io/etcd - GitHub</a></li>
-<li><a href="https://www.cncf.io/reports/etcd-project-journey-report/">etcd Project Journey Report - CNCF</a></li>
-<li><a href="https://www.redhat.com/en/topics/containers/what-is-etcd">What is etcd? - Red Hat</a></li>
-<li><a href="https://www.infoq.com/news/2020/11/etcd-cncf-graduation/">etcd Becomes a CNCF Graduated Project - InfoQ</a></li>
 </ul>
 
 ]]></description>
@@ -1186,205 +1334,6 @@ sequenceDiagram
 <li><a href="https://www.city.katori.lg.jp/sightseeing/museum/tadataka.html">伊能忠敬とは：香取市ウェブサイト</a></li>
 <li><a href="https://www.topcon.co.jp/media/infrastructure/surveying/">日本地図を作った伊能忠敬測量の目的は地球の大きさを測ることだった!? | Through the LENS by TOPCON</a></li>
 <li><a href="https://ja.wikipedia.org/wiki/%E3%82%B7%E3%83%BC%E3%83%9C%E3%83%AB%E3%83%88%E4%BA%8B%E4%BB%B6">シーボルト事件 - Wikipedia</a></li>
-</ul>
-
-]]></description>
-</item>
-<item>
-<title>おでん</title>
-<link>https://64p.org/notes/oden.html</link>
-<guid isPermaLink="true">https://64p.org/notes/oden.html</guid>
-<pubDate>Fri, 14 Aug 2026 04:59:00 +0900</pubDate>
-<description><![CDATA[<h1>おでん</h1>
-
-<p>大根・卵・練り物・こんにゃくなどの具材を、だし汁でじっくり煮込む日本の料理。#food <a class="note-tag" href="/notes/tags/japan.html">#japan</a></p>
-
-<h2>由来</h2>
-
-<p>ルーツは室町時代に流行した「豆腐田楽（とうふでんがく）」。豆腐を串に刺して焼き、味噌を塗って食べる料理で、平安時代にはすでに原型が存在したとする説もある。</p>
-
-<p>名前の「おでん」は、この「田楽（でんがく）」を指す女房言葉（室町時代から宮中に仕える女房が使い始めた言葉）に由来する。「田楽」の「田」を「でん」と読み、丁寧語の接頭辞「お」を付けて「お田（おでん）」となった。</p>
-
-<p>江戸時代に入ると、串に刺した豆腐やこんにゃくを煮込む「煮込み田楽」へと変化し、屋台で食べるファストフードとして江戸庶民に広まった。「田楽」と「おでん」はこの過程で分化し、串を焼いて味噌を塗るものを「田楽」、煮込むものを「おでん」と呼び分けるようになった。</p>
-
-<h2>地域による違い</h2>
-
-<p>出汁・醤油の系統や練り物の産地の違いから、地域ごとに味付けや具材が大きく異なる。</p>
-
-<ul>
-<li><strong>関東</strong>: 濃口醤油ベースの、色の濃い出汁。</li>
-<li><strong>関西</strong>: 昆布や薄口醤油を使った、上品な色の出汁。</li>
-<li><strong>静岡おでん</strong>: 牛すじと濃口醤油による黒い出汁が特徴。黒はんぺん・なると巻・牛すじ・豚もつなどを串に刺して煮込み、だし粉と青のりをかけて食べる。</li>
-<li><strong>愛知（味噌おでん）</strong>: 八丁味噌と三温糖などで作る甘辛い汁で煮込む。豚もつ・牛すじ・大根・角麩などが具材。</li>
-</ul>
-
-
-<h2>コンビニおでん</h2>
-
-<p>1979年頃、コンビニエンスストアで調理済みおでんの販売が始まった。当初は練り物中心の具材構成だったが、その後具材の種類が数十種類に増え、地域限定の具材を扱う店舗も現れた。</p>
-
-<p>コンビニおでんは海外にも展開しており、1997年にはローソンが上海で販売を開始し中国進出の先駆けとなった。韓国には戦前の日本から串おでんの形式が伝わり、現在では「オデン（어묵/오뎅）」として韓国のストリートフードの一部になっている。</p>
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://www.kibun.co.jp/knowledge/oden/history/rekishi/index.html">歴史：おでんの歴史 | おでん教室 | 紀文アカデミー | 紀文食品</a></li>
-<li><a href="https://ja.wikipedia.org/wiki/%E3%81%8A%E3%81%A7%E3%82%93">おでん - Wikipedia</a></li>
-<li><a href="https://watobi.jp/word/5658.html">「おでん」の由来 ｜ WA・TO・BI - 和食の扉 -</a></li>
-<li><a href="https://en.wikipedia.org/wiki/Oden">Oden - Wikipedia (English)</a></li>
-<li><a href="https://www.yamaki.co.jp/katsuobushi-plus/news/202312_oden/">多彩な日本各地のおでん。地方ごとの味わいの違いをご紹介！</a></li>
-<li><a href="https://nihonumai.com/oden-regional-flavors/">地域でこんなに違う！「おでん」の種と出汁の東西格差と、知られざる味噌文化 | 日本のうまいもの</a></li>
-<li><a href="https://intojapanwaraku.com/rock/culture-rock/29047/">コンビニおでんの意外なルーツ！おでんと茶の湯との関係とは？ ｜ 和樂web</a></li>
-<li><a href="https://hitomono-gatari.com/oden/">おでんのルーツ！変わり種具材と地域差！コンビニではいつから？ | ルーツアーカイブ</a></li>
-</ul>
-
-]]></description>
-</item>
-<item>
-<title>セキュリティ運用</title>
-<link>https://64p.org/notes/security-operations.html</link>
-<guid isPermaLink="true">https://64p.org/notes/security-operations.html</guid>
-<pubDate>Fri, 14 Aug 2026 01:23:00 +0900</pubDate>
-<description><![CDATA[<h1>セキュリティ運用</h1>
-
-<p><a class="note-tag" href="/notes/tags/security.html">#security</a> <a class="note-tag" href="/notes/tags/moc.html">#moc</a></p>
-
-<p>セキュリティインシデントの監視・検知・対応と、それを支えるツール・知識体系・攻撃側視点の検証手法についてのノートを束ねるハブノート。</p>
-
-<h2>防御側の組織と活動</h2>
-
-<ul>
-<li><a href="/notes/soc.html">SOC</a> — 監視・検知・対応を専門に担う組織。Tier 1（トリアージ）〜Tier 3（脅威ハンティング）のティア構成</li>
-<li><a href="/notes/threat-hunting.html">脅威ハンティング</a> — アラートを待たず、既に潜んでいる脅威を仮説駆動で能動的に探す活動</li>
-<li><a href="/notes/7ai.html">7AI</a> — SOC業務（トリアージ・調査・ハンティング）をAIエージェントで自動化する企業の実例</li>
-<li><a href="/notes/noc.html">NOC</a> — 隣接概念。セキュリティ特化のSOCに対し、ネットワークの可用性・パフォーマンス維持を担う</li>
-</ul>
-
-
-<h2>検知・対応のツール</h2>
-
-<ul>
-<li><a href="/notes/siem.html">SIEM</a> — 環境全体のログを集約・相関分析してアラートを上げる「広さ」担当の基盤</li>
-<li><a href="/notes/edr.html">EDR</a> — エンドポイントの挙動を記録・監視し隔離等の対応まで行う「深さ」担当のツール</li>
-</ul>
-
-
-<h2>知識体系・指標</h2>
-
-<ul>
-<li><a href="/notes/mitre-attack.html">MITRE ATT&amp;CK</a> — 攻撃者のTTPs（戦術・技術・手順）を体系化したナレッジベース。検知・ハンティングの共通語彙</li>
-<li><a href="/notes/ioc-ioa.html">IOC/IOA</a> — 検知の手がかりとなる指標。事後の侵害証拠（IOC）と進行中の攻撃兆候（IOA）</li>
-</ul>
-
-
-<h2>攻撃側視点での検証（オフェンシブセキュリティ）</h2>
-
-<ul>
-<li><a href="/notes/penetration-test.html">ペネトレーションテスト</a> — 攻撃者と同じ手法で疑似攻撃し、防御の弱点を実証する手法</li>
-<li><a href="/notes/metasploit.html">Metasploit</a> — exploitの開発・実行を担う代表的なペンテストフレームワーク</li>
-<li><a href="/notes/burp-suite.html">Burp Suite</a> — Webアプリ診断の定番プロキシツール</li>
-<li><a href="/notes/kali-linux.html">Kali Linux</a> — ペンテストツールを同梱したLinuxディストリビューション（モバイル版は<a href="/notes/kali-nethunter.html">Kali NetHunter</a>）</li>
-<li><a href="/notes/hack-the-box.html">Hack The Box</a> — 許可された仮想環境でペンテスト技術を練習できる学習プラットフォーム</li>
-</ul>
-
-
-<h2>脅威の実例</h2>
-
-<ul>
-<li><a href="/notes/ransomware.html">ランサムウェア</a> — データ暗号化と身代金要求を組み合わせた代表的な脅威。国内被害は<a href="/notes/japan-ransomware-incidents.html">国内ランサムウェア被害事例</a>（ハブノート）にまとめている</li>
-</ul>
-
-
-<h2>関連領域</h2>
-
-<ul>
-<li><a href="/notes/devsecops.html">DevSecOps</a> — 運用段階ではなく開発パイプラインの側にセキュリティを組み込むアプローチ</li>
-</ul>
-
-]]></description>
-</item>
-<item>
-<title>SOC (Security Operations Center)</title>
-<link>https://64p.org/notes/soc.html</link>
-<guid isPermaLink="true">https://64p.org/notes/soc.html</guid>
-<pubDate>Thu, 13 Aug 2026 22:36:00 +0900</pubDate>
-<description><![CDATA[<h1>SOC (Security Operations Center)</h1>
-
-<p><a class="note-tag" href="/notes/tags/security.html">#security</a></p>
-
-<p>組織のセキュリティインシデントの監視・検知・対応を専門に担うチーム、およびその拠点。<a href="/notes/siem.html">SIEM</a>や<a href="/notes/edr.html">EDR</a>などのツールが上げるアラートを24時間365日体制で監視し、トリアージ・調査・対応を行う。</p>
-
-<h2>ティア構成</h2>
-
-<p>SOCアナリストは習熟度・役割に応じて段階（ティア）に分かれるのが典型的。</p>
-
-<ul>
-<li><strong>Tier 1（トリアージ）</strong> — アラートの一次対応。定義済みのプレイブックに従って緊急度を判定し、誤検知（false positive）を切り分け、本物のインシデントをエスカレーションする</li>
-<li><strong>Tier 2（調査・インシデント対応）</strong> — エスカレーションされたインシデントを深掘りする。複数ソースのデータを相関させて攻撃のパターンを特定し、封じ込め・復旧を主導する</li>
-<li><strong>Tier 3（脅威ハンティング）</strong> — 最上位のアナリストが、アラートに上がっていない脅威を能動的に探す<a href="/notes/threat-hunting.html">脅威ハンティング</a>や、新しい脅威への対策立案を担う</li>
-</ul>
-
-
-<p>このほか、チーム運営・プロセス整備・危機対応コミュニケーションを担うSOCマネージャーが置かれる。</p>
-
-<h2>関連する概念</h2>
-
-<ul>
-<li><strong><a href="/notes/noc.html">NOC</a> (Network Operations Center)</strong> — ネットワークの可用性・パフォーマンス維持が主目的で、セキュリティ特化のSOCとは役割が異なる</li>
-<li>Tier 1のアラートトリアージは反復作業（トイル）になりやすく、AIエージェントによる自動化（<a href="/notes/7ai.html">7AI</a>など）が近年のトレンドになっている</li>
-</ul>
-
-
-<h2><a href="/notes/security-operations.html">セキュリティ運用</a>の中での位置づけ</h2>
-
-<p>セキュリティ運用の中核となる組織。SIEM・EDRといったツール群を使いこなし、脅威ハンティングまで含む防御側の活動全体を実行する主体。</p>
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://www.crowdstrike.com/en-us/cybersecurity-101/next-gen-siem/security-operations-center-soc/">What is a Security Operations Center? | CrowdStrike</a></li>
-<li><a href="https://www.ibm.com/think/topics/security-operations-center">What Is a Security Operations Center (SOC)? | IBM</a></li>
-<li><a href="https://www.paloaltonetworks.com/cyberpedia/soc-roles-and-responsibilities">SOC Roles and Responsibilities | Palo Alto Networks</a></li>
-</ul>
-
-]]></description>
-</item>
-<item>
-<title>SIEM (Security Information and Event Management)</title>
-<link>https://64p.org/notes/siem.html</link>
-<guid isPermaLink="true">https://64p.org/notes/siem.html</guid>
-<pubDate>Thu, 13 Aug 2026 22:36:00 +0900</pubDate>
-<description><![CDATA[<h1>SIEM (Security Information and Event Management)</h1>
-
-<p><a class="note-tag" href="/notes/tags/security.html">#security</a></p>
-
-<p>OS・データベース・アプリケーション・ネットワーク機器・セキュリティ製品など、IT環境の様々なソースからログ・イベントデータを集約し、相関分析して脅威の兆候を検知するためのソフトウェア／プラットフォーム。単体のログでは見えない攻撃の兆候を、複数ソースにまたがる相関ルールで浮かび上がらせ、優先度付きのアラートとして<a href="/notes/soc.html">SOC</a>のアナリストに提示するのが基本的な役割。</p>
-
-<h2>主な機能</h2>
-
-<ul>
-<li><strong>ログ収集・正規化</strong> — 多様なフォーマットのログを一元的に収集し、検索・分析可能な形に正規化する</li>
-<li><strong>相関分析・アラート</strong> — 定義したルールや分析に基づきイベント同士を関連付け、セキュリティインシデントの可能性が高いものをアラートとして上げる</li>
-<li><strong>コンプライアンス支援</strong> — 監査用のログ保全やレポート生成を自動化し、各種規制対応を支援する</li>
-</ul>
-
-
-<p>近年はUEBA (User and Entity Behavior Analytics) による異常行動の検出や、機械学習ベースの分析を取り込んだ製品が増えており、検知後の対応を自動化するSOAR (Security Orchestration, Automation and Response) と統合される構成も一般的。</p>
-
-<h2>位置づけ</h2>
-
-<p>エンドポイント層を深く見る<a href="/notes/edr.html">EDR</a>に対し、SIEMは環境全体のログを横断的に見る広さが持ち味で、両者は補完関係にある。SIEMのアラートをすり抜けた脅威を能動的に探す活動が<a href="/notes/threat-hunting.html">脅威ハンティング</a>であり、その際のデータ基盤としてもSIEMが使われる。ログ分析基盤としての性質上、大量データの高速集計が求められ、分析用DB（<a href="/notes/clickhouse.html">ClickHouse</a>等）が下回りに使われることもある。</p>
-
-<h2><a href="/notes/security-operations.html">セキュリティ運用</a>の中での位置づけ</h2>
-
-<p>環境全体のログを横断的に相関分析する「広さ」担当の検知基盤。エンドポイントを深く見るEDRと補完関係にある。</p>
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://www.ibm.com/think/topics/siem">What is SIEM? | IBM</a></li>
-<li><a href="https://www.microsoft.com/en-us/security/business/security-101/what-is-siem">What Is SIEM? | Microsoft Security</a></li>
-<li><a href="https://en.wikipedia.org/wiki/Security_information_and_event_management">Security information and event management - Wikipedia</a></li>
 </ul>
 
 ]]></description>
