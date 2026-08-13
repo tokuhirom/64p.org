@@ -6,7 +6,86 @@
 <atom:link href="https://64p.org/notes/rss.xml" rel="self" type="application/rss+xml" />
 <description>ちょっと調べたことや検証結果を、AIの力も借りながらメモしていくコーナーです。</description>
 <language>ja</language>
-<lastBuildDate>Thu, 13 Aug 2026 09:09:49 +0900</lastBuildDate>
+<lastBuildDate>Thu, 13 Aug 2026 09:14:00 +0900</lastBuildDate>
+<item>
+<title>Vitest</title>
+<link>https://64p.org/notes/vitest.html</link>
+<guid isPermaLink="true">https://64p.org/notes/vitest.html</guid>
+<pubDate>Thu, 13 Aug 2026 09:14:00 +0900</pubDate>
+<description><![CDATA[<h1>Vitest</h1>
+
+<p><a href="/notes/vite.html">Vite</a>によって駆動される次世代テストフレームワーク。Anthony Fu氏(Vue/Vite/Nuxtのコアメンバー)とViteコミュニティにより2021年後半に作られた。</p>
+
+<h2>作られた理由</h2>
+
+<p>当時最も普及していたJestは非同期変換やESMのサポートが不十分で、Viteベースのプロジェクトを正しくテストできなかった。加えて「アプリのビルドはVite、テストはJest」という構成では、Babel/ts-jestなどJest用の変換パイプラインをアプリ用のVite設定とは別に用意する必要があり、二重設定になってしまう問題があった。Vitestはこれを1つのパイプラインに統合することを狙って作られた。</p>
+
+<h2>特徴</h2>
+
+<ul>
+<li>既存の<code>vite.config</code>をそのまま読み込むため、Viteプラグイン・エイリアス・resolve設定がテスト実行時にもそのまま使える(追加設定がほぼ不要)</li>
+<li>Jest互換のAPI(<code>describe</code>/<code>it</code>/<code>expect</code>など)を提供しつつ、より高速に動作</li>
+<li>ネイティブなwatchモード(HMRに近い即時再実行)</li>
+<li>v8/Istanbulによるネイティブコードカバレッジ</li>
+<li>Vue, React, Svelte, Lit, Markoなどのコンポーネントテストに対応するbrowser mode</li>
+</ul>
+
+
+<h2>VitestとViteの関係</h2>
+
+<p>VitestはViteのモジュール解決・変換パイプライン・プラグインシステムをそのまま利用する。要件としてVite v6.0.0以上・Node v20.0.0以上が必要。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://vitest.dev/guide/">Getting Started | Guide | Vitest</a></li>
+<li><a href="https://blog.logrocket.com/vitest-adoption-guide/">Vitest 4 adoption guide: Overview and migrating from Jest - LogRocket Blog</a></li>
+</ul>
+
+]]></description>
+</item>
+<item>
+<title>Vite</title>
+<link>https://64p.org/notes/vite.html</link>
+<guid isPermaLink="true">https://64p.org/notes/vite.html</guid>
+<pubDate>Thu, 13 Aug 2026 09:14:00 +0900</pubDate>
+<description><![CDATA[<h1>Vite</h1>
+
+<p>フランス語で「素早い」を意味する、フロントエンド向けのビルドツール。Evan You氏(Vue.jsの作者)が開発し、2020年4月に初版がリリースされた。「dev server」と「本番ビルド」の2つの主要機能で構成される。</p>
+
+<h2>誕生の背景</h2>
+
+<p>従来型のバンドラーベースの開発サーバーは「アプリ全体を事前にバンドルしてからブラウザに渡す」方式だったため、アプリが大きくなるほど起動やHMR(Hot Module Replacement)が遅くなるという課題があった。Viteはブラウザのネイティブ ES モジュール対応を活かし、処理を2つに分割することでこれを解決した。</p>
+
+<ul>
+<li><strong>依存関係(node_modulesなど)</strong>: esbuildで高速に事前バンドル</li>
+<li><strong>自分のソースコード</strong>: ネイティブESMでオンデマンド配信し、ブラウザが必要なファイルだけを読み込む</li>
+</ul>
+
+
+<p>これにより、アプリのサイズに関わらずdev serverの起動とHMRが高速なまま保たれる。</p>
+
+<h2>ビルドパイプラインの変化</h2>
+
+<p>Viteは長らく「開発時はesbuild、本番ビルド時は<a href="/notes/rollup.html">Rollup</a>」という2つの異なるツールを使い分けていたが、この不一致を解消するため、Rust製バンドラー<a href="/notes/rolldown.html">Rolldown</a>へ移行し、単一の一貫したパイプラインを実現しつつある(Vite 8でデフォルト採用予定)。</p>
+
+<h2>関連</h2>
+
+<ul>
+<li><a href="/notes/vitest.html">Vitest</a>はVite上に構築されたテストフレームワーク</li>
+</ul>
+
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://vite.dev/guide/">Getting Started | Vite</a></li>
+<li><a href="https://vite.dev/guide/why">Why Vite | Vite</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Vite_(software">Vite (software) - Wikipedia</a>)</li>
+</ul>
+
+]]></description>
+</item>
 <item>
 <title>Rollup</title>
 <link>https://64p.org/notes/rollup.html</link>
@@ -27,7 +106,7 @@
 <p>主にライブラリのビルド用途で使われることが多い。アプリケーション向けの複雑な機能(コード分割、HMRなど)よりも、シンプルで最適化されたバンドル生成に強みがある。</p>
 
 <ul>
-<li>Viteは本番ビルド時にRollupを使用している(開発時はesbuildを使用)</li>
+<li><a href="/notes/vite.html">Vite</a>は本番ビルド時にRollupを使用している(開発時はesbuildを使用)</li>
 <li>Svelteなども内部でRollupを採用</li>
 </ul>
 
@@ -59,7 +138,7 @@
 
 <h2>Viteとの関係</h2>
 
-<p>Viteはこれまで、開発時にesbuild・本番ビルド時にRollupという2つの異なるバンドラーを使い分ける構成だった。Rolldownはこの二重構成をRust製バンドラー1つに統一することを目指すプロジェクトで、開発ツール(Vite)・バンドラー(Rolldown)・コンパイラ(Oxc)をすべてVoidZeroが同じチームで維持する構成になる。</p>
+<p><a href="/notes/vite.html">Vite</a>はこれまで、開発時にesbuild・本番ビルド時にRollupという2つの異なるバンドラーを使い分ける構成だった。Rolldownはこの二重構成をRust製バンドラー1つに統一することを目指すプロジェクトで、開発ツール(Vite)・バンドラー(Rolldown)・コンパイラ(Oxc)をすべてVoidZeroが同じチームで維持する構成になる。</p>
 
 <p><code>rolldown-vite</code>パッケージとして試験的に利用可能になっており、Vite 8でデフォルトバンドラーとして採用される予定。プラグインはVite/Rollupプラグインであればそのまま試せるレベルの互換性が重視されている。</p>
 
@@ -1664,179 +1743,6 @@ Testing real mode
 <ul>
 <li><a href="https://github.com/dpw/kvm-hello-world">GitHub - dpw/kvm-hello-world</a></li>
 <li><a href="https://github.com/dpw/kvm-hello-world/blob/master/README.md">kvm-hello-world/README.md</a></li>
-</ul>
-
-]]></description>
-</item>
-<item>
-<title>KVM (Kernel-based Virtual Machine)</title>
-<link>https://64p.org/notes/kvm.html</link>
-<guid isPermaLink="true">https://64p.org/notes/kvm.html</guid>
-<pubDate>Wed, 12 Aug 2026 23:36:00 +0900</pubDate>
-<description><![CDATA[<h1>KVM (Kernel-based Virtual Machine)</h1>
-
-<p>LinuxカーネルにビルトインされたCPU仮想化機能。CPUが持つハードウェア仮想化支援機能(Intel VT-x / AMD-V)を、<code>/dev/kvm</code>というデバイスファイル経由でユーザー空間のプログラムに使わせる。2007年、Linuxカーネル2.6.20にマージされた。 <a class="note-tag" href="/notes/tags/virtualization.html">#virtualization</a> <a class="note-tag" href="/notes/tags/linux.html">#linux</a></p>
-
-<h2>KVM単体ではVMは動かない</h2>
-
-<p>KVMは<strong>デバイスのエミュレーションを一切やらない</strong>。ディスクI/O、ネットワークアダプタ、画面出力、USB、PCIデバイス、ファームウェア(BIOS相当)——これらはすべてKVMの管轄外で、<a href="/notes/qemu.html">QEMU</a>や<a href="/notes/firecracker.html">Firecracker</a>、<a href="/notes/cloud-hypervisor.html">Cloud Hypervisor</a>のような「ユーザー空間のVMM」側が担当する。KVMが提供するのは「CPUを仮想的に走らせる」部分だけ。</p>
-
-<h2><code>/dev/kvm</code>とioctlインターフェース</h2>
-
-<p>VMMと<code>/dev/kvm</code>の間のやり取りはioctl呼び出しで行われる。</p>
-
-<ul>
-<li><code>KVM_CREATE_VM</code> — VM用のファイルディスクリプタを作る</li>
-<li><code>KVM_CREATE_VCPU</code> — 仮想CPU(1つのLinuxスレッドとして実装される)を割り当てる</li>
-<li><code>KVM_SET_USER_MEMORY_REGION</code> — ゲストの物理メモリをVMのアドレス空間にマップする</li>
-<li><code>KVM_RUN</code> — 実際にゲストCPUをホストCPU上で直接実行させる</li>
-</ul>
-
-
-<p>VMMが<code>KVM_RUN</code>を呼ぶと、ゲストのコードがホストCPU上でほぼネイティブ速度で直接実行される。ゲストがI/Oを起こすなど「<a href="/notes/vm-exit.html">VM exit</a>」が発生するとKVMから制御がVMM側に戻り、VMM側がそのデバイス動作をエミュレートしてからまたKVMに実行を戻す、というループになっている。</p>
-
-<h2>なぜカーネル内蔵なのか</h2>
-
-<p>カーネルの一部として動くことで、Linuxが既に持っているプロセススケジューラ・メモリ管理・デバイスドライバの資産をそのまま仮想化にも使い回せる、という設計になっている。</p>
-
-<h2>実際に動かしてみる</h2>
-
-<p><a href="/notes/qemu.html">QEMU</a>等を使わず<code>/dev/kvm</code>のioctlを直接叩いて最小限のVMを起動する実験を<a href="/notes/kvm-hello-world-experiment.html">kvm-hello-world実験</a>で行った。「<a href="/notes/vm-exit.html">VM exit</a>」がどう発生し、ユーザー空間のVMMがどう処理するかを手を動かして確認できる。</p>
-
-<h2>このシリーズの文脈での位置づけ</h2>
-
-<p><a href="/notes/firecracker.html">Firecracker</a>・<a href="/notes/cloud-hypervisor.html">Cloud Hypervisor</a>・<a href="/notes/crosvm.html">crosvm</a>は、いずれもこの「KVMというCPU仮想化の土台」の上に、自前のデバイスモデル(ミニマルなvirtioデバイス群など)を実装したVMMという位置づけになる。<a href="/notes/rust-vmm.html">rust-vmm</a>の<code>kvm-ioctls</code>/<code>kvm-bindings</code>クレートは、この<code>/dev/kvm</code>のioctl呼び出しをRustから安全に扱うためのラッパー。</p>
-
-<h2><a href="/notes/microvm-ecosystem.html">コンテナ向け軽量VM技術</a>の中での位置づけ</h2>
-
-<p><a href="/notes/firecracker.html">Firecracker</a>・<a href="/notes/cloud-hypervisor.html">Cloud Hypervisor</a>・<a href="/notes/crosvm.html">crosvm</a>が共通して依拠する、Linuxカーネル側のCPU仮想化基盤。</p>
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://en.wikipedia.org/wiki/Kernel-based_Virtual_Machine">Kernel-based Virtual Machine - Wikipedia</a></li>
-<li><a href="https://www.redhat.com/en/topics/virtualization/what-is-KVM">What is KVM? | Red Hat</a></li>
-<li><a href="https://lwn.net/Articles/658511/">Using the KVM API - LWN.net</a></li>
-<li><a href="https://docs.kernel.org/virt/kvm/api.html">The Definitive KVM API Documentation</a></li>
-<li><a href="https://medium.com/@kuldeepranjan39/virtualization-d677d8390d31">From Emulation to Virtualization: How QEMU and KVM Work Together</a></li>
-</ul>
-
-]]></description>
-</item>
-<item>
-<title>LLMテキストの電子透かし</title>
-<link>https://64p.org/notes/llm-text-watermarking.html</link>
-<guid isPermaLink="true">https://64p.org/notes/llm-text-watermarking.html</guid>
-<pubDate>Wed, 12 Aug 2026 23:33:00 +0900</pubDate>
-<description><![CDATA[<h1>LLMテキストの電子透かし</h1>
-
-<p><a class="note-tag" href="/notes/tags/llm.html">#llm</a> <a class="note-tag" href="/notes/tags/ai.html">#ai</a> <a class="note-tag" href="/notes/tags/security.html">#security</a> <a class="note-tag" href="/notes/tags/watermarking.html">#watermarking</a></p>
-
-<p>LLMが生成したテキストに、人間には知覚できない統計的な「印」を埋め込み、後から「このテキストはこのモデルが生成したものか」を検定できるようにする技術。ゼロ幅文字やメタデータを付加する方式とは違い、<strong>トークン選択そのものに偏りを仕込む</strong>ので、コピペしても印がテキストと一緒に運ばれる。</p>
-
-<p>発端は <a href="https://zenn.dev/hellorusk/articles/3328866ca9e922">Kaito Sugimotoさんの解説記事</a>（2026-08、<a href="/notes/claude-text-watermark.html">Claudeの透かし導入</a>を受けたもの）。以下はそこで紹介されていた研究群を一次情報で裏取りしつつ整理したメモ。</p>
-
-<h2>基本原理</h2>
-
-<p>LLMは次トークンを確率分布からサンプリングしている。「ここは this でも that でも自然」という揺らぎのある場面で、秘密鍵由来の疑似乱数を使って選択を微妙に偏らせる。1トークンあたりの偏りはごく僅かでも、数百トークン集まれば統計的検定（z検定など）で「偶然ではありえない癖」として検出できる。</p>
-
-<ul>
-<li>埋め込みに使えるのはエントロピー（選択の揺らぎ）だけ。事実の列挙やコードのような<strong>低エントロピー出力には埋め込む余地が少ない</strong>という原理的制約がある。</li>
-<li>検出には秘密鍵（と検出アルゴリズム）が必要で、モデル本体は不要。安価に検定できる。</li>
-</ul>
-
-
-<h2>手法の系譜</h2>
-
-<div class="mermaid">
-flowchart TD
-    A[LLMテキスト電子透かし] --&gt; B["ロジット操作型&lt;br/&gt;KGW法 (2023)"]
-    A --&gt; C["サンプリング置換型&lt;br/&gt;(distortion-free)"]
-    C --&gt; C1["Gumbel-maxトリック&lt;br/&gt;Aaronson (2022) / EXP-edit"]
-    C --&gt; C2["Tournament sampling&lt;br/&gt;SynthID-Text"]
-    A --&gt; D["意味空間型&lt;br/&gt;(言い換え耐性)"]
-    D --&gt; D1["SemStamp / k-SemStamp"]
-    D --&gt; D2["PASA (2026)"]
-    A --&gt; E["Post-hoc型&lt;br/&gt;SAEMark"]
-</div>
-
-
-<h3>KGW法（ロジット操作型）</h3>
-
-<p>Kirchenbauer, Geiping, Wen らの &ldquo;A Watermark for Large Language Models"（ICML 2023）。この分野の火付け役。</p>
-
-<ul>
-<li>直前トークン列のハッシュ＋秘密鍵で語彙を「グリーンリスト」（割合γ）と「レッドリスト」に分割し、グリーン側のロジットにバイアスδを加算して優遇する。</li>
-<li>検出はテキスト中のグリーントークン比率が期待値γをどれだけ超えるかのz検定。</li>
-<li>弱点: ロジットを直接いじるので<strong>出力分布が歪む</strong>（品質劣化しうる）。</li>
-</ul>
-
-
-<h3>distortion-free系（サンプリング置換型）</h3>
-
-<p>「分布を歪めずに透かす」方向。サンプリングに使う乱数そのものを秘密鍵由来の疑似乱数に置き換える。</p>
-
-<ul>
-<li><strong>Gumbel-maxトリック</strong>: Aaronson（OpenAI, 2022年に講演で公表）の exponential minimum sampling。各トークン i に疑似乱数 r_i を割り当て、<code>r_i^(1/p_i)</code> が最大のトークンを選ぶと、鍵に関する期待値では元の分布どおりのサンプリングになる（単一トークンでは非歪曲）。検出時は同じ鍵で r_i を再現し、選ばれたトークンの r_i が不自然に大きいことを検定する。</li>
-<li><strong>EXP-edit</strong>: Kuditipudi ら &ldquo;Robust Distortion-free Watermarks for Language Models"（2023, Stanford）。同じくGumbel系で、編集距離ベースのアラインメントにより挿入・削除への頑健性を持たせた。</li>
-<li>弱点: 乱数が鍵から決定的に決まるため、同じプロンプトに対して<strong>出力が毎回同じになりがち</strong>（多様性の喪失）。Gumbel-Soft（Fu ら 2024）などが緩和策。</li>
-</ul>
-
-
-<h3>Tournament sampling</h3>
-
-<p>Google DeepMind の <a href="/notes/synthid-text.html">SynthID-Text</a> が採用。候補トークンを複数サンプリングして秘密鍵由来のスコアで勝ち抜き戦にかける。本物のサンプリングが基礎に残るので多様性が保たれ、非歪曲設定も歪曲設定（検出力優先）も選べる。Nature掲載＋Gemini本番投入という点で実用化の転換点になった。</p>
-
-<h3>意味空間型（言い換え耐性）</h3>
-
-<p>トークン表層の偏りは<strong>パラフレーズ（言い換え）でかなり消える</strong>。これが実用上の最大の攻撃面で、対策として意味表現に透かしを入れる研究がある。</p>
-
-<ul>
-<li><strong>SemStamp</strong>（Hou ら, NAACL 2024）: 文単位で生成し、文埋め込みが LSH（locality-sensitive hashing）で区切った意味空間の「当たり領域」に落ちるまで棄却サンプリングする。言い換えても文の意味（＝埋め込みの落ちる領域）は変わりにくいことを利用。後続の k-SemStamp はLSHをk-meansクラスタリングに置き換えて精度を改善。</li>
-<li><strong>PASA</strong>（Ai &amp; He, ICML 2026）: 意味クラスタと秘密鍵由来の乱数を紐付け、distortion-free と言い換え耐性の両立を理論的な枠組み（検出精度・頑健性・歪みのトレードオフの特徴付け）ごと提示した。</li>
-</ul>
-
-
-<h3>マルチビット透かし</h3>
-
-<p>「AI生成か否か」の1ビット判定を超えて、<strong>ユーザーIDなどのペイロード</strong>を埋め込む方向。</p>
-
-<ul>
-<li>Qu ら &ldquo;Provably Robust Multi-bit Watermarking for AI-generated Text"（USENIX Security 2025）: ペイロードを Reed-Solomon 誤り訂正符号でエンコードし、疑似乱数で決めたテキストセグメントにシンボルを分散埋め込み。編集ノイズが乗っても最近傍の符号語に復号できる。</li>
-<li><strong>SAEMark</strong>（NeurIPS 2025）: post-hoc型。モデルのロジットに一切触れず、生成済みテキストから Sparse Autoencoder で特徴を抽出し、特徴統計が鍵由来のターゲットに最も近い候補を採択する（推論時の棄却サンプリング）。<strong>APIしか触れないブラックボックスモデルにも適用できる</strong>のが特徴で、多言語・コードでも動く。</li>
-</ul>
-
-
-<h2>限界・論点</h2>
-
-<ul>
-<li>強い言い換え・翻訳・人間の文章との混合で検出力は落ちる。意味空間型はここへの対策だが、商用システムにはまだ本格実装されていない（<a href="/notes/claude-text-watermark.html">Claude</a>も編集・言い換えで消えうると明言している）。</li>
-<li>低エントロピー出力（コード、定型文）には原理的に埋め込みにくい。</li>
-<li>オープンウェイトモデルには強制できない。サンプリング実装を握っているホスト型APIでしか成立しない。</li>
-<li>検出に秘密鍵が要るため、「誰でも検定できる公開検出」と「鍵が漏れると除去攻撃が容易になる」のあいだに緊張がある。</li>
-<li>検出できても分かるのは「そのモデルが生成（処理）した」ことまでで、<strong>著者性の証明にはならない</strong>。逆に「検出されない＝人間が書いた」の証明にもならない。</li>
-</ul>
-
-
-<h2>実運用</h2>
-
-<ul>
-<li>Google: <a href="/notes/synthid-text.html">SynthID-Text</a> を Gemini に本番投入（2024〜）。</li>
-<li>Anthropic: <a href="/notes/claude-text-watermark.html">Claudeのテキスト透かし</a>（2026-08、<a href="/notes/eu-ai-act.html">EU AI Act</a>第50条対応）。</li>
-</ul>
-
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://zenn.dev/hellorusk/articles/3328866ca9e922">30年後の未来では、AIの出力したテキストに電子透かしが入っているかもしれない</a> — 発端となった解説記事</li>
-<li><a href="https://arxiv.org/abs/2301.10226">A Watermark for Large Language Models (Kirchenbauer et al., 2023)</a></li>
-<li><a href="https://arxiv.org/abs/2307.15593">Robust Distortion-free Watermarks for Language Models (Kuditipudi et al., 2023)</a> / <a href="https://crfm.stanford.edu/2023/07/30/watermarking.html">解説ブログ (Stanford CRFM)</a></li>
-<li><a href="https://www.nature.com/articles/s41586-024-08025-4">Scalable watermarking for identifying large language model outputs (Nature, 2024)</a></li>
-<li><a href="https://aclanthology.org/2024.naacl-long.226/">SemStamp: A Semantic Watermark with Paraphrastic Robustness for Text Generation (NAACL 2024)</a> / <a href="https://arxiv.org/abs/2402.11399">k-SemStamp</a></li>
-<li><a href="https://arxiv.org/abs/2605.10977">PASA: A Principled Embedding-Space Watermarking Approach (ICML 2026)</a></li>
-<li><a href="https://www.usenix.org/system/files/conference/usenixsecurity25/sec25cycle1-prepub-446-qu-watermarking.pdf">Provably Robust Multi-bit Watermarking for AI-generated Text (USENIX Security 2025)</a></li>
-<li><a href="https://arxiv.org/abs/2508.08211">SAEMark: Steering Personalized Multilingual LLM Watermarks with Sparse Autoencoders (NeurIPS 2025)</a></li>
 </ul>
 
 ]]></description>

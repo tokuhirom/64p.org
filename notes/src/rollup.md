@@ -1,6 +1,6 @@
 ---
 created: 2026-08-13 09:09
-updated: 2026-08-13 09:09
+updated: 2026-08-13 09:14
 ---
 # Rollup
 
@@ -16,7 +16,7 @@ Rich Harris氏とLukas Taegert-Atkinson氏が開発・保守している。
 
 主にライブラリのビルド用途で使われることが多い。アプリケーション向けの複雑な機能(コード分割、HMRなど)よりも、シンプルで最適化されたバンドル生成に強みがある。
 
-- Viteは本番ビルド時にRollupを使用している(開発時はesbuildを使用)
+- [[vite|Vite]]は本番ビルド時にRollupを使用している(開発時はesbuildを使用)
 - Svelteなども内部でRollupを採用
 
 Rustで書かれた後継バンドラーとして[[rolldown|Rolldown]]が開発されている。
