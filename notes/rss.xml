@@ -6,7 +6,150 @@
 <atom:link href="https://64p.org/notes/rss.xml" rel="self" type="application/rss+xml" />
 <description>ちょっと調べたことや検証結果を、AIの力も借りながらメモしていくコーナーです。</description>
 <language>ja</language>
-<lastBuildDate>Fri, 14 Aug 2026 08:21:37 +0900</lastBuildDate>
+<lastBuildDate>Fri, 14 Aug 2026 08:24:50 +0900</lastBuildDate>
+<item>
+<title>Traefik</title>
+<link>https://64p.org/notes/traefik.html</link>
+<guid isPermaLink="true">https://64p.org/notes/traefik.html</guid>
+<pubDate>Fri, 14 Aug 2026 08:24:00 +0900</pubDate>
+<description><![CDATA[<h1>Traefik</h1>
+
+<p>Go製のクラウドネイティブなリバースプロキシ / ロードバランサー / Ingressコントローラー（MITライセンス）。Containous（現Traefik Labs）が開発している。 <a class="note-tag" href="/notes/tags/networking.html">#networking</a> <a class="note-tag" href="/notes/tags/kubernetes.html">#kubernetes</a></p>
+
+<h2>特徴: 動的なサービスディスカバリ</h2>
+
+<p>従来のリバースプロキシがルーティングを設定ファイルに手書きするのに対し、Traefikは「プロバイダー」からサービスを自動発見して自分の設定を動的に更新する。インフラの変化（コンテナの追加・削除など）を検知すると、再起動なしでルーティングに反映される。</p>
+
+<ul>
+<li>プロバイダー: <a href="/notes/kubernetes.html">Kubernetes</a>（Ingress / Gateway API / CRD）、Docker、Docker Swarm、Nomad、Amazon ECS、Consul、file、HTTPなど</li>
+<li>ACME（Let&rsquo;s Encrypt）組み込みで、TLS証明書の取得・更新を自動化できる</li>
+<li>HTTP/2・HTTP/3・gRPC・WebSocket・TCP・UDP対応、ミドルウェアチェーンによる拡張、ビルトインのダッシュボード</li>
+</ul>
+
+
+<h2>使われどころ</h2>
+
+<ul>
+<li><a href="/notes/k3s.html">k3s</a>のデフォルトIngressコントローラーとして同梱されている</li>
+<li>Docker Composeベースの自宅サーバー・小規模構成で、コンテナのラベルを書くだけでリバースプロキシ+自動TLSが手に入る手軽さから人気がある。Kubernetesの世界ではingress-nginxなどと並ぶ選択肢</li>
+</ul>
+
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://traefik.io/traefik">Traefik, The Cloud Native Application Proxy - Traefik Labs</a></li>
+<li><a href="https://github.com/traefik/traefik">traefik/traefik - GitHub</a></li>
+</ul>
+
+]]></description>
+</item>
+<item>
+<title>kind (Kubernetes in Docker)</title>
+<link>https://64p.org/notes/kind.html</link>
+<guid isPermaLink="true">https://64p.org/notes/kind.html</guid>
+<pubDate>Fri, 14 Aug 2026 08:24:00 +0900</pubDate>
+<description><![CDATA[<h1>kind (Kubernetes in Docker)</h1>
+
+<p>Dockerコンテナを「ノード」として<a href="/notes/kubernetes.html">Kubernetes</a>クラスタを動かすツール。<code>kubernetes-sigs/kind</code> で開発されている。名前は &ldquo;Kubernetes IN Docker&rdquo; の略。もともとはKubernetes自体のテスト（本体のCI）のために設計されたもので、ローカル開発やCIでの利用にも使える、という立ち位置。 <a class="note-tag" href="/notes/tags/kubernetes.html">#kubernetes</a></p>
+
+<h2>仕組み</h2>
+
+<ul>
+<li><strong>node image</strong> — systemd・containerd・kubeadm・kubeletなど、コンテナの中でKubernetesノードとして振る舞うのに必要な一式を焼き込んだDockerイメージ。ベースとなるbase-imageの上に、Kubernetesのビルド成果物を載せて作られる</li>
+<li>このnode imageのコンテナを1ノード1コンテナで起動し、<strong>kubeadm</strong>で各ノードをブートストラップしてクラスタを組む</li>
+<li>VMを使わないため起動が速く、マルチノードクラスタ（コントロールプレーン複数のHA構成も含む）を気軽に作れる</li>
+<li>Kubernetesのリリース前バイナリ（CI artifacts）からnode imageをビルドする機能があり、「まだリリースされていないKubernetes」のテストができる</li>
+</ul>
+
+
+<h2><a href="/notes/kubernetes.html">Kubernetes</a>の中での位置づけ</h2>
+
+<p>ローカルクラスタツールとしては<a href="/notes/minikube.html">minikube</a>・k3d（<a href="/notes/k3s.html">k3s</a> in Docker）と並ぶ選択肢。upstream Kubernetesを忠実に動かすこと・使い捨てのクラスタを高速に作れることに強みがあり、オペレーターやCRDのテスト、CIでのE2Eテストに向く。一方でminikubeのようなアドオン機構やドライバーの多様性はない。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://kind.sigs.k8s.io/">kind - Kubernetes</a></li>
+<li><a href="https://github.com/kubernetes-sigs/kind">kubernetes-sigs/kind - GitHub</a></li>
+<li><a href="https://kind.sigs.k8s.io/docs/design/initial/">Initial design - kind</a></li>
+</ul>
+
+]]></description>
+</item>
+<item>
+<title>Borg (Googleのクラスタ管理システム)</title>
+<link>https://64p.org/notes/google-borg.html</link>
+<guid isPermaLink="true">https://64p.org/notes/google-borg.html</guid>
+<pubDate>Fri, 14 Aug 2026 08:24:00 +0900</pubDate>
+<description><![CDATA[<h1>Borg (Googleのクラスタ管理システム)</h1>
+
+<p>Googleが社内で運用してきたクラスタ管理システム。数万台規模のマシンからなるクラスタ（セル）上で、数千のアプリケーションの数十万規模のジョブを動かす。長年秘密にされていたが、EuroSys 2015の論文「Large-scale cluster management at Google with Borg」で詳細が公開された。 <a class="note-tag" href="/notes/tags/infrastructure.html">#infrastructure</a> <a class="note-tag" href="/notes/tags/google.html">#google</a></p>
+
+<h2>特徴</h2>
+
+<ul>
+<li>admission control・効率的なタスクパッキング・オーバーコミット・プロセスレベルの性能分離を伴うマシン共有を組み合わせて、高いリソース利用率を実現</li>
+<li>検索・Gmailのような長時間稼働のレイテンシ重視サービスと、バッチジョブを同じクラスタに同居させる</li>
+<li>障害からの復旧時間を最小化するランタイム機能で高可用性アプリケーションを支える</li>
+</ul>
+
+
+<p>プロセスの分離には<a href="/notes/cgroups.html">cgroups（control groups）</a>を使っている。そもそもLinuxのcgroups自体が、Googleのエンジニアが社内の巨大な共有クラスタ運用（＝Borgの世界）のために「process containers」として開発を始めたものという経緯がある。</p>
+
+<h2>Borg → Omega → Kubernetes</h2>
+
+<p>論文「Borg, Omega, and Kubernetes」（ACM Queue, 2016）で、Google自身が3世代のコンテナ管理システムの教訓を整理している。</p>
+
+<ul>
+<li><strong>Omega</strong> — Borgエコシステムのソフトウェアエンジニアリングを改善したいという動機から、原理原則に基づいてゼロから設計し直した後継。複数スケジューラなどOmegaの成果の多くは、のちにBorg本体へ還元された</li>
+<li><strong><a href="/notes/kubernetes.html">Kubernetes</a></strong> — Googleの第3のコンテナ管理システム。外部の開発者がLinuxコンテナに関心を持ち始めた時代に、オープンソースとして開発された</li>
+</ul>
+
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://research.google/pubs/large-scale-cluster-management-at-google-with-borg/">Large-scale cluster management at Google with Borg - Google Research</a></li>
+<li><a href="https://queue.acm.org/detail.cfm?id=2898444">Borg, Omega, and Kubernetes - ACM Queue</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Borg_(cluster_manager">Borg (cluster manager) - Wikipedia</a>)</li>
+</ul>
+
+]]></description>
+</item>
+<item>
+<title>etcd</title>
+<link>https://64p.org/notes/etcd.html</link>
+<guid isPermaLink="true">https://64p.org/notes/etcd.html</guid>
+<pubDate>Fri, 14 Aug 2026 08:24:00 +0900</pubDate>
+<description><![CDATA[<h1>etcd</h1>
+
+<p>分散システム向けの、信頼性の高いキーバリューストア。Go製で、合意アルゴリズムに<strong>Raft</strong>を使い、リーダーノードの故障を含むマシン障害に耐えながら強い一貫性を保つ。名前はUnixの設定ディレクトリ <code>/etc</code> に distributed の「d」を付けたもの（「分散された/etc」）。 <a class="note-tag" href="/notes/tags/infrastructure.html">#infrastructure</a> <a class="note-tag" href="/notes/tags/distributed-systems.html">#distributed-systems</a></p>
+
+<h2>経緯</h2>
+
+<ul>
+<li>2013年、CoreOS社で開発が始まり、2014年にオープンソース化</li>
+<li>2018年、CoreOSがRed Hatに買収され、同年12月にプロジェクトはCNCFへ移管</li>
+<li>2020年11月、CNCFのgraduatedプロジェクトに昇格</li>
+</ul>
+
+
+<h2>Kubernetesのプライマリデータストア</h2>
+
+<p><a href="/notes/kubernetes.html">Kubernetes</a>のクラスタ状態（あらゆるAPIオブジェクト）はすべてetcdに保存・複製される。kube-apiserverの背後にいる唯一のステートフルなコンポーネントであり、etcdのバックアップがそのままクラスタのバックアップになる。一方で運用（クラスタ構成・スナップショット・ディスク性能への敏感さ）には手間がかかるため、<a href="/notes/k3s.html">k3s</a>は「kine」というシムでetcd APIをSQL（デフォルトはsqlite3）に変換し、小規模構成でetcdなしで動けるようにしている。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://github.com/etcd-io/etcd">etcd-io/etcd - GitHub</a></li>
+<li><a href="https://www.cncf.io/reports/etcd-project-journey-report/">etcd Project Journey Report - CNCF</a></li>
+<li><a href="https://www.redhat.com/en/topics/containers/what-is-etcd">What is etcd? - Red Hat</a></li>
+<li><a href="https://www.infoq.com/news/2020/11/etcd-cncf-graduation/">etcd Becomes a CNCF Graduated Project - InfoQ</a></li>
+</ul>
+
+]]></description>
+</item>
 <item>
 <title>熱拡散ドーピング</title>
 <link>https://64p.org/notes/thermal-diffusion-doping.html</link>
@@ -346,12 +489,39 @@ sequenceDiagram
 
 <p>本Issueは2026年8月時点でOpen(未解決)、<code>bug</code>・<code>journal</code>ラベルが付いている。</p>
 
+<p>同Issueは後に、ログ1行の書き込みでext4で49KB以上、btrfsで110KB以上のディスク書き込みが発生するという定量報告が追加され、<a href="https://news.ycombinator.com/item?id=49290215">Hacker Newsで議論</a>を呼んだ。</p>
+
+<h2>過剰I/Oの技術的な原因</h2>
+
+<p>journaldをメンテナンスしてきた開発者(pengaru)によるHacker News上での解析では、次の点が原因として挙げられている。</p>
+
+<ul>
+<li>新しいログ行を追記するたびにハッシュテーブルの更新が発生し、ディスク上の分散した位置への小さな書き込みが生じる</li>
+<li>こうした小規模書き込みがストレージのブロック単位に増幅され、書き込みがブロックサイズの境界をまたぐとさらに複数ブロックの書き込みになる</li>
+<li>ジャーナルファイルへのmmapベースのアクセスが、ページキャッシュの汚染や不要な先読みを引き起こす</li>
+</ul>
+
+
+<p>journalのフォーマットが元々目指していた「ログエントリは高度に反復的なので、ディスクへの書き込み量自体は実質的に小さいはず」という設計意図に対し、実装がこの目標を達成できていない、という評価がなされている。</p>
+
+<h2>代替フォーマット案</h2>
+
+<p>Hacker News上の議論では、journalの独自バイナリ形式に代わる案として、SQLite・DuckDB・Parquetなどの既存フォーマットの活用が提案された。それぞれについて次のような指摘もある。</p>
+
+<ul>
+<li>SQLiteは書き直し型(rewrite-based)のデータベースであり、少量データの頻繁な書き込みではwrite amplificationが大きいという反論がある</li>
+<li>Parquetは列指向・高圧縮で有利だが、行グループ単位のバッチ書き込みを前提とするため、ログのように低ボリュームで逐次発生するデータには向かないという指摘がある</li>
+<li>最もwrite amplificationが小さいのは、結局プレーンテキストファイルへの追記だという意見もある</li>
+</ul>
+
+
 <p><a class="note-tag" href="/notes/tags/systemd.html">#systemd</a> <a class="note-tag" href="/notes/tags/logging.html">#logging</a></p>
 
 <h2>出典</h2>
 
 <ul>
 <li><a href="https://github.com/systemd/systemd/issues/40262">Excessive IO caused by systemd-journald · Issue #40262 · systemd/systemd</a></li>
+<li><a href="https://news.ycombinator.com/item?id=49290215">Single log line is 49KB+ (ext4) / 110KB+ (btrfs) of systemd-journald disk writes | Hacker News</a></li>
 </ul>
 
 ]]></description>
@@ -1212,217 +1382,6 @@ sequenceDiagram
 <li><a href="https://www.ibm.com/think/topics/siem">What is SIEM? | IBM</a></li>
 <li><a href="https://www.microsoft.com/en-us/security/business/security-101/what-is-siem">What Is SIEM? | Microsoft Security</a></li>
 <li><a href="https://en.wikipedia.org/wiki/Security_information_and_event_management">Security information and event management - Wikipedia</a></li>
-</ul>
-
-]]></description>
-</item>
-<item>
-<title>MITRE ATT&amp;CK</title>
-<link>https://64p.org/notes/mitre-attack.html</link>
-<guid isPermaLink="true">https://64p.org/notes/mitre-attack.html</guid>
-<pubDate>Thu, 13 Aug 2026 22:36:00 +0900</pubDate>
-<description><![CDATA[<h1>MITRE ATT&amp;CK</h1>
-
-<p><a class="note-tag" href="/notes/tags/security.html">#security</a></p>
-
-<p>実際のサイバー攻撃事例の観測に基づいて、攻撃者の戦術・技術・手順（TTPs: Tactics, Techniques, and Procedures）を体系化した、誰でも参照できるナレッジベース。米国の非営利団体MITREが管理している。ATT&amp;CKは Adversarial Tactics, Techniques, and Common Knowledge の略。</p>
-
-<h2>構造</h2>
-
-<ul>
-<li><strong>Tactics（戦術）</strong> — 攻撃者が達成しようとする目的。「なぜその行動をするのか」に当たる。初期アクセス（Initial Access）、実行（Execution）、永続化（Persistence）、権限昇格（Privilege Escalation）、横展開（Lateral Movement）、情報持ち出し（Exfiltration）など。</li>
-<li><strong>Techniques（技術）</strong> — 各戦術を「どうやって」達成するかの具体的な手法。Enterprise向けマトリクスには185のテクニックと367のサブテクニックが登録されており（2026年時点）、継続的に追加されている。</li>
-</ul>
-
-
-<p>戦術を列、技術を行としたマトリクス形式で整理されており、攻撃の一連の流れを標準化された語彙で記述できる。</p>
-
-<h2>使われ方</h2>
-
-<ul>
-<li>インシデント対応で「何が・どのように起きたか」を標準化された用語で共有する</li>
-<li><a href="/notes/threat-hunting.html">脅威ハンティング</a>の仮説駆動型アプローチで、「このテクニックの痕跡が自環境にないか」という仮説の元ネタにする</li>
-<li><a href="/notes/edr.html">EDR</a>等の検知能力の評価・ギャップ分析（どのテクニックを検知できるか）に使う</li>
-<li>レッドチーム演習・<a href="/notes/penetration-test.html">ペネトレーションテスト</a>の攻撃シナリオ設計に使う</li>
-</ul>
-
-
-<h2><a href="/notes/security-operations.html">セキュリティ運用</a>の中での位置づけ</h2>
-
-<p>防御側（検知評価・ハンティング仮説）と攻撃側視点の検証（レッドチーム・ペンテスト）の双方が共通語彙として参照する知識体系。</p>
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://www.microsoft.com/en-us/security/business/security-101/what-is-mitre-attack-framework">What is the MITRE ATT&amp;CK framework? | Microsoft Security</a></li>
-<li><a href="https://www.wiz.io/academy/detection-and-response/mitre-attack-framework">MITRE ATT&amp;CK Framework | Wiz</a></li>
-<li><a href="https://www.paloaltonetworks.com/cyberpedia/what-are-mitre-attack-techniques">What Are MITRE ATT&amp;CK Techniques? | Palo Alto Networks</a></li>
-</ul>
-
-]]></description>
-</item>
-<item>
-<title>IOC (侵害指標) と IOA (攻撃指標)</title>
-<link>https://64p.org/notes/ioc-ioa.html</link>
-<guid isPermaLink="true">https://64p.org/notes/ioc-ioa.html</guid>
-<pubDate>Thu, 13 Aug 2026 22:36:00 +0900</pubDate>
-<description><![CDATA[<h1>IOC (侵害指標) と IOA (攻撃指標)</h1>
-
-<p><a class="note-tag" href="/notes/tags/security.html">#security</a></p>
-
-<p>サイバー攻撃の痕跡・兆候を表す2つの指標。<a href="/notes/threat-hunting.html">脅威ハンティング</a>や<a href="/notes/soc.html">SOC</a>での検知・調査の手がかりとして使われる。</p>
-
-<h2>IOC (Indicators of Compromise: 侵害指標)</h2>
-
-<p>システムやネットワークが「既に侵害された」ことを示すアーティファクト（証拠）。事後的な性質を持ち、攻撃が起きたかどうか、どのシステムが侵害されたか、どう修復すべきかを判断するために使われる。具体例:</p>
-
-<ul>
-<li>既知マルウェアのファイルハッシュ</li>
-<li>悪性と判明しているIPアドレス・ドメイン・URL</li>
-<li>不審なレジストリ変更や設定変更の痕跡</li>
-</ul>
-
-
-<p>既知の悪性エンティティとの照合が中心なので機械的にマッチングしやすく、脅威インテリジェンスのフィードとして組織間で共有されることも多い。</p>
-
-<h2>IOA (Indicators of Attack: 攻撃指標)</h2>
-
-<p>攻撃が「進行中である」こと、あるいは攻撃者の意図を示す行動パターン。攻撃者のTTPs（戦術・技術・手順。体系化したものが<a href="/notes/mitre-attack.html">MITRE ATT&amp;CK</a>）に着目し、異常なネットワークトラフィック、不正なアクセス試行、通常と異なるユーザー挙動などから、侵害が完了する前にリアルタイムで攻撃を捉えることを狙う。</p>
-
-<h2>対比</h2>
-
-<table>
-<thead>
-<tr>
-<th> </th>
-<th> IOC </th>
-<th> IOA </th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td> タイミング </td>
-<td> 事後（侵害の証拠） </td>
-<td> 進行中（攻撃の兆候） </td>
-</tr>
-<tr>
-<td> 着目点 </td>
-<td> アーティファクト（ハッシュ・IP等） </td>
-<td> 行動・TTPs </td>
-</tr>
-<tr>
-<td> 主な用途 </td>
-<td> 侵害調査・修復・情報共有 </td>
-<td> 予防・リアルタイム検知 </td>
-</tr>
-</tbody>
-</table>
-
-
-<p>IOCベースの検知は既知の脅威にしか効かないため、未知の攻撃には行動ベースのIOAで補う、という組み合わせで使われる。</p>
-
-<h2><a href="/notes/security-operations.html">セキュリティ運用</a>の中での位置づけ</h2>
-
-<p>検知・調査の「手がかり」となる指標のペア。SIEM/EDRでの機械的な照合にも、脅威ハンティングの起点にも使われる。</p>
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://www.sentinelone.com/cybersecurity-101/threat-intelligence/ioa-vs-ioc/">IOA vs IOC: 8 Critical Differences | SentinelOne</a></li>
-<li><a href="https://www.crowdstrike.com/en-us/resources/white-papers/indicators-attack-vs-indicators-compromise/">Indicators of Attack vs. Indicators of Compromise | CrowdStrike</a></li>
-<li><a href="https://www.cisco.com/site/us/en/learn/topics/security/what-are-indicators-of-compromise-ioc.html">What Are Indicators of Compromise (IOC)? | Cisco</a></li>
-</ul>
-
-]]></description>
-</item>
-<item>
-<title>EDR (Endpoint Detection and Response)</title>
-<link>https://64p.org/notes/edr.html</link>
-<guid isPermaLink="true">https://64p.org/notes/edr.html</guid>
-<pubDate>Thu, 13 Aug 2026 22:36:00 +0900</pubDate>
-<description><![CDATA[<h1>EDR (Endpoint Detection and Response)</h1>
-
-<p><a class="note-tag" href="/notes/tags/security.html">#security</a></p>
-
-<p>エンドポイント（サーバー・PC・モバイル端末など）に軽量なエージェントを常駐させて活動を継続的に記録・監視し、疑わしい挙動を検知して、調査・対応までを支援するセキュリティソリューション。従来のアンチウイルスが既知のマルウェアのシグネチャ照合を中心とするのに対し、EDRは挙動データをリアルタイムに記録・分析するため、ファイルレス攻撃や高度な標的型攻撃（APT）のような、シグネチャでは捕まえにくい攻撃の検出に強い。</p>
-
-<h2>主な機能</h2>
-
-<ul>
-<li><strong>テレメトリ収集</strong> — プロセスの起動、ファイル操作、ネットワーク接続、レジストリ変更などのエンドポイント活動を記録し続ける</li>
-<li><strong>振る舞い検知</strong> — 挙動分析（behavioral analytics）や脅威インテリジェンスとの突合で疑わしい活動を検出しアラートを上げる</li>
-<li><strong>調査支援</strong> — 攻撃の時系列や影響範囲をたどるためのデータとツールをアナリストに提供する。<a href="/notes/threat-hunting.html">脅威ハンティング</a>の調査フェーズでも中心的なツールとなる</li>
-<li><strong>対応</strong> — 侵害された端末のネットワーク隔離、プロセスの停止などをリモートで実行し、攻撃の横展開を止める</li>
-</ul>
-
-
-<h2>位置づけ</h2>
-
-<p><a href="/notes/soc.html">SOC</a>の運用では、EDRがエンドポイント層の検知・対応を担い、各種ログを横断的に相関分析する<a href="/notes/siem.html">SIEM</a>と補完し合う。EDRの適用範囲をネットワーク・クラウド・メール等まで広げた発展形はXDR (Extended Detection and Response) と呼ばれる。</p>
-
-<h2><a href="/notes/security-operations.html">セキュリティ運用</a>の中での位置づけ</h2>
-
-<p>エンドポイント層を深く監視・対応する「深さ」担当のツール。ログ横断のSIEMと補完関係にあり、脅威ハンティングの調査でも中心的に使われる。</p>
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://www.crowdstrike.com/en-us/cybersecurity-101/endpoint-security/endpoint-detection-and-response-edr/">What is EDR? | CrowdStrike</a></li>
-<li><a href="https://www.microsoft.com/en-us/security/business/security-101/what-is-edr-endpoint-detection-response">What Is EDR? | Microsoft Security</a></li>
-<li><a href="https://en.wikipedia.org/wiki/Endpoint_detection_and_response">Endpoint detection and response - Wikipedia</a></li>
-</ul>
-
-]]></description>
-</item>
-<item>
-<title>脅威ハンティング (Threat Hunting)</title>
-<link>https://64p.org/notes/threat-hunting.html</link>
-<guid isPermaLink="true">https://64p.org/notes/threat-hunting.html</guid>
-<pubDate>Thu, 13 Aug 2026 22:30:00 +0900</pubDate>
-<description><![CDATA[<h1>脅威ハンティング (Threat Hunting)</h1>
-
-<p><a class="note-tag" href="/notes/tags/security.html">#security</a></p>
-
-<p>ネットワークやシステム内に既に潜んでいるが、自動化されたセキュリティツール（<a href="/notes/edr.html">EDR</a>・<a href="/notes/siem.html">SIEM</a>等のアラート）をすり抜けて未検出のままになっているサイバー脅威を、セキュリティアナリストが能動的に探索するプラクティス。「攻撃者は既に環境内にいる」という前提（assume breach）に立ち、アラートを待つ受動的な運用から、仮説を立てて自ら探しに行く能動的な運用へと発想を反転させる点が特徴。</p>
-
-<p>攻撃者が初期防御を突破してから検知されるまで潜伏し続ける時間（dwell time）を短縮し、大きな実害が出る前にステルスな悪性活動を発見することが目的。</p>
-
-<h2>主なアプローチ</h2>
-
-<ul>
-<li><strong>仮説駆動型 (hypothesis-driven)</strong> — 新しく観測された攻撃者のTTPs（戦術・技術・手順。体系化したものが<a href="/notes/mitre-attack.html">MITRE ATT&amp;CK</a>）などの脅威インテリジェンスをもとに「自組織の環境にもこの行動パターンが存在するのではないか」という仮説を立てて調査する。</li>
-<li><strong>IOC/IOAベース</strong> — 既知の<a href="/notes/ioc-ioa.html">IOC（Indicators of Compromise: 侵害指標）やIOA（Indicators of Attack: 攻撃指標）</a>を手がかりに、隠れた攻撃や進行中の悪性活動を探す。</li>
-<li><strong>高度な分析・機械学習ベース</strong> — 大量のテレメトリデータを分析して異常値（アノマリー）を検出し、そこから潜在的な悪性活動の手がかりを掘り下げる。</li>
-</ul>
-
-
-<h2>ハンティングの流れ</h2>
-
-<ol>
-<li><strong>トリガー</strong> — 仮説や異常な活動の検出により、調査対象のシステム・領域を特定する</li>
-<li><strong>調査</strong> — EDR等のツールとログ・テレメトリを使い、悪性の侵害が実際にあるかを深掘りする</li>
-<li><strong>解決</strong> — 発見した脅威の情報を運用チームに引き継ぎ、封じ込め・修復・防御の改善につなげる</li>
-</ol>
-
-
-<h2>関連する概念との違い</h2>
-
-<ul>
-<li><strong>インシデントレスポンス</strong> — IRはアラートや侵害の発覚を起点に事後対応するのに対し、脅威ハンティングはアラートがまだ上がっていない脅威を先回りして探す。<a href="/notes/soc.html">SOC</a>（Security Operations Center）の標準的な検知・対応プロセスと並行して行われ、自動化された検知を人間の分析で補完する位置づけ。</li>
-<li><strong><a href="/notes/penetration-test.html">ペネトレーションテスト</a></strong> — ペンテストは攻撃者の視点で疑似攻撃を仕掛けて防御の弱点を検証するのに対し、脅威ハンティングは防御側の視点で「既に起きている侵害」の痕跡を探す。</li>
-</ul>
-
-
-<h2><a href="/notes/security-operations.html">セキュリティ運用</a>の中での位置づけ</h2>
-
-<p>SOCの標準的な検知・対応プロセス（アラート駆動）を補完する、能動的な脅威探索の活動。SOCのティア構成では最上位のTier 3が担うことが多い。</p>
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://www.crowdstrike.com/en-us/cybersecurity-101/threat-intelligence/threat-hunting/">What is Cyber Threat Hunting? | CrowdStrike</a></li>
-<li><a href="https://www.wiz.io/academy/detection-and-response/threat-hunting">What is Proactive Threat Hunting? | Wiz</a></li>
-<li><a href="https://www.sophos.com/en-us/cybersecurity-explained/threat-hunting">What Is Threat Hunting? | Sophos</a></li>
 </ul>
 
 ]]></description>
