@@ -6,7 +6,231 @@
 <atom:link href="https://64p.org/notes/rss.xml" rel="self" type="application/rss+xml" />
 <description>ちょっと調べたことや検証結果を、AIの力も借りながらメモしていくコーナーです。</description>
 <language>ja</language>
-<lastBuildDate>Thu, 13 Aug 2026 22:30:18 +0900</lastBuildDate>
+<lastBuildDate>Thu, 13 Aug 2026 22:36:59 +0900</lastBuildDate>
+<item>
+<title>SOC (Security Operations Center)</title>
+<link>https://64p.org/notes/soc.html</link>
+<guid isPermaLink="true">https://64p.org/notes/soc.html</guid>
+<pubDate>Thu, 13 Aug 2026 22:36:00 +0900</pubDate>
+<description><![CDATA[<h1>SOC (Security Operations Center)</h1>
+
+<p><a class="note-tag" href="/notes/tags/security.html">#security</a></p>
+
+<p>組織のセキュリティインシデントの監視・検知・対応を専門に担うチーム、およびその拠点。<a href="/notes/siem.html">SIEM</a>や<a href="/notes/edr.html">EDR</a>などのツールが上げるアラートを24時間365日体制で監視し、トリアージ・調査・対応を行う。</p>
+
+<h2>ティア構成</h2>
+
+<p>SOCアナリストは習熟度・役割に応じて段階（ティア）に分かれるのが典型的。</p>
+
+<ul>
+<li><strong>Tier 1（トリアージ）</strong> — アラートの一次対応。定義済みのプレイブックに従って緊急度を判定し、誤検知（false positive）を切り分け、本物のインシデントをエスカレーションする</li>
+<li><strong>Tier 2（調査・インシデント対応）</strong> — エスカレーションされたインシデントを深掘りする。複数ソースのデータを相関させて攻撃のパターンを特定し、封じ込め・復旧を主導する</li>
+<li><strong>Tier 3（脅威ハンティング）</strong> — 最上位のアナリストが、アラートに上がっていない脅威を能動的に探す<a href="/notes/threat-hunting.html">脅威ハンティング</a>や、新しい脅威への対策立案を担う</li>
+</ul>
+
+
+<p>このほか、チーム運営・プロセス整備・危機対応コミュニケーションを担うSOCマネージャーが置かれる。</p>
+
+<h2>関連する概念</h2>
+
+<ul>
+<li><strong><a href="/notes/noc.html">NOC</a> (Network Operations Center)</strong> — ネットワークの可用性・パフォーマンス維持が主目的で、セキュリティ特化のSOCとは役割が異なる</li>
+<li>Tier 1のアラートトリアージは反復作業（トイル）になりやすく、AIエージェントによる自動化（<a href="/notes/7ai.html">7AI</a>など）が近年のトレンドになっている</li>
+</ul>
+
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://www.crowdstrike.com/en-us/cybersecurity-101/next-gen-siem/security-operations-center-soc/">What is a Security Operations Center? | CrowdStrike</a></li>
+<li><a href="https://www.ibm.com/think/topics/security-operations-center">What Is a Security Operations Center (SOC)? | IBM</a></li>
+<li><a href="https://www.paloaltonetworks.com/cyberpedia/soc-roles-and-responsibilities">SOC Roles and Responsibilities | Palo Alto Networks</a></li>
+</ul>
+
+]]></description>
+</item>
+<item>
+<title>SIEM (Security Information and Event Management)</title>
+<link>https://64p.org/notes/siem.html</link>
+<guid isPermaLink="true">https://64p.org/notes/siem.html</guid>
+<pubDate>Thu, 13 Aug 2026 22:36:00 +0900</pubDate>
+<description><![CDATA[<h1>SIEM (Security Information and Event Management)</h1>
+
+<p><a class="note-tag" href="/notes/tags/security.html">#security</a></p>
+
+<p>OS・データベース・アプリケーション・ネットワーク機器・セキュリティ製品など、IT環境の様々なソースからログ・イベントデータを集約し、相関分析して脅威の兆候を検知するためのソフトウェア／プラットフォーム。単体のログでは見えない攻撃の兆候を、複数ソースにまたがる相関ルールで浮かび上がらせ、優先度付きのアラートとして<a href="/notes/soc.html">SOC</a>のアナリストに提示するのが基本的な役割。</p>
+
+<h2>主な機能</h2>
+
+<ul>
+<li><strong>ログ収集・正規化</strong> — 多様なフォーマットのログを一元的に収集し、検索・分析可能な形に正規化する</li>
+<li><strong>相関分析・アラート</strong> — 定義したルールや分析に基づきイベント同士を関連付け、セキュリティインシデントの可能性が高いものをアラートとして上げる</li>
+<li><strong>コンプライアンス支援</strong> — 監査用のログ保全やレポート生成を自動化し、各種規制対応を支援する</li>
+</ul>
+
+
+<p>近年はUEBA (User and Entity Behavior Analytics) による異常行動の検出や、機械学習ベースの分析を取り込んだ製品が増えており、検知後の対応を自動化するSOAR (Security Orchestration, Automation and Response) と統合される構成も一般的。</p>
+
+<h2>位置づけ</h2>
+
+<p>エンドポイント層を深く見る<a href="/notes/edr.html">EDR</a>に対し、SIEMは環境全体のログを横断的に見る広さが持ち味で、両者は補完関係にある。SIEMのアラートをすり抜けた脅威を能動的に探す活動が<a href="/notes/threat-hunting.html">脅威ハンティング</a>であり、その際のデータ基盤としてもSIEMが使われる。ログ分析基盤としての性質上、大量データの高速集計が求められ、分析用DB（<a href="/notes/clickhouse.html">ClickHouse</a>等）が下回りに使われることもある。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://www.ibm.com/think/topics/siem">What is SIEM? | IBM</a></li>
+<li><a href="https://www.microsoft.com/en-us/security/business/security-101/what-is-siem">What Is SIEM? | Microsoft Security</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Security_information_and_event_management">Security information and event management - Wikipedia</a></li>
+</ul>
+
+]]></description>
+</item>
+<item>
+<title>MITRE ATT&amp;CK</title>
+<link>https://64p.org/notes/mitre-attack.html</link>
+<guid isPermaLink="true">https://64p.org/notes/mitre-attack.html</guid>
+<pubDate>Thu, 13 Aug 2026 22:36:00 +0900</pubDate>
+<description><![CDATA[<h1>MITRE ATT&amp;CK</h1>
+
+<p><a class="note-tag" href="/notes/tags/security.html">#security</a></p>
+
+<p>実際のサイバー攻撃事例の観測に基づいて、攻撃者の戦術・技術・手順（TTPs: Tactics, Techniques, and Procedures）を体系化した、誰でも参照できるナレッジベース。米国の非営利団体MITREが管理している。ATT&amp;CKは Adversarial Tactics, Techniques, and Common Knowledge の略。</p>
+
+<h2>構造</h2>
+
+<ul>
+<li><strong>Tactics（戦術）</strong> — 攻撃者が達成しようとする目的。「なぜその行動をするのか」に当たる。初期アクセス（Initial Access）、実行（Execution）、永続化（Persistence）、権限昇格（Privilege Escalation）、横展開（Lateral Movement）、情報持ち出し（Exfiltration）など。</li>
+<li><strong>Techniques（技術）</strong> — 各戦術を「どうやって」達成するかの具体的な手法。Enterprise向けマトリクスには185のテクニックと367のサブテクニックが登録されており（2026年時点）、継続的に追加されている。</li>
+</ul>
+
+
+<p>戦術を列、技術を行としたマトリクス形式で整理されており、攻撃の一連の流れを標準化された語彙で記述できる。</p>
+
+<h2>使われ方</h2>
+
+<ul>
+<li>インシデント対応で「何が・どのように起きたか」を標準化された用語で共有する</li>
+<li><a href="/notes/threat-hunting.html">脅威ハンティング</a>の仮説駆動型アプローチで、「このテクニックの痕跡が自環境にないか」という仮説の元ネタにする</li>
+<li><a href="/notes/edr.html">EDR</a>等の検知能力の評価・ギャップ分析（どのテクニックを検知できるか）に使う</li>
+<li>レッドチーム演習・<a href="/notes/penetration-test.html">ペネトレーションテスト</a>の攻撃シナリオ設計に使う</li>
+</ul>
+
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://www.microsoft.com/en-us/security/business/security-101/what-is-mitre-attack-framework">What is the MITRE ATT&amp;CK framework? | Microsoft Security</a></li>
+<li><a href="https://www.wiz.io/academy/detection-and-response/mitre-attack-framework">MITRE ATT&amp;CK Framework | Wiz</a></li>
+<li><a href="https://www.paloaltonetworks.com/cyberpedia/what-are-mitre-attack-techniques">What Are MITRE ATT&amp;CK Techniques? | Palo Alto Networks</a></li>
+</ul>
+
+]]></description>
+</item>
+<item>
+<title>IOC (侵害指標) と IOA (攻撃指標)</title>
+<link>https://64p.org/notes/ioc-ioa.html</link>
+<guid isPermaLink="true">https://64p.org/notes/ioc-ioa.html</guid>
+<pubDate>Thu, 13 Aug 2026 22:36:00 +0900</pubDate>
+<description><![CDATA[<h1>IOC (侵害指標) と IOA (攻撃指標)</h1>
+
+<p><a class="note-tag" href="/notes/tags/security.html">#security</a></p>
+
+<p>サイバー攻撃の痕跡・兆候を表す2つの指標。<a href="/notes/threat-hunting.html">脅威ハンティング</a>や<a href="/notes/soc.html">SOC</a>での検知・調査の手がかりとして使われる。</p>
+
+<h2>IOC (Indicators of Compromise: 侵害指標)</h2>
+
+<p>システムやネットワークが「既に侵害された」ことを示すアーティファクト（証拠）。事後的な性質を持ち、攻撃が起きたかどうか、どのシステムが侵害されたか、どう修復すべきかを判断するために使われる。具体例:</p>
+
+<ul>
+<li>既知マルウェアのファイルハッシュ</li>
+<li>悪性と判明しているIPアドレス・ドメイン・URL</li>
+<li>不審なレジストリ変更や設定変更の痕跡</li>
+</ul>
+
+
+<p>既知の悪性エンティティとの照合が中心なので機械的にマッチングしやすく、脅威インテリジェンスのフィードとして組織間で共有されることも多い。</p>
+
+<h2>IOA (Indicators of Attack: 攻撃指標)</h2>
+
+<p>攻撃が「進行中である」こと、あるいは攻撃者の意図を示す行動パターン。攻撃者のTTPs（戦術・技術・手順。体系化したものが<a href="/notes/mitre-attack.html">MITRE ATT&amp;CK</a>）に着目し、異常なネットワークトラフィック、不正なアクセス試行、通常と異なるユーザー挙動などから、侵害が完了する前にリアルタイムで攻撃を捉えることを狙う。</p>
+
+<h2>対比</h2>
+
+<table>
+<thead>
+<tr>
+<th> </th>
+<th> IOC </th>
+<th> IOA </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td> タイミング </td>
+<td> 事後（侵害の証拠） </td>
+<td> 進行中（攻撃の兆候） </td>
+</tr>
+<tr>
+<td> 着目点 </td>
+<td> アーティファクト（ハッシュ・IP等） </td>
+<td> 行動・TTPs </td>
+</tr>
+<tr>
+<td> 主な用途 </td>
+<td> 侵害調査・修復・情報共有 </td>
+<td> 予防・リアルタイム検知 </td>
+</tr>
+</tbody>
+</table>
+
+
+<p>IOCベースの検知は既知の脅威にしか効かないため、未知の攻撃には行動ベースのIOAで補う、という組み合わせで使われる。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://www.sentinelone.com/cybersecurity-101/threat-intelligence/ioa-vs-ioc/">IOA vs IOC: 8 Critical Differences | SentinelOne</a></li>
+<li><a href="https://www.crowdstrike.com/en-us/resources/white-papers/indicators-attack-vs-indicators-compromise/">Indicators of Attack vs. Indicators of Compromise | CrowdStrike</a></li>
+<li><a href="https://www.cisco.com/site/us/en/learn/topics/security/what-are-indicators-of-compromise-ioc.html">What Are Indicators of Compromise (IOC)? | Cisco</a></li>
+</ul>
+
+]]></description>
+</item>
+<item>
+<title>EDR (Endpoint Detection and Response)</title>
+<link>https://64p.org/notes/edr.html</link>
+<guid isPermaLink="true">https://64p.org/notes/edr.html</guid>
+<pubDate>Thu, 13 Aug 2026 22:36:00 +0900</pubDate>
+<description><![CDATA[<h1>EDR (Endpoint Detection and Response)</h1>
+
+<p><a class="note-tag" href="/notes/tags/security.html">#security</a></p>
+
+<p>エンドポイント（サーバー・PC・モバイル端末など）に軽量なエージェントを常駐させて活動を継続的に記録・監視し、疑わしい挙動を検知して、調査・対応までを支援するセキュリティソリューション。従来のアンチウイルスが既知のマルウェアのシグネチャ照合を中心とするのに対し、EDRは挙動データをリアルタイムに記録・分析するため、ファイルレス攻撃や高度な標的型攻撃（APT）のような、シグネチャでは捕まえにくい攻撃の検出に強い。</p>
+
+<h2>主な機能</h2>
+
+<ul>
+<li><strong>テレメトリ収集</strong> — プロセスの起動、ファイル操作、ネットワーク接続、レジストリ変更などのエンドポイント活動を記録し続ける</li>
+<li><strong>振る舞い検知</strong> — 挙動分析（behavioral analytics）や脅威インテリジェンスとの突合で疑わしい活動を検出しアラートを上げる</li>
+<li><strong>調査支援</strong> — 攻撃の時系列や影響範囲をたどるためのデータとツールをアナリストに提供する。<a href="/notes/threat-hunting.html">脅威ハンティング</a>の調査フェーズでも中心的なツールとなる</li>
+<li><strong>対応</strong> — 侵害された端末のネットワーク隔離、プロセスの停止などをリモートで実行し、攻撃の横展開を止める</li>
+</ul>
+
+
+<h2>位置づけ</h2>
+
+<p><a href="/notes/soc.html">SOC</a>の運用では、EDRがエンドポイント層の検知・対応を担い、各種ログを横断的に相関分析する<a href="/notes/siem.html">SIEM</a>と補完し合う。EDRの適用範囲をネットワーク・クラウド・メール等まで広げた発展形はXDR (Extended Detection and Response) と呼ばれる。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://www.crowdstrike.com/en-us/cybersecurity-101/endpoint-security/endpoint-detection-and-response-edr/">What is EDR? | CrowdStrike</a></li>
+<li><a href="https://www.microsoft.com/en-us/security/business/security-101/what-is-edr-endpoint-detection-response">What Is EDR? | Microsoft Security</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Endpoint_detection_and_response">Endpoint detection and response - Wikipedia</a></li>
+</ul>
+
+]]></description>
+</item>
 <item>
 <title>脅威ハンティング (Threat Hunting)</title>
 <link>https://64p.org/notes/threat-hunting.html</link>
@@ -16,15 +240,15 @@
 
 <p><a class="note-tag" href="/notes/tags/security.html">#security</a></p>
 
-<p>ネットワークやシステム内に既に潜んでいるが、自動化されたセキュリティツール（EDR・SIEM等のアラート）をすり抜けて未検出のままになっているサイバー脅威を、セキュリティアナリストが能動的に探索するプラクティス。「攻撃者は既に環境内にいる」という前提（assume breach）に立ち、アラートを待つ受動的な運用から、仮説を立てて自ら探しに行く能動的な運用へと発想を反転させる点が特徴。</p>
+<p>ネットワークやシステム内に既に潜んでいるが、自動化されたセキュリティツール（<a href="/notes/edr.html">EDR</a>・<a href="/notes/siem.html">SIEM</a>等のアラート）をすり抜けて未検出のままになっているサイバー脅威を、セキュリティアナリストが能動的に探索するプラクティス。「攻撃者は既に環境内にいる」という前提（assume breach）に立ち、アラートを待つ受動的な運用から、仮説を立てて自ら探しに行く能動的な運用へと発想を反転させる点が特徴。</p>
 
 <p>攻撃者が初期防御を突破してから検知されるまで潜伏し続ける時間（dwell time）を短縮し、大きな実害が出る前にステルスな悪性活動を発見することが目的。</p>
 
 <h2>主なアプローチ</h2>
 
 <ul>
-<li><strong>仮説駆動型 (hypothesis-driven)</strong> — 新しく観測された攻撃者のTTPs（戦術・技術・手順）などの脅威インテリジェンスをもとに「自組織の環境にもこの行動パターンが存在するのではないか」という仮説を立てて調査する。</li>
-<li><strong>IOC/IOAベース</strong> — 既知のIOC（Indicators of Compromise: 侵害指標）やIOA（Indicators of Attack: 攻撃指標）を手がかりに、隠れた攻撃や進行中の悪性活動を探す。</li>
+<li><strong>仮説駆動型 (hypothesis-driven)</strong> — 新しく観測された攻撃者のTTPs（戦術・技術・手順。体系化したものが<a href="/notes/mitre-attack.html">MITRE ATT&amp;CK</a>）などの脅威インテリジェンスをもとに「自組織の環境にもこの行動パターンが存在するのではないか」という仮説を立てて調査する。</li>
+<li><strong>IOC/IOAベース</strong> — 既知の<a href="/notes/ioc-ioa.html">IOC（Indicators of Compromise: 侵害指標）やIOA（Indicators of Attack: 攻撃指標）</a>を手がかりに、隠れた攻撃や進行中の悪性活動を探す。</li>
 <li><strong>高度な分析・機械学習ベース</strong> — 大量のテレメトリデータを分析して異常値（アノマリー）を検出し、そこから潜在的な悪性活動の手がかりを掘り下げる。</li>
 </ul>
 
@@ -41,7 +265,7 @@
 <h2>関連する概念との違い</h2>
 
 <ul>
-<li><strong>インシデントレスポンス</strong> — IRはアラートや侵害の発覚を起点に事後対応するのに対し、脅威ハンティングはアラートがまだ上がっていない脅威を先回りして探す。SOC（Security Operations Center）の標準的な検知・対応プロセスと並行して行われ、自動化された検知を人間の分析で補完する位置づけ（SOCについては<a href="/notes/noc.html">NOC</a>のノートも参照）。</li>
+<li><strong>インシデントレスポンス</strong> — IRはアラートや侵害の発覚を起点に事後対応するのに対し、脅威ハンティングはアラートがまだ上がっていない脅威を先回りして探す。<a href="/notes/soc.html">SOC</a>（Security Operations Center）の標準的な検知・対応プロセスと並行して行われ、自動化された検知を人間の分析で補完する位置づけ。</li>
 <li><strong><a href="/notes/penetration-test.html">ペネトレーションテスト</a></strong> — ペンテストは攻撃者の視点で疑似攻撃を仕掛けて防御の弱点を検証するのに対し、脅威ハンティングは防御側の視点で「既に起きている侵害」の痕跡を探す。</li>
 </ul>
 
@@ -643,7 +867,7 @@ graph LR
 
 <h2>SOCとの違い</h2>
 
-<p>似た概念に SOC (Security Operations Center) がある。NOCはネットワークの可用性・パフォーマンス維持が主目的なのに対し、SOCはセキュリティインシデントの検知・対応に特化している点が異なる。</p>
+<p>似た概念に <a href="/notes/soc.html">SOC (Security Operations Center)</a> がある。NOCはネットワークの可用性・パフォーマンス維持が主目的なのに対し、SOCはセキュリティインシデントの検知・対応に特化している点が異なる。</p>
 
 <h2>出典</h2>
 
@@ -1248,216 +1472,6 @@ Content-length: 25
 <li><a href="https://en.wikibooks.org/wiki/Haskell/Understanding_monads">Haskell/Understanding monads - Wikibooks</a></li>
 <li><a href="https://wiki.haskell.org/Monad">Monad - HaskellWiki</a></li>
 <li><a href="https://wiki.haskell.org/Monads_as_computation">Monads as computation - HaskellWiki</a></li>
-</ul>
-
-]]></description>
-</item>
-<item>
-<title>Service Mesh</title>
-<link>https://64p.org/notes/service-mesh.html</link>
-<guid isPermaLink="true">https://64p.org/notes/service-mesh.html</guid>
-<pubDate>Thu, 13 Aug 2026 09:29:00 +0900</pubDate>
-<description><![CDATA[<h1>Service Mesh</h1>
-
-<p>マイクロサービス間の通信を管理するインフラ層。各サービスがリトライ・サーキットブレーカー・mTLS・ロードバランシングなどの通信ロジックを自前で実装する代わりに、それらをネットワーク層に集約する。 <a class="note-tag" href="/notes/tags/networking.html">#networking</a> <a class="note-tag" href="/notes/tags/kubernetes.html">#kubernetes</a> <a class="note-tag" href="/notes/tags/security.html">#security</a></p>
-
-<h2>アーキテクチャの2方式</h2>
-
-<h3>サイドカー方式(従来型)</h3>
-
-<p>各アプリケーションPodにプロキシ(多くはEnvoy)を並走させ、全トラフィックをそのプロキシ経由にする。</p>
-
-<ul>
-<li><strong>Istio</strong>: 機能が豊富で成熟している一方、リソース消費と運用の複雑さがトレードオフになる。詳細は<a href="/notes/istio-ambient-mesh.html">Istio Ambient Mesh</a>を参照</li>
-<li><strong>Linkerd</strong>: Rust製の自前プロキシを使い、Kubernetes専用・ミニマル志向で設計されている。中規模負荷(5,000 RPS/service未満)ではIstioよりオーバーヘッドが小さいとされる。初めてService Meshを導入するならLinkerdから始め、必要に応じてIstioへ移行するのが定石とされている</li>
-</ul>
-
-
-<h3>サイドカーレス方式</h3>
-
-<ul>
-<li><strong>Istio Ambient Mesh</strong>: ノード単位のDaemonSetである<code>ztunnel</code>がL4処理を担い、L7が必要な場合のみオプションの<code>waypoint proxy</code>(Envoy)を挟む。詳細は<a href="/notes/istio-ambient-mesh.html">Istio Ambient Mesh</a></li>
-<li><strong><a href="/notes/cilium.html">Cilium</a> Service Mesh</strong>: L3/L4は<a href="/notes/bpf.html">eBPF</a>で処理し、L7が必要な時だけノードレベルのEnvoyを使う。WireGuard/IPsecによる透過的暗号化、SPIFFE/SPIRE連携のmTLSもサポートする</li>
-</ul>
-
-
-<p>両者とも、サイドカー方式の「Pod毎にプロキシを起動する」オーバーヘッドを避け、ノード単位の共有プロキシ/eBPFでコストを下げる方向性は共通している。</p>
-
-<h2>主な提供機能</h2>
-
-<ul>
-<li><strong>mTLS</strong>による相互認証・暗号化。SPIFFE/SPIREのようなID基盤と連携することも多い</li>
-<li>リトライ・タイムアウト・サーキットブレーカーなどの耐障害性機能</li>
-<li>カナリアリリースやA/Bテスト用のトラフィックルーティング</li>
-<li>可観測性(メトリクス・分散トレーシング・アクセスログの自動収集)</li>
-</ul>
-
-
-<h2>コントロールプレーン/データプレーン</h2>
-
-<ul>
-<li><strong>データプレーン</strong>: 実際にトラフィックを中継するプロキシ層(サイドカーEnvoy、ztunnel、eBPFプログラムなど)</li>
-<li><strong>コントロールプレーン</strong>: ポリシーや証明書を配布・管理する層(Istioなら<code>istiod</code>)</li>
-</ul>
-
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://reintech.io/blog/kubernetes-service-mesh-comparison-2026-istio-linkerd-cilium">Kubernetes Service Mesh Comparison 2026: Istio vs Linkerd vs Cilium</a></li>
-<li><a href="https://tasrieit.com/blog/istio-vs-linkerd-service-mesh-comparison-2026">Istio vs Linkerd: We Run Both in Production - Here&rsquo;s What Won (2026)</a></li>
-<li><a href="https://oneuptime.com/blog/post/2026-02-24-how-to-understand-istio-architecture-control-plane-vs-data-plane/view">How to Understand Istio Architecture (Control Plane vs Data Plane)</a></li>
-</ul>
-
-]]></description>
-</item>
-<item>
-<title>Istio Ambient Mesh</title>
-<link>https://64p.org/notes/istio-ambient-mesh.html</link>
-<guid isPermaLink="true">https://64p.org/notes/istio-ambient-mesh.html</guid>
-<pubDate>Thu, 13 Aug 2026 09:29:00 +0900</pubDate>
-<description><![CDATA[<h1>Istio Ambient Mesh</h1>
-
-<p>2022年に発表された<a href="/notes/service-mesh.html">Service Mesh</a>実装Istioの新データプレーンモード。従来のサイドカー方式(全アプリケーションPodにEnvoyプロキシを並走させる方式)に対し、サイドカーなしでService Meshの機能を提供する。 <a class="note-tag" href="/notes/tags/networking.html">#networking</a> <a class="note-tag" href="/notes/tags/kubernetes.html">#kubernetes</a> <a class="note-tag" href="/notes/tags/security.html">#security</a></p>
-
-<h2>データプレーンの構成</h2>
-
-<p>L4処理とL7処理を分離し、必要な場合のみL7プロキシを経由させる構成になっている。</p>
-
-<ul>
-<li><strong>ztunnel(per-nodeのL4プロキシ)</strong>: ノードごとに1つ動くDaemonSetとして展開される共有エージェント。トラフィックのルーティングにeBPFプログラム(istio-cniコンポーネントに組み込まれる)を使い、従来のiptablesベースのルーティングに比べて性能・柔軟性で優位とされる</li>
-<li><strong>waypoint proxy(オプションのL7プロキシ)</strong>: Envoy製のプロキシで、アプリケーションPodの外で動作する。アプリケーションから独立してデプロイ・アップグレード・スケールできる</li>
-</ul>
-
-
-<h2>コントロールプレーン</h2>
-
-<p><code>istiod</code>がコントロールプレーンとして残り、ztunnel・waypoint proxy双方の設定・証明書管理を担う。サイドカー方式と共通のコンポーネント。</p>
-
-<h2>サイドカー方式との違い</h2>
-
-<p>サイドカー方式は「全部乗せ」でL4/L7の機能を1つのサイドカープロキシに詰め込むのに対し、Ambient MeshはL4(ztunnel)とL7(waypoint proxy)を分離し、L7が不要なワークロードではztunnelのみで済ませることでリソース消費を抑える設計になっている。</p>
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://istio.io/latest/blog/2022/introducing-ambient-mesh/">Istio / Introducing Ambient Mesh</a></li>
-<li><a href="https://istio.io/latest/docs/overview/dataplane-modes/">Istio / Sidecar or ambient?</a></li>
-<li><a href="https://oneuptime.com/blog/post/2026-01-07-istio-ambient-mesh-sidecarless/view">How to Deploy Istio Ambient Mesh (Sidecar-less Mode)</a></li>
-</ul>
-
-]]></description>
-</item>
-<item>
-<title>Vitest</title>
-<link>https://64p.org/notes/vitest.html</link>
-<guid isPermaLink="true">https://64p.org/notes/vitest.html</guid>
-<pubDate>Thu, 13 Aug 2026 09:14:00 +0900</pubDate>
-<description><![CDATA[<h1>Vitest</h1>
-
-<p><a href="/notes/vite.html">Vite</a>によって駆動される次世代テストフレームワーク。Anthony Fu氏(Vue/Vite/Nuxtのコアメンバー)とViteコミュニティにより2021年後半に作られた。</p>
-
-<h2>作られた理由</h2>
-
-<p>当時最も普及していたJestは非同期変換やESMのサポートが不十分で、Viteベースのプロジェクトを正しくテストできなかった。加えて「アプリのビルドはVite、テストはJest」という構成では、Babel/ts-jestなどJest用の変換パイプラインをアプリ用のVite設定とは別に用意する必要があり、二重設定になってしまう問題があった。Vitestはこれを1つのパイプラインに統合することを狙って作られた。</p>
-
-<h2>特徴</h2>
-
-<ul>
-<li>既存の<code>vite.config</code>をそのまま読み込むため、Viteプラグイン・エイリアス・resolve設定がテスト実行時にもそのまま使える(追加設定がほぼ不要)</li>
-<li>Jest互換のAPI(<code>describe</code>/<code>it</code>/<code>expect</code>など)を提供しつつ、より高速に動作</li>
-<li>ネイティブなwatchモード(HMRに近い即時再実行)</li>
-<li>v8/Istanbulによるネイティブコードカバレッジ</li>
-<li>Vue, React, Svelte, Lit, Markoなどのコンポーネントテストに対応するbrowser mode</li>
-</ul>
-
-
-<h2>VitestとViteの関係</h2>
-
-<p>VitestはViteのモジュール解決・変換パイプライン・プラグインシステムをそのまま利用する。要件としてVite v6.0.0以上・Node v20.0.0以上が必要。</p>
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://vitest.dev/guide/">Getting Started | Guide | Vitest</a></li>
-<li><a href="https://blog.logrocket.com/vitest-adoption-guide/">Vitest 4 adoption guide: Overview and migrating from Jest - LogRocket Blog</a></li>
-</ul>
-
-]]></description>
-</item>
-<item>
-<title>Vite</title>
-<link>https://64p.org/notes/vite.html</link>
-<guid isPermaLink="true">https://64p.org/notes/vite.html</guid>
-<pubDate>Thu, 13 Aug 2026 09:14:00 +0900</pubDate>
-<description><![CDATA[<h1>Vite</h1>
-
-<p>フランス語で「素早い」を意味する、フロントエンド向けのビルドツール。Evan You氏(Vue.jsの作者)が開発し、2020年4月に初版がリリースされた。「dev server」と「本番ビルド」の2つの主要機能で構成される。</p>
-
-<h2>誕生の背景</h2>
-
-<p>従来型のバンドラーベースの開発サーバーは「アプリ全体を事前にバンドルしてからブラウザに渡す」方式だったため、アプリが大きくなるほど起動やHMR(Hot Module Replacement)が遅くなるという課題があった。Viteはブラウザのネイティブ ES モジュール対応を活かし、処理を2つに分割することでこれを解決した。</p>
-
-<ul>
-<li><strong>依存関係(node_modulesなど)</strong>: esbuildで高速に事前バンドル</li>
-<li><strong>自分のソースコード</strong>: ネイティブESMでオンデマンド配信し、ブラウザが必要なファイルだけを読み込む</li>
-</ul>
-
-
-<p>これにより、アプリのサイズに関わらずdev serverの起動とHMRが高速なまま保たれる。</p>
-
-<h2>ビルドパイプラインの変化</h2>
-
-<p>Viteは長らく「開発時はesbuild、本番ビルド時は<a href="/notes/rollup.html">Rollup</a>」という2つの異なるツールを使い分けていたが、この不一致を解消するため、Rust製バンドラー<a href="/notes/rolldown.html">Rolldown</a>へ移行し、単一の一貫したパイプラインを実現しつつある(Vite 8でデフォルト採用予定)。</p>
-
-<h2>関連</h2>
-
-<ul>
-<li><a href="/notes/vitest.html">Vitest</a>はVite上に構築されたテストフレームワーク</li>
-</ul>
-
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://vite.dev/guide/">Getting Started | Vite</a></li>
-<li><a href="https://vite.dev/guide/why">Why Vite | Vite</a></li>
-<li><a href="https://en.wikipedia.org/wiki/Vite_(software">Vite (software) - Wikipedia</a>)</li>
-</ul>
-
-]]></description>
-</item>
-<item>
-<title>Rollup</title>
-<link>https://64p.org/notes/rollup.html</link>
-<guid isPermaLink="true">https://64p.org/notes/rollup.html</guid>
-<pubDate>Thu, 13 Aug 2026 09:09:00 +0900</pubDate>
-<description><![CDATA[<h1>Rollup</h1>
-
-<p>JavaScriptのモジュールバンドラー。ES6モジュール構文で書いたコードを解析し、CommonJS/AMD/IIFE/UMDなど様々な形式にコンパイルできる。「ES modulesで書けば将来対応のコードを今すぐ書ける」というのが基本コンセプト。</p>
-
-<p>Rich Harris氏とLukas Taegert-Atkinson氏が開発・保守している。</p>
-
-<h2>Tree-shaking</h2>
-
-<p>未使用のコードを解析して自動的に除外する仕組み。ES modulesの静的な<code>import</code>/<code>export</code>構文を利用することで、実際に使われている関数だけをバンドルに残せる。この用語自体をRollupが広めたとされる。</p>
-
-<h2>用途</h2>
-
-<p>主にライブラリのビルド用途で使われることが多い。アプリケーション向けの複雑な機能(コード分割、HMRなど)よりも、シンプルで最適化されたバンドル生成に強みがある。</p>
-
-<ul>
-<li><a href="/notes/vite.html">Vite</a>は本番ビルド時にRollupを使用している(開発時はesbuildを使用)</li>
-<li>Svelteなども内部でRollupを採用</li>
-</ul>
-
-
-<p>Rustで書かれた後継バンドラーとして<a href="/notes/rolldown.html">Rolldown</a>が開発されている。</p>
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://rollupjs.org/introduction/">Rollup Introduction</a></li>
 </ul>
 
 ]]></description>

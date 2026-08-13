@@ -1,6 +1,6 @@
 ---
 created: 2026-08-13 20:47
-updated: 2026-08-13 20:47
+updated: 2026-08-13 22:36
 ---
 # NOC (Network Operations Center)
 
@@ -17,7 +17,7 @@ updated: 2026-08-13 20:47
 
 ## SOCとの違い
 
-似た概念に SOC (Security Operations Center) がある。NOCはネットワークの可用性・パフォーマンス維持が主目的なのに対し、SOCはセキュリティインシデントの検知・対応に特化している点が異なる。
+似た概念に [[soc|SOC (Security Operations Center)]] がある。NOCはネットワークの可用性・パフォーマンス維持が主目的なのに対し、SOCはセキュリティインシデントの検知・対応に特化している点が異なる。
 
 ## 出典
 
