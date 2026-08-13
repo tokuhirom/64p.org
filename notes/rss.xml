@@ -6,7 +6,55 @@
 <atom:link href="https://64p.org/notes/rss.xml" rel="self" type="application/rss+xml" />
 <description>ちょっと調べたことや検証結果を、AIの力も借りながらメモしていくコーナーです。</description>
 <language>ja</language>
-<lastBuildDate>Thu, 13 Aug 2026 21:20:49 +0900</lastBuildDate>
+<lastBuildDate>Thu, 13 Aug 2026 21:24:08 +0900</lastBuildDate>
+<item>
+<title>flaky test</title>
+<link>https://64p.org/notes/flaky-test.html</link>
+<guid isPermaLink="true">https://64p.org/notes/flaky-test.html</guid>
+<pubDate>Thu, 13 Aug 2026 21:24:00 +0900</pubDate>
+<description><![CDATA[<h1>flaky test</h1>
+
+<p>コードに変更がないにもかかわらず、実行するたびに成功したり失敗したりする、非決定的な挙動を示すテストのこと。</p>
+
+<h2>主な原因</h2>
+
+<ul>
+<li><strong>並行性の問題</strong> — スレッド間の競合状態など</li>
+<li><strong>タイミング依存</strong> — 非同期処理やアニメーションの完了を待たずにアサーションする</li>
+<li><strong>外部システムへの依存</strong> — ネットワーク接続、外部API、DBなどの不安定さ</li>
+<li><strong>テスト間の分離不足</strong> — 前のテストの状態(グローバル変数、DBレコード等)が後続テストに影響する</li>
+<li><strong>テスト設定の不整合</strong> — 実行環境によってパラメータや設定が変わる</li>
+<li><strong>環境差異</strong> — ハードウェアやOS、CI環境とローカル環境の違い</li>
+<li><strong>甘いテスト設計</strong> — 前提条件を十分に検証・保証できていない</li>
+</ul>
+
+
+<h2>影響</h2>
+
+<ul>
+<li><strong>偽陽性(false positive)</strong> — アプリ自体は正常なのにテストが失敗と報告する</li>
+<li><strong>不要なビルド失敗</strong> — 再実行やデプロイ遅延を招く</li>
+<li>CI/CDで信頼性が下がり、チームが「失敗しても無視して再実行/マージする」習慣がつくと、本物のバグを見逃すリスクが高まる</li>
+<li>デバッグに無駄な工数がかかり、リリースサイクルが遅延する</li>
+</ul>
+
+
+<h2>関連</h2>
+
+<p><a href="/notes/playwright.html">Playwright</a>の自動待機(auto-waiting)機能やアサーションの自動リトライは、タイミング依存によるflakinessを減らすための対策の一つ。</p>
+
+<p><a class="note-tag" href="/notes/tags/testing.html">#testing</a></p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/Flaky_test">Flaky test - Wikipedia</a></li>
+<li><a href="https://www.datadoghq.com/knowledge-center/flaky-tests/">What is a Flaky Test? Causes, Identification &amp; Remediation | Datadog</a></li>
+<li><a href="https://www.jetbrains.com/teamcity/ci-cd-guide/concepts/flaky-tests/">What are Flaky Tests? | TeamCity CI/CD Guide | JetBrains</a></li>
+</ul>
+
+]]></description>
+</item>
 <item>
 <title>Playwright</title>
 <link>https://64p.org/notes/playwright.html</link>
@@ -19,7 +67,7 @@
 <h2>特徴</h2>
 
 <ul>
-<li><strong>自動待機(auto-waiting)</strong> — 要素が操作可能になるまで自動的に待つため、flaky(不安定)なテストを減らせる</li>
+<li><strong>自動待機(auto-waiting)</strong> — 要素が操作可能になるまで自動的に待つため、<a href="/notes/flaky-test.html">flaky(不安定)なテスト</a>を減らせる</li>
 <li><strong>アサーションの自動リトライ</strong> — 条件が満たされるまで再試行する</li>
 <li><strong>ネットワークインターセプト</strong> — リクエスト/レスポンスを傍受・モックできる</li>
 <li><strong>ブラウザコンテキストの分離</strong>と<strong>並列実行</strong>により高速・大規模なテストスイートを実現できる</li>
@@ -1440,66 +1488,6 @@ sudo: a terminal is required to read the password; either use the -S option to r
 <li><a href="https://fontawesome.com/plans">Plans &amp; Pricing to Meet Your Icon Needs | Font Awesome</a></li>
 <li><a href="https://fontawesome.com/versions">Versions of Font Awesome</a></li>
 <li><a href="https://en.wikipedia.org/wiki/Font_Awesome">Font Awesome - Wikipedia</a></li>
-</ul>
-
-]]></description>
-</item>
-<item>
-<title>Iconify</title>
-<link>https://64p.org/notes/iconify.html</link>
-<guid isPermaLink="true">https://64p.org/notes/iconify.html</guid>
-<pubDate>Thu, 13 Aug 2026 07:43:00 +0900</pubDate>
-<description><![CDATA[<h1>Iconify</h1>
-
-<p>複数のオープンソースアイコンセットを統一した記法で扱えるアイコンフレームワーク。個々のアイコンライブラリを直接使うのではなく、それらを束ねる統合レイヤーとして機能する。</p>
-
-<p><a class="note-tag" href="/notes/tags/icon.html">#icon</a> <a class="note-tag" href="/notes/tags/frontend.html">#frontend</a> <a class="note-tag" href="/notes/tags/web.html">#web</a></p>
-
-<h2>対応規模</h2>
-
-<p><a href="/notes/font-awesome.html">Font Awesome</a>、Material Design Icons、Feather Icons、Noto Emojiなど200以上のアイコンセット、約25万個以上のアイコンに対応する。セットをまたいでも同じ統一シンタックスで参照できる。</p>
-
-<h2>仕組み</h2>
-
-<p>Iconify自体はアイコンデータを内包せず、使用するアイコンだけをAPI経由でオンデマンドに取得する。従来のアイコンフォント/SVGスプライトのように未使用アイコンまでバンドルに含める必要がなく、地理分散サーバーで低遅延を実現している。</p>
-
-<h2>利用方法</h2>
-
-<ul>
-<li>全フレームワーク共通で使える<code>iconify-icon</code>というWeb Component</li>
-<li>React/Vue/Svelte向けの専用コンポーネント</li>
-<li>Figma/Sketch/Adobe XD向けのデザインプラグイン</li>
-</ul>
-
-
-<h2>Font Awesomeなど個別のアイコンセットとの関係性</h2>
-
-<p><a href="/notes/font-awesome.html">Font Awesome</a>は1つの統一デザイン言語を持つ独立したアイコンセット（公式のReact/Vue/Angular連携、CDN配布、Pro版はサブスクリプション課金）。一方Iconifyはそれ自体がアイコンを作るのではなく、Font Awesome（オープンソース版）を含む200以上の既存アイコンセットを統一シンタックスで横断的に扱うための集約レイヤーで、実際にIconifyのアイコン検索サイトにも「Font Awesome Solid」「Font Awesome 6 Brands」がそのまま収録されている。したがって両者は対等な競合というより、「1つのアイコンセット」対「複数のアイコンセット（Font Awesomeも含む）を束ねる仕組み」という関係にある。</p>
-
-<h2>セルフホスト</h2>
-
-<p>IconifyのAPI自体もアイコンセットもGitHubで公開されており、自前サーバーでホストすることも可能。</p>
-
-<h2>ライセンス</h2>
-
-<p>Iconify本体はMITライセンス。ただし個々のアイコンデータは各アイコンセット固有のライセンスに従い、実際にはMIT・Apache 2.0・CC BY 4.0などが混在する。</p>
-
-<ul>
-<li><strong>CC BY 4.0</strong>（表示義務あり）: Solar(6,184アイコン)、<a href="/notes/font-awesome.html">Font Awesome</a> Solid(2,000アイコン)など</li>
-<li><strong>MIT</strong>（表示義務は基本任意）: Tabler(3,768)、Boxicons(3,320)など</li>
-<li><strong>Apache 2.0</strong>（特許保護条項付き）: MingCute Designなど</li>
-</ul>
-
-
-<p>どのライセンスかはセットごとにIconify側のメタデータ(ライセンス名・SPDX識別子・URL)として提供されており、CC BY系のセットを使う場合は表示義務の有無をセット単位で確認する必要がある。</p>
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://iconify.design/docs/iconify-icon/">Iconify Icon Web Component</a></li>
-<li><a href="https://github.com/iconify/iconify">GitHub - iconify/iconify</a></li>
-<li><a href="https://iconify.design/docs/api/collections.html">List of icon sets | Iconify</a></li>
-<li><a href="https://github.com/iconify/icon-sets/blob/master/collections.md">icon-sets/collections.md · GitHub</a></li>
 </ul>
 
 ]]></description>

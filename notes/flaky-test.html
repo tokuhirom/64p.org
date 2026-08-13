@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>JSHint - Notes - 64p.org</title>
+    <title>flaky test - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="alternate" type="application/rss+xml" title="Notes - 64p.org" href="/notes/rss.xml">
@@ -24,7 +24,7 @@
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
                                     <li><a href="/notes/playwright.html">Playwright</a></li>
-                                    <li><a href="/notes/flaky-test.html">flaky test</a></li>
+                                    <li><a href="/notes/flaky-test.html" class="active">flaky test</a></li>
                                     <li><a href="/notes/herdr-browser.html">herdr-browser</a></li>
                                     <li><a href="/notes/showa-rider-evil-organizations.html">昭和仮面ライダーの悪の組織の系譜</a></li>
                                     <li><a href="/notes/kamen-rider-v3.html">仮面ライダーV3</a></li>
@@ -104,7 +104,7 @@
                                     <li><a href="/notes/typescript-eslint.html">typescript-eslint</a></li>
                                     <li><a href="/notes/openjs-foundation.html">OpenJS Foundation</a></li>
                                     <li><a href="/notes/jslint.html">JSLint</a></li>
-                                    <li><a href="/notes/jshint.html" class="active">JSHint</a></li>
+                                    <li><a href="/notes/jshint.html">JSHint</a></li>
                                     <li><a href="/notes/prettier.html">Prettier</a></li>
                                     <li><a href="/notes/oxc.html">Oxc(Oxidation Compiler)</a></li>
                                     <li><a href="/notes/moc.html">MOC (Map of Content)</a></li>
@@ -379,38 +379,58 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>JSHint</h1>
+                <h1>flaky test</h1>
 
-<p>Anton Kovalyov氏が2011年に<a href="/notes/jslint.html">JSLint</a>をフォークして作ったJavaScriptリンター。フォークの動機は「JSLintは不快なほどオピニオン化していた（uncomfortably opinionated）」というもので、JSLintが許さなかったルールのカスタマイズをコミュニティ主導で可能にした。 <a class="note-tag" href="/notes/tags/javascript.html">#javascript</a></p>
+<p>コードに変更がないにもかかわらず、実行するたびに成功したり失敗したりする、非決定的な挙動を示すテストのこと。</p>
 
-<h2>ライセンス問題の継承と解消</h2>
+<h2>主な原因</h2>
 
-<p>フォーク元のJSLint由来のコードに「Good, not Evil」条項（詳細は<a href="/notes/jslint.html">JSLint</a>参照）が残っていたため、JSHintも長年Free Software Foundationから非フリー扱いされていた。2020年8月に該当コードをすべて置き換えて完全なMITライセンスとなり、問題が解消された。</p>
+<ul>
+<li><strong>並行性の問題</strong> — スレッド間の競合状態など</li>
+<li><strong>タイミング依存</strong> — 非同期処理やアニメーションの完了を待たずにアサーションする</li>
+<li><strong>外部システムへの依存</strong> — ネットワーク接続、外部API、DBなどの不安定さ</li>
+<li><strong>テスト間の分離不足</strong> — 前のテストの状態(グローバル変数、DBレコード等)が後続テストに影響する</li>
+<li><strong>テスト設定の不整合</strong> — 実行環境によってパラメータや設定が変わる</li>
+<li><strong>環境差異</strong> — ハードウェアやOS、CI環境とローカル環境の違い</li>
+<li><strong>甘いテスト設計</strong> — 前提条件を十分に検証・保証できていない</li>
+</ul>
 
-<h2><a href="/notes/javascript-linters-formatters.html">JavaScriptのリンター・フォーマッター</a>の中での位置づけ</h2>
 
-<p>JSリンター系譜の中間世代。<a href="/notes/jslint.html">JSLint</a>の「設定不可」への反発から生まれたが、独自ルールの追加はできず、その制約への不満から<a href="/notes/eslint.html">ESLint</a>が生まれた。「設定可能」（JSHint）から「プラガブル」（ESLint）への進化の途中段階といえる。</p>
+<h2>影響</h2>
+
+<ul>
+<li><strong>偽陽性(false positive)</strong> — アプリ自体は正常なのにテストが失敗と報告する</li>
+<li><strong>不要なビルド失敗</strong> — 再実行やデプロイ遅延を招く</li>
+<li>CI/CDで信頼性が下がり、チームが「失敗しても無視して再実行/マージする」習慣がつくと、本物のバグを見逃すリスクが高まる</li>
+<li>デバッグに無駄な工数がかかり、リリースサイクルが遅延する</li>
+</ul>
+
+
+<h2>関連</h2>
+
+<p><a href="/notes/playwright.html">Playwright</a>の自動待機(auto-waiting)機能やアサーションの自動リトライは、タイミング依存によるflakinessを減らすための対策の一つ。</p>
+
+<p><a class="note-tag" href="/notes/tags/testing.html">#testing</a></p>
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://en.wikipedia.org/wiki/JSHint">JSHint - Wikipedia</a></li>
-<li><a href="https://en.wikipedia.org/wiki/JSLint">JSLint - Wikipedia</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Flaky_test">Flaky test - Wikipedia</a></li>
+<li><a href="https://www.datadoghq.com/knowledge-center/flaky-tests/">What is a Flaky Test? Causes, Identification &amp; Remediation | Datadog</a></li>
+<li><a href="https://www.jetbrains.com/teamcity/ci-cd-guide/concepts/flaky-tests/">What are Flaky Tests? | TeamCity CI/CD Guide | JetBrains</a></li>
 </ul>
 
 
                                 <div class="notes-backlinks">
                     <h2>🔗 リンクされているノート</h2>
                     <ul>
-                                            <li><a href="/notes/eslint.html">ESLint</a></li>
-                                            <li><a href="/notes/jslint.html">JSLint</a></li>
-                                            <li><a href="/notes/javascript-linters-formatters.html">JavaScriptのリンター・フォーマッター</a></li>
+                                            <li><a href="/notes/playwright.html">Playwright</a></li>
                     
                     </ul>
                 </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-12 23:21 / 更新日時: 2026-08-12 23:21</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=JSHint&url=https%3A%2F%2F64p.org%2Fnotes%2Fjshint.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <span>作成日時: 2026-08-13 21:24 / 更新日時: 2026-08-13 21:24</span>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=flaky%20test&url=https%3A%2F%2F64p.org%2Fnotes%2Fflaky-test.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">
