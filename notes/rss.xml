@@ -6,7 +6,47 @@
 <atom:link href="https://64p.org/notes/rss.xml" rel="self" type="application/rss+xml" />
 <description>ちょっと調べたことや検証結果を、AIの力も借りながらメモしていくコーナーです。</description>
 <language>ja</language>
-<lastBuildDate>Fri, 14 Aug 2026 04:59:08 +0900</lastBuildDate>
+<lastBuildDate>Fri, 14 Aug 2026 05:00:45 +0900</lastBuildDate>
+<item>
+<title>伊能忠敬</title>
+<link>https://64p.org/notes/ino-tadataka.html</link>
+<guid isPermaLink="true">https://64p.org/notes/ino-tadataka.html</guid>
+<pubDate>Fri, 14 Aug 2026 05:00:00 +0900</pubDate>
+<description><![CDATA[<h1>伊能忠敬</h1>
+
+<p>江戸時代後期、日本全国を実測して初めて精度の高い日本地図を作り上げた測量家（1745年-1818年）。#japan <a class="note-tag" href="/notes/tags/history.html">#history</a></p>
+
+<h2>生涯</h2>
+
+<p>上総国（現・千葉県九十九里町）出身。18歳で下総国佐原（現・千葉県香取市）の伊能家に婿養子として入り、酒造業・米穀取引などの家業を発展させた後、50歳で家督を息子に譲って隠居した。</p>
+
+<p>隠居後の1795年、江戸に出て幕府天文方の高橋至時（たかはし よしとき）に師事し、天文学・暦学・測量術を学んだ。55歳から71歳で亡くなるまでの17年間に10回の測量旅行を行い、日本全国の海岸線を歩いて測量した総距離は約4万kmにおよぶ（地球一周分に相当する）。</p>
+
+<h2>測量の動機</h2>
+
+<p>忠敬が測量を始めた直接の目的は、地球の大きさ（子午線1度の距離）を知ることだったとされる。当時、地球の大きさを正確に測る方法として、異なる緯度間の距離を実測して比較する手法が知られており、蝦夷地（北海道）への測量旅行はその第一歩として企画された。結果として得られた実測データが、そのまま精密な日本地図の作成に繋がっていった。</p>
+
+<h2>大日本沿海輿地全図</h2>
+
+<p>忠敬は地図の完成を見ないまま1818年に没し、弟子の高橋景保（至時の息子）らが作業を引き継いで1821年に完成させた。「大日本沿海輿地全図（伊能図）」と呼ばれ、縮尺別に大図（全214図）・中図（全8図）・小図（全3図）から構成される。現代の測量・衛星写真による地図と比較しても、沿岸部の形状はほぼ一致する精度を持つ。</p>
+
+<h2>シーボルト事件</h2>
+
+<p>伊能図は国防上の理由から国外への持ち出しが禁じられていた。1828年、ドイツ人医師フィリップ・フランツ・フォン・シーボルトが伊能図の写しなどを国外に持ち出そうとして発覚し、国外追放処分となった（シーボルト事件）。この事件は、伊能図がそれだけ軍事的にも価値のある精度を持っていたことを示している。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://www.nippon.com/ja/japan-topics/b07210/">伊能忠敬：隠居後に前人未到の全国測量を成し遂げ、精密な日本地図を作成 | nippon.com</a></li>
+<li><a href="https://www.nippon.com/en/japan-topics/b07210/mapping-a-nation-japan%E2%80%99s-most-famous-cartographer-ino-tadataka.html">Mapping a Nation: Japan&rsquo;s Most Famous Cartographer, Inō Tadataka | Nippon.com</a></li>
+<li><a href="https://www.gsi.go.jp/KIDS/MEMORI/inou.htm">測量・地図ミニ人物伝：伊能忠敬 | 国土地理院</a></li>
+<li><a href="https://www.city.katori.lg.jp/sightseeing/museum/tadataka.html">伊能忠敬とは：香取市ウェブサイト</a></li>
+<li><a href="https://www.topcon.co.jp/media/infrastructure/surveying/">日本地図を作った伊能忠敬測量の目的は地球の大きさを測ることだった!? | Through the LENS by TOPCON</a></li>
+<li><a href="https://ja.wikipedia.org/wiki/%E3%82%B7%E3%83%BC%E3%83%9C%E3%83%AB%E3%83%88%E4%BA%8B%E4%BB%B6">シーボルト事件 - Wikipedia</a></li>
+</ul>
+
+]]></description>
+</item>
 <item>
 <title>おでん</title>
 <link>https://64p.org/notes/oden.html</link>
@@ -1405,46 +1445,6 @@ Content-length: 25
 <li><a href="https://www.cncf.io/projects/fluentd/">Fluentd | CNCF</a></li>
 <li><a href="https://www.fluentd.org/blog/fluentd-cncf-graduation/">Fluentd has Graduated! | Fluentd Blog</a></li>
 <li><a href="https://docs.fluentbit.io/manual/2.0/about/fluentd-and-fluent-bit">Fluentd &amp; Fluent Bit | Fluent Bit: Official Manual</a></li>
-</ul>
-
-]]></description>
-</item>
-<item>
-<title>Embulk</title>
-<link>https://64p.org/notes/embulk.html</link>
-<guid isPermaLink="true">https://64p.org/notes/embulk.html</guid>
-<pubDate>Thu, 13 Aug 2026 12:59:00 +0900</pubDate>
-<description><![CDATA[<h1>Embulk</h1>
-
-<p>異なるデータベース・ストレージ・ファイル形式・クラウドサービス間でのバルクデータ転送を行う、プラグイン型のオープンソースデータローダー。Treasure Data社の古橋貞之(Sadayuki Furuhashi)氏が開発した。同氏は<a href="/notes/fluentd.html">Fluentd</a>や<a href="/notes/messagepack.html">MessagePack</a>の開発者でもあり、Fluentdがストリーム型のログ収集を担うのに対し、Embulkはバルク(一括)型のデータ転送を担う位置づけになっている。</p>
-
-<p><a class="note-tag" href="/notes/tags/data-engineering.html">#data-engineering</a> <a class="note-tag" href="/notes/tags/ruby.html">#ruby</a> <a class="note-tag" href="/notes/tags/java.html">#java</a></p>
-
-<h2>主な機能</h2>
-
-<ul>
-<li>入力(Input)・出力(Output)・フィルタ(Filter)・パーサー(Parser)・フォーマッタ(Formatter)などのプラグインを組み合わせてデータパイプラインを構成するプラグイン型アーキテクチャ。プラグインはMavenやRubyGemsのリポジトリから利用できる。</li>
-<li>入力ファイル形式の自動判定(guess)機能。</li>
-<li>大規模データを扱うための並列実行。</li>
-<li>データの一貫性を保つためのトランザクション制御と、失敗時のリジューム(再実行)対応。</li>
-<li>設定はYAMLで記述する。</li>
-</ul>
-
-
-<h2>技術基盤</h2>
-
-<ul>
-<li>JRuby上に実装されており、Java(JVM)ランタイムで動作する。プラグインはJavaまたはJRubyのどちらでも実装できる。</li>
-<li>執筆時点の最新安定版はv0.11系(GitHubの最新リリースはv0.11.5、2024年9月公開)で、Java 8を公式サポートしている。</li>
-</ul>
-
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://www.embulk.org/">Embulk 公式サイト</a></li>
-<li><a href="https://github.com/embulk/embulk">embulk/embulk - GitHub</a></li>
-<li><a href="https://en.wikipedia.org/wiki/Treasure_Data">Treasure Data - Wikipedia</a></li>
 </ul>
 
 ]]></description>

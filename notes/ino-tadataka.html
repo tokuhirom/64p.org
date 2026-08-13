@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>BOLA（Broken Object Level Authorization） - Notes - 64p.org</title>
+    <title>伊能忠敬 - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="alternate" type="application/rss+xml" title="Notes - 64p.org" href="/notes/rss.xml">
@@ -23,7 +23,7 @@
                 <a class="notes-tags-link" href="/notes/rss.xml">📡 RSS</a>
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
-                                    <li><a href="/notes/ino-tadataka.html">伊能忠敬</a></li>
+                                    <li><a href="/notes/ino-tadataka.html" class="active">伊能忠敬</a></li>
                                     <li><a href="/notes/oden.html">おでん</a></li>
                                     <li><a href="/notes/threat-hunting.html">脅威ハンティング (Threat Hunting)</a></li>
                                     <li><a href="/notes/soc.html">SOC (Security Operations Center)</a></li>
@@ -213,7 +213,7 @@
                                     <li><a href="/notes/mos-black-angus-burger.html">モスバーガー「ブラックアンガスバーガー」</a></li>
                                     <li><a href="/notes/naisuimen-yoshoku.html">内水面養殖業（ないすいめんようしょくぎょう）</a></li>
                                     <li><a href="/notes/ec2-application-status-checks.html">Amazon EC2 Application Status Checks</a></li>
-                                    <li><a href="/notes/bola.html" class="active">BOLA（Broken Object Level Authorization）</a></li>
+                                    <li><a href="/notes/bola.html">BOLA（Broken Object Level Authorization）</a></li>
                                     <li><a href="/notes/ai-agent-gym-booking-hack.html">AIエージェントによるジム予約システム侵害事件（2026年8月）</a></li>
                                     <li><a href="/notes/ai-agent-api-authorization-governance.html">AIエージェント時代のAPI認可ガバナンス</a></li>
                                     <li><a href="/notes/yamabudou-squash.html">山ぶどうスカッシュ</a></li>
@@ -394,57 +394,43 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>BOLA（Broken Object Level Authorization）</h1>
+                <h1>伊能忠敬</h1>
 
-<p>OWASP API Security Top 10で最上位（API1:2023）に位置づけられる脆弱性カテゴリ。オブジェクトレベルの認可メカニズムの不備を指す、IDOR（Insecure Direct Object References）系の典型的な脆弱性。</p>
+<p>江戸時代後期、日本全国を実測して初めて精度の高い日本地図を作り上げた測量家（1745年-1818年）。#japan <a class="note-tag" href="/notes/tags/history.html">#history</a></p>
 
-<h2>原因</h2>
+<h2>生涯</h2>
 
-<p>サーバーコンポーネントは通常、クライアントの状態を完全には追跡せず、代わりにクライアントから送信されるオブジェクトIDなどのパラメータに依存して、どのオブジェクトにアクセスするかを決定する。このオブジェクトIDに対するアクセス権限の検証が欠けていると、攻撃者はIDを差し替えるだけで本来アクセスできないはずの他人のリソースを操作できてしまう。</p>
+<p>上総国（現・千葉県九十九里町）出身。18歳で下総国佐原（現・千葉県香取市）の伊能家に婿養子として入り、酒造業・米穀取引などの家業を発展させた後、50歳で家督を息子に譲って隠居した。</p>
 
-<h2>典型的な攻撃例（OWASP掲載）</h2>
+<p>隠居後の1795年、江戸に出て幕府天文方の高橋至時（たかはし よしとき）に師事し、天文学・暦学・測量術を学んだ。55歳から71歳で亡くなるまでの17年間に10回の測量旅行を行い、日本全国の海岸線を歩いて測量した総距離は約4万kmにおよぶ（地球一周分に相当する）。</p>
 
-<ul>
-<li>電子商取引プラットフォームで、URLパターン<code>/shops/{shopName}/revenue_data.json</code>の店舗名を操作し、他店舗の売上データにアクセスする。</li>
-<li>自動車メーカーのAPIで、車両識別番号（VIN）が所有者本人のものかの検証が不足しており、他人の車両をリモート操作できてしまう。</li>
-<li>ドキュメント管理サービスの削除機能が許可チェックを実施しておらず、他ユーザーのドキュメントを削除できてしまう。</li>
-</ul>
+<h2>測量の動機</h2>
 
+<p>忠敬が測量を始めた直接の目的は、地球の大きさ（子午線1度の距離）を知ることだったとされる。当時、地球の大きさを正確に測る方法として、異なる緯度間の距離を実測して比較する手法が知られており、蝦夷地（北海道）への測量旅行はその第一歩として企画された。結果として得られた実測データが、そのまま精密な日本地図の作成に繋がっていった。</p>
 
-<h2>対策</h2>
+<h2>大日本沿海輿地全図</h2>
 
-<ul>
-<li>ユーザーポリシー・階層に基づく適切な認可メカニズムを実装する。</li>
-<li>クライアント入力に基づいてレコードへアクセスするすべての関数で認可チェックを行う。</li>
-<li>レコードIDにGUIDなど予測不可能なランダム値を使う。</li>
-<li>認可メカニズムの脆弱性を評価するテストを実施する。</li>
-</ul>
+<p>忠敬は地図の完成を見ないまま1818年に没し、弟子の高橋景保（至時の息子）らが作業を引き継いで1821年に完成させた。「大日本沿海輿地全図（伊能図）」と呼ばれ、縮尺別に大図（全214図）・中図（全8図）・小図（全3図）から構成される。現代の測量・衛星写真による地図と比較しても、沿岸部の形状はほぼ一致する精度を持つ。</p>
 
+<h2>シーボルト事件</h2>
 
-<h2>関連</h2>
-
-<p><a href="/notes/ai-agent-gym-booking-hack.html">AIエージェントによるジム予約システム侵害事件（2026年8月）</a>では、AIエージェントがこのBOLA脆弱性を自ら発見・悪用してしまった事例が報告されている。</p>
+<p>伊能図は国防上の理由から国外への持ち出しが禁じられていた。1828年、ドイツ人医師フィリップ・フランツ・フォン・シーボルトが伊能図の写しなどを国外に持ち出そうとして発覚し、国外追放処分となった（シーボルト事件）。この事件は、伊能図がそれだけ軍事的にも価値のある精度を持っていたことを示している。</p>
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://owasp.org/API-Security/editions/2023/en/0xa1-broken-object-level-authorization/">API1:2023 Broken Object Level Authorization - OWASP</a></li>
+<li><a href="https://www.nippon.com/ja/japan-topics/b07210/">伊能忠敬：隠居後に前人未到の全国測量を成し遂げ、精密な日本地図を作成 | nippon.com</a></li>
+<li><a href="https://www.nippon.com/en/japan-topics/b07210/mapping-a-nation-japan%E2%80%99s-most-famous-cartographer-ino-tadataka.html">Mapping a Nation: Japan&rsquo;s Most Famous Cartographer, Inō Tadataka | Nippon.com</a></li>
+<li><a href="https://www.gsi.go.jp/KIDS/MEMORI/inou.htm">測量・地図ミニ人物伝：伊能忠敬 | 国土地理院</a></li>
+<li><a href="https://www.city.katori.lg.jp/sightseeing/museum/tadataka.html">伊能忠敬とは：香取市ウェブサイト</a></li>
+<li><a href="https://www.topcon.co.jp/media/infrastructure/surveying/">日本地図を作った伊能忠敬測量の目的は地球の大きさを測ることだった!? | Through the LENS by TOPCON</a></li>
+<li><a href="https://ja.wikipedia.org/wiki/%E3%82%B7%E3%83%BC%E3%83%9C%E3%83%AB%E3%83%88%E4%BA%8B%E4%BB%B6">シーボルト事件 - Wikipedia</a></li>
 </ul>
 
 
-<p><a class="note-tag" href="/notes/tags/security.html">#security</a> <a class="note-tag" href="/notes/tags/api.html">#api</a></p>
-
-                                <div class="notes-backlinks">
-                    <h2>🔗 リンクされているノート</h2>
-                    <ul>
-                                            <li><a href="/notes/ai-agent-gym-booking-hack.html">AIエージェントによるジム予約システム侵害事件（2026年8月）</a></li>
-                                            <li><a href="/notes/ai-agent-api-authorization-governance.html">AIエージェント時代のAPI認可ガバナンス</a></li>
-                    
-                    </ul>
-                </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-11 11:23 / 更新日時: 2026-08-11 11:23</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=BOLA%EF%BC%88Broken%20Object%20Level%20Authorization%EF%BC%89&url=https%3A%2F%2F64p.org%2Fnotes%2Fbola.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <span>作成日時: 2026-08-14 05:00 / 更新日時: 2026-08-14 05:00</span>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=%E4%BC%8A%E8%83%BD%E5%BF%A0%E6%95%AC&url=https%3A%2F%2F64p.org%2Fnotes%2Fino-tadataka.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">
