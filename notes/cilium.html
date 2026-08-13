@@ -23,6 +23,9 @@
                 <a class="notes-tags-link" href="/notes/rss.xml">📡 RSS</a>
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
+                                    <li><a href="/notes/service-mesh.html">Service Mesh</a></li>
+                                    <li><a href="/notes/istio-ambient-mesh.html">Istio Ambient Mesh</a></li>
+                                    <li><a href="/notes/cilium.html" class="active">Cilium</a></li>
                                     <li><a href="/notes/vitest.html">Vitest</a></li>
                                     <li><a href="/notes/vite.html">Vite</a></li>
                                     <li><a href="/notes/rollup.html">Rollup</a></li>
@@ -31,7 +34,6 @@
                                     <li><a href="/notes/xdp.html">XDP (eXpress Data Path)</a></li>
                                     <li><a href="/notes/open-vswitch.html">Open vSwitch (OVS)</a></li>
                                     <li><a href="/notes/bpf.html">BPF (Berkeley Packet Filter)</a></li>
-                                    <li><a href="/notes/cilium.html" class="active">Cilium</a></li>
                                     <li><a href="/notes/bpftrace.html">bpftrace</a></li>
                                     <li><a href="/notes/bpftrace-experiment.html">bpftraceを動かしてeBPFトレーシングを体感する</a></li>
                                     <li><a href="/notes/iconify.html">Iconify</a></li>
@@ -369,7 +371,7 @@
 <li><strong>ネットワーキング</strong>: オーバーレイネットワーク・ネイティブルーティングなど柔軟なルーティングオプションを提供。eBPFベースの分散ロードバランシングにより、従来iptablesベースだったkube-proxyを置き換えられる</li>
 <li><strong>セキュリティ(Network Policy)</strong>: IPアドレスへの依存から脱却し、ID・ラベルベースのセキュリティモデルを実現。Kubernetes標準のNetworkPolicy(L3/L4)に加え、CiliumNetworkPolicyとしてL7(HTTPメソッド/パスフィルタ、DNSベースのegress、FQDNポリシー)まで対応する</li>
 <li><strong>Hubble(Observability)</strong>: 完全に分散されたネットワーク可視化プラットフォーム。ノードごとにフローをキャプチャし、Hubble relayでクラスタ全体に集約、CLI/UIで閲覧できる。サービス依存関係マップ・HTTPフロー・DNS問題の検出・レイテンシ分析が可能</li>
-<li><strong>Service Mesh</strong>: サイドカーを使わない設計が特徴。L3/L4はeBPFで処理し、L7が必要な場合のみノードレベルのEnvoyを使う。WireGuardやIPsecによる透過的暗号化、SPIFFE/SPIRE連携によるmTLSもサポートする</li>
+<li><strong><a href="/notes/service-mesh.html">Service Mesh</a></strong>: サイドカーを使わない設計が特徴。L3/L4はeBPFで処理し、L7が必要な場合のみノードレベルのEnvoyを使う。WireGuardやIPsecによる透過的暗号化、SPIFFE/SPIRE連携によるmTLSもサポートする</li>
 </ul>
 
 
@@ -391,12 +393,13 @@
                     <h2>🔗 リンクされているノート</h2>
                     <ul>
                                             <li><a href="/notes/bpf.html">BPF (Berkeley Packet Filter)</a></li>
+                                            <li><a href="/notes/service-mesh.html">Service Mesh</a></li>
                                             <li><a href="/notes/xdp.html">XDP (eXpress Data Path)</a></li>
                     
                     </ul>
                 </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-13 08:33 / 更新日時: 2026-08-13 08:33</span>
+                    <span>作成日時: 2026-08-13 08:33 / 更新日時: 2026-08-13 09:29</span>
                     <a class="share-x" href="https://twitter.com/intent/tweet?text=Cilium&url=https%3A%2F%2F64p.org%2Fnotes%2Fcilium.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>

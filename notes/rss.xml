@@ -6,7 +6,103 @@
 <atom:link href="https://64p.org/notes/rss.xml" rel="self" type="application/rss+xml" />
 <description>ちょっと調べたことや検証結果を、AIの力も借りながらメモしていくコーナーです。</description>
 <language>ja</language>
-<lastBuildDate>Thu, 13 Aug 2026 09:14:00 +0900</lastBuildDate>
+<lastBuildDate>Thu, 13 Aug 2026 09:29:49 +0900</lastBuildDate>
+<item>
+<title>Service Mesh</title>
+<link>https://64p.org/notes/service-mesh.html</link>
+<guid isPermaLink="true">https://64p.org/notes/service-mesh.html</guid>
+<pubDate>Thu, 13 Aug 2026 09:29:00 +0900</pubDate>
+<description><![CDATA[<h1>Service Mesh</h1>
+
+<p>マイクロサービス間の通信を管理するインフラ層。各サービスがリトライ・サーキットブレーカー・mTLS・ロードバランシングなどの通信ロジックを自前で実装する代わりに、それらをネットワーク層に集約する。 <a class="note-tag" href="/notes/tags/networking.html">#networking</a> <a class="note-tag" href="/notes/tags/kubernetes.html">#kubernetes</a> <a class="note-tag" href="/notes/tags/security.html">#security</a></p>
+
+<h2>アーキテクチャの2方式</h2>
+
+<h3>サイドカー方式(従来型)</h3>
+
+<p>各アプリケーションPodにプロキシ(多くはEnvoy)を並走させ、全トラフィックをそのプロキシ経由にする。</p>
+
+<ul>
+<li><strong>Istio</strong>: 機能が豊富で成熟している一方、リソース消費と運用の複雑さがトレードオフになる。詳細は<a href="/notes/istio-ambient-mesh.html">Istio Ambient Mesh</a>を参照</li>
+<li><strong>Linkerd</strong>: Rust製の自前プロキシを使い、Kubernetes専用・ミニマル志向で設計されている。中規模負荷(5,000 RPS/service未満)ではIstioよりオーバーヘッドが小さいとされる。初めてService Meshを導入するならLinkerdから始め、必要に応じてIstioへ移行するのが定石とされている</li>
+</ul>
+
+
+<h3>サイドカーレス方式</h3>
+
+<ul>
+<li><strong>Istio Ambient Mesh</strong>: ノード単位のDaemonSetである<code>ztunnel</code>がL4処理を担い、L7が必要な場合のみオプションの<code>waypoint proxy</code>(Envoy)を挟む。詳細は<a href="/notes/istio-ambient-mesh.html">Istio Ambient Mesh</a></li>
+<li><strong><a href="/notes/cilium.html">Cilium</a> Service Mesh</strong>: L3/L4は<a href="/notes/bpf.html">eBPF</a>で処理し、L7が必要な時だけノードレベルのEnvoyを使う。WireGuard/IPsecによる透過的暗号化、SPIFFE/SPIRE連携のmTLSもサポートする</li>
+</ul>
+
+
+<p>両者とも、サイドカー方式の「Pod毎にプロキシを起動する」オーバーヘッドを避け、ノード単位の共有プロキシ/eBPFでコストを下げる方向性は共通している。</p>
+
+<h2>主な提供機能</h2>
+
+<ul>
+<li><strong>mTLS</strong>による相互認証・暗号化。SPIFFE/SPIREのようなID基盤と連携することも多い</li>
+<li>リトライ・タイムアウト・サーキットブレーカーなどの耐障害性機能</li>
+<li>カナリアリリースやA/Bテスト用のトラフィックルーティング</li>
+<li>可観測性(メトリクス・分散トレーシング・アクセスログの自動収集)</li>
+</ul>
+
+
+<h2>コントロールプレーン/データプレーン</h2>
+
+<ul>
+<li><strong>データプレーン</strong>: 実際にトラフィックを中継するプロキシ層(サイドカーEnvoy、ztunnel、eBPFプログラムなど)</li>
+<li><strong>コントロールプレーン</strong>: ポリシーや証明書を配布・管理する層(Istioなら<code>istiod</code>)</li>
+</ul>
+
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://reintech.io/blog/kubernetes-service-mesh-comparison-2026-istio-linkerd-cilium">Kubernetes Service Mesh Comparison 2026: Istio vs Linkerd vs Cilium</a></li>
+<li><a href="https://tasrieit.com/blog/istio-vs-linkerd-service-mesh-comparison-2026">Istio vs Linkerd: We Run Both in Production - Here&rsquo;s What Won (2026)</a></li>
+<li><a href="https://oneuptime.com/blog/post/2026-02-24-how-to-understand-istio-architecture-control-plane-vs-data-plane/view">How to Understand Istio Architecture (Control Plane vs Data Plane)</a></li>
+</ul>
+
+]]></description>
+</item>
+<item>
+<title>Istio Ambient Mesh</title>
+<link>https://64p.org/notes/istio-ambient-mesh.html</link>
+<guid isPermaLink="true">https://64p.org/notes/istio-ambient-mesh.html</guid>
+<pubDate>Thu, 13 Aug 2026 09:29:00 +0900</pubDate>
+<description><![CDATA[<h1>Istio Ambient Mesh</h1>
+
+<p>2022年に発表された<a href="/notes/service-mesh.html">Service Mesh</a>実装Istioの新データプレーンモード。従来のサイドカー方式(全アプリケーションPodにEnvoyプロキシを並走させる方式)に対し、サイドカーなしでService Meshの機能を提供する。 <a class="note-tag" href="/notes/tags/networking.html">#networking</a> <a class="note-tag" href="/notes/tags/kubernetes.html">#kubernetes</a> <a class="note-tag" href="/notes/tags/security.html">#security</a></p>
+
+<h2>データプレーンの構成</h2>
+
+<p>L4処理とL7処理を分離し、必要な場合のみL7プロキシを経由させる構成になっている。</p>
+
+<ul>
+<li><strong>ztunnel(per-nodeのL4プロキシ)</strong>: ノードごとに1つ動くDaemonSetとして展開される共有エージェント。トラフィックのルーティングにeBPFプログラム(istio-cniコンポーネントに組み込まれる)を使い、従来のiptablesベースのルーティングに比べて性能・柔軟性で優位とされる</li>
+<li><strong>waypoint proxy(オプションのL7プロキシ)</strong>: Envoy製のプロキシで、アプリケーションPodの外で動作する。アプリケーションから独立してデプロイ・アップグレード・スケールできる</li>
+</ul>
+
+
+<h2>コントロールプレーン</h2>
+
+<p><code>istiod</code>がコントロールプレーンとして残り、ztunnel・waypoint proxy双方の設定・証明書管理を担う。サイドカー方式と共通のコンポーネント。</p>
+
+<h2>サイドカー方式との違い</h2>
+
+<p>サイドカー方式は「全部乗せ」でL4/L7の機能を1つのサイドカープロキシに詰め込むのに対し、Ambient MeshはL4(ztunnel)とL7(waypoint proxy)を分離し、L7が不要なワークロードではztunnelのみで済ませることでリソース消費を抑える設計になっている。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://istio.io/latest/blog/2022/introducing-ambient-mesh/">Istio / Introducing Ambient Mesh</a></li>
+<li><a href="https://istio.io/latest/docs/overview/dataplane-modes/">Istio / Sidecar or ambient?</a></li>
+<li><a href="https://oneuptime.com/blog/post/2026-01-07-istio-ambient-mesh-sidecarless/view">How to Deploy Istio Ambient Mesh (Sidecar-less Mode)</a></li>
+</ul>
+
+]]></description>
+</item>
 <item>
 <title>Vitest</title>
 <link>https://64p.org/notes/vitest.html</link>
@@ -295,7 +391,7 @@
 <li><strong>ネットワーキング</strong>: オーバーレイネットワーク・ネイティブルーティングなど柔軟なルーティングオプションを提供。eBPFベースの分散ロードバランシングにより、従来iptablesベースだったkube-proxyを置き換えられる</li>
 <li><strong>セキュリティ(Network Policy)</strong>: IPアドレスへの依存から脱却し、ID・ラベルベースのセキュリティモデルを実現。Kubernetes標準のNetworkPolicy(L3/L4)に加え、CiliumNetworkPolicyとしてL7(HTTPメソッド/パスフィルタ、DNSベースのegress、FQDNポリシー)まで対応する</li>
 <li><strong>Hubble(Observability)</strong>: 完全に分散されたネットワーク可視化プラットフォーム。ノードごとにフローをキャプチャし、Hubble relayでクラスタ全体に集約、CLI/UIで閲覧できる。サービス依存関係マップ・HTTPフロー・DNS問題の検出・レイテンシ分析が可能</li>
-<li><strong>Service Mesh</strong>: サイドカーを使わない設計が特徴。L3/L4はeBPFで処理し、L7が必要な場合のみノードレベルのEnvoyを使う。WireGuardやIPsecによる透過的暗号化、SPIFFE/SPIRE連携によるmTLSもサポートする</li>
+<li><strong><a href="/notes/service-mesh.html">Service Mesh</a></strong>: サイドカーを使わない設計が特徴。L3/L4はeBPFで処理し、L7が必要な場合のみノードレベルのEnvoyを使う。WireGuardやIPsecによる透過的暗号化、SPIFFE/SPIRE連携によるmTLSもサポートする</li>
 </ul>
 
 
@@ -1606,143 +1702,6 @@ case KVM_EXIT_IO:
 <li><a href="https://docs.kernel.org/driver-api/virtio/virtio.html">Virtio on Linux — The Linux Kernel documentation</a></li>
 <li><a href="https://www.linux-kvm.org/page/Virtio">Virtio - KVM</a></li>
 <li><a href="https://www.redhat.com/en/blog/virtqueues-and-virtio-ring-how-data-travels">Virtqueues and virtio ring: How the data travels | Red Hat</a></li>
-</ul>
-
-]]></description>
-</item>
-<item>
-<title>QEMU</title>
-<link>https://64p.org/notes/qemu.html</link>
-<guid isPermaLink="true">https://64p.org/notes/qemu.html</guid>
-<pubDate>Wed, 12 Aug 2026 23:47:00 +0900</pubDate>
-<description><![CDATA[<h1>QEMU</h1>
-
-<p>汎用のマシンエミュレータ兼VMM(Virtual Machine Monitor)。x86・ARM・PowerPC・RISC-Vなど多数のCPUアーキテクチャをエミュレートでき、ホストと異なるアーキテクチャのバイナリもそのまま動かせる(QEMU user-mode emulation)。 <a class="note-tag" href="/notes/tags/virtualization.html">#virtualization</a></p>
-
-<h2>成り立ち</h2>
-
-<p>2003年、Fabrice BellardがQEMUの開発を開始し、2005年のv0.7.1まで一人で開発した。BellardはFFmpegやTiny C Compilerの作者としても知られる。現在はPeter Maydellらを含むQEMUチームによって開発が続けられている。</p>
-
-<h2>動的バイナリ変換(TCG)</h2>
-
-<p>QEMUのコアには「Tiny Code Generator(TCG)」というJITコンパイラがあり、ゲストの命令列をホストのネイティブコードへ動的に変換・キャッシュしながら実行する(動的バイナリ変換)。これによりハードウェア仮想化支援機能なしでも任意のCPUアーキテクチャをソフトウェアだけでエミュレートできるが、ネイティブ実行に比べて一般に10倍程度遅くなるとされる。</p>
-
-<h2><a href="/notes/kvm.html">KVM</a>との役割分担</h2>
-
-<p><a href="/notes/kvm.html">KVM</a>と組み合わせて使う場合、QEMUは「アクセラレータ」としてKVMを利用する。役割はきれいに分かれている。</p>
-
-<ul>
-<li><strong>KVM</strong>: CPUの仮想化のみを担当。ディスク・ネットワーク・画面などのデバイスは一切エミュレートしない</li>
-<li><strong>QEMU</strong>: ゲストから見えるあらゆるデバイスのエミュレーションを担当。ゲストがI/Oを起こして「<a href="/notes/vm-exit.html">VM exit</a>」すると、KVMから制御がQEMUに戻り、QEMUがそのデバイス動作をソフトウェアでエミュレートしてから、また実行をKVMに戻す</li>
-</ul>
-
-
-<p>ハードウェア仮想化支援がない環境や、KVMが対応していないアーキテクチャの組み合わせでは、QEMUは自身のTCGだけでCPUもソフトウェア的にエミュレートして動作する(KVM非使用モード)。</p>
-
-<h2><a href="/notes/microvm-ecosystem.html">コンテナ向け軽量VM技術</a>の中での位置づけ</h2>
-
-<p><a href="/notes/firecracker.html">Firecracker</a>・<a href="/notes/cloud-hypervisor.html">Cloud Hypervisor</a>・<a href="/notes/crosvm.html">crosvm</a>と並ぶ、<a href="/notes/kvm.html">KVM</a>を土台に使えるVMMの一つ。ただしQEMUはこれらと異なり2003年発でmicroVM専用に設計されたものではなく、幅広いデバイス・アーキテクチャをフルエミュレートする「何でも屋」という性格が強い。<a href="/notes/hypeman.html">Hypeman</a>や<a href="/notes/kata-containers.html">Kata Containers</a>は、対応VMMの選択肢の一つとしてQEMUも選べる。</p>
-
-<h2><a href="/notes/microvm-ecosystem.html">コンテナ向け軽量VM技術</a>の中での位置づけ</h2>
-
-<p><a href="/notes/firecracker.html">Firecracker</a>・<a href="/notes/cloud-hypervisor.html">Cloud Hypervisor</a>・<a href="/notes/crosvm.html">crosvm</a>と並ぶ、<a href="/notes/kvm.html">KVM</a>を使えるVMMの一つ。他の3つがmicroVM専用に設計されているのに対し、QEMUは幅広いアーキテクチャ・デバイスをフルエミュレートできる「何でも屋」という違いがある。</p>
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://en.wikipedia.org/wiki/QEMU">QEMU - Wikipedia</a></li>
-<li><a href="https://www.qemu.org/docs/master/system/introduction.html">Introduction — QEMU documentation</a></li>
-<li><a href="https://www.diskinternals.com/vmfs-recovery/kvm-vs-qemu/">KVM vs QEMU: Architecture, Performance, and the Critical Difference</a></li>
-<li><a href="https://docs.saferwall.com/blog/virtualization-internals-part-4-qemu/">Virtualization Internals Part 4 - QEMU | Saferwall</a></li>
-<li><a href="https://www.usenix.org/legacy/event/usenix05/tech/freenix/full_papers/bellard/bellard.pdf">QEMU, a Fast and Portable Dynamic Translator | USENIX</a></li>
-</ul>
-
-]]></description>
-</item>
-<item>
-<title>kvm-hello-world実験</title>
-<link>https://64p.org/notes/kvm-hello-world-experiment.html</link>
-<guid isPermaLink="true">https://64p.org/notes/kvm-hello-world-experiment.html</guid>
-<pubDate>Wed, 12 Aug 2026 23:42:00 +0900</pubDate>
-<description><![CDATA[<h1>kvm-hello-world実験</h1>
-
-<p><a href="/notes/kvm.html">KVM</a>がやっていることを手を動かして体感するための実験記録。<a href="/notes/qemu.html">QEMU</a>等を一切使わず、<code>/dev/kvm</code>のioctlを直接叩くだけの最小限のCプログラムでVMを起動する。 <a class="note-tag" href="/notes/tags/virtualization.html">#virtualization</a> <a class="note-tag" href="/notes/tags/linux.html">#linux</a></p>
-
-<h2>使ったもの</h2>
-
-<p><a href="https://github.com/dpw/kvm-hello-world">dpw/kvm-hello-world</a>というMIT Licenseの約500行のC教材プログラム。<a href="/notes/qemu.html">QEMU</a>やkvmtoolのような「フル機能のVMM」ではなく、KVM APIの使い方だけを見せるために書かれたもの。</p>
-
-<h2>動かし方</h2>
-
-<pre><code class="sh">git clone https://github.com/dpw/kvm-hello-world
-cd kvm-hello-world
-make
-./kvm-hello-world -s   # protected modeでゲストを起動
-</code></pre>
-
-<p>Ubuntu/Pop!_OS 24.04・GCC 13・binutils 2.42の環境では、Makefileそのままだと2箇所で失敗したため修正が必要だった。</p>
-
-<ol>
-<li><code>CFLAGS</code>の<code>-Werror</code>を外す — 新しいGCCが<code>*(long *) 0x400 = 42;</code>(ヌルポインタ相当のアドレスへの書き込み)を<code>-Warray-bounds</code>で警告するようになっており、教材コード自体は正しい意図(アドレス0はゲストのメモリ先頭という意味)なのでビルドを通すために警告を無視する</li>
-<li><code>payload.o</code>を作る<code>ld -T payload.ld -o payload.o</code>に<code>-r</code>(relocatable指定)を追加 — 新しいbinutilsは<code>-r</code>なしだと実行可能ファイルを生成してしまい、後続のリンクに使えずエラーになる</li>
-</ol>
-
-
-<h2>実行結果</h2>
-
-<pre><code>$ ./kvm-hello-world -s
-Testing protected mode
-Hello, world!
-$ ./kvm-hello-world -p
-Testing 32-bit paging
-Hello, world!
-$ ./kvm-hello-world -l
-Testing 64-bit mode
-Hello, world!
-$ ./kvm-hello-world -r
-Testing real mode
-</code></pre>
-
-<p>real modeのゲスト(<code>guest16.s</code>、アセンブリ6行)はメモリに42を書き込んで<code>hlt</code>するだけで文字出力コードがないため、<code>Hello, world!</code>は出ない(エラーが出なければ成功)。</p>
-
-<h2>なぜsudoなしで動いたか</h2>
-
-<p><code>/dev/kvm</code>は通常<code>root:kvm</code>グループの<code>0660</code>権限で、一般ユーザーはkvmグループに入っていないとアクセスできない。このマシンでは<code>getfacl /dev/kvm</code>で確認したところ、ユーザーに対する個別ACLエントリ(<code>user:tokuhirom:rw-</code>)が付与されており、それによってsudoなしで直接<code>/dev/kvm</code>を開けた。</p>
-
-<h2>コードで分かること</h2>
-
-<p>ゲスト側(<code>guest.c</code>)はOSなしの3行程度のプログラムで、ポート0xE9への<code>outb</code>命令を1文字ずつ実行するだけ。</p>
-
-<pre><code class="c">for (p = "Hello, world!\n"; *p; ++p)
-    outb(0xE9, *p);
-</code></pre>
-
-<p>ホスト側(<code>kvm-hello-world.c</code>)はこの機械語をVMのメモリに直接コピーし、<code>KVM_RUN</code>をループで呼ぶ。ゲストが<code>outb</code>を実行するたびに「<a href="/notes/vm-exit.html">VM exit</a>」が発生し、<code>KVM_EXIT_IO</code>としてホスト側に制御が戻る。</p>
-
-<pre><code class="c">case KVM_EXIT_IO:
-    if (vcpu-&gt;kvm_run-&gt;io.direction == KVM_EXIT_IO_OUT
-        &amp;&amp; vcpu-&gt;kvm_run-&gt;io.port == 0xE9) {
-        fwrite(p + vcpu-&gt;kvm_run-&gt;io.data_offset,
-               vcpu-&gt;kvm_run-&gt;io.size, 1, stdout);
-        continue;  // またKVM_RUNに戻ってゲストを再開
-    }
-</code></pre>
-
-<p>ポート0xE9は実在のデバイスではなく、このプログラムが決めた「ただの取り決め」。これが<a href="/notes/kvm.html">KVM</a>ノートで説明した「KVMはデバイスエミュレーションを一切せず、ユーザー空間のVMMがI/Oを肩代わりする」の最小の実例になっている。FirecrackerやQEMUがネットワーク・ディスクに対してやっていることの、極小版がこれだと考えると分かりやすい。</p>
-
-<h2>ソース</h2>
-
-<p>このリポジトリの<a href="https://github.com/tokuhirom/64p.org/tree/master/notes/code/kvm-hello-world"><code>notes/code/kvm-hello-world/</code></a>に、上記の修正を加えたソース一式を置いてある(<code>make</code>するだけでビルドできる)。</p>
-
-<h2>続き: <a href="/notes/virtqueue-toy-experiment.html">virtqueue風トイ実験</a></h2>
-
-<p>この実験の「1文字ごとに<code>outb</code>して<a href="/notes/vm-exit.html">VM exit</a>する」という素朴なI/Oを、<a href="/notes/virtio.html">virtio</a>のように「まとめて共有メモリに書いて1回だけ通知する」設計に変えるとどれだけVM exit回数が減るかを、この実験の続きとして確認した。</p>
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://github.com/dpw/kvm-hello-world">GitHub - dpw/kvm-hello-world</a></li>
-<li><a href="https://github.com/dpw/kvm-hello-world/blob/master/README.md">kvm-hello-world/README.md</a></li>
 </ul>
 
 ]]></description>

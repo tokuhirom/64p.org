@@ -1,6 +1,6 @@
 ---
 created: 2026-08-13 08:33
-updated: 2026-08-13 08:33
+updated: 2026-08-13 09:29
 ---
 # Cilium
 
@@ -11,7 +11,7 @@ Docker/Kubernetesなどのコンテナプラットフォーム上で、アプリ
 - **ネットワーキング**: オーバーレイネットワーク・ネイティブルーティングなど柔軟なルーティングオプションを提供。eBPFベースの分散ロードバランシングにより、従来iptablesベースだったkube-proxyを置き換えられる
 - **セキュリティ(Network Policy)**: IPアドレスへの依存から脱却し、ID・ラベルベースのセキュリティモデルを実現。Kubernetes標準のNetworkPolicy(L3/L4)に加え、CiliumNetworkPolicyとしてL7(HTTPメソッド/パスフィルタ、DNSベースのegress、FQDNポリシー)まで対応する
 - **Hubble(Observability)**: 完全に分散されたネットワーク可視化プラットフォーム。ノードごとにフローをキャプチャし、Hubble relayでクラスタ全体に集約、CLI/UIで閲覧できる。サービス依存関係マップ・HTTPフロー・DNS問題の検出・レイテンシ分析が可能
-- **Service Mesh**: サイドカーを使わない設計が特徴。L3/L4はeBPFで処理し、L7が必要な場合のみノードレベルのEnvoyを使う。WireGuardやIPsecによる透過的暗号化、SPIFFE/SPIRE連携によるmTLSもサポートする
+- **[[service-mesh|Service Mesh]]**: サイドカーを使わない設計が特徴。L3/L4はeBPFで処理し、L7が必要な場合のみノードレベルのEnvoyを使う。WireGuardやIPsecによる透過的暗号化、SPIFFE/SPIRE連携によるmTLSもサポートする
 
 ## エコシステムでの位置づけ
 
