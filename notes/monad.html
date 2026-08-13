@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>deck (k1LoW) - Notes - 64p.org</title>
+    <title>モナド - Notes - 64p.org</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/static/notes.css">
     <link rel="alternate" type="application/rss+xml" title="Notes - 64p.org" href="/notes/rss.xml">
@@ -23,7 +23,7 @@
                 <a class="notes-tags-link" href="/notes/rss.xml">📡 RSS</a>
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
-                                    <li><a href="/notes/monad.html">モナド</a></li>
+                                    <li><a href="/notes/monad.html" class="active">モナド</a></li>
                                     <li><a href="/notes/service-mesh.html">Service Mesh</a></li>
                                     <li><a href="/notes/istio-ambient-mesh.html">Istio Ambient Mesh</a></li>
                                     <li><a href="/notes/cilium.html">Cilium</a></li>
@@ -301,7 +301,7 @@
                                     <li><a href="/notes/markdown-presentation-tools.html">Markdownベースのプレゼンテーションツール</a></li>
                                     <li><a href="/notes/japan-fountain-pen-manufacturers.html">日本の万年筆メーカー</a></li>
                                     <li><a href="/notes/sendai-gyutan.html">仙台牛タンの発祥</a></li>
-                                    <li><a href="/notes/deck-k1low.html" class="active">deck (k1LoW)</a></li>
+                                    <li><a href="/notes/deck-k1low.html">deck (k1LoW)</a></li>
                                     <li><a href="/notes/slidev.html">Slidev</a></li>
                                     <li><a href="/notes/marp.html">Marp</a></li>
                                     <li><a href="/notes/project-loom.html">Project Loom</a></li>
@@ -362,44 +362,122 @@
 
         <main class="notes-main">
             <article class="notes-content">
-                <h1>deck (k1LoW)</h1>
+                <h1>モナド</h1>
 
-<p>k1LoW氏が開発した、MarkdownからGoogle Slidesを生成・更新するCLIツール。Go言語製、MITライセンス。</p>
+<p><a class="note-tag" href="/notes/tags/functional-programming.html">#functional-programming</a> <a class="note-tag" href="/notes/tags/haskell.html">#haskell</a></p>
 
-<p><a class="note-tag" href="/notes/tags/deck.html">#deck</a> <a class="note-tag" href="/notes/tags/presentation.html">#presentation</a> <a class="note-tag" href="/notes/tags/markdown.html">#markdown</a> <a class="note-tag" href="/notes/tags/google-slides.html">#google-slides</a> <a class="note-tag" href="/notes/tags/go.html">#go</a></p>
+<p>値を文脈（コンテキスト）付きで包み、その文脈を保ったまま計算を繋げていくための仕組み。関数型プログラミング（特にHaskell）で、失敗しうる計算・状態・入出力など「純粋な関数だけでは表現しにくいもの」を統一的に扱うための型クラス／デザインパターン。<a href="/notes/currying.html">Currying(カリー化)</a>と並んで関数型プログラミングの基本語彙のひとつ。</p>
 
-<h2>特徴</h2>
+<p>一言でまとめると「<strong>包んだ値に対する計算の連結方法を、型ごとに定義できる共通インターフェース</strong>」。</p>
+
+<h2>構成要素</h2>
+
+<p>モナド <code>M</code> は2つの操作を持つ。</p>
 
 <ul>
-<li><strong>コンテンツとデザインの分離</strong>: Markdownでコンテンツを書き、デザイン(テーマ・レイアウト)はGoogle Slides側で管理する</li>
-<li><strong>ワークフロー</strong>: <code>deck new</code>でプレゼンテーションIDを取得 → Markdownで編集 → <code>deck apply</code>でGoogle Slidesに反映 → <code>deck open</code>でブラウザ表示</li>
-<li><strong>ウォッチモード</strong>: ファイル変更を自動監視し、即座にGoogle Slidesへ反映</li>
-<li>対応記法: CommonMark + GitHub Flavored Markdown（太字・斜体・コード・リスト・表・画像・ブロッククォート・HTMLインライン要素など）</li>
+<li><strong>return</strong> (unit) — 普通の値 <code>a</code> をモナドの値 <code>M a</code> に包む。例: <code>return 5</code> → <code>Just 5</code></li>
+<li><strong>bind</strong> (<code>&gt;&gt;=</code>) — <code>M a</code> と「<code>a → M b</code> な関数」を受け取り、包みを開けて関数を適用し、結果をまた <code>M b</code> として返す。これで「文脈付き計算の連結」ができる</li>
 </ul>
 
 
-<h2><a href="/notes/markdown-presentation-tools.html">Markdownベースのプレゼンテーションツール</a>の中での位置づけ</h2>
+<h2>モナド則</h2>
 
-<p><a href="/notes/slidev.html">Slidev</a>や<a href="/notes/marp.html">Marp</a>がHTML/PDF/PPTXなど自己完結した出力を生成するのに対し、deckは<strong>既存のGoogle SlidesというGUIプラットフォームにMarkdownで内容を流し込む</strong>という異なるアプローチを取る。共同編集やコメント機能などGoogle Slidesのエコシステムをそのまま使いたい場合に向く。</p>
+<p>正しいモナドは3つの法則を満たす必要がある。Haskellコンパイラは検査しないので、インスタンスを書くプログラマの責任。</p>
+
+<ol>
+<li><strong>左単位元</strong>: <code>return x &gt;&gt;= f</code> ≡ <code>f x</code></li>
+<li><strong>右単位元</strong>: <code>m &gt;&gt;= return</code> ≡ <code>m</code></li>
+<li><strong>結合律</strong>: <code>(m &gt;&gt;= f) &gt;&gt;= g</code> ≡ <code>(\x -&gt; f x &gt;&gt;= g)</code> に <code>m</code> を bind したものと同じ</li>
+</ol>
+
+
+<p>この3つが成り立つおかげで、<code>do</code>記法で書いた逐次的なコードが直感通りに動くことが保証される。</p>
+
+<h2>代表的なモナド</h2>
+
+<table>
+<thead>
+<tr>
+<th> モナド </th>
+<th> 文脈 </th>
+<th> 何が嬉しいか </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td> <code>Maybe</code> </td>
+<td> 失敗するかもしれない </td>
+<td> <code>Nothing</code> が出たら以降を自動スキップ。nullチェックの連鎖が消える </td>
+</tr>
+<tr>
+<td> <code>Either</code> </td>
+<td> エラー情報付きの失敗 </td>
+<td> エラーを値として伝搬 </td>
+</tr>
+<tr>
+<td> <code>List</code> </td>
+<td> 非決定性（複数の結果） </td>
+<td> 全組み合わせの計算が自然に書ける </td>
+</tr>
+<tr>
+<td> <code>IO</code> </td>
+<td> 副作用 </td>
+<td> 純粋な言語の中に入出力を閉じ込める </td>
+</tr>
+<tr>
+<td> <code>State</code> </td>
+<td> 状態の引き回し </td>
+<td> 状態渡しの定型コードを隠蔽 </td>
+</tr>
+</tbody>
+</table>
+
+
+<p><code>Maybe</code> の例。bindが <code>Nothing</code> を自動で伝搬してくれるので、手書きなら「結果を確認して、Nothingでなければ次へ…」となるif連鎖が消える。</p>
+
+<pre><code class="haskell">lookupUser name &gt;&gt;= lookupAddress &gt;&gt;= lookupZipCode
+-- どこかで Nothing になれば、最終結果も Nothing
+</code></pre>
+
+<p>JavaScriptの <code>Promise.then</code> やRustの <code>Option</code>/<code>Result</code> の <code>and_then</code> も、実質的に同じ構造（bind相当）を持っている。</p>
+
+<h2>共通インターフェースだと何が嬉しいのか</h2>
+
+<p>モナドの価値は個々の <code>Maybe</code> や <code>IO</code> そのものではなく、それらを貫く共通の「形」に名前を付けた点にある。形に対する道具（汎用関数・構文・リファクタリング則）を一度作れば全部の型で使い回せる。</p>
+
+<h3>1. 定型処理（配管コード）がロジックから消える</h3>
+
+<p>「失敗チェックして次へ」「状態を次の関数に手渡し」「エラーを上に伝搬」といった処理は、本来やりたい計算とは無関係の"配管"。これを <code>bind</code> の定義に一度だけ押し込むと、利用側のコードにはビジネスロジックだけが残る。</p>
+
+<h3>2. 汎用関数が「無料で」ついてくる</h3>
+
+<p><code>bind</code> と <code>return</code> だけを使って書かれた関数は、すべてのモナドに対して自動で動く。Haskellの <code>Control.Monad</code> には <code>mapM</code>/<code>forM</code>（for-eachループ相当）、<code>sequence</code>（<code>[M a]</code> → <code>M [a]</code>）、<code>replicateM</code>、<code>when</code>、<code>foldM</code> などが揃っていて、自分の型に <code>Monad</code> インスタンスを定義した瞬間、これら全部が使えるようになる。<code>Iterator</code> インターフェースを実装すれば <code>map</code>/<code>filter</code> が全部使えるのと同型の嬉しさ。</p>
+
+<h3>3. 言語側の構文サポートが1つで済む</h3>
+
+<p>Haskellの <code>do</code> 記法は「モナドという単一のインターフェース」への糖衣構文なので、言語は構文を1つ用意するだけで、失敗処理にも状態にも非同期にも同じ書き味を提供できる。共通化しない場合、JavaScriptが <code>Promise</code> 専用に <code>async/await</code> を、Rustが <code>Result</code> 専用に <code>?</code> を用意したように、文脈の種類ごとに専用構文を言語に足していくことになる。</p>
+
+<h3>4. 文脈の差し替えがロジックの書き換えなしにできる</h3>
+
+<p>ロジックがインターフェース越しに書かれていれば、「<code>Maybe</code> を <code>Either</code> に変えたい」「後からログ蓄積を足したい」というとき、モナドの定義側を差し替えるだけでロジック側はそのまま動く。モナド則が保証されているおかげで、差し替えやリファクタリングをしても挙動の予測が崩れない。</p>
+
+<h2>圏論との関係</h2>
+
+<p>「モナドは自己関手の圏におけるモノイド対象」という圏論由来の定義もあるが、プログラミングで使う分には上記の「共通インターフェース」理解で十分。</p>
 
 <h2>出典</h2>
 
 <ul>
-<li><a href="https://github.com/k1LoW/deck">GitHub - k1LoW/deck</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Monad_(functional_programming">Monad (functional programming) - Wikipedia</a>)</li>
+<li><a href="https://en.wikibooks.org/wiki/Haskell/Understanding_monads">Haskell/Understanding monads - Wikibooks</a></li>
+<li><a href="https://wiki.haskell.org/Monad">Monad - HaskellWiki</a></li>
+<li><a href="https://wiki.haskell.org/Monads_as_computation">Monads as computation - HaskellWiki</a></li>
 </ul>
 
 
-                                <div class="notes-backlinks">
-                    <h2>🔗 リンクされているノート</h2>
-                    <ul>
-                                            <li><a href="/notes/moc.html">MOC (Map of Content)</a></li>
-                                            <li><a href="/notes/markdown-presentation-tools.html">Markdownベースのプレゼンテーションツール</a></li>
-                    
-                    </ul>
-                </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-09 21:37 / 更新日時: 2026-08-09 21:37</span>
-                    <a class="share-x" href="https://twitter.com/intent/tweet?text=deck%20%28k1LoW%29&url=https%3A%2F%2F64p.org%2Fnotes%2Fdeck-k1low.html" target="_blank" rel="noopener">𝕏 で共有</a>
+                    <span>作成日時: 2026-08-13 09:43 / 更新日時: 2026-08-13 09:43</span>
+                    <a class="share-x" href="https://twitter.com/intent/tweet?text=%E3%83%A2%E3%83%8A%E3%83%89&url=https%3A%2F%2F64p.org%2Fnotes%2Fmonad.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>
             <footer class="notes-footer">
