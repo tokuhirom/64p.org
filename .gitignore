@@ -2,6 +2,12 @@
 .DS_Store
 **/.DS_Store
 
-# ~/.gitignore_global has a global "tags" rule (for ctags) that also
-# matches this project's generated notes/tags/ directory. Un-ignore it here.
-!notes/tags/
+# Build output of `perl regen-index.pl`. GitHub Actions regenerates these on
+# every deploy (see .github/workflows/pages.yml); only the sources under
+# notes/src/ and talks/*/ are tracked.
+/index.html
+/talks/index.html
+/notes/*.html
+/notes/tags/
+/notes/rss.xml
+/_site/
