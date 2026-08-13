@@ -1,10 +1,10 @@
 ---
 created: 2026-08-09 22:48
-updated: 2026-08-09 22:48
+updated: 2026-08-13 22:06
 ---
 # coreboot
 
-BIOS/UEFIを置き換える、オープンソースのファームウェアプロジェクト。旧称LinuxBIOS。1999年に初リリース、当初の開発者にはRonald G. Minnich、Eric Biedermanらが名を連ねる。 #linux #kernel
+[[bios|BIOS]]/[[uefi|UEFI]]を置き換える、オープンソースのファームウェアプロジェクト。旧称LinuxBIOS。1999年に初リリース、当初の開発者にはRonald G. Minnich、Eric Biedermanらが名を連ねる。 #linux #kernel
 
 ## 設計思想
 

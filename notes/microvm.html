@@ -23,6 +23,13 @@
                 <a class="notes-tags-link" href="/notes/rss.xml">📡 RSS</a>
                 <input class="notes-search" type="text" placeholder="ノートを絞り込む...">
                 <ul class="notes-nav">
+                                    <li><a href="/notes/uefi.html">UEFI</a></li>
+                                    <li><a href="/notes/system76.html">System76</a></li>
+                                    <li><a href="/notes/microvm.html" class="active">microVM</a></li>
+                                    <li><a href="/notes/kvm.html">KVM (Kernel-based Virtual Machine)</a></li>
+                                    <li><a href="/notes/jetkvm.html">JetKVM</a></li>
+                                    <li><a href="/notes/coreboot.html">coreboot</a></li>
+                                    <li><a href="/notes/bios.html">BIOS</a></li>
                                     <li><a href="/notes/playwright.html">Playwright</a></li>
                                     <li><a href="/notes/flaky-test.html">flaky test</a></li>
                                     <li><a href="/notes/herdr-browser.html">herdr-browser</a></li>
@@ -87,12 +94,10 @@
                                     <li><a href="/notes/kvm-hello-world-experiment.html">kvm-hello-world実験</a></li>
                                     <li><a href="/notes/virtio.html">virtio</a></li>
                                     <li><a href="/notes/rust-vmm.html">rust-vmm</a></li>
-                                    <li><a href="/notes/microvm.html" class="active">microVM</a></li>
                                     <li><a href="/notes/microvm-ecosystem.html">コンテナ向け軽量VM技術</a></li>
                                     <li><a href="/notes/kata-containers.html">Kata Containers</a></li>
                                     <li><a href="/notes/crosvm.html">crosvm</a></li>
                                     <li><a href="/notes/qemu.html">QEMU</a></li>
-                                    <li><a href="/notes/kvm.html">KVM (Kernel-based Virtual Machine)</a></li>
                                     <li><a href="/notes/hypeman.html">Hypeman</a></li>
                                     <li><a href="/notes/cloud-hypervisor.html">Cloud Hypervisor</a></li>
                                     <li><a href="/notes/llm-text-watermarking.html">LLMテキストの電子透かし</a></li>
@@ -282,7 +287,6 @@
                                     <li><a href="/notes/tailscale.html">Tailscale</a></li>
                                     <li><a href="/notes/nat.html">NAT (Network Address Translation)</a></li>
                                     <li><a href="/notes/l2tp-ipsec.html">L2TP/IPsec</a></li>
-                                    <li><a href="/notes/jetkvm.html">JetKVM</a></li>
                                     <li><a href="/notes/scala.html">Scala</a></li>
                                     <li><a href="/notes/kotlin.html">Kotlin</a></li>
                                     <li><a href="/notes/scala3.html">Scala 3</a></li>
@@ -303,9 +307,7 @@
                                     <li><a href="/notes/office-chair-esd.html">オフィスチェアの静電気によるPCモニター暗転問題</a></li>
                                     <li><a href="/notes/agent-plugins.html">Agent Plugins</a></li>
                                     <li><a href="/notes/devsecops.html">DevSecOps</a></li>
-                                    <li><a href="/notes/system76.html">System76</a></li>
                                     <li><a href="/notes/pop-os.html">Pop!_OS</a></li>
-                                    <li><a href="/notes/coreboot.html">coreboot</a></li>
                                     <li><a href="/notes/nushell.html">Nushell</a></li>
                                     <li><a href="/notes/simd.html">SIMD</a></li>
                                     <li><a href="/notes/project-panama.html">Project Panama</a></li>
@@ -398,7 +400,7 @@
 <p><a href="/notes/firecracker.html">Firecracker</a>を例にすると、主に3つの要因が重なっている。</p>
 
 <ol>
-<li><strong>BIOS・ブートローダーを省略した直接カーネルブート</strong> — Linuxカーネル自体はBIOS/ブートローダーを必須としない。「64-bit Linux Boot Protocol」を使い、16-bitリアルモードからではなくカーネルのprotected-modeエントリポイントへ直接ジャンプする。ACPIテーブルもカーネル起動に必要な最小限しか用意しない。</li>
+<li><strong>BIOS・ブートローダーを省略した直接カーネルブート</strong> — Linuxカーネル自体は<a href="/notes/bios.html">BIOS</a>/ブートローダーを必須としない。「64-bit Linux Boot Protocol」を使い、16-bitリアルモードからではなくカーネルのprotected-modeエントリポイントへ直接ジャンプする。ACPIテーブルもカーネル起動に必要な最小限しか用意しない。</li>
 <li><strong>最小限のデバイスモデル</strong> — USB・PCIバス・レガシーデバイスなど不要なハードウェアエミュレーションを排除。Firecrackerが提供するデバイスは実質5種類のみ(<a href="/notes/virtio.html">virtio</a>-net、virtio-block、virtio-vsock、シリアルコンソール、最小限のキーボードコントローラ)。</li>
 <li><strong>ミニマルなVMMコード</strong> — 汎用ハイパーバイザーが持つ幅広いハードウェアサポートのコードパスを持たないため、実行すべきコード量自体が少ない。</li>
 </ol>
@@ -446,7 +448,7 @@
                     </ul>
                 </div>
                                 <div class="notes-meta">
-                    <span>作成日時: 2026-08-12 23:14 / 更新日時: 2026-08-12 23:51</span>
+                    <span>作成日時: 2026-08-12 23:14 / 更新日時: 2026-08-13 22:06</span>
                     <a class="share-x" href="https://twitter.com/intent/tweet?text=microVM&url=https%3A%2F%2F64p.org%2Fnotes%2Fmicrovm.html" target="_blank" rel="noopener">𝕏 で共有</a>
                 </div>
             </article>

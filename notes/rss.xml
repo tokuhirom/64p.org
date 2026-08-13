@@ -6,7 +6,79 @@
 <atom:link href="https://64p.org/notes/rss.xml" rel="self" type="application/rss+xml" />
 <description>ちょっと調べたことや検証結果を、AIの力も借りながらメモしていくコーナーです。</description>
 <language>ja</language>
-<lastBuildDate>Thu, 13 Aug 2026 21:24:08 +0900</lastBuildDate>
+<lastBuildDate>Thu, 13 Aug 2026 22:06:54 +0900</lastBuildDate>
+<item>
+<title>UEFI</title>
+<link>https://64p.org/notes/uefi.html</link>
+<guid isPermaLink="true">https://64p.org/notes/uefi.html</guid>
+<pubDate>Thu, 13 Aug 2026 22:06:00 +0900</pubDate>
+<description><![CDATA[<h1>UEFI</h1>
+
+<p>Unified Extensible Firmware Interfaceの略。<a href="/notes/bios.html">BIOS</a>の後継として開発されたファームウェア仕様で、コンピュータの電源投入時に最初に実行される。BIOSがIBM PC由来の独自アーキテクチャだったのに対し、UEFIはUnified EFI Forumという業界コンソーシアムにより仕様が管理されている。 <a class="note-tag" href="/notes/tags/hardware.html">#hardware</a></p>
+
+<h2>GPTとEFIシステムパーティション</h2>
+
+<p>UEFIは従来のMBR(Master Boot Record)パーティションテーブルに加えて、2TB超のディスクにも対応する<strong>GPT (GUID Partition Table)</strong> をサポートする。ディスク上には<strong>EFIシステムパーティション(ESP)</strong>と呼ばれる専用領域が確保され、そこにブートローダーやOSカーネルなどの「UEFIアプリケーション」が格納される。</p>
+
+<h2>ブートマネージャー</h2>
+
+<p>UEFI実装はブート設定をNVRAM変数として保持しており、電源投入時にその設定に基づいてOSローダーを実行する。BIOSがブートセクタの実行に依存していたのに対し、UEFIはブートマネージャーを備えることで、ブートセクタに依存しない柔軟なブート方式を提供する。</p>
+
+<h2>Secure Boot</h2>
+
+<p><strong>Secure Boot</strong>は、デジタル署名によって承認されたUEFIドライバー・OSブートローダーのみをロードする仕組み。プラットフォームキー(PK)とキー交換キー(KEK)による階層構造で信頼チェーンを管理し、ファームウェアから署名済みドライバー・カーネルモジュールまでの信頼を確立する。</p>
+
+<h2><a href="/notes/bios.html">BIOS</a>との関係</h2>
+
+<p>UEFIはBIOSと同じ「起動前のハードウェア初期化とOSへの引き渡し」という役割を担うが、GUI対応・大容量ディスクからの起動・Secure Bootなど、BIOSの制約を解消した拡張版にあたる。ただし慣習的に、UEFI搭載機でも設定画面が「BIOS設定」と呼ばれ続けていることが多く、両者は現在でも同義語的に使われがちである。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/UEFI">Unified Extensible Firmware Interface - Wikipedia (en)</a></li>
+<li><a href="https://ja.wikipedia.org/wiki/Unified_Extensible_Firmware_Interface">Unified Extensible Firmware Interface - Wikipedia (ja)</a></li>
+<li><a href="https://zenn.dev/jamoyazii/articles/d04d93155f7043">UEFIについて調べてみた（SecureBoot編）</a></li>
+<li><a href="https://docs.redhat.com/ja/documentation/red_hat_enterprise_linux/7/html/system_administrators_guide/sec-uefi_secure_boot">26.11. Unified Extensible Firmware Interface (UEFI) セキュアブート | Red Hat Enterprise Linux 7</a></li>
+</ul>
+
+]]></description>
+</item>
+<item>
+<title>BIOS</title>
+<link>https://64p.org/notes/bios.html</link>
+<guid isPermaLink="true">https://64p.org/notes/bios.html</guid>
+<pubDate>Thu, 13 Aug 2026 22:06:00 +0900</pubDate>
+<description><![CDATA[<h1>BIOS</h1>
+
+<p>Basic Input/Output Systemの略、「基本入出力システム」。パソコンの電源投入直後にマザーボード上のROM/フラッシュメモリから最初に実行されるファームウェア。OSが起動する前段階を担当する。 <a class="note-tag" href="/notes/tags/hardware.html">#hardware</a></p>
+
+<h2>主な役割</h2>
+
+<ul>
+<li><strong>POST (Power-On Self-Test)</strong> — CPU・メモリ・キーボードなど主要ハードウェアの自己診断。</li>
+<li><strong>ハードウェアの初期化</strong> — 各種デバイスを使える状態にセットアップする。</li>
+<li><strong>ブートローダーの起動</strong> — 起動デバイス(HDD/SSD・USBメモリ・CDなど)からOSの起動プログラムを見つけて実行し、制御をOSに引き渡す。</li>
+<li><strong>起動デバイスの順序制御</strong> — どのドライブから優先的に起動するかをBIOS設定画面で指定できる。</li>
+</ul>
+
+
+<h2><a href="/notes/uefi.html">UEFI</a>との関係</h2>
+
+<p>近年の多くのPCでは、BIOSに代わり後継規格の<a href="/notes/uefi.html">UEFI</a>(Unified Extensible Firmware Interface)が使われている。UEFIはBIOSと同じ役割(起動前のハードウェア初期化とOSへの引き渡し)を担うが、GUI対応・2TB超のディスクからの起動・<a href="/notes/uefi.html">Secure Boot</a>など、BIOSの制約を解消した拡張版にあたる。ただし慣習的に、UEFI搭載機でも設定画面が「BIOS設定」と呼ばれ続けていることが多く、両者は現在でも同義語的に使われがちである。</p>
+
+<p>オープンソースのファームウェア実装として<a href="/notes/coreboot.html">coreboot</a>があり、BIOS/UEFIの置き換えを標榜している。</p>
+
+<h2>出典</h2>
+
+<ul>
+<li><a href="https://premioinc.com/ja/blogs/blog/what-is-bios-basic-input-output-system-bios-vs-uefi">BIOS（Basic Input Output System）とは何ですか？BIOSとUEFIの違いは何ですか？</a></li>
+<li><a href="https://xexeq.jp/blogs/media/it-glossary231">BIOS(Basic Input/Output System)とは？意味をわかりやすく簡単に解説</a></li>
+<li><a href="https://ja.wikipedia.org/wiki/Basic_Input/Output_System">Basic Input/Output System - Wikipedia</a></li>
+<li><a href="https://it-notes.stylemap.co.jp/hardware/what-is-bios-a-guide-to-the-basic-input-output-system/">BIOSとは？基本入出力システムの役割と仕組みを解説</a></li>
+</ul>
+
+]]></description>
+</item>
 <item>
 <title>flaky test</title>
 <link>https://64p.org/notes/flaky-test.html</link>
@@ -1365,129 +1437,6 @@ Content-length: 25
 <li><a href="https://deepwiki.com/bpftrace/bpftrace">bpftrace/bpftrace | DeepWiki</a></li>
 <li><a href="https://www.brendangregg.com/blog/2019-08-19/bpftrace.html">A thorough introduction to bpftrace - Brendan Gregg</a></li>
 <li><a href="https://bpftrace.org/hol/kernel-probes">Working with kernel probes - bpftrace docs</a></li>
-</ul>
-
-]]></description>
-</item>
-<item>
-<title>bpftraceを動かしてeBPFトレーシングを体感する</title>
-<link>https://64p.org/notes/bpftrace-experiment.html</link>
-<guid isPermaLink="true">https://64p.org/notes/bpftrace-experiment.html</guid>
-<pubDate>Thu, 13 Aug 2026 08:32:00 +0900</pubDate>
-<description><![CDATA[<h1>bpftraceを動かしてeBPFトレーシングを体感する</h1>
-
-<p><a href="/notes/bpftrace.html">bpftrace</a>を実際にこのマシン(Pop!_OS/Ubuntu noble)にインストールして動かし、<a href="/notes/bpf.html">eBPF</a>によるトレーシングを体感した記録。 <a class="note-tag" href="/notes/tags/linux.html">#linux</a> <a class="note-tag" href="/notes/tags/kernel.html">#kernel</a> <a class="note-tag" href="/notes/tags/observability.html">#observability</a></p>
-
-<h2>環境構築</h2>
-
-<p><code>apt install bpftrace</code> でインストールできた(候補バージョン <code>0.20.2-1ubuntu4.3</code>)。</p>
-
-<pre><code class="sh">$ apt-cache policy bpftrace
-bpftrace:
-  Installed: (none)
-  Candidate: 0.20.2-1ubuntu4.3
-$ sudo apt install -y bpftrace
-$ bpftrace --version
-bpftrace v0.20.2
-</code></pre>
-
-<h2>躓いた点: 非対話環境でのroot権限</h2>
-
-<p>bpftraceの実行にはroot権限(eBPFプログラムのロードにCAP_BPF/CAP_SYS_ADMIN相当の権限が必要)が要る。しかしClaude CodeのBashツールにはインタラクティブなsudoパスワード入力用のTTYが無く、<code>sudo -n true</code>や<code>sudo -v</code>はいずれも失敗した。</p>
-
-<pre><code>$ sudo -n true
-sudo: a password is required
-$ sudo -v
-sudo: a terminal is required to read the password; either use the -S option to read from standard input or configure an askpass helper
-</code></pre>
-
-<p>そのため、実行自体はユーザーが別の実端末上で行い、出力をファイル経由で共有してもらう形で進めた。</p>
-
-<h2>実験1: syscallをプロセス名別に集計する(tracepoint)</h2>
-
-<pre><code class="sh">sudo bpftrace -e 'tracepoint:raw_syscalls:sys_enter { @[comm] = count(); } interval:s:5 { exit(); }'
-</code></pre>
-
-<p><code>@[comm] = count()</code>というmap集計だけで、カーネル空間でのプロセス名(<code>comm</code>)ごとのsyscall呼び出し回数を集計できる。<code>interval:s:5 { exit(); }</code>のように別のprobeでタイマーによる終了処理を書けるのも分かった。</p>
-
-<p>5秒間の実行結果は降順で、上位は<code>HeapHelper</code>(291754回)、<code>pgrep</code>(159370回)、<code>herdr</code>(85612回)、<code>gnome-terminal-</code>(54975回)、<code>claude</code>(49301回)など。GUI環境(<code>gnome-shell</code>: 42290回、<code>Xorg</code>: 40950回)も多数のsyscallを発生させていることが見えた。プロセス名はLinuxの<code>comm</code>(<code>TASK_COMM_LEN</code>)の制約で15文字に切り詰められるため、<code>StreamT~ #14757</code>のような省略表示になっているものもあった。</p>
-
-<h2>実験2: <code>do_nanosleep</code>カーネル関数をkprobeで追跡する</h2>
-
-<pre><code class="sh">sudo timeout 5 bpftrace -e 'kprobe:do_nanosleep { printf("PID %d (%s) sleeping\n", pid, comm); }'
-</code></pre>
-
-<p><code>ibus-ui-gtk3</code>や<code>tailscaled</code>など、定期的にポーリング/スリープしているデーモンプロセスが高頻度で<code>do_nanosleep</code>を呼んでいることが可視化された。コンテナ管理daemonの<code>incusd</code>が短時間に何十回もsleepしている様子も観測できた。ユーザーが手動で叩いた<code>sleep</code>コマンドの呼び出しもPIDごとに個別に捕捉されている。</p>
-
-<p>kprobeはカーネル関数名を直接指定するだけでフックできる手軽さがある一方、<code>do_nanosleep</code>のような内部関数名はカーネルバージョンが変われば変わりうる、という<a href="/notes/bpftrace.html">bpftraceノート</a>で触れた「tracepointの方が安定している」という説明を裏付ける結果でもあった。</p>
-
-<h2>実験3: execveをtracepointで追跡し、新規プロセス起動を可視化する</h2>
-
-<pre><code class="sh">sudo timeout 5 bpftrace -e 'tracepoint:syscalls:sys_enter_execve { printf("%s -&gt; %s\n", comm, str(args-&gt;filename)); }'
-</code></pre>
-
-<p><code>args-&gt;filename</code>のように、tracepointの引数構造体からファイルパス文字列を<code>str()</code>で読み出せる。5秒間の結果には<code>zsh -&gt; /usr/bin/pgrep</code>のような親プロセスと起動された実行ファイルのペアが並び、シェルのプロンプト表示のたびに<code>pgrep</code>や<code>sleep</code>が起動されている様子が見えた。ユーザーが個人で開発しているRust製Rakuインタプリタ<code>mutsu</code>のデバッグビルド(<code>../../target/debug/mutsu</code>)が<code>timeout</code>コマンド経由で起動されているのも捕捉された。</p>
-
-<h2>分かったこと</h2>
-
-<ul>
-<li><code>@[key] = count()</code>のようなmap構文だけで、カーネル空間での集計処理をユーザー空間へのイベント転送やロックなしに数行で書ける</li>
-<li>複数のprobeを1つのスクリプトに並べて書ける(タイマーprobeでの終了処理など)</li>
-<li><code>printf</code>はカーネル側からユーザー空間の標準出力へ安全に文字列を渡す仕組みとして機能する</li>
-<li>実運用では、動かす環境にTTY越しの対話的なroot権限取得手段が要る(今回のような非対話CI/エージェント環境では一手間かかる)</li>
-</ul>
-
-]]></description>
-</item>
-<item>
-<title>Font Awesome</title>
-<link>https://64p.org/notes/font-awesome.html</link>
-<guid isPermaLink="true">https://64p.org/notes/font-awesome.html</guid>
-<pubDate>Thu, 13 Aug 2026 07:46:00 +0900</pubDate>
-<description><![CDATA[<h1>Font Awesome</h1>
-
-<p>SVG・Webフォント・CSSを提供するアイコンライブラリ/ツールキット。2012年3月3日にDave GandyがBootstrap用として個人的に作り始めたのが始まりで、現在は世界で最も普及しているアイコンセットとされ、1億以上のウェブサイトで使われている。</p>
-
-<p><a class="note-tag" href="/notes/tags/icon.html">#icon</a> <a class="note-tag" href="/notes/tags/frontend.html">#frontend</a> <a class="note-tag" href="/notes/tags/web.html">#web</a></p>
-
-<h2>スタイル</h2>
-
-<p>Solid・Regular・Light・Thin・Duotone・Sharp・Brands(SNSやOSSプロジェクトのロゴ)など複数のスタイルバリエーションを持つ。無料版で使えるのはSolid/Regular/Brandsの一部に限られ、Light/Thin/Duotone/Sharpなどの追加スタイルはPro版限定。</p>
-
-<h2>提供形式</h2>
-
-<p>アイコンデータはSVG(および対応するJS)として管理されており、そこからWebフォント形式やCSSも生成される。従来は「アイコンフォント」として使われることが多かったが、現在はSVGでの利用も公式に推奨されている。</p>
-
-<h2>ライセンス(無料版)</h2>
-
-<ul>
-<li>アイコン(SVG/JS): CC BY 4.0(表示義務あり)</li>
-<li>フォント(Web/デスクトップ): SIL OFL 1.1</li>
-<li>コード: MIT</li>
-</ul>
-
-
-<p>無料版は約2,000アイコンに限定される。</p>
-
-<h2>料金プラン</h2>
-
-<p>無料版で使い始められ、Proプランに切り替えるとアイコン数・追加スタイル・Kits・ページビュー枠・サポートが拡充される。2025年の値上げ以降、Proは年額$60〜$600。</p>
-
-<h2>バージョン</h2>
-
-<p>2026年時点でVersion 7が最新。Version 6はLTS(重要バグ修正のみ提供)、Version 3〜5はEOL。</p>
-
-<h2>Iconifyとの関係</h2>
-
-<p><a href="/notes/iconify.html">Iconify</a>はFont Awesomeを含む200以上のアイコンセットを統一シンタックスで横断的に扱うための集約レイヤーで、実際にIconifyのアイコン検索サイトにもFont Awesome(オープンソース版)の各スタイルがそのまま収録されている。Font Awesome自体は1つの独立したアイコンセット/ブランドという位置づけ。</p>
-
-<h2>出典</h2>
-
-<ul>
-<li><a href="https://github.com/FortAwesome/Font-Awesome">GitHub - FortAwesome/Font-Awesome</a></li>
-<li><a href="https://fontawesome.com/plans">Plans &amp; Pricing to Meet Your Icon Needs | Font Awesome</a></li>
-<li><a href="https://fontawesome.com/versions">Versions of Font Awesome</a></li>
-<li><a href="https://en.wikipedia.org/wiki/Font_Awesome">Font Awesome - Wikipedia</a></li>
 </ul>
 
 ]]></description>
