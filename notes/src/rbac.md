@@ -1,6 +1,6 @@
 ---
 created: 2026-08-12 13:38
-updated: 2026-08-12 13:40
+updated: 2026-08-14 08:21
 ---
 # RBAC (Role-Based Access Control)
 
@@ -21,7 +21,7 @@ updated: 2026-08-12 13:40
 
 ## 採用例
 
-Kubernetes の RBAC（Role/ClusterRole と RoleBinding）、各クラウドの IAM、Envoy の RBAC フィルタなど、インフラ系ソフトウェアの権限管理のデファクト。データレイクハウスのカタログ [[apache-polaris|Apache Polaris]] も principal に対するロールベースの権限管理を中核機能にしている。近年は「RBACで大枠を決め、細かい条件は [[common-expression-language|CEL]] のような式言語やABAC的な属性条件で補う」ハイブリッド構成も多い。
+[[kubernetes|Kubernetes]] の RBAC（Role/ClusterRole と RoleBinding）、各クラウドの IAM、Envoy の RBAC フィルタなど、インフラ系ソフトウェアの権限管理のデファクト。データレイクハウスのカタログ [[apache-polaris|Apache Polaris]] も principal に対するロールベースの権限管理を中核機能にしている。近年は「RBACで大枠を決め、細かい条件は [[common-expression-language|CEL]] のような式言語やABAC的な属性条件で補う」ハイブリッド構成も多い。
 
 ## 出典
 

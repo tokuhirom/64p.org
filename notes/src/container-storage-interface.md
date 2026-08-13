@@ -1,10 +1,10 @@
 ---
 created: 2026-08-14 08:09
-updated: 2026-08-14 08:09
+updated: 2026-08-14 08:21
 ---
 # Container Storage Interface (CSI)
 
-コンテナオーケストレーションシステム（Kubernetes、Mesos、Cloud Foundryなど）に対して、任意のブロック/ファイルストレージシステムを統一的な方法で公開するための標準仕様。Kubernetes、Mesos、Docker、Cloud Foundryのコミュニティメンバーの協力によって策定された、Kubernetes本体からは独立した仕様（[spec本体](https://github.com/container-storage-interface/spec/blob/master/spec.md)はKubernetesリポジトリの外にある）。
+コンテナオーケストレーションシステム（[[kubernetes|Kubernetes]]、[[apache-mesos|Mesos]]、Cloud Foundryなど）に対して、任意のブロック/ファイルストレージシステムを統一的な方法で公開するための標準仕様。Kubernetes、Mesos、Docker、Cloud Foundryのコミュニティメンバーの協力によって策定された、Kubernetes本体からは独立した仕様（[spec本体](https://github.com/container-storage-interface/spec/blob/master/spec.md)はKubernetesリポジトリの外にある）。
 
 ## 目的
 
@@ -17,6 +17,10 @@ Kubernetes v1.9でCSI仕様のalpha実装が公開され、v1.13でGA（General 
 ## [[kubernetes-on-oxide|Oxide Computer]]での事例
 
 CSIドライバが前提とする「稼働中のノードへディスクを動的にアタッチ/デタッチする」という振る舞い（ホットアタッチ）は、Oxide Computerのように独自にハードウェア〜[[kvm|ハイパーバイザー]]〜APIまで一気通貫で設計しているプラットフォームでは自明には成立しない。Oxideの制約「ディスクの着脱前にインスタンスを停止する必要がある」とCSIの前提が衝突し、ハイパーバイザー層まで遡った対応が必要になった。
+
+## [[kubernetes]]の中での位置づけ
+
+ストレージベンダー実装を本体から切り離すための標準インターフェース。クラウド連携における[[kubernetes-cloud-controller-manager|CCM]]と対になる「in-tree実装の切り出し」の一例だが、CSI自体はKubernetes専用ではなくオーケストレーター横断の仕様である点が異なる。
 
 ## 出典
 

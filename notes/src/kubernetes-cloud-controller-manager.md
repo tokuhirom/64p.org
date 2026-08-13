@@ -1,6 +1,6 @@
 ---
 created: 2026-08-14 08:09
-updated: 2026-08-14 08:09
+updated: 2026-08-14 08:21
 ---
 # Cloud Controller Manager (CCM)
 
@@ -19,6 +19,10 @@ CCMが登場する以前は、各クラウドベンダー向けの連携コー�
 ## [[kubernetes-on-oxide|Oxide Computer]]での実装
 
 Oxide向けのCCMは、OxideインスタンスとKubernetesのNodeオブジェクトの同期（Node Controller相当）と、Oxideの Floating IPを使ったLoadBalancerサービスの実現（Service Controller相当）を担当している。ロードバランサーは記事執筆時点でProxyモードで実装されている。
+
+## [[kubernetes]]の中での位置づけ
+
+クラウドプロバイダー固有の制御ループを本体から分離するプラグイン点。ストレージにおける[[container-storage-interface|CSI]]と同様の「in-tree実装の切り出し」の一例で、Kubernetesを特定クラウドに依存させないための拡張機構のひとつ。
 
 ## 出典
 

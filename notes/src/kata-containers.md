@@ -1,10 +1,10 @@
 ---
 created: 2026-08-12 23:23
-updated: 2026-08-12 23:51
+updated: 2026-08-14 08:21
 ---
 # Kata Containers
 
-VMの持つセキュリティ上の分離性と、コンテナの持つ速度・軽量性を両立させることを目指すコンテナランタイム。コンテナ1個ごとに軽量VMを立ち上げ、その中でコンテナプロセスを動かす。OCIランタイム仕様・Kubernetesのcontainer runtime interface(CRI)双方に対応している。 #virtualization
+VMの持つセキュリティ上の分離性と、コンテナの持つ速度・軽量性を両立させることを目指すコンテナランタイム。コンテナ1個ごとに軽量VMを立ち上げ、その中でコンテナプロセスを動かす。OCIランタイム仕様・[[kubernetes|Kubernetes]]のcontainer runtime interface(CRI)双方に対応している。 #virtualization
 
 ## 成り立ち
 

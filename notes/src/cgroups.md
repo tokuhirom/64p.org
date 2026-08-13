@@ -1,6 +1,6 @@
 ---
 created: 2026-08-11 09:41
-updated: 2026-08-11 09:41
+updated: 2026-08-14 08:21
 ---
 # cgroups（control groups）
 
@@ -8,7 +8,7 @@ Linuxカーネルの機能で、プロセスをグループ化し、そのグル
 
 ## 起源
 
-- 2006年、Google社のエンジニア（主にPaul MenageとRohit Seth）が「process containers」という名前で開発を開始。彼らは社内で巨大な共有Linuxクラスタを運用しており、これが後のBorg・Kubernetesへと繋がっていく。
+- 2006年、Google社のエンジニア（主にPaul MenageとRohit Seth）が「process containers」という名前で開発を開始。彼らは社内で巨大な共有Linuxクラスタを運用しており、これが後のBorg・[[kubernetes|Kubernetes]]へと繋がっていく。
 - カーネルに既にあった`cpusets`という仕組みを応用する形で開発された。
 - 2007年後半、Linuxカーネル内での「container」という語の多義性による混乱を避けるため「control groups（cgroups）」に改称。
 - 2008年1月リリースのLinuxカーネル2.6.24でメインラインにマージされた。

@@ -1,6 +1,6 @@
 ---
 created: 2026-08-13 09:29
-updated: 2026-08-13 09:29
+updated: 2026-08-14 08:21
 ---
 # Service Mesh
 
@@ -13,7 +13,7 @@ updated: 2026-08-13 09:29
 各アプリケーションPodにプロキシ(多くはEnvoy)を並走させ、全トラフィックをそのプロキシ経由にする。
 
 - **Istio**: 機能が豊富で成熟している一方、リソース消費と運用の複雑さがトレードオフになる。詳細は[[istio-ambient-mesh|Istio Ambient Mesh]]を参照
-- **Linkerd**: Rust製の自前プロキシを使い、Kubernetes専用・ミニマル志向で設計されている。中規模負荷(5,000 RPS/service未満)ではIstioよりオーバーヘッドが小さいとされる。初めてService Meshを導入するならLinkerdから始め、必要に応じてIstioへ移行するのが定石とされている
+- **Linkerd**: Rust製の自前プロキシを使い、[[kubernetes|Kubernetes]]専用・ミニマル志向で設計されている。中規模負荷(5,000 RPS/service未満)ではIstioよりオーバーヘッドが小さいとされる。初めてService Meshを導入するならLinkerdから始め、必要に応じてIstioへ移行するのが定石とされている
 
 ### サイドカーレス方式
 

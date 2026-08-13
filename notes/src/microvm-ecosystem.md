@@ -1,10 +1,10 @@
 ---
 created: 2026-08-12 23:25
-updated: 2026-08-12 23:51
+updated: 2026-08-14 08:21
 ---
 # コンテナ向け軽量VM技術
 
-コンテナのカーネル共有による分離の弱さを、VMレベルの分離で補おうとする一群の技術。[[microvm|microVM]]という土台技術の上に、それをコンテナのエコシステム(OCIイメージ・containerd・Kubernetes)と繋ぐレイヤーが複数存在する。
+コンテナのカーネル共有による分離の弱さを、VMレベルの分離で補おうとする一群の技術。[[microvm|microVM]]という土台技術の上に、それをコンテナのエコシステム(OCIイメージ・containerd・[[kubernetes|Kubernetes]])と繋ぐレイヤーが複数存在する。
 
 #virtualization #moc
 

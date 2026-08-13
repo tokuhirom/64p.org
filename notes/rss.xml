@@ -6,7 +6,7 @@
 <atom:link href="https://64p.org/notes/rss.xml" rel="self" type="application/rss+xml" />
 <description>ちょっと調べたことや検証結果を、AIの力も借りながらメモしていくコーナーです。</description>
 <language>ja</language>
-<lastBuildDate>Fri, 14 Aug 2026 08:20:07 +0900</lastBuildDate>
+<lastBuildDate>Fri, 14 Aug 2026 08:21:37 +0900</lastBuildDate>
 <item>
 <title>熱拡散ドーピング</title>
 <link>https://64p.org/notes/thermal-diffusion-doping.html</link>
@@ -455,6 +455,10 @@ sequenceDiagram
 
 <p>ハードウェア〜ハイパーバイザー〜APIまで一気通貫で自社設計しているOxideならではの、「Kubernetesが暗黙に前提としている振る舞い（ディスクのホットアタッチ等）が、独自インフラだと素直には成立しない」という摩擦が具体的に語られている点が興味深い。パブリッククラウドのAPIの背後で当然のように提供されている機能が、実はハイパーバイザーレベルでの作り込みを要求するものだと分かる例になっている。</p>
 
+<h2><a href="/notes/kubernetes.html">Kubernetes</a>の中での位置づけ</h2>
+
+<p>独自インフラ上へのKubernetes統合の具体事例。<a href="/notes/cluster-api.html">Cluster API</a>・<a href="/notes/kubernetes-cloud-controller-manager.html">CCM</a>・<a href="/notes/container-storage-interface.html">CSI</a>という拡張機構が実際にどう使われる（そしてどこで摩擦が起きる）かを示すケーススタディになっている。</p>
+
 <h2>出典</h2>
 
 <ul>
@@ -491,6 +495,10 @@ sequenceDiagram
 
 <p>Oxide向けのCCMは、OxideインスタンスとKubernetesのNodeオブジェクトの同期（Node Controller相当）と、Oxideの Floating IPを使ったLoadBalancerサービスの実現（Service Controller相当）を担当している。ロードバランサーは記事執筆時点でProxyモードで実装されている。</p>
 
+<h2><a href="/notes/kubernetes.html">Kubernetes</a>の中での位置づけ</h2>
+
+<p>クラウドプロバイダー固有の制御ループを本体から分離するプラグイン点。ストレージにおける<a href="/notes/container-storage-interface.html">CSI</a>と同様の「in-tree実装の切り出し」の一例で、Kubernetesを特定クラウドに依存させないための拡張機構のひとつ。</p>
+
 <h2>出典</h2>
 
 <ul>
@@ -509,7 +517,7 @@ sequenceDiagram
 <pubDate>Fri, 14 Aug 2026 08:09:00 +0900</pubDate>
 <description><![CDATA[<h1>Container Storage Interface (CSI)</h1>
 
-<p>コンテナオーケストレーションシステム（Kubernetes、Mesos、Cloud Foundryなど）に対して、任意のブロック/ファイルストレージシステムを統一的な方法で公開するための標準仕様。Kubernetes、Mesos、Docker、Cloud Foundryのコミュニティメンバーの協力によって策定された、Kubernetes本体からは独立した仕様（<a href="https://github.com/container-storage-interface/spec/blob/master/spec.md">spec本体</a>はKubernetesリポジトリの外にある）。</p>
+<p>コンテナオーケストレーションシステム（<a href="/notes/kubernetes.html">Kubernetes</a>、<a href="/notes/apache-mesos.html">Mesos</a>、Cloud Foundryなど）に対して、任意のブロック/ファイルストレージシステムを統一的な方法で公開するための標準仕様。Kubernetes、Mesos、Docker、Cloud Foundryのコミュニティメンバーの協力によって策定された、Kubernetes本体からは独立した仕様（<a href="https://github.com/container-storage-interface/spec/blob/master/spec.md">spec本体</a>はKubernetesリポジトリの外にある）。</p>
 
 <h2>目的</h2>
 
@@ -522,6 +530,10 @@ sequenceDiagram
 <h2><a href="/notes/kubernetes-on-oxide.html">Oxide Computer</a>での事例</h2>
 
 <p>CSIドライバが前提とする「稼働中のノードへディスクを動的にアタッチ/デタッチする」という振る舞い（ホットアタッチ）は、Oxide Computerのように独自にハードウェア〜<a href="/notes/kvm.html">ハイパーバイザー</a>〜APIまで一気通貫で設計しているプラットフォームでは自明には成立しない。Oxideの制約「ディスクの着脱前にインスタンスを停止する必要がある」とCSIの前提が衝突し、ハイパーバイザー層まで遡った対応が必要になった。</p>
+
+<h2><a href="/notes/kubernetes.html">Kubernetes</a>の中での位置づけ</h2>
+
+<p>ストレージベンダー実装を本体から切り離すための標準インターフェース。クラウド連携における<a href="/notes/kubernetes-cloud-controller-manager.html">CCM</a>と対になる「in-tree実装の切り出し」の一例だが、CSI自体はKubernetes専用ではなくオーケストレーター横断の仕様である点が異なる。</p>
 
 <h2>出典</h2>
 
@@ -559,6 +571,10 @@ sequenceDiagram
 <h2><a href="/notes/kubernetes-on-oxide.html">Oxide Computer</a>でのCAPOx</h2>
 
 <p>Oxide向けのインフラストラクチャプロバイダーは「CAPOx（Cluster API Provider Oxide）」と呼ばれ、Oxideプラットフォーム上でのKubernetesクラスタの宣言的な作成・管理をCluster APIの枠組みで実現する。同じくOxide向けの<a href="/notes/kubernetes-on-oxide.html">Rancher Node Driver</a>や<a href="/notes/kubernetes-on-oxide.html">Omni Infrastructure Provider</a>とは別の、独立したプロビジョニング手段として提供されている。</p>
+
+<h2><a href="/notes/kubernetes.html">Kubernetes</a>の中での位置づけ</h2>
+
+<p>宣言的管理の対象をPodなどのワークロードから「クラスタそのもの」に一段引き上げる拡張機構。<a href="/notes/kubernetes-cloud-controller-manager.html">CCM</a>や<a href="/notes/container-storage-interface.html">CSI</a>が既存クラスタの中でインフラと連携するのに対し、こちらはクラスタの作成・削除自体を扱う。</p>
 
 <h2>出典</h2>
 

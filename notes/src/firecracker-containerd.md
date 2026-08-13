@@ -1,10 +1,10 @@
 ---
 created: 2026-08-12 23:23
-updated: 2026-08-12 23:25
+updated: 2026-08-14 08:21
 ---
 # firecracker-containerd
 
-AWSが開発する、containerdに[[firecracker|Firecracker]]をコンテナのVM分離バックエンドとして統合するプロジェクト。containerdのプラグインとして実装されており、Kubernetes・Amazon ECSなど既存のコンテナオーケストレーションフレームワークとの互換性を保ちながら、コンテナをFirecracker microVM単位で分離実行できる。 #virtualization #aws
+AWSが開発する、containerdに[[firecracker|Firecracker]]をコンテナのVM分離バックエンドとして統合するプロジェクト。containerdのプラグインとして実装されており、[[kubernetes|Kubernetes]]・Amazon ECSなど既存のコンテナオーケストレーションフレームワークとの互換性を保ちながら、コンテナをFirecracker microVM単位で分離実行できる。 #virtualization #aws
 
 ## アーキテクチャ
 

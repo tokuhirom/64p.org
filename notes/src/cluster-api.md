@@ -1,6 +1,6 @@
 ---
 created: 2026-08-14 08:09
-updated: 2026-08-14 08:09
+updated: 2026-08-14 08:21
 ---
 # Cluster API (CAPI)
 
@@ -21,6 +21,10 @@ CAPIは「他のKubernetesクラスタを作成・管理するための専用Kub
 ## [[kubernetes-on-oxide|Oxide Computer]]でのCAPOx
 
 Oxide向けのインフラストラクチャプロバイダーは「CAPOx（Cluster API Provider Oxide）」と呼ばれ、Oxideプラットフォーム上でのKubernetesクラスタの宣言的な作成・管理をCluster APIの枠組みで実現する。同じくOxide向けの[[kubernetes-on-oxide|Rancher Node Driver]]や[[kubernetes-on-oxide|Omni Infrastructure Provider]]とは別の、独立したプロビジョニング手段として提供されている。
+
+## [[kubernetes]]の中での位置づけ
+
+宣言的管理の対象をPodなどのワークロードから「クラスタそのもの」に一段引き上げる拡張機構。[[kubernetes-cloud-controller-manager|CCM]]や[[container-storage-interface|CSI]]が既存クラスタの中でインフラと連携するのに対し、こちらはクラスタの作成・削除自体を扱う。
 
 ## 出典
 
