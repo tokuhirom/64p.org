@@ -1,6 +1,6 @@
 ---
 created: 2026-08-11 11:23
-updated: 2026-08-11 11:23
+updated: 2026-08-14 14:20
 ---
 # BOLA（Broken Object Level Authorization）
 
@@ -26,6 +26,8 @@ OWASP API Security Top 10で最上位（API1:2023）に位置づけられる脆�
 ## 関連
 
 [[ai-agent-gym-booking-hack]]では、AIエージェントがこのBOLA脆弱性を自ら発見・悪用してしまった事例が報告されている。
+
+同じくサーバー側が入力を過信することに起因する脆弱性として[[ssrf|SSRF]]（サーバーに任意の宛先へリクエストさせる）がある。
 
 ## 出典
 
