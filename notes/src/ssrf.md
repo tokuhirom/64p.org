@@ -1,10 +1,10 @@
 ---
 created: 2026-08-14 14:20
-updated: 2026-08-14 14:20
+updated: 2026-08-14 15:35
 ---
 # SSRF（Server-Side Request Forgery）
 
-サーバーサイドのアプリケーションが、ユーザー入力由来のURL・ホスト名を検証せずに外部リソースを取得（HTTPリクエスト送信など）してしまう脆弱性。攻撃者はこの挙動を悪用し、ファイアウォールやVPNの内側にいるサーバー自身に任意の宛先へリクエストを送らせることができる。OWASP Top 10（2021年版）では単独カテゴリ「A10:2021 – Server-Side Request Forgery」として採用されている。
+サーバーサイドのアプリケーションが、ユーザー入力由来のURL・ホスト名を検証せずに外部リソースを取得（HTTPリクエスト送信など）してしまう脆弱性。攻撃者はこの挙動を悪用し、ファイアウォールやVPNの内側にいるサーバー自身に任意の宛先へリクエストを送らせることができる。[[owasp-top-10|OWASP Top 10]]の2021年版では単独カテゴリ「A10:2021 – Server-Side Request Forgery」として採用されていたが、2025年版ではBroken Access Controlカテゴリに統合された。[[owasp-api-security-top-10|OWASP API Security Top 10]]（2023年版）では引き続き「API7:2023 Server Side Request Forgery」として単独カテゴリになっている。
 
 ## 典型的な悪用例
 
@@ -90,6 +90,7 @@ func main() {
 ## 出典
 
 - [A10 Server Side Request Forgery (SSRF) - OWASP Top 10:2021](https://owasp.org/Top10/2021/A10_2021-Server-Side_Request_Forgery_(SSRF)/)
+- [OWASP Top 10:2025](https://owasp.org/Top10/2025/)
 - [Server Side Request Forgery | OWASP Foundation](https://owasp.org/www-community/attacks/Server_Side_Request_Forgery)
 - [Server Side Request Forgery Prevention - OWASP Cheat Sheet Series](https://cheatsheetseries.owasp.org/cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html)
 - [What is SSRF (Server-side request forgery)? Tutorial & Examples | Web Security Academy](https://portswigger.net/web-security/ssrf)

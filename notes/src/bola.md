@@ -1,10 +1,10 @@
 ---
 created: 2026-08-11 11:23
-updated: 2026-08-14 14:20
+updated: 2026-08-14 15:35
 ---
 # BOLA（Broken Object Level Authorization）
 
-OWASP API Security Top 10で最上位（API1:2023）に位置づけられる脆弱性カテゴリ。オブジェクトレベルの認可メカニズムの不備を指す、IDOR（Insecure Direct Object References）系の典型的な脆弱性。
+[[owasp-api-security-top-10|OWASP API Security Top 10]]で最上位（API1:2023）に位置づけられる脆弱性カテゴリ。オブジェクトレベルの認可メカニズムの不備を指す、IDOR（Insecure Direct Object References）系の典型的な脆弱性。
 
 ## 原因
 
