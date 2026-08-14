@@ -1,12 +1,12 @@
 ---
 created: 2026-08-15 06:58
-updated: 2026-08-15 06:58
+updated: 2026-08-15 07:03
 ---
 # golangci-lint
 
 #golang #linter
 
-Go向けのlintランナー（アグリゲータ）。100以上のlinterを1つのバイナリに同梱し、並列実行してまとめて結果を出す。個々のlinter（staticcheck、govetなど）を個別にインストールする必要がない。Goエコシステムでは事実上の標準lintツール。GPLv3、GitHubスターは約19.3k。
+Go向けのlintランナー（アグリゲータ）。100以上のlinterを1つのバイナリに同梱し、並列実行してまとめて結果を出す。個々のlinter（[[staticcheck]]、govetなど）を個別にインストールする必要がない。Goエコシステムでは事実上の標準lintツール。GPLv3、GitHubスターは約19.3k。
 
 - 高速: linterの並列実行に加え、Goのビルドキャッシュと解析結果のキャッシュを活用する。
 - 設定は`.golangci.yml`（YAML）。デフォルト設定は誤検知（偽陽性）を抑える方向にチューニングされている。
