@@ -1,6 +1,6 @@
 ---
 created: 2026-08-14 11:32
-updated: 2026-08-14 11:32
+updated: 2026-08-14 12:02
 ---
 # Elasticsearch
 
@@ -22,7 +22,7 @@ Apache Luceneをベースにした分散型の検索・分析エンジン。Java
 
 ## ライセンス変遷
 
-2021年にApache 2.0からSSPL/Elastic Licenseのデュアルライセンスへ移行し、これを機にAWSが[[opensearch|OpenSearch]]としてフォークした。2024年9月にAGPLv3を選択肢へ追加し、OSI承認ライセンスへ「復帰」している。経緯の詳細は[[sspl|SSPL]]・[[agpl|AGPL]]・[[software-licenses|ソフトウェアライセンス]]を参照。
+2021年にApache 2.0からSSPL/Elastic Licenseのデュアルライセンスへ移行し、これを機にAWSが[[opensearch|OpenSearch]]としてフォークした。2024年9月にAGPLv3を選択肢へ追加し、[[osi|OSI]]承認ライセンスへ「復帰」している。経緯の詳細は[[sspl|SSPL]]・[[agpl|AGPL]]・[[software-licenses|ソフトウェアライセンス]]を参照。
 
 ## 出典
 

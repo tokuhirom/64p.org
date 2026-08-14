@@ -1,17 +1,17 @@
 ---
 created: 2026-08-14 09:50
-updated: 2026-08-14 11:32
+updated: 2026-08-14 12:02
 ---
 # AGPL
 
 #license #open-source #copyleft
 
-GNU Affero General Public License。GPLの「ASPループホール（SaaSループホール）」を塞ぐためのコピーレフトライセンス。通常のGPLの義務は「頒布（distribute）」した時にしか発動しないため、GPLコードを改変してサーバー上でSaaSとして運用する限りソース公開義務を負わない。AGPLは「ネットワーク越しにユーザーと対話するソフトウェア」にもコピーレフトを及ぼす（ネットワークコピーレフト）。
+GNU Affero General Public License。GPLの「ASPループホール（SaaSループホール）」を塞ぐための[[copyleft|コピーレフト]]ライセンス。通常のGPLの義務は「頒布（distribute）」した時にしか発動しないため、GPLコードを改変してサーバー上でSaaSとして運用する限りソース公開義務を負わない。AGPLは「ネットワーク越しにユーザーと対話するソフトウェア」にもコピーレフトを及ぼす（ネットワークコピーレフト）。
 
 ## 歴史
 
 - **2002年**: Henri Poole の会社 Affero, Inc. が GPLv2 ベースの「Affero GPL v1」を公開。名前はこの会社に由来する。
-- **2007年**: FSF が [[gplv3|GPLv3]] をベースに **GNU AGPLv3** を公開。OSI承認・FSF公認の自由ソフトウェアライセンス。GPLv3とは相互にリンク可能とする条項が双方の第13条に入っている。
+- **2007年**: FSF が [[gplv3|GPLv3]] をベースに **GNU AGPLv3** を公開。[[osi|OSI]]承認・FSF公認の自由ソフトウェアライセンス。GPLv3とは相互にリンク可能とする条項が双方の第13条に入っている。
 
 ## 中核: 第13条 (Remote Network Interaction)
 

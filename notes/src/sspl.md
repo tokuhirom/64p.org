@@ -1,6 +1,6 @@
 ---
 created: 2026-08-14 09:59
-updated: 2026-08-14 11:43
+updated: 2026-08-14 12:02
 ---
 # SSPL
 
@@ -19,7 +19,7 @@ AGPLの第13条が「改変版をネットワーク経由で使わせるなら�
 
 ## OSI非承認
 
-- MongoDBは2018年10月にOSIへ承認申請したが、レビューで「特定の利用分野（サービス提供）への差別でありOpen Source Definitionに反する」との批判が強く、2019年に申請を取り下げた
+- MongoDBは2018年10月に[[osi|OSI]]へ承認申請したが、レビューで「特定の利用分野（サービス提供）への差別でありOpen Source Definitionに反する」との批判が強く、2019年に申請を取り下げた
 - OSIはその後「SSPLはオープンソースライセンスではない」と明確に表明しており、source-availableライセンスに分類される
 - この結果、Debian・Fedora・RHELはMongoDBをリポジトリから削除した
 
@@ -33,7 +33,7 @@ ElasticもRedisも最終的にAGPLv3併用でオープンソースに戻って�
 
 ## [[software-licenses|ソフトウェアライセンス]]の中での位置づけ
 
-AGPLよりさらに強い網羅的コピーレフトを狙った拡張だが、OSI非承認のためオープンソースではなくsource-availableに分類される。時限式でOSS化する[[business-source-license|BSL]]とは別系統のsource-availableライセンス。
+AGPLよりさらに強い網羅的[[copyleft|コピーレフト]]を狙った拡張だが、OSI非承認のためオープンソースではなくsource-availableに分類される。時限式でOSS化する[[business-source-license|BSL]]とは別系統のsource-availableライセンス。
 
 ## 出典
 

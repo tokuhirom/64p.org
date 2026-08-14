@@ -1,6 +1,6 @@
 ---
 created: 2026-08-14 11:43
-updated: 2026-08-14 11:43
+updated: 2026-08-14 12:02
 ---
 # Business Source License
 
@@ -20,7 +20,7 @@ MariaDB社が考案したsource-availableライセンス。SPDX識別子は`BUSL
 
 ## オープンソースではない
 
-本番利用の制限がある間はOpen Source Definitionを満たさないため、OSI承認ライセンスではなくsource-availableに分類される。MariaDB社自身も「proprietaryとopen sourceの中間の妥協」と位置づけている。
+本番利用の制限がある間はOpen Source Definitionを満たさないため、[[osi|OSI]]承認ライセンスではなくsource-availableに分類される。MariaDB社自身も「proprietaryとopen sourceの中間の妥協」と位置づけている。
 
 ## 採用例
 
@@ -33,7 +33,7 @@ MariaDB社が考案したsource-availableライセンス。SPDX識別子は`BUSL
 
 ## [[software-licenses|ソフトウェアライセンス]]の中での位置づけ
 
-コピーレフトの拡張である[[agpl|AGPL]]/[[sspl|SSPL]]とは別系統のsource-available。競合排除を「公開義務の重さ」ではなく「本番利用制限＋時限式OSS化」で実現するアプローチ。
+[[copyleft|コピーレフト]]の拡張である[[agpl|AGPL]]/[[sspl|SSPL]]とは別系統のsource-available。競合排除を「公開義務の重さ」ではなく「本番利用制限＋時限式OSS化」で実現するアプローチ。
 
 ## 出典
 

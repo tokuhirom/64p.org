@@ -1,3 +1,7 @@
+---
+created: 2026-08-14 12:02
+updated: 2026-08-14 12:02
+---
 # JSLint
 
 Douglas Crockford氏（JSONの考案者として知られる）が2002年に公開した、JavaScript向け静的解析ツール。最初期のJavaScriptリンターとされる。jslint.comのWebアプリケーションとして提供されたのが始まり。 #javascript
@@ -10,7 +14,7 @@ Douglas Crockford氏（JSONの考案者として知られる）が2002年に公�
 
 ライセンスはMITベースだが「The Software shall be used for Good, not Evil.（本ソフトウェアは善のために使われるべきであり、悪のために使われてはならない）」という条項が追加されていた。この道徳的制約のためFree Software Foundationからは非フリーなライセンスと分類され、Google CodeでのホスティングやDebianリポジトリへの収録ができないという実害があった。
 
-2011年にはIBMが「顧客がこの制約なしにJSLintを使えるようにしてほしい」と問い合わせ、Crockford氏が「IBMとその顧客・パートナー・手下（minions）がJSLintを悪のために使うことを許可する」と返答した逸話がある。2021年にUnlicense（FSF/OSI承認済み）へ移行し、長年のライセンス問題は解消された。
+2011年にはIBMが「顧客がこの制約なしにJSLintを使えるようにしてほしい」と問い合わせ、Crockford氏が「IBMとその顧客・パートナー・手下（minions）がJSLintを悪のために使うことを許可する」と返答した逸話がある。2021年にUnlicense（FSF/[[osi|OSI]]承認済み）へ移行し、長年のライセンス問題は解消された。
 
 ## [[javascript-linters-formatters|JavaScriptのリンター・フォーマッター]]の中での位置づけ
 
