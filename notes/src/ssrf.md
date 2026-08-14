@@ -1,6 +1,6 @@
 ---
 created: 2026-08-14 14:20
-updated: 2026-08-14 15:35
+updated: 2026-08-14 15:54
 ---
 # SSRF（Server-Side Request Forgery）
 
@@ -92,7 +92,7 @@ func main() {
 - [A10 Server Side Request Forgery (SSRF) - OWASP Top 10:2021](https://owasp.org/Top10/2021/A10_2021-Server-Side_Request_Forgery_(SSRF)/)
 - [OWASP Top 10:2025](https://owasp.org/Top10/2025/)
 - [Server Side Request Forgery | OWASP Foundation](https://owasp.org/www-community/attacks/Server_Side_Request_Forgery)
-- [Server Side Request Forgery Prevention - OWASP Cheat Sheet Series](https://cheatsheetseries.owasp.org/cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html)
+- [Server Side Request Forgery Prevention - OWASP Cheat Sheet Series](https://cheatsheetseries.owasp.org/cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html)（[[owasp-cheat-sheet-series|OWASP Cheat Sheet Series]]の一篇）
 - [What is SSRF (Server-side request forgery)? Tutorial & Examples | Web Security Academy](https://portswigger.net/web-security/ssrf)
 - [Preventing Server-Side Request Forgery in Golang - agwa.name](https://www.agwa.name/blog/post/preventing_server_side_request_forgery_in_golang)
 - [code.dny.dev/ssrf - Go Packages](https://pkg.go.dev/code.dny.dev/ssrf)
