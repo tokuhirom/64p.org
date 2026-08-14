@@ -1,6 +1,6 @@
 ---
 created: 2026-08-14 23:05
-updated: 2026-08-14 23:08
+updated: 2026-08-14 23:09
 ---
 # 3Mの15%カルチャー
 
@@ -19,6 +19,10 @@ updated: 2026-08-14 23:08
 - 1977年に Post-it Notes として製品化され、3Mを代表するヒット商品になった。
 
 他にもScotchテープなど、3Mのベストセラー製品の多くがこの制度から生まれたとされる。
+
+## [[corporate-innovation-culture|企業のイノベーション奨励制度・文化]]の中での位置づけ
+
+[[mcknight-principles|McKnight Principles]]の思想を制度として実装したもので、この系譜の元祖。[[google-20-percent-rule|Googleの20%ルール]]など後続の類似制度の手本になった。
 
 ## 出典
 
