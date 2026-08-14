@@ -1,6 +1,6 @@
 ---
 created: 2026-08-14 11:36
-updated: 2026-08-14 11:36
+updated: 2026-08-14 11:39
 ---
 # Terraform
 
@@ -16,6 +16,10 @@ HashiCorpが開発する宣言的IaC(Infrastructure as Code)ツール。HCL(Hash
 ## ライセンス変遷
 
 2023年8月にMPL 2.0からBUSL 1.1(Business Source License)へ変更され、これを機に**OpenTofu**(Linux Foundation傘下)としてフォークされた。経緯の詳細は[[bsl|BSL]]・[[software-licenses|ソフトウェアライセンス]]を参照。
+
+## [[hashicorp|HashiCorp製品群]]の中での位置づけ
+
+HashiCorpのIaCツール。同社の他製品([[consul|Consul]]・[[vault|Vault]]・[[nomad|Nomad]])とは独立して単体で使われることが多い。
 
 ## 出典
 

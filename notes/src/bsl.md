@@ -1,6 +1,6 @@
 ---
 created: 2026-08-14 09:59
-updated: 2026-08-14 11:36
+updated: 2026-08-14 11:39
 ---
 # BSL (Business Source License)
 
@@ -26,7 +26,7 @@ MariaDB社が考案したsource-availableライセンス。SPDX識別子は`BUSL
 
 - **MariaDB MaxScale**: 本家。MariaDB Serverとの接続プロキシ
 - **CockroachDB** (2019): Apache 2.0から移行
-- **HashiCorp** (2023年8月): [[terraform|Terraform]]・Vaultなど全製品をMPL 2.0からBUSL 1.1へ変更。「HashiCorpと競合する製品への組み込み・ホスティング」を禁じるAdditional Use Grantが曖昧だと批判され、Terraformから**OpenTofu**（Linux Foundation傘下）、Vaultから**OpenBao**がフォークされた
+- **[[hashicorp|HashiCorp]]** (2023年8月): [[terraform|Terraform]]・[[vault|Vault]]など全製品をMPL 2.0からBUSL 1.1へ変更。「HashiCorpと競合する製品への組み込み・ホスティング」を禁じるAdditional Use Grantが曖昧だと批判され、Terraformから**[[opentofu|OpenTofu]]**（Linux Foundation傘下）、Vaultから**[[openbao|OpenBao]]**がフォークされた
 - **SurrealDB**、**EMQX** など
 
 [[sspl|SSPL]]同様、ライセンス変更が大型フォークを誘発した事例（OpenTofu）を生んでいる。

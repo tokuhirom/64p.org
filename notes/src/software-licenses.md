@@ -1,6 +1,6 @@
 ---
 created: 2026-08-14 09:59
-updated: 2026-08-14 11:36
+updated: 2026-08-14 11:39
 ---
 # ソフトウェアライセンス
 
@@ -27,5 +27,5 @@ updated: 2026-08-14 11:36
 
 - [[redis|Redis]] → [[valkey|Valkey]]: SSPL化を機にAWS・GoogleらがフォークしてLinux Foundationへ
 - [[elasticsearch|Elasticsearch]] → [[opensearch|OpenSearch]]: SSPL化を機にAWSがフォーク
-- [[terraform|Terraform]] → OpenTofu: BSL化を機にLinux Foundation傘下でフォーク
+- [[terraform|Terraform]] → [[opentofu|OpenTofu]]: BSL化を機にLinux Foundation傘下でフォーク
 - [[mold-linker|mold]]: AGPL/商用デュアルライセンスのマネタイズがうまくいかず、逆にMITへ緩めた例
