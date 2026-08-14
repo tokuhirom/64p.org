@@ -1,6 +1,6 @@
 ---
 created: 2026-08-14 23:05
-updated: 2026-08-14 23:05
+updated: 2026-08-14 23:08
 ---
 # 3Mの15%カルチャー
 
@@ -10,7 +10,7 @@ updated: 2026-08-14 23:05
 
 ## 起源: William McKnightの経営哲学
 
-当時の3M会長 William L. McKnight が1948年に打ち出した経営原則（McKnight Principles）に由来する。意思決定を組織の下層に委譲し、自発性を奨励し、失敗を許容するという思想で、「アイデアを持つ者の話は誰のものであれ聞け (listen to anybody with an idea)」という姿勢が15%ルールの土台になった。
+当時の3M会長 William L. McKnight が1948年に打ち出した経営原則（[[mcknight-principles|McKnight Principles]]）に由来する。意思決定を組織の下層に委譲し、自発性を奨励し、失敗を許容するという思想で、「アイデアを持つ者の話は誰のものであれ聞け (listen to anybody with an idea)」という姿勢が15%ルールの土台になった。
 
 ## 代表的な成果: ポストイット
 
