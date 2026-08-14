@@ -1,6 +1,6 @@
 ---
 created: 2026-08-14 11:36
-updated: 2026-08-14 11:43
+updated: 2026-08-14 13:12
 ---
 # Terraform
 
@@ -10,7 +10,7 @@ HashiCorpが開発する宣言的IaC(Infrastructure as Code)ツール。HCL(Hash
 
 ## アーキテクチャ
 
-- **Provider**: クラウド・SaaS・各種APIとやりとりするプラグイン。個々のリソースタイプ・データソースはproviderが実装する。設定内で使用するproviderを宣言し、Terraformがそれをインストールして利用する。
+- **Provider**: クラウド・SaaS・各種APIとやりとりするプラグイン。個々のリソースタイプ・データソースはproviderが実装する。設定内で使用するproviderを宣言し、Terraformがそれをインストールして利用する。各属性のスキーマ定義には[[terraform-provider-schema-flags|Required/Optional/Computedといったフラグ]]がある。
 - **State**: デプロイ済みリソースの実際の状態を追跡するstateファイル。`backend`ブロックで保存先(ローカル・S3・Terraform Cloudなど)を指定する。`plan`はこのstateと設定の差分を計算し、`apply`で実インフラへ反映する。
 
 ## ライセンス変遷
