@@ -1,6 +1,6 @@
 ---
 created: 2026-08-14 09:19
-updated: 2026-08-14 09:19
+updated: 2026-08-14 09:29
 ---
 # GPUStack
 
@@ -13,6 +13,10 @@ updated: 2026-08-14 09:19
 - NVIDIA・AMDに加え、Ascend NPU・Hygon DCU・Moore Threads・MetaX・Cambricon MLU・Iluvatar・T-Head PPUなど幅広いアクセラレータをサポート
 - OpenAI互換・Anthropic互換のAPIで推論エンジンを提供する
 - Grafana/Prometheusと連携した監視ダッシュボードで、システムの健全性・メトリクスを可視化する
+
+## [[vllm|vLLM]]とのレイヤーの違い
+
+vLLMは単一ノード上でLLM推論を実行する推論エンジンそのものであり、GPUStackはそのvLLM(やSGLang、TensorRT-LLMなど)を部品として使う側の管理レイヤーにあたる。GPUStackは複数GPU・複数ノードにまたがるクラスタ管理、リソーススケジューリング、どの推論エンジンをどう構成するかの自動選択、ロードバランシング、認証・監視、統一APIゲートウェイなどを担う。Kubernetesにおけるコンテナランタイムとオーケストレータの関係に近い。
 
 ## Kubernetesとの関係
 
@@ -28,3 +32,4 @@ updated: 2026-08-14 09:19
 - [GitHub - gpustack/gpustack](https://github.com/gpustack/gpustack)
 - [Overview - GPUStack](https://docs.gpustack.ai/2.0/overview/)
 - [Introducing GPUStack: An open-source GPU cluster manager for running LLMs - Medium](https://medium.com/@gpustack.ai/introducing-gpustack-an-open-source-gpu-cluster-manager-for-running-llms-0f0a3cb104a7)
+- [GitHub - gpustack/gpustack (README)](https://raw.githubusercontent.com/gpustack/gpustack/main/docs/overview.md)
