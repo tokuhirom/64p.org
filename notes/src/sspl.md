@@ -1,6 +1,6 @@
 ---
 created: 2026-08-14 09:59
-updated: 2026-08-14 09:59
+updated: 2026-08-14 11:32
 ---
 # SSPL
 
@@ -26,7 +26,7 @@ AGPLの第13条が「改変版をネットワーク経由で使わせるなら�
 ## 採用と、それが誘発したフォーク
 
 - **MongoDB** (2018): AGPLv3から移行。SSPLの本家
-- **Elasticsearch/Kibana** (2021): Apache 2.0からSSPL/Elastic Licenseのデュアルへ → AWSが**OpenSearch**をフォーク。2024年9月にAGPLv3を追加してOSI承認ライセンスに復帰
+- **[[elasticsearch|Elasticsearch]]/Kibana** (2021): Apache 2.0からSSPL/Elastic Licenseのデュアルへ → AWSが**[[opensearch|OpenSearch]]**をフォーク。2024年9月にAGPLv3を追加してOSI承認ライセンスに復帰
 - **[[redis|Redis]]** (2024): BSDからRSALv2/SSPLv1のデュアルへ → **[[valkey|Valkey]]**がフォーク。2025年5月のRedis 8でAGPLv3を追加して復帰
 
 ElasticもRedisも最終的にAGPLv3併用でオープンソースに戻っており、「SSPL単独はコミュニティの離反（フォーク）コストが大きすぎる」という前例になりつつある。

@@ -1,6 +1,6 @@
 ---
 created: 2026-08-14 09:50
-updated: 2026-08-14 09:59
+updated: 2026-08-14 11:32
 ---
 # AGPL
 
@@ -31,7 +31,7 @@ GNU Affero General Public License。GPLの「ASPループホール（SaaSルー�
 
 - **MongoDB**: 長らくAGPLv3だったが、AGPLでも不十分として2018年により強い独自ライセンス[[sspl|SSPL]]へ移行（SSPLはOSI非承認）。
 - **Grafana**: 2021年に Apache 2.0 から AGPLv3 へ変更。
-- **Elasticsearch/Kibana**: 2021年にSSPL化した後、2024年9月にAGPLv3を選択肢に追加して「オープンソース復帰」を宣言。
+- **[[elasticsearch|Elasticsearch]]/Kibana**: 2021年にSSPL化した後、2024年9月にAGPLv3を選択肢に追加して「オープンソース復帰」を宣言。
 - **[[redis|Redis]]**: 2024年のSSPL化の後、2025年5月のRedis 8でAGPLv3を選択肢に加えてOSI承認ライセンスに復帰。この間に[[valkey|Valkey]]がフォークとして誕生している。
 - **[[mold-linker|mold]]**: AGPL/商用のデュアルライセンスでのマネタイズを試みたが期待通りにいかず、2.0でMITへ移行。
 

@@ -1,6 +1,6 @@
 ---
 created: 2026-08-14 09:59
-updated: 2026-08-14 09:59
+updated: 2026-08-14 11:32
 ---
 # ソフトウェアライセンス
 
@@ -26,6 +26,6 @@ updated: 2026-08-14 09:59
 ## ライセンス変更が引き起こしたフォーク・騒動の事例
 
 - [[redis|Redis]] → [[valkey|Valkey]]: SSPL化を機にAWS・GoogleらがフォークしてLinux Foundationへ
-- Elasticsearch → OpenSearch: SSPL化を機にAWSがフォーク
+- [[elasticsearch|Elasticsearch]] → [[opensearch|OpenSearch]]: SSPL化を機にAWSがフォーク
 - Terraform → OpenTofu: BSL化を機にLinux Foundation傘下でフォーク
 - [[mold-linker|mold]]: AGPL/商用デュアルライセンスのマネタイズがうまくいかず、逆にMITへ緩めた例
