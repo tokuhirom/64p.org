@@ -1,6 +1,6 @@
 ---
 created: 2026-08-14 14:02
-updated: 2026-08-14 14:02
+updated: 2026-08-14 14:08
 ---
 # OpenHaystack
 
@@ -8,7 +8,7 @@ updated: 2026-08-14 14:02
 
 <https://github.com/seemoo-lab/openhaystack>
 
-ドイツ TU Darmstadt の Secure Mobile Networking Lab (SEEMOO) の研究者 (Alexander Heinrich, Milan Stute) が開発したオープンソースのフレームワーク。Apple の [[find-my-network|Find My ネットワーク]]をリバースエンジニアリングし、**自作の「AirTag」的な BLE トラッカーを作れる**ようにするもの。AirTag の正式発表（2021年4月）より前の2021年3月に公開され、WiSec 2021 で論文としても発表された。
+ドイツ TU Darmstadt の Secure Mobile Networking Lab (SEEMOO) の研究者 (Alexander Heinrich, Milan Stute) が開発したオープンソースのフレームワーク。Apple の [[find-my-network|Find My ネットワーク]]をリバースエンジニアリングし、**自作の「AirTag」的な [[bluetooth-low-energy|BLE]] トラッカーを作れる**ようにするもの。AirTag の正式発表（2021年4月）より前の2021年3月に公開され、WiSec 2021 で論文としても発表された。
 
 ## 仕組み
 
