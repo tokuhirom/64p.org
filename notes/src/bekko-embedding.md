@@ -1,6 +1,6 @@
 ---
 created: 2026-08-15 07:14
-updated: 2026-08-15 07:14
+updated: 2026-08-15 07:22
 ---
 # Bekko Embedding
 
@@ -13,7 +13,7 @@ updated: 2026-08-15 07:14
 ## アーキテクチャ
 
 - mmBERT-small(22層)を4層(a8m)/13層(a25m)にプルーニングして構築。
-- 出力は384次元。Matryoshka学習により256/128/64次元にも圧縮可能。
+- 出力は384次元。[[matryoshka-representation-learning|Matryoshka学習]]により256/128/64次元にも圧縮可能。
 - 最大8,192トークンの入力に対応。
 
 ## Active Parameters(AP)という指標
