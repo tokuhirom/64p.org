@@ -1,6 +1,6 @@
 ---
 created: 2026-08-15 06:51
-updated: 2026-08-15 06:51
+updated: 2026-08-15 06:58
 ---
 # Go 1.24のtool directive
 
@@ -37,6 +37,8 @@ go install tool  # GOBINへインストール
 ## 注意点
 
 ツール依存も通常の依存と同様にgo.modのバージョン解決に参加するため、ツール側のgo.modが新しすぎる`go` directiveを宣言していると、利用側モジュールがサポートできるGoの下限に影響する（詳細は[[go-mod-go-directive|go.modのgo directiveとtoolchain directive]]）。
+
+また、ツール側がtool directive経由のインストールを推奨していない場合もある。例えば[[golangci-lint]]は、ローカルのGoバージョンに依存したテストされていないバイナリができること等を理由に、バイナリインストールを推奨しtool directive経由を「動作保証しない」としている。
 
 ## 出典
 
