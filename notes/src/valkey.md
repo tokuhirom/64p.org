@@ -1,15 +1,15 @@
 ---
 created: 2026-08-14 09:06
-updated: 2026-08-14 09:50
+updated: 2026-08-14 09:59
 ---
 # Valkey
 
-2024年3月の[[redis|Redis]]のライセンス変更（BSD → RSALv2/SSPLv1）を受けて、数日のうちにRedis 7.2からフォークされたインメモリKVS。Linux Foundation傘下でBSD-3-Clauseライセンスを維持しており、AWS・Google Cloud・Oracle・Ericsson・Snapなどの企業がTechnical Steering Committeeに参加している。 #infrastructure #cache
+2024年3月の[[redis|Redis]]のライセンス変更（BSD → RSALv2/[[sspl|SSPLv1]]）を受けて、数日のうちにRedis 7.2からフォークされたインメモリKVS。Linux Foundation傘下でBSD-3-Clauseライセンスを維持しており、AWS・Google Cloud・Oracle・Ericsson・Snapなどの企業がTechnical Steering Committeeに参加している。 #infrastructure #cache
 
 ## 経緯
 
 - Redis社のライセンス変更直後、元Redisコントリビュータ（AWSのMadelyn Olsonら）が「placeholderkv」の名でフォークを開始し、すぐにLinux Foundationへ寄贈されてValkeyと命名された
-- クラウド各社がRedisをマネージドサービスとして提供していたため、SSPLの「サービス提供にはソース公開が必要」という条項を避ける動機が強かった
+- クラウド各社がRedisをマネージドサービスとして提供していたため、[[sspl|SSPL]]の「サービス提供にはソース公開が必要」という条項を避ける動機が強かった
 - Fedora・AlpineなどのLinuxディストリビューションがredisパッケージをvalkeyに置き換え、AWSもElastiCache / MemoryDBでValkey対応を追加した
 
 ## リリースの歩み

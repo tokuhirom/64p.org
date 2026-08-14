@@ -1,6 +1,6 @@
 ---
 created: 2026-08-14 09:50
-updated: 2026-08-14 09:50
+updated: 2026-08-14 09:59
 ---
 # AGPL
 
@@ -11,7 +11,7 @@ GNU Affero General Public License。GPLの「ASPループホール（SaaSルー�
 ## 歴史
 
 - **2002年**: Henri Poole の会社 Affero, Inc. が GPLv2 ベースの「Affero GPL v1」を公開。名前はこの会社に由来する。
-- **2007年**: FSF が GPLv3 をベースに **GNU AGPLv3** を公開。OSI承認・FSF公認の自由ソフトウェアライセンス。GPLv3とは相互にリンク可能とする条項が双方の第13条に入っている。
+- **2007年**: FSF が [[gplv3|GPLv3]] をベースに **GNU AGPLv3** を公開。OSI承認・FSF公認の自由ソフトウェアライセンス。GPLv3とは相互にリンク可能とする条項が双方の第13条に入っている。
 
 ## 中核: 第13条 (Remote Network Interaction)
 
@@ -29,13 +29,17 @@ GNU Affero General Public License。GPLの「ASPループホール（SaaSルー�
 
 商用オープンソース企業が「クラウドベンダーのタダ乗り防止」として採用するケースが目立つ。
 
-- **MongoDB**: 長らくAGPLv3だったが、AGPLでも不十分として2018年により強い独自ライセンスSSPLへ移行（SSPLはOSI非承認）。
+- **MongoDB**: 長らくAGPLv3だったが、AGPLでも不十分として2018年により強い独自ライセンス[[sspl|SSPL]]へ移行（SSPLはOSI非承認）。
 - **Grafana**: 2021年に Apache 2.0 から AGPLv3 へ変更。
 - **Elasticsearch/Kibana**: 2021年にSSPL化した後、2024年9月にAGPLv3を選択肢に追加して「オープンソース復帰」を宣言。
 - **[[redis|Redis]]**: 2024年のSSPL化の後、2025年5月のRedis 8でAGPLv3を選択肢に加えてOSI承認ライセンスに復帰。この間に[[valkey|Valkey]]がフォークとして誕生している。
 - **[[mold-linker|mold]]**: AGPL/商用のデュアルライセンスでのマネタイズを試みたが期待通りにいかず、2.0でMITへ移行。
 
 「強すぎて企業に嫌われる」性質が、逆に商用OSSベンダーにとっては競合クラウドベンダーの牽制と商用ライセンス販売（デュアルライセンス）の道具として機能している、という二面性がある。
+
+## [[software-licenses|ソフトウェアライセンス]]の中での位置づけ
+
+[[gplv3|GPLv3]]にネットワークコピーレフトを加えた拡張。これでも足りないとして生まれたのが[[sspl|SSPL]]。
 
 ## 出典
 

@@ -1,6 +1,6 @@
 ---
 created: 2026-08-09 16:56
-updated: 2026-08-09 16:56
+updated: 2026-08-14 09:59
 ---
 # Network Doctor (netdoc)
 
@@ -40,7 +40,7 @@ netdoc --json host          # スクリプト向けの構造化レポート
 
 ## その他
 
-GitHub上で156スター、560コミット。ライセンスはGPLv3以上。
+GitHub上で156スター、560コミット。ライセンスは[[gplv3|GPLv3]]以上。
 
 #go #tui #network #cli
 

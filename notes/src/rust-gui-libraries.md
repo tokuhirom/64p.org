@@ -1,6 +1,6 @@
 ---
 created: 2026-08-09 16:01
-updated: 2026-08-09 16:05
+updated: 2026-08-14 09:59
 ---
 # Rust GUI ライブラリ一覧
 
@@ -31,7 +31,7 @@ Rust製のGUIライブラリ・フレームワークをまとめておく。個�
 Elm Architecture(State/Message/View/Update)を採用した宣言型GUI。Krakenの元Cryptowatchチームが開発。型安全なAPIとasync対応が特徴だが、ドキュメントに不足があるとの指摘がある([boringcactusのサーベイ](https://www.boringcactus.com/2025/04/13/2025-survey-of-rust-gui-libraries.html)参照)。
 
 ### Slint
-`.slint`という独自DSLでUIを定義し、コンパイル時に最適化する組込機器フレンドリーな設計。Rust以外にC++/JavaScript/Pythonからも利用可能。ライセンスがGPLv3または商用ライセンスという点は他のMITライセンス系ライブラリと毛色が異なる。
+`.slint`という独自DSLでUIを定義し、コンパイル時に最適化する組込機器フレンドリーな設計。Rust以外にC++/JavaScript/Pythonからも利用可能。ライセンスが[[gplv3|GPLv3]]または商用ライセンスという点は他のMITライセンス系ライブラリと毛色が異なる。
 
 ### Dioxus
 React/Solid/Svelteのいいとこ取りを謳うシグナルベースの状態管理を持つフルスタックフレームワーク。Web/デスクトップ/モバイル/SSRを単一コードベースでカバーする。[[freya]]はDioxusの代替レンダラー(Skiaベース)としてREADME内で言及されている。
