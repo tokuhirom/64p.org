@@ -1,6 +1,6 @@
 ---
 created: 2026-08-13 13:07
-updated: 2026-08-13 13:07
+updated: 2026-08-14 09:07
 ---
 # MessagePack
 
@@ -22,7 +22,7 @@ updated: 2026-08-13 13:07
 ## 採用事例
 
 - [[fluentd|Fluentd]]は内部データ表現に全面的にMessagePackを採用しており、パイプラインの各ステージ間でゼロコピーのデータ受け渡しを実現している。
-- RedisはLuaスクリプティングでMessagePackを採用している。
+- [[redis|Redis]]はLuaスクリプティングでMessagePackを採用している。
 - Treasure Data社の分析基盤パイプラインもMessagePack上に構築されている。
 
 ## 出典
