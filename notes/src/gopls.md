@@ -6,7 +6,7 @@ updated: 2026-08-15 07:06
 
 #golang #lsp
 
-Goチームが開発している**公式のlanguage server**。「Go please」と発音する。LSP (Language Server Protocol) 対応エディタにナビゲーション・補完・診断・リファクタリングなどのIDE機能を提供する。VS Code（公式Go拡張が自動でインストール・更新）、Vim/Neovim、Emacs、Helix、Zedなど幅広いエディタに対応。
+Goチームが開発している**公式のlanguage server**。「Go please」と発音する。[[lsp|LSP (Language Server Protocol)]]対応エディタにナビゲーション・補完・診断・リファクタリングなどのIDE機能を提供する。VS Code（公式Go拡張が自動でインストール・更新）、Vim/Neovim、Emacs、Helix、Zedなど幅広いエディタに対応。
 
 ```sh
 go install golang.org/x/tools/gopls@latest
