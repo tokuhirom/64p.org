@@ -1,6 +1,6 @@
 ---
 created: 2026-08-14 11:39
-updated: 2026-08-14 11:39
+updated: 2026-08-14 11:43
 ---
 # Nomad
 
@@ -16,7 +16,7 @@ HashiCorpが開発するワークロードオーケストレーター。Docker�
 
 ## ライセンス変遷
 
-2023年8月のHashiCorp全製品のBUSL 1.1化にNomadも含まれた。詳細は[[bsl|BSL]]を参照。
+2023年8月のHashiCorp全製品のBUSL 1.1化にNomadも含まれた。詳細は[[business-source-license|BSL]]を参照。
 
 ## 出典
 

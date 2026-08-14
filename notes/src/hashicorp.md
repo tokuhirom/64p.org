@@ -1,6 +1,6 @@
 ---
 created: 2026-08-14 11:39
-updated: 2026-08-14 11:39
+updated: 2026-08-14 11:43
 ---
 # HashiCorp製品群
 
@@ -17,9 +17,9 @@ HashiCorpが開発するインフラ運用系ツール群を見渡すハブノ�
 
 ## ライセンス変更とそれが誘発したフォーク
 
-2023年8月、HashiCorpは全製品をMPL 2.0からBUSL 1.1([[bsl|BSL]])へ変更した。これを機にLinux Foundation傘下で2つのフォークが生まれている。
+2023年8月、HashiCorpは全製品をMPL 2.0からBUSL 1.1([[business-source-license|BSL]])へ変更した。これを機にLinux Foundation傘下で2つのフォークが生まれている。
 
 - [[opentofu|OpenTofu]] — Terraformのフォーク
 - [[openbao|OpenBao]] — Vaultのフォーク
 
-背景にある[[bsl|BSL]]/[[software-licenses|ソフトウェアライセンス]]全体の潮流については別ノートを参照。
+背景にある[[business-source-license|BSL]]/[[software-licenses|ソフトウェアライセンス]]全体の潮流については別ノートを参照。

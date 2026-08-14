@@ -1,6 +1,6 @@
 ---
 created: 2026-08-14 11:39
-updated: 2026-08-14 11:39
+updated: 2026-08-14 11:43
 ---
 # Vault
 
@@ -17,7 +17,7 @@ HashiCorpが開発するシークレット管理・暗号化・PKIツール。AP
 
 ## ライセンス変遷
 
-2023年8月にMPL 2.0からBUSL 1.1へ変更され、これを機に**OpenBao**(Linux Foundation傘下)としてフォークされた。詳細は[[bsl|BSL]]を参照。
+2023年8月にMPL 2.0からBUSL 1.1へ変更され、これを機に**OpenBao**(Linux Foundation傘下)としてフォークされた。詳細は[[business-source-license|BSL]]を参照。
 
 ## 出典
 

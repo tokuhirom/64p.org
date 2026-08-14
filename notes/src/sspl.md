@@ -1,6 +1,6 @@
 ---
 created: 2026-08-14 09:59
-updated: 2026-08-14 11:32
+updated: 2026-08-14 11:43
 ---
 # SSPL
 
@@ -33,7 +33,7 @@ ElasticもRedisも最終的にAGPLv3併用でオープンソースに戻って�
 
 ## [[software-licenses|ソフトウェアライセンス]]の中での位置づけ
 
-AGPLよりさらに強い網羅的コピーレフトを狙った拡張だが、OSI非承認のためオープンソースではなくsource-availableに分類される。時限式でOSS化する[[bsl|BSL]]とは別系統のsource-availableライセンス。
+AGPLよりさらに強い網羅的コピーレフトを狙った拡張だが、OSI非承認のためオープンソースではなくsource-availableに分類される。時限式でOSS化する[[business-source-license|BSL]]とは別系統のsource-availableライセンス。
 
 ## 出典
 

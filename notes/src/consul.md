@@ -1,6 +1,6 @@
 ---
 created: 2026-08-14 11:36
-updated: 2026-08-14 11:39
+updated: 2026-08-14 11:43
 ---
 # Consul
 
@@ -20,7 +20,7 @@ Consul Connectモードでは各サービスにサイドカープロキシ(典�
 
 ## ライセンス変遷
 
-2023年8月にHashiCorpの全製品がMPL 2.0からBUSL 1.1へ変更された際、Consulも対象になった。詳細は[[bsl|BSL]]を参照。
+2023年8月にHashiCorpの全製品がMPL 2.0からBUSL 1.1へ変更された際、Consulも対象になった。詳細は[[business-source-license|BSL]]を参照。
 
 ## [[hashicorp|HashiCorp製品群]]の中での位置づけ
 
