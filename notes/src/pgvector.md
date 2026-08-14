@@ -1,10 +1,10 @@
 ---
 created: 2026-08-10 17:10
-updated: 2026-08-13 00:41
+updated: 2026-08-15 07:14
 ---
 # pgvector
 
-[[postgresql|PostgreSQL]]にベクトルデータ型（`vector`）とその類似検索機能を追加する拡張機能。テキストや画像の埋め込み（embedding）をリレーショナルデータベースに直接保存し、類似度検索ができる。生成AIによるRAG（検索拡張生成）や画像検索、レコメンドエンジンなどの用途で使われる。
+[[postgresql|PostgreSQL]]にベクトルデータ型（`vector`）とその類似検索機能を追加する拡張機能。テキストや画像の埋め込み（[[bekko-embedding|embedding]]）をリレーショナルデータベースに直接保存し、類似度検索ができる。生成AIによるRAG（検索拡張生成）や画像検索、レコメンドエンジンなどの用途で使われる。
 
 #postgresql #database #vector-search #ai
 
