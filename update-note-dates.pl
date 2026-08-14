@@ -1,7 +1,9 @@
 #!/usr/bin/env perl
 # Run by lefthook's pre-commit hook (see lefthook.yml). Given staged
 # notes/src/*.md paths as argv, stamps YAML frontmatter with created/updated
-# timestamps, regenerates the site, and stages everything the regen touched.
+# timestamps, then regenerates the site as a validation pass (broken [[links]]
+# warn here). Build output is gitignored and deployed via GitHub Actions, so
+# only the stamped sources are re-staged.
 use strict;
 use warnings;
 
@@ -40,5 +42,5 @@ for my $file (@md_files) {
 system('perl', 'regen-index.pl') == 0
     or die "regen-index.pl failed\n";
 
-system('git', 'add', 'notes/', 'index.html', 'talks/index.html') == 0
+system('git', 'add', 'notes/src/') == 0
     or die "git add failed\n";
