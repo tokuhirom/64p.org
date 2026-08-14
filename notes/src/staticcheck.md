@@ -1,6 +1,6 @@
 ---
 created: 2026-08-15 07:03
-updated: 2026-08-15 07:03
+updated: 2026-08-15 07:06
 ---
 # staticcheck
 
@@ -26,6 +26,10 @@ Dominik Honnef氏が開発しているGo向けの静的解析ツール（linter�
 
 - バージョニングは`2022.1`のような年ベースの形式。
 - 同じリポジトリに、構造体のメモリレイアウトを表示・最適化する`structlayout`系ツール（structlayout / structlayout-optimize / structlayout-pretty）も含まれている。
+
+## [[go-tooling|Goの開発ツーリング]]の中での位置づけ
+
+静的解析・lint系。[[go-vet|go vet]]より広範なチェックを提供する代表的なサードパーティlinterで、単体でも[[golangci-lint]]経由でも使われる。
 
 ## 出典
 
