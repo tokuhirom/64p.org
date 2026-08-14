@@ -1,6 +1,6 @@
 ---
 created: 2026-08-14 19:39
-updated: 2026-08-14 19:49
+updated: 2026-08-14 19:51
 ---
 # sghtmltopdf
 
@@ -14,8 +14,8 @@ wkhtmltopdfはQtWebKitベースのHTML-to-PDF変換ツールで、2023年にSSRF
 
 [[servo|Mozilla Servo]]プロジェクト由来のパーサー群をコンポーネントとして採用している。
 
-- HTML解析: html5ever
-- CSS解析: cssparser
+- HTML解析: [[html5ever]]
+- CSS解析: [[cssparser]]
 - セレクタマッチング: selectorsクレート
 - Ruby連携: magnus gem + FFI
 
