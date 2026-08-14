@@ -1,12 +1,12 @@
 ---
 created: 2026-08-15 07:15
-updated: 2026-08-15 07:15
+updated: 2026-08-15 07:17
 ---
 # Pebble（スマートウォッチ）
 
 #wearable #hardware #open-source #startup
 
-Eric Migicovskyが開発した電子ペーパー系スマートウォッチ。2012年にKickstarterでクラウドファンディング史上最大級の成功を収めたのち、2016年にFitbitへの売却で一度消滅。GoogleによるPebbleOSのオープンソース化（2025年1月）をきっかけに、創業者自身の会社 Core Devices によって復活した。
+Eric Migicovskyが開発した[[e-paper|電子ペーパー]]系スマートウォッチ。2012年にKickstarterでクラウドファンディング史上最大級の成功を収めたのち、2016年にFitbitへの売却で一度消滅。GoogleによるPebbleOSのオープンソース化（2025年1月）をきっかけに、創業者自身の会社 Core Devices によって復活した。
 
 ## 歴史
 
