@@ -36,6 +36,23 @@ print(resp.json())
 - `uv run example.py`とするだけで、uvが自動的に依存関係を解決した一時環境を作って実行してくれる(`pyproject.toml`があるプロジェクト内でも、このメタデータがあればそちらが優先される)
 - 依存関係が1ファイルに閉じるので、ちょっとしたスクリプトを配布・共有するのに向いている
 
+## shebang経由での直接実行
+
+スクリプトの先頭行に以下のshebangを書いておくと、`uv run`を打たずに`./スクリプト名`だけで実行できる。
+
+```
+#!/usr/bin/env -S uv run --script
+# /// script
+# requires-python = ">=3.12"
+# dependencies = ["httpx"]
+# ///
+
+import httpx
+print(httpx.get("https://example.com"))
+```
+
+`chmod +x`で実行権限を付与すれば、他の実行ファイルと同様に`./スクリプト名`で起動でき、その際に依存関係の解決・インストールも自動で行われる。`env`の`-S`オプションは、shebang行に複数の引数(`uv run --script`)をまとめて渡すためのもの。
+
 ## 出典
 
 - [uv - Astral Docs](https://docs.astral.sh/uv/)
