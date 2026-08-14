@@ -1,6 +1,6 @@
 ---
 created: 2026-08-14 08:24
-updated: 2026-08-14 08:33
+updated: 2026-08-14 11:36
 ---
 # Traefik
 
@@ -10,7 +10,7 @@ Go製のクラウドネイティブなリバースプロキシ / ロードバラ
 
 従来のリバースプロキシがルーティングを設定ファイルに手書きするのに対し、Traefikは「プロバイダー」からサービスを自動発見して自分の設定を動的に更新する。インフラの変化（コンテナの追加・削除など）を検知すると、再起動なしでルーティングに反映される。
 
-- プロバイダー: [[kubernetes|Kubernetes]]（Ingress / Gateway API / CRD）、Docker、Docker Swarm、Nomad、Amazon ECS、Consul、file、HTTPなど
+- プロバイダー: [[kubernetes|Kubernetes]]（Ingress / Gateway API / CRD）、Docker、Docker Swarm、Nomad、Amazon ECS、[[consul|Consul]]、file、HTTPなど
 - [[acme|ACME]]（[[lets-encrypt|Let's Encrypt]]）組み込みで、TLS証明書の取得・更新を自動化できる
 - HTTP/2・HTTP/3・gRPC・WebSocket・TCP・UDP対応、ミドルウェアチェーンによる拡張、ビルトインのダッシュボード
 
