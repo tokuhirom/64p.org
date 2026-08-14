@@ -314,7 +314,11 @@ sub regen {
     my @by_created = sort { $b->{created} cmp $a->{created} } @notes;
     splice(@by_created, 30) if @by_created > 30;
     my @rss_items = map {
-        +{ %$_, pub_date => rfc822(Time::Piece->strptime($_->{created}, '%Y-%m-%d %H:%M')) }
+        my $body = $_->{body};
+        # RSS readers don't resolve root-relative hrefs against the site,
+        # so absolutize the wikilink/tag links embedded in the rendered body.
+        $body =~ s{href="(/[^"]*)"}{href="https://64p.org$1"}g;
+        +{ %$_, body => $body, pub_date => rfc822(Time::Piece->strptime($_->{created}, '%Y-%m-%d %H:%M')) }
     } @by_created;
     my $rss = $xslate->render(
         'notes-rss.tt' => {
