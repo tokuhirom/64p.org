@@ -1,6 +1,6 @@
 ---
 created: 2026-08-14 12:25
-updated: 2026-08-14 12:25
+updated: 2026-08-14 12:28
 ---
 # ssh-agent
 
@@ -28,7 +28,7 @@ OpenSSH付属のバックグラウンドプログラムで、SSH認証用の秘�
 - Agent Forwardingを`~/.ssh/config`でデフォルト有効にせず、必要なときだけ`-A`オプションを付けて使う。
 - `ssh-add -x` / `ssh-add -X`でagentをロック/アンロックし、不要な間は鍵を使えなくする。
 - Secretive（macOSのSecure Enclave + Touch ID統合agent）のように、生体認証をセッションごとに要求するagentを使う。
-- Agent Forwardingの代替として`ProxyJump`（`ssh -J bastion.example.com target.internal`）を使う。この方式では、ローカルのsshクライアント自身が複数ホップ分のハンドシェイクを行い、agentソケット自体をリモートホストに晒さずに済む。
+- Agent Forwardingの代替として[[proxyjump|ProxyJump]]（`ssh -J bastion.example.com target.internal`）を使う。この方式では、ローカルのsshクライアント自身が複数ホップ分のハンドシェイクを行い、agentソケット自体をリモートホストに晒さずに済む。
 
 ## 出典
 
