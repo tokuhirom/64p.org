@@ -1,10 +1,12 @@
 ---
 created: 2026-08-10 20:44
-updated: 2026-08-10 20:44
+updated: 2026-08-14 22:50
 ---
 # ACM-ICPC
 
 正式名称は「ACM国際大学対抗プログラミングコンテスト」(ACM International Collegiate Programming Contest)。世界最大級の、大学生を対象とした勝ち抜き型の競技プログラミングコンテスト。 #competitive-programming
+
+名前が似ている [[icfpc|ICFPC (ICFP Programming Contest)]] とは別のコンテスト。
 
 ## 歴史
 
