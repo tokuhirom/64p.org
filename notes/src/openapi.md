@@ -1,6 +1,6 @@
 ---
 created: 2026-08-15 16:18
-updated: 2026-08-15 16:18
+updated: 2026-08-15 16:19
 ---
 # OpenAPI
 
@@ -12,7 +12,7 @@ RESTful APIをHTTP越しに記述するための言語非依存なインター�
 
 2015年、SmartBearがSwagger 2.0仕様をLinux Foundation傘下の新設団体「OpenAPI Initiative (OAI)」に寄贈し、2016年1月1日に仕様名が正式に"OpenAPI Specification"へ改称され、新しいGitHubリポジトリへ移動した。OAIにはSmartBear・Google・IBM・Microsoft・PayPal・SAP・Salesforceなどが名を連ねる、ベンダー中立なオープンガバナンス組織。
 
-現在の用語整理としては、「Swagger」はSmartBearが提供するツール群（[[swagger-ui-editor|Swagger UI/Editor]]など）を指す通称として残り、「OpenAPI」が仕様そのものを指す。
+現在の用語整理としては、「Swagger」はSmartBearが提供するツール群（[[swagger-ui-editor|Swagger UI/Editor]]など）を指す通称として残り、「OpenAPI」が仕様そのものを指す。詳しくは[[swagger|Swagger]]参照。
 
 ## バージョン変遷
 

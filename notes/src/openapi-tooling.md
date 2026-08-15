@@ -1,6 +1,6 @@
 ---
 created: 2026-08-15 16:18
-updated: 2026-08-15 16:18
+updated: 2026-08-15 16:19
 ---
 # OpenAPI関連ツールエコシステム
 
@@ -19,6 +19,7 @@ graph LR
 
 ## 各ツール
 
+- [[swagger|Swagger]] — SmartBearのツール群のブランド名。仕様名としてのOpenAPIとの使い分けを整理
 - [[spectral|Spectral]] — Stoplight製のOSSリンター。JSONPathベースのルールでOpenAPI/AsyncAPI文書の書き方の品質をチェックする
 - [[redocly-cli|Redocly CLI]] — Redocly製のlint/bundle CLI。Spectralと競合するリンター機能を持つ
 - [[swagger-ui-editor|Swagger UI / Swagger Editor]] — SmartBear製、API設計とドキュメント可視化の定番
