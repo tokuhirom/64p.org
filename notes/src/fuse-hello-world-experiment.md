@@ -1,14 +1,14 @@
 ---
 created: 2026-08-16 07:22
-updated: 2026-08-16 07:22
+updated: 2026-08-16 07:32
 ---
 # fuse-hello-world実験
 
-[[fuse-filesystem-in-userspace|FUSE]]が「非rootユーザーでもファイルシステムをマウントできる」「システムコール1回ごとにカーネル⇔ユーザー空間を往復する」という仕組みを手を動かして体感するための実験記録。`libfuse`自体には依存せず、`/dev/fuse`を直接叩く純Rust実装の[fuser](https://github.com/cberner/fuser)クレート（[[libfuse-api-levels|低レベルAPI]]相当）で、`hello.txt`という1ファイルだけを返す最小のファイルシステムを実装した。 #linux #rust #ファイルシステム
+[[fuse-filesystem-in-userspace|FUSE]]が「非rootユーザーでもファイルシステムをマウントできる」「システムコール1回ごとにカーネル⇔ユーザー空間を往復する」という仕組みを手を動かして体感するための実験記録。`libfuse`自体には依存せず、`/dev/fuse`を直接叩く純Rust実装の[[fuser-rust-crate|fuser]]クレート（[[libfuse-api-levels|低レベルAPI]]相当）で、`hello.txt`という1ファイルだけを返す最小のファイルシステムを実装した。 #linux #rust #ファイルシステム
 
 ## 使ったもの
 
-- [fuser](https://crates.io/crates/fuser) 0.18.0 — FUSEの低レベルAPIをRustで実装したクレート。`libfuse3-dev`のヘッダ類は一切インストールせずに使えた。
+- [[fuser-rust-crate|fuser]] 0.18.0 — FUSEの低レベルAPIをRustで実装したクレート。`libfuse3-dev`のヘッダ類は一切インストールせずに使えた。
 - 公式リポジトリの`examples/hello.rs`をベースに、マルチスレッド統計などの余分な機能を削った最小版を書いた。
 
 ## 実装
