@@ -1,6 +1,6 @@
 ---
 created: 2026-08-09 13:26
-updated: 2026-08-15 10:04
+updated: 2026-08-15 17:41
 ---
 
 # Raku / Rakudo / Perl 6
@@ -61,6 +61,10 @@ Rust製のRakuインタプリタ「[mutsu](https://github.com/tokuhirom/mutsu)�
 - Rakuの`Int`は最初から多倍長整数（bignum）であり、Gauche由来の[[print-100-trick|ループなしで1〜100を印字するトリック]]も`FatRat`を使わず素の`Int`除算だけで[[print-100-trick-mutsu-experiment|再現できた]]。
 - サイト（[tokuhirom.github.io/mutsu](https://tokuhirom.github.io/mutsu/)）は[[wasm|WebAssembly]]化したmutsu自身で動いており、チュートリアルやプレイグラウンドを提供している。
 - まだ本番用途には非推奨（not yet suitable for production use）。RakuASTは未完成、コンパイル時診断の一部が未実装など既知の制限あり。
+
+## 他の独立実装
+
+mutsu以外にも、Rakudo/MoarVM系列とは別に個人・小規模チームによるRaku処理系の実装が存在する。例えば[[raptor|Raptor]]は、Perl5に近い構文をRakuのサブセットとして採用したGo製の処理系。
 
 ## 出典
 
