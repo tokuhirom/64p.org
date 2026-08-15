@@ -1,6 +1,6 @@
 ---
 created: 2026-08-13 08:59
-updated: 2026-08-13 08:59
+updated: 2026-08-15 19:06
 ---
 # MySQL HeatWave
 
@@ -37,7 +37,7 @@ DB System側でのデータ変更は暗号化された通信で自動的にHeatW
 
 課金は個別のライセンス購入ではなく、サブスクリプション/従量課金（pay-as-you-go）モデルに組み込まれている。DB System（MySQLインスタンス部分）はOCPU・ストレージ単位の課金、HeatWave Clusterはノード単位の追加課金という構成。
 
-ベクトル検索やML機能などHeatWave固有の機能は、MySQL Community版はもちろんEnterprise版にも存在しない、HeatWaveだけの独自機能。
+ベクトル検索やML機能などHeatWave固有の機能は、MySQL Community版はもちろんEnterprise版にも存在しない、HeatWaveだけの独自機能。Community/Commercial版でも[[mysql-vector|VECTOR型]]自体は使えるが、値の格納・シリアライズができるのみで、類似度計算(`DISTANCE()`関数)やANN検索インデックスはHeatWave限定。
 
 ## パフォーマンス面の主張
 
