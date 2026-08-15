@@ -1,6 +1,6 @@
 ---
 created: 2026-08-09 21:52
-updated: 2026-08-10 16:49
+updated: 2026-08-15 09:30
 ---
 # WireGuard
 
@@ -30,7 +30,7 @@ updated: 2026-08-10 16:49
 
 ## 応用
 
-[[tailscale]]はWireGuardプロトコルをベースに、鍵配布・[[nat|NAT]]越え・DNSなどの面倒な部分をコーディネーションサーバーが肩代わりするサービス。
+[[tailscale]]はWireGuardプロトコルをベースに、鍵配布・[[nat|NAT]]越え・DNSなどの面倒な部分をコーディネーションサーバーが肩代わりするサービス。[[proxylity-udp-gateway|Proxylity UDP Gateway]]はAWS上でWireGuardエンドポイントをサーバーレスに提供する製品。
 
 ## 出典
 
