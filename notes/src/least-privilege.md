@@ -1,6 +1,6 @@
 ---
 created: 2026-08-12 13:40
-updated: 2026-08-12 17:52
+updated: 2026-08-16 07:44
 ---
 # 最小権限の原則
 
@@ -16,11 +16,15 @@ Principle of Least Privilege (PoLP)。システム内のあらゆる主体（ユ
 
 ## 実装パターン
 
-- **権限の降格**: 特権で起動して初期化後に落とす古典パターン。Version 6 Unix の login.c がスーパーユーザーで起動し、不要になった時点で setuid() で降格していたのが古い実例。
+- **権限の降格**: 特権で起動して初期化後に落とす古典パターン。Version 6 Unix の login.c がスーパーユーザーで起動し、不要になった時点で[[setuid-setgid|setuid()]]で降格していたのが古い実例。
 - **privilege bracketing**: 権限が必要な瞬間だけ取得し、使い終わったら即座に手放す。
 - **privilege separation**: 特権が必要な部分を別プロセスに分離し、大部分を無特権で動かす（OpenSSHの設計が代表例）。
 - **アクセス制御モデルでの運用**: [[rbac|RBAC]] のロール設計やクラウドIAMのポリシーで「業務に必要な権限だけ」を割り当てる。[[apache-polaris|Apache Polaris]] の credential vending（テーブルのストレージパスだけにスコープした短命の認証情報を払い出す）もこの原則の実践。
 - サンドボックス、コンテナ、[[seccomp]] のようなシステムコール制限も、プロセスの持つ能力を必要最小限に絞る手段と言える。
+
+## [[linux-privilege-mechanisms]]の中での位置づけ
+
+このノートは原則そのものを扱う。それを実際にLinux上で実装する各論(setuidの粗さ・[[linux-capabilities|capabilities]]による細粒度化・[[seccomp]]や[[landlock|Landlock]]によるシステムコール/リソース制限など)は[[linux-privilege-mechanisms]]配下の各ノートを参照。
 
 ## 限界
 

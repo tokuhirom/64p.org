@@ -1,10 +1,10 @@
 ---
 created: 2026-08-15 20:47
-updated: 2026-08-15 20:47
+updated: 2026-08-16 07:44
 ---
 # Bubblewrap (bwrap)
 
-非特権ユーザーがLinuxのコンテナ機能を使ってサンドボックスを作れる、低レベルのサンドボックスツール。[containers/bubblewrap](https://github.com/containers/bubblewrap)としてGitHubで公開されており、LGPL v2ライセンス。root権限もsetuidバイナリも不要で、ユーザーネームスペースを使って動作する。sudoやchrootに近い、単純な「ラッパーツール」として設計されている。
+非特権ユーザーがLinuxのコンテナ機能を使ってサンドボックスを作れる、低レベルのサンドボックスツール。[containers/bubblewrap](https://github.com/containers/bubblewrap)としてGitHubで公開されており、LGPL v2ライセンス。root権限も[[setuid-setgid|setuidバイナリ]]も不要で、ユーザーネームスペースを使って動作する。sudoやchrootに近い、単純な「ラッパーツール」として設計されている。
 
 ## 使っているカーネル機能
 
@@ -36,5 +36,9 @@ bwrap --ro-bind /usr /usr --proc /proc --dev /dev bash
 
 - **[Flatpak](https://flatpak.org/)** — アプリケーションのサンドボックス化に利用。BubblewrapはFlatpak開発の過程で生まれた。
 - **[OpenAI Codex CLI](https://github.com/openai/codex)** — Linux版でコマンド実行のサンドボックスとしてbwrapを利用する（`codex-rs/linux-sandbox`）。ホストの`/`をデフォルトで読み取り専用マウントし、書き込み可能なパスを個別に許可する方式。
+
+## [[linux-privilege-mechanisms]]の中での位置づけ
+
+[[fuse-filesystem-in-userspace|FUSE]]の`fusermount3`のように[[setuid-setgid|setuid]]バイナリで非特権ユーザーに特権操作を代行させるアプローチに対し、Bubblewrapはuser namespaceで「非特権ユーザーが自分の名前空間内だけでrootを名乗る」ことでsetuidを丸ごと不要にするアプローチ。
 
 #linux #kernel #security #sandbox

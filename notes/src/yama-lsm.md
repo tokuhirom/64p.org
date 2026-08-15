@@ -1,14 +1,14 @@
 ---
 created: 2026-08-11 16:42
-updated: 2026-08-11 16:46
+updated: 2026-08-16 07:44
 ---
 # Yama (Yama LSM)
 
-Linuxカーネルの[[linux-security-modules|LSM]] (Linux Security Module) フレームワーク向けの実装の一つ。Kees Cookが開発し、2010〜2011年頃にパッチが提出された。symlink/hardlink保護やptrace制限など、以前からOpenwallや[[grsecurity]]といった別配布・パッチセットで個別に存在していたDAC（Discretionary Access Control）強化機能を、メインラインカーネルに統合する形でまとめたモジュール。ptraceの制限ロジックは元々grsecurityの「子プロセスのみ」制限がベースになっている。
+Linuxカーネルの[[linux-security-modules|LSM]] (Linux Security Module) フレームワーク向けの実装の一つ。Kees Cookが開発し、2010〜2011年頃にパッチが提出された。symlink/hardlink保護や[[ptrace]]制限など、以前からOpenwallや[[grsecurity]]といった別配布・パッチセットで個別に存在していたDAC（Discretionary Access Control）強化機能を、メインラインカーネルに統合する形でまとめたモジュール。ptraceの制限ロジックは元々grsecurityの「子プロセスのみ」制限がベースになっている。
 
 ## 主な目的: ptraceの制限
 
-同一ユーザーが自分の任意のプロセスのメモリ・実行状態を検査できてしまう既定の挙動を制限する。あるアプリケーションが侵害された場合でも、攻撃者が同じユーザー権限の別プロセスに`ptrace`でアタッチして機密情報を抜き取ったり処理を改ざんしたりするのを防ぐのが狙い。
+同一ユーザーが自分の任意のプロセスのメモリ・実行状態を検査できてしまう既定の挙動を制限する。あるアプリケーションが侵害された場合でも、攻撃者が同じユーザー権限の別プロセスに[[ptrace]]でアタッチして機密情報を抜き取ったり処理を改ざんしたりするのを防ぐのが狙い。
 
 ## ptrace_scope の4モード
 

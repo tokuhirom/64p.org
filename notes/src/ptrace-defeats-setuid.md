@@ -1,10 +1,10 @@
 ---
 created: 2026-08-16 07:36
-updated: 2026-08-16 07:36
+updated: 2026-08-16 07:44
 ---
 # ptraceされているプロセスはsetuidの昇格が無効化される
 
-Linuxでは、`ptrace`でトレースされているプロセスが`execve(2)`でsetuid/setgidビット付きの実行ファイルを実行しても、実効ユーザーID(EUID)の昇格が行われない。`man strace`のBUGSセクションに一次情報として明記されている。
+Linuxでは、[[ptrace]]でトレースされているプロセスが`execve(2)`で[[setuid-setgid|setuid/setgidビット]]付きの実行ファイルを実行しても、実効ユーザーID(EUID)の昇格が行われない。`man strace`のBUGSセクションに一次情報として明記されている。
 
 > Programs that use the setuid bit do not have effective user ID privileges while being traced.
 
@@ -18,6 +18,12 @@ setuidバイナリは「実行した瞬間にroot(など他ユーザー)の権�
 
 [[fuse-hello-world-experiment]]で、非rootユーザーのプロセスが`fusermount3`（setuid-rootの[[fuse-filesystem-in-userspace|FUSE]]マウントヘルパー）を`fork`・`exec`する場面を`strace -f`でトレースしたところ、通常は成功するはずの`fusermount3`側の`mount(2)`システムコールまで`EPERM`（Operation not permitted）で失敗する挙動を実際に観測した。`strace -f`が`fusermount3`のexecve後もトレースを継続する(=`fusermount3`もトレースされたまま動く)ため、setuidによる昇格が無効化され、`fusermount3`が非特権のままmountを試みて失敗した、という説明と一致する結果だった。
 
+## [[linux-privilege-mechanisms]]の中での位置づけ
+
+[[ptrace]]と[[setuid-setgid]]という2つの仕組みが、なぜ・どう交わらないよう設計されているかを具体的な観測付きで示す、両ノートの交点にあたる内容。
+
 ## 出典
 
 - `man strace`（BUGSセクション、`--user`オプションの説明）
+
+#linux #security

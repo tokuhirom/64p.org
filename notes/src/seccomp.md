@@ -1,6 +1,6 @@
 ---
 created: 2026-08-12 17:52
-updated: 2026-08-12 17:52
+updated: 2026-08-16 07:44
 ---
 # seccomp
 
@@ -23,6 +23,10 @@ secure computing mode。Linuxカーネルの機能で、プロセスが発行で
 ## 採用例
 
 Chrome/Chromium のレンダラサンドボックス（seccomp-bpf の初期の代表的ユーザー）、Docker などのコンテナランタイム（デフォルトの seccomp プロファイルで危険なシステムコールを遮断）、systemd の `SystemCallFilter=`、Firefox、OpenSSH など。コンテナの文脈では、namespace や [[cgroups]] による分離と組み合わせて使われる。
+
+## [[linux-privilege-mechanisms]]の中での位置づけ
+
+[[setuid-setgid|setuid]]や[[linux-capabilities|capabilities]]が「誰の権限で動くか」を制御するのに対し、seccompは「どのシステムコールを発行できるか」というより下位のレイヤーを制御する。非特権ユーザーがseccompフィルタを取り付けるには`no_new_privs`([[linux-capabilities]]ノート参照)が必要な点でも両者は結びついている。
 
 ## 出典
 

@@ -1,6 +1,6 @@
 ---
 created: 2026-08-11 16:46
-updated: 2026-08-11 16:46
+updated: 2026-08-16 07:44
 ---
 # LSM (Linux Security Modules) フレームワーク
 
@@ -14,7 +14,7 @@ Linuxカーネルのセキュリティ上重要な箇所（ファイルオープ
 
 ## 代表的な実装
 
-SELinux・AppArmor・Smack・TOMOYOなどが独立したLSM実装として存在する。多くはMAC（強制アクセス制御）ポリシーの実施エンジンを共有する。[[yama-lsm|Yama]]のようにptrace制限に特化した狭い機能のLSMもある。
+SELinux・AppArmor・Smack・TOMOYOなどが独立したLSM実装として存在する。多くはMAC（強制アクセス制御）ポリシーの実施エンジンを共有する。[[yama-lsm|Yama]]のように[[ptrace]]制限に特化した狭い機能のLSMや、[[landlock|Landlock]]のように非特権プロセスが自分自身に制限をかける自己サンドボックス型のLSMもある。
 
 ## スタッキング（複数LSMの同時利用）
 
