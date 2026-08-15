@@ -1,6 +1,6 @@
 ---
 created: 2026-08-15 09:11
-updated: 2026-08-15 09:14
+updated: 2026-08-16 07:48
 ---
 # Goのos.ReadはO_NONBLOCK+EAGAINでもブロックする
 
@@ -16,7 +16,7 @@ Goランタイムは[[go-netpoller|netpoller]]という`epoll`ベースのI/Oポ
 
 元記事の著者は以下の手順で原因を突き止めている。
 
-1. `strace`で追跡し、①`read`が`O_NONBLOCK`付きで実行され`EAGAIN`を返している、②その直後に`epoll_pwait`がtimeout=-1（無限待ち）で呼ばれていることを確認。
+1. [[strace]]で追跡し、①`read`が`O_NONBLOCK`付きで実行され`EAGAIN`を返している、②その直後に`epoll_pwait`がtimeout=-1（無限待ち）で呼ばれていることを確認。
 2. `gdb`の`catch syscall`機能で、その`epoll_pwait`呼び出しが`runtime.schedule → runtime.findRunnable`というGoランタイムのスケジューラ内部から発生していることを突き止めた。
 
 ## 回避策

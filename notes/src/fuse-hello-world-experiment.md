@@ -1,6 +1,6 @@
 ---
 created: 2026-08-16 07:22
-updated: 2026-08-16 07:36
+updated: 2026-08-16 07:48
 ---
 # fuse-hello-world実験
 
@@ -79,7 +79,7 @@ read(ino=2, offset=0)
 
 [[fuse-filesystem-in-userspace|FUSEノート]]に書いた「アプリのシステムコール→カーネルのpendingキュー→ユーザー空間デーモンが処理→結果を書き戻す」という往復が、`ls`や`cat`のような日常的なコマンド1つでも複数回のコールバック呼び出しとして実際に発生していることが確認できた。`.Trash`への問い合わせは自分では意図しておらず、GNOME(GVFS)側がマウントされたファイルシステムを自動でゴミ箱対応チェックしにきているものと見られる。
 
-## 内部動作をstraceで確認
+## 内部動作を[[strace]]で確認
 
 `fuser`クレートのソース(`src/mnt/fuse_pure.rs`)を読むと、マウント時は以下の順で処理していることが分かる。
 
@@ -89,7 +89,7 @@ read(ino=2, offset=0)
 4. `fusermount3`が(実効uid=0で)実際に`mount(2)`を呼んで成功させ、マウントに使った`/dev/fuse`のfdを`SCM_RIGHTS`でUNIXソケット越しに親プロセスへ送り返す
 5. 親プロセスが`recvmsg()`でそのfdを受け取り、以後はそのfdでFUSEカーネルモジュールと直接通信する
 
-`strace -f -e trace=mount,execve,socketpair,recvmsg ./target/debug/fuse-hello mnt`で実際にこの通りの流れが見えた。
+[[strace]] `-f -e trace=mount,execve,socketpair,recvmsg ./target/debug/fuse-hello mnt`で実際にこの通りの流れが見えた。
 
 ```
 openat(AT_FDCWD, "/dev/fuse", O_RDWR|O_CLOEXEC) = 3

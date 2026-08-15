@@ -1,6 +1,6 @@
 ---
 created: 2026-08-12 23:55
-updated: 2026-08-12 23:59
+updated: 2026-08-16 07:48
 ---
 # virtqueue風トイ実験
 
@@ -29,9 +29,9 @@ Hello via a toy virtqueue! One doorbell, not one exit per byte.
 [host] guest rax=42 (expect 42), mem[0x400]=42 (expect 42)
 ```
 
-## `strace`で客観的に比較
+## [[strace]]で客観的に比較
 
-`KVM_RUN` ioctlの呼び出し回数(=[[vm-exit|VM exit]]してホストに戻ってきた回数)を`strace`で数えた。
+`KVM_RUN` ioctlの呼び出し回数(=[[vm-exit|VM exit]]してホストに戻ってきた回数)をstraceで数えた。
 
 | 実験 | メッセージ長 | `KVM_RUN`呼び出し回数 |
 |---|---|---|

@@ -1,3 +1,7 @@
+---
+created: 2026-08-16 07:48
+updated: 2026-08-16 07:48
+---
 # VM exit
 
 ゲスト(VM内で動くコード)が、CPU自身では処理できない・処理してはいけない操作をしようとした瞬間に、制御が強制的にゲストからホスト側([[kvm|KVM]]およびその上のVMM)に戻される現象。 #virtualization
@@ -22,7 +26,7 @@ VM exit1回ごとに、ゲストモードからホストモードへのコンテ
 
 ## 実際に動かしてみる
 
-[[kvm-hello-world-experiment|kvm-hello-world実験]]と[[virtqueue-toy-experiment|virtqueue風トイ実験]]で、VM exit回数を`strace`で実測して比較した。
+[[kvm-hello-world-experiment|kvm-hello-world実験]]と[[virtqueue-toy-experiment|virtqueue風トイ実験]]で、VM exit回数を[[strace]]で実測して比較した。
 
 | 実験 | 送信データ量 | VM exit(`KVM_RUN`)回数 |
 |---|---|---|
