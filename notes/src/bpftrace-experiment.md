@@ -1,6 +1,6 @@
 ---
 created: 2026-08-13 08:32
-updated: 2026-08-13 08:32
+updated: 2026-08-15 22:18
 ---
 # bpftraceを動かしてeBPFトレーシングを体感する
 
@@ -49,7 +49,7 @@ sudo bpftrace -e 'tracepoint:raw_syscalls:sys_enter { @[comm] = count(); } inter
 sudo timeout 5 bpftrace -e 'kprobe:do_nanosleep { printf("PID %d (%s) sleeping\n", pid, comm); }'
 ```
 
-`ibus-ui-gtk3`や`tailscaled`など、定期的にポーリング/スリープしているデーモンプロセスが高頻度で`do_nanosleep`を呼んでいることが可視化された。コンテナ管理daemonの`incusd`が短時間に何十回もsleepしている様子も観測できた。ユーザーが手動で叩いた`sleep`コマンドの呼び出しもPIDごとに個別に捕捉されている。
+[[ibus|`ibus-ui-gtk3`]]や`tailscaled`など、定期的にポーリング/スリープしているデーモンプロセスが高頻度で`do_nanosleep`を呼んでいることが可視化された。コンテナ管理daemonの`incusd`が短時間に何十回もsleepしている様子も観測できた。ユーザーが手動で叩いた`sleep`コマンドの呼び出しもPIDごとに個別に捕捉されている。
 
 kprobeはカーネル関数名を直接指定するだけでフックできる手軽さがある一方、`do_nanosleep`のような内部関数名はカーネルバージョンが変われば変わりうる、という[[bpftrace|bpftraceノート]]で触れた「tracepointの方が安定している」という説明を裏付ける結果でもあった。
 
