@@ -1,6 +1,6 @@
 ---
 created: 2026-08-15 19:32
-updated: 2026-08-15 19:32
+updated: 2026-08-15 20:35
 ---
 # vlt (vōlt)
 
@@ -28,6 +28,16 @@ npm互換のセキュリティ重視型JavaScriptパッケージマネージャ�
 
 vltとセットで、npm互換のFair Sourceなサーバーレスレジストリシステムであるvsrも展開している。オンプレ・セルフホスト・クラウド管理型のいずれでも運用可能で、プライベートレジストリは2GBまで無料。従来のチーム/メンテナー単位を超えた細粒度のアクセス制御である「Granular Access Tokens」が特徴。
 
+## pnpmとの違い
+
+両者とも「フラットにhoistせず、宣言していない依存関係にアクセスできないようにする厳格なnode_modules」を志向する点は共通するが、実現方法とプロダクトの方向性が異なる。
+
+- **アーキテクチャ**: pnpmはマシン全体で共有するcontent-addressable storeを持ち、パッケージの各バージョンをディスク上に一度だけ保存する。`node_modules/.pnpm`という仮想ストアにstoreからのハードリンクを配置し、そこから各パッケージ用の`node_modules`へsymlinkを張ることで宣言した依存だけが見える構造を作る(ディスク節約とマルチプロジェクト間の共有が主眼)。vltは内部的に`node_modules/.vlt/`という独自レイアウトを使い、依存関係を`@vltpkg/graph`というGraph(Node/Edgeで表現)としてモデル化してnode_modules構造を導出する。peer依存のバージョンが競合する場合はパッケージを複製して別々に配置する。
+- **クエリ・セキュリティ機能**: vltはDependency Selector Syntax(DSS)というCSSセレクタ風のクエリ言語を持ち、`:malware` `:cve` `:vuln` `:unmaintained` `:outdated`など60以上の疑似セレクタ(うち約30がセキュリティ関連)で依存関係グラフを横断検索できる。`vlt.json`のGraph Modifiersでこれらのセレクタを使い特定パッケージのバージョンを強制上書きすることも可能。pnpmにも`overrides`によるバージョン上書きや`pnpm audit`はあるが、vltほど網羅的なクエリ・ポリシー言語は持たない。
+- **レジストリの扱い**: pnpmはデフォルトでnpmレジストリを使うが、vltはデフォルトレジストリを持たず、設定しない限りパッケージの解決・取得コマンドはエラーになる(自前のホスト型レジストリvsrや複数レジストリ運用が前提)。
+- **開発チーム・ポジショニング**: pnpmはZoltan Kochan氏を中心としたコミュニティ主導プロジェクトで、モノレポでのディスク効率・速度が主眼。vltはnpm自体の創設者・元メンテナーチームによる開発で、単なるクライアントではなくサプライチェーンセキュリティ込みのプラットフォーム(レジストリ運用、マルウェア検出込み)として設計されている。
+- **成熟度**: pnpmは2017年頃から存在し実運用実績が豊富。vltは2026年8月に1.0に到達したばかりで、エコシステム・実績はこれから。
+
 #javascript #npm #package-manager #security
 
 ## 出典
@@ -36,3 +46,8 @@ vltとセットで、npm互換のFair Sourceなサーバーレスレジストリ
 - [vlt 1.0 & Hosted Package Registries](https://www.vlt.io/blog/1-0)
 - [Introducing the vlt Package Manager & Serverless Registry](https://www.vlt.io/blog/introducing-vlt-and-vsr)
 - [vlt Debuts New JavaScript Package Manager and Serverless Registry - Socket.dev](https://socket.dev/blog/vlt-debuts-new-javascript-package-manager-and-serverless-registry)
+- [Migrating from pnpm to vlt](https://docs.vlt.sh/cli/migration/from-pnpm)
+- [Symlinked node_modules structure - pnpm](https://pnpm.io/symlinked-node-modules-structure)
+- [Dependency Selector Syntax - vlt docs](https://docs.vlt.sh/cli/selectors)
+- [Taking Control with Graph Modifiers - vlt blog](https://blog.vlt.sh/blog/introducing-graph-modifiers)
+- [@vltpkg/graph - npm](https://www.npmjs.com/package/@vltpkg/graph)
