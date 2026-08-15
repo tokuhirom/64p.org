@@ -1,6 +1,6 @@
 ---
 created: 2026-08-15 08:36
-updated: 2026-08-15 09:32
+updated: 2026-08-15 10:21
 ---
 # 後北条氏
 
@@ -24,7 +24,7 @@ updated: 2026-08-15 09:32
 
 ## 滅亡
 
-天正18年（1590年）、豊臣秀吉の[[odawara-seibatsu|小田原征伐]]により滅亡。経緯の詳細は[[odawara-seibatsu]]参照。
+天正18年（1590年）、[[toyotomi-hideyoshi|豊臣秀吉]]の[[odawara-seibatsu|小田原征伐]]により滅亡。経緯の詳細は[[odawara-seibatsu]]参照。
 
 ## 出典
 
