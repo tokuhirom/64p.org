@@ -1,10 +1,10 @@
 ---
 created: 2026-08-15 21:21
-updated: 2026-08-15 21:21
+updated: 2026-08-15 21:26
 ---
 # SpiderMonkey
 
-Mozillaが開発するJavaScript/WebAssemblyエンジン。Firefoxに搭載されているほか、Rust製ブラウザエンジンServoなどでも使われている。実装言語はC++・Rust・JavaScript。
+Mozillaが開発するJavaScript/WebAssemblyエンジン。Firefoxに搭載されているほか、Rust製ブラウザエンジン[[servo|Servo]]などでも使われている。実装言語はC++・Rust・JavaScript。
 
 ## 歴史
 
@@ -16,7 +16,7 @@ Mozillaが開発するJavaScript/WebAssemblyエンジン。Firefoxに搭載さ�
 
 1. **Baseline Interpreter** — バイトコードをシンプルな最適化のみで実行
 2. **Baseline JIT** — 最小限の最適化で高速にマシンコードへコンパイル
-3. **WarpMonkey**（旧IonMonkey。Firefox 83で改称） — ホットコードに対して積極的な最適化を行う
+3. **[[spidermonkey-jit|WarpMonkey]]**（旧IonMonkey。Firefox 83で改称） — ホットコードに対して積極的な最適化を行う
 
 ## 2026年の動き: asm.jsの非推奨化
 
