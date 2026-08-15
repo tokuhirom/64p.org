@@ -1,6 +1,6 @@
 ---
 created: 2026-08-15 09:11
-updated: 2026-08-15 09:11
+updated: 2026-08-15 09:14
 ---
 # Goのos.ReadはO_NONBLOCK+EAGAINでもブロックする
 
@@ -10,7 +10,7 @@ Go言語で`/dev/kmsg`のようなデバイスファイルを`O_NONBLOCK`フラ�
 
 Goの`os.Read`（Linux実装）は、内部の`read(2)`システムコールが`EAGAIN`を返した場合、それをアプリケーション側にエラーとして返さない。代わりに`fd.pd.pollable()`が`true`のとき`fd.pd.waitRead`が呼ばれ、readyになるまで（＝データが来るまで）内部で待機し続ける。
 
-Goランタイムは`epoll`ベースのI/Oポーリング機構（netpoller）を使い、ノンブロッキングI/Oをアプリケーションから見て「あたかもブロッキングI/Oであるかのように」隠蔽する設計になっている。そのため、呼び出し元は`EAGAIN`を観測できず、`O_NONBLOCK`フラグを立てただけでは真にノンブロッキングな挙動にならない。
+Goランタイムは[[go-netpoller|netpoller]]という`epoll`ベースのI/Oポーリング機構を使い、ノンブロッキングI/Oをアプリケーションから見て「あたかもブロッキングI/Oであるかのように」隠蔽する設計になっている。そのため、呼び出し元は`EAGAIN`を観測できず、`O_NONBLOCK`フラグを立てただけでは真にノンブロッキングな挙動にならない。
 
 ## 検証方法
 
@@ -27,3 +27,5 @@ Goランタイムは`epoll`ベースのI/Oポーリング機構（netpoller）�
 ## 出典
 
 - [Go: O_NONBLOCKなのにreadがブロックする](https://appare45.hatenablog.com/entry/go-o_nonblock-read-blocks)
+
+#golang #linux
