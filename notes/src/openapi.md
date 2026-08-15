@@ -1,6 +1,6 @@
 ---
 created: 2026-08-15 16:18
-updated: 2026-08-15 16:19
+updated: 2026-08-15 16:22
 ---
 # OpenAPI
 
@@ -18,11 +18,10 @@ RESTful APIをHTTP越しに記述するための言語非依存なインター�
 
 - **2.0 (Swagger, 2014)** — OAI移管前の最終形。今も"Swagger"の名で呼ばれることが多い
 - **3.0 (2017)** — OpenAPI Initiative発足後、最初のメジャーバージョン
-- **3.1 (2021)** — schemaがJSON Schema Draft 2020-12に完全準拠。3.0のschemaはJSON Schema Draft 5の「サブセット」に過ぎず完全互換ではなかった。主な変更点:
-  - `webhooks`フィールドが新設され、アウトバウンド（サーバー→クライアント）イベントを正式に記述可能に。3.0にはネイティブな手段がなく、callbacksの転用や仕様外文書化で代替していた
-  - `nullable`キーワード（3.0.3では独自拡張）が廃止され、JSON Schema標準のunion型表現に置き換わった
-  - `$ref`が3.0.3では`description`や`example`などの兄弟キーワードと共存できなかったが、3.1.0ではJSON Schemaの挙動に合わせてこの制約が撤廃された
+- **[[openapi-3-1|3.1]] (2021)** — schemaがJSON Schema Draft 2020-12に完全準拠。webhooks新設など、TSCが意図的にsemverの慣習を破った変更を含む。詳細は[[openapi-3-1|OpenAPI 3.1]]参照
 - **3.2.0 (2025年9月)** — hierarchical tags、QUERYメソッド、ストリーミングAPIのネイティブサポートを追加
+
+次期メジャーバージョン(通称OpenAPI 4.0)の検討は[[openapi-moonwalk|OpenAPI Moonwalk]]という取り組みで進行中。
 
 ## 契約ファーストとの関係
 
