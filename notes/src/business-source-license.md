@@ -1,12 +1,12 @@
 ---
 created: 2026-08-14 11:43
-updated: 2026-08-14 12:02
+updated: 2026-08-15 21:59
 ---
 # Business Source License
 
 #license #source-available
 
-MariaDB社が考案したsource-availableライセンス。SPDX識別子は`BUSL-1.1`（[[bsl|Boost Software LicenseのBSL]]と衝突するため）。「一定期間は商用利用を制限するが、期日が来たら自動的にオープンソースライセンスへ変わる」時限式が最大の特徴。MariaDB社のMaxScaleで実運用が始まり、"Business Source License"はMariaDB社の商標。
+[[mariadb|MariaDB]]社が考案したsource-availableライセンス。SPDX識別子は`BUSL-1.1`（[[bsl|Boost Software LicenseのBSL]]と衝突するため）。「一定期間は商用利用を制限するが、期日が来たら自動的にオープンソースライセンスへ変わる」時限式が最大の特徴。MariaDB社のMaxScaleで実運用が始まり、"Business Source License"はMariaDB社の商標。
 
 ## 仕組み
 

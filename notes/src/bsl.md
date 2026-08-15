@@ -1,12 +1,12 @@
 ---
 created: 2026-08-14 11:43
-updated: 2026-08-14 11:43
+updated: 2026-08-15 21:59
 ---
 # BSL (曖昧さ回避)
 
 「BSL」という略称は、由来の異なる複数のソフトウェアライセンスを指して使われており、文脈で判別する必要がある。
 
-- [[business-source-license|Business Source License]]（SPDX識別子: `BUSL-1.1`）— MariaDB社が考案したsource-availableライセンス。本番利用を制限しつつ最長4年の時限式でOSSへ変わる。[[hashicorp|HashiCorp]]・CockroachDBなどが採用
+- [[business-source-license|Business Source License]]（SPDX識別子: `BUSL-1.1`）— [[mariadb|MariaDB]]社が考案したsource-availableライセンス。本番利用を制限しつつ最長4年の時限式でOSSへ変わる。[[hashicorp|HashiCorp]]・CockroachDBなどが採用
 - [[boost-software-license|Boost Software License]]（SPDX識別子: `BSL-1.0`）— Boost C++ Libraries向けに2003年公開されたOSI承認のパーミッシブライセンス
 
 ## 名称衝突とSPDXでの扱い
