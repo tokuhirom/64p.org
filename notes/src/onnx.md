@@ -1,6 +1,6 @@
 ---
 created: 2026-08-14 22:57
-updated: 2026-08-14 23:00
+updated: 2026-08-15 15:14
 ---
 # ONNX (Open Neural Network Exchange)
 
@@ -12,7 +12,7 @@ PyTorch・TensorFlow・scikit-learnなど任意のフレームワークで学習
 
 ## 技術的な構成
 
-- シリアライズ形式にはGoogleのProtocol Buffers (protobuf)を採用。
+- シリアライズ形式にはGoogleの[[protocol-buffers|Protocol Buffers]] (protobuf)を採用。
 - モデルは計算グラフとして表現され、各ノードが演算子(operator)に対応する。
 - 演算子は[[onnx-opset|opset(operator set)]]という仕組みでバージョン管理される。
 - 2026年3月時点の安定版は1.21.0で、150以上の演算子が定義されている。
