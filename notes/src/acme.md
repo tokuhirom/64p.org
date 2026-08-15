@@ -1,6 +1,6 @@
 ---
 created: 2026-08-14 08:33
-updated: 2026-08-14 08:33
+updated: 2026-08-15 16:51
 ---
 # ACME (Automatic Certificate Management Environment)
 
@@ -17,6 +17,10 @@ CAがクライアントに「このドメインを本当に支配しているか
 ## クライアント
 
 certbot（EFF製、最も広く使われる）、acme.sh、legoなどの専用クライアントのほか、Caddyや[[traefik|Traefik]]のようにサーバー自体がACMEクライアントを内蔵していて、証明書の取得から更新までを完全に自動でやってくれるものもある。
+
+## 学術機関向けCAでの採用例
+
+[[lets-encrypt|Let's Encrypt]]以外にも、日本の学術機関向け認証局である[[upki-certs-nii|UPKI電子証明書発行サービス]]が2025年11月にACME対応した。
 
 ## 出典
 
