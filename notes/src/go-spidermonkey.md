@@ -1,10 +1,10 @@
 ---
 created: 2026-08-15 20:42
-updated: 2026-08-15 20:46
+updated: 2026-08-15 21:21
 ---
 # go-spidermonkey
 
-[[go-yaml-libraries|goccy]]氏が開発している、FirefoxのSpiderMonkey JavaScriptエンジンを純粋なGoで動かすライブラリ。「SpiderMonkey in pure Go — run untrusted JavaScript anywhere Go runs. No cgo, no WebAssembly runtime, one static binary.」を謳う。
+[[go-yaml-libraries|goccy]]氏が開発している、Firefoxの[[spidermonkey|SpiderMonkey]] JavaScriptエンジンを純粋なGoで動かすライブラリ。「SpiderMonkey in pure Go — run untrusted JavaScript anywhere Go runs. No cgo, no WebAssembly runtime, one static binary.」を謳う。
 
 ## 仕組み
 

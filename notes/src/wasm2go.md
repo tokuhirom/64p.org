@@ -1,10 +1,10 @@
 ---
 created: 2026-08-15 20:46
-updated: 2026-08-15 20:46
+updated: 2026-08-15 21:21
 ---
 # wasm2go
 
-[[go-yaml-libraries|goccy]]氏が開発している、[[wasm|WebAssembly]]バイナリをスタンドアロンなGoソースコードに変換するahead-of-timeコンパイラ。解釈器や[[wasi|WASI]]ランタイム（wazero等）を実行時に必要とせず、ネイティブなGoの実行ファイルとして動作する。[[go-spidermonkey]]はこのツールでSpiderMonkeyのWasmビルドをGoコードへ変換して使っている。
+[[go-yaml-libraries|goccy]]氏が開発している、[[wasm|WebAssembly]]バイナリをスタンドアロンなGoソースコードに変換するahead-of-timeコンパイラ。解釈器や[[wasi|WASI]]ランタイム（wazero等）を実行時に必要とせず、ネイティブなGoの実行ファイルとして動作する。[[go-spidermonkey]]はこのツールで[[spidermonkey|SpiderMonkey]]のWasmビルドをGoコードへ変換して使っている。
 
 ## 動機
 
