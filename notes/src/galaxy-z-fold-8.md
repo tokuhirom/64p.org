@@ -1,6 +1,6 @@
 ---
 created: 2026-08-15 22:24
-updated: 2026-08-15 22:24
+updated: 2026-08-15 22:33
 ---
 # Galaxy Z Fold 8
 
@@ -28,6 +28,17 @@ Fold 7の直系後継ではなく、Samsung初の「ワイドスクリーン」�
 
 内部にヒトの髪の毛の30%以下の厚さのウルトラシン・チタニウム合金を新採用した「Flex Titanium」技術により、折り目(クレース)を大幅に浅く・目立たなくした。通常使用ではほぼ見えず、画面消灯時に強い光を当てると見える程度まで改善している。
 
+## Kindleでのマンガ読書体験
+
+Buzzap！のレビュー(2026年8月6日)によると、Kindleアプリでのマンガ読書に関して以下の特徴が挙げられている。
+
+- サブディスプレイ(5.5インチ、16:10)とメインディスプレイ(7.6インチ、4:3)を使い分けられる。電車内などではサブ画面、腰を据えて読むときはメイン画面、といった使い分けが可能。
+- 画面が広いぶん、『HUNTER×HUNTER』のようにセリフ量の多い作品でも読みやすい。
+- 最大の利点として、見開きページをそのまま表示できる点が挙げられている。従来のスマートフォンは1ページずつの表示に限定されていたが、Fold 8では本を読むのと同じ感覚を再現でき、作者が意図した見開きレイアウトやコマ割りの見せ方が損なわれない。
+- デメリットとして、メインディスプレイは「もう少し大きければ迫力が増すが、そうすると持ちにくくなる」というトレードオフが指摘されている。
+
+海外レビュー(Gizmodo)では、内蔵カメラ(ホールパンチ)の位置がモノクロのマンガや文字の多いページで目立ちやすい点をデメリットとして挙げている。
+
 ## 出典
 
 - [Samsung Galaxy Z Fold 7 vs Samsung Galaxy Z Fold 8 : Specs Comparison - 91mobiles](https://www.91mobiles.com/compare/Samsung/Galaxy+Z+Fold+7/vs/Samsung/Galaxy+Z+Fold+8.html)
@@ -36,5 +47,7 @@ Fold 7の直系後継ではなく、Samsung初の「ワイドスクリーン」�
 - [Galaxy Z Fold 8 Ultra release date, price, specs, and must-know features - PhoneArena](https://www.phonearena.com/galaxy-z-fold-8-release-date-price-features-news)
 - [Is the Galaxy Z Fold 8 and Fold 8 Ultra's display crease visible? - SamMobile](https://www.sammobile.com/news/galaxy-z-fold-8-crease-visible-or-not/)
 - [Samsung Galaxy Z Fold 8 Ultra vs Fold 8 - PhoneArena](https://www.phonearena.com/reviews/samsung-galaxy-z-fold-8-ultra-vs-fold-8_id7970)
+- [Galaxy Z Fold8『Kindleマンガの読みやすさ』徹底レビュー、見開き表示も快適で「単行本を読んでいる感覚」再現も | Buzzap！](https://buzzap.jp/news/20260806-galaxy-z-fold8-comic-review/)
+- [Samsung Galaxy Z Fold 8 Review: The Most Fun Phone in Ages - Gizmodo](https://gizmodo.com/samsung-galaxy-z-fold-8-review-the-most-fun-phone-in-ages-2000792547)
 
-#samsung #galaxy-z-fold #フォルダブル
+#samsung #galaxy-z-fold #フォルダブル #kindle
