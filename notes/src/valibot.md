@@ -1,6 +1,6 @@
 ---
 created: 2026-08-14 22:35
-updated: 2026-08-14 22:35
+updated: 2026-08-15 16:18
 ---
 # Valibot
 
@@ -35,7 +35,7 @@ const LoginSchema = v.object({
 
 ## エコシステム
 
-週間ダウンロード数はZodが約1.79億に対しValibotは約1090万と、採用規模はZodが大きく上回る。React Hook Form・tRPC・OpenAPI生成・AI SDKの構造化出力などではZodがデファクトスタンダード。一方Valibotは SvelteKitのSuperformsで一級サポートされているほか、`@valibot/to-json-schema`（JSON Schema出力）、`@valibot/i18n`（多言語エラーメッセージ）などの補助パッケージが用意されている。
+週間ダウンロード数はZodが約1.79億に対しValibotは約1090万と、採用規模はZodが大きく上回る。React Hook Form・tRPC・[[openapi|OpenAPI]]生成・AI SDKの構造化出力などではZodがデファクトスタンダード。一方Valibotは SvelteKitのSuperformsで一級サポートされているほか、`@valibot/to-json-schema`（JSON Schema出力）、`@valibot/i18n`（多言語エラーメッセージ）などの補助パッケージが用意されている。
 
 ## 使い分け
 

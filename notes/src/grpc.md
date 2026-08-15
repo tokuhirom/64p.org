@@ -1,6 +1,6 @@
 ---
 created: 2026-08-15 14:40
-updated: 2026-08-15 14:40
+updated: 2026-08-15 16:18
 ---
 # gRPC
 
@@ -22,7 +22,7 @@ service HelloService {
 }
 ```
 
-`protoc`(または`buf`などのツール)がこの定義から各言語のクライアント/サーバースタブコードを生成する。対応言語はJava、Go、Python、Ruby、C++、C#、Dart、Kotlin、Node.js、Objective-C、PHP、Rust、Swiftなど多数。契約(スキーマ)を先に定義してからコードを生成する契約ファースト(contract-first)なアプローチであり、REST + OpenAPIのようにエンドポイントを実装してから後付けでスキーマを書く流れとは逆になる。
+`protoc`(または`buf`などのツール)がこの定義から各言語のクライアント/サーバースタブコードを生成する。対応言語はJava、Go、Python、Ruby、C++、C#、Dart、Kotlin、Node.js、Objective-C、PHP、Rust、Swiftなど多数。契約(スキーマ)を先に定義してからコードを生成する契約ファースト(contract-first)なアプローチであり、REST + [[openapi|OpenAPI]]のようにエンドポイントを実装してから後付けでスキーマを書く流れとは逆になる。
 
 ## 4つのRPCパターン
 
@@ -44,7 +44,7 @@ gRPCはHTTP/2の多重化(1コネクション上で複数リクエスト/レス�
 ## RESTとの違い
 
 - **ペイロード** — gRPCはデフォルトでProtocol Buffersによるバイナリシリアライズ、RESTは通常JSON(テキスト)
-- **スキーマ** — gRPCは`.proto`による契約ファースト、RESTはOpenAPI等を後付けすることが多い
+- **スキーマ** — gRPCは`.proto`による契約ファースト、RESTは[[openapi|OpenAPI]]等を後付けすることが多い
 - **通信方式** — gRPCはHTTP/2ベースで双方向ストリーミングを標準サポート、RESTはリクエスト/レスポンス型が基本
 - **ブラウザからの直接呼び出し** — ブラウザはHTTP/2フレームを細粒度制御できないため、素のgRPCをブラウザから直接話すことができない。この制約への対応が[[grpc-web|gRPC-Web]]
 
