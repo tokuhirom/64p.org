@@ -247,10 +247,15 @@ sub regen {
                 '**' . ($label // $target) . '**';
             }
         }ge;
-        # '#' must be preceded by whitespace/start-of-line and followed by
-        # a letter, so ATX headings ("# Title") and URL fragments
-        # ("...#section") are left alone.
-        $note->{mkdn} =~ s{(?<!\S)#([a-zA-Z][\w\-]*)}{
+        # '#' must not be glued to a preceding word character (so URL
+        # fragments like "...managing-dependencies#tools" and "C#" the
+        # language are left alone), but IS allowed right after punctuation
+        # like "。" or ")" since "文末。#tag" (no space before #) is the
+        # common way tags get written. The tag itself must start with a
+        # Unicode letter (\p{L}, e.g. a-z or 戦国時代) - never a digit or
+        # underscore, so "#1234" (issue/PR refs) and ATX headings ("# Title",
+        # which has a space right after #) are never mistaken for tags.
+        $note->{mkdn} =~ s{(?<!\w)#(\p{L}[\w\-]*)}{
             my $tag = lc($1);
             $tag_notes{$tag}{$note->{slug}} = 1;
             qq{<a class="note-tag" href="/notes/tags/$tag.html">#$tag</a>};
