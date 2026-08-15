@@ -1,6 +1,6 @@
 ---
 created: 2026-08-15 20:42
-updated: 2026-08-15 20:42
+updated: 2026-08-15 20:46
 ---
 # go-spidermonkey
 
@@ -8,7 +8,7 @@ updated: 2026-08-15 20:42
 
 ## 仕組み
 
-SpiderMonkeyを一度WebAssemblyにコンパイルし、それを`wasm2go`（Wasm→Go変換ツール。`goccy/spidermonkeywasm2go`として変換済みエンジンが提供されている）でGoのソースコードに変換している。この方式により:
+SpiderMonkeyを一度WebAssemblyにコンパイルし、それを[[wasm2go]]（Wasm→Go変換ツール。変換済みエンジンは`goccy/spidermonkeywasm2go`として提供されている）でGoのソースコードに変換している。この方式により:
 
 - CGO不要（クロスコンパイルが容易、glibc依存がない）
 - 別途Wasmランタイム（wasmtime, wazeroなど）を同梱する必要がない

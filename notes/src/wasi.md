@@ -1,6 +1,6 @@
 ---
 created: 2026-08-13 07:30
-updated: 2026-08-13 07:42
+updated: 2026-08-15 20:46
 ---
 # WASI (WebAssembly System Interface)
 
@@ -22,7 +22,7 @@ capability-basedサンドボックス。Wasmモジュール/コンポーネン�
 
 ## 代表的なランタイム
 
-Wasmtime、WasmEdge、WAMR、wazero(Go製)、Wasmer、wasmi/wasm3(組込向け軽量実装)など。
+Wasmtime、WasmEdge、WAMR、wazero(Go製)、Wasmer、wasmi/wasm3(組込向け軽量実装)など。ランタイムを介さずWasmを直接ネイティブコードへ変換するアプローチとして[[wasm2go]]もある。
 
 ## 出典
 
