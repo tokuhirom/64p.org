@@ -1,0 +1,59 @@
+---
+created: 2026-08-16 00:30
+updated: 2026-08-16 00:30
+---
+# FUSE (Filesystem in Userspace)
+
+root権限を持たない一般ユーザーでも独自のファイルシステムを実装・マウントできるようにするLinuxの仕組み。通常Linuxでファイルシステムを実装するにはカーネル空間に組み込む必要があるが、FUSEを使うとファイルシステムのロジックをユーザー空間のプログラムとして書ける。
+
+## 構成要素
+
+3つのコンポーネントからなる。
+
+- **`fuse.ko`** — カーネルモジュール。VFS(仮想ファイルシステム)層とユーザー空間デーモンの間の通信を仲介する。
+- **`libfuse`** — ユーザー空間でファイルシステムデーモンを実装するためのライブラリ。`getattr`（属性取得）・`readdir`（ディレクトリ一覧）・`open`・`read`のようなコールバック関数を実装する形でファイルシステムを作る。
+- **`fusermount`** — 非特権ユーザーが安全にマウントできるようにするマウントユーティリティ。
+
+## 動作の流れ
+
+```
+VFS layer
+    ↓
+FUSEカーネルモジュール (fuse.ko)
+    ↓
+/dev/fuse (キャラクタデバイス、通信パイプ)
+    ↓
+ユーザー空間プログラム (libfuseで実装)
+```
+
+`/dev/fuse`という仮想デバイスがカーネルとユーザー空間の通信パイプとして機能する。Linuxカーネルの公式ドキュメントでは`rm`（ファイル削除）を例に流れが説明されている。
+
+1. アプリケーションが`sys_unlink()`を呼ぶ
+2. カーネルがリクエストを「pending」キューに積む
+3. ユーザー空間デーモンが`fuse_dev_read()`経由でリクエストを取得
+4. デーモンが実際の処理（この場合は削除）を実行
+5. デーモンが`sys_write()`で結果を書き戻し、カーネルが呼び出し元に結果を返す
+
+つまりシステムコール1回につき、カーネル⇔ユーザー空間の往復（コンテキストスイッチ）が発生するため、カーネル内蔵のファイルシステムに比べてオーバーヘッドがある。
+
+## デッドロック対策
+
+FUSEはページフォールトなど特有のデッドロックシナリオに対応するため、ファイルシステムの中断（abort）機能やページフォルト時のアトミックなコピー処理を備えている。
+
+## 代表的な用途
+
+- **sshfs** — SFTPプロトコル経由でリモートファイルシステムをマウント
+- **s3fs-fuse** — S3バケットをFUSE経由でマウントするサードパーティのOSSツール（AWS公式の[[aws-s3-files|S3 Files]]とは別物）
+- **NTFS-3G** — NTFSファイルシステムへのアクセス
+- **gocryptfs** — 暗号化ファイルシステム
+- **rclone mount** — クラウドストレージをFUSE経由でマウント
+
+macOSにも同等の仕組み（macFUSE）が存在する。
+
+## 出典
+
+- [FUSE — The Linux Kernel documentation](https://www.kernel.org/doc/html/next/filesystems/fuse.html)
+- [FUSE: Building Filesystems in Userspace | InfluentCoder](https://influentcoder.com/posts/fuse/)
+- [Filesystem in Userspace - Gentoo wiki](https://wiki.gentoo.org/wiki/Filesystem_in_Userspace/ja)
+
+#linux #ファイルシステム
