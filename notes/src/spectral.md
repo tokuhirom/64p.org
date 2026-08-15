@@ -1,10 +1,10 @@
 ---
 created: 2026-08-15 16:18
-updated: 2026-08-15 16:18
+updated: 2026-08-15 16:32
 ---
 # Spectral
 
-Stoplight社が開発するOSSのJSON/YAMLリンター。[[openapi|OpenAPI]] (v3.1, v3.0, v2.0)、Arazzo v1.0、AsyncAPI v2.xの組み込みサポートを持つ。汎用ルールセットエンジンとして任意のJSON/YAMLに使えるが、OpenAPI/AsyncAPI/JSON Schemaを念頭に設計されている。
+Stoplight社が開発するOSSのJSON/YAMLリンター。[[openapi|OpenAPI]] (v3.1, v3.0, v2.0)、[[arazzo|Arazzo]] v1.0、AsyncAPI v2.xの組み込みサポートを持つ。汎用ルールセットエンジンとして任意のJSON/YAMLに使えるが、OpenAPI/AsyncAPI/JSON Schemaを念頭に設計されている。
 
 ## 仕組み: given / then / severity
 
