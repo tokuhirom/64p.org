@@ -1,10 +1,10 @@
 ---
 created: 2026-08-15 16:27
-updated: 2026-08-15 16:27
+updated: 2026-08-15 16:29
 ---
 # ダブル配列 (Double Array)
 
-TRIE(トライ木)を**BASE配列**と**CHECK配列**という2つの配列に圧縮して表現するデータ構造。青江順一(Jun-ichi Aoe)が1989年にIEEE Transactions on Software Engineering誌に発表した論文 "An Efficient Digital Search Algorithm by Using a Double-Array Structure"(vol.15, no.9, pp.1066-1077)で提案した。 #algorithm #data-structure #nlp
+[[trie|TRIE(トライ木)]]を**BASE配列**と**CHECK配列**という2つの配列に圧縮して表現するデータ構造。青江順一(Jun-ichi Aoe)が1989年にIEEE Transactions on Software Engineering誌に発表した論文 "An Efficient Digital Search Algorithm by Using a Double-Array Structure"(vol.15, no.9, pp.1066-1077)で提案した。 #algorithm #data-structure #nlp
 
 ## 仕組み
 
