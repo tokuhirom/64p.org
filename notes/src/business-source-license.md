@@ -1,6 +1,6 @@
 ---
 created: 2026-08-14 11:43
-updated: 2026-08-15 21:59
+updated: 2026-08-15 22:07
 ---
 # Business Source License
 
@@ -25,7 +25,7 @@ updated: 2026-08-15 21:59
 ## 採用例
 
 - **MariaDB MaxScale**: 本家。MariaDB Serverとの接続プロキシ
-- **CockroachDB** (2019): Apache 2.0から移行
+- **[[cockroachdb|CockroachDB]]** (2019): Apache 2.0から移行（2024年に自社製ライセンスCCLへさらに移行し完全プロプライエタリ化）
 - **[[hashicorp|HashiCorp]]** (2023年8月): [[terraform|Terraform]]・[[vault|Vault]]など全製品をMPL 2.0からBUSL 1.1へ変更。「HashiCorpと競合する製品への組み込み・ホスティング」を禁じるAdditional Use Grantが曖昧だと批判され、Terraformから**[[opentofu|OpenTofu]]**（Linux Foundation傘下）、Vaultから**[[openbao|OpenBao]]**がフォークされた
 - **SurrealDB**、**EMQX** など
 

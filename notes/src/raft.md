@@ -1,6 +1,6 @@
 ---
 created: 2026-08-14 08:33
-updated: 2026-08-14 11:36
+updated: 2026-08-15 22:07
 ---
 # Raft (合意アルゴリズム)
 
@@ -30,7 +30,7 @@ stateDiagram-v2
 
 ## 採用例
 
-[[etcd]]がRaftで一貫性を保っているのが代表例（つまり[[kubernetes|Kubernetes]]のクラスタ状態はRaftの上に載っている）。ほかにHashiCorpの[[consul|Consul]]やTiKV、CockroachDBなど、Go/Rust系の分散システムでの採用が多い。
+[[etcd]]がRaftで一貫性を保っているのが代表例（つまり[[kubernetes|Kubernetes]]のクラスタ状態はRaftの上に載っている）。ほかにHashiCorpの[[consul|Consul]]やTiKV、[[cockroachdb|CockroachDB]]（MultiRaftとして拡張して採用）など、Go/Rust系の分散システムでの採用が多い。
 
 ## ビジュアルデモ
 
