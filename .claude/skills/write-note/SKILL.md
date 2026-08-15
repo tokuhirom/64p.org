@@ -12,16 +12,16 @@ description: 64p.org の /notes/ コーナーに新しい調査メモ（ノー�
 1. `notes/src/` 配下に新しい Markdown ファイルを作る。ファイル名は英数字とハイフンの kebab-case (例: `perl-signal-handling.md`)。
 2. 1行目に `# タイトル` の形でタイトルを書く。タイトルは日本語でよい（むしろ日本語で書く）。
 3. 本文はMarkdown。コードスニペットを載せる場合はフェンス付きコードブロックで言語を指定する(` ```perl ` のように)。シンタックスハイライトが自動で効く。
-4. 書き終えたら以下を実行してHTMLを再生成する。
+4. 書き終えたら以下を実行してHTMLを再生成し、手元で見た目を確認する。
 
    ```sh
    perl regen-index.pl
    ```
 
-   `notes/<slug>.html`、`notes/index.html`、トップページ (`index.html`) のNotes欄がまとめて更新される。
+   `notes/<slug>.html`、`notes/index.html`、トップページ (`index.html`) のNotes欄がまとめて更新される。ただしこれらの生成物は`.gitignore`されており(`/index.html`, `/notes/*.html`, `/notes/tags/`など)、GitHub Actions (`.github/workflows/pages.yml`)がデプロイの度に再生成する。手元のプレビュー用であり、コミット対象ではない。
 
-5. 生成されたHTMLも含めてコミットする。このリポジトリは生成物もgit管理してGitHub Pagesでそのまま配信しているため、`.gitignore`されていない。`git commit`するとlefthookのpre-commitフックが自動で作成日・更新日のfrontmatterを付与し、`perl regen-index.pl`も実行して生成物ごとステージしてくれるので、手順4は省略してそのままcommitしてよい（フック未導入の場合のみ手動で手順4を実行する）。
-6. mdのみ(および付随する生成物)の変更なら、ブランチを切ってPRを作らずに直接masterへpushしてよい。テンプレートやビルドロジックなどコードに手を入れた場合は従来通りPRを作る。
+5. `notes/src/*.md`(ソースのみ)をコミットする。`git commit`するとlefthookのpre-commitフックが自動で作成日・更新日のfrontmatterを付与してくれる。
+6. mdのみの変更なら、ブランチを切ってPRを作らずに直接masterへpushしてよい。テンプレートやビルドロジックなどコードに手を入れた場合は従来通りPRを作る。
 
 ## Zettelkasten的な相互リンク
 
@@ -41,7 +41,7 @@ description: 64p.org の /notes/ コーナーに新しい調査メモ（ノー�
 
 Obsidianのように、本文中の好きな場所に`#tag`と書くとタグになる（タイトル直後や文中どこでもよい）。
 
-- `#raku` `#rust` `#compiler-design` のように、英字始まり・英数字とハイフンのみ。日本語タグは非対応。
+- `#raku` `#rust` `#compiler-design`のような英字始まりタグに加え、`#戦国時代`のような日本語タグも使える。1文字目はUnicodeの文字(`\p{L}`)であれば良く、数字・アンダースコアでは始められない(`#1234`のような番号参照との誤認防止)。2文字目以降は英数字・アンダースコア・ハイフン・Unicode文字が続けられる。英字タグは小文字に正規化されるが、日本語タグは正規化されない(表記ゆれに注意)。
 - 見出し行(`# タイトル`)や、URLのフラグメント(`...#section`)はタグとして誤認識されない（`#`の直前が空白・行頭であることを要求しているため）。
 - コードブロック・インラインコード内の`#...`もタグとして解釈されない。
 - クリックすると`/notes/tags/<tag>.html`（そのタグが付いたノート一覧）に飛ぶ。
