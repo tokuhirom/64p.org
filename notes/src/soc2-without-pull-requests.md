@@ -1,10 +1,10 @@
 ---
 created: 2026-08-15 17:28
-updated: 2026-08-15 17:28
+updated: 2026-08-15 17:39
 ---
 # SOC 2準拠にプルリクエストは必須ではない
 
-AIコーディングツールAmp(Sourcegraph製)のチームブログ記事「[That's not SOC 2 compliant](https://ampcode.com/notes/thats-not-soc-2-compliant)」(著者: Will Dollman)の要旨。Ampチームはプルリクエストを使わずメインブランチへ直接pushする開発フローを採用しているが、それでもSOC 2準拠を達成しているという内容。
+AIコーディングツールAmp(Sourcegraph製)のチームブログ記事「[That's not SOC 2 compliant](https://ampcode.com/notes/thats-not-soc-2-compliant)」(著者: Will Dollman)の要旨。Ampチームはプルリクエストを使わずメインブランチへ直接pushする開発フローを採用しているが、それでも[[soc2|SOC 2]]準拠を達成しているという内容。
 
 ## 主張の骨子
 
