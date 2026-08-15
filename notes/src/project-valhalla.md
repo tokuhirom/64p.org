@@ -1,6 +1,6 @@
 ---
 created: 2026-08-09 21:16
-updated: 2026-08-09 21:18
+updated: 2026-08-15 21:56
 ---
 # Project Valhalla
 
@@ -23,6 +23,10 @@ Project Valhallaの中核となるJEP。
 - 現行の最新版: JDK 26
 - JDK 27: 2026年9月予定
 - JDK 28: 2027年3月予定(JEP 401プレビュー搭載見込み)
+
+## Generic Specialization
+
+値型の導入に合わせて、コレクションをプリミティブ値向けに特化させる**generic specialization**も構想されている。ただし現行の[[java-generics-type-erasure|型消去(type erasure)]]による参照型ジェネリクスへの、完全なreified generics(実行時に型情報を保持する方式)の導入は、既存バイトコードとの互換性維持が難しく可能性は低いとされる。
 
 ## 出典
 
