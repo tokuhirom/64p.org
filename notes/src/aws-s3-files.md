@@ -1,6 +1,6 @@
 ---
 created: 2026-08-16 00:23
-updated: 2026-08-16 00:30
+updated: 2026-08-16 00:32
 ---
 # S3 Files (AWS)
 
@@ -43,7 +43,7 @@ EFSは独立したファイルシステムサービスであるのに対し、S3
 
 ### s3fs-fuseとの違い
 
-S3をファイルシステムとしてマウントする手段としては、以前から[[fuse-filesystem-in-userspace|FUSE]]ベースのサードパーティOSSツール`s3fs-fuse`が存在した。s3fs-fuseはユーザー空間でS3 APIをファイル操作にマッピングする方式だが、S3 FilesはAWSネイティブのマネージドサービスであり、EFSを基盤にNFSプロトコルで提供される点が異なる。
+S3をファイルシステムとしてマウントする手段としては、以前から[[fuse-filesystem-in-userspace|FUSE]]ベースのサードパーティOSSツール[[s3fs-fuse]]が存在した。s3fs-fuseはユーザー空間でS3 APIをファイル操作にマッピングする方式だが、S3 FilesはAWSネイティブのマネージドサービスであり、EFSを基盤にNFSプロトコルで提供される点が異なる。
 
 ## 出典
 
