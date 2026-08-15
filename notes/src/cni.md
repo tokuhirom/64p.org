@@ -1,6 +1,6 @@
 ---
 created: 2026-08-14 08:39
-updated: 2026-08-14 08:40
+updated: 2026-08-15 14:40
 ---
 # CNI (Container Network Interface)
 
@@ -19,7 +19,7 @@ Kubernetesは「全Podが一意なIPを持ち、NATなしで相互に通信で�
 
 - **Flannel** — CoreOS発のシンプルなオーバーレイネットワーク。NetworkPolicyなどの高度な機能はないが軽量で、[[k3s]]のデフォルト
 - **Calico** — L3ルーティングベースでオーバーレイなしでも動く。NetworkPolicyによるセキュリティ制御が充実
-- **[[cilium|Cilium]]** — eBPFでカーネルレベルにネットワーキングを実装し、iptablesを迂回する。L7（HTTP/gRPC/Kafka）レベルのポリシーまで扱える
+- **[[cilium|Cilium]]** — eBPFでカーネルレベルにネットワーキングを実装し、iptablesを迂回する。L7（HTTP/[[grpc|gRPC]]/Kafka）レベルのポリシーまで扱える
 
 ## DockerのCNMとの対比
 

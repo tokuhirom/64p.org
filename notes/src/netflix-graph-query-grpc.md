@@ -1,6 +1,6 @@
 ---
 created: 2026-08-15 14:37
-updated: 2026-08-15 14:37
+updated: 2026-08-15 14:40
 ---
 # Netflixのリアルタイム分散グラフDB: gRPCによるクエリ層設計
 
@@ -8,7 +8,7 @@ Netflix Tech Blogの3部作記事のPart 3。「どのデバイスがこのア�
 
 ## アーキテクチャ
 
-gRPCをエントリポイントとする3層構成。
+[[grpc|gRPC]]をエントリポイントとする3層構成。
 
 ```mermaid
 graph LR

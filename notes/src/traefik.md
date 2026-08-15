@@ -1,6 +1,6 @@
 ---
 created: 2026-08-14 08:24
-updated: 2026-08-14 11:39
+updated: 2026-08-15 14:40
 ---
 # Traefik
 
@@ -12,7 +12,7 @@ Go製のクラウドネイティブなリバースプロキシ / ロードバラ
 
 - プロバイダー: [[kubernetes|Kubernetes]]（Ingress / Gateway API / CRD）、Docker、Docker Swarm、[[nomad|Nomad]]、Amazon ECS、[[consul|Consul]]、file、HTTPなど
 - [[acme|ACME]]（[[lets-encrypt|Let's Encrypt]]）組み込みで、TLS証明書の取得・更新を自動化できる
-- HTTP/2・HTTP/3・gRPC・WebSocket・TCP・UDP対応、ミドルウェアチェーンによる拡張、ビルトインのダッシュボード
+- HTTP/2・HTTP/3・[[grpc|gRPC]]・WebSocket・TCP・UDP対応、ミドルウェアチェーンによる拡張、ビルトインのダッシュボード
 
 ## 使われどころ
 
