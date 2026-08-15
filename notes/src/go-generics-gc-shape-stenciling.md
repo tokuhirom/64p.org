@@ -1,6 +1,6 @@
 ---
 created: 2026-08-15 21:28
-updated: 2026-08-15 21:28
+updated: 2026-08-15 21:31
 ---
 # GoジェネリクスのGC Shape Stenciling
 
@@ -8,12 +8,7 @@ Go 1.18(2022年)で導入されたジェネリクスの実装方式。[[monomorp
 
 ## 背景: Generic Dilemma
 
-2009年、Go開発者のRuss Coxは、ジェネリクスの言語設計における根本的なトレードオフを次のように整理した。
-
-> do you want slow programmers, slow compilers and bloated binaries, or slow execution times?
-> (遅いプログラマ、遅いコンパイラと肥大化したバイナリ、遅い実行時のどれが欲しいのか)
-
-これは実質的に「ジェネリクスを持たない(C方式)」「[[monomorphization|単態化]](C++方式)」「暗黙のボクシング(Java方式)」の三択として提示された。Goのジェネリクス設計は、この二律背反を部分的に回避することを目指した。
+2009年、Go開発者のRuss Coxは、ジェネリクスの言語設計における根本的なトレードオフを[[russ-cox-generic-dilemma|The Generic Dilemma]]として整理した。「ジェネリクスを持たない(C方式)」「[[monomorphization|単態化]](C++方式)」「暗黙のボクシング(Java方式)」のいずれを選んでも代償があるという三択で、Goのジェネリクス設計はこの二律背反を部分的に回避することを目指した。
 
 ## 設計の紆余曲折(2017-2020年)
 
@@ -70,8 +65,8 @@ shape本体が型固有の情報を得るために参照する辞書には、以
 
 ## 理論的基礎・関連研究
 
-- **Featherweight Go**(2020, [arxiv.org/abs/2005.11710](https://arxiv.org/abs/2005.11710)): Goにジェネリクスを型安全に追加でき、単態化によってコンパイル可能であることを形式的に証明した論文。
-- **Generic Go to Go**(OOPSLA 2022, Ellis他): 実用的なコードにおけるshape共有の効果を測定し、Go 1.18のGC Shape Stencilingと純粋な単態化とで命令数がほぼ同等(703 vs 674)であることを報告。型のネストが深く指数的に組み合わせが増えるケースでは、純粋単態化だとバイナリが6.3MBまで膨らむ例を示した。
+- [[featherweight-go|Featherweight Go]](2020): Goにジェネリクスを型安全に追加でき、単態化によってコンパイル可能であることを形式的に証明した論文。
+- [[generic-go-to-go|Generic Go to Go]](OOPSLA 2022, Ellis他): 実用的なコードにおけるshape共有の効果を測定し、Go 1.18のGC Shape Stencilingと純粋な単態化とで命令数がほぼ同等(703 vs 674)であることを報告。型のネストが深く指数的に組み合わせが増えるケースでは、純粋単態化だとバイナリが6.3MBまで膨らむ例を示した。
 
 ## 出典
 
