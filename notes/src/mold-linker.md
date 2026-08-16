@@ -1,6 +1,6 @@
 ---
 created: 2026-08-12 13:50
-updated: 2026-08-14 09:50
+updated: 2026-08-16 13:34
 ---
 # mold(高速リンカ)
 
@@ -12,7 +12,7 @@ MySQLのリンクを例にしたベンチマークでは、GNU ldが10.84秒、l
 
 ## 対応プラットフォーム
 
-x86-64, i386, ARM64, ARM32, RISC-V(32/64bit, LE/BE), PowerPC(32/64bit), s390x, LoongArch, SPARC64, m68k, SH-4など幅広いISAに対応。
+x86-64, i386, ARM64, ARM32, RISC-V(32/64bit, LE/BE), PowerPC(32/64bit), s390x, LoongArch, SPARC64, m68k, SH-4など幅広い[[instruction-set-architecture|ISA]]に対応。
 
 ## ライセンスの変遷
 
