@@ -1,10 +1,10 @@
 ---
 created: 2026-08-12 13:50
-updated: 2026-08-16 13:34
+updated: 2026-08-16 18:19
 ---
 # mold(高速リンカ)
 
-rui314氏(LLVM lldリンカの開発者でもある)が開発した、C++20製の次世代リンカ。GNU ld・LLVM lld・goldといった既存のUnix系リンカの代替として、リンク工程そのものを高速化することを狙ったツール。 #rust #build #linker
+rui314氏(LLVM lldリンカの開発者でもある)が開発した、C++20製の次世代リンカ。GNU ld・LLVM lld・[[gnu-gold-linker|gold]]といった既存のUnix系リンカの代替として、リンク工程そのものを高速化することを狙ったツール。 #rust #build #linker
 
 ## 速度
 
