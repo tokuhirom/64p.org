@@ -1,6 +1,6 @@
 ---
 created: 2026-08-10 16:44
-updated: 2026-08-10 16:49
+updated: 2026-08-16 23:36
 ---
 # Tailscale
 
@@ -13,6 +13,11 @@ updated: 2026-08-10 16:49
 - **[[nat|NAT]] traversal**: STUNによる発見、Discoプロトコルによるピア間発見、複数経路の中から最速のものを選ぶレース戦略などを組み合わせ、ポート開放なしに直接のP2P接続を優先的に確立する
 - **DERP (Designated Encrypted Relay for Packets)**: symmetric NATやキャリアグレードNAT、制限の厳しいファイアウォールなどでP2P直接接続ができない場合のフォールバックとして、HTTPS経由でWireGuard暗号化パケットを中継する暗号化リレーサーバー群。DERPサーバー自体は復号を行わず、暗号文をそのまま中継するだけなのでエンドツーエンド暗号化は保たれる
 - **MagicDNS**: 各ノードに安定したホスト名を割り当てる機能
+
+## 関連機能
+
+- [[tailscale-funnel|Tailscale Funnel]] — tailnet内にとどまらず、ローカルサービスをインターネット全体に公開する機能
+- **Tailscale Serve** — Funnelと似ているが、公開範囲がtailnet内のデバイス・メンバーに限定される版
 
 ## [[wireguard]]との関係
 
