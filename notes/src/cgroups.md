@@ -1,6 +1,6 @@
 ---
 created: 2026-08-11 09:41
-updated: 2026-08-14 08:25
+updated: 2026-08-16 10:27
 ---
 # cgroups（control groups）
 
@@ -36,6 +36,10 @@ Linuxカーネルの機能で、プロセスをグループ化し、そのグル
 ## 活用例
 
 [[lxc|LXC]]・Docker・Kubernetesにおけるコンテナのリソース制限の基盤、systemdによる全プロセスの自動cgroup階層配置、[[incus|Incus]]・Firejail・libvirtなど多数のツールで採用されている。
+
+## 関連機能
+
+cgroup v2では、各サブディレクトリに[[psi-pressure-stall-information|PSI]](Pressure Stall Information)のファイルも自動生成され、cgroup単位でのCPU/メモリ/IOの逼迫度を監視できる。
 
 ## 出典
 
