@@ -1,10 +1,10 @@
 ---
 created: 2026-08-16 11:28
-updated: 2026-08-16 11:28
+updated: 2026-08-16 11:43
 ---
 # FiveFilters Feed Creator
 
-[FiveFilters.org](https://www.fivefilters.org/)が提供する、RSSフィードを持たないWebページから独自のフィード(RSS/JSON)を生成するサービス。<https://createfeed.fivefilters.org/>でホスト型サービスとして提供されている。現在は「Feed Control」というプラットフォームの一部という位置づけ。[[rss-bridge]]と同じく「フィードのないサイトをフィード化する」問題を扱うツールだが、アプローチが異なる。
+[FiveFilters.org](https://www.fivefilters.org/)が提供する、RSSフィードを持たないWebページから独自のフィード(RSS/JSON)を生成するサービス。<https://createfeed.fivefilters.org/>でホスト型サービスとして提供されている。現在は「Feed Control」というプラットフォームの一部という位置づけ。[[rss-bridge]]や[[feedly-rss-builder|Feedly RSS Builder]]と同じく「フィードのないサイトをフィード化する」問題を扱うツールだが、アプローチが異なる。
 
 ## 仕組み
 

@@ -1,6 +1,6 @@
 ---
 created: 2026-08-16 11:24
-updated: 2026-08-16 11:28
+updated: 2026-08-16 11:43
 ---
 # RSS-Bridge
 
@@ -33,7 +33,7 @@ Atom/RSS標準に加え、HTML・JSON・Plaintext・MRSS(メディア対応)・S
 
 ## 類似ツール
 
-「フィードのないサイトをフィード化する」問題を扱う点で[[fivefilters-feed-creator|FiveFilters Feed Creator]]と同種。RSS-Bridgeは自分でホストするOSS+bridge集合であるのに対し、FiveFiltersはホスト型サービス(将来セルフホスト版も予定)という違いがある。RSS-BridgeのCssSelector/XPathブリッジは手動でセレクタを指定する方式で、サイト構造を自動判定する[[html-content-extraction|本文抽出アルゴリズム]]とはアプローチが異なる。
+「フィードのないサイトをフィード化する」問題を扱う点で[[fivefilters-feed-creator|FiveFilters Feed Creator]]や[[feedly-rss-builder|Feedly RSS Builder]]と同種。RSS-Bridgeは自分でホストするOSS+bridge集合であるのに対し、FiveFiltersはホスト型サービス(将来セルフホスト版も予定)、FeedlyはSaaS内蔵機能という違いがある。RSS-BridgeのCssSelector/XPathブリッジは手動でセレクタを指定する方式で、サイト構造を自動判定する[[html-content-extraction|本文抽出アルゴリズム]]とはアプローチが異なる。
 
 ## 出典
 
