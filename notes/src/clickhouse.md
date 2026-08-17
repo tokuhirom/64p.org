@@ -1,6 +1,6 @@
 ---
 created: 2026-08-12 12:53
-updated: 2026-08-13 22:36
+updated: 2026-08-17 12:33
 ---
 # ClickHouse
 
@@ -26,7 +26,7 @@ updated: 2026-08-13 22:36
 
 ## 得意・不得意
 
-リアルタイムダッシュボード、ログ分析・[[siem|SIEM]]、BIの高速化、AdTech、時系列分析、プロダクト分析、オブザーバビリティ基盤などの分析ワークロードが主戦場。一方でOLTPやレコード単位の頻繁な更新・削除には不向き。実務では「[[postgresql|PostgreSQL]]/[[mysql|MySQL]]でOLTPを担い、分析・リアルタイム集計はClickHouseに任せる」という併用構成が一般的。
+リアルタイムダッシュボード、ログ分析・[[siem|SIEM]]、BIの高速化、AdTech、時系列分析、プロダクト分析、オブザーバビリティ基盤などの分析ワークロードが主戦場。一方でOLTPやレコード単位の頻繁な更新・削除には不向き。実務では「[[postgresql|PostgreSQL]]/[[mysql|MySQL]]でOLTPを担い、分析・リアルタイム集計はClickHouseに任せる」という併用構成が一般的。なお[[pgrust]]はClickBenchでClickHouseを上回る性能を報告している。
 
 ## 出典
 
