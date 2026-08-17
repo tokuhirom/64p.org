@@ -1,6 +1,6 @@
 ---
 created: 2026-08-17 09:48
-updated: 2026-08-17 09:48
+updated: 2026-08-17 09:51
 ---
 # textfile collectorを動かした実験記録
 
@@ -67,7 +67,7 @@ curl -s http://127.0.0.1:9100/metrics | grep -E '^mybatch|node_textfile_mtime'
 
 ## 実験3: タイムスタンプ付きメトリクス(サポート外)を書いた場合の挙動
 
-textfile collectorはtext exposition formatのタイムスタンプ(3カラム目)をサポートしていない。実際に書いてみると、
+textfile collectorは[[prometheus-exposition-format|text exposition format]]のタイムスタンプ(3カラム目)をサポートしていない。実際に書いてみると、
 
 ```sh
 echo 'mybatch_broken_metric 1 1234567890000' > textfiles/broken.prom

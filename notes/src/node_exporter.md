@@ -1,6 +1,6 @@
 ---
 created: 2026-08-17 09:48
-updated: 2026-08-17 09:48
+updated: 2026-08-17 09:51
 ---
 # node_exporter
 
@@ -14,7 +14,7 @@ Prometheus本体と同じくpull型。node_exporterはHTTPサーバーとして�
 
 ## textfile collector
 
-`--collector.textfile.directory=<dir>`フラグで指定したディレクトリ内の`*.prom`ファイル(Prometheusのtext exposition format)をスクレイプのたびに読み込み、そのままメトリクスとしてマージして公開する機能。node_exporter自身が対応していない独自メトリクスや、cronジョブの実行結果("最後に成功した時刻"など)を後付けで露出させたい場合に使う。
+`--collector.textfile.directory=<dir>`フラグで指定したディレクトリ内の`*.prom`ファイル([[prometheus-exposition-format|Prometheusのtext exposition format]])をスクレイプのたびに読み込み、そのままメトリクスとしてマージして公開する機能。node_exporter自身が対応していない独自メトリクスや、cronジョブの実行結果("最後に成功した時刻"など)を後付けで露出させたい場合に使う。
 
 - ファイルごとに`node_textfile_mtime_seconds{file="..."}`(最終読み込み成功時のmtime)が自動付与される
 - タイムスタンプ付きの行(`metric_name 1 1234567890000`のような3カラム目)はサポートされておらず、含まれているとそのファイル全体がパース不可としてスキップされる(他の`.prom`ファイルには影響しない、ファイル単位のエラー)。この場合`node_textfile_scrape_error`が1になる
