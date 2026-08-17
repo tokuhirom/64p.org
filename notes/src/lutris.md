@@ -1,10 +1,10 @@
 ---
 created: 2026-08-17 18:22
-updated: 2026-08-17 18:23
+updated: 2026-08-17 18:25
 ---
 # Lutris
 
-Linux向けのゲームランチャー/ライブラリマネージャー。Wine・[[proton|Proton]]・DOSBox・ScummVM・各種エミュレータなど複数のランナーを切り替えて、WindowsゲームやレトロゲームをLinux上で実行できる。Battle.net・EA・GOG・Epicなど各種ストアとの統合機能も持つ。
+Linux向けのゲームランチャー/ライブラリマネージャー。[[wine|Wine]]・[[proton|Proton]]・DOSBox・ScummVM・各種エミュレータなど複数のランナーを切り替えて、WindowsゲームやレトロゲームをLinux上で実行できる。Battle.net・EA・GOG・Epicなど各種ストアとの統合機能も持つ。
 
 ## Proton統合
 

@@ -1,6 +1,6 @@
 ---
 created: 2026-08-11 16:42
-updated: 2026-08-16 07:44
+updated: 2026-08-17 18:25
 ---
 # Yama (Yama LSM)
 
@@ -15,7 +15,7 @@ Linuxカーネルの[[linux-security-modules|LSM]] (Linux Security Module) フ�
 `/proc/sys/kernel/yama/ptrace_scope`で設定する。
 
 - **0（従来型）**: dumpableであれば、同一uidの任意のプロセスに`PTRACE_ATTACH`可能
-- **1（制限型、Yamaのデフォルト）**: 親子関係などあらかじめ定義された関係を持つプロセスのみアタッチ可能。`prctl(PR_SET_PTRACER, pid, ...)`で明示的に許可するプロセスを指定できる。KDE・Chromium・Firefoxのクラッシュハンドラや、Wineが同種プロセス間のptraceのみ許可する用途で使用
+- **1（制限型、Yamaのデフォルト）**: 親子関係などあらかじめ定義された関係を持つプロセスのみアタッチ可能。`prctl(PR_SET_PTRACER, pid, ...)`で明示的に許可するプロセスを指定できる。KDE・Chromium・Firefoxのクラッシュハンドラや、[[wine|Wine]]が同種プロセス間のptraceのみ許可する用途で使用
 - **2（管理者のみ）**: `CAP_SYS_PTRACE`権限を持つプロセスのみ利用可能
 - **3（禁止）**: ptrace使用を完全禁止。この設定にすると、再起動までリバート不可
 

@@ -1,14 +1,14 @@
 ---
 created: 2026-08-17 18:23
-updated: 2026-08-17 18:23
+updated: 2026-08-17 18:25
 ---
 # Proton
 
-Valveが開発する、Windows向けソフトウェア(主にゲーム)をLinux上で動かすための互換レイヤー。2018-08-21に初版がリリースされた。CodeWeavers社との協力のもと、Wineをベースにいくつかのライブラリを組み合わせて構成されている。
+Valveが開発する、Windows向けソフトウェア(主にゲーム)をLinux上で動かすための互換レイヤー。2018-08-21に初版がリリースされた。CodeWeavers社との協力のもと、[[wine|Wine]]をベースにいくつかのライブラリを組み合わせて構成されている。
 
 ## 構成コンポーネント
 
-- **Wine** — Windows APIコールをその場でPOSIX互換の呼び出しに変換する互換レイヤー。Protonの基盤。
+- **[[wine|Wine]]** — Windows APIコールをその場でPOSIX互換の呼び出しに変換する互換レイヤー。Protonの基盤。
 - **DXVK** — Direct3D 9/10/11をVulkanに変換するレイヤー。Philip RebohleとJoshua Ashtonが開発し、両者ともValveに雇用されてProton開発に従事している。
 - **VKD3D-Proton** — Direct3D 12をVulkanに変換するレイヤー。Józef Kuciaが元プロジェクトを立ち上げ、Hans-Kristian Arntzenらが開発を継続。ValveはこれをフォークしてProtonの全ビルドに同梱している。
 - **FAudio** — Microsoft XAudio2の再実装。
