@@ -1,6 +1,6 @@
 ---
 created: 2026-08-12 23:25
-updated: 2026-08-14 08:21
+updated: 2026-08-17 20:23
 ---
 # コンテナ向け軽量VM技術
 
@@ -24,6 +24,7 @@ updated: 2026-08-14 08:21
 - [[cloud-hypervisor|Cloud Hypervisor]] — Intel主導・Rust製。[[rust-vmm|rust-vmm]]由来でFirecrackerの実装を参考にしている
 - [[rust-vmm|rust-vmm]] — Firecracker/crosvm/Cloud Hypervisorが共有する、Rust製VMM部品(クレート)群
 - [[crosvm|crosvm]] — Google製。ChromeOS/Android向けに開発されたRust製VMM
+- [[libkrun|libkrun]] — 別プロセスではなくライブラリとしてホストプロセスに組み込まれる、Firecracker/rust-vmm由来のVMM。crun/AIサンドボックス等の隔離バックエンドとして使われる
 - [[qemu|QEMU]] — 2003年発。他のVMMと異なりmicroVM専用ではなく、幅広いアーキテクチャ・デバイスをフルエミュレートできる「何でも屋」
 
 ## コンテナエコシステムとの統合レイヤー
