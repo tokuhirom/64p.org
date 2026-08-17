@@ -1,6 +1,6 @@
 ---
 created: 2026-08-09 18:07
-updated: 2026-08-09 18:07
+updated: 2026-08-17 17:44
 ---
 # ADR(Architecture Decision Record)
 
@@ -39,6 +39,8 @@ updated: 2026-08-09 18:07
 ## 関連
 
 [[sakpilot]]でもE2Eテスト戦略がADR(`docs/adr/0001-e2e-testing-strategy.md`)として記録されている。
+
+[[arc42]]のセクション9「Architectural Decisions」はADRに相当する位置づけになっている。
 
 ## 出典
 
