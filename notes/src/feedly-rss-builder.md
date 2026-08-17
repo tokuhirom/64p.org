@@ -1,6 +1,6 @@
 ---
 created: 2026-08-16 11:43
-updated: 2026-08-16 11:43
+updated: 2026-08-17 17:13
 ---
 # Feedly RSS Builder
 
@@ -34,6 +34,8 @@ Pro+プラン(最大25フィード作成可)、Enterpriseプラン(最大100フ�
 | FiveFilters Feed Creator | 人がテキストの手がかり(clue)を文字列で指定 |
 | RSS-BridgeのCssSelector/XPathブリッジ | 人がCSSセレクタ/XPathを手書き |
 | Feedly RSS Builder | 人がプレビュー上で要素を直接クリック選択 |
+
+これらはいずれも「フィードを作る」側の問題を扱う。作られたフィードを速く・快適に読む「リーダー」側の問題を扱うツールとして[[ratatoskr|Ratatoskr]]がある。
 
 ## 出典
 
