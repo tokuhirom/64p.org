@@ -1,6 +1,6 @@
 ---
 created: 2026-08-12 23:29
-updated: 2026-08-12 23:51
+updated: 2026-08-17 18:19
 ---
 # crosvm
 
@@ -16,7 +16,7 @@ Googleが開発するRust製の[[microvm|軽量VM]]向けVMM(Virtual Machine Mon
 
 ## 機能
 
-io_uring・vhost、内部の非同期ランタイム(`cros_async`)を活用し、モダンなワークロード向けに最適化されている。virtio-fs/virtio-9pによるファイルシステム共有のほか、Console・RNG・Balloon・Vsock・TPM・Pmem・ビデオデコード/エンコードなど幅広い[[virtio|virtio]]デバイスに対応する。
+io_uring・vhost、内部の非同期ランタイム(`cros_async`)を活用し、モダンなワークロード向けに最適化されている。virtio-fs/virtio-9pによるファイルシステム共有のほか、Console・RNG・Balloon・Vsock・[[tpm|TPM]]・Pmem・ビデオデコード/エンコードなど幅広い[[virtio|virtio]]デバイスに対応する。
 
 ## [[rust-vmm|rust-vmm]]との関係
 
