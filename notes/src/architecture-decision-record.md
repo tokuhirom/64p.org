@@ -1,6 +1,6 @@
 ---
 created: 2026-08-09 18:07
-updated: 2026-08-17 17:44
+updated: 2026-08-17 17:45
 ---
 # ADR(Architecture Decision Record)
 
@@ -22,7 +22,7 @@ updated: 2026-08-17 17:44
 - **Decision**: 決定した内容の詳細
 - **Consequences**: その決定がもたらすポジティブ・ネガティブな影響
 
-他にMADRテンプレートなど派生形式も存在する。
+他に[[madr|MADRテンプレート]]など派生形式も存在する。
 
 ## Dress Codeの事例("Any Decision Record"としての運用)
 
