@@ -1,15 +1,14 @@
 ---
 created: 2026-08-17 18:22
-updated: 2026-08-17 18:22
+updated: 2026-08-17 18:23
 ---
 # Lutris
 
-Linux向けのゲームランチャー/ライブラリマネージャー。Wine・Proton・DOSBox・ScummVM・各種エミュレータなど複数のランナーを切り替えて、WindowsゲームやレトロゲームをLinux上で実行できる。Battle.net・EA・GOG・Epicなど各種ストアとの統合機能も持つ。
+Linux向けのゲームランチャー/ライブラリマネージャー。Wine・[[proton|Proton]]・DOSBox・ScummVM・各種エミュレータなど複数のランナーを切り替えて、WindowsゲームやレトロゲームをLinux上で実行できる。Battle.net・EA・GOG・Epicなど各種ストアとの統合機能も持つ。
 
 ## Proton統合
 
-- **Proton**はValveが開発する、SteamでWindowsゲームをLinux上で動かすための互換レイヤー。Wineをベースに、DXVK(Direct3D→Vulkan変換)やVKD3D-Proton(Direct3D 12→Vulkan変換)などを同梱している。
-- **GE-Proton**は`GloriousEggroll`氏によるコミュニティフォーク。Valve公式のProtonにまだ入っていないパッチ(DXVK/VKD3D-Proton/FAudioの更新版など)を先行して取り込んでおり、2026年時点でLutrisにおけるWindowsゲーム実行の推奨選択肢になっている。
+[[proton|Proton]]のコミュニティフォークである**GE-Proton**が、2026年時点でLutrisにおけるWindowsゲーム実行の推奨選択肢になっている。GE-ProtonはValve公式のProtonにまだ入っていないパッチ(DXVK/VKD3D-Proton/FAudioの更新版など)を先行して取り込んでいる。
 
 ## UMU(umu-launcher)経由での起動(Lutris 0.5.20〜)
 
