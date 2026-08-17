@@ -1,6 +1,6 @@
 ---
 created: 2026-08-14 09:19
-updated: 2026-08-14 09:29
+updated: 2026-08-17 09:48
 ---
 # GPUStack
 
@@ -12,7 +12,7 @@ updated: 2026-08-14 09:29
 - [[vllm|vLLM]]・SGLang・TensorRT-LLMなど複数の推論エンジンをプラガブルに扱い、モデルに応じて自動選択・自動構成する。カスタムエンジンの追加も可能
 - NVIDIA・AMDに加え、Ascend NPU・Hygon DCU・Moore Threads・MetaX・Cambricon MLU・Iluvatar・T-Head PPUなど幅広いアクセラレータをサポート
 - OpenAI互換・Anthropic互換のAPIで推論エンジンを提供する
-- Grafana/Prometheusと連携した監視ダッシュボードで、システムの健全性・メトリクスを可視化する
+- Grafana/[[prometheus|Prometheus]]と連携した監視ダッシュボードで、システムの健全性・メトリクスを可視化する
 
 ## [[vllm|vLLM]]とのレイヤーの違い
 

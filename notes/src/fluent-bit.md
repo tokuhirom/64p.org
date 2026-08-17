@@ -1,6 +1,6 @@
 ---
 created: 2026-08-13 13:05
-updated: 2026-08-14 08:21
+updated: 2026-08-17 09:48
 ---
 # Fluent Bit
 
@@ -22,7 +22,7 @@ updated: 2026-08-14 08:21
 ## 主な機能
 
 - JSON・正規表現・LTSV・Logfmtなど複数フォーマットのログパーサーに対応。
-- PrometheusおよびOpenTelemetryと互換性のあるメトリクス収集・出力。
+- [[prometheus|Prometheus]]およびOpenTelemetryと互換性のあるメトリクス収集・出力。
 - バックプレッシャーハンドリングと、メモリ/ファイルシステムでのデータバッファリング。
 - 高スループット・低リソース消費を重視した設計で、[[kubernetes|Kubernetes]]のノードレベルやエッジ層でのログ収集用途によく使われる。
 

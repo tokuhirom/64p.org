@@ -1,6 +1,6 @@
 ---
 created: 2026-08-15 06:50
-updated: 2026-08-15 06:50
+updated: 2026-08-17 09:48
 ---
 # GoのYAMLライブラリ事情
 
@@ -23,7 +23,7 @@ updated: 2026-08-15 06:50
 - import pathは `go.yaml.in/yaml/v4`
 - v1〜v3は凍結・セキュリティ修正のみとし、`gopkg.in/yaml.vX`からの移行を容易にする設計。新機能はすべてv4で開発
 - v4では`Marshal`/`Unmarshal`に代わり`Load`/`Dump`という命名を採用（PyYAML等他言語との一貫性を意識）
-- Kubernetes（2025-06-26付けで正式採用）・Prometheusが既に移行済み
+- Kubernetes（2025-06-26付けで正式採用）・[[prometheus|Prometheus]]が既に移行済み
 
 ## 現状の使い分けの目安
 
