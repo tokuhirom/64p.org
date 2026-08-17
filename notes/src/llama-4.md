@@ -1,10 +1,10 @@
 ---
 created: 2026-08-16 13:30
-updated: 2026-08-16 13:30
+updated: 2026-08-17 18:32
 ---
 # Llama 4
 
-Metaが2025年4月5日にリリースした、Llamaシリーズ初のMixture-of-Experts(MoE)アーキテクチャモデル。ネイティブなearly fusionによるマルチモーダル(テキスト+画像)対応。Scout・Maverick・Behemothの3サイズで構成される。[[open-weight-llm-moc|オープンウェイトLLM MOC]]の一員。
+Metaが2025年4月5日にリリースした、Llamaシリーズ初の[[moe|Mixture-of-Experts(MoE)]]アーキテクチャモデル。ネイティブなearly fusionによるマルチモーダル(テキスト+画像)対応。Scout・Maverick・Behemothの3サイズで構成される。[[open-weight-llm-moc|オープンウェイトLLM MOC]]の一員。
 
 ## Scout / Maverick / Behemoth
 

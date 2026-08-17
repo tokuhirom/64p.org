@@ -1,6 +1,6 @@
 ---
 created: 2026-08-11 09:44
-updated: 2026-08-12 13:02
+updated: 2026-08-17 18:32
 ---
 # Muse Glimmer 30B
 
@@ -19,9 +19,9 @@ Meta（Meta Superintelligence Labs）が2026年8月10日に発表した、300億
 
 ## 動作要件・性能
 
-- 量子化した状態で20GB未満のメモリで動作可能とされ、単一のコンシューマー向けGPUでも動く小規模設計。
+- [[llm-quantization|量子化]]した状態で20GB未満のメモリで動作可能とされ、単一のコンシューマー向けGPUでも動く小規模設計。
 - AMD Ryzen AI Max+ 395プロセッサで最大24 tokens/秒、AMD Radeon AI PRO R9700 GPU（dFlash有効時）で最大53 tokens/秒という初期ベンチマーク結果が報告されている。
-- Hugging Face上で公開されており（`meta-models/Muse-Glimmer-30B`など）、unslothによる[[ggml|GGUF]]量子化版も配布されている。
+- Hugging Face上で公開されており（`meta-models/Muse-Glimmer-30B`など）、unslothによる[[gguf|GGUF]][[llm-quantization|量子化]]版も配布されている。
 
 ## 出典
 

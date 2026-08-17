@@ -1,6 +1,6 @@
 ---
 created: 2026-08-16 13:30
-updated: 2026-08-16 13:30
+updated: 2026-08-17 18:32
 ---
 # gpt-oss
 
@@ -17,12 +17,12 @@ Apache 2.0ライセンス + OpenAI独自の「gpt-oss usage policy」の両方�
 | 総パラメータ | 116.8B | 20.9B |
 | アクティブパラメータ/トークン | 5.1B | 3.6B |
 | 層数 | 36 | 24 |
-| MoEエキスパート数 | 128 | 32 |
+| [[moe|MoE]]エキスパート数 | 128 | 32 |
 | コンテキスト長 | 131,072トークン | 131,072トークン |
 | チェックポイントサイズ | 60.8 GiB | 12.8 GiB |
 | 必要メモリ目安 | 80GB | 16GB |
 
-ネイティブMXFP4量子化。alternating dense/locally banded sparse attention + grouped multi-query attentionを採用。学習にo3等OpenAI内部フロンティアモデルの知見を反映したRLを使用している。
+ネイティブMXFP4[[llm-quantization|量子化]]。alternating dense/locally banded sparse attention + grouped multi-query attentionを採用。学習にo3等OpenAI内部フロンティアモデルの知見を反映したRLを使用している。
 
 ## reasoning effort
 

@@ -1,6 +1,6 @@
 ---
 created: 2026-08-16 13:30
-updated: 2026-08-16 13:30
+updated: 2026-08-17 18:32
 ---
 # DeepSeek V4
 
@@ -12,7 +12,7 @@ MIT(報道ベース。Hugging Face公式ブログには明記なし)。
 
 ## アーキテクチャ
 
-- V4-Pro: 総パラメータ1.6T、アクティブ49B。V4-Flash: 総パラメータ284B、アクティブ13B。共にMoE構成。
+- V4-Pro: 総パラメータ1.6T、アクティブ49B。V4-Flash: 総パラメータ284B、アクティブ13B。共に[[moe|MoE]]構成。
 - ハイブリッド注意機構を採用: Compressed Sparse Attention(CSA、4倍圧縮率でlightning indexerが圧縮ブロックからトップkを選択)とHeavily Compressed Attention(HCA、128倍圧縮率ですべての圧縮ブロックへ密な注意)を組み合わせ、長文脈での効率を改善している。
 - thinking/non-thinkingのハイブリッド切り替えと、reasoning_effort(low/high/max)の指定に対応。
 

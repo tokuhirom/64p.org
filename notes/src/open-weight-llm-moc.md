@@ -1,6 +1,6 @@
 ---
 created: 2026-08-16 12:48
-updated: 2026-08-16 13:30
+updated: 2026-08-17 18:32
 ---
 # オープンウェイトLLM
 
@@ -37,7 +37,7 @@ updated: 2026-08-16 13:30
 
 ## 大きさ(パラメータ規模)の傾向
 
-2026年半ば以降、オープンウェイト陣営でも兆パラメータ級のMoEモデルが相次いでいる。
+2026年半ば以降、オープンウェイト陣営でも兆パラメータ級の[[moe|MoE]]モデルが相次いでいる。
 
 - **軽量・denseで扱いやすい層**: [[qwen3-8-27b|Qwen3.8-27B]](27.78B)、[[gpt-oss|gpt-oss-20b]](21B)。単一の高性能GPU/ハイエンドPCでも動く規模。
 - **数百B級MoE**: [[gpt-oss|gpt-oss-120b]]、[[deepseek-v4|DeepSeek V4-Flash]]、[[mistral-large-3|Mistral Large 3]]、[[llama-4|Llama 4 Maverick]]。

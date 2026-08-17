@@ -1,10 +1,10 @@
 ---
 created: 2026-08-16 12:48
-updated: 2026-08-16 12:48
+updated: 2026-08-17 18:32
 ---
 # Qwen3.8-27B
 
-Alibaba傘下のQwen Teamが2026年8月14日にリリースした、27.78Bパラメータのdense(非MoE)モデル。Hugging Faceに`Qwen/Qwen3.8-27B`(および量子化版`Qwen/Qwen3.8-27B-FP8`)として公開されており、ライセンスはApache 2.0。[[open-weight-llm-moc|オープンウェイトLLM MOC]]の一員。
+Alibaba傘下のQwen Teamが2026年8月14日にリリースした、27.78Bパラメータのdense(非[[moe|MoE]])モデル。Hugging Faceに`Qwen/Qwen3.8-27B`(および[[llm-quantization|量子化]]版`Qwen/Qwen3.8-27B-FP8`)として公開されており、ライセンスはApache 2.0。[[open-weight-llm-moc|オープンウェイトLLM MOC]]の一員。
 
 ## アーキテクチャ
 

@@ -1,6 +1,6 @@
 ---
 created: 2026-08-12 13:02
-updated: 2026-08-12 13:02
+updated: 2026-08-17 18:32
 ---
 # transcribe.cpp
 
@@ -18,7 +18,7 @@ whisper.cppはOpenAIのWhisperモデル専用の実装だったのに対し、tr
 
 ## 特徴
 
-- **対応モデル数**: 16種類以上のモデルファミリー、60以上のバリエーションに対応（[[ggml|GGUF]]形式）
+- **対応モデル数**: 16種類以上のモデルファミリー、60以上のバリエーションに対応（[[gguf|GGUF]]形式）
   - Whisper（tiny〜large-v3-turbo、12バリエーション）に加え、Parakeet、Canary（NVIDIA製）、Moonshine、SenseVoice、Qwen3-ASR、GigaAM、Voxtralなど幅広くカバー
   - 話者分離（diarization）専用のSortformerにも対応
 - **品質保証**: 公開している全モデルでWER（単語誤り率）を検証済み
