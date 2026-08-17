@@ -1,6 +1,6 @@
 ---
 created: 2026-08-17 11:29
-updated: 2026-08-17 11:29
+updated: 2026-08-17 11:31
 ---
 # リベラルアーツ
 
@@ -16,8 +16,10 @@ updated: 2026-08-17 11:29
 
 中世の大学教育の基礎科目として、以下の7分野で構成された。
 
-- 言語系3学（Trivium）: 文法・論理学・修辞学
-- 数学系4学（Quadrivium）: 算術・幾何学・天文学・音楽
+- 言語系3学: [[trivium|Trivium]]（文法・論理学・修辞学）
+- 数学系4学: [[quadrivium|Quadrivium]]（算術・幾何学・天文学・音楽）
+
+この7分野を一体の教養課程として定式化したのは5世紀の北アフリカの著述家マルティアヌス・カペッラの著作『フィロロギアとメルクリウスの結婚』とされる。中世大学の哲学部・学芸学部において、神学・法学・医学など専門学部への進学課程を構成した。
 
 現代の「リベラルアーツ」はこの厳密な7科目構成というより、専門分野を横断して幅広く学ぶ教育理念そのものを指す用法が一般的。
 
@@ -28,3 +30,5 @@ updated: 2026-08-17 11:29
 - [LiberalArtsとは？ 意味や使い方 - コトバンク](https://kotobank.jp/word/liberalarts-3230980)
 - [リベラルアーツとは・意味 | IDEAS FOR GOOD](https://ideasforgood.jp/glossary/liberalarts/)
 - [DISCOVER LIBERAL ARTS | Global Liberal Arts Program (GLAP)公式サイト](https://glap.rikkyo.ac.jp/discover/)
+- [リベラル・アーツの本来の構造｜Noz](https://note.com/noz3981/n/n1dc0d576c9b8)
+- [２．教養「自由七科」の成立 ～古代ギリシャ・古代ローマ・中世前期の学問の歴史～ - カクヨム](https://kakuyomu.jp/works/1177354054895684204/episodes/1177354054896277298)
