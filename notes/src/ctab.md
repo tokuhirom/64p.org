@@ -1,6 +1,6 @@
 ---
 created: 2026-08-15 20:34
-updated: 2026-08-15 20:34
+updated: 2026-08-17 10:42
 ---
 # cTab
 
@@ -32,5 +32,9 @@ Apple Developer Programに未加入のため「野良アプリ」扱いで、`--
 ## 開発の発端
 
 petitvioletさんのブログ記事「[cTab: Mac ウィンドウスイッチャー](https://petitviolet.hatenablog.com/entry/20260726/1785046348)」で開発経緯が語られている。Claude(AI)の支援を受けて開発したと言及されている。
+
+## [[macos-menu-bar-utilities|macOSメニューバー常駐ユーティリティ]]の中での位置づけ
+
+[[alttab|AltTab]]と同じくウィンドウ単位の切り替えを実現するツール。メニューバーに常駐してキー操作をフックする点が[[macos-menu-bar-utilities|同カテゴリ]]の他ツールと共通する。
 
 #macos #swift #claude
