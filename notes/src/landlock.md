@@ -1,6 +1,6 @@
 ---
 created: 2026-08-16 07:44
-updated: 2026-08-16 07:44
+updated: 2026-08-18 08:44
 ---
 # Landlock
 
@@ -23,6 +23,10 @@ Linux 5.13で導入された、非特権プロセスが「自分自身とその�
 ## [[linux-privilege-mechanisms]]の中での位置づけ
 
 [[setuid-setgid|setuid]]や[[linux-capabilities|capabilities]]が「他者に権限を与える」方向なのに対し、Landlockと[[seccomp]]は「自分自身の権限を絞る」方向。両者の違いは、seccompがシステムコール単位のフィルタなのに対し、Landlockはファイルパスのようなオブジェクト単位でルールを表現できる点。
+
+## [[linux-7.2|Linux 7.2]]での強化
+
+[[linux-7.2|Linux 7.2]]でも機能強化が入っている。詳細は[[linux-7.2|Linux 7.2]]のノート参照。
 
 ## 出典
 
