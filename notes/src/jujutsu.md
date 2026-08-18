@@ -1,6 +1,6 @@
 ---
 created: 2026-08-18 16:30
-updated: 2026-08-18 20:32
+updated: 2026-08-18 20:36
 ---
 # Jujutsu (jj)
 
@@ -17,7 +17,7 @@ updated: 2026-08-18 20:32
 - **完全な操作ログ（operation log）** — ほぼ全ての操作をundoできる。
 - **自動rebase** — 履歴の途中のコミットを書き換えると、その子孫コミットが自動的に追従してrebaseされる。
 
-設計思想としては、Git（データモデル・速度）、[[mercurial|Mercurial]]（匿名ブランチ、indexのないシンプルなCLI、revset、強力な履歴書き換え）、Pijul/Darcs（コンフリクトのファーストクラス化）の要素を組み合わせたものとされている。
+設計思想としては、Git（データモデル・速度）、[[mercurial|Mercurial]]（匿名ブランチ、indexのないシンプルなCLI、revset、強力な履歴書き換え）、[[pijul|Pijul]]/[[darcs|Darcs]]（コンフリクトのファーストクラス化）の要素を組み合わせたものとされている。
 
 ## エコシステムでの対応状況
 
@@ -25,7 +25,7 @@ diffビューアの[[hunk-cli|hunk]]はGit/Jujutsu/[[sapling|Sapling]]に対応�
 
 ## [[distributed-vcs-alternatives|Gitに代わる分散バージョン管理システム]]の中での位置づけ
 
-Gitのデータモデルをそのまま使いつつUI/UXだけを作り直す「Git互換レイヤー系」の一つ。同系統の[[sapling|Sapling]]がMercurial由来のスタック型ワークフローを引き継ぐのに対し、JujutsuはMercurial・Pijul/Darcsなど複数のツールの要素を組み合わせた独自設計という違いがある。
+Gitのデータモデルをそのまま使いつつUI/UXだけを作り直す「Git互換レイヤー系」の一つ。同系統の[[sapling|Sapling]]がMercurial由来のスタック型ワークフローを引き継ぐのに対し、JujutsuはMercurial・[[pijul|Pijul]]/[[darcs|Darcs]]など複数のツールの要素を組み合わせた独自設計という違いがある。
 
 #git #vcs
 
