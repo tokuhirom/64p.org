@@ -1,6 +1,6 @@
 ---
 created: 2026-08-18 16:30
-updated: 2026-08-18 20:31
+updated: 2026-08-18 20:32
 ---
 # Jujutsu (jj)
 
@@ -22,6 +22,10 @@ updated: 2026-08-18 20:31
 ## エコシステムでの対応状況
 
 diffビューアの[[hunk-cli|hunk]]はGit/Jujutsu/[[sapling|Sapling]]に対応しており、jj環境では自動検出してネイティブのrevsetを使う機能を持つ。こうしたツール側の対応が進んでいることからも、Git互換VCSとして一定の認知が進んでいることがうかがえる。
+
+## [[distributed-vcs-alternatives|Gitに代わる分散バージョン管理システム]]の中での位置づけ
+
+Gitのデータモデルをそのまま使いつつUI/UXだけを作り直す「Git互換レイヤー系」の一つ。同系統の[[sapling|Sapling]]がMercurial由来のスタック型ワークフローを引き継ぐのに対し、JujutsuはMercurial・Pijul/Darcsなど複数のツールの要素を組み合わせた独自設計という違いがある。
 
 #git #vcs
 

@@ -1,6 +1,6 @@
 ---
 created: 2026-08-18 20:31
-updated: 2026-08-18 20:31
+updated: 2026-08-18 20:32
 ---
 # Mercurial
 
@@ -19,9 +19,9 @@ CLIコマンド名は`hg`。Matt Mackallが2005年に開発した分散型バー
 - 一方で現在のVCS市場シェアはGitに大きく水をあけられており、約2%程度とされる。
 - 最新の安定版は7.2.1（2026年4月1日リリース）。実装言語はPython・C・Rust。
 
-## 後継・派生ツールへの影響
+## [[distributed-vcs-alternatives|Gitに代わる分散バージョン管理システム]]の中での位置づけ
 
-[[sapling|Sapling]]のCLI(`sl`)はもともとMercurialをベースに作られており、UIや機能を色濃く継承している。また[[jujutsu|Jujutsu]]も設計思想の一部（匿名ブランチ、indexのないシンプルなCLI、revset、強力な履歴書き換え）をMercurialから取り入れているとされる。
+Git以前から存在する独立系の分散VCSとして、後続のGit互換レイヤー系ツールに影響を与えている。[[sapling|Sapling]]のCLI(`sl`)はもともとMercurialをベースに作られており、UIや機能を色濃く継承している。また[[jujutsu|Jujutsu]]も設計思想の一部（匿名ブランチ、indexのないシンプルなCLI、revset、強力な履歴書き換え）をMercurialから取り入れているとされる。
 
 #git #vcs
 

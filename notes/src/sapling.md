@@ -1,6 +1,6 @@
 ---
 created: 2026-08-18 16:44
-updated: 2026-08-18 20:31
+updated: 2026-08-18 20:32
 ---
 # Sapling
 
@@ -21,9 +21,9 @@ Metaのmonorepoをエンジニアリング組織の成長に耐えられるよ�
 
 外部での採用はMetaの外ではあまり広がっていない、という指摘がある。クライアント自体はOSSだが、スケーラビリティを支える高度な機能の多くが非公開の専用サーバーに依存しているため、社外の開発者にとっての実用性は限定的という評価がある。
 
-## Git互換VCSとしての位置づけ
+## [[distributed-vcs-alternatives|Gitに代わる分散バージョン管理システム]]の中での位置づけ
 
-Gitと同じくスタック型ワークフロー・履歴書き換えの容易さを志向する点で[[jujutsu|Jujutsu]]と目的意識が近い。diffビューアの[[hunk-cli|hunk]]もGit/Jujutsu/Saplingの3つに対応しており、Sapling環境では自動検出してネイティブのrevsetを使う機能を持つ。
+Gitのデータモデルをそのまま使いつつUI/UXだけを作り直す「Git互換レイヤー系」の一つ。スタック型ワークフロー・履歴書き換えの容易さを志向する点で[[jujutsu|Jujutsu]]と目的意識が近いが、SaplingはMercurial由来のCLI・ワークフローを直接引き継いでいる点が異なる。diffビューアの[[hunk-cli|hunk]]もGit/Jujutsu/Saplingの3つに対応しており、Sapling環境では自動検出してネイティブのrevsetを使う機能を持つ。
 
 #git #vcs
 
