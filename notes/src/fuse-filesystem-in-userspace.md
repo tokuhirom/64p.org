@@ -1,6 +1,6 @@
 ---
 created: 2026-08-16 00:30
-updated: 2026-08-16 07:22
+updated: 2026-08-18 11:25
 ---
 # FUSE (Filesystem in Userspace)
 
@@ -54,7 +54,7 @@ FUSEはページフォールトなど特有のデッドロックシナリオに�
 - **[[s3fs-fuse]]** — S3バケットをFUSE経由でマウントするサードパーティのOSSツール（AWS公式の[[aws-s3-files|S3 Files]]とは別物）
 - **NTFS-3G** — NTFSファイルシステムへのアクセス
 - **gocryptfs** — 暗号化ファイルシステム
-- **rclone mount** — クラウドストレージをFUSE経由でマウント
+- **[[rclone]] mount** — クラウドストレージをFUSE経由でマウント
 
 macOSにも同等の仕組み（macFUSE）が存在する。
 

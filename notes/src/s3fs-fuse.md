@@ -1,6 +1,6 @@
 ---
 created: 2026-08-16 00:32
-updated: 2026-08-16 07:10
+updated: 2026-08-18 11:25
 ---
 # s3fs-fuse
 
@@ -37,6 +37,10 @@ AWS以外のS3互換ストレージの場合:
 ```sh
 s3fs mybucket /path/to/mountpoint -o url=https://url.to.s3/ -o use_path_request_style
 ```
+
+## [[rclone]]との関係
+
+[[rclone]]の`mount`コマンドも同じくFUSE経由でクラウドストレージをマウントできるが、S3専用のs3fs-fuseと異なり70以上のバックエンドに対応した汎用実装になっている。
 
 ## 制限事項
 
