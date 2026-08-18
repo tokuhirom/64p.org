@@ -1,6 +1,6 @@
 ---
 created: 2026-08-15 22:21
-updated: 2026-08-18 14:11
+updated: 2026-08-18 14:12
 ---
 # Keyball
 
@@ -32,5 +32,9 @@ updated: 2026-08-18 14:11
 - [GitHub - Yowkees/keyball](https://github.com/Yowkees/keyball)
 - [Keyball | holykeebs Documentation](https://docs.holykeebs.com/guides/keyboard/keyball/)
 - [Keyball61 – holykeebs](https://holykeebs.com/products/keyball61)
+
+## [[custom-mechanical-keyboards|自作キーボード]]の中での位置づけ
+
+トラックボール内蔵系の自作キーボードとして、キー数違いのモデルを幅広く展開する代表的なシリーズ。同系統の[[aerogu34|Aerogu34]]と対比できる。
 
 #自作キーボード #keyball #qmk

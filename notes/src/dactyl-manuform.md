@@ -1,6 +1,6 @@
 ---
 created: 2026-08-15 22:21
-updated: 2026-08-15 22:21
+updated: 2026-08-18 14:12
 ---
 # Dactyl Manuform
 
@@ -25,5 +25,9 @@ updated: 2026-08-15 22:21
 - [GitHub - joshreve/dactyl-keyboard](https://github.com/joshreve/dactyl-keyboard)
 - [Dactyl Manuform系列のキーボードを作った話｜なゆ](https://note.com/nykx/n/ndb74597ff296)
 - [エルゴノミックな自作キーボード Dactyl Manuform を作った話](https://www.creativity-ape.com/entry/2019/01/12/204423)
+
+## [[custom-mechanical-keyboards|自作キーボード]]の中での位置づけ
+
+3Dプリント筐体を使うエルゴノミック分割キーボードの代表例。トラックボール内蔵系の[[keyball|Keyball]]・[[aerogu34|Aerogu34]]とは別系統だが、ファームウェアに[[qmk|QMK]]を使う点は共通する。
 
 #自作キーボード #qmk

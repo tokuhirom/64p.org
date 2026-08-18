@@ -1,6 +1,6 @@
 ---
 created: 2026-08-18 14:11
-updated: 2026-08-18 14:11
+updated: 2026-08-18 14:12
 ---
 # Aerogu34
 
@@ -26,5 +26,9 @@ updated: 2026-08-18 14:11
 - [おぐ氏による14mmトラックボール版Aeroguのツイート](https://x.com/ogu_key/status/2031650759499260350)
 - [YRLYG氏によるAerogu34(protoB)ビルド報告](https://x.com/YRLYG99/status/2083855964214808724)
 - [YRLYG氏によるOgukeycap_ULP(Ver.6)受領報告](https://x.com/YRLYG99/status/2087485770827452578)
+
+## [[custom-mechanical-keyboards|自作キーボード]]の中での位置づけ
+
+トラックボール内蔵系の自作キーボードで、[[keyball|Keyball]]と同じ狙いを持つ。Keyballが白銀ラボによる展開規模の大きいシリーズであるのに対し、Aerogu34はより小規模なコミュニティ頒布のプロジェクト。
 
 #自作キーボード #トラックボール
