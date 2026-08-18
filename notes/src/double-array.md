@@ -1,6 +1,6 @@
 ---
 created: 2026-08-15 16:27
-updated: 2026-08-15 16:29
+updated: 2026-08-19 00:50
 ---
 # ダブル配列 (Double Array)
 
@@ -17,7 +17,7 @@ updated: 2026-08-15 16:29
 
 ## 応用
 
-形態素解析、スペル訂正、日本語かな漢字変換の辞書検索など、高速なプレフィックス検索が必要な場面で広く使われている。実装としては[[mecab|MeCab]]の辞書引きや、Darts(Double-ARray Trie System)などが知られる。
+形態素解析、スペル訂正、日本語かな漢字変換の辞書検索など、高速なプレフィックス検索が必要な場面で広く使われている。実装としては[[mecab|MeCab]]の辞書引きや、Darts(Double-ARray Trie System)、Rust実装の[yada](https://crates.io/crates/yada)(MeCab系解析器[[lindera|Lindera]]が辞書引きに利用)などが知られる。
 
 ## 出典
 
