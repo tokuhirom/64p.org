@@ -1,6 +1,6 @@
 ---
 created: 2026-08-18 16:30
-updated: 2026-08-18 16:30
+updated: 2026-08-18 16:44
 ---
 # Jujutsu (jj)
 
@@ -21,7 +21,7 @@ updated: 2026-08-18 16:30
 
 ## エコシステムでの対応状況
 
-diffビューアの[[hunk-cli|hunk]]はGit/Jujutsu/Saplingに対応しており、jj環境では自動検出してネイティブのrevsetを使う機能を持つ。こうしたツール側の対応が進んでいることからも、Git互換VCSとして一定の認知が進んでいることがうかがえる。
+diffビューアの[[hunk-cli|hunk]]はGit/Jujutsu/[[sapling|Sapling]]に対応しており、jj環境では自動検出してネイティブのrevsetを使う機能を持つ。こうしたツール側の対応が進んでいることからも、Git互換VCSとして一定の認知が進んでいることがうかがえる。
 
 #git #vcs
 
