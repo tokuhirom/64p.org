@@ -1,12 +1,12 @@
 ---
 created: 2026-08-15 21:28
-updated: 2026-08-15 21:28
+updated: 2026-08-18 21:51
 ---
 # 辞書渡し(dictionary passing)
 
 ジェネリクス(総称型)を実装する方式のひとつ。ジェネリックなコード(関数など)の機械語は型ごとに複製せず1本だけ生成し、型ごとに異なる振る舞い(演算・メソッド呼び出しなど)は呼び出し側から「辞書」というデータ構造として実行時に渡す。関数側は辞書に入っている関数ポインタや型情報を引いて処理を行う。
 
-Haskellの型クラス(type class)実装がこの方式の代表例。対になる方式が[[monomorphization|単態化]]で、両者は[[go-generics-gc-shape-stenciling|Goのジェネリクス実装(GC Shape Stenciling)]]が解決しようとした「Generic Dilemma」の両極をなす。
+[[haskell|Haskell]]の型クラス(type class)実装がこの方式の代表例。対になる方式が[[monomorphization|単態化]]で、両者は[[go-generics-gc-shape-stenciling|Goのジェネリクス実装(GC Shape Stenciling)]]が解決しようとした「Generic Dilemma」の両極をなす。
 
 ## 利点
 

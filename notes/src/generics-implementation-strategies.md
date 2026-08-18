@@ -1,13 +1,13 @@
 ---
 created: 2026-08-15 21:28
-updated: 2026-08-15 21:56
+updated: 2026-08-18 21:51
 ---
 # ジェネリクスの実装方式
 
 言語処理系がジェネリクス(総称型)をコンパイラ・ランタイムレベルでどう実現するかには、大きく分けて2つの極と、それらを折衷したハイブリッド方式がある。
 
 - [[monomorphization|単態化(monomorphization)]] — 型ごとにコードを複製する方式。C++・Rustで採用。実行速度は速いがバイナリサイズが肥大化しやすい。
-- [[dictionary-passing|辞書渡し(dictionary passing)]] — コードは1本にまとめ、型ごとの違いを実行時に「辞書」として渡す方式。Haskellの型クラスで採用。バイナリサイズは小さいが実行時オーバーヘッドがある。
+- [[dictionary-passing|辞書渡し(dictionary passing)]] — コードは1本にまとめ、型ごとの違いを実行時に「辞書」として渡す方式。[[haskell|Haskell]]の型クラスで採用。バイナリサイズは小さいが実行時オーバーヘッドがある。
 - [[go-generics-gc-shape-stenciling|GoジェネリクスのGC Shape Stenciling]] — GCから見た型の形状(shape)が同じ型同士で機械語本体を共有しつつ、型固有の違いは辞書経由で渡すハイブリッド方式。Go 1.18で採用。
 - [[java-generics-type-erasure|Javaの型消去(type erasure)]] — コンパイル時に型パラメータを消し去り、単一のバイトコードにまとめる方式。単態化・辞書渡しのどちらとも異なり、実行時に型情報自体を持たない。Java 5で採用。
 

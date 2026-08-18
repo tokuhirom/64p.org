@@ -1,10 +1,10 @@
 ---
 created: 2026-08-18 20:36
-updated: 2026-08-18 20:36
+updated: 2026-08-18 21:51
 ---
 # Darcs
 
-正式には再帰頭字語で「Darcs Advanced Revision Control System」。David Roundyが開発した分散バージョン管理システムで、Haskellで実装されている（実装言語としてはやや珍しい選択だが移植性は高く、Haskellコミュニティの標準的なRCSとなっている）。開発陣は正確性の検証に力を入れており、Haskellの表現力の高い型システムで一部の性質を保証しつつ、QuickCheckによるランダム化テストで他の性質を検証している。
+正式には再帰頭字語で「Darcs Advanced Revision Control System」。David Roundyが開発した分散バージョン管理システムで、[[haskell|Haskell]]で実装されている（実装言語としてはやや珍しい選択だが移植性は高く、Haskellコミュニティの標準的なRCSとなっている）。開発陣は正確性の検証に力を入れており、Haskellの表現力の高い型システムで一部の性質を保証しつつ、QuickCheckによるランダム化テストで他の性質を検証している。
 
 ## パッチをファーストクラスの概念として扱う
 
