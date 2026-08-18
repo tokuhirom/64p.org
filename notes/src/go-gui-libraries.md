@@ -1,6 +1,6 @@
 ---
 created: 2026-08-09 16:05
-updated: 2026-08-09 16:05
+updated: 2026-08-18 20:47
 ---
 # Go GUI ライブラリ一覧
 
@@ -25,7 +25,7 @@ Go言語のGUIライブラリ・フレームワークをまとめておく。[[r
 Material Designに着想を得た独自レンダラーを持つツールキット。デスクトップとモバイルを単一コードベースでカバーし、GoのGUIライブラリの中では最もスター数が多く事実上のデファクトに近い。ビルドにはCコンパイラが必要。
 
 ### Gio
-immediate mode設計でGPUベースのレンダリングを行う。開発は元々[Sourcehut](https://git.sr.ht/~eliasnaur/gio)上で行われており、GitHubはミラー。モバイル対応が手厚く、Android/iOSをネイティブにターゲットできる点が特徴。
+immediate mode設計でGPUベースのレンダリングを行う。開発は元々[[sourcehut|SourceHut]](https://git.sr.ht/~eliasnaur/gio)上で行われており、GitHubはミラー。モバイル対応が手厚く、Android/iOSをネイティブにターゲットできる点が特徴。
 
 ### Giu
 Dear ImGuiのGoバインディング(cimgui-go)上に構築されたimmediate mode GUI。実行ファイルサイズの小ささ(UPX圧縮後3MB以下)や低CPU使用率を売りにしている。
