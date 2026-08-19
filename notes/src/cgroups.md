@@ -1,6 +1,6 @@
 ---
 created: 2026-08-11 09:41
-updated: 2026-08-16 10:27
+updated: 2026-08-19 10:59
 ---
 # cgroups（control groups）
 
@@ -35,7 +35,7 @@ Linuxカーネルの機能で、プロセスをグループ化し、そのグル
 
 ## 活用例
 
-[[lxc|LXC]]・Docker・Kubernetesにおけるコンテナのリソース制限の基盤、systemdによる全プロセスの自動cgroup階層配置、[[incus|Incus]]・Firejail・libvirtなど多数のツールで採用されている。
+[[lxc|LXC]]・Docker・Kubernetesにおけるコンテナのリソース制限の基盤、systemdによる全プロセスの自動cgroup階層配置、[[incus|Incus]]・Firejail・libvirtなど多数のツールで採用されている。単発のコマンド実行にcgroupベースのメモリ上限を設けたい場合は`systemd-run`が使える（[[linux-command-memory-limit]]）。
 
 ## 関連機能
 
