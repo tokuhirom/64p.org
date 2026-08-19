@@ -1,6 +1,6 @@
 ---
 created: 2026-08-19 22:56
-updated: 2026-08-19 22:56
+updated: 2026-08-19 23:01
 ---
 # Java 27
 
@@ -10,7 +10,7 @@ updated: 2026-08-19 22:56
 
 コマンドラインでGCを明示指定しなかった場合、プロセッサ数や搭載物理メモリに関わらず常にG1が選ばれるようにする。[[java-26|Java 26]]のJEP 522によるスループット改善で、G1の最大スループットがSerial GCに近づいたことが背景。GC自体をコマンドラインで明示指定しているアプリケーションや、制約された環境で実行していないアプリケーションには影響しない。Serial GCが削除されるわけではなく、引き続き選択可能。2026年5月にJDK 27ターゲットとして確定した。
 
-## Compact Object Headersをデフォルト有効に(JEP 534)
+## [[compact-object-headers|Compact Object Headers]]をデフォルト有効に(JEP 534)
 
 [[java-24|Java 24]]で実験導入(JEP 450)、[[java-25|Java 25]]で正式機能化(JEP 519)されたCompact Object Headersを、デフォルトで有効化する。これにより`-XX:+UseCompactObjectHeaders`フラグの明示指定が不要になる。
 

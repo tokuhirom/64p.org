@@ -1,12 +1,12 @@
 ---
 created: 2026-08-19 22:56
-updated: 2026-08-19 22:56
+updated: 2026-08-19 23:01
 ---
 # Java 25
 
 2025年9月リリースのLTS(長期サポート)版。Java 21(前回のLTS、2023年9月)からのアップグレード先として位置づけられる。OracleのJava 21無料更新(NFTC)は2026年9月16日に終了予定で、それ以降も無償ライセンスで使い続けたいチームはこのバージョン以降への移行が事実上必須になる。
 
-## Compact Object Headers、正式機能化(JEP 519)
+## [[compact-object-headers|Compact Object Headers]]、正式機能化(JEP 519)
 
 [[java-24|Java 24]]でJEP 450として実験導入されたCompact Object Headersが、`-XX:+UseCompactObjectHeaders`オプションで有効化できる正式なプロダクト機能になった。ただしデフォルトはまだ無効。SPECjbb2015ベンチマークでヒープ使用量22%減・GCサイクル15%減・CPU時間8%減という実測値が報告されている。[[java-27|Java 27]]でデフォルト有効化(JEP 534)される見込み。
 

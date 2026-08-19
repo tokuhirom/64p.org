@@ -1,6 +1,6 @@
 ---
 created: 2026-08-09 21:16
-updated: 2026-08-19 22:56
+updated: 2026-08-19 23:01
 ---
 # Project Valhalla
 
@@ -23,6 +23,10 @@ Project Valhallaの中核となるJEP。
 - 現行の最新版: [[java-26|JDK 26]]
 - [[java-27|JDK 27]]: 2026年9月予定
 - JDK 28: 2027年3月予定(JEP 401プレビュー搭載見込み)
+
+## [[compact-object-headers|Compact Object Headers]]との関係
+
+64bitに再設計されたオブジェクトヘッダには、値型対応を見越して4bitの予約領域が確保されている。
 
 ## Generic Specialization
 

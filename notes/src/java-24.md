@@ -1,6 +1,6 @@
 ---
 created: 2026-08-19 22:56
-updated: 2026-08-19 22:56
+updated: 2026-08-19 23:01
 ---
 # Java 24
 
@@ -10,7 +10,7 @@ updated: 2026-08-19 22:56
 
 [[java-23|JEP 471]](非推奨予告)を受け、Java 24からはメモリアクセスメソッド使用時にデフォルトで警告が出るようになった(`--sun-misc-unsafe-memory-access=warn`相当)。まだ動作は継続する。
 
-## Compact Object Headers、実験的機能として導入(JEP 450)
+## [[compact-object-headers|Compact Object Headers]]、実験的機能として導入(JEP 450)
 
 HotSpotのオブジェクトヘッダサイズを、64bitアーキテクチャで96〜128bitから64bitへ削減する機能。`-XX:+UnlockExperimentalVMOptions`が必要な実験段階で導入された。ヒープサイズ削減・デプロイ密度向上・データ局所性向上を狙う。[[java-25|Java 25]]で正式機能(JEP 519)に、[[java-27|Java 27]]でデフォルト有効化(JEP 534)される見込み。
 
