@@ -1,6 +1,6 @@
 ---
 created: 2026-08-10 18:36
-updated: 2026-08-14 08:21
+updated: 2026-08-19 18:05
 ---
 # Podman
 
@@ -25,6 +25,10 @@ OCI(Open Containers Initiative)準拠のコンテナ・イメージ仕様に従�
 ## [[lxc|LXC]]/[[lxd|LXD]]系との違い
 
 LXC/LXDが「システムコンテナ」(initプロセスから丸ごと1つのOS環境を動かす用途)を志向するのに対し、Podmanは Docker 同様、単一アプリケーションの実行に特化した「アプリケーションコンテナ」を扱う。
+
+## 関連機能
+
+- [[podman-auto-update|podman-auto-update]]: systemd管理下のコンテナのイメージを自動更新する標準機能。
 
 ## 出典
 
