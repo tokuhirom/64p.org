@@ -1,6 +1,6 @@
 ---
 created: 2026-08-14 08:20
-updated: 2026-08-19 09:51
+updated: 2026-08-19 09:59
 ---
 # k3s
 
@@ -31,6 +31,10 @@ Rancher Labs（現SUSE）が開発した軽量[[kubernetes|Kubernetes]]ディス
 派生ツールとして、k3sをDockerコンテナ内で動かす**k3d**があり、ローカル開発用途で[[minikube]]や[[kind|kind]]と並ぶ選択肢になっている。
 
 同じ「単一バイナリの軽量ディストリビューション」枠では[[k0s]]がよく比較対象になる。両者の違いは[[k0s]]のノート参照。
+
+## 実験: [[k3s-experiment|k3s実験]]
+
+Dockerコンテナ上でk3sを実際に動かし、単一プロセスであることの確認・sqliteデータストアの確認・nginxのhello worldをTraefik Ingress経由で疎通させるところまで試した記録。
 
 ## [[kubernetes]]の中での位置づけ
 
