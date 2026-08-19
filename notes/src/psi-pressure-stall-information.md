@@ -1,6 +1,6 @@
 ---
 created: 2026-08-16 10:27
-updated: 2026-08-16 10:27
+updated: 2026-08-19 14:27
 ---
 # PSI(Pressure Stall Information)
 
@@ -37,7 +37,7 @@ full avg10=0.00 avg60=0.00 avg300=0.00 total=0
 
 ## [[cgroups]]との連携
 
-`CONFIG_CGROUPS=y`かつcgroup v2がマウントされている環境では、システム全体だけでなく各cgroupサブディレクトリにも`cpu.pressure`/`memory.pressure`/`io.pressure`が自動生成され、同じ形式でコンテナ・サービス単位の負荷を監視できる。これによりコンテナオーケストレーション基盤側でリソース逼迫を検知し、ロードシェディングや低優先度ジョブの退避、OOM Killerによる強制終了より早い段階での対処(oomdなど)が可能になる。
+`CONFIG_CGROUPS=y`かつcgroup v2がマウントされている環境では、システム全体だけでなく各cgroupサブディレクトリにも`cpu.pressure`/`memory.pressure`/`io.pressure`が自動生成され、同じ形式でコンテナ・サービス単位の負荷を監視できる。これによりコンテナオーケストレーション基盤側でリソース逼迫を検知し、ロードシェディングや低優先度ジョブの退避、OOM Killerによる強制終了より早い段階での対処(oomd、[[systemd-oomd]]など)が可能になる。psiに依存しないシンプルなアプローチのユーザースペースOOMデーモンとしては[[earlyoom]]がある。
 
 ## 出典
 
