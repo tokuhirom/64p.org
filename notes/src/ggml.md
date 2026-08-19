@@ -1,12 +1,12 @@
 ---
 created: 2026-08-12 13:02
-updated: 2026-08-17 18:32
+updated: 2026-08-19 17:09
 ---
 # ggml
 
 #machine-learning #cpp
 
-Georgi Gerganov氏が2022年から開発している、機械学習推論向けのC/C++製テンソル演算ライブラリ。名前は開発者のイニシャル「GG」+「ML」に由来する。llama.cppやwhisper.cpp、[[transcribe-cpp|transcribe.cpp]]など、C/C++で書かれたローカル推論エコシステム全体を支える計算基盤になっている。
+Georgi Gerganov氏が2022年から開発している、機械学習推論向けのC/C++製テンソル演算ライブラリ。名前は開発者のイニシャル「GG」+「ML」に由来する。[[llama-cpp|llama.cpp]]やwhisper.cpp、[[transcribe-cpp|transcribe.cpp]]など、C/C++で書かれたローカル推論エコシステム全体を支える計算基盤になっている。
 
 ## 特徴
 
