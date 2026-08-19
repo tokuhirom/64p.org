@@ -1,6 +1,6 @@
 ---
 created: 2026-08-19 18:25
-updated: 2026-08-19 18:25
+updated: 2026-08-19 22:44
 ---
 # fwupd
 
@@ -8,8 +8,8 @@ Linux上で[[uefi|UEFI]]/BIOS、NVMe SSD、ネットワークカードなど各�
 
 ## 仕組み
 
-- **Linux Vendor Firmware Service (LVFS)** というクラウドサービスに、各OEMベンダーがファームウェアイメージを提供する。
-- fwupdデーモンはLVFSからメタデータカタログをダウンロードし、署名検証などのチェックを経たファームウェアイメージをD-Busソケット経由で受け取り、システムに適用する。
+- [[lvfs|Linux Vendor Firmware Service (LVFS)]]というクラウドサービスに、各OEMベンダーがファームウェアイメージを提供する。
+- fwupdデーモンは[[lvfs|LVFS]]からメタデータカタログをダウンロードし、署名検証などのチェックを経たファームウェアイメージをD-Busソケット経由で受け取り、システムに適用する。
 - ユーザー操作はCLIツール`fwupdmgr`、またはGNOME SoftwareのようなGUIフロントエンド経由で行う。
 
 ## 基本的な使い方(fwupdmgr)
