@@ -1,6 +1,6 @@
 ---
 created: 2026-08-09 21:23
-updated: 2026-08-09 21:23
+updated: 2026-08-19 22:56
 ---
 # OpenJDKの主要プロジェクト
 
@@ -14,6 +14,10 @@ OpenJDKでは、JDK本体の開発とは別に、特定のテーマを掘り下�
 - [[project-panama|Project Panama]] — 外部関数・外部データ連携(Foreign Function & Memory API、jextract)
 - [[project-leyden|Project Leyden]] — 起動時間・ウォームアップ時間の改善(AOTキャッシュ)
 - [[project-babylon|Project Babylon]] — 外部プログラミングモデル(SQL、GPU等)へのJavaの拡張(コードリフレクション)
+
+## 関連ハブノート
+
+各プロジェクトのJEPが実際にどのバージョンでリリースされたかは、時系列で追う[[java-version-updates|Javaバージョンごとのアップデート]]も参照。
 
 ## 出典
 

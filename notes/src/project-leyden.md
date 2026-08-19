@@ -1,6 +1,6 @@
 ---
 created: 2026-08-09 21:23
-updated: 2026-08-09 21:23
+updated: 2026-08-19 22:56
 ---
 # Project Leyden
 
@@ -20,9 +20,9 @@ AOTキャッシュは可搬性がない。特定のJDK・JARファイル・設�
 
 ## 進捗
 
-- JDK 24: JEP 483でAOTキャッシュ導入
-- JDK 25: JEP 514でさらに強化
-- JDK 26: JEP 516 (Ahead-of-Time Object Caching with Any GC) 導入予定
+- [[java-24|JDK 24]]: JEP 483でAOTキャッシュ導入
+- [[java-25|JDK 25]]: JEP 514でさらに強化
+- [[java-26|JDK 26]]: JEP 516 (Ahead-of-Time Object Caching with Any GC) 導入予定
 
 ## 出典
 

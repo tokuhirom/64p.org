@@ -1,6 +1,6 @@
 ---
 created: 2026-08-09 21:16
-updated: 2026-08-15 21:56
+updated: 2026-08-19 22:56
 ---
 # Project Valhalla
 
@@ -20,8 +20,8 @@ Project Valhallaの中核となるJEP。
 
 ## タイムライン
 
-- 現行の最新版: JDK 26
-- JDK 27: 2026年9月予定
+- 現行の最新版: [[java-26|JDK 26]]
+- [[java-27|JDK 27]]: 2026年9月予定
 - JDK 28: 2027年3月予定(JEP 401プレビュー搭載見込み)
 
 ## Generic Specialization
