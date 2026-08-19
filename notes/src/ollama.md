@@ -1,6 +1,6 @@
 ---
 created: 2026-08-19 17:09
-updated: 2026-08-19 17:09
+updated: 2026-08-19 17:46
 ---
 # Ollama
 
@@ -10,10 +10,18 @@ updated: 2026-08-19 17:09
 
 Ollamaは2種類のランナーを持ち、モデルアーキテクチャに応じて自動選択する。
 
-- **llamarunner**: [[llama-cpp|llama.cpp]]をCGoバインディングで呼び出す従来の実装。
-- **ollamarunner**: マルチモーダルモデル対応のため2025年に導入された、Go言語によるOllama独自実装。画像処理メタデータ・KVCache最適化・画像キャッシュ、チャンク化attention、2D回転埋め込みなどをサポートする。
+- **llamarunner**: `/llama/llama.go`で[[llama-cpp|llama.cpp]]のC/C++コードをCGO経由で直接呼び出す従来の実装。
+- **ollamarunner**: マルチモーダルモデル対応のため2025年に導入された、`/runner/ollamarunner/`以下にGoで実装されたOllama独自の推論エンジン。画像処理メタデータ・KVCache最適化・画像キャッシュ、チャンク化attention、2D回転埋め込みなどをサポートする。
 
-つまりOllamaは全面的にllama.cppへ依存しているわけではなく、一部のモデル系列は独自エンジンで動く。
+つまりOllamaは全面的にllama.cppへ依存しているわけではなく、一部のモデル系列は独自エンジンで動く。ollamarunnerが未対応のアーキテクチャに遭遇すると、llamarunnerへ自動的にフォールバックする、互換性優先のデュアルエンジン設計になっている。
+
+### ollamarunnerの「pure Go」の意味
+
+ollamarunnerは「pure Go推論エンジン」と説明されることが多いが、これは誤解しやすい表現。実際にはllamarunner・ollamarunner共に、最終的にはGGMLバックエンド(CUDA/ROCm/Metal/CPU)を通じてテンソル演算を行う点は変わらない。ollamarunnerの「pure Go」性は、llama.cppのCGoラッパー(llama-server相当のコード)を経由しない、という意味であり、モデルのグラフ構築・スケジューリング・KVキャッシュ管理といった制御ロジックをOllamaチームがGoで再実装した、という点を指す。
+
+構成要素は主に3つのGoファイル(cache.go・multimodal.go・runner.go)からなり、`Server`(推論サーバー本体、新規シーケンスの生成を管理)・`Sequence`(プロンプトと画像データを持つ1つの推論シーケンス)・`InputCache`(複数スロットでKVキャッシュを管理し、`LoadCacheSlot()`でロード、`ShiftCacheSlot()`で古い履歴を捨てて新しい履歴にシフトする)という構造体が中心になる。
+
+llama.cppのCGo越しの呼び出しオーバーヘッドを避けられる分、prefill(プロンプト処理)とdecode(トークン生成)のパイプライン実行が並列化しやすく、理論上スループット面で有利とされる。
 
 ## llama.cppとの違い
 
@@ -37,5 +45,8 @@ GPUStackはOllamaのモデルライブラリとのモデル互換性を持ちつ
 - [Ollama + llama.cpp Architecture Overview | LLM Learning](https://jonathanding.github.io/llm-learning/en/articles/ollama-architecture/)
 - [Switching our Inference Backend from Ollama to llama.cpp — _nullmirror](https://nullmirror.com/en/blog/2025-11-02-switching-our-inference-backend-from-ollama-to-llama.cpp/)
 - [Ollama's new engine for multimodal models · Ollama Blog](https://ollama.com/blog/multimodal-models)
+- [Ollama Architecture Analysis / Real-World Q&A | MartianLee's Dev Blog](https://martianlee.github.io/posts/2026-03-15-ollama-architecture)
+- [ollamarunner package - github.com/ollama/ollama/runner/ollamarunner - Go Packages](https://pkg.go.dev/github.com/ollama/ollama/runner/ollamarunner)
+- [Inference Engine | ollama/ollama | DeepWiki](https://deepwiki.com/ollama/ollama/5-inference-engine)
 
 #machine-learning #llm
