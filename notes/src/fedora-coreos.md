@@ -1,6 +1,6 @@
 ---
 created: 2026-08-15 16:15
-updated: 2026-08-15 16:22
+updated: 2026-08-20 11:10
 ---
 # Fedora CoreOS
 
@@ -21,6 +21,8 @@ stable / testing / next の3ストリームで段階的に検証しながら配�
 ## 関連
 
 Red Hat OpenShiftのノードOSである**RHCOS (Red Hat CoreOS)** は、Fedora CoreOSを上流として派生した製品版。
+
+同じrpm-ostree/OSTree系のイミュータブル設計思想を、OCIコンテナイメージという業界標準の単位でより汎用的に再構成したものが[[bootc|bootc]]。
 
 ## 出典
 

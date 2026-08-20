@@ -1,6 +1,6 @@
 ---
 created: 2026-08-15 16:19
-updated: 2026-08-15 16:19
+updated: 2026-08-20 11:10
 ---
 # OSTree
 
@@ -20,6 +20,8 @@ Linuxのファイルシステムツリーをバージョン管理し、アトミ
 ## 応用例
 
 RPMパッケージ管理とOSTreeを組み合わせたものが**rpm-ostree**であり、[[fedora-coreos|Fedora CoreOS]]やFedora Silverblue/Kinoiteなど、Red Hat系のイミュータブルLinuxディストリビューションの中核技術になっている。組込み分野(Toradex TorizonなどYocto/IoTデバイスのOTA更新)でも使われている。
+
+OSTreeの作者Colin Walters自身は、OCIコンテナイメージをそのままブート可能なホストOSとして扱う[[bootc|bootc]]を「成功すればrpm-ostreeの後継になる」と位置づけており、bootcもOSTreeをバッキングモデルとして使っている。
 
 ## 出典
 
