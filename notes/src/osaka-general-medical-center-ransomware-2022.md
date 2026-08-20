@@ -1,6 +1,6 @@
 ---
 created: 2026-08-11 13:42
-updated: 2026-08-11 13:42
+updated: 2026-08-21 07:57
 ---
 # 大阪急性期・総合医療センターランサムウェア事案（2022年）
 
@@ -26,7 +26,7 @@ updated: 2026-08-11 13:42
 
 ## [[japan-ransomware-incidents|国内ランサムウェア被害事例]]の中での位置づけ
 
-VPN機器の脆弱性放置が侵入経路になった点は[[handa-hospital-ransomware-2021|半田病院]]の事案と共通する。取引先（給食委託事業者）経由での侵入という点は[[kojima-press-ransomware-2022|小島プレス工業]]の事案とも通じる、サプライチェーン経由の被害。
+VPN機器の脆弱性放置が侵入経路になった点は[[handa-hospital-ransomware-2021|半田病院]]の事案と共通する。取引先（給食委託事業者）経由での侵入という点は[[kojima-press-ransomware-2022|小島プレス工業]]の事案とも通じる、[[supply-chain-attack|サプライチェーン攻撃]]経由の被害。
 
 #security
 

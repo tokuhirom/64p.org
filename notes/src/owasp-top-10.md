@@ -1,6 +1,6 @@
 ---
 created: 2026-08-14 15:35
-updated: 2026-08-14 15:35
+updated: 2026-08-21 07:57
 ---
 # OWASP Top 10
 
@@ -17,7 +17,7 @@ updated: 2026-08-14 15:35
 
 1. **A01:2025 Broken Access Control** — 認可の不備。ユーザー権限の適用漏れにより、本来許可されないリソース・操作にアクセスできる。2025年版では[[ssrf|SSRF]]（旧A10:2021の単独カテゴリ）がここに統合された。
 2. **A02:2025 Security Misconfiguration** — 不適切なデフォルト設定、不要な機能の有効化、エラーメッセージの過剰開示など。
-3. **A03:2025 Software Supply Chain Failures** — 旧「Vulnerable and Outdated Components」を拡張し、依存関係・ビルドシステム・配布インフラ全体を含む供給網のリスクを対象にする。
+3. **A03:2025 Software Supply Chain Failures** — 旧「Vulnerable and Outdated Components」を拡張し、依存関係・ビルドシステム・配布インフラ全体を含む[[supply-chain-attack|供給網]]のリスクを対象にする。
 4. **A04:2025 Cryptographic Failures** — 弱い、または未実装の暗号化により機密データが漏洩する。
 5. **A05:2025 Injection** — 信頼できない入力がインタプリタに渡り、意図しないコマンド・クエリとして実行される（XSSを含む）。
 6. **A06:2025 Insecure Design** — 実装以前の設計段階の欠陥。セキュアな設計パターンや脅威モデリングの欠如。
