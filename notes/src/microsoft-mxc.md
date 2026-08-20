@@ -1,6 +1,6 @@
 ---
 created: 2026-08-20 15:26
-updated: 2026-08-20 15:26
+updated: 2026-08-20 15:41
 ---
 # Microsoft eXecution Container (MXC)
 
@@ -28,11 +28,11 @@ READMEでは "MXC is a sandboxed code execution system for running untrusted cod
 
 | プラットフォーム | デフォルト | 選択可能な代替 |
 |---|---|---|
-| Windows 11 24H2+ | processcontainer | Windows Sandbox, WSLC, MicroVM, Hyperlight, IsolationSession |
-| Linux x64/ARM64 | [[bubblewrap]] | [[lxc\|LXC]], MicroVM, Hyperlight |
+| Windows 11 24H2+ | processcontainer | Windows Sandbox, WSLC, MicroVM, [[hyperlight\|Hyperlight]], IsolationSession |
+| Linux x64/ARM64 | [[bubblewrap]] | [[lxc\|LXC]], MicroVM, [[hyperlight\|Hyperlight]] |
 | macOS ARM64/x64 | seatbelt | (なし) |
 
-安定版(実験フラグ不要)として ProcessContainer(WindowsのAppContainer/BaseContainerを利用)、[[bubblewrap|Bubblewrap]]、[[lxc|LXC]]、Seatbelt(macOSネイティブ)の4つが提供される。一方、Windows Sandbox・WSLC・[[microvm|MicroVM]]・Hyperlight・IsolationSessionは`experimental: true`を指定しないと使えない実験的バックエンドという位置づけ。[[microvm-ecosystem|コンテナ向け軽量VM技術]]で扱っているようなmicroVM系技術を、複数OSの隔離手段のひとつとして横断的に選択できるようにしている点が特徴。
+安定版(実験フラグ不要)として ProcessContainer(WindowsのAppContainer/BaseContainerを利用)、[[bubblewrap|Bubblewrap]]、[[lxc|LXC]]、Seatbelt(macOSネイティブ)の4つが提供される。一方、Windows Sandbox・WSLC・[[microvm|MicroVM]]・[[hyperlight|Hyperlight]]・IsolationSessionは`experimental: true`を指定しないと使えない実験的バックエンドという位置づけ。[[microvm-ecosystem|コンテナ向け軽量VM技術]]で扱っているようなmicroVM系技術を、複数OSの隔離手段のひとつとして横断的に選択できるようにしている点が特徴。
 
 ## ポリシー制御
 
