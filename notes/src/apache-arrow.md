@@ -1,6 +1,6 @@
 ---
 created: 2026-08-09 21:14
-updated: 2026-08-12 09:55
+updated: 2026-08-20 09:06
 ---
 # Apache Arrow
 
@@ -15,7 +15,7 @@ updated: 2026-08-12 09:55
 
 ## エコシステムでの採用例
 
-- クエリエンジン: Apache DataFusion, DuckDB, Velox
+- クエリエンジン: Apache DataFusion, [[duckdb-2.0|DuckDB]], Velox
 - データサイエンスライブラリ: pandas, polars, R Arrow
 - データフォーマット: Vortex, [[apache-parquet|Parquet]]のreader
 - データ転送レイヤー: Flight SQL, ADBC
