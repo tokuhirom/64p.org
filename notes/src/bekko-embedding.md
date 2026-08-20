@@ -1,6 +1,6 @@
 ---
 created: 2026-08-15 07:14
-updated: 2026-08-15 07:22
+updated: 2026-08-20 15:07
 ---
 # Bekko Embedding
 
@@ -40,7 +40,7 @@ updated: 2026-08-15 07:22
 
 ## 実行環境
 
-PyTorch(sentence-transformers)、CPU向けOpenVINO(x86で約2.8倍、Raspberry Pi 5で約1.7倍高速化)、ブラウザ向けTransformers.js(WebGPU/WASM上で動作し、データをサーバーに送らずクライアント完結)の3系統に対応。いずれもprefixやタスク指示なしの統一インターフェースで使える。
+[[pytorch|PyTorch]](sentence-transformers)、CPU向けOpenVINO(x86で約2.8倍、Raspberry Pi 5で約1.7倍高速化)、ブラウザ向けTransformers.js(WebGPU/WASM上で動作し、データをサーバーに送らずクライアント完結)の3系統に対応。いずれもprefixやタスク指示なしの統一インターフェースで使える。
 
 ## [[pgvector]]との関係
 

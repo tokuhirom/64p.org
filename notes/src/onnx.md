@@ -1,6 +1,6 @@
 ---
 created: 2026-08-14 22:57
-updated: 2026-08-15 15:14
+updated: 2026-08-20 15:07
 ---
 # ONNX (Open Neural Network Exchange)
 
@@ -8,7 +8,7 @@ updated: 2026-08-15 15:14
 
 機械学習モデルを異なるフレームワーク間で相互運用可能にするためのオープンソースの共通フォーマット。2017年9月にFacebook(現Meta)とMicrosoftが共同で立ち上げ、その後Amazon・IBM・Intel・NVIDIAなど多数の組織がサポートに加わった。
 
-PyTorch・TensorFlow・scikit-learnなど任意のフレームワークで学習したモデルをONNX形式にエクスポートすることで、別の推論エンジンに載せ替えられる。モデルのネットワーク構造(層・接続)とパラメータ(重み・バイアス)をフレームワーク非依存の形でシリアライズし、Linux・Windows・macOS・Android・iOSなど多様な実行環境をまたいで動かせる。
+[[pytorch|PyTorch]]・TensorFlow・scikit-learnなど任意のフレームワークで学習したモデルをONNX形式にエクスポートすることで、別の推論エンジンに載せ替えられる。モデルのネットワーク構造(層・接続)とパラメータ(重み・バイアス)をフレームワーク非依存の形でシリアライズし、Linux・Windows・macOS・Android・iOSなど多様な実行環境をまたいで動かせる。
 
 ## 技術的な構成
 

@@ -1,6 +1,6 @@
 ---
 created: 2026-08-10 17:02
-updated: 2026-08-10 17:02
+updated: 2026-08-20 15:07
 ---
 # NVIDIA DGX Spark
 
@@ -14,7 +14,7 @@ updated: 2026-08-10 17:02
 - **対応モデル**: 最大2000億パラメーターの大規模生成AIモデルに対応。2台を接続すると最大4050億パラメータのモデルにも対応可能
 - **サイズ**: 150mm×150mm×50.5mm、重量約1.2kg
 - **ネットワーク**: NVIDIA ConnectX-7 SmartNIC搭載。10GbE(RJ-45)を標準装備し、2台間の高速接続にも使われる
-- **OS**: UbuntuベースのDGX OSをプリインストール。CUDA・PyTorch・Ollama・NVIDIA NIMなどがすぐ使える状態で提供される
+- **OS**: UbuntuベースのDGX OSをプリインストール。CUDA・[[pytorch|PyTorch]]・[[ollama|Ollama]]・NVIDIA NIMなどがすぐ使える状態で提供される
 
 ## 位置づけ
 

@@ -1,6 +1,6 @@
 ---
 created: 2026-08-12 20:37
-updated: 2026-08-18 22:07
+updated: 2026-08-20 15:07
 ---
 # Mojo
 
@@ -25,7 +25,7 @@ Swift/LLVMの開発を主導したChris LattnerとTim Davisが創設。TypeScrip
 
 ## MAX(推論プラットフォーム)
 
-Modular社は[[vllm|vLLM]]と同様のLLM推論・サービング領域で「MAX」という推論プラットフォームも開発している。Modular 26.5に合わせてMAXも26.5となり、インストールプロセスの最適化、GLM-5.2・Nemotron-Hなど新しいモデルファミリーへの対応、エージェント向けスキル機能の拡充が行われた。
+Modular社は[[vllm|vLLM]]と同様のLLM推論・サービング領域で「[[max|MAX]]」という推論プラットフォームも開発している。Modular 26.5に合わせてMAXも26.5となり、インストールプロセスの最適化、GLM-5.2・Nemotron-Hなど新しいモデルファミリーへの対応、エージェント向けスキル機能の拡充が行われた。詳細は[[max|MAX]]を参照。
 
 ## Qualcommによる買収
 
