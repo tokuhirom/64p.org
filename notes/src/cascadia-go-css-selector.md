@@ -1,6 +1,6 @@
 ---
 created: 2026-08-20 13:06
-updated: 2026-08-20 13:06
+updated: 2026-08-20 13:31
 ---
 # cascadia(GoのCSSセレクタライブラリ)
 
@@ -12,7 +12,7 @@ updated: 2026-08-20 13:06
 - `QueryAll(n, m)` — マッチする全ノードをスライスで返す
 - Goのコードを書かずにCSSセレクタの動作を試せる、パッケージの薄いラッパーであるコマンドラインツール`cascadia`も同梱
 
-Webスクレイピングやスクレイピング用途のHTML解析でCSSセレクタ的にノードを抜き出したいGoプログラムでよく使われる。jQueryライクなAPIを提供する[goquery](https://github.com/PuerkitoBio/goquery)が内部でこのパッケージを利用している。
+Webスクレイピングやスクレイピング用途のHTML解析でCSSセレクタ的にノードを抜き出したいGoプログラムでよく使われる。jQueryライクなAPIを提供する[goquery](https://github.com/PuerkitoBio/goquery)が内部でこのパッケージを利用している。他の類似ライブラリとの比較は[[go-css-selector-libraries|GoのCSSセレクタ/HTMLパースライブラリ]]を参照。
 
 ## 「Cascadia」という名前の衝突
 
