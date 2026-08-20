@@ -1,6 +1,6 @@
 ---
 created: 2026-08-14 08:14
-updated: 2026-08-20 09:06
+updated: 2026-08-20 09:10
 ---
 # systemd-journaldの過剰なI/O
 
@@ -31,7 +31,7 @@ journalのフォーマットが元々目指していた「ログエントリは�
 
 ## 代替フォーマット案
 
-Hacker News上の議論では、journalの独自バイナリ形式に代わる案として、SQLite・[[duckdb-2.0|DuckDB]]・Parquetなどの既存フォーマットの活用が提案された。それぞれについて次のような指摘もある。
+Hacker News上の議論では、journalの独自バイナリ形式に代わる案として、SQLite・[[duckdb|DuckDB]]・Parquetなどの既存フォーマットの活用が提案された。それぞれについて次のような指摘もある。
 
 - SQLiteは書き直し型(rewrite-based)のデータベースであり、少量データの頻繁な書き込みではwrite amplificationが大きいという反論がある
 - Parquetは列指向・高圧縮で有利だが、行グループ単位のバッチ書き込みを前提とするため、ログのように低ボリュームで逐次発生するデータには向かないという指摘がある
