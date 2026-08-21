@@ -4,7 +4,7 @@ updated: 2026-08-21 10:55
 ---
 # InnoDBのロック
 
-[[mysql|MySQL]]のデフォルトストレージエンジン[[mysql|InnoDB]]が実装しているロック機構。[[postgresql|PostgreSQL]]の[[postgres-lock-blocking-graph|ロック]]がテーブルロック(8段階)＋行ロック(数種類)という比較的シンプルな構成なのに対し、InnoDBは行・インデックスレベルのロックにギャップロック等の概念が加わり、レイヤーが1段多い。
+[[mysql|MySQL]]のデフォルトストレージエンジンInnoDBが実装しているロック機構。[[postgresql|PostgreSQL]]の[[postgres-lock-blocking-graph|ロック]]がテーブルロック(8段階)＋行ロック(数種類)という比較的シンプルな構成なのに対し、InnoDBは行・インデックスレベルのロックにギャップロック等の概念が加わり、レイヤーが1段多い。
 
 #database #mysql #innodb #lock
 
