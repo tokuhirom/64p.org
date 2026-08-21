@@ -1,10 +1,10 @@
 ---
 created: 2026-08-14 08:24
-updated: 2026-08-15 15:14
+updated: 2026-08-22 07:26
 ---
 # Traefik
 
-Go製のクラウドネイティブなリバースプロキシ / ロードバランサー / Ingressコントローラー（MITライセンス）。Containous（現Traefik Labs）が開発している。 #networking #kubernetes
+Go製のクラウドネイティブなリバースプロキシ / ロードバランサー / Ingressコントローラー（MITライセンス）。Containous（現Traefik Labs）が開発している。設定済みのスタンドアロン製品である点で、Rustでネットワークスタックを組み立てるライブラリの[[rama]]とは位置づけが異なる。 #networking #kubernetes
 
 ## 特徴: 動的なサービスディスカバリ
 
