@@ -1,10 +1,10 @@
 ---
 created: 2026-08-10 17:15
-updated: 2026-08-10 17:21
+updated: 2026-08-21 10:40
 ---
 # MVCC
 
-Multi-Version Concurrency Control（多version同時実行制御）の略。[[postgresql|PostgreSQL]]が採用している並行処理制御の仕組みで、行に対する読み書きの際にロックで衝突を防ぐのではなく、行の複数バージョンを保持することで実現している。
+Multi-Version Concurrency Control（多version同時実行制御）の略。[[postgresql|PostgreSQL]]が採用している並行処理制御の仕組みで、行に対する読み書きの際にロックで衝突を防ぐのではなく、行の複数バージョンを保持することで実現している。書き込み同士の衝突や、テーブル構造を変更する操作については、MVCCではなく[[postgres-lock-blocking-graph|ロック]]で対処される。
 
 #database #concurrency #postgresql
 
