@@ -1,6 +1,6 @@
 ---
 created: 2026-08-10 17:20
-updated: 2026-08-10 17:21
+updated: 2026-08-21 10:55
 ---
 # トランザクション分離レベル
 
@@ -24,7 +24,7 @@ Read Committedと違い、トランザクション内で最初にSQL文を実行
 
 デフォルトの分離レベルが異なる。PostgreSQLはRead Committedがデフォルトなのに対し、MySQLのInnoDBはRepeatable Readがデフォルト。設計思想の違いとして、MySQLは初期状態からより強い分離レベルを提供する方向、PostgreSQLはより高い並行性を優先する方向とされる。
 
-ファントムリードへの対処方法も異なる。PostgreSQLはMVCCのスナップショット機構だけでファントムリードに対処するため、Repeatable Readでも限定的にファントムリードが起こりうる。一方InnoDBのRepeatable Readは、MVCCに加えてgap lock・next-key lockという行間ロックを併用しており、多くのケースでファントムリードそのものを防いでいる。つまり同じ「Repeatable Read」という名前でも、内部の実現方法（ロックの有無）が異なる点に注意が必要。
+ファントムリードへの対処方法も異なる。PostgreSQLはMVCCのスナップショット機構だけでファントムリードに対処するため、Repeatable Readでも限定的にファントムリードが起こりうる。一方InnoDBのRepeatable Readは、MVCCに加えて[[innodb-locking|gap lock・next-key lock]]という行間ロックを併用しており、多くのケースでファントムリードそのものを防いでいる。つまり同じ「Repeatable Read」という名前でも、内部の実現方法（ロックの有無）が異なる点に注意が必要。
 
 ## 出典
 
