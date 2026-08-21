@@ -1,6 +1,6 @@
 ---
 created: 2026-08-21 10:40
-updated: 2026-08-21 10:40
+updated: 2026-08-21 10:50
 ---
 # Lock Blocking Graph(PostgreSQLのロック競合を可視化するインタラクティブツール)
 
@@ -46,7 +46,7 @@ Concept節では、Postgresが並行アクセスの衝突を3パターンに分�
 ## メモ
 
 - [[mvcc|MVCC]]・[[vacuum|VACUUM]]・[[transaction-isolation-levels|トランザクション分離レベル]]など、ロックと隣接する概念は別ノートに切り出し済み。本ノートはあくまで上記ツール(および元サイト)の紹介に徹する。
-- MySQL/InnoDB側で同種の「操作を選ぶと何をブロックするか可視化する」専用サイトは調査時点(2026-08-21)では見当たらなかった。[MySQL公式ドキュメントのInnoDB Locking](https://dev.mysql.com/doc/en/innodb-locking.html)がテキストベースの解説、[InnoDB Data Locking – Part 3 "Deadlocks"](https://dev.mysql.com/blog-archive/innodb-data-locking-part-3-deadlocks/)というMySQL公式ブログにトランザクションを三角形・ロックを円で表した動画による可視化の記事がある程度。
+- MySQL/InnoDB側で同種の「操作を選ぶと何をブロックするか可視化する」専用サイトは調査時点(2026-08-21)では見当たらなかった。内容的に一番近いのは[MySQL Reference Manual: 17.7.3 Locks Set by Different SQL Statements in InnoDB](https://dev.mysql.com/doc/refman/8.4/en/innodb-locks-set.html)で、「このSQL文はこのロックを取る」という対応表を持っているが、あくまで静的なドキュメントでインタラクティブなグラフ表示ではない。[InnoDB Data Locking – Part 3 "Deadlocks"](https://dev.mysql.com/blog-archive/innodb-data-locking-part-3-deadlocks/)というMySQL公式ブログにはトランザクションを三角形・ロックを円で表した動画による可視化があるが、一方向の動画でインタラクティブ性はない。[sql-academy.org/guide/locking](https://sql-academy.org/en/guide/locking)というMySQL/PostgreSQL両方を扱う学習ページもあるが、概念説明と確認問題1問のみで、操作選択式のシミュレータ機能はなかった。
 
 ## 出典
 
