@@ -1,6 +1,6 @@
 ---
 created: 2026-08-12 23:14
-updated: 2026-08-13 22:06
+updated: 2026-08-21 21:23
 ---
 # microVM
 
@@ -30,7 +30,7 @@ updated: 2026-08-13 22:06
 
 ## 用途
 
-サーバーレス実行環境やAIエージェント向けサンドボックスなど、マルチテナントで多数の短命なワークロードを高速に隔離・起動する必要がある場面で採用される。[[hypeman|Hypeman]]はFirecracker/Cloud Hypervisor/[[qemu|QEMU]]/Apple Virtualization.frameworkを切り替え可能な形で統一的に扱うランタイム。
+サーバーレス実行環境やAIエージェント向けサンドボックスなど、マルチテナントで多数の短命なワークロードを高速に隔離・起動する必要がある場面で採用される。[[hypeman|Hypeman]]はFirecracker/Cloud Hypervisor/[[qemu|QEMU]]/Apple [[virtualization-framework|Virtualization.framework]]を切り替え可能な形で統一的に扱うランタイム。[[crackling|crackling]]も同様にFirecrackerとVirtualization.frameworkを統一APIで扱う取り組みの一つ。
 
 ## [[microvm-ecosystem|コンテナ向け軽量VM技術]]の中での位置づけ
 

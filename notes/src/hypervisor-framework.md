@@ -1,6 +1,6 @@
 ---
 created: 2026-08-17 20:26
-updated: 2026-08-17 20:26
+updated: 2026-08-21 21:23
 ---
 # Hypervisor.framework
 
@@ -19,7 +19,7 @@ KVMがioctl呼び出しでカーネルのデバイスファイルを操作する
 
 ## Virtualization.frameworkとの違い
 
-Appleはより高レベルのAPIとして`Virtualization.framework`も別途提供している。Hypervisor.frameworkがCPU/メモリ仮想化のみを扱う低レベルAPIであるのに対し、Virtualization.frameworkはデバイスモデルやゲストOSブートまで含めてmacOS/Linuxの仮想マシンを丸ごと作成できる高レベルAPI。libkrunのような軽量VMMは、デバイスモデルを自前で持つため低レベルなHypervisor.frameworkの方を土台として選ぶ。
+Appleはより高レベルのAPIとして[[virtualization-framework|Virtualization.framework]]も別途提供している。Hypervisor.frameworkがCPU/メモリ仮想化のみを扱う低レベルAPIであるのに対し、Virtualization.frameworkはデバイスモデルやゲストOSブートまで含めてmacOS/Linuxの仮想マシンを丸ごと作成できる高レベルAPI。libkrunのような軽量VMMは、デバイスモデルを自前で持つため低レベルなHypervisor.frameworkの方を土台として選ぶ。
 
 ## 出典
 

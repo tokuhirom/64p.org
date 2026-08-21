@@ -1,6 +1,6 @@
 ---
 created: 2026-08-12 23:25
-updated: 2026-08-17 20:23
+updated: 2026-08-21 21:23
 ---
 # コンテナ向け軽量VM技術
 
@@ -34,6 +34,7 @@ FirecrackerなどのVMMは素のカーネル+rootfsしか扱えないため、OC
 - [[kata-containers|Kata Containers]] — OpenStack Foundation発。OCI/CRI互換のコンテナランタイムとして、Firecracker/Cloud Hypervisor/[[qemu|QEMU]]など複数のVMMを横断的にバックエンドとして選べる
 - [[firecracker-containerd|firecracker-containerd]] — AWS製。containerd専用のFirecracker統合プラグイン
 - [[hypeman|Hypeman]] — Kernel社製。OCIイメージのpull・実行をDocker互換CLIで扱えるようにした、マルチハイパーバイザー対応のランタイム
+- [[crackling|crackling]] — Encore社製。Linux上のFirecrackerとmacOS上の[[virtualization-framework|Virtualization.framework]]を統一APIで扱う抽象化レイヤー
 
 ## 出典
 

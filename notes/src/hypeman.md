@@ -1,6 +1,6 @@
 ---
 created: 2026-08-12 23:14
-updated: 2026-08-12 23:47
+updated: 2026-08-21 21:23
 ---
 # Hypeman
 
@@ -13,7 +13,7 @@ updated: 2026-08-12 23:47
 ## 対応ハイパーバイザー
 
 - Linux: [[cloud-hypervisor|Cloud Hypervisor]]、[[firecracker|Firecracker]]、[[qemu|QEMU]]（[[kvm|KVM]]必須）
-- macOS: Apple Silicon上のVirtualization.framework（Rosetta経由でlinux/amd64イメージも実行可）
+- macOS: Apple Silicon上の[[virtualization-framework|Virtualization.framework]]（Rosetta経由でlinux/amd64イメージも実行可）
 
 ## 主な機能
 
