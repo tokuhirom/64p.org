@@ -1,6 +1,6 @@
 ---
 created: 2026-08-22 07:26
-updated: 2026-08-22 07:26
+updated: 2026-08-22 07:28
 ---
 # rama
 
@@ -16,7 +16,7 @@ updated: 2026-08-22 07:26
 - HTTP: HTTP/1・[[http2|HTTP/2]]のサーバー/クライアント、[[websocket|WebSocket]]、[[grpc|gRPC]]、FastCGI
 - TLS: Rustls / BoringSSLによるTLS終端、動的証明書、mTLS、[[acme|ACME]]対応
 - プロキシプロトコル: HTTP CONNECT、HTTPS CONNECT、SOCKS5、HAProxy PROXYプロトコル
-- その他: DNS、テレメトリ、フィンガープリンティングなど
+- その他: DNS、テレメトリ、[[tls-fingerprinting|フィンガープリンティング]]など
 
 ## 想定用途
 
