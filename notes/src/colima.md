@@ -1,6 +1,6 @@
 ---
 created: 2026-08-25 17:40
-updated: 2026-08-25 17:40
+updated: 2026-08-25 17:41
 ---
 # Colima
 
@@ -8,7 +8,7 @@ macOS(およびLinux)上でDocker互換のコンテナランタイムを最小�
 
 ## 仕組み
 
-内部的には[Lima](https://github.com/lima-vm/lima)（macOS上にLinux VMを立てるツール）を利用し、その上でDocker・containerd・Kubernetes・Incusといった複数のランタイムを選択して動かせる。デフォルトのランタイムはDocker。GUIは持たずCLIオンリー。
+内部的には[[lima|Lima]]（macOS上にLinux VMを立てるツール）を利用し、その上でDocker・containerd・Kubernetes・Incusといった複数のランタイムを選択して動かせる。デフォルトのランタイムはDocker。GUIは持たずCLIオンリー。
 
 ## 使い方
 

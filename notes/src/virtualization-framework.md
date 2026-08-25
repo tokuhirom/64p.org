@@ -1,6 +1,6 @@
 ---
 created: 2026-08-21 21:23
-updated: 2026-08-25 17:40
+updated: 2026-08-25 17:41
 ---
 # Virtualization.framework
 
@@ -18,7 +18,7 @@ Hypervisor.frameworkがCPU・メモリの仮想化のみを扱う低レベルAPI
 
 ## 利用例
 
-[[hypeman|Hypeman]]や[[crackling|crackling]]など、Linux上のFirecracker/Cloud Hypervisor/QEMUとmacOS上のVirtualization.frameworkを統一APIで切り替えられるようにするマルチプラットフォームなVM実行基盤のmacOS側バックエンドとして採用されている。Docker Desktop代替の[[orbstack|OrbStack]]や[[colima|Colima]]もmacOS上のVM基盤としてVirtualization.frameworkを利用できる。
+[[hypeman|Hypeman]]や[[crackling|crackling]]など、Linux上のFirecracker/Cloud Hypervisor/QEMUとmacOS上のVirtualization.frameworkを統一APIで切り替えられるようにするマルチプラットフォームなVM実行基盤のmacOS側バックエンドとして採用されている。Docker Desktop代替の[[orbstack|OrbStack]]や[[colima|Colima]]もmacOS上のVM基盤としてVirtualization.frameworkを利用できる。特に[[colima|Colima]]の土台である[[lima|Lima]]は、macOS 13.5以降でVirtualization.framework(vz)バックエンドをデフォルトとしている。
 
 ## 出典
 
