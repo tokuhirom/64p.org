@@ -1,6 +1,6 @@
 ---
 created: 2026-08-17 20:26
-updated: 2026-08-21 21:23
+updated: 2026-08-25 17:40
 ---
 # Hypervisor.framework
 
@@ -11,7 +11,7 @@ Appleが提供するmacOS向けの低レベル仮想化API。サードパーテ�
 - `hv_vm_create`でVMを作成、`hv_vm_map`でゲストにメモリを割り当て、`hv_vcpu_create`/`hv_vcpu_run`でvCPUを生成・実行するという、意図的にミニマルな一連のC API群
 - デバイスエミュレーションは一切提供しない。VMM実装者が[[virtio|virtio]]等のデバイスモデルを自前で用意する必要がある
 - 利用には`com.apple.security.hypervisor`エンタイトルメントが必要
-- Intel Mac・Apple Silicon Mac双方に対応しており、Intel Mac時代のDocker Desktopなどの仮想化基盤としても使われてきた
+- Intel Mac・Apple Silicon Mac双方に対応しており、Intel Mac時代のDocker Desktopなどの仮想化基盤としても使われてきた（現在のDocker Desktop代替である[[colima|Colima]]・[[orbstack|OrbStack]]も、macOS上ではHypervisor.framework/Virtualization.frameworkベースのVMを利用する）
 
 ## [[kvm|KVM]]との比較
 
