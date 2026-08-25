@@ -1,6 +1,6 @@
 ---
 created: 2026-08-26 07:41
-updated: 2026-08-26 07:41
+updated: 2026-08-26 07:46
 ---
 # LogUpdater論文と`logresearch`アカウント無断PR事件
 
