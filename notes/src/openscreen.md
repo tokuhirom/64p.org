@@ -1,10 +1,10 @@
 ---
 created: 2026-08-27 08:11
-updated: 2026-08-27 08:11
+updated: 2026-08-27 08:13
 ---
 # OpenScreen
 
-画面録画から製品デモ動画への編集までを行う、無料・オープンソースのデスクトップアプリ。"Record your screen, ship a demo" がスローガンで、[Screen Studio](https://screen.studio/)の代替を目指している。 #electron #rust
+画面録画から製品デモ動画への編集までを行う、無料・オープンソースのデスクトップアプリ。"Record your screen, ship a demo" がスローガンで、[[screen-studio|Screen Studio]]の代替を目指している。 #electron #rust
 
 ## 概要
 
