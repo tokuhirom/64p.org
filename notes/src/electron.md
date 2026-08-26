@@ -1,6 +1,6 @@
 ---
 created: 2026-08-09 16:15
-updated: 2026-08-09 16:15
+updated: 2026-08-27 08:11
 ---
 # Electron
 
@@ -24,7 +24,7 @@ Node.jsとChromiumを1バイナリに同梱し、Webアプリと同じ書き方�
 
 ## 著名な採用アプリ
 
-Visual Studio Code、Slack、GitKraken、WebTorrentなど(初期採用者を含む)。
+Visual Studio Code、Slack、GitKraken、WebTorrentなど(初期採用者を含む)。フロントエンドをElectron、バックエンドをRustで書く構成の例として[[openscreen]]がある。
 
 ## 位置づけ
 
