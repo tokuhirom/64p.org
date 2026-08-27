@@ -1,6 +1,6 @@
 ---
 created: 2026-08-10 16:44
-updated: 2026-08-16 23:36
+updated: 2026-08-27 21:56
 ---
 # Tailscale
 
@@ -18,6 +18,7 @@ updated: 2026-08-16 23:36
 
 - [[tailscale-funnel|Tailscale Funnel]] — tailnet内にとどまらず、ローカルサービスをインターネット全体に公開する機能
 - **Tailscale Serve** — Funnelと似ているが、公開範囲がtailnet内のデバイス・メンバーに限定される版
+- [[tailcat|Tailcat]] — コントロールプレーン(コーディネーションサーバー)を使わず、データプレーンのコンポーネントだけをnetcat風のCLI/ライブラリとして切り出したOSSツール
 
 ## [[wireguard]]との関係
 
