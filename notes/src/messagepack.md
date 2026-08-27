@@ -1,6 +1,6 @@
 ---
 created: 2026-08-13 13:07
-updated: 2026-08-14 09:07
+updated: 2026-08-27 21:59
 ---
 # MessagePack
 
@@ -24,6 +24,10 @@ updated: 2026-08-14 09:07
 - [[fluentd|Fluentd]]は内部データ表現に全面的にMessagePackを採用しており、パイプラインの各ステージ間でゼロコピーのデータ受け渡しを実現している。
 - [[redis|Redis]]はLuaスクリプティングでMessagePackを採用している。
 - Treasure Data社の分析基盤パイプラインもMessagePack上に構築されている。
+
+## [[cbor|CBOR]]との違い
+
+同じくJSON互換のデータモデルをバイナリでスキーマフリー・自己記述的にエンコードする形式として[[cbor|CBOR]]がある。CBORはMessagePackの発想を拡張し、バイト文字列・日付・多倍長整数といった型をタグ機構でネイティブサポートする点が異なる。
 
 ## 出典
 

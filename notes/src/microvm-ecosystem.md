@@ -1,6 +1,6 @@
 ---
 created: 2026-08-12 23:25
-updated: 2026-08-21 21:23
+updated: 2026-08-27 21:59
 ---
 # コンテナ向け軽量VM技術
 
@@ -35,6 +35,10 @@ FirecrackerなどのVMMは素のカーネル+rootfsしか扱えないため、OC
 - [[firecracker-containerd|firecracker-containerd]] — AWS製。containerd専用のFirecracker統合プラグイン
 - [[hypeman|Hypeman]] — Kernel社製。OCIイメージのpull・実行をDocker互換CLIで扱えるようにした、マルチハイパーバイザー対応のランタイム
 - [[crackling|crackling]] — Encore社製。Linux上のFirecrackerとmacOS上の[[virtualization-framework|Virtualization.framework]]を統一APIで扱う抽象化レイヤー
+
+## VMを使わない隣接アプローチ
+
+- [[gvisor|gVisor]] — コンテナ単位でVMを丸ごと起動するのではなく、システムコールをユーザースペースの独自実装で仲介・遮断することでサンドボックス化する(KVMプラットフォーム利用時を除きVMは使わない)。コンテナのカーネル共有分離の弱さを補うという目的は共通するが、アプローチが異なる。
 
 ## 出典
 
