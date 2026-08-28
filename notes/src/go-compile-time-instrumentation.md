@@ -1,6 +1,6 @@
 ---
 created: 2026-08-15 20:55
-updated: 2026-08-15 21:17
+updated: 2026-08-28 12:46
 ---
 # Goのコンパイル時計装(compile-time instrumentation)
 
@@ -23,7 +23,7 @@ Go compile-time instrumentationはこれらとは別の第三の道として、*
 otelc go build ./...
 ```
 
-のように`go build`の前に`otelc`を挟むだけで、`net/http`・`database/sql`・gRPC・Redisなど対応ライブラリの呼び出し箇所にテレメトリ送出コードがビルド時に埋め込まれる。ランタイムオーバーヘッドがないのが特徴(実行時にフックを行うeBPF計装や、リフレクション・プロキシを使う手法と対照的)。
+のように`go build`の前に`otelc`を挟むだけで、`net/http`・`database/sql`・gRPC・Redisなど対応ライブラリの呼び出し箇所にテレメトリ送出コードがビルド時に埋め込まれる。埋め込まれたコードはOTel SDK経由でOTLPを喋るので、送出先には[[opentelemetry-collector|OpenTelemetry Collector]]や、ローカル確認用の[[otel-desktop-viewer]]をそのまま使える。ランタイムオーバーヘッドがないのが特徴(実行時にフックを行うeBPF計装や、リフレクション・プロキシを使う手法と対照的)。
 
 ## 取得できるメトリクス
 

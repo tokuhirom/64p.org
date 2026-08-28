@@ -1,6 +1,6 @@
 ---
 created: 2026-08-13 13:05
-updated: 2026-08-17 09:48
+updated: 2026-08-28 12:46
 ---
 # Fluent Bit
 
@@ -22,7 +22,7 @@ updated: 2026-08-17 09:48
 ## 主な機能
 
 - JSON・正規表現・LTSV・Logfmtなど複数フォーマットのログパーサーに対応。
-- [[prometheus|Prometheus]]およびOpenTelemetryと互換性のあるメトリクス収集・出力。
+- [[prometheus|Prometheus]]およびOpenTelemetryと互換性のあるメトリクス収集・出力。OTLP/HTTPとOTLP/gRPCの両方を受け付けるopentelemetry inputプラグイン(デフォルトポート4318)を持ち、ログ・メトリクス・トレースの3シグナルを扱えるため、テレメトリの収集・変換・転送を担う点で[[opentelemetry-collector|OpenTelemetry Collector]]と用途が重なる。
 - バックプレッシャーハンドリングと、メモリ/ファイルシステムでのデータバッファリング。
 - 高スループット・低リソース消費を重視した設計で、[[kubernetes|Kubernetes]]のノードレベルやエッジ層でのログ収集用途によく使われる。
 
