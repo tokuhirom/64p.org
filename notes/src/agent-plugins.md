@@ -1,6 +1,6 @@
 ---
 created: 2026-08-09 23:01
-updated: 2026-08-19 08:34
+updated: 2026-08-28 18:20
 ---
 # Agent Plugins
 
@@ -17,7 +17,7 @@ updated: 2026-08-19 08:34
 Next.jsに着想を得た「ファイルシステム＝設定」のアプローチを採用している。
 
 - **`plugin.json`**: schemaとnameだけを含む最小限のコアマニフェスト
-- **`skills/`ディレクトリ**: 再利用可能なタスク指示・リソース(Agent Skills)
+- **`skills/`ディレクトリ**: 再利用可能なタスク指示・リソース(Agent Skills。各スキルは[[skill-md]]を中心としたディレクトリ)
 - **`mcp.json`**: MCPサーバーの接続設定(transport typeを明示。[[sovereign-agent-mesh|SAM]]のようなP2Pメッシュ経由でのMCPツール共有とは別レイヤーの話)
 - **`com.example.client/`のような拡張ネームスペース**: 特定クライアント固有の非ポータブルな追加設定用
 

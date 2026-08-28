@@ -1,10 +1,10 @@
 ---
 created: 2026-08-10 22:46
-updated: 2026-08-10 22:46
+updated: 2026-08-28 18:20
 ---
 # grill-me
 
-Claude Code用の[[agent-plugins|Agent Skill]]の一つ。Matt Pocock氏が開発し、「Skills For Real Engineers」に含まれるスキル。 #claude-code
+Claude Code用の[[skill-md|Agent Skill]]の一つ。Matt Pocock氏が開発し、「Skills For Real Engineers」に含まれるスキル。 #claude-code
 
 ## 仕組み
 
