@@ -1,6 +1,6 @@
 ---
 created: 2026-08-09 14:46
-updated: 2026-08-09 14:47
+updated: 2026-08-30 20:07
 ---
 # Project Glasswing
 
@@ -24,6 +24,10 @@ OpenBSD(27年間未発見)、FFmpeg(16年間未発見)、Linuxカーネルなど
 
 - 防御的セキュリティ研究向けに1億ドル相当のモデルクレジットを提供。
 - オープンソースセキュリティ団体へ計400万ドルを寄付(Linux Foundation経由で[[openssf]]傘下のAlpha-Omegaに250万ドル、Apache Software Foundationに150万ドル)。
+
+## 関連
+
+フロンティアモデルへのアクセス格差という文脈で、[[security-embargo-ai-era|AI時代の脆弱性エンバーゴ]]の議論からも参照されている。
 
 ## 出典
 
