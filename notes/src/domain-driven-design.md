@@ -1,6 +1,6 @@
 ---
 created: 2026-08-09 22:57
-updated: 2026-08-13 19:36
+updated: 2026-09-01 09:14
 ---
 # DDD (Domain-Driven Design / ドメイン駆動設計)
 
@@ -43,6 +43,7 @@ Fowlerが挙げている例。ある電力会社では「メーター(meter)」�
 
 - OOP（オブジェクト指向）とは親和性が高く、Entity/Value ObjectはOOPのクラスのインスタンスとみなせる
 - [[microservices|マイクロサービス]]アーキテクチャとも相性がよく、Bounded Contextがサービス分割の単位の指針になることが多い
+- [[onion-architecture|オニオンアーキテクチャ]]や[[clean-architecture|クリーンアーキテクチャ]]といった、ドメインモデルを中心に置き外側にインフラを追いやる[[software-architecture-styles|アーキテクチャの様式]]と組み合わせて語られることが多い
 - CQRSやイベントソーシングと組み合わせられることも多いが、DDD自体に必須ではない
 
 ## 批判・限界
