@@ -1,20 +1,20 @@
 ---
 created: 2026-08-18 13:29
-updated: 2026-09-01 23:18
+updated: 2026-09-01 23:23
 ---
 # Omarchy
 
-[Ruby on Rails](https://rubyonrails.org/)の作者であり[37signals](https://37signals.com/)/Basecampの創業者でもあるDHH（David Heinemeier Hansson）が開発している、[Arch Linux](https://archlinux.org/)ベースのopinionatedなLinuxディストリビューション。[Hyprland](https://hyprland.org/)（Wayland上で動くタイリングウィンドウマネージャー）を採用し、開発者向けのデスクトップ環境をあらかじめ一式構築済みの状態で提供する。GitHubは[omacom/omarchy](https://github.com/omacom/omarchy)（当初は`basecamp/omarchy`だったが、後述のOmacom Foundation設立に伴い`omacom` organizationへ移された）、MITライセンス。公式サイトは[omarchy.org](https://omarchy.org/)。
+[Ruby on Rails](https://rubyonrails.org/)の作者であり[37signals](https://37signals.com/)/Basecampの創業者でもあるDHH（David Heinemeier Hansson）が開発している、[Arch Linux](https://archlinux.org/)ベースのopinionatedなLinuxディストリビューション。[[hyprland|Hyprland]]（Wayland上で動くタイリングウィンドウマネージャー）を採用し、開発者向けのデスクトップ環境をあらかじめ一式構築済みの状態で提供する。GitHubは[omacom/omarchy](https://github.com/omacom/omarchy)（当初は`basecamp/omarchy`だったが、後述のOmacom Foundation設立に伴い`omacom` organizationへ移された）、MITライセンス。公式サイトは[omarchy.org](https://omarchy.org/)。
 
 ## コンセプト
 
-素のArch Linuxを何時間もかけて自分好みに設定する代わりに、単一のインストーラーコマンドで「フルに設定済みのモダンな開発者デスクトップ」を即座に手に入れることを目指すディストリビューション。DHHが以前作成したUbuntuベースの同種プロジェクト[Omakub](https://omakub.org/)のArch Linux版という位置づけ。
+素のArch Linuxを何時間もかけて自分好みに設定する代わりに、単一のインストーラーコマンドで「フルに設定済みのモダンな開発者デスクトップ」を即座に手に入れることを目指すディストリビューション。DHHが以前作成したUbuntuベースの同種プロジェクト[[omakub|Omakub]]のArch Linux版という位置づけ。
 
 「*美しいシステムはやる気を起こさせるシステムである*（a beautiful system is a motivating system）」という設計哲学を掲げ、実用性だけでなく見た目の美しさも重視している。
 
 ## 主な特徴
 
-- **ベース**: Arch Linux + Hyprland（Waylandコンポジタ）。
+- **ベース**: Arch Linux + [[hyprland|Hyprland]]（Waylandコンポジタ）。
 - **キーボード中心の操作**: マウスなしでも完結する操作設計。`Super + Space`でアプリランチャーが開き、主要アプリにはホットキーが割り当て済み。
 - **標準搭載ツール**: Alacritty（ターミナル）、Neovim、tmux、Chromium、Spotify、Typora、LibreOffice、Zoomなど、開発者がすぐ使える一通りのアプリが同梱される。
 - **セキュリティ**: フルディスク暗号化（LUKS）が必須、ファイアウォールがデフォルトで有効。
@@ -26,7 +26,7 @@ updated: 2026-09-01 23:18
 
 ### Quickshellによるデスクトップシェルの統合
 
-バー・ランチャー・メニュー・通知・OSD・コントロールパネル・ロック画面・polkitエージェントを、[Quickshell](https://quickshell.org/)ベースの単一の常駐プロセスに統合し、プラグインアーキテクチャとIPCでスクリプタブルにした。これに伴い、Waybar・Walker・Mako・SwayOSD・hyprlock・hypridle・swaybg・polkit-gnomeという8つの独立プログラムが構成から取り除かれている。`omarchy plugin clone`でビルトインウィジェットを複製してカスタマイズできる。
+バー・ランチャー・メニュー・通知・OSD・コントロールパネル・ロック画面・polkitエージェントを、[[quickshell|Quickshell]]ベースの単一の常駐プロセスに統合し、プラグインアーキテクチャとIPCでスクリプタブルにした。これに伴い、Waybar・Walker・Mako・SwayOSD・hyprlock・hypridle・swaybg・polkit-gnomeという8つの独立プログラムが構成から取り除かれている。`omarchy plugin clone`でビルトインウィジェットを複製してカスタマイズできる。
 
 ### コーディングエージェントを一級市民として扱う
 
@@ -41,7 +41,7 @@ Quattroの方向性を最も特徴づけているのがこの点で、AIコー�
 
 2026年8月21日、DHHがOmarchyとその周辺エコシステムを支えるための非営利団体Omacom Foundationを設立した。Founding Patron 8名（Tobi Lütke、Patrick Collison、Michael Dell、Jack Dorsey、Matthew Prince、Brendan Iribe、Jason Fried、DHH）による$8Mでスタートし、8月24日にDrew Houston（Dropbox）とPeter Steinbergerの各$1M追加で$10M、8月31日には1Password・37signalsのコーポレートパトロン参加などを含め14件のパトロン契約・計$12.6Mに達している。
 
-特徴的なのは、資金がOmarchy本体だけでなく上流プロジェクトへ流れている点で、[Hyprland](https://hyprland.org/)の独占スポンサー、Quickshellのスポンサー、[mise](https://mise.jdx.dev/)のプレミアムスポンサーに就いている。個人のdotfiles的プロジェクトから、Linuxデスクトップのエコシステムに資金を配分する組織へと性質が変わりつつある。
+特徴的なのは、資金がOmarchy本体だけでなく上流プロジェクトへ流れている点で、[[hyprland|Hyprland]]の独占スポンサー、[[quickshell|Quickshell]]のスポンサー、[mise](https://mise.jdx.dev/)のプレミアムスポンサーに就いている。個人のdotfiles的プロジェクトから、Linuxデスクトップのエコシステムに資金を配分する組織へと性質が変わりつつある。
 
 このほか、Core Teamの設立、プラグインコンテスト、Rangersプログラム、AIRレジデンシー、世界各地でのミートアップなど、コミュニティ運営の枠組みが8月中に一斉に立ち上がっている。Quattroリリース後1週間で10万ダウンロードを記録した。
 
@@ -56,7 +56,7 @@ Quattroの方向性を最も特徴づけているのがこの点で、AIコー�
 
 ## [[manjaro]]との違い
 
-同じくArch Linuxベースだが方向性は異なる。[[manjaro|Manjaro]]は「Archを万人向けに使いやすくする」ことを狙った複数デスクトップ環境対応の総合ディストリビューションで、独自にステージング済みのリポジトリを持つ。一方Omarchyはopinionatedな単一構成で、Hyprland中心の開発者向けデスクトップを単一のインストーラーで即座に構築することに特化している。
+同じくArch Linuxベースだが方向性は異なる。[[manjaro|Manjaro]]は「Archを万人向けに使いやすくする」ことを狙った複数デスクトップ環境対応の総合ディストリビューションで、独自にステージング済みのリポジトリを持つ。一方Omarchyはopinionatedな単一構成で、[[hyprland|Hyprland]]中心の開発者向けデスクトップを単一のインストーラーで即座に構築することに特化している。
 
 ## 出典
 
