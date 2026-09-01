@@ -1,6 +1,6 @@
 ---
 created: 2026-08-09 23:01
-updated: 2026-08-28 18:20
+updated: 2026-09-01 23:40
 ---
 # Agent Plugins
 
@@ -23,7 +23,7 @@ Next.jsに着想を得た「ファイルシステム＝設定」のアプロー�
 
 ## 対応クライアント
 
-VS Code, Cursor, GitHub Copilot, ChatGPT, Codex, Kiroの6クライアントが対応表明。Claude/AnthropicはこのコンソーシアムのメンテナーにもGoogle同様の対応クライアントにも名前が挙がっていない(Claude Codeは既に独自のplugin/skill機構を持っている)。
+VS Code, Cursor, GitHub Copilot, ChatGPT, Codex, [[kiro|Kiro]]の6クライアントが対応表明。Claude/AnthropicはこのコンソーシアムのメンテナーにもGoogle同様の対応クライアントにも名前が挙がっていない(Claude Codeは既に独自のplugin/skill機構を持っている)。
 
 ## あえて定義していないこと
 
