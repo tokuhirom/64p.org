@@ -1,6 +1,6 @@
 ---
 created: 2026-08-13 22:12
-updated: 2026-09-02 19:10
+updated: 2026-09-02 19:46
 ---
 # Platform Engineering
 
@@ -22,9 +22,9 @@ Platform Engineeringは、この「開発者全員にインフラ運用スキル
 
 IDPのうち、開発者が実際に触れる入口となる「ポータル層」（Internal Developer Portal）の代表的な実装が[[backstage|Backstage]]。カタログ・ドキュメント・テンプレート・各種ツール連携を一枚のUIに束ねる。
 
-### Golden Path（黄金経路）/ Paved Road
+### [[golden-path|Golden Path]]（黄金経路）/ Paved Road
 
-ほとんどのワークロードに対する標準化されたワークフロー。「強制ではないが最も楽で推奨される道」を用意することで、標準化と自由度のバランスを取る。
+ほとんどのワークロードに対する標準化されたワークフロー。「強制ではないが最も楽で推奨される道」を用意することで、標準化と自由度のバランスを取る。Spotify発の言葉で、Netflix系の文脈では Paved Road（舗装路）と呼ばれる。
 
 ### Self-Service
 
