@@ -1,6 +1,6 @@
 ---
 created: 2026-09-02 20:50
-updated: 2026-09-02 20:50
+updated: 2026-09-02 22:18
 ---
 # SLSA (Supply-chain Levels for Software Artifacts)
 
@@ -25,7 +25,7 @@ L2とL3の分かれ目は「**署名鍵にビルドステップが触れるか**
 
 ## provenance の中身
 
-「どのソース(コミットハッシュ)を、どのビルダーが、どのパラメータで、いつビルドしたか」を記述したドキュメント。in-toto Attestation の形式で表現され、[[sigstore|Sigstore]]で署名されることが多い。
+「どのソース(コミットハッシュ)を、どのビルダーが、どのパラメータで、いつビルドしたか」を記述したドキュメント。[[in-toto|in-toto Attestation]] の形式で表現され、[[sigstore|Sigstore]]で署名されることが多い。
 
 ## 実際にどう満たすか
 

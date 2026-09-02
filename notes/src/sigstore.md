@@ -1,6 +1,6 @@
 ---
 created: 2026-09-02 20:50
-updated: 2026-09-02 20:50
+updated: 2026-09-02 22:18
 ---
 # Sigstore
 
@@ -14,9 +14,9 @@ updated: 2026-09-02 20:50
 
 - **Cosign** — OCIアーティファクト(コンテナイメージ)やファイルへの署名・検証を行うCLI。署名をレジストリ上にイメージと並べて格納する。
 - **Fulcio** — 短命な証明書を発行する無料のCA。OIDCで認証されたアイデンティティ(GitHub Actionsのワークフロー識別子、Googleアカウントなど)と一時鍵を結びつけた証明書を発行する。有効期限は10分程度。
-- **Rekor** — 署名の透明性ログ(transparency log)。誰がいつ何に署名したかが追記専用のログに記録され、後から監査できる。[[certificate-transparency|Certificate Transparency]]のソフトウェア署名版と考えるとわかりやすい。
+- **Rekor** — 署名の[[transparency-log|透明性ログ]]。誰がいつ何に署名したかが追記専用のログに記録され、後から監査できる。[[certificate-transparency|Certificate Transparency]]のソフトウェア署名版と考えるとわかりやすい。
 
-信頼の起点(Fulcioのルート証明書、Rekorの公開鍵)は TUF (The Update Framework) 経由で配布される。
+信頼の起点(Fulcioのルート証明書、Rekorの公開鍵)は [[tuf|TUF (The Update Framework)]] 経由で配布される。
 
 ## keyless署名の流れ
 

@@ -1,6 +1,6 @@
 ---
 created: 2026-09-02 20:50
-updated: 2026-09-02 20:50
+updated: 2026-09-02 22:18
 ---
 # SBOM (Software Bill of Materials)
 
@@ -41,7 +41,7 @@ grype sbom:./sbom.spdx.json
 
 ## VEX との関係
 
-SBOMは「何が入っているか」しか言わない。そのため「入ってはいるが、該当のコードパスを呼んでいないので影響を受けない」といった判断は表現できない。これを補うのが **VEX (Vulnerability Exploitability eXchange)** で、CVEごとに「影響あり/なし/調査中」とその根拠を述べる。SBOMとVEXは補完関係にある。
+SBOMは「何が入っているか」しか言わない。そのため「入ってはいるが、該当のコードパスを呼んでいないので影響を受けない」といった判断は表現できない。これを補うのが **[[vex|VEX]] (Vulnerability Exploitability eXchange)** で、CVEごとに「影響あり/なし/調査中」とその根拠を述べる。SBOMとVEXは補完関係にある。なお、SBOM自体を「アーティファクトについての署名された主張」として流通させる場合は、[[in-toto|in-toto Attestation]]のpredicateとして包むのが定番。
 
 ## 限界
 

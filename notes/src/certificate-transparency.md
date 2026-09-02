@@ -1,10 +1,10 @@
 ---
 created: 2026-08-19 12:48
-updated: 2026-08-19 12:48
+updated: 2026-09-02 22:18
 ---
 # Certificate Transparency (CT)
 
-CA(認証局)が発行したTLS証明書の発行記録を、改ざん検知可能な形で公開・監視するための仕組み。現行仕様は**RFC 9162**(Certificate Transparency Version 2.0)で、2021年12月に旧**RFC 6962**を置き換えた。CAが単独で不正な証明書を発行しても、CTログに載ることで第三者が検知できるようにするのが目的。 #security #pki
+CA(認証局)が発行したTLS証明書の発行記録を、改ざん検知可能な形で公開・監視するための仕組み。現行仕様は**RFC 9162**(Certificate Transparency Version 2.0)で、2021年12月に旧**RFC 6962**を置き換えた。CAが単独で不正な証明書を発行しても、CTログに載ることで第三者が検知できるようにするのが目的。[[transparency-log|透明性ログ]]という一般的な仕組みの、最も成功した実例でもある。 #security #pki
 
 ## 仕組み
 
