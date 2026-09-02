@@ -1,6 +1,6 @@
 ---
 created: 2026-09-02 19:50
-updated: 2026-09-02 19:50
+updated: 2026-09-02 19:54
 ---
 # 開発者ポータル (Internal Developer Portal)
 
@@ -29,7 +29,7 @@ updated: 2026-09-02 19:50
 
 1. **鮮度の高いメタデータグラフ** — 手動更新のYAMLではなく、プロバイダとプロセッサによる動的取得。GitHub・AWS・Kubernetes・Datadog・PagerDutyなどから自動で引く
 2. **リレーション** — S3バケットとReactコンポーネントのような、資産どうしの接続が張られていること
-3. **機械向けの配信形式** — MCP・CLI・API・ベクトルデータベース経由
+3. **機械向けの配信形式** — [[mcp|MCP]]・CLI・API・ベクトルデータベース経由
 
 [[backstage|Backstage]]本体も MCP Actions Backend を持つようになっており、Actions Registryに登録されたアクションを `catalog:create-component` のような名前空間付きのMCPツールとして公開できる。認証は静的トークン（外部アクセス向けの暫定手段）か、CIMD (Client ID Metadata Documents) によるOAuthが推奨で、Dynamic Client Registrationはdeprecated。ポータルのPermissionシステムがそのままエージェントのツール呼び出しの権限境界になる、という設計になっている。
 

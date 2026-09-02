@@ -1,6 +1,6 @@
 ---
 created: 2026-09-02 15:59
-updated: 2026-09-02 15:59
+updated: 2026-09-02 19:54
 ---
 # llms.txt
 
@@ -61,7 +61,7 @@ Ahrefsが2026年5月に137,210ドメインを調査した結果:
 - アクセスがあった3%についても、内訳の上位はSEO監査ツール21.7%、一般ウェブクローラー13.1%、技術プロファイリング11.6%
 - AI関連ボットは合計19.5%。内訳はAIエージェント/インフラ10.5%、GPTBot 4.51%、AI補助ツール2.5%、PerplexityBot等の検索1.1%、ClaudeBot 0.8%
 
-GoogleのJohn Muellerは2025年6月にBlueskyで「FWIW no AI system currently uses llms.txt」と述べ、2026年6月2日にも「purely speculative for now(ファイルは何年も存在しているのにどのAIシステムも使っていない — それが何を意味するか)」と繰り返している。Googleは AI Overviews でllms.txtを参照せず通常のSEOで評価するという立場で、代替としてWebMCP(ブラウザ内でWebサイトがエージェントにツールを公開する提案)を挙げている。
+GoogleのJohn Muellerは2025年6月にBlueskyで「FWIW no AI system currently uses llms.txt」と述べ、2026年6月2日にも「purely speculative for now(ファイルは何年も存在しているのにどのAIシステムも使っていない — それが何を意味するか)」と繰り返している。Googleは AI Overviews でllms.txtを参照せず通常のSEOで評価するという立場で、代替としてWebMCP([[mcp|MCP]]の考え方をブラウザ内に持ち込み、Webサイトがエージェントにツールを公開する提案)を挙げている。
 
 一方で、OpenAI・Anthropic・Googleはいずれも自社ドキュメントでllms.txtを**公開はしている**。「出すが読まない」という非対称な状況になっている。
 
