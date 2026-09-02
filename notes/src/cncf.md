@@ -1,6 +1,6 @@
 ---
 created: 2026-09-02 19:13
-updated: 2026-09-02 19:13
+updated: 2026-09-02 20:35
 ---
 # CNCF
 
@@ -29,7 +29,7 @@ CNCFプロジェクトは Sandbox / Incubating / Graduated の3段階を持つ�
 
 昇格の実務としては、TOCスポンサーが決まってから最低3ヶ月の期間、5〜7名のインタビュー可能な採用者、2週間のパブリックコメント期間、そしてTOCの2/3スーパーマジョリティ投票が必要になる。
 
-段階は「品質のランク」というより**賭けてよい度合いのランク**として読むのが実用的。Sandboxは「面白いが自分で面倒を見る覚悟が要る」、Graduatedは「本番で使っている会社が大量にいる」というシグナルになる。既存ノートで言えば[[cilium|Cilium]]（2023年Graduated）、[[etcd]]（2020年Graduated）、[[fluentd|Fluentd]]（2019年Graduated）、[[prometheus|Prometheus]]（2018年Graduated、Kubernetesに次ぐ2番目）が卒業組で、[[k0s]]や[[hyperlight|Hyperlight]]はSandbox、[[backstage|Backstage]]はIncubating。
+段階は「品質のランク」というより**賭けてよい度合いのランク**として読むのが実用的。Sandboxは「面白いが自分で面倒を見る覚悟が要る」、Graduatedは「本番で使っている会社が大量にいる」というシグナルになる。既存ノートで言えば[[cilium|Cilium]]（2023年Graduated）、[[etcd]]（2020年Graduated）、[[fluentd|Fluentd]]（2019年Graduated）、[[prometheus|Prometheus]]（2018年Graduated、Kubernetesに次ぐ2番目）が卒業組で、[[k0s]]や[[hyperlight|Hyperlight]]、[[holmesgpt|HolmesGPT]]（2025年採択）はSandbox、[[backstage|Backstage]]はIncubating。
 
 ## ガバナンス
 
