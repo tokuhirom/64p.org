@@ -1,6 +1,6 @@
 ---
 created: 2026-08-13 22:12
-updated: 2026-08-13 22:19
+updated: 2026-09-02 19:10
 ---
 # Platform Engineering
 
@@ -19,6 +19,8 @@ Platform Engineeringは、この「開発者全員にインフラ運用スキル
 ### Internal Developer Platform (IDP)
 
 プラットフォームエンジニアが提供する統合製品。アプリケーションライフサイクル全体（環境構築〜本番運用）をカバーし、認知負荷を軽減しつつ適切な抽象化レベルを開発者に提供する。開発者はHelmチャートのような詳細制御か、プリプロビジョニングされた環境での即時利用かを選べる。
+
+IDPのうち、開発者が実際に触れる入口となる「ポータル層」（Internal Developer Portal）の代表的な実装が[[backstage|Backstage]]。カタログ・ドキュメント・テンプレート・各種ツール連携を一枚のUIに束ねる。
 
 ### Golden Path（黄金経路）/ Paved Road
 
