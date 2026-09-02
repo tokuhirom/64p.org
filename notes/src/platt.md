@@ -1,10 +1,10 @@
 ---
 created: 2026-09-02 19:10
-updated: 2026-09-02 19:10
+updated: 2026-09-02 19:50
 ---
 # PlaTT
 
-株式会社エーピーコミュニケーションズ（APC）が提供する、[[backstage]]ベースの開発者ポータル（IDP: Internal Developer Portal）製品。表記は「PlaTT」（"Pla" + "TT"）。素のBackstageに日本の現場向けの機能とエンタープライズ向け機能、そして導入・運用サポートを乗せて商用サービス化したもの。
+株式会社エーピーコミュニケーションズ（APC）が提供する、[[backstage]]ベースの[[developer-portal|開発者ポータル]]（IDP: Internal Developer Portal）製品。表記は「PlaTT」（"Pla" + "TT"）。素のBackstageに日本の現場向けの機能とエンタープライズ向け機能、そして導入・運用サポートを乗せて商用サービス化したもの。
 
 #platform-engineering #devops
 

@@ -1,10 +1,10 @@
 ---
 created: 2026-09-02 19:10
-updated: 2026-09-02 19:46
+updated: 2026-09-02 19:50
 ---
 # Backstage
 
-Spotifyが自社の開発者体験改善のために作り、2020年3月にOSSとして公開した「開発者ポータルを作るためのフレームワーク」。同年9月に[[cncf|CNCF]]へ寄贈され、2022年3月にSandboxからIncubatingへ昇格した。2026年時点でもIncubatingのままだが、Graduated入りに必要なセキュリティ監査が進行中。3,400社以上で使われている。
+Spotifyが自社の開発者体験改善のために作り、2020年3月にOSSとして公開した「[[developer-portal|開発者ポータル]]を作るためのフレームワーク」。同年9月に[[cncf|CNCF]]へ寄贈され、2022年3月にSandboxからIncubatingへ昇格した。2026年時点でもIncubatingのままだが、Graduated入りに必要なセキュリティ監査が進行中。3,400社以上で使われている。
 
 「完成した製品」ではなく**フレームワーク**である点が重要で、素のBackstageはReact + Node.jsのTypeScriptモノレポとして手元に生成され、そこにプラグインを足して自組織向けのポータルに仕立てていく。この「自分でビルドして運用する」コストの高さが、後述の商用ディストリビューションが多数存在する理由になっている。
 
@@ -39,7 +39,7 @@ descriptor fileはリポジトリルートに置くのが慣例だが必須で�
 
 ### TechDocs
 
-docs-as-codeアプローチのドキュメント機能。Markdownをリポジトリに置いておくとMkDocsでビルドされ、ポータル上でカタログのエンティティに紐づいて表示・検索できる。設計書やAPI仕様書がWikiとリポジトリに散らばる問題への回答。
+[[docs-as-code|Docs as Code]]アプローチのドキュメント機能。Markdownをリポジトリに置いておくとMkDocsでビルドされ、ポータル上でカタログのエンティティに紐づいて表示・検索できる。設計書やAPI仕様書がWikiとリポジトリに散らばる問題への回答。
 
 ### Search
 
@@ -60,7 +60,7 @@ docs-as-codeアプローチのドキュメント機能。Markdownをリポジト
 
 ## [[platform-engineering|Platform Engineering]]の中での位置づけ
 
-Platform Engineeringが掲げるInternal Developer Platform (IDP)のうち、Backstageが担うのは主に**ポータル層**（Internal Developer Portal）。実際に環境をプロビジョニングするのは[[terraform]]や[[kubernetes]]などの下回りで、Backstageはそれらへの入口とカタログ・ドキュメントを一枚のUIに束ねる役割を持つ。開発者の認知負荷を下げるというPlatform Engineeringの目的に対して、「散らばった情報とツールを一箇所に集める」側から攻めるアプローチと言える。
+Platform Engineeringが掲げるInternal Developer Platform (IDP)のうち、Backstageが担うのは主に**ポータル層**（[[developer-portal|Internal Developer Portal]]）。実際に環境をプロビジョニングするのは[[terraform]]や[[kubernetes]]などの下回りで、Backstageはそれらへの入口とカタログ・ドキュメントを一枚のUIに束ねる役割を持つ。開発者の認知負荷を下げるというPlatform Engineeringの目的に対して、「散らばった情報とツールを一箇所に集める」側から攻めるアプローチと言える。
 
 ## 出典
 

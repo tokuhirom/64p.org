@@ -1,6 +1,6 @@
 ---
 created: 2026-09-02 19:46
-updated: 2026-09-02 19:46
+updated: 2026-09-02 19:50
 ---
 # Golden Path
 
@@ -26,7 +26,7 @@ Netflixの Paved Road はこの契約性をより明示的に定義している�
 
 ## Golden Path tutorial
 
-Spotifyでは単なる仕様書ではなく**チュートリアル**の形をとっているのが特徴。step-by-stepのガイドで、[[backstage|Backstage]]のTechDocs上で管理され、新入エンジニアのオンボーディング最初の2週間とEngineering Bootcampで使われる。Spotify社内で最も使われ、最も重要なドキュメント群だとされている。
+Spotifyでは単なる仕様書ではなく**チュートリアル**の形をとっているのが特徴。step-by-stepのガイドで、[[backstage|Backstage]]のTechDocs上で[[docs-as-code|Docs as Code]]の形で管理され、新入エンジニアのオンボーディング最初の2週間とEngineering Bootcampで使われる。Spotify社内で最も使われ、最も重要なドキュメント群だとされている。
 
 運用面では変遷があり、以前は「チュートリアル1本につきテクニカルライター1名」という体制だったがスケールせず廃止された。現在は複数チームにオーナーシップを分散しているが、チュートリアル間の整合性の確保が課題として残っていると自ら書いている。
 
