@@ -1,12 +1,12 @@
 ---
 created: 2026-08-17 09:48
-updated: 2026-08-17 09:51
+updated: 2026-09-02 19:13
 ---
 # Prometheus
 
 pullモデルのオープンソース監視・アラーティングシステム。監視対象がHTTPエンドポイント(`/metrics`)上でメトリクスを公開し、Prometheusサーバーが定期的にそのエンドポイントをスクレイプ(取得)しに行く方式を取る。push型の監視ツールに対し、監視対象のライフサイクルに依存せず、疎通確認がしやすいという特徴がある。
 
-2012年にSoundCloudで開発が始まり、開発者らがGoogleの内部監視システムBorgmonについて知ったことがきっかけでOSS版として作られた。2016年にCNCFの2番目のプロジェクトとしてホストされ、2018年に[[kubernetes|Kubernetes]]に次ぐ2番目のCNCF Graduatedプロジェクトとなった。
+2012年にSoundCloudで開発が始まり、開発者らがGoogleの内部監視システムBorgmonについて知ったことがきっかけでOSS版として作られた。2016年に[[cncf|CNCF]]の2番目のプロジェクトとしてホストされ、2018年に[[kubernetes|Kubernetes]]に次ぐ2番目のCNCF Graduatedプロジェクトとなった。
 
 #observability #cncf
 

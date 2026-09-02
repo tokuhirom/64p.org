@@ -1,10 +1,10 @@
 ---
 created: 2026-08-14 08:25
-updated: 2026-08-19 09:51
+updated: 2026-09-02 19:13
 ---
 # Kubernetes
 
-コンテナオーケストレーター。Googleが社内クラスタ管理システム[[google-borg|Borg]]の知見をもとに2014年に公開し、CNCF設立時の最初のホストプロジェクトとなった。2010年代後半のオーケストレーション競争（vs Docker Swarm, [[apache-mesos|Apache Mesos]]）を制し、コンテナ基盤の事実上の標準になっている。
+コンテナオーケストレーター。Googleが社内クラスタ管理システム[[google-borg|Borg]]の知見をもとに2014年に公開し、[[cncf|CNCF]]設立時の最初のホストプロジェクトとなった。2010年代後半のオーケストレーション競争（vs Docker Swarm, [[apache-mesos|Apache Mesos]]）を制し、コンテナ基盤の事実上の標準になっている。
 
 このノートはKubernetes関連ノートを束ねるハブノート。 #kubernetes #infrastructure #moc
 

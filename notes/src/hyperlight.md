@@ -1,10 +1,10 @@
 ---
 created: 2026-08-20 15:41
-updated: 2026-08-20 15:41
+updated: 2026-09-02 19:13
 ---
 # Hyperlight
 
-Microsoftが開発する、アプリケーションに組み込んで使う軽量なVMM(Virtual Machine Manager)。Rust製ライブラリで、KVM(Linux)やHyper-V(Windows)といったハイパーバイザー技術を直接叩き、フルOSを起動しないマイクロVM内で信頼できないコードを実行する。2025年2月にCNCF Sandboxプロジェクトへ採択された。ライセンスはApache 2.0。
+Microsoftが開発する、アプリケーションに組み込んで使う軽量なVMM(Virtual Machine Manager)。Rust製ライブラリで、KVM(Linux)やHyper-V(Windows)といったハイパーバイザー技術を直接叩き、フルOSを起動しないマイクロVM内で信頼できないコードを実行する。2025年2月に[[cncf|CNCF]] Sandboxプロジェクトへ採択された。ライセンスはApache 2.0。
 
 - リポジトリ: https://github.com/hyperlight-dev/hyperlight
 

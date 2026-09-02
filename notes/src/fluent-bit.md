@@ -1,10 +1,10 @@
 ---
 created: 2026-08-13 13:05
-updated: 2026-08-28 12:46
+updated: 2026-09-02 19:13
 ---
 # Fluent Bit
 
-ログ・メトリクス・トレースを収集する軽量なテレメトリエージェント。[[fluentd|Fluentd]]のアーキテクチャを踏襲しつつ、組み込み機器やエッジデバイスなどFluentdの実行が困難な低リソース環境向けに開発された。作者はEduardo Silva、現在はChronosphere社がスポンサーとなっている。CNCF傘下のFluentdプロジェクトのサブプロジェクトという位置づけで、Fluent Bit自体もCNCF Graduatedレベルにある。ライセンスはApache License v2.0。
+ログ・メトリクス・トレースを収集する軽量なテレメトリエージェント。[[fluentd|Fluentd]]のアーキテクチャを踏襲しつつ、組み込み機器やエッジデバイスなどFluentdの実行が困難な低リソース環境向けに開発された。作者はEduardo Silva、現在はChronosphere社がスポンサーとなっている。[[cncf|CNCF]]傘下のFluentdプロジェクトのサブプロジェクトという位置づけで、Fluent Bit自体もCNCF Graduatedレベルにある。ライセンスはApache License v2.0。
 
 #data-engineering #cncf #observability
 

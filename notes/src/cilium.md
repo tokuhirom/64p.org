@@ -1,6 +1,6 @@
 ---
 created: 2026-08-13 08:33
-updated: 2026-08-14 08:21
+updated: 2026-09-02 19:13
 ---
 # Cilium
 
@@ -15,7 +15,7 @@ Docker/[[kubernetes|Kubernetes]]などのコンテナプラットフォーム上
 
 ## エコシステムでの位置づけ
 
-CNCFのプロジェクトとして2023年にGraduated(卒業)ステータスに到達している。Google Kubernetes Engine(GKE Autopilot)のデフォルトCNI、Amazon EKSの推奨CNI、Azure AKSの組み込みオプションとして採用されるなど、主要クラウドのマネージドKubernetesに組み込まれている。動作にはLinux 5.4以降が必要(本番運用では5.15以降が推奨)。
+[[cncf|CNCF]]のプロジェクトとして2023年にGraduated(卒業)ステータスに到達している。Google Kubernetes Engine(GKE Autopilot)のデフォルトCNI、Amazon EKSの推奨CNI、Azure AKSの組み込みオプションとして採用されるなど、主要クラウドのマネージドKubernetesに組み込まれている。動作にはLinux 5.4以降が必要(本番運用では5.15以降が推奨)。
 
 ## 出典
 

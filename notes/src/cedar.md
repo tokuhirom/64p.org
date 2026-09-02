@@ -1,6 +1,6 @@
 ---
 created: 2026-08-19 19:09
-updated: 2026-08-19 19:11
+updated: 2026-09-02 19:13
 ---
 # Cedar(ポリシー言語)
 
@@ -31,7 +31,7 @@ Cedarは「今のリクエスト単体」を評価する設計であり、過去
 
 ## Open Policy Agent(OPA)/Regoとの違い
 
-Conftestが使うOPA/[[rego|Rego]]とは別系統・無関係のプロジェクト。OPAはCNCFプロジェクトでGo実装、RegoはKubernetes admission control・Terraformプラン検証・インフラのコンプライアンスチェックまで幅広く使える汎用ポリシー言語。対してCedarはRust実装で、アプリケーションの認可(principal/action/resource)に用途を絞り、安全性(必ず停止・副作用なし)と実行速度、形式検証性を重視した設計になっている。ベンチマークではCedarがRegoの42〜60倍高速という報告もある。
+Conftestが使うOPA/[[rego|Rego]]とは別系統・無関係のプロジェクト。OPAは[[cncf|CNCF]]プロジェクトでGo実装、RegoはKubernetes admission control・Terraformプラン検証・インフラのコンプライアンスチェックまで幅広く使える汎用ポリシー言語。対してCedarはRust実装で、アプリケーションの認可(principal/action/resource)に用途を絞り、安全性(必ず停止・副作用なし)と実行速度、形式検証性を重視した設計になっている。ベンチマークではCedarがRegoの42〜60倍高速という報告もある。
 
 ## 出典
 

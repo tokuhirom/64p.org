@@ -1,10 +1,10 @@
 ---
 created: 2026-08-14 08:09
-updated: 2026-08-14 08:21
+updated: 2026-09-02 19:13
 ---
 # Cluster API (CAPI)
 
-Kubernetesクラスタ自体のライフサイクル（作成・アップグレード・運用）を、Kubernetes流の宣言的APIで管理するためのサブプロジェクト。CNCFのCluster Lifecycle Special Interest Group（SIG）配下にある。
+Kubernetesクラスタ自体のライフサイクル（作成・アップグレード・運用）を、Kubernetes流の宣言的APIで管理するためのサブプロジェクト。[[cncf|CNCF]]のCluster Lifecycle Special Interest Group（SIG）配下にある。
 
 ## 発想
 

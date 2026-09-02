@@ -1,6 +1,6 @@
 ---
 created: 2026-08-15 14:40
-updated: 2026-08-15 16:18
+updated: 2026-09-02 19:13
 ---
 # gRPC
 
@@ -10,7 +10,7 @@ Googleが開発したオープンソースのRPC(Remote Procedure Call)フレー
 
 Googleは2001年頃から、社内のマイクロサービス群を接続するための汎用RPC基盤Stubbyを内部で運用していた。Stubbyは1秒あたり数百億リクエストというインターネットスケールを捌けるRPC層だったが、公開された標準に基づいておらず、Google社内インフラに強く結合していたため外部公開には向かなかった。
 
-HTTP/2やSPDY、QUICといった公開標準の登場でStubbyと同等の機能(多重化・ストリーミング等)が標準技術でも実現可能になったことを受け、2015年3月にStubbyの後継として開発・オープンソース化されたのがgRPCである。2017年2月にはCloud Native Computing Foundation(CNCF)にプロジェクトとして受け入れられた。
+HTTP/2やSPDY、QUICといった公開標準の登場でStubbyと同等の機能(多重化・ストリーミング等)が標準技術でも実現可能になったことを受け、2015年3月にStubbyの後継として開発・オープンソース化されたのがgRPCである。2017年2月には[[cncf|Cloud Native Computing Foundation(CNCF)]]にプロジェクトとして受け入れられた。
 
 ## サービス定義とProtocol Buffers
 

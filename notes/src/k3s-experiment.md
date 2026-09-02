@@ -1,6 +1,6 @@
 ---
 created: 2026-08-19 09:59
-updated: 2026-08-19 09:59
+updated: 2026-09-02 19:13
 ---
 # k3s実験
 
@@ -116,7 +116,7 @@ docker stop k3s-experiment && docker rm k3s-experiment
 ## コードから分かること
 
 - k3sの「軽量」は主に配布形態(単一バイナリ)と運用の自動化(証明書配布・Ingress自動反映など)によるもので、実行時に全部が1プロセスに収まっているわけではない。コントロールプレーンのコアAPI群だけが1プロセス化されており、アドオン(Traefik・CoreDNS等)は素のKubernetesと同じくPodとして動く。
-- Dockerコンテナ1個でCNCF準拠のフル機能Kubernetesクラスタが50秒足らずで立ち上がり、Ingress込みで実アプリの疎通まで確認できる手軽さは、[[minikube]]や[[kind|kind]]と同じ土俵の「ローカルで試すk3s」体験として十分実用的。
+- Dockerコンテナ1個で[[cncf|CNCF]]準拠のフル機能Kubernetesクラスタが50秒足らずで立ち上がり、Ingress込みで実アプリの疎通まで確認できる手軽さは、[[minikube]]や[[kind|kind]]と同じ土俵の「ローカルで試すk3s」体験として十分実用的。
 
 ## 出典
 

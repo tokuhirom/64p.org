@@ -1,10 +1,10 @@
 ---
 created: 2026-08-19 09:51
-updated: 2026-08-19 09:51
+updated: 2026-09-02 19:13
 ---
 # k0s
 
-Mirantisが開発する軽量[[kubernetes|Kubernetes]]ディストリビューション。CNCF Sandboxプロジェクトで、「Zero Friction Kubernetes」を標榜する。[[k3s]]と並んで軽量ディストリビューションの比較対象としてよく挙げられる。 #kubernetes
+Mirantisが開発する軽量[[kubernetes|Kubernetes]]ディストリビューション。[[cncf|CNCF]] Sandboxプロジェクトで、「Zero Friction Kubernetes」を標榜する。[[k3s]]と並んで軽量ディストリビューションの比較対象としてよく挙げられる。 #kubernetes
 
 ## アーキテクチャ
 

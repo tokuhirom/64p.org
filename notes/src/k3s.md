@@ -1,10 +1,10 @@
 ---
 created: 2026-08-14 08:20
-updated: 2026-08-19 09:59
+updated: 2026-09-02 19:13
 ---
 # k3s
 
-Rancher Labs（現SUSE）が開発した軽量[[kubernetes|Kubernetes]]ディストリビューション。CNCFの適合性認証（conformant）を受けた完全なKubernetesでありながら、100MB未満の単一バイナリとして配布され、コマンド一発でインストールできる。 #kubernetes
+Rancher Labs（現SUSE）が開発した軽量[[kubernetes|Kubernetes]]ディストリビューション。[[cncf|CNCF]]の適合性認証（conformant）を受けた完全なKubernetesでありながら、100MB未満の単一バイナリとして配布され、コマンド一発でインストールできる。 #kubernetes
 
 名前の由来: Kubernetesの略記「K8s」（10文字）に対し、「半分のメモリフットプリント」を目指したので5文字ぶんの「K3s」。K8sと違って元になる長い正式名称はない。
 

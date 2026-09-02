@@ -1,10 +1,10 @@
 ---
 created: 2026-08-14 08:39
-updated: 2026-08-15 14:40
+updated: 2026-09-02 19:13
 ---
 # CNI (Container Network Interface)
 
-Linuxコンテナのネットワーク設定を行うための、ベンダー中立な標準インターフェース仕様と基本プラグイン群。[[coreos|CoreOS]]がコンテナランタイムrktのプラグイン機構として提唱したものが原型で、2017年5月にCNCFの10番目のホストプロジェクトになった。[[kubernetes|Kubernetes]]のほか、[[apache-mesos|Mesos]]・Cloud Foundryなどでも採用されている。 #networking #kubernetes
+Linuxコンテナのネットワーク設定を行うための、ベンダー中立な標準インターフェース仕様と基本プラグイン群。[[coreos|CoreOS]]がコンテナランタイムrktのプラグイン機構として提唱したものが原型で、2017年5月に[[cncf|CNCF]]の10番目のホストプロジェクトになった。[[kubernetes|Kubernetes]]のほか、[[apache-mesos|Mesos]]・Cloud Foundryなどでも採用されている。 #networking #kubernetes
 
 ## Kubernetesとの関係
 

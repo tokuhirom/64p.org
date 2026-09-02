@@ -1,12 +1,12 @@
 ---
 created: 2026-08-14 11:39
-updated: 2026-08-14 11:39
+updated: 2026-09-02 19:13
 ---
 # OpenTofu
 
 #hashicorp #iac #fork
 
-[[terraform|Terraform]]がMPL 2.0からBUSL 1.1へライセンス変更したことを受け、2023年8月の変更発表から数週間で作られたMPL 2.0ライセンスのフォーク。当初はOpenTF Foundationとして立ち上がり、Linux Foundation傘下で運営されている。2025年4月にはCNCF(Cloud Native Computing Foundation)にも受け入れられた。
+[[terraform|Terraform]]がMPL 2.0からBUSL 1.1へライセンス変更したことを受け、2023年8月の変更発表から数週間で作られたMPL 2.0ライセンスのフォーク。当初はOpenTF Foundationとして立ち上がり、Linux Foundation傘下で運営されている。2025年4月には[[cncf|CNCF]](Cloud Native Computing Foundation)にも受け入れられた。
 
 ## Terraformとの互換性
 

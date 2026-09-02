@@ -1,6 +1,6 @@
 ---
 created: 2026-08-13 13:03
-updated: 2026-08-13 13:07
+updated: 2026-09-02 19:13
 ---
 # Fluentd
 
@@ -17,7 +17,7 @@ updated: 2026-08-13 13:07
 
 ## CNCFとFluent Bit
 
-- 2016年11月8日にCNCF(Cloud Native Computing Foundation)のIncubatingプロジェクトとして採択され、2019年4月11日にGraduatedレベルへ昇格した。
+- 2016年11月8日に[[cncf|CNCF]](Cloud Native Computing Foundation)のIncubatingプロジェクトとして採択され、2019年4月11日にGraduatedレベルへ昇格した。
 - 組み込み機器やエッジデバイスなど、Fluentdの実行が困難な軽量環境向けに、Fluentdのアーキテクチャを踏襲した軽量版として[[fluent-bit|Fluent Bit]]が開発された。Fluent BitはFluentdの傘下にあるCNCF Graduatedのサブプロジェクトという位置づけ。
 - Fluent Bitはログだけでなくメトリクスやトレースの収集・処理・転送にも対応するよう発展しており、現在はFluentdより広く採用されている。
 

@@ -1,6 +1,6 @@
 ---
 created: 2026-08-14 08:24
-updated: 2026-08-14 08:39
+updated: 2026-09-02 19:13
 ---
 # etcd
 
@@ -9,7 +9,7 @@ updated: 2026-08-14 08:39
 ## 経緯
 
 - 2013年、[[coreos|CoreOS]]社で開発が始まり、2014年にオープンソース化
-- 2018年、CoreOSがRed Hatに買収され、同年12月にプロジェクトはCNCFへ移管
+- 2018年、CoreOSがRed Hatに買収され、同年12月にプロジェクトは[[cncf|CNCF]]へ移管
 - 2020年11月、CNCFのgraduatedプロジェクトに昇格
 
 ## Kubernetesのプライマリデータストア
