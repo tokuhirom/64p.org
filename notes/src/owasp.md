@@ -1,6 +1,6 @@
 ---
 created: 2026-08-14 15:35
-updated: 2026-08-14 15:54
+updated: 2026-09-02 20:50
 ---
 # OWASP（Open Worldwide Application Security Project）
 
@@ -13,7 +13,7 @@ Webアプリケーションセキュリティの向上を目的とする非営�
 - [[owasp-wstg|Web Security Testing Guide (WSTG)]] — Webアプリを対象としたペンテスト手法を体系化したガイド。[[penetration-test|ペネトレーションテスト]]の観点別チェック項目を網羅する。
 - [[owasp-cheat-sheet-series|OWASP Cheat Sheet Series]] — 個別の脆弱性カテゴリ（[[ssrf|SSRF]]など）ごとに対策の実装指針をまとめたドキュメント群。
 
-このほかクラウドネイティブセキュリティ、AI/LLMリスク、SBOM等xBOM、スマートコントラクトなど新しい領域のプロジェクトも継続的に立ち上がっている。
+このほかクラウドネイティブセキュリティ、AI/LLMリスク、[[sbom|SBOM]]等xBOM、スマートコントラクトなど新しい領域のプロジェクトも継続的に立ち上がっている。
 
 ## 関連
 

@@ -1,6 +1,6 @@
 ---
 created: 2026-08-09 14:47
-updated: 2026-08-21 07:57
+updated: 2026-09-02 20:50
 ---
 # OpenSSF (Open Source Security Foundation)
 
@@ -16,7 +16,8 @@ Linux Foundation傘下の非営利団体で、オープンソースソフトウ�
 
 ## 代表的なプロジェクト
 
-- **Sigstore**: ソフトウェアのコード署名・検証サービス。
+- **[[sigstore|Sigstore]]**: ソフトウェアのコード署名・検証サービス。長期保管する秘密鍵を持たない「keyless署名」が特徴。
+- **[[slsa|SLSA]]**: ビルドパイプラインのセキュリティ成熟度をレベルで表現するフレームワーク。
 - **Alpha-Omega**: [[supply-chain-attack|サプライチェーン攻撃]]対策改善のための大規模プロジェクト。
 - **Scorecard**: OSSプロジェクトのセキュリティ健全性を機械的にスコア化するツール群。
 
