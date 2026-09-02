@@ -1,6 +1,6 @@
 ---
 created: 2026-09-02 22:18
-updated: 2026-09-02 22:18
+updated: 2026-09-02 22:24
 ---
 # in-toto
 
@@ -33,7 +33,7 @@ updated: 2026-09-02 22:18
 
 この `predicate` を差し替えることで、[[slsa|SLSA]] provenance、[[sbom|SBOM]]、[[vex|VEX]]、テスト結果、スキャン結果など何でも表現できる。「アーティファクトについての主張の入れ物」を統一したことが、このフレームワークが広く採用された理由。
 
-署名は DSSE (Dead Simple Signing Envelope) というエンベロープで包み、実際の署名・透明性ログへの記録は [[sigstore|Sigstore]] が担うのが定番の組み合わせ。
+署名は [[dsse|DSSE (Dead Simple Signing Envelope)]] というエンベロープで包み、実際の署名・透明性ログへの記録は [[sigstore|Sigstore]] が担うのが定番の組み合わせ。
 
 ## SLSAとの関係
 

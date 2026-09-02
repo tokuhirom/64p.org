@@ -1,6 +1,6 @@
 ---
 created: 2026-08-19 12:48
-updated: 2026-09-02 22:18
+updated: 2026-09-02 22:24
 ---
 # Certificate Transparency (CT)
 
@@ -8,9 +8,9 @@ CA(認証局)が発行したTLS証明書の発行記録を、改ざん検知可�
 
 ## 仕組み
 
-- 証明書がCTログ(append-onlyな**Merkle木**構造のデータベース)に投稿されると、ログは**SCT(Signed Certificate Timestamp)**を返す。SCTは「この証明書をMerkle木に追加すると約束する」というログの署名付きレシートで、ブラウザはSCTを検証することでその証明書がCTログに登録済みであることを確認できる。
+- 証明書がCTログ(append-onlyな[[merkle-tree|Merkle木]]構造のデータベース)に投稿されると、ログは**SCT(Signed Certificate Timestamp)**を返す。SCTは「この証明書をMerkle木に追加すると約束する」というログの署名付きレシートで、ブラウザはSCTを検証することでその証明書がCTログに登録済みであることを確認できる。
 - **monitor**(監視者)がログの内部一貫性を検証し、**auditor**が**STH(Signed Tree Head)**――Merkle木のルートハッシュのスナップショット――を突き合わせる「gossip」を行うことで、ログが過去の履歴を改ざん(append-only性への違反)していないかを検知する。
-- CTログは肥大化するため、時間単位の「シャード」に分割して運用されるのが一般的。
+- CTログは肥大化するため、時間単位の「シャード」に分割して運用されるのが一般的。近年は、ログを静的ファイルの集まりとして配信する[[tile-based-transparency-log|タイルベースの方式]](Static CT API)への移行が進んでいる。
 - 複数の主要CAは自身でもCTログを運用している。[[lets-encrypt|Let's Encrypt]]は「Sycamore」「Willow」「Twig」という複数のCTログを運用し、発行した証明書を複数の独立したログへ冗長的に投稿している。
 
 ## 副作用としての情報漏洩

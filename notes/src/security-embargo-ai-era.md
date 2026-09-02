@@ -1,6 +1,6 @@
 ---
 created: 2026-08-30 20:07
-updated: 2026-08-30 20:07
+updated: 2026-09-02 22:24
 ---
 # AI時代の脆弱性エンバーゴ
 
@@ -35,7 +35,7 @@ M-Trends の time-to-exploit (TTE) は「脆弱性が知られてから最初の
 
 1. **Super sekrit private patch development** — 私的な開発基盤の強化。OSSコミュニティの議論はMatrix(暗号化)やDiscord/Slackに分散しており、修正コードそのものより「脆弱性の説明を必要な人にだけ届ける」仕組みが重要になる、という指摘。GitHubのtemporary private forkについては、CI/CDと連携できない、マージできるPRが1本のみ、リポジトリ横断の問題に対応できない、レビュアー追加に時間がかかる、という制約が挙げられている
 2. **No embargoes, just ship continuously** — エンバーゴを置かず継続的にリリースする。Chromeの週次セキュリティ更新と隔週リリースが例として挙げられている。OSSライブラリでは依存関係が絡むため、エコシステム横断のパッケージ管理、Andrew Nesbitt の Scrutineer のようなトリアージ支援ツール、マルチプラットフォームのCI/CD強化が必要とされる
-3. **Proactive protection at the protocol layer** — 仮想パッチング。CloudflareがLog4j2の際にマネージドルールを即座に配布した例が挙げられ、著者は "antibotty network"(ローカルで高速に伝播する防御)を提案している
+3. **Proactive protection at the protocol layer** — 仮想パッチング。Cloudflareが[[log4shell|Log4j2の脆弱性]]の際にマネージドルールを即座に配布した例が挙げられ、著者は "antibotty network"(ローカルで高速に伝播する防御)を提案している
 
 著者はいずれか単独では足りず組み合わせが必要だとしている。また [[project-glasswing]] のような商用フロンティアモデルへのアクセス格差にも言及している。
 
