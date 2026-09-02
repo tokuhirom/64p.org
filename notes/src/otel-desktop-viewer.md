@@ -1,6 +1,6 @@
 ---
 created: 2026-08-28 12:46
-updated: 2026-08-28 12:46
+updated: 2026-09-02 22:30
 ---
 # otel-desktop-viewer
 
@@ -13,7 +13,7 @@ updated: 2026-08-28 12:46
 単なるビューアではなく、[[opentelemetry-collector|OpenTelemetry Collector]]に独自の`desktop` exporterを組み込んだカスタムディストリビューションとして作られている。この`desktop` exporterが以下の3つを担う。
 
 1. 受け取ったテレメトリを[[duckdb|DuckDB]]へ取り込む
-2. `POST /rpc`のJSON-RPC APIとして公開する
+2. `POST /rpc`の[[json-rpc|JSON-RPC]] APIとして公開する
 3. バイナリに埋め込まれたSvelte製のWeb UIを配信する
 
 つまり「Collector + 組み込みDB + 組み込みUI」が単一バイナリに収まっている。ローカルにJaegerのall-in-oneやバックエンド一式を立てるのに比べて、依存が単一バイナリで済むのが利点。
