@@ -1,12 +1,12 @@
 ---
 created: 2026-08-14 13:58
-updated: 2026-08-14 13:58
+updated: 2026-09-04 18:06
 ---
 # gpui-wry
 
 #rust
 
-[[wry]]をベースに、[[gpui|GPUI]]アプリの中にWebViewを埋め込むためのブリッジcrate。[longbridge/gpui-component](https://github.com/longbridge/gpui-component)リポジトリの`crates/webview`として、huacnleeが開発している(gpui-componentはGPUI用のUIコンポーネント集)。ライセンスはApache-2.0。
+[[wry]]をベースに、[[gpui|GPUI]]アプリの中にWebViewを埋め込むためのブリッジcrate。[[gpui-kit|GPUI Kit]]リポジトリ(旧名`longbridge/gpui-component`)の`crates/webview`として、huacnleeが開発している。ライセンスはApache-2.0。
 
 ## API
 
@@ -25,4 +25,4 @@ updated: 2026-08-14 13:58
 ## 出典
 
 - [gpui_wry - docs.rs](https://docs.rs/gpui-wry/latest/gpui_wry/)
-- [longbridge/gpui-component/crates/webview - GitHub](https://github.com/longbridge/gpui-component/tree/main/crates/webview)
+- [longbridge/gpui-kit/crates/webview - GitHub](https://github.com/longbridge/gpui-kit/tree/main/crates/webview)
