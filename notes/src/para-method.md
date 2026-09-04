@@ -1,6 +1,6 @@
 ---
 created: 2026-09-05 00:06
-updated: 2026-09-05 00:06
+updated: 2026-09-05 07:18
 ---
 # PARAメソッド
 
@@ -23,7 +23,7 @@ PARAはForteの提唱する **Building a Second Brain (BASB)** という体系�
 
 - **Capture** — 心に響いたものを取り込む
 - **Organize** — 行動可能性に沿って置く (ここがPARA)
-- **Distill** — 要点を段階的に太字・ハイライトで凝縮する (progressive summarization)
+- **Distill** — 要点を段階的に太字・ハイライトで凝縮する ([[progressive-summarization|Progressive Summarization]])
 - **Express** — ノートをアウトプットに変える
 
 PARAは2017年にForte Labsのブログ記事として発表され、2022年の書籍『Building a Second Brain』で体系の一部として、2023年には単独の書籍『The PARA Method』として展開されている。
@@ -32,6 +32,10 @@ PARAは2017年にForte Labsのブログ記事として発表され、2022年の�
 
 - [[gtd|GTD]]が扱うのは**タスク**、PARAが扱うのは**情報**。PARAのProjectsはGTDのprojectsリストと対応させやすく、実際GTDの語彙を情報整理側に持ち込んだ側面がある。
 - [[zettelkasten|Zettelkasten]]は「アイデア同士のリンクで思考を育てる」ことが目的で、フォルダ階層を積極的に否定する。PARAはフォルダ4つで実務を回すことが目的なので、思想はむしろ逆方向。両者を対立させるより、行動に近い情報はPARA、育てたい概念は[[evergreen-notes|エバーグリーンノート]]、と役割で分ける使い方が現実的とされる。
+
+## [[productivity-methods|個人生産性メソッド]]の中での位置づけ
+
+知識管理系。情報の置き場所を決めるレイヤーで、タスクを扱う実行系とは守備範囲が重ならない。
 
 ## 書籍
 
