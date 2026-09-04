@@ -1,6 +1,6 @@
 ---
 created: 2026-09-04 18:06
-updated: 2026-09-04 18:06
+updated: 2026-09-04 18:08
 ---
 # GPUI Kit
 
@@ -65,6 +65,43 @@ showcaseがGitHub Pages上に置かれていて、ネイティブで動かすの
 
 規模・実績の面では、単に「gpui-kit」と言った場合はLongbridge版を指すことがほとんど。
 
+## どのディストリビューションに乗るか
+
+[[gpui|GPUI]]まわりは公式クレートが止まっている影響で選択肢が分岐している。用途別の整理。
+
+- **デスクトップアプリを作りたい** → GPUI Kit。実運用の実績があり、コンポーネントが揃っていて、何よりGPUI本体のバージョン追従を肩代わりしてくれる。
+- **GPUIそのものを低レベルに触りたい、Zed本流に入らない機能(トレイ対応やWayland周りなど)が要る** → [gpui-ce](https://github.com/gpui-ce/gpui-ce)。`cargo add gpui-ce`だけで始められ、コミュニティ側の要望を受け入れる方針。
+- **公式の`gpui` 0.2.2** → 選ばない。2025-10-22から更新が止まっている間に、アップストリームでは`gpui`/`gpui_platform`の分割やwgpu移行が済んでいる。READMEの通りに書いても最新のアップストリームとは別物になる。
+
+crates.ioのダウンロード数(2026-09-04時点)。
+
+| クレート | 最新 | total | recent |
+| --- | --- | --- | --- |
+| `gpui-component` | 0.6.0 | 102,230 | 45,191 |
+| `gpui-kit`(傘クレート) | 0.6.0 | 400 | 400 |
+| `gpui-ce` | 0.2.2 | 7,763 | 6,424 |
+| `gpui-unofficial` | 1.19.0-pre | 4,199 | 2,931 |
+| `gpuikit` | 0.8.0 | 257 | 167 |
+| `gpui`(公式) | 0.2.2 | 252,104 | 140,284 |
+
+`gpui-kit`のダウンロードが小さいのは傘クレートが最近できたばかりだからで、実体は`gpui-component`の方に出ている。新規に書き始めるなら`gpui-kit`、既存コードがあるなら`gpui-component`のままでよい。公式`gpui`の25万は歴史的な蓄積。
+
+### 系統は混ぜられない
+
+一番の落とし穴。参照しているGPUIの再配布元が系統ごとに違う。
+
+```text
+gpui-kit (Longbridge)  →  gpui-pre
+gpuikit  (Nate Butler) →  gpui-unofficial
+gpui-ce                →  gpui-ce 自身
+```
+
+Rustではパッケージが違えば同じ`struct`でも別の型になるので、これらを混在させることはできない。「GPUI Kitのテーブルを使いつつgpui-ceのトレイ対応も欲しい」はコンパイルが通らない。最初にどの系統に乗るかを決める必要がある。gpui-ceは「今はほぼAPI互換だが、これから変えていく」と明言しているため、この分断は今後広がる方向。
+
+### そもそもGPUIを選ぶか
+
+Zedのようなエディタ的なもの、大量の行を高速に描くものを作るならGPUI Kitは有力で、Tree-sitter+[[lsp|LSP]]付きのコードエディタコンポーネントがそのまま使えるのは[[rust-gui-libraries|他のRust GUIライブラリ]]にない強み。一方で普通のGUIツールなら、pre-1.0で破壊的変更が頻繁・公式クレートが止まっている・エコシステムが系統ごとに分断している、という前提を許容できるかどうかで判断することになる。
+
 ## 出典
 
 - [longbridge/gpui-kit - GitHub](https://github.com/longbridge/gpui-kit)
@@ -74,3 +111,5 @@ showcaseがGitHub Pages上に置かれていて、ネイティブで動かすの
 - [iamnbutler/gpuikit - GitHub](https://github.com/iamnbutler/gpuikit)
 - [gpuikit showcase](https://nate.rip/gpuikit/)
 - [iamnbutler/gpui-unofficial - GitHub](https://github.com/iamnbutler/gpui-unofficial)
+- [gpui-component - crates.io](https://crates.io/crates/gpui-component)
+- [gpui-ce - crates.io](https://crates.io/crates/gpui-ce)
