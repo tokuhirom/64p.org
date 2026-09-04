@@ -1,6 +1,6 @@
 ---
 created: 2026-08-09 16:01
-updated: 2026-08-14 09:59
+updated: 2026-09-04 18:13
 ---
 # Rust GUI ライブラリ一覧
 
@@ -25,7 +25,20 @@ Rust製のGUIライブラリ・フレームワークをまとめておく。個�
 ## 各ライブラリの補足
 
 ### egui
-即座に画面を組める手軽さが特徴のimmediate mode GUI。フレーム毎にレイアウトを再計算する設計で、デバッグUIやツール系アプリ向き。AccessKitによるアクセシビリティ対応あり。
+即座に画面を組める手軽さが特徴のimmediate mode GUI。フレーム毎にレイアウトを再計算する設計で、デバッグUIやツール系アプリ向き。AccessKitによるアクセシビリティ対応あり(WindowsとmacOSのネイティブアクセシビリティAPIを実装している)。
+
+ネイティブっぽい見た目にならないのは欠陥ではなく**設計上の非目標**で、READMEのNon-goalsに"Native looking interface"が明記されている。
+
+> If you want a GUI that looks native, egui is not for you.
+
+OSのウィジェットを使わずテクスチャ付き三角形として全部を自前描画するため、macOS/Windows/Webのどこでも同じ見た目になる。一貫性という利点と、プラットフォーム感の薄さは表裏。immediate modeの制約として、動的にサイズが決まる要素のレイアウトが1フレーム遅れ、表示された最初のフレームでちらつくことがある(eguiはウィンドウやグリッドレイアウトでこの手法を使っている)。
+
+日本語で使う場合の注意点が2つある。
+
+- **日本語表示にはフォント設定が必要**。Noto Sansなどのフォントファイルを用意して`FontDefinitions`で指定しないと豆腐になる。
+- **IME周りに既知の問題がある**。0.33.3では、同一フレーム内で`Event::Ime(ImeEvent::Commit(..))`と`Event::Key { Key: Enter, .. }`が同時に処理される結果、変換確定のEnterがそのまま改行として入ってしまう。IMEイベントのあるフレームでEnterイベントを`retain()`で除外する回避策が知られている。2026年3月に修正PRがマージされ次のリリースに入る見込みとされていた(最新は0.36.1)。また、eguiのウィンドウで日本語入力を始めると他のアプリの変換候補表示が不安定になる、という報告もある。
+
+テキストを日常的に打ち込む種類のアプリを日本語で作るなら、この辺りを踏む前提で選ぶことになる。
 
 ### Iced
 Elm Architecture(State/Message/View/Update)を採用した宣言型GUI。Krakenの元Cryptowatchチームが開発。型安全なAPIとasync対応が特徴だが、ドキュメントに不足があるとの指摘がある([boringcactusのサーベイ](https://www.boringcactus.com/2025/04/13/2025-survey-of-rust-gui-libraries.html)参照)。
@@ -50,6 +63,8 @@ React/Solid/Svelteのいいとこ取りを謳うシグナルベースの状態�
 - [A 2025 Survey of Rust GUI Libraries - boringcactus](https://www.boringcactus.com/2025/04/13/2025-survey-of-rust-gui-libraries.html)
 - [The Rust GUI Landscape in 2026: Picking Your Framework - Wren Learns Rust](https://wrenlearnsrust.com/posts/2026-03-11-rust-gui-landscape-2026.html)
 - [egui - GitHub](https://github.com/emilk/egui)
+- [eguiで作るRustのGUI(基本的な使い方と日本語表示) - Zenn](https://zenn.dev/tris/articles/rust-egui-01)
+- [eguiで作ったテキストエディタに日本語入力の変換でEnterを押すと改行されてしまう!! - Zenn](https://zenn.dev/amanita/articles/57371b532ee5c6)
 - [Iced - GitHub](https://github.com/iced-rs/iced)
 - [Slint - GitHub](https://github.com/slint-ui/slint)
 - [Dioxus - GitHub](https://github.com/DioxusLabs/dioxus)
