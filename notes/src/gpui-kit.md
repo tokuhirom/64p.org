@@ -1,6 +1,6 @@
 ---
 created: 2026-09-04 18:06
-updated: 2026-09-04 18:08
+updated: 2026-09-05 14:53
 ---
 # GPUI Kit
 
@@ -36,7 +36,7 @@ gpui-kit             アプリケーションが依存する唯一のクレー�
 - Dockレイアウト: リサイズ可能なパネル、ドラッグ可能なタブ、ネストした分割、シリアライズ可能なTiles
 - Markdown/HTMLのネイティブレンダリング、チャート
 - WebView埋め込み([[gpui-wry]]は本リポジトリの`crates/webview`)
-- macOS/Windows/Linux対応
+- macOS/Windows/Linux対応。ただしメニューまわりは差が大きく、専用の作法がいる([[gpui-kit-cross-platform-menu|GPUI Kitでのクロスプラットフォームなメニュー]])
 
 ## GPUI本体の取り込み方
 

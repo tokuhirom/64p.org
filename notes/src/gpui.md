@@ -1,6 +1,6 @@
 ---
 created: 2026-08-09 15:29
-updated: 2026-09-05 09:30
+updated: 2026-09-05 14:53
 ---
 # GPUI
 
@@ -54,6 +54,8 @@ gpui-ceのフォーク作成者(iamnbutler)は、GPUIがZedのニーズに特化
 ## GPUI上に載るUIツールキット
 
 GPUI自体は`div`とtailwind風のスタイルAPIを提供する低レベルな層なので、ボタン・テーブル・ダイアログといった完成されたコンポーネントは別のクレートが担う。代表的なのが[[gpui-kit|GPUI Kit]](旧gpui-component、Longbridge製)。
+
+メニューについても同様で、`cx.set_menus()`が実際にOSのメニューバーを作るのはmacOSだけ。Windows/Linuxでは定義を保持するだけなので、描画はアプリ側かUIツールキット側の仕事になる(詳細は[[gpui-kit-cross-platform-menu|GPUI Kitでのクロスプラットフォームなメニュー]])。
 
 ## 出典
 
