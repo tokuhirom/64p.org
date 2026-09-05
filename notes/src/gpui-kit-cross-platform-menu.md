@@ -1,6 +1,6 @@
 ---
 created: 2026-09-05 14:53
-updated: 2026-09-05 14:53
+updated: 2026-09-05 15:09
 ---
 # GPUI Kitでのクロスプラットフォームなメニュー
 
@@ -189,7 +189,7 @@ NativeMenu::new()
 - GPUI Kitの`AppMenuBar`は`cx.get_menus()`ではなく`GlobalState`を見るので、**`cx.set_menus()`と`GlobalState::set_app_menus()`の両方を呼ぶ**。片方だけだとmacOSとそれ以外で内容がずれる。
 - `MenuItem::os_action(name, action, OsAction::Copy)`の`OsAction`(Cut/Copy/Paste/SelectAll/Undo/Redo)はmacOSのメニュー構築でしか参照されない。`MenuItem::SystemMenu(OsMenu { menu_type: SystemMenuType::Services })`も同様にmacOS専用で、`AppMenuBar`側の変換では`OwnedMenuItem::SystemMenu(_) => {}`と読み飛ばされる。
 - 逆にmacOSに無いものもある。`cx.set_dock_menu()`はmacOSではDockアイコンの右クリックメニュー、Windowsではタスクバーのジャンプリストになり、Linuxでは`// todo(linux)`で未実装。
-- Linuxにはグローバルメニュー(Unity/KDEのDBus appmenu)への対応が無い。GNOME/KDEのパネル側にメニューを出したいという要求は現状GPUIでは満たせず、ウィンドウ内に描くしかない。
+- Linuxにはグローバルメニュー(Unity/KDEのDBus appmenu)への対応が無い。GNOME/KDEのパネル側にメニューを出したいという要求は現状GPUIでは満たせず、ウィンドウ内に描くしかない。コミュニティフォークの[[gpui-ce]]でもここは埋まっていない。
 - ドキュメントサイトの例は`AppMenuBar::new(window, cx)`になっているが、実際のシグネチャは`AppMenuBar::new(cx: &mut App)`(0.6.0時点)。
 
 ## 出典
