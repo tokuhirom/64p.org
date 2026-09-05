@@ -1,6 +1,6 @@
 ---
 created: 2026-09-05 09:30
-updated: 2026-09-05 09:30
+updated: 2026-09-05 09:40
 ---
 # GPUIアプリのテスト
 
@@ -91,6 +91,10 @@ fn test_clicking_image_fallback_opens_image_url(cx: &mut TestAppContext) {
 - `simulate_random_delay().await` — ランダムな順序でタスクを差し込む。SEEDを変えて総当たりすることで、並行処理の順序依存バグを炙り出す
 
 注意点として、GPUIのテスト内で`smol::Timer::after(..)`を直接使わないこと。テストスケジューラが追跡していないため`run_until_parked()`がそれを待ってくれない。時間待ちは`cx.background_executor().timer(..)`経由にする。
+
+## 外側からのGUI自動操作との使い分け
+
+GPUI内蔵のテストはあくまでプロセス内のシミュレーションなので、「本当にウィンドウが出るか」「WMとの連携」「IME」「クリップボードの実挙動」までは見ていない。そこを検証したい場合はXvfb+xdotoolのような外側からの自動操作が必要になる（[[x11-gui-test-automation|LinuxでGUIアプリの操作を自動化してテストする]]）。ただしGPUIは全部自前で描画してAT-SPIツリーを出さないため、外側からは座標か画像でしか掴めない。
 
 ## 外部アプリから使うときの前提
 
