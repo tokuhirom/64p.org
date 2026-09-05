@@ -1,6 +1,6 @@
 ---
 created: 2026-08-09 15:29
-updated: 2026-09-04 18:06
+updated: 2026-09-05 09:30
 ---
 # GPUI
 
@@ -46,6 +46,10 @@ Zedメンテナーのmaxdeviantは[GitHub Discussion #9877](https://github.com/z
 2026年2月頃の[GitHub Discussion #30515「Please extract GPUI」](https://github.com/zed-industries/zed/discussions/30515)等では、GPUI本流の開発がZed外部ユーザーのニーズを優先しない方向にあり、Zed本体で直接使わないコード(トレイ対応やWayland周りのタッチイベント対応など)はアップストリームにマージされにくくなっていることが議論されている。同時期のHacker Newsのスレッドでも、Zed側の「2026年はビジネスに直結する仕事に集中する必要があり、Zedのユースケースに直接関係ないものは後回しにする」という趣旨の発言が引用されている。Zed開発者自身が、Zed本体で不要な機能追加はコミュニティフォークの[gpui-ce](https://github.com/gpui-ce/gpui-ce)(GPUI Community Edition)への提出を案内するようになっている。
 
 gpui-ceのフォーク作成者(iamnbutler)は、GPUIがZedのニーズに特化して作られているため、Zed Industriesがコミュニティ専用の作業に工数を割くのを正当化するのは難しい、という実務的な理由を説明している。gpui-ce自体は2025年12月に作られた当初こそメンテナー対応の滞りが指摘されていたが、2026年9月時点ではGitHub Stars約1,000、コミットもほぼ連日入っている。`Sync/zed 20260903`のように定期的にアップストリームを同期しつつ、Windowsでのwgpu surface対応やWaylandのアイコン対応といった「Zed本体には要らない機能」を取り込んでいる。READMEでは「今はほぼAPI互換だが、これから変えていく」と明言している。
+
+## テスト
+
+ヘッドレスのテストプラットフォームを内蔵しており、実GPU・実ウィンドウなしでクリックやキー入力をシミュレートしたテストが書ける。詳細は[[gpui-testing|GPUIアプリのテスト]]を参照。
 
 ## GPUI上に載るUIツールキット
 
