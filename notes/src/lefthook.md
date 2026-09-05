@@ -1,6 +1,6 @@
 ---
 created: 2026-08-09 14:17
-updated: 2026-08-09 14:17
+updated: 2026-09-05 09:53
 ---
 # lefthook
 
@@ -27,6 +27,7 @@ Git hooks(pre-commit等)を管理するツール。このリポジトリでもno
 
 - npmエコシステム限定の[Husky](https://typicode.github.io/husky/)と違い、言語非依存で使える。
 - `pre-commit`(Pythonのpre-commit framework)と比較されることが多いが、lefthookは設定がYAML1枚で完結し、並列実行やDocker実行など「速度」寄りの機能を前面に出しているのが特徴。
+- pre-commit互換を保ったままRustで再実装した[[prek]]も同じ領域のツール。prekは`repos:`で外部リポジトリのhookを引いてきて環境構築ごと任せるpre-commitのモデルを引き継いでいるのに対し、lefthookは実行するコマンドを自分で書く。
 
 ## このリポジトリでの使い方
 
