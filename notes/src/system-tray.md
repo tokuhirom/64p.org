@@ -1,6 +1,6 @@
 ---
 created: 2026-09-06 01:33
-updated: 2026-09-06 01:33
+updated: 2026-09-06 23:14
 ---
 # システムトレイ / インジケータ
 
@@ -47,7 +47,7 @@ flowchart TD
 ```
 
 - **XEmbed方式**(freedesktop の System Tray Protocol) — アプリ側がX11のウィンドウを作り、パネル側がそれを自分の中に埋め込む。X11の仕組みそのものなので**Waylandでは使えない**。
-- **StatusNotifierItem (SNI)** — KDE発。D-Busでアプリがオブジェクトを公開し、`StatusNotifierWatcher`に登録する。表示はパネル側の裁量(モデル/ビュー分離)。メニューは`com.canonical.dbusmenu`で渡す。D-Busベースなので**Waylandでも動く**。freedesktopのwikiに置かれているが、正式な標準として批准されたわけではない。
+- **[[status-notifier-item|StatusNotifierItem (SNI)]]** — KDE発。D-Busでアプリがオブジェクトを公開し、`StatusNotifierWatcher`に登録する。表示はパネル側の裁量(モデル/ビュー分離)。メニューは`com.canonical.dbusmenu`で渡す。D-Busベースなので**Waylandでも動く**。freedesktopのwikiに置かれているが、正式な標準として批准されたわけではない。
 
 GNOMEは3.26(2017年)で従来のトレイ表示を削除した。2024年に公式の「Status Icons」拡張(作者はFlorian Müllner)がGNOME Shell Extensionsパッケージに入ったが、**これはXEmbedのみ対応でAppIndicator/SNIには対応しない**。作者は「もっと良い標準が出てくれば対応するかもしれないが、AppIndicatorsはそれではない」と述べている。しかもこの拡張は既定で有効ではなく、ディストリが同梱するかどうかによる。SNIを使いたい場合はコミュニティ製の「AppIndicator and KStatusNotifierItem Support」拡張を入れることになる。
 
@@ -55,7 +55,7 @@ GNOMEは3.26(2017年)で従来のトレイ表示を削除した。2024年に公�
 
 ## Rustでの実装
 
-デファクトは[tray-icon](https://github.com/tauri-apps/tray-icon)([[tauri|Tauri]]チームが管理)。3プラットフォームのバックエンドはこうなっている(v0.24.2のソースで確認)。
+デファクトは[tray-icon](https://github.com/tauri-apps/tray-icon)([[tauri|Tauri]]チームが管理。メニュー側は同チームの[[muda]]が担当する)。3プラットフォームのバックエンドはこうなっている(v0.24.2のソースで確認)。
 
 | プラットフォーム | 使っているもの |
 | --- | --- |
@@ -67,7 +67,7 @@ Linux側の実装で目を引くのが**アイコンをメモリから渡せな�
 
 イベントループの制約も強い。Windowsではwin32のイベントループ、Linux/FreeBSDではGTKのイベントループが同一スレッドで回っている必要があり、macOSではメインスレッドでイベントループが回っている必要がある。自前のイベントループを持つGUIフレームワークに後付けする場合、ここが最初の障害になる。
 
-もう一つの選択肢が[ksni](https://github.com/iovxw/ksni)。KDE/freedesktopのStatusNotifierItem仕様を**純Rust + D-Busで実装**していて、GTKにもlibappindicatorにも依存しない。`org.kde.StatusNotifierItem`と`com.canonical.dbusmenu`を自前で喋る。tray-iconのLinuxバックエンドをksniに置き換える提案([Issue #11293](https://github.com/tauri-apps/tauri/issues/11293))は出ているが、2026年9月時点では採用されていない。
+もう一つの選択肢が[ksni](https://github.com/iovxw/ksni)。KDE/freedesktopの[[status-notifier-item|StatusNotifierItem仕様]]を**純Rust + D-Busで実装**していて、GTKにもlibappindicatorにも依存しない。`org.kde.StatusNotifierItem`と`com.canonical.dbusmenu`を自前で喋る。tray-iconのLinuxバックエンドをksniに置き換える提案([Issue #11293](https://github.com/tauri-apps/tauri/issues/11293))は出ているが、2026年9月時点では採用されていない。
 
 crates.ioのダウンロード数(2026-09時点)。
 

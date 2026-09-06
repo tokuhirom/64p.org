@@ -1,6 +1,6 @@
 ---
 created: 2026-09-05 14:53
-updated: 2026-09-05 15:09
+updated: 2026-09-06 23:14
 ---
 # GPUI Kitでのクロスプラットフォームなメニュー
 
@@ -32,7 +32,7 @@ fn set_menus(&self, menus: Vec<Menu>, _keymap: &Keymap) {
 }
 ```
 
-保持された内容は`cx.get_menus()`で読み出せる。つまり[[gpui|GPUI]]は「メニューの定義を持っておくストア」までは面倒を見るが、**macOS以外ではそれを描画する責任をアプリ側に投げている**。[[tauri]]のTAOのようにOSのメニューバー抽象を持っているわけではない。
+保持された内容は`cx.get_menus()`で読み出せる。つまり[[gpui|GPUI]]は「メニューの定義を持っておくストア」までは面倒を見るが、**macOS以外ではそれを描画する責任をアプリ側に投げている**。[[tauri]]のTAOや、そのメニュー部分を担う[[muda]]のようにOSのメニューバー抽象を持っているわけではない。
 
 Zed本体も同じ構造で、`crates/title_bar/src/application_menu.rs`の`ApplicationMenu`が`cx.get_menus()`を読んで自前で描いている。macOSではこれを作らない(`ZED_USE_CROSS_PLATFORM_MENU`環境変数を付けたときだけ描く)分岐が入っている。
 
