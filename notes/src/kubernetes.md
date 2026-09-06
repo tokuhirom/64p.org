@@ -1,6 +1,6 @@
 ---
 created: 2026-08-14 08:25
-updated: 2026-09-02 19:13
+updated: 2026-09-06 01:15
 ---
 # Kubernetes
 
@@ -24,6 +24,7 @@ updated: 2026-09-02 19:13
 - [[cni|CNI]] — Podネットワークを実装するプラグインの標準インターフェース。ストレージにおけるCSIのネットワーク版にあたる
 - [[etcd]] — クラスタの全状態を保存するプライマリデータストア
 - [[kubeadm]] — クラスタを手作業で組む際の公式ブートストラップツール。kind・Cluster APIなど上位ツールの土台でもある
+- [[kubernetes-rootless-mode|rootless mode (KubeletInUserNamespace)]] — kubelet以下のノードスタック全体をuser namespace内の非rootユーザーで動かす仕組み。v1.37でベータ昇格
 
 ## 事例
 

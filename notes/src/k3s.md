@@ -1,6 +1,6 @@
 ---
 created: 2026-08-14 08:20
-updated: 2026-09-02 19:13
+updated: 2026-09-06 01:15
 ---
 # k3s
 
@@ -35,6 +35,10 @@ Rancher Labs（現SUSE）が開発した軽量[[kubernetes|Kubernetes]]ディス
 ## 実験: [[k3s-experiment|k3s実験]]
 
 Dockerコンテナ上でk3sを実際に動かし、単一プロセスであることの確認・sqliteデータストアの確認・nginxのhello worldをTraefik Ingress経由で疎通させるところまで試した記録。
+
+## rootlessモード
+
+k3sは[[kubernetes-rootless-mode|rootlessモード]]をサポートしている。kind・minikube・現行のUsernetesがrootless Dockerのような外部ランタイムに依存するのに対し、k3sは外部ランタイムなしでホスト上に直接rootlessなクラスタを立てられるのが違い。
 
 ## [[kubernetes]]の中での位置づけ
 

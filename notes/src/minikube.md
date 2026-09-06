@@ -1,6 +1,6 @@
 ---
 created: 2026-08-14 08:20
-updated: 2026-08-14 08:25
+updated: 2026-09-06 01:15
 ---
 # minikube
 
@@ -13,6 +13,7 @@ updated: 2026-08-14 08:25
 - **Kubernetesバージョン選択** — 最新版に加えて6つ前までのマイナーバージョンを指定でき、特定バージョンでの検証がしやすい
 - **マルチノード** — `minikube start --nodes 3` のように複数ノードのクラスタも作れる
 - クロスプラットフォーム（Linux / macOS / Windows）、複数コンテナランタイム（containerd / CRI-O / docker）、GPU（NVIDIA / AMD / Apple）対応
+- rootless Docker / rootless [[podman|Podman]] の上でも起動でき、[[kubernetes-rootless-mode|rootless Kubernetes]]を手軽に試せる
 
 ## kind・k3d との比較
 

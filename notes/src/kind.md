@@ -1,6 +1,6 @@
 ---
 created: 2026-08-14 08:24
-updated: 2026-08-14 08:33
+updated: 2026-09-06 01:15
 ---
 # kind (Kubernetes in Docker)
 
@@ -12,6 +12,7 @@ Dockerコンテナを「ノード」として[[kubernetes|Kubernetes]]クラス�
 - このnode imageのコンテナを1ノード1コンテナで起動し、**[[kubeadm|kubeadm]]**で各ノードをブートストラップしてクラスタを組む
 - VMを使わないため起動が速く、マルチノードクラスタ（コントロールプレーン複数のHA構成も含む）を気軽に作れる
 - Kubernetesのリリース前バイナリ（CI artifacts）からnode imageをビルドする機能があり、「まだリリースされていないKubernetes」のテストができる
+- rootless Docker / rootless [[podman|Podman]] / rootless nerdctl の上でも動くので、[[kubernetes-rootless-mode|rootless Kubernetes]]を試す一番手軽な手段でもある
 
 ## [[kubernetes]]の中での位置づけ
 

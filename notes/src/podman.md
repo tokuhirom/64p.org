@@ -1,6 +1,6 @@
 ---
 created: 2026-08-10 18:36
-updated: 2026-08-20 00:23
+updated: 2026-09-06 01:15
 ---
 # Podman
 
@@ -13,6 +13,8 @@ Docker Engineのような常駐デーモンを持たず、各コマンドが独�
 ## rootless対応
 
 root権限なしで一般ユーザーとしてコンテナを起動できる。Dockerも後付けでrootlessモードを持つが、Podmanは標準でこの動作をサポートする。ネットワーク接続はユーザー空間ツール[[pasta|pasta]](Podman 5.3以降のデフォルト)が担う。
+
+rootless Podmanが用意するuser namespaceは、[[kubernetes-rootless-mode|Kubernetesのrootless mode]]でノードコンポーネント一式を非rootで動かす際の土台としても使われる。
 
 ## Pod単位の管理
 
