@@ -1,6 +1,6 @@
 ---
 created: 2026-09-01 23:23
-updated: 2026-09-01 23:23
+updated: 2026-09-06 01:33
 ---
 # Quickshell
 
@@ -10,7 +10,7 @@ QtQuick（QML）でデスクトップシェルを組み立てるためのツー�
 
 - **QMLホスト** — UI・振る舞い・システム連携をすべてQMLで宣言的に書く。個別のツールを設定ファイルで寄せ集めるのではなく、1つの言語・1つのプロセスの中で完結する。
 - **ホットリロード** — QMLを保存すると即座に反映され、シェルを組む試行錯誤のサイクルが速い。
-- **システム連携の組み込み** — NetworkManagerとのD-Bus通信、PipeWire（オーディオミキサー）、StatusNotifierItemによるシステムトレイ、`ext-session-lock-v1`（ロック画面）、`ext-idle-notify-v1`（アイドルタイマー）といったWaylandプロトコルを直接扱えるコンポーネント群が用意されている。[[hyprland|Hyprland]]やi3のIPCとの連携も含む。
+- **システム連携の組み込み** — NetworkManagerとのD-Bus通信、PipeWire（オーディオミキサー）、[[system-tray|StatusNotifierItem]]によるシステムトレイ、`ext-session-lock-v1`（ロック画面）、`ext-idle-notify-v1`（アイドルタイマー）といったWaylandプロトコルを直接扱えるコンポーネント群が用意されている。[[hyprland|Hyprland]]やi3のIPCとの連携も含む。
 
 ## 位置づけ
 

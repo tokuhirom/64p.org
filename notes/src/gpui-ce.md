@@ -1,6 +1,6 @@
 ---
 created: 2026-09-05 15:09
-updated: 2026-09-05 15:30
+updated: 2026-09-06 01:33
 ---
 # GPUI Community Edition (gpui-ce)
 
@@ -158,7 +158,7 @@ Rustではパッケージが違えば同じ`struct`でも別の型なので、�
 
 ## 誤解しやすい点
 
-- **システムトレイ/ステータスバー常駐はgpui-ceにも無い。** `NSStatusBar`・`Shell_NotifyIcon`・`StatusNotifierItem`のいずれの実装も、upstream・gpui-ceどちらのツリーにも見当たらない(2026年9月初旬時点)。「Zed本体に要らない機能はgpui-ceへ」という案内から、トレイ対応がgpui-ceにあると思われがちだが、そこは埋まっていない。この誤解の出所はおそらく前述のDiscussion #1856で、そこでは「Zedのスコープ外として弾かれる機能」の例としてカスタムシェーダ・トレイ対応・Waylandのタッチイベント変換が挙げられている。あくまで要望として挙がっただけで、実装されたわけではない。同じくメニュー周りも、macOS以外でOSのメニューバーを出す手段は無い([[gpui-kit-cross-platform-menu|GPUI Kitでのクロスプラットフォームなメニュー]])。
+- **[[system-tray|システムトレイ/ステータスバー常駐]]はgpui-ceにも無い。** `NSStatusBar`・`Shell_NotifyIcon`・`StatusNotifierItem`のいずれの実装も、upstream・gpui-ceどちらのツリーにも見当たらない(2026年9月初旬時点)。「Zed本体に要らない機能はgpui-ceへ」という案内から、トレイ対応がgpui-ceにあると思われがちだが、そこは埋まっていない。この誤解の出所はおそらく前述のDiscussion #1856で、そこでは「Zedのスコープ外として弾かれる機能」の例としてカスタムシェーダ・トレイ対応・Waylandのタッチイベント変換が挙げられている。あくまで要望として挙がっただけで、実装されたわけではない。同じくメニュー周りも、macOS以外でOSのメニューバーを出す手段は無い([[gpui-kit-cross-platform-menu|GPUI Kitでのクロスプラットフォームなメニュー]])。
 - Waylandの`input_region`・`exclusive_zone`・layer shellは**upstreamにも入っている**。gpui-ce側のPRとして議論されたものの一部は本流にも取り込まれている。
 - upstreamも`spring.rs`や`elements/surface.rs`は持っている。差分は「surfaceの入力元にGPUテクスチャがあるか」といった中身の側にある。
 

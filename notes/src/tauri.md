@@ -1,6 +1,6 @@
 ---
 created: 2026-08-09 16:14
-updated: 2026-08-14 13:58
+updated: 2026-09-06 01:33
 ---
 # Tauri
 
@@ -16,7 +16,7 @@ Rustバックエンドとネイティブ(OS標準)WebViewを組み合わせて�
 ## アーキテクチャ
 
 - **[[wry|WRY]]**: プラットフォームごとのWebView(macOS/iOS: WKWebView、Windows: WebView2、Linux: WebKitGTK)を抽象化するライブラリ
-- **TAO**: `winit`をフォークしたウィンドウ管理ライブラリ(メニューバー・システムトレイ機能を追加)
+- **TAO**: `winit`をフォークしたウィンドウ管理ライブラリ(メニューバー・[[system-tray|システムトレイ]]機能を追加)
 - Rustコアと WebView間はメッセージパッシングで通信する設計
 
 ## セキュリティモデル
