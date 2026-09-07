@@ -1,6 +1,6 @@
 ---
 created: 2026-09-07 23:30
-updated: 2026-09-07 23:30
+updated: 2026-09-07 23:35
 ---
 # mise
 
@@ -55,9 +55,9 @@ run = "echo hello from mise"
 
 どちらも入れず`mise exec` / `mise run`で明示的に包む運用も可能。
 
-## asdfとの違い
+## [[asdf]]との違い
 
-[asdf](https://asdf-vm.com/)の後発互換として始まった経緯があり、比較されることが多い。
+[[asdf]]の後発互換として始まった経緯があり、比較されることが多い。
 
 - **解決のタイミング** — asdfは呼び出しのたびにshimを通してバージョンを解決する。miseはプロンプトやディレクトリ移動のタイミングでPATHを更新し、以降は実体パスを直接叩く。この差が体感速度に効く。
 - **Rust実装** — asdfのshell実装に対しmiseはRustで書き直されている。
@@ -68,8 +68,8 @@ run = "echo hello from mise"
 
 miseは「どこからバイナリを取ってくるか」をバックエンドとして抽象化している。asdfやvfoxのプラグインも使えるが、それらのCLI自体は使わずRustで再実装している。
 
-- **署名付きマニフェスト**: packslip
-- **キュレーションされたレシピ**: aqua（aquaレジストリのエントリを使う。aqua CLIは不要）
+- **署名付きマニフェスト**: [[packslip]]
+- **キュレーションされたレシピ**: [[aqua]]（aquaレジストリのエントリを使う。aqua CLIは不要）
 - **リリースアセット**: github / gitlab / forgejo
 - **直接ダウンロード**: http / s3
 - **言語のパッケージ**: cargo / go / npm / pipx / gem / dotnet / spm
@@ -79,7 +79,7 @@ miseは「どこからバイナリを取ってくるか」をバックエンド�
 
 `node`や`python`のような一般的なツールは[レジストリ](https://mise.jdx.dev/registry.html)にショートハンドが登録されていて、`mise use node@24`のように書けばおすすめの取得元が選ばれる。レジストリに無いツールもバックエンドを明示すれば使える。
 
-### packslip
+### [[packslip]]
 
 比較的新しい仕組みで、ツールのメンテナが署名付きのリリースマニフェストを公開し、mise側がそれを検証してインストールする。
 
@@ -87,7 +87,7 @@ miseは「どこからバイナリを取ってくるか」をバックエンド�
 mise use packslip:github.com/jdx/hk
 ```
 
-miseは公開者の署名・要求したプロジェクトとバージョン・選ばれたダウンロードのdigestとサイズを検証してから展開する。署名は鍵ベース（minisign形式）とkeyless（OIDC証明書）の両方に対応し、リリースを独立に承認するstamperサービスとも連携できる。Packslip自体を別途インストールする必要はない。
+miseは公開者の署名・要求したプロジェクトとバージョン・選ばれたダウンロードのdigestとサイズを検証してから展開する。署名は鍵ベース（minisign形式）とkeyless（OIDC証明書）の両方に対応し、リリースを独立に承認するstamperサービスとも連携できる。Packslip自体を別途インストールする必要はない。詳細は[[packslip]]を参照。
 
 ## mise.lock
 
@@ -139,6 +139,10 @@ echo "hello from a file task"
 マシンそのもののセットアップを宣言する領域。システムパッケージ（apk/apt/AUR/dnf/pacman/brew/mas）、Linuxのユーザーとグループ、systemd/launchdのサービス、Docker Composeのプロジェクト、リポジトリのclone、dotfilesなどを`mise.toml`に書いて`mise bootstrap`で適用する。
 
 dotfilesについてはsymlink・生成（テンプレート）に加えて、2026.9.2で追加された自動双方向同期のtrackモードがある。詳細は[[mise-dotfiles]]を参照。
+
+## [[cli-version-managers]]の中での位置づけ
+
+[[asdf]]・[[aqua]]と同じ「プロジェクトごとにツールのバージョンを切り替える」領域から出発しつつ、環境変数・タスク・マシンのbootstrapまで広げて「開発環境のフロントエンド」を名乗っているのがmise。バージョン解決はshimではなくPATH書き換えが主で、ツール定義はプラグイン（asdf/vfox）・レジストリ（[[aqua]]）・publisher署名（[[packslip]]）のいずれも取り込めるバックエンド方式になっている。
 
 ## このリポジトリでの使い方
 
