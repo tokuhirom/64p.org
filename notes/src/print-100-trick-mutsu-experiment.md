@@ -1,6 +1,6 @@
 ---
 created: 2026-08-15 10:04
-updated: 2026-08-15 10:04
+updated: 2026-09-07 23:30
 ---
 # mutsuで「ループなしで1〜100を印字」を動かす実験
 
@@ -14,7 +14,7 @@ Gaucheの多倍長有理数演算で成立するこのトリックが、Rakuの�
 
 ## 環境
 
-- mutsu 0.21.0（miseでグローバルインストール: `~/.local/share/mise/installs/github-tokuhirom-mutsu/0.21.0/bin/mutsu`）
+- mutsu 0.21.0（[[mise]]でグローバルインストール: `~/.local/share/mise/installs/github-tokuhirom-mutsu/0.21.0/bin/mutsu`）
 
 ## 試行錯誤
 

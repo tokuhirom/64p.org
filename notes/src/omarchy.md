@@ -1,6 +1,6 @@
 ---
 created: 2026-08-18 13:29
-updated: 2026-09-07 23:21
+updated: 2026-09-07 23:30
 ---
 # Omarchy
 
@@ -41,7 +41,7 @@ Quattroの方向性を最も特徴づけているのがこの点で、AIコー�
 
 2026年8月21日、DHHがOmarchyとその周辺エコシステムを支えるための非営利団体Omacom Foundationを設立した。Founding Patron 8名（Tobi Lütke、Patrick Collison、Michael Dell、Jack Dorsey、Matthew Prince、Brendan Iribe、Jason Fried、DHH）による$8Mでスタートし、8月24日にDrew Houston（Dropbox）とPeter Steinbergerの各$1M追加で$10M、8月31日には1Password・37signalsのコーポレートパトロン参加などを含め14件のパトロン契約・計$12.6Mに達している。
 
-特徴的なのは、資金がOmarchy本体だけでなく上流プロジェクトへ流れている点で、[[hyprland|Hyprland]]の独占スポンサー、[[quickshell|Quickshell]]のスポンサー、[mise](https://mise.jdx.dev/)のプレミアムスポンサーに就いている。個人のdotfiles的プロジェクトから、Linuxデスクトップのエコシステムに資金を配分する組織へと性質が変わりつつある。
+特徴的なのは、資金がOmarchy本体だけでなく上流プロジェクトへ流れている点で、[[hyprland|Hyprland]]の独占スポンサー、[[quickshell|Quickshell]]のスポンサー、[[mise]]のプレミアムスポンサーに就いている。個人のdotfiles的プロジェクトから、Linuxデスクトップのエコシステムに資金を配分する組織へと性質が変わりつつある。
 
 このほか、Core Teamの設立、プラグインコンテスト、Rangersプログラム、AIRレジデンシー、世界各地でのミートアップなど、コミュニティ運営の枠組みが8月中に一斉に立ち上がっている。Quattroリリース後1週間で10万ダウンロードを記録した。
 

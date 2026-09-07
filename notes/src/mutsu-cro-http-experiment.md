@@ -1,6 +1,6 @@
 ---
 created: 2026-08-13 15:04
-updated: 2026-08-13 15:04
+updated: 2026-09-07 23:30
 ---
 # mutsuでCro::HTTPのhello worldを動かす実験
 
@@ -14,7 +14,7 @@ mutsu 0.21.0のCro::HTTPサポートで、典型的なCroのサンプルコー�
 
 ## 環境
 
-- mutsu 0.21.0（miseでグローバルインストール: `~/.local/share/mise/installs/github-tokuhirom-mutsu/0.21.0/bin/mutsu`）
+- mutsu 0.21.0（[[mise]]でグローバルインストール: `~/.local/share/mise/installs/github-tokuhirom-mutsu/0.21.0/bin/mutsu`）
 - Linux (Pop!_OS, kernel 6.18)
 
 ## コード

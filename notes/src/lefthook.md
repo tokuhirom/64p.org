@@ -1,6 +1,6 @@
 ---
 created: 2026-08-09 14:17
-updated: 2026-09-05 09:53
+updated: 2026-09-07 23:30
 ---
 # lefthook
 
@@ -31,7 +31,7 @@ Git hooks(pre-commit等)を管理するツール。このリポジトリでもno
 
 ## このリポジトリでの使い方
 
-`mise.toml`でバージョン固定して導入している。
+[[mise]]の`mise.toml`でバージョン固定して導入している。
 
 ```toml
 [tools]
