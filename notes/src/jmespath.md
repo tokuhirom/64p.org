@@ -1,6 +1,6 @@
 ---
 created: 2026-08-31 19:13
-updated: 2026-08-31 19:20
+updated: 2026-09-08 15:07
 ---
 # JMESPath
 
@@ -21,7 +21,7 @@ JMESPathには公開されたABNF文法による言語仕様と、実装が満�
 - AWS CLIの`--query`オプション
 - boto3のpaginatorの`.search()`
 - Azure CLIの`--query`オプション
-- Ansibleの`json_query`フィルタ
+- [[ansible|Ansible]]の`json_query`フィルタ
 - n8nなどのワークフローツール
 
 ```sh
