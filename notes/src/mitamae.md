@@ -1,16 +1,16 @@
 ---
 created: 2026-08-19 15:26
-updated: 2026-09-08 15:07
+updated: 2026-09-08 15:08
 ---
 # mitamae
 
-[[itamae|Itamae]]の代替実装(alternative implementation)。mrubyで駆動する、高速・軽量・単一バイナリの構成管理ツール。MITライセンス。
+[[itamae|Itamae]]の代替実装(alternative implementation)。[[mruby]]で駆動する、高速・軽量・単一バイナリの構成管理ツール。MITライセンス。
 
 ## 3つの設計目標
 
 READMEが挙げる特徴はそのまま設計上の割り切りになっている。
 
-- **Fast** — ローカル実行に最適化されている。他ツールが1操作ごとにシェルコマンドやSSH接続を経由するのに対し、mitamaeは可能な限りmrubyライブラリのC関数で処理する。
+- **Fast** — ローカル実行に最適化されている。他ツールが1操作ごとにシェルコマンドやSSH接続を経由するのに対し、mitamaeは可能な限り[[mruby]]ライブラリのC関数で処理する。
 - **Simple** — Chef Server、Berkshelf、Data Bags、RubyGemsのいずれも不要。coreは本質的な機能だけを提供する。
 - **Single Binary** — バイナリ1つを転送すれば動く。MRI(標準Ruby処理系)のインストールも不要。
 
@@ -54,7 +54,7 @@ mitamae独自の機能(いずれ本家へポートしたい、とREADMEに書か
 
 ## mrubyであることの制約
 
-DSLの土台がMRIではなくmrubyなので、Chefのレシピをそのまま持ってくると詰まる箇所がある。READMEの移行表から主なもの。
+DSLの土台がMRIではなく[[mruby]]なので、Chefのレシピをそのまま持ってくると詰まる箇所がある。READMEの移行表から主なもの。
 
 | Chef | mitamae |
 |:---|:---|
