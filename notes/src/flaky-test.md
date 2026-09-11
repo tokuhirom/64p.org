@@ -1,6 +1,6 @@
 ---
 created: 2026-08-13 21:24
-updated: 2026-08-13 21:24
+updated: 2026-09-11 05:53
 ---
 # flaky test
 
@@ -26,6 +26,8 @@ updated: 2026-08-13 21:24
 ## 関連
 
 [[playwright]]の自動待機(auto-waiting)機能やアサーションの自動リトライは、タイミング依存によるflakinessを減らすための対策の一つ。
+
+Goの[[go-synctest|testing/synctest]]は別方向からの対策で、テストを仮想時計の「バブル」に入れ、`synctest.Wait()`で「他の全goroutineがブロックした」時点を正確に捉えられるようにする。「たぶんこれくらい待てば終わっているだろう」という`time.Sleep`をテストから追い出すのが狙い。
 
 #testing
 
