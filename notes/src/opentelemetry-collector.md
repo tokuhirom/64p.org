@@ -1,6 +1,6 @@
 ---
 created: 2026-08-28 12:46
-updated: 2026-08-28 12:46
+updated: 2026-09-19 21:49
 ---
 # OpenTelemetry Collector
 
@@ -90,6 +90,10 @@ receivers:
 これで`output_path`にGoのソースと実行可能バイナリが生成される。ocb自体は「コンポーネントのマニフェストを、動くCollectorバイナリに変換する」だけの小さなツールで、コンポーネントは`gomod`でGoモジュールとして指定する。
 
 この仕組みを使って作られたローカル開発用ディストリビューションの例が[[otel-desktop-viewer]]。DuckDBへ書き込む独自exporterを組み込んでいる。
+
+## セマンティック規約との関係
+
+Collector自身の内部テレメトリ(`otelcol_`プレフィックスのメトリクス群)は、OpenTelemetryのセマンティック規約に従っていない点がいくつか指摘されており、規約側へ寄せる議論が進んでいる。また、コンポーネントの`metadata.yaml`から内部テレメトリのコードとドキュメントを生成する`cmd/mdatagen`を、セマンティック規約ツールである[[otel-weaver|OpenTelemetry Weaver]]の上に載せ替えるRFCも出ている。
 
 ## 出典
 

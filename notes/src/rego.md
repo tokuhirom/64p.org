@@ -1,6 +1,6 @@
 ---
 created: 2026-08-19 19:11
-updated: 2026-09-02 19:13
+updated: 2026-09-19 21:49
 ---
 # Rego(ポリシー言語)
 
@@ -30,7 +30,7 @@ allow if {
 
 ## 用途の広さ
 
-Kubernetes admission control、Terraformプラン検証、APIゲートウェイでの認可、インフラのコンプライアンスチェックなど、アプリケーション認可に留まらない汎用ポリシーエンジンとして使われる。ConftestはRego/OPAポリシーをOSSの設定ファイル(JSON/YAML/HCL等)に適用するCLIツール。
+Kubernetes admission control、Terraformプラン検証、APIゲートウェイでの認可、インフラのコンプライアンスチェックなど、アプリケーション認可に留まらない汎用ポリシーエンジンとして使われる。ConftestはRego/OPAポリシーをOSSの設定ファイル(JSON/YAML/HCL等)に適用するCLIツール。[[otel-weaver|OpenTelemetry Weaver]]も、セマンティック規約レジストリや実際に流れているテレメトリに対する組織固有のルールをRegoで書かせる。
 
 ## [[cedar|Cedar]]との違い
 
