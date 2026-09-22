@@ -1,6 +1,6 @@
 ---
 created: 2026-08-10 15:21
-updated: 2026-09-22 00:15
+updated: 2026-09-22 01:06
 ---
 # herdr-browser
 
@@ -17,7 +17,7 @@ Herdr開発元(herdrdev)のX投稿でも「みんなHerdrにブラウザが欲�
 
 ## [[herdr]]の中での位置づけ
 
-herdr本体はターミナルマルチプレクサとしてエージェントのPTYを束ねる役割に徹しており、ブラウザ操作の可視化はherdr-browserというプラグインとして別途提供されている。ペインとして開くTUIはマニフェストの`[[panes]]`で宣言する仕組みで、詳細は[[herdr-plugins|herdrのプラグイン機構]]を参照。
+herdr本体はターミナルマルチプレクサとしてエージェントのPTYを束ねる役割に徹しており、ブラウザ操作の可視化はherdr-browserというプラグインとして別途提供されている。ペインとして開くTUIはマニフェストの`[[panes]]`で宣言する仕組みで、詳細は[[herdr-plugins|herdrのプラグイン機構]]を参照。ペインに画像を流し込む部分は[[herdr-socket-api|ソケットAPI]]の`pane.graphics.*`が担っている。
 
 #claude-code #tmux
 
