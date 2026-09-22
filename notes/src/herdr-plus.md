@@ -1,6 +1,6 @@
 ---
 created: 2026-09-16 04:51
-updated: 2026-09-16 04:51
+updated: 2026-09-22 00:15
 ---
 # herdr plus
 
@@ -36,7 +36,7 @@ command = "lazygit"
 - `/`を含まない名前には`[worktree]`の`branch_prefix`が付く
 - `/`を含む名前はそのまま使われる
 
-さらに`worktree.created` / `worktree.opened`イベントにフックして、worktreeが作られた/開かれた瞬間にプロジェクトのタブレイアウトを流し込む設定もある(レイアウトごとにon/off可)。設定は`worktrees/`サブディレクトリ。
+さらに[[herdr-plugins|プラグイン機構]]の`[[events]]`で`worktree.created` / `worktree.opened`にフックして、worktreeが作られた/開かれた瞬間にプロジェクトのタブレイアウトを流し込む設定もある(レイアウトごとにon/off可)。設定は`worktrees/`サブディレクトリ。
 
 ## Quick Actions — パラメータ付きのfuzzyランチャ
 
@@ -64,7 +64,7 @@ value = "herdr-plus"
 
 ## [[herdr]]の中での位置づけ
 
-herdr本体はマルチプレクサとしての役割に絞り、周辺機能はプラグインに出す設計になっている。ペイン内にブラウザを出す[[herdr-browser]]と同じく、herdr plusもその一つ。
+herdr本体はマルチプレクサとしての役割に絞り、周辺機能は[[herdr-plugins|プラグイン機構]]に出す設計になっている。ペイン内にブラウザを出す[[herdr-browser]]と同じく、herdr plusもその一つ。
 
 特に効くのがworktree連携で、[[orca|Orca]]との比較で「herdrはセッション永続化が主眼、Orcaはタスクごとのworktree自動生成による環境隔離が主眼」と整理される差分を、本体の機能追加ではなくプラグイン側から埋めにきている格好になる。エージェントを並列で走らせると各タスクを別worktreeに隔離したい要求は必ず出るので、そこがプラグインで足せる。
 
