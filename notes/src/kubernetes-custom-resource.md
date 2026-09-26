@@ -1,6 +1,6 @@
 ---
 created: 2026-09-26 07:54
-updated: 2026-09-26 07:54
+updated: 2026-09-26 08:01
 ---
 # Kubernetesのカスタムリソース（CRD）
 
@@ -8,8 +8,11 @@ CustomResourceDefinition (CRD) を登録すると、[[kubernetes|Kubernetes]] AP
 
 ## CRDとコントローラは別物
 
+用語の関係は[[kubernetes-extension-terms]]に整理。
+
+
 - CRD単体はただのデータ置き場。オブジェクトを作っても何も起きない。
-- 現実に何かを起こすのはコントローラ（Operator）で、CRを watch して「望ましい状態（spec）」に「実際の状態」を近づけるreconcileループを回し、結果を `status` に書き戻す。
+- 現実に何かを起こすのは[[kubernetes-controller|コントローラ]]（[[kubernetes-operator|Operator]]）で、CRを watch して「望ましい状態（spec）」に「実際の状態」を近づけるreconcileループを回し、結果を `status` に書き戻す。
 - なので「何でも登録できるか」の答えは、データとしてはJSONで書けるものなら大体何でも可。何を起こせるかはコントローラ次第で、クラスタ外の物理世界でも構わない（後述のピザ）。
 
 ## 定義の例（公式ドキュメントのCronTab）
@@ -83,6 +86,10 @@ spec:
 - ピザの例が面白いのは、reconcileモデルの汎用性を端的に示している点。「外部APIの向こうにある状態」を宣言的に管理するという意味では、[[cluster-api|Cluster API]]がクラスタそのものをリソース化しているのと同じ発想。
 - 逆に言うと、CRDは「kubectlで扱えるスキーマ付きKVS」としても使えてしまうが、etcdのサイズ上限や書き込み負荷を考えると、汎用DB代わりにするものではない。
 - CRDやOperatorを試すなら[[kind]]で使い捨てクラスタを立てるのが手軽。
+
+## [[kubernetes-extension-terms]]の中での位置づけ
+
+「型を追加する」部分だけを担う。単体ではデータ置き場で、動作はコントローラが担う。
 
 ## 出典
 

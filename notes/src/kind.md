@@ -1,6 +1,6 @@
 ---
 created: 2026-08-14 08:24
-updated: 2026-09-26 07:54
+updated: 2026-09-26 08:01
 ---
 # kind (Kubernetes in Docker)
 
@@ -16,7 +16,7 @@ Dockerコンテナを「ノード」として[[kubernetes|Kubernetes]]クラス�
 
 ## [[kubernetes]]の中での位置づけ
 
-ローカルクラスタツールとしては[[minikube]]・k3d（[[k3s]] in Docker）と並ぶ選択肢。upstream Kubernetesを忠実に動かすこと・使い捨てのクラスタを高速に作れることに強みがあり、オペレーターや[[kubernetes-custom-resource|CRD]]のテスト、CIでのE2Eテストに向く。一方でminikubeのようなアドオン機構やドライバーの多様性はない。
+ローカルクラスタツールとしては[[minikube]]・k3d（[[k3s]] in Docker）と並ぶ選択肢。upstream Kubernetesを忠実に動かすこと・使い捨てのクラスタを高速に作れることに強みがあり、[[kubernetes-operator|オペレーター]]や[[kubernetes-custom-resource|CRD]]のテスト、CIでのE2Eテストに向く。一方でminikubeのようなアドオン機構やドライバーの多様性はない。
 
 ## 出典
 

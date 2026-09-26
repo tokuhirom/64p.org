@@ -1,6 +1,6 @@
 ---
 created: 2026-08-14 08:09
-updated: 2026-08-14 08:21
+updated: 2026-09-26 08:01
 ---
 # Cloud Controller Manager (CCM)
 
@@ -10,7 +10,7 @@ updated: 2026-08-14 08:21
 
 CCMが登場する以前は、各クラウドベンダー向けの連携コードがKubernetes本体（kube-controller-manager）に直接組み込まれていた（in-tree cloud provider）。これをプラグイン機構として切り出すことで、クラウドベンダーがKubernetes本体のリリースサイクルとは独立した速度で自社向け機能をリリースできるようになった。
 
-## 主に持つコントローラ
+## 主に持つ[[kubernetes-controller|コントローラ]]
 
 - **Node Controller** — クラウド上に新しいサーバーが作られたことを検知し、対応するKubernetesのNodeオブジェクトを更新する。クラウドAPIから得た一意な識別子や、リージョン・利用可能なCPU/メモリなどのラベル・アノテーションを付与する
 - **Route Controller** — ノード間通信のため、クラウドプロバイダー側のネットワークルートを設定する

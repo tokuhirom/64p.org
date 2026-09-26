@@ -1,6 +1,6 @@
 ---
 created: 2026-08-14 08:09
-updated: 2026-09-02 19:13
+updated: 2026-09-26 08:01
 ---
 # Cluster API (CAPI)
 
@@ -8,7 +8,7 @@ Kubernetesクラスタ自体のライフサイクル（作成・アップグレ�
 
 ## 発想
 
-Kubernetesがコンテナ（Pod）を宣言的なYAMLとコントローラのreconcileループで管理するのと同じパターンを、「クラスタそのもの」の管理に適用したもの。Kubernetesのバージョン、ノード数、マシンタイプ、ネットワーキングなどの「望ましい状態」をYAMLで定義し、CAPIのコントローラが実環境をその定義に近づけ続ける（reconcile）。
+Kubernetesがコンテナ（Pod）を宣言的なYAMLと[[kubernetes-controller|コントローラのreconcileループ]]で管理するのと同じパターンを、「クラスタそのもの」の管理に適用したもの。Kubernetesのバージョン、ノード数、マシンタイプ、ネットワーキングなどの「望ましい状態」をYAMLで定義し、CAPIのコントローラが実環境をその定義に近づけ続ける（reconcile）。
 
 ## management clusterというアーキテクチャ
 

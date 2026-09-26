@@ -1,6 +1,6 @@
 ---
 created: 2026-09-26 05:57
-updated: 2026-09-26 05:57
+updated: 2026-09-26 08:01
 ---
 # Semaphore UI（Ansible/Terraform向けWeb UI）
 
@@ -55,7 +55,7 @@ updated: 2026-09-26 05:57
 
 ## AWXとの比較
 
-同じ「AnsibleにWeb UIを被せる」系のOSSとして[[ansible|AWX]]（Ansible Automation Platformのupstream）がある。AWXはKubernetes上にOperatorで載せる前提の大掛かりな構成なのに対し、Semaphoreは単一のGoバイナリ（+ DB、SQLiteなら外部DBすら不要）で動く。小規模チームで「Playbookを誰でも安全に叩けるようにしたい」「定期実行したい」程度ならSemaphoreの方が導入コストが低い。一方でAnsible専用ではなくTerraform等も同列に扱う点は方向性の違い。（AWXのデプロイ方式は一般的な知識によるもので、このノート作成時に裏取りはしていない）
+同じ「AnsibleにWeb UIを被せる」系のOSSとして[[ansible|AWX]]（Ansible Automation Platformのupstream）がある。AWXはKubernetes上に[[kubernetes-operator|Operator]]で載せる前提の大掛かりな構成なのに対し、Semaphoreは単一のGoバイナリ（+ DB、SQLiteなら外部DBすら不要）で動く。小規模チームで「Playbookを誰でも安全に叩けるようにしたい」「定期実行したい」程度ならSemaphoreの方が導入コストが低い。一方でAnsible専用ではなくTerraform等も同列に扱う点は方向性の違い。（AWXのデプロイ方式は一般的な知識によるもので、このノート作成時に裏取りはしていない）
 
 #ansible #infrastructure-as-code #go
 

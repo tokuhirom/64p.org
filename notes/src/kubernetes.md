@@ -1,6 +1,6 @@
 ---
 created: 2026-08-14 08:25
-updated: 2026-09-26 07:54
+updated: 2026-09-26 08:01
 ---
 # Kubernetes
 
@@ -18,6 +18,9 @@ updated: 2026-09-26 07:54
 
 ## アーキテクチャ・拡張機構
 
+- [[kubernetes-extension-terms]] — CRD・CR・コントローラ・Operator・reconcileの関係を整理したハブ
+- [[kubernetes-controller|コントローラ]] — 望ましい状態に実際の状態を近づけ続ける制御ループ（reconcile）
+- [[kubernetes-operator|Operator]] — CRD＋専用コントローラで特定アプリの運用を自動化するパターン
 - [[kubernetes-custom-resource|カスタムリソース（CRD）]] — 独自のKindをAPIに追加する拡張機構。コントローラ（Operator）と組み合わせてreconcileさせる
 - [[cluster-api]] — Kubernetesクラスタ自体をKubernetesのリソースとして宣言的に管理する仕組み
 - [[kubernetes-cloud-controller-manager]] — クラウドプロバイダー固有の制御ループを本体から分離したコンポーネント
