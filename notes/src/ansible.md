@@ -1,6 +1,6 @@
 ---
 created: 2026-08-19 15:26
-updated: 2026-09-08 15:07
+updated: 2026-09-26 02:02
 ---
 # Ansible（構成管理ツール）
 
@@ -51,6 +51,7 @@ Playbookの中の変数展開・条件分岐にはJinja2テンプレートを使
 - **Molecule** — Roleやコレクションのテストフレームワーク。シナリオごとにコンテナ等の環境を作り、収束(converge)させ、**もう一度流して`changed`が出ないこと**で冪等性を検証し、最後に状態を検証する。
 - **ansible-navigator** / **Execution Environment** — 実行に必要なansible-core・コレクション・Python依存をコンテナイメージ(EE)に固め、その中でPlaybookを流す方式。手元と本番で実行環境を揃えられる。
 - **AWX** — Web UI・REST API・ジョブ実行エンジンをAnsibleの上に載せたOSSプロジェクト(Red Hatがスポンサー)。商用版が**Ansible Automation Platform (AAP)**。
+- **[[lc4ri|LC4RI]]** — ツールではなく方法論。Jupyter NotebookからAnsibleを実行し、Notebookを実行可能な手順書兼作業証跡にする(NIIクラウド運用チーム)。
 
 ## dry-runと安全側の実行
 
