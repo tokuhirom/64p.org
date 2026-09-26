@@ -88,10 +88,16 @@ body * {
     font-size: small;
 }
 #topics a {
-    color: #ccee00;
+    color: #1a5fb4;
 }
 #topics a:hover {
-    color: #eeee00;
+    color: #3584e4;
+}
+#topics strong {
+    color: #b3261e;
+}
+#topics .step_hidden {
+    visibility: hidden;
 }
 #topics img {
 }

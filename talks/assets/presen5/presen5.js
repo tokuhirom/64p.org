@@ -6,6 +6,8 @@
         start_time: new Date(),
         init: function (formatter, data) {
             this.formatter = formatter;
+            this.step = 0;
+            this.steps = 0;
             this.data = data;
     
             this.init_sections();
@@ -24,7 +26,7 @@
             if (location.hash === "") {
                 this.page = 0;
             } else {
-                this.page = Number(location.hash.substr(1));
+                this.page = Number(location.hash.substr(1)) || 0;
             }
         },
         init_sections: function() {
@@ -39,20 +41,39 @@
             return this.page < this.sections.length - 1;
         },
         next: function () {
+            if (!this.sections) {
+                return;
+            }
+            // ページ内に未表示の → 行があれば先にそれを1行ずつ出す
+            if (this.step < this.steps) {
+                this.step++;
+                this.apply_step();
+                return;
+            }
             if (!this.has_next()) {
                 return;
             }
             this.page++;
+            this.step = 0;
             this.rewrite();
         },
         has_prev: function () {
             return this.page > 0;
         },
         prev: function(){
+            if (!this.sections) {
+                return;
+            }
+            if (this.step > 0) {
+                this.step--;
+                this.apply_step();
+                return;
+            }
             if (!this.has_prev()) {
                 return; // nop.
             }
             this.page--;
+            this.step = -1; // 前のページに戻るときは → 行を全部出した状態にする
             this.rewrite();
         },
         cron: function () {
@@ -79,9 +100,21 @@
             if (!this.format_cache[p]) {
                 this.format_cache[p] = this.formatter.format(this.sections[p]);
             }
-            document.getElementById("topics").innerHTML = this.format_cache[p][0];
+            var topics = document.getElementById("topics");
+            topics.innerHTML = this.format_cache[p][0];
             this.page_info = this.format_cache[p];
+            this.steps = topics.querySelectorAll(".step").length;
+            if (this.step === -1 || this.step > this.steps) {
+                this.step = this.steps;
+            }
+            this.apply_step();
             location.hash = "#" + p;
+        },
+        apply_step: function () {
+            var step = this.step;
+            document.querySelectorAll("#topics .step").forEach(function (el, i) {
+                el.classList.toggle("step_hidden", i >= step);
+            });
         },
         two_column: function (i) {
             var m = "" + i;
@@ -126,7 +159,9 @@
                 return text.replace(/\\p\{WHITE FROWNING FACE\}/, '&#x2639;')
                     .replace(/\\p\{WHITE SMILING FACE\}/g, '&#x263a;')
                     .replace(/\\p\{BLACK SMILING FACE\}/g, '&#x263b;')
-                    .replace(/`(.*?)`/g, '<code>$1</code>');
+                    .replace(/`(.*?)`/g, '<code>$1</code>')
+                    .replace(/\[([^\]]+)\]\(([^)\s]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>')
+                    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
             },
             format: function (text) {
                 var lines = text.split(/\n/);
@@ -165,6 +200,9 @@
                     if (mode === "pre") {
                         pre_max = Math.max(v.length, pre_max);
                         context.push(v.replace(/&lt;B&gt;/g, "<B>").replace(/&lt;\/B&gt;/g, "</B>").tag("span") + "\n");
+                    } else if (/^→/.test(v)) {
+                        // → で始まる行は next で1行ずつ表示する
+                        context.push((Presen.Formatter.Hatena.format_text(v).tag("span") + "<br>").tag("span", "step"));
                     } else {
                         context.push(Presen.Formatter.Hatena.format_text(v).tag("span") + "<br>");
                     }
@@ -293,6 +331,7 @@
                 return;
             }
             Presen.page = p;
+            Presen.step = 0;
             Presen.rewrite();
         });
     };
