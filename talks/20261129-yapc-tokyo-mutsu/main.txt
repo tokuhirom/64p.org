@@ -119,12 +119,20 @@ Byte code interpreter にしたいと思い立つ。
 AST の tree walking が実装は簡単
 → AIが byte code interpreter を嫌がる。。
 → Roast を通すという Goal 設定と矛盾しているからですよね。。
-→ どうしたらいいんだ。。
+→ とにかく文句言ってくる
+----
+結局ずるずる後回しにしていたが、、最終的に、この置換に一ヶ月かかった。
+→ バイトコードインタープリタとtree walker が並行してると、二重に実装がある。
+→ コードを直したのに直らない！ とかいって混乱する
+----
+
+----
+submodule の ticket/issue 誤登録
 ----
 ----
-----
-----
-----
+- KPI を設定して実装することが大事。
+  - roast pass rate → ecosystem pass rate
+- 
 ----
 Enjoy!
 
