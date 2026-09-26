@@ -12,7 +12,7 @@ body * {
     /* word-break: break-all; */
 }
 
-#topics {
+:is(#topics, .print_topics) {
     margin-left: 20px;
     margin-right: 20px;
     margin-top: 60px;
@@ -23,20 +23,20 @@ body * {
     text-align: center;
 }
 
-#topics h2 {
+:is(#topics, .print_topics) h2 {
     font-style: bold;
     color: #532232;
     // font-style: italic;
 }
 
-#topics h3 {
+:is(#topics, .print_topics) h3 {
     padding : 15px;
     font-size : 220%;
     line-height : 1;
     font-style: italic;
 }
 
-#topics pre {
+:is(#topics, .print_topics) pre {
     padding-left: 4px;
     font-size: 80%;
     background-color: #eceeee;
@@ -48,60 +48,60 @@ body * {
     color: black;
 }
 
-#topics ul {
+:is(#topics, .print_topics) ul {
     text-align: left;
 }
-#topics ul li {
+:is(#topics, .print_topics) ul li {
     text-align: left;
     margin-bottom: 90px;
 }
 
-#topics .code {
+:is(#topics, .print_topics) .code {
     padding-left: 4px;
     font-size: 80%;
     background-color: #202010;
     text-align: left;
 }
 
-#topics .list {
+:is(#topics, .print_topics) .list {
     font-size: 90%;
     text-align: left;
     margin-bottom: 18px;
 }
-#topics .list::before {
+:is(#topics, .print_topics) .list::before {
     content: '・'
 }
-#topics .plain_list .list::before { content: '' }
+:is(#topics, .print_topics) .plain_list .list::before { content: '' }
 
-#topics .list_child {
+:is(#topics, .print_topics) .list_child {
     font-size: 80%;
     text-align: left;
     margin-left: 40px;
 }
-#topics .list_child::before {
+:is(#topics, .print_topics) .list_child::before {
     content: '・'
 }
 
-#topics .note {
+:is(#topics, .print_topics) .note {
     text-align: right;
     color: #cccccc;
     font-size: small;
 }
-#topics a {
+:is(#topics, .print_topics) a {
     color: #1a5fb4;
 }
-#topics a:hover {
+:is(#topics, .print_topics) a:hover {
     color: #3584e4;
 }
-#topics strong {
+:is(#topics, .print_topics) strong {
     color: #b3261e;
 }
-#topics .step_hidden {
+:is(#topics, .print_topics) .step_hidden {
     visibility: hidden;
 }
-#topics img {
+:is(#topics, .print_topics) img {
 }
-#topics code {
+:is(#topics, .print_topics) code {
     background-color: #eceeee;
     word-break: none;
     border: 1px solid #ddd;
@@ -231,5 +231,76 @@ pre B {
     #topics pre {
         overflow-x: auto;
         word-break: normal;
+    }
+}
+
+/* ------------------------------------------------------------------------- */
+/* PDF出力(印刷)用: 全スライドを1ページ1枚で並べる */
+
+#header #pdf_button {
+    margin-right: 12px;
+    padding: 0 8px;
+    border: 1px solid #999;
+    border-radius: 4px;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    cursor: pointer;
+}
+
+#print_slides {
+    position: fixed;
+    left: -10000px;
+    top: 0;
+}
+
+#print_slides .print_slide {
+    position: relative;
+    box-sizing: border-box;
+    width: 297mm;
+    height: 210mm;
+    padding: 12mm 15mm;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+    break-after: page;
+    page-break-after: always;
+}
+#print_slides .print_slide:last-child {
+    break-after: auto;
+    page-break-after: auto;
+}
+
+#print_slides .print_topics {
+    margin: 0;
+    width: 100%;
+}
+
+#print_slides .print_page_number {
+    position: absolute;
+    right: 8mm;
+    bottom: 5mm;
+    font-size: 12px;
+    color: #999;
+    font-family: Monaco, Menlo, Consolas, "Courier New", monospace;
+}
+
+@page {
+    size: A4 landscape;
+    margin: 0;
+}
+
+@media print {
+    html, body {
+        margin: 0;
+        background-color: #fff;
+    }
+    #container, #padding, #presen_nav {
+        display: none !important;
+    }
+    #print_slides {
+        position: static;
     }
 }

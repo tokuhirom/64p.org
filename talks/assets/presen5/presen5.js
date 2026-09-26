@@ -336,6 +336,69 @@
         });
     };
 
+    // PDF出力: 印刷直前に全スライドを1ページ1枚で並べた要素を作り、
+    // ブラウザの印刷ダイアログから「PDFとして保存」してもらう。
+    // → 行は全部表示した状態で出す。
+    Presen.build_print = function () {
+        Presen.clear_print();
+        if (!Presen.sections) {
+            return;
+        }
+        var container = document.createElement("div");
+        container.id = "print_slides";
+        document.body.appendChild(container);
+
+        var takahashi = Presen.formatter === Presen.Formatter.Takahashi;
+        Presen.sections.forEach(function (section, i) {
+            var slide = document.createElement("div");
+            slide.className = "print_slide";
+            var topics = document.createElement("div");
+            topics.className = "print_topics";
+            topics.innerHTML = Presen.formatter.format(section)[0];
+            slide.appendChild(topics);
+            var num = document.createElement("div");
+            num.className = "print_page_number";
+            num.textContent = (i + 1) + " / " + Presen.sections.length;
+            slide.appendChild(num);
+            container.appendChild(slide);
+
+            // ページに収まるまで文字を小さくする
+            var cs = window.getComputedStyle(slide);
+            var max_w = slide.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+            var max_h = slide.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom);
+            var size = takahashi ? 200 : 68;
+            topics.style.fontSize = size + "px";
+            while (size > 10 && (topics.scrollHeight > max_h || topics.scrollWidth > max_w)) {
+                size = Math.floor(size * 0.92);
+                topics.style.fontSize = size + "px";
+            }
+        });
+    };
+    Presen.clear_print = function () {
+        var old = document.getElementById("print_slides");
+        if (old) {
+            old.parentNode.removeChild(old);
+        }
+    };
+    Presen.observe_print_event = function () {
+        // ボタン以外(Ctrl+P やブラウザメニュー)からの印刷にも対応する
+        window.addEventListener("beforeprint", Presen.build_print);
+        window.addEventListener("afterprint", Presen.clear_print);
+
+        var button = document.createElement("button");
+        button.type = "button";
+        button.id = "pdf_button";
+        button.textContent = "PDF";
+        button.title = "印刷ダイアログから「PDFとして保存」で全スライドをPDFにできます";
+        button.addEventListener("click", function (e) {
+            e.stopPropagation();
+            Presen.build_print();
+            window.print();
+        });
+        var page_info = document.getElementById("page_info");
+        page_info.insertBefore(button, page_info.firstChild);
+    };
+
     // -------------------------------------------------------------------------
     
     document.addEventListener("DOMContentLoaded", function () {
@@ -363,6 +426,7 @@
     
         Presen.observe_key_event();
         Presen.observe_touch_event();
+        Presen.observe_print_event();
     });
     
 })();
