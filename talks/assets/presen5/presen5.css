@@ -148,3 +148,82 @@ pre B {
     vertical-align: middle;
     height: 100%;
 }
+
+/* ------------------------------------------------------------------------- */
+/* スマホ向けのページ送りボタン・レイアウト */
+
+#presen_nav {
+    display: none;
+}
+
+@media (pointer: coarse), (max-width: 700px) {
+    #presen_nav {
+        display: flex;
+        justify-content: space-between;
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        padding: 8px 12px calc(8px + env(safe-area-inset-bottom));
+        pointer-events: none;
+    }
+    #presen_nav button {
+        pointer-events: auto;
+        width: 56px;
+        height: 56px;
+        border: none;
+        border-radius: 50%;
+        background-color: rgba(0, 0, 0, 0.12);
+        color: #333;
+        font-size: 32px;
+        line-height: 1;
+        cursor: pointer;
+        -webkit-tap-highlight-color: transparent;
+    }
+    #presen_nav button:active {
+        background-color: rgba(0, 0, 0, 0.25);
+    }
+    #topics {
+        touch-action: pan-y pinch-zoom;
+    }
+}
+
+@media (max-width: 700px) {
+    #header {
+        font-size: 12px;
+        height: auto;
+        padding: 6px 0;
+    }
+    #header #title {
+        padding-left: 10px;
+        max-width: 55%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    #header #page_info {
+        padding-right: 10px;
+    }
+    #topics {
+        margin: 50px 12px 90px;
+        font-size: 7vw;
+        overflow-wrap: anywhere;
+    }
+    #topics h3 {
+        padding: 8px;
+        font-size: 130%;
+    }
+    #topics ul li {
+        margin-bottom: 20px;
+    }
+    #topics .list {
+        margin-bottom: 8px;
+    }
+    #topics .list_child {
+        margin-left: 20px;
+    }
+    #topics pre {
+        overflow-x: auto;
+        word-break: normal;
+    }
+}

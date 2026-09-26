@@ -222,6 +222,81 @@
         });
     };
     
+    // スマホ向け: スワイプ・タップ・画面下のボタンでページ遷移できるようにする
+    Presen.observe_touch_event = function () {
+        var start = null;
+        var SWIPE_MIN = 40; // px
+
+        document.addEventListener("touchstart", function (e) {
+            if (e.touches.length !== 1) {
+                start = null;
+                return;
+            }
+            start = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+        }, { passive: true });
+
+        document.addEventListener("touchend", function (e) {
+            if (!start) {
+                return;
+            }
+            var t = e.changedTouches[0];
+            var dx = t.clientX - start.x;
+            var dy = t.clientY - start.y;
+            start = null;
+            // 縦スクロール・ピンチ等は邪魔しない
+            if (Math.abs(dx) < SWIPE_MIN || Math.abs(dx) < Math.abs(dy) * 1.5) {
+                return;
+            }
+            if (dx < 0) {
+                Presen.next();
+            } else {
+                Presen.prev();
+            }
+        }, { passive: true });
+
+        // 画面の左1/3タップで戻る、それ以外で進む（リンク・ボタン・テキスト選択中は除く）
+        document.addEventListener("click", function (e) {
+            if (e.target.closest("a, button, pre, #header")) {
+                return;
+            }
+            var sel = window.getSelection && window.getSelection();
+            if (sel && String(sel).length > 0) {
+                return;
+            }
+            if (e.clientX < window.innerWidth / 3) {
+                Presen.prev();
+            } else {
+                Presen.next();
+            }
+        });
+
+        var nav = document.createElement("div");
+        nav.id = "presen_nav";
+        [["prev", "\u2039", "前のページ"], ["next", "\u203a", "次のページ"]].forEach(function (b) {
+            var button = document.createElement("button");
+            button.type = "button";
+            button.className = "presen_nav_" + b[0];
+            button.textContent = b[1];
+            button.setAttribute("aria-label", b[2]);
+            button.addEventListener("click", function (e) {
+                e.stopPropagation();
+                Presen[b[0]]();
+            });
+            nav.appendChild(button);
+        });
+        document.body.appendChild(nav);
+
+        // ブラウザの戻る/進むや手動での #N 変更に追従する
+        window.addEventListener("hashchange", function () {
+            var p = Number(location.hash.substr(1));
+            if (!Presen.sections || isNaN(p) || p === Presen.page || p < 0 || p >= Presen.sections.length) {
+                return;
+            }
+            Presen.page = p;
+            Presen.rewrite();
+        });
+    };
+
     // -------------------------------------------------------------------------
     
     document.addEventListener("DOMContentLoaded", function () {
@@ -248,6 +323,7 @@
         document.body.classList.add('takahashi');
     
         Presen.observe_key_event();
+        Presen.observe_touch_event();
     });
     
 })();
