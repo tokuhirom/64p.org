@@ -1,10 +1,10 @@
 ---
 created: 2026-09-26 02:02
-updated: 2026-09-26 02:02
+updated: 2026-09-26 02:07
 ---
 # LC4RI (Literate Computing for Reproducible Infrastructure)
 
-「再構築可能なインフラのための文芸的コンピューティング」。国立情報学研究所(NII)のクラウド運用チームが提唱・実践している、Jupyter Notebookを手順書兼作業証跡として使うインフラ運用の方法論。Notebookに「なぜやるか・前提・実行コマンド・結果・確認」を一緒に残し、実行可能で再現可能な手順書にする。
+「再構築可能なインフラのための文芸的コンピューティング」([[literate-programming|文芸的プログラミング]]の発展形であるLiterate Computingをインフラ運用に適用したもの)。国立情報学研究所(NII)のクラウド運用チームが提唱・実践している、[[jupyter-notebook|Jupyter Notebook]]を手順書兼作業証跡として使うインフラ運用の方法論。Notebookに「なぜやるか・前提・実行コマンド・結果・確認」を一緒に残し、実行可能で再現可能な手順書にする。
 
 ## 考え方
 

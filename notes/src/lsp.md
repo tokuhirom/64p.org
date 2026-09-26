@@ -1,6 +1,6 @@
 ---
 created: 2026-08-12 23:09
-updated: 2026-09-02 22:30
+updated: 2026-09-26 02:07
 ---
 # LSP (Language Server Protocol)
 
@@ -92,7 +92,7 @@ LSPの機能はほぼすべてオプショナルで、何が使えるかは起�
 
 - 400以上の言語サーバーが開発されている。Goの[[gopls|gopls]]のように言語チーム自身が公式サーバーを出しているケースも多い。
 - VS Code、JetBrains系IDE、Neovim、Eclipseなど主要エディタが対応。[[biome|Biome]]もCLIに加えてLSP経由での利用に対応している。
-- 近年はGitHub Copilot Language Server SDKのようにAIアシスタント側でも採用が広がり、Jupyter Notebookやデータベースツールなど従来のコードエディタ以外にも拡大している。[[mojo|Mojo]]もLSPサーバーを提供しており、Modular 26.5でその安定性が向上した。
+- 近年はGitHub Copilot Language Server SDKのようにAIアシスタント側でも採用が広がり、[[jupyter-notebook|Jupyter Notebook]]やデータベースツールなど従来のコードエディタ以外にも拡大している。[[mojo|Mojo]]もLSPサーバーを提供しており、Modular 26.5でその安定性が向上した。
 
 ## LSPから派生した「N×Mを潰すプロトコル」
 
