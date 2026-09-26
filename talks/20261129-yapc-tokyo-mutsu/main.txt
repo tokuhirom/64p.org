@@ -1,0 +1,96 @@
+速い Raku インタープリタを気合と根性で実装した話
+<div style="text-align:right; font-size: 50%;">
+YAPC::Tokyo 2026
+tokuhirom
+</div>
+----
+Raku はご存知？
+Perl6 と呼ばれていたもの
+----
+*３分間昔話をします
+----
+2005年に就職してから Perl5 を使いはじめたのですが
+----
+<!-- https://gihyo.jp/dev/serial/01/perl-hackers-hub/003901 -->
+2000年にぶち上げられたプロジェクトが Perl6
+実に26年経過しました。
+----
+どんなことができるようになるのか
+----
+- Grammar
+- Concurrency
+- CPAN module もすべて使える
+- etc. etc.
+----
+最強では？？
+----
+Parrot VM が作られることが発表されました
+----
+そしてParrot終了
+----
+MoarVM 時代へ
+----
+Raku とは言語名。
+Rakudo は実装。
+----
+Roast というものができた。
+仕様はテストとして提供されるようになった。
+----
+Rakudo は MoarVM と NQP からなっている
+----
+MoarVM - Register Machine
+- 高速化できるらしい
+- 実装の難易度が上がるらしい
+----
+NQP
+- 中間言語
+----
+課題(だと僕が思っているもの)
+- 起動時のオーバーヘッドがある
+----
+*そしてときは15年ほどたった
+----
+今、僕はギョームでは go を書いています。
+----
+どうしてこうなった？
+----
+*閑話休題
+----
+ときは大AI時代
+----
+- テストがあれば実装は作れるらしい
+- テストを非公開にするプロジェクトが登場
+----
+( ﾟдﾟ)ﾊｯ!
+Raku には Roast があるから実装作れるのでは？
+----
+作ってみようと思いたつ
+(2026年2月)
+----
+いまだ完成していない。
+----
+テストがあれば実装が作れる、は嘘です！
+----
+元になるものをこの２つと定める。
+- [Raku/doc](https://github.com/Raku/doc)
+- [Raku/roast](https://github.com/Raku/roast)
+この２つをsubmoduleとしておく。
+----
+最初のゴールを設定する
+- **roast が全部通ること**
+----
+AI に document を読ませて、どういう実装手順で実装していくかを考える。
+- Language Core
+- Object System
+- Regex and Grammars
+- Advanced Features
+- Bytecode VM
+- Optimiziation
+- GC
+- REPL/Debugger, etc.
+----
+----
+----
+----
+Enjoy!
+
