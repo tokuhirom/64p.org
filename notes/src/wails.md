@@ -1,6 +1,6 @@
 ---
 created: 2026-08-09 15:22
-updated: 2026-08-09 16:15
+updated: 2026-10-09 03:13
 ---
 # Wails
 
@@ -16,6 +16,7 @@ Electronがフルの Chromium を同梱するのに対し、Wailsは OS のネ�
 
 - **[[electron|Electron]]**: フルのChromiumを同梱する成熟したエコシステム。バイナリサイズは大きいがドキュメント・実績が豊富。
 - **[[tauri|Tauri]]**: WailsとほぼおなじくOSネイティブWebViewを使うアーキテクチャだが、バックエンドはRust。WebViewはデフォルトでネイティブ機能に一切アクセスできず、明示的な許可(capabilities)を与える設計でセキュリティ面で一歩進んでいる。
+- **[[mygo|MyGo]]**: 同じくGo + OS標準WebViewの系統だが、cgoなしの純Goでどのマシンからもクロスビルドでき、WebViewを使わないGo製ネイティブUIも選べる。v0.x。詳細は[[mygo]]。
 - **Wails**: Goでバックエンドを書きたい開発者にとって、Tauriに近い軽量さのメリットを享受できる選択肢という位置づけ。
 
 ## バージョン状況
