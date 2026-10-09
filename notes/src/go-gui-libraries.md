@@ -1,6 +1,6 @@
 ---
 created: 2026-08-09 16:05
-updated: 2026-08-18 20:47
+updated: 2026-10-09 03:13
 ---
 # Go GUI ライブラリ一覧
 
@@ -16,6 +16,7 @@ Go言語のGUIライブラリ・フレームワークをまとめておく。[[r
 | [Walk](https://github.com/lxn/walk) | lxn | 7.1k | Windows API直接ラップ | Windows専用 | BSD-3-Clause |
 | [gotk3](https://github.com/gotk3/gotk3) | gotk3 | 2.2k | GTK3バインディング | 主にLinux(GTK3が動く環境) | ISC |
 | [[wails]] | wailsapp | 約35.7k | OSネイティブWebView(Web技術) | Windows/macOS/Linux | MIT |
+| [[mygo|MyGo]] | egoist | 約1.1k | OSネイティブWebView または GPU描画のネイティブUI（cgoなし） | Windows/macOS/Linux | MIT |
 
 ※スター数は調査時点(2026年8月)のスナップショット。
 
@@ -38,6 +39,9 @@ GTK3の薄いバインディング。GoのGCとGObjectの参照カウントを�
 
 ### Wails
 ネイティブGUIツールキットではなく、GoバックエンドとOSネイティブWebView(WebKit/WebView2/WebKitGTK)を組み合わせたハイブリッド型。詳細は[[wails]]を参照。
+
+### MyGo
+WebViewとGo製のGPU描画ネイティブUIを選べる（混在可）、cgoなしの純Goフレームワーク。詳細は[[mygo]]を参照。
 
 ## 出典
 
