@@ -495,9 +495,15 @@ WebAssembly にもなる
 *デモ
 <!-- REPL / playground / mzef install / Cro hello world -->
 ----
-まだ本番では使わないでください
-- RakuAST 移行中
-- まだ遅いところもある
+*そして
+----
+昨日 (11/28)
+mutsu 1.0.0 をリリースしました！！！
+----
+最初の安定版です。
+----
+まぁバグはあると思うけど。。
+→ 見つけたら issue ください
 ----
 *まとめ
 ----
@@ -512,5 +518,10 @@ WebAssembly にもなる
 - GC や JIT みたいな根っこの判断は人間がやる
 ----
 令和の今でも Raku の実装は作れる！
+----
+mutsu 1.0.0、使ってみてください
+>||
+mise use -g github:tokuhirom/mutsu
+||<
 ----
 Enjoy!
