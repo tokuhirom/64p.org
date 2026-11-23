@@ -99,6 +99,17 @@
   - 出典（二次情報）: https://smartscope.blog/en/blog/claude-max-20x-renamed-ultra-5-hour-limit-2026/ , https://www.buildmvpfast.com/blog/claude-max-plan-changes-ultra-5-hour-limit-2026 , https://support.claude.com/en/articles/17728952
 - 💤 レビューで「1日50PRを誰がどうレビュー・マージしているか、エージェント構成・並列数・コスト」を知りたいという声
 
+## Rakudo コミッター視点レビュー（2026-11-23）
+
+- 反映済み: タイトル「JIT 搭載」で MoarVM に JIT がないように聞こえる点（spesh/JIT はあると先に言う）、「カリカリにチューニングすれば」→ 設計のトレードオフの話に、Raku Weekly の引用は原文英語に、MoarVM の「らしい」、「ちゃんと速い」、RakuAST への敬意、「何十年分」→ 20年、感謝は「Raku コミュニティ」へ広げ序盤にも一言、Roast 100% の数え方を明記、ベンチの Rakudo バージョンを画面に
+- 💤 未反映（要相談）:
+  - 感謝の節に固有名を出すか（Larry Wall, Damian Conway, Audrey Tang, pmichaud, jnthn, lizmat, brrt, timo, nine (Inline::Perl5), ugexe (Zef) など。担当は要裏取り）
+  - 昔話が「Raku は失敗した」流れの笑いに聞こえうる（最強では？？ → Parrot 終了 → ギョームでは go）。好みの範囲
+  - 「僕はほぼコードを書いてない」+ 108万行・1日50PR → 品質保証を質疑で聞かれる準備
+  - ベンチを最新 Rakudo で取り直すか
+  - 起動は Raku++ のほうが約2倍速い、と一言入れるか
+  - issue 誤登録の件数と後始末
+
 ## ライセンス
 
 - ✅ Rakudo / Roast / Raku/doc / old-design-docs / Zef はすべて Artistic License 2.0。mutsu も意図的にそれに合わせて Artistic License 2.0（tokuhirom 談: Rakudo のコード片をコピーするうえで、同じライセンスにしておくのが一番問題が起きないだろう、という判断）
