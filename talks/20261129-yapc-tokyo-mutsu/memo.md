@@ -101,7 +101,7 @@
 
 ## ライセンス
 
-- ✅ Rakudo / Roast / Raku/doc / old-design-docs / Zef はすべて Artistic License 2.0。mutsu もそれに合わせて Artistic License 2.0（tokuhirom 談: Rakudo に合わせた）
+- ✅ Rakudo / Roast / Raku/doc / old-design-docs / Zef はすべて Artistic License 2.0。mutsu も意図的にそれに合わせて Artistic License 2.0（tokuhirom 談: Rakudo のコード片をコピーするうえで、同じライセンスにしておくのが一番問題が起きないだろう、という判断）
 - ✅ OSS だからこそ、テスト・ドキュメント・Rakudo のコード (RakuAST::Deparse)・Zef を取り込んで別実装を作れた
   - 出典: https://rakudo.org/about ("licensed under the terms of the Artistic License 2.0") , https://github.com/rakudo/rakudo , mutsu README のサードパーティ表
 
