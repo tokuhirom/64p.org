@@ -73,8 +73,9 @@ Rakudo は実装。
 Rakudo は NQP と Raku で書かれていて、MoarVM の上で動く
 ----
 MoarVM - Register Machine
-- 高速化できるらしい
-- 実装の難易度が上がるらしい
+- spesh (型で特化する最適化) と JIT を持ってる
+- そのぶん実装の難易度は上がるらしい
+<!-- memo「歴史の裏取り」11 -->
 ----
 NQP (Not Quite Perl)
 - Rakudo を書くための小さな Raku
@@ -112,6 +113,9 @@ Raku 自体は好きなんですよ
 → (ちゃんと調べたわけではないです)
 <!-- 起動が遅い原因を断定する現行の一次資料は見つからなかった。memo「歴史の裏取り」12 -->
 ----
+MoarVM にも spesh や JIT はある
+→ でも、起動まで含めて別の設計にしたらどうなる？
+----
 Rust で全部書き直して JIT を載せたら
 速くなるのでは？
 ----
@@ -129,6 +133,8 @@ Rust で全部書き直して JIT を載せたら
 ----
 ( ﾟдﾟ)ﾊｯ!
 Raku には Roast があるから実装作れるのでは？
+----
+(Roast を20年積み上げてきた人たちのおかげです)
 ----
 作ってみようと思いたつ
 (2026年2月)
@@ -260,7 +266,8 @@ Perl6 はパーサーを自分で差し替えられる。
 ----
 そして今は RakuAST に移行中。
 → Rakudo 本体も 2026.09 で RakuAST がデフォルトになった
-→ 本家の進化にも追従しないといけない。。
+→ RakuAST は Rakudo の人たちが何年もかけて作ってきたもの
+→ mutsu もそこに追従していく
 ----
 *Byte code interpreter の話
 ----
@@ -436,6 +443,7 @@ bench CI というのを作った
 → 同じ Raku のコードがどこまで速くなりうるか、の目安
 ----
 mutsu / rakudo の時間比 (小さいほど mutsu が速い)
+(Rakudo v2026.07 で計測)
 - 起動: 0.07
 - fib (JIT): 0.59
 - mandelbrot (JIT): 0.21
@@ -465,7 +473,7 @@ mutsu / rakudo の時間比 (小さいほど mutsu が速い)
 - JSON::Fast: 1.33 (rakudo が速い)
 - YAML パース: 0.93
 ----
-MoarVM の JIT は、温まったあとはちゃんと速い
+MoarVM の spesh / JIT は、温まると強い
 → mutsu 側にもまだまだ伸びしろがある
 ----
 何をやって速くしたかは ADR と news/ に全部書いてある
@@ -510,7 +518,8 @@ MoarVM の JIT は、温まったあとはちゃんと速い
 Rakudo Weekly → Raku Weekly に改名
 <!-- https://rakuweekly.blog/2026/10/05/2026-40-pythonesque/ (Elizabeth Mattijsen, 2026.40) -->
 ----
-「Raku の実装は今3つある。Rakudo はそのうちの1つ」
+"there are now three viable implementations of the Raku Programming Language, of which “Rakudo” is only one."
+<!-- Elizabeth Mattijsen, Raku Weekly News 2026.40。要旨: Raku の実用的な実装は今3つあり、Rakudo はそのうちの1つ -->
 ----
 Raku++ と Mutsu
 → 名前が出てる！！！
@@ -566,6 +575,7 @@ AI がやらかしたら、全部ルールとして書き残す
 ----
 Roast (spectest.data) 1,425 / 1,425 ファイル
 → 100%！！！
+(Rakudo が実行するリストで、Rakudo と同じく #?rakudo の skip/todo を適用した数え方)
 <!-- mutsu scripts/roast-compat.py count (PR #19043, 2026-11-23)。当日 HISTORY.tsv の spec_pass 列で実測値を確認 -->
 ----
 ecosystem
@@ -636,7 +646,7 @@ mutsu 1.0.0 をリリースしました！！！
 ----
 mutsu は、Rakudo の人たちが積み上げてきたものの上に乗っかってる
 ----
-- Roast: Pugs の頃から何十年分も積み上げられてきたテスト
+- Roast: Pugs の頃から20年分積み上げられてきたテスト
 - Raku/doc: ドキュメント
 - 設計文書 (Synopsis)
 → これがなかったら、AI がいても絶対に作れなかった
@@ -660,7 +670,7 @@ Rakudo のコードもそのまま使わせてもらってる
 OSS だと、こういう広がり方もする
 → 26年分の積み上げを土台に、別の実装が生えてくる
 ----
-Rakudo を作ってきたみなさんに感謝！
+Raku コミュニティのみなさんに感謝！
 ----
 *まとめ
 ----
@@ -674,7 +684,8 @@ Rakudo を作ってきたみなさんに感謝！
 ----
 - GC や JIT みたいな根っこの判断は人間がやる
 ----
-- 同じ言語仕様でも、カリカリにチューニングすればここまでやれる
+- 設計のトレードオフを変えると、起動はここまで縮む
+- (温まった後は Rakudo が速いところもまだたくさんある)
 ----
 令和の今でも Raku の実装は作れる！
 ----
