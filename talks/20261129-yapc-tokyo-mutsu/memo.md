@@ -170,6 +170,12 @@
   - どのツールをどの程度使っているかは不明。言うなら「作者のブログでも AI を helper と書いている」程度に留める
   - 出典: https://andrewshitov.com/2026/07/13/raku-the-fastest-raku-compiler/ , https://github.com/ash/rakupp/commits/main
 
+## 起動の速さ
+
+- ✅ 「Rakudo の起動が遅いのは NQP/Raku で書かれたコンパイラ・標準ライブラリを起動のたびに読むからでは？」は tokuhirom の仮説。調べたわけではない → スライドでも仮説と明言
+- ✅ mutsu 側の事実: `say 1` の起動命令数 10.16M → 7.66M (-25%)、ページフォルト ~950 → ~700（callgrind）。修飾名インデックスの遅延構築など（news/2026-10/startup-skips-qualified-index-and-relocations.md）
+- 💤 起動は Raku++ のほうが速い（bench-startup で mutsu/rakupp ≈ 2）
+
 ## Raku Weekly への改名
 
 - ✅ 2026-10-05 の号（2026.40 Pythonesque, Elizabeth Mattijsen）で Rakudo Weekly News → Raku Weekly News に改名
