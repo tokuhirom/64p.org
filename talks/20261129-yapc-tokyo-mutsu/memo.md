@@ -143,6 +143,13 @@
 - 💤 Language Server（ADR-0065, AI エージェント向け）
 - 💤 RakuAST 移行・builtin method のテーブル化・Interpreter のサブシステム分割が進行中（PLAN.md §0）
 
+## デモ
+
+- ✅ `demo.html?ex=hello|grammar|multi|concurrency` を iframe でスライドに埋め込み。CDN (jsDelivr) の @tokuhirom/mutsu 0.26.1 を blob worker から読む
+- 💤 パッケージ同梱の `<mutsu-code>` は CDN の wasm-worker.js を `new Worker()` するので、別オリジンのページでは起動しない（Failed to construct 'Worker'）。docs/browser-embedding.md の CDN 例がそのままだと動かない
+- 💤 iframe 内にフォーカスがあるとページ送りできない → 外側をクリックしてから送る
+- 💤 wasm は約32MB。会場 Wi-Fi に備えて事前に開いてキャッシュしておく
+
 ## 当日更新
 
 - [ ] Roast の数（HISTORY.tsv）と グラフ再生成: `python3 gen-history-graph.py ../../../mutsu/HISTORY.tsv history-pass.svg`
@@ -151,3 +158,4 @@
 - [ ] ecosystem pass rate
 - [ ] Raku++ の README（バージョン・Roast）
 - [ ] 1.0.0 のリリース日
+- [ ] demo.html の VERSION を 1.0.0 に更新して動作確認
