@@ -261,6 +261,8 @@
 
 ## 当日更新
 
+- [ ] `node check-layout.js` が OK（スライドを直したら毎回）
+
 - [ ] Roast の数: mutsu で `scripts/roast-compat.py count`、HISTORY.tsv の `spec_pass` 列に実測が入っているか確認（PR #19043 以降、定期実行で入る）
 - [ ] グラフ再生成: `python3 gen-history-graph.py ../../../mutsu/HISTORY.tsv history-pass.svg`（spec_pass があれば橙線で重なる）
 - [ ] コミット数・PR 数・issue 数・open issue 数

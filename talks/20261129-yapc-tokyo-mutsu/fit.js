@@ -40,11 +40,26 @@
     var availH = window.innerHeight - top - enH - nav - 8;
     var availW = t.clientWidth;
 
-    // デモの iframe は残りの高さいっぱいに
-    var frame = t.querySelector("iframe");
-    if (frame) frame.style.height = Math.max(200, availH - 4) + "px";
-
     var min = minSize();
+    var media = t.querySelectorAll("iframe, img");
+    if (media.length) {
+      // 画像・デモの iframe があるページは文字サイズを固定し、メディアを残りの高さいっぱいにする
+      t.style.fontSize = Math.max(min, Math.min(maxSize(), 0.6 * maxSize())) + "px";
+      media.forEach(function (m) { m.style.maxHeight = "40px"; if (m.tagName === "IFRAME") m.style.height = "40px"; });
+      var rest = availH - (t.scrollHeight - 40 * media.length) - 4;
+      media.forEach(function (m) {
+        var h = Math.max(80, rest / media.length);
+        m.style.maxHeight = h + "px";
+        m.style.maxWidth = "100%";
+        if (m.tagName === "IFRAME") m.style.height = h + "px";
+      });
+      var fits = !(t.scrollHeight > availH + 1 || t.scrollWidth > availW + 1);
+      t.dataset.fitSize = parseFloat(t.style.fontSize).toFixed(1);
+      t.dataset.fitMin = min.toFixed(1);
+      t.dataset.fitOk = fits ? "1" : "0";
+      return;
+    }
+
     var size = maxSize();
     var tooBig = function () {
       return t.scrollHeight > availH + 1 || t.scrollWidth > availW + 1;
