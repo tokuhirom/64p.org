@@ -446,6 +446,22 @@ MoarVM の JIT は、温まったあとはちゃんと速い
 今は bench CI で rakupp とも比べてる
 → 別の実装があると、お互いの伸びしろが見える
 ----
+*Raku の世界がちょっと変わった
+----
+週刊ニュース「Rakudo Weekly News」
+→ 2019年当時、まともに動く実装は Rakudo だけだったので、この名前
+----
+2026年10月
+Rakudo Weekly → Raku Weekly に改名
+<!-- https://rakuweekly.blog/2026/10/05/2026-40-pythonesque/ (Elizabeth Mattijsen, 2026.40) -->
+----
+「Raku の実装は今3つある。Rakudo はそのうちの1つ」
+----
+Raku++ と Mutsu
+→ 名前が出てる！！！
+----
+嬉しい。。
+----
 *AI を並列で走らせたら
 ----
 1日 50〜100 PR マージされる世界

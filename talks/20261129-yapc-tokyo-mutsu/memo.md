@@ -104,6 +104,14 @@
 - 💤 rakupp のほうが速いベンチ: JSON::Fast（mutsu/rakupp 5.9）、startup（2.1）など
 - 💤 AI を開発に使っているかは README に記述なし（言わないこと）
 
+## Raku Weekly への改名
+
+- ✅ 2026-10-05 の号（2026.40 Pythonesque, Elizabeth Mattijsen）で Rakudo Weekly News → Raku Weekly News に改名
+- ✅ 理由: Raku の実用的な実装が3つになり、Rakudo はそのうちの1つだから。2019年7月の開始時は実用的な実装が Rakudo だけだった
+- ✅ 本文で Raku++ と Mutsu の名前が出ている（主要開発者に改名を伝え、ニュースを送ってもらう約束をした、という段落）
+- 💤 記事は3つを一覧にしていない（Rakudo + Raku++ + Mutsu と読めるが明記はない）
+- 出典: https://rakuweekly.blog/2026/10/05/2026-40-pythonesque/
+
 ## AI を並列で走らせる運用
 
 - ✅ ADR 番号の衝突 6 回 → ADR 番号 = issue 番号
