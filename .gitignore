@@ -11,3 +11,6 @@
 /notes/tags/
 /notes/rss.xml
 /_site/
+
+# デモ用の WebAssembly 版 mutsu (約32MB)。fetch-mutsu-wasm.sh で取得する。
+/talks/20261129-yapc-tokyo-mutsu/vendor/

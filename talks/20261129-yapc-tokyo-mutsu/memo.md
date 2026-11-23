@@ -145,10 +145,11 @@
 
 ## デモ
 
-- ✅ `demo.html?ex=hello|grammar|multi|concurrency` を iframe でスライドに埋め込み。CDN (jsDelivr) の @tokuhirom/mutsu 0.26.1 を blob worker から読む
+- ✅ `demo.html?ex=hello|grammar|multi|concurrency` を iframe でスライドに埋め込み
+- ✅ wasm はローカルの `vendor/mutsu-wasm/` から読む（ネットワーク不要）。`sh fetch-mutsu-wasm.sh` で npm から取得（integrity 検証あり、vendor/ は gitignore）。ローカルに無いときだけ CDN にフォールバックし、ステータスがオレンジ色で `(CDN)` と出る
+- ✅ 発表時は `cd talks && python3 -m http.server` などローカルサーバで開く。ステータスが `(local)` になっていることを確認
 - 💤 パッケージ同梱の `<mutsu-code>` は CDN の wasm-worker.js を `new Worker()` するので、別オリジンのページでは起動しない（Failed to construct 'Worker'）。docs/browser-embedding.md の CDN 例がそのままだと動かない
 - 💤 iframe 内にフォーカスがあるとページ送りできない → 外側をクリックしてから送る
-- 💤 wasm は約32MB。会場 Wi-Fi に備えて事前に開いてキャッシュしておく
 
 ## 当日更新
 
@@ -158,4 +159,4 @@
 - [ ] ecosystem pass rate
 - [ ] Raku++ の README（バージョン・Roast）
 - [ ] 1.0.0 のリリース日
-- [ ] demo.html の VERSION を 1.0.0 に更新して動作確認
+- [ ] demo.html の VERSION を 1.0.0 に更新 → `sh fetch-mutsu-wasm.sh` → Wi-Fi を切って4つのデモが `(local)` で動くか確認

@@ -67,28 +67,41 @@ say so 3 == any(1, 2, 3);     # junction
 </script>
 
 <script type="module">
-const VERSION = '0.26.1';   // TODO: 1.0.0 リリース後に更新
-const BASE = `https://cdn.jsdelivr.net/npm/@tokuhirom/mutsu@${VERSION}/`;
+const VERSION = '0.26.1';   // TODO: 1.0.0 リリース後に更新して fetch-mutsu-wasm.sh を再実行
+// 本番は fetch-mutsu-wasm.sh で取ってきたローカルの vendor/mutsu-wasm/ を使う（ネットワーク不要）。
+// ローカルに無いとき（公開サイトなど）だけ CDN にフォールバックする。
+const LOCAL = new URL('vendor/mutsu-wasm/', location.href).href;
+const CDN = `https://cdn.jsdelivr.net/npm/@tokuhirom/mutsu@${VERSION}/`;
 
 // パッケージ同梱の <mutsu-code> は CDN 上の worker を new Worker() するため
-// 別オリジンのページからは起動できない。同じことをする worker を blob で作る。
-const workerSrc = `
-  import init, { Repl } from '${BASE}mutsu.js';
-  const ready = init();
-  self.onmessage = async ({ data }) => {
-    try {
-      await ready;
-      const repl = new Repl();
-      const r = JSON.parse(repl.evalBlock(data.code));
-      self.postMessage({ ok: true, output: r.output });
-    } catch (e) {
-      self.postMessage({ ok: false, error: String(e?.message ?? e) });
-    }
-  };
-  ready.then(() => self.postMessage({ booted: true }),
-             e => self.postMessage({ booted: false, error: String(e) }));
-`;
-const workerUrl = URL.createObjectURL(new Blob([workerSrc], { type: 'text/javascript' }));
+// 別オリジンだと起動できない。同じことをする worker を blob で作る。
+function workerUrlFor(base) {
+  const src = `
+    import init, { Repl } from '${base}mutsu.js';
+    const ready = init();
+    self.onmessage = async ({ data }) => {
+      try {
+        await ready;
+        const repl = new Repl();
+        const r = JSON.parse(repl.evalBlock(data.code));
+        self.postMessage({ ok: true, output: r.output });
+      } catch (e) {
+        self.postMessage({ ok: false, error: String(e?.message ?? e) });
+      }
+    };
+    ready.then(() => self.postMessage({ booted: true }),
+               e => self.postMessage({ booted: false, error: String(e) }));
+  `;
+  return URL.createObjectURL(new Blob([src], { type: 'text/javascript' }));
+}
+
+async function pickBase() {
+  try {
+    const r = await fetch(LOCAL + 'mutsu.js', { method: 'HEAD', cache: 'no-store' });
+    if (r.ok) return [LOCAL, 'local'];
+  } catch (e) {}
+  return [CDN, 'CDN'];
+}
 
 const $ = id => document.getElementById(id);
 const exId = new URLSearchParams(location.search).get('ex') || 'hello';
@@ -97,18 +110,22 @@ $('title').textContent = ex.dataset.title;
 $('code').value = ex.textContent.replace(/^\n/, '').replace(/\s+$/, '\n');
 
 let worker;
-function boot() {
-  worker = new Worker(workerUrl, { type: 'module' });
+async function boot() {
+  const [base, where] = await pickBase();
+  worker = new Worker(workerUrlFor(base), { type: 'module' });
   worker.onmessage = ({ data }) => {
     if ('booted' in data) {
-      $('status').textContent = data.booted ? `mutsu ${VERSION} (wasm) ready` : 'load failed: ' + data.error;
+      $('status').textContent = data.booted
+        ? `mutsu ${VERSION} (wasm, ${where}) ready`
+        : `load failed (${where}): ` + data.error;
+      $('status').style.color = where === 'local' ? '' : '#c2410c';
       $('run').disabled = !data.booted;
       return;
     }
     const ms = (performance.now() - started).toFixed(0);
     $('out').className = data.ok ? '' : 'error';
     $('out').textContent = data.ok ? data.output : data.error;
-    $('status').textContent = `done in ${ms} ms`;
+    $('status').textContent = `done in ${ms} ms (${where})`;
     $('run').disabled = false;
   };
 }
