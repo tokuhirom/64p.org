@@ -7,6 +7,55 @@
 
 数字は 2026-11-22 時点。当日朝に更新するもの → 末尾の「当日更新」参照。
 
+## 歴史の裏取り（2026-11-23 調査）
+
+スライドの「３分間昔話」の各主張について。結論 / 根拠 / URL。
+
+1. **2000年に Perl6 が発表された** — 正しい。2000-07-19、Larry Wall が The Perl Conference 4.0 の State of the Onion で発表
+   - https://en.wikipedia.org/wiki/Raku_(programming_language) ("first announced on 19 July 2000")
+   - https://www.perl.com/pub/2000/07/perl6.html/ (M-J Dominus の当時のレポート)
+   - https://developers.slashdot.org/story/00/07/19/203221/larry-wall-announces-perl-6
+2. **Grammar / Concurrency / CPAN が使える** — おおむね正しい。3つとも 6.c の公式アナウンスに出てくる。CPAN は Inline::Perl5 経由（XS モジュールも可）。当初構想は「Perl5 からの移行・相互運用」（S01 の `use v5`）で、「CPAN がすべて使える」は言い過ぎ気味
+   - https://github.com/rakudo/rakudo/blob/main/docs/announce/2015.12.md ("staying compatible with Perl 5 (via Inline::Perl5)")
+   - https://github.com/niner/Inline-Perl5 ("Supports Perl 5 modules including XS modules")
+   - https://github.com/Raku/old-design-docs/blob/master/S01-overview.pod
+3. **Parrot VM が作られることが発表された** — 2001年。名前は 2001-04-01 のエイプリルフールのジョーク（Perl と Python が合併）が由来で、実際の VM は 2001年9月に登場
+   - https://en.wikipedia.org/wiki/Parrot_virtual_machine
+   - https://www.perl.com/pub/2001/09/18/parrot.html/ ("destined to be the Perl 6 Virtual Machine")
+   - https://developers.slashdot.org/story/01/09/12/133208/parrot-for-real
+4. **Parrot 終了** — 正しい。Rakudo は 2015.03 で Parrot バックエンドを削除。Parrot 本体は 8.1.0 (2016-02) が最終で、2021年8月に開発終了を表明
+   - https://pmthium.com/?p=460 (Patrick Michaud, 2015-02)
+   - https://github.com/rakudo/rakudo/blob/main/docs/announce/2015.03.md ("first release of Rakudo that does *not* support Parrot")
+   - https://github.com/parrot/parrot ("no longer being actively developed ... filled by MoarVM")
+5. **Pugs → Roast** — 正しい。Pugs は 2005-02-01 に Audrey Tang が Haskell で開始、2010-04 に休止。Roast は Pugs 用に作られたテストが元（公式用語集）。Roast README には Pugs 由来の記述はない
+   - https://en.wikipedia.org/wiki/Pugs_(compiler)
+   - https://docs.raku.org/language/glossary#roast ("Originally developed for pugs, it now serves all Raku implementations")
+6. **MoarVM 時代へ** — 正しい。MoarVM 開発開始 2012-03、公表 2013-05。Rakudo 2014.01 で MoarVM 対応、Rakudo Star は 2014.04 から MoarVM 同梱。2015.03 で Parrot が外れて実質 MoarVM が主
+   - https://en.wikipedia.org/wiki/MoarVM
+   - https://github.com/rakudo/rakudo/blob/main/docs/announce/2014.01.md
+   - https://rakudo.org/post/announce-rakudo-star-release-2014-04
+7. **2015年クリスマスに 6.c / 2019年に Raku に改名** — 正しい。6.c は 2015-12-25。改名は 2019年10月（Larry Wall 承認 10/11〜12、マージ報道 10/15）
+   - https://docs.raku.org/language/faq
+   - https://lwn.net/Articles/802329/
+   - https://news.perlfoundation.org/post/tpf-response-raku-rename
+8. **Raku は言語名、Rakudo は実装** — 正しい。Rakudo は Rakuda-do（駱駝道）の略、日本語の「楽土」の意味も
+   - https://docs.raku.org/language/glossary#Rakudo
+9. **仕様はテストとして提供される（Roast）** — 正しい。テストを通るコンパイラがその版の Raku を実装しているとみなされる。6.c は roast の `6.c` タグ / `6.c-errata` ブランチ
+   - https://docs.raku.org/language/faq
+   - https://github.com/Raku/roast
+10. **Rakudo = MoarVM + NQP、「NQP は中間言語」** — 要修正。NQP (Not Quite Perl) は Raku のサブセットの言語で、コンパイラを書くためのもの。中間表現は QAST（MoarVM 向けには MAST）。Rakudo には JVM バックエンドも残っているが実験的扱い
+    - https://github.com/Raku/nqp ("a lightweight Raku-like environment for virtual machines")
+    - https://docs.raku.org/language/glossary ("NQP is a primitive language ... using a subset of the Raku syntax")
+    - https://www.moarvm.org/features.html (MAST)
+    - https://github.com/rakudo/rakudo ("moar and jvm backends")
+11. **MoarVM はレジスタマシン** — 正しい。spesh（型による特化）と JIT も持つ。レジスタマシンと明記した公式文書は見つからず、JIT 開発者 brrt のブログが根拠
+    - https://www.moarvm.org/features.html
+    - https://docs.raku.org/language/glossary#Spesh
+    - https://brrt-to-the-future.blogspot.com/2014/05/moarvm-as-machine.html
+12. **起動時のオーバーヘッド** — 起動が重いのは事実（bench CI で raku -e 相当が 0.117s）。原因を「CORE.setting のデシリアライズ」と断定する現行の一次資料は見つからず。2012年に setting のシリアライズ方式を変えて起動時間が約25%に縮んだ、という jnthn の記事はある
+    - https://raku.github.io/CCR/Remaster/Jonathan%20Worthington/Rakudo-Star-201202-out-and-the-focus-for-201203.html
+    - https://use-perl.github.io/user/JonathanWorthington/journal/39500 (2009, "Rakudo just does a lot of work at startup")
+
 ## tokuhirom の発言・スタンス
 
 - ✅ 11/28 に 1.0.0 を出す。最初の安定版。「まだ使うな」ではない。バグはあると思う
