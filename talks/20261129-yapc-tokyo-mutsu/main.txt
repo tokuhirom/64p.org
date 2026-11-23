@@ -166,11 +166,12 @@ Raku には Roast があるから実装作れるのでは？
 <!-- 2026-11-22 時点で open issue 192 件。当日更新 -->
 <div class="en">It's still not finished.<br>About 200 open issues remain</div>
 ----
-テストがあれば実装が作れる、は嘘です！
-<div class="en">"Tests are all you need to build an implementation" is a lie!</div>
+Roast があっても、テストだけで実装が完成するわけではない
+→ AI のトークン、速いビルド環境、CI の資源、時間が要る
+<div class="en">Even with Roast, tests alone don't finish an implementation<br>You also need AI tokens, fast builds, CI resources, and time</div>
 ----
-(テストがないと作れない、のはほんと)
-<div class="en">(But without tests, you can't build one. That part is true)</div>
+Roast は、実装を進めるための出発点
+<div class="en">Roast gives us a starting point for building one</div>
 ----
 元になるものをこの２つと定める。
 - [Raku/doc](https://github.com/Raku/doc)
@@ -325,11 +326,14 @@ Perl6 はパーサーを自分で差し替えられる。
 → Packrat に全部書き直す羽目になる
 <div class="en">In Raku you can swap out the grammar itself<br>A plain yacc/bison-style parser can't express that<br>Simple cases worked, but...<br>Ended up rewriting it all as a Packrat parser</div>
 ----
-そして今は RakuAST に移行中。
-→ Rakudo 本体も 2026.09 で RakuAST がデフォルトになった
-→ RakuAST は Rakudo の人たちが何年もかけて作ってきたもの
-→ mutsu もそこに追従していく
-<div class="en">Now migrating to RakuAST<br>Rakudo made RakuAST the default in 2026.09<br>RakuAST is years of work by the Rakudo folks<br>and mutsu follows it</div>
+パーサーの次は、パース結果の表現も変えている
+→ パーサーが作る AST を RakuAST に移行中
+→ RakuAST はパーサーではなく、コードの構造を表す AST
+<div class="en">Next, we're changing how we represent the parser's output<br>Moving the AST it produces to RakuAST<br>RakuAST is an AST, not a parser</div>
+----
+Rakudo は 2026.09 で RakuAST をデフォルトにした
+→ Rakudo の人たちが何年もかけて作ってきたものに、mutsu も追従する
+<div class="en">Rakudo made RakuAST the default in 2026.09<br>mutsu is following years of work by the Rakudo team</div>
 ----
 *Byte code interpreter の話
 <div class="en">The bytecode interpreter</div>
@@ -367,6 +371,10 @@ AST の tree walking が実装は簡単
 というルールを決めた
 (2026年6月)
 <div class="en">The rule: "1 operation = 1 implementation"<br>(June 2026)</div>
+----
+新しいバイトコード経路を足すだけでは、二重実装は残る
+→ 旧 tree walker の経路を消すところまでを完了条件にした
+<div class="en">Adding a bytecode path alone leaves two implementations<br>We made removing the old tree-walker path part of "done"</div>
 ----
 ルールを書いても守られない。。
 <div class="en">Rules alone don't get followed...</div>
@@ -421,28 +429,27 @@ JSON::Fast が動かない
 ……それもう JSON::Fast じゃないよね？
 <div class="en">...but that's not JSON::Fast anymore, is it?</div>
 ----
-実際に測ってみたら
-51 個中 42 個はもう動いてた
-<div class="en">When we actually measured:<br>42 of the 51 ops already worked</div>
+JSON::Fast が使う nqp:: op を 51 個洗い出した
+→ mutsu で動かなかったのは 9 個。残り 42 個は動いていた
+<div class="en">We listed the 51 nqp:: ops used by JSON::Fast<br>Only 9 failed in mutsu; the other 42 already worked</div>
 ----
 本物のモジュールをそのまま動かす。
 ネイティブで置き換えるのは禁止。
 (2026年8月)
 <div class="en">Run the real module as-is.<br>No native replacements.<br>(August 2026)</div>
 ----
-逃げ方その3: 「計測した結果、不要と判断しました」
-<div class="en">Escape #3: "Based on measurements, it isn't needed"</div>
+逃げ方その3: 共通の実装を「不要」として後回しにする
+<div class="en">Escape #3: put off shared infrastructure as "unnecessary"</div>
 ----
-7月「nqp:: op の層は作らなくていいです」
-10月 やっぱり作る。111 op 実装。
-<div class="en">July: "We don't need an nqp:: op layer"<br>October: built it anyway, 111 ops</div>
+7月、AI は「nqp:: op の共通層は不要」と主張
+→ でもモジュールを個別に Rust で置き換えても、Raku のコードは動かない
+<div class="en">In July, AI argued that a shared nqp:: op layer was unnecessary<br>But replacing modules one by one in Rust doesn't run their Raku code</div>
 ----
-AI はもっともらしい理由を作るのがうまい
-<div class="en">AI is good at producing plausible reasons</div>
+10月、共通の nqp:: op 層を実装し、111 個の op を追加
+<div class="en">In October, we built the shared nqp:: op layer<br>We added 111 ops</div>
 ----
-なので、完了条件を「古いものが消えたこと」にする
-→ 新しいものができただけでは完了にしない
-<div class="en">So "done" means the old thing is deleted<br>A new thing existing is not enough</div>
+「不要」という説明も、実際に動かしたいコードで確かめる
+<div class="en">Check claims that something is unnecessary against the code we actually want to run</div>
 ----
 *丸投げできないもの
 <div class="en">Things you can't just hand off</div>
@@ -534,15 +541,18 @@ GC を「参照カウント + 非移動 + 世代別じゃない」にしてあ�
 はやい！！！
 <div class="en">Fast!!!</div>
 ----
-教訓: 命令数 ≠ 時間
-→ 行番号を記録するだけの命令 `SetSourceLine` が、実行命令の 21% を占めていた
-→ 消して、代わりに毎命令で行番号を更新したら 7.8% 遅くなった
-<div class="en">Lesson: instruction count ≠ time<br><code>SetSourceLine</code>, which only records line numbers, was 21% of executed instructions<br>Removing it and updating the line on every instruction made it 7.8% slower</div>
+バイトコード VM は、エラー表示のために元のソース行番号を覚えておく
+→ そのための命令 `SetSourceLine` が、fib 実行時の命令数の 21%
+<div class="en">The bytecode VM tracks source lines for error messages<br><code>SetSourceLine</code> accounted for 21% of executed instructions in fib</div>
 ----
-行番号が必要な命令でだけ引くようにして、やっと 3.4% 速くなった
-→ 21% 減らしても 3.4%。JIT 有効時は ±0%
+この命令を消して、毎命令で行番号を更新したら 7.8% 遅くなった
+→ 行番号が必要な命令でだけ調べると 3.4% 速くなった
+<div class="en">Removing it and updating the line on every instruction made fib 7.8% slower<br>Looking up the line only where needed made it 3.4% faster</div>
+----
+教訓: 命令数 ≠ 時間
+→ 命令数を 21% 減らしても、速度は 3.4% 改善。JIT 有効時は ±0%
 <!-- mutsu news/2026-07.md 「baseline optimizations round 5」(#4489)。+7.8% / -3.4% は fib の命令数 -->
-<div class="en">Looking up the line only where needed finally made it 3.4% faster<br>21% fewer instructions, 3.4% gain. ±0% with the JIT on</div>
+<div class="en">Lesson: instruction count ≠ time<br>21% fewer instructions meant a 3.4% gain; ±0% with the JIT on</div>
 ----
 測らないとわからない。。
 <div class="en">You can't know without measuring...</div>
