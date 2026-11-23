@@ -24,7 +24,7 @@ EN = {
 "Rakudo は NQP と Raku で書かれていて、MoarVM の上で動く": "Rakudo is written in NQP and Raku, and runs on MoarVM",
 "MoarVM - Register Machine": "MoarVM: a register machine<br>with spesh (type specialization) and a JIT<br>which makes it harder to implement, I hear",
 "NQP (Not Quite Perl)": "a small Raku for writing Rakudo",
-"ちなみに Perl5 の正規表現は": "By the way, Perl 5 regexes...<br>were removed from both Rakudo and Roast in September 2026<br>and mutsu followed, deleting PCRE2 entirely",
+"たとえば Perl5 の正規表現 (`m:P5/.../`)": "For example, Perl 5 regexes (<code>m:P5/.../</code>)<br>were removed from both Rakudo and Roast in September 2026<br>and mutsu followed, deleting PCRE2 entirely",
 "課題(だと僕が思っているもの)": "What I see as a challenge:<br>startup overhead",
 "*なぜ作るのか": "Why build another one?",
 "Raku 自体は好きなんですよ": "I really like Raku itself",

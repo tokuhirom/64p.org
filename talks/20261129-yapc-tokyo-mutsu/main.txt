@@ -101,12 +101,6 @@ NQP (Not Quite Perl)
 <!-- memo 10 -->
 <div class="en">a small Raku for writing Rakudo</div>
 ----
-ちなみに Perl5 の正規表現は
-→ 2026年9月、Rakudo からも Roast からも削除された
-→ mutsu も追随して PCRE2 ごと消しました
-<!-- memo 14 -->
-<div class="en">By the way, Perl 5 regexes...<br>were removed from both Rakudo and Roast in September 2026<br>and mutsu followed, deleting PCRE2 entirely</div>
-----
 課題(だと僕が思っているもの)
 - 起動時のオーバーヘッドがある
 <div class="en">What I see as a challenge:<br>startup overhead</div>
@@ -841,6 +835,12 @@ mutsu は、Rakudo の人たちが積み上げてきたものの上に乗っか�
 → AI にも「わからなかったら raku -e で確かめろ」と指示してる
 <!-- mutsu AGENTS.md: "raku is the reference oracle" -->
 <div class="en">When in doubt, Rakudo is the answer<br>The AI is told: "if unsure, check with raku -e"</div>
+----
+たとえば Perl5 の正規表現 (`m:P5/.../`)
+→ 2026年9月、Rakudo からも Roast からも削除された
+→ mutsu も追随して PCRE2 ごと消しました
+<!-- memo 14 -->
+<div class="en">For example, Perl 5 regexes (<code>m:P5/.../</code>)<br>were removed from both Rakudo and Roast in September 2026<br>and mutsu followed, deleting PCRE2 entirely</div>
 ----
 Rakudo のコードもそのまま使わせてもらってる
 → `.DEPARSE` は Rakudo の RakuAST::Deparse をそのまま同梱

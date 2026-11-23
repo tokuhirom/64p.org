@@ -14,6 +14,9 @@
     - https://rakudo.org/post/announce-rakudo-star-release-2017-01
     - 注意: mutsu の PLAN.md は「公式エコシステムに batteries-included のディストリビューションはない」と書いているが、Rakudo Star がモジュール同梱の配布物として存在する。スライドでは「Rakudo Star が2010年からやってきたこと」と明記した
 
+- 💤 同梱モジュール数の比較: Rakudo Star の etc/modules.txt は 76 エントリ（依存込み、zef で入れる）。mutsu の batteries.lock は 43。数では Rakudo Star のほうが多い。違いは中身（mutsu は Cro::HTTP や Text::CSV、Star は LibXML・HTTP::UserAgent・Getopt::Long など）と、バイナリ1個 + mise / Docker / wasm という配り方
+    - https://github.com/rakudo/star/blob/master/etc/modules.txt
+
 ## Roast の物差し
 
 - ✅ mutsu #19036 → PR #19043 (2026-11-23 マージ) で spectest.data 基準に統一。`scripts/roast-compat.py`、定義は `docs/roast-compatibility.md`
