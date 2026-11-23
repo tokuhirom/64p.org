@@ -7,6 +7,12 @@
 
 数字は 2026-11-22 時点。当日朝に更新するもの → 末尾の「当日更新」参照。
 
+## Roast の物差し
+
+- ✅ mutsu #19036 → PR #19043 (2026-11-23 マージ) で spectest.data 基準に統一。`scripts/roast-compat.py`、定義は `docs/roast-compatibility.md`
+- ✅ pseudo-6c/6d/6e は PR #19007 で whitelist 入り → 1,425 / 1,425
+- 💤 1,425/1,425 は whitelist ベース。spectest.data 列での実測は次の定期実行から HISTORY.tsv に入る
+
 ## 歴史の裏取り（2026-11-23 調査）
 
 スライドの「３分間昔話」の各主張について。結論 / 根拠 / URL。
@@ -225,7 +231,8 @@
 
 ## 当日更新
 
-- [ ] Roast の数（HISTORY.tsv）と グラフ再生成: `python3 gen-history-graph.py ../../../mutsu/HISTORY.tsv history-pass.svg`
+- [ ] Roast の数: mutsu で `scripts/roast-compat.py count`、HISTORY.tsv の `spec_pass` 列に実測が入っているか確認（PR #19043 以降、定期実行で入る）
+- [ ] グラフ再生成: `python3 gen-history-graph.py ../../../mutsu/HISTORY.tsv history-pass.svg`（spec_pass があれば橙線で重なる）
 - [ ] コミット数・PR 数・issue 数・open issue 数
 - [ ] ベンチ（bench-data ブランチの最新コミット）
 - [ ] ecosystem pass rate
