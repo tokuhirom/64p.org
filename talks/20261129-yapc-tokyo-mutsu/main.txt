@@ -35,34 +35,55 @@ Perl6 と呼ばれていたもの
 ----
 - Grammar
 - Concurrency
-- CPAN module もすべて使える
+- Perl5 との相互運用 (CPAN module も使える)
+- Perl5 の正規表現もそのまま使える (`m:P5/.../`)
 - etc. etc.
+<!-- 6.c アナウンスに Grammar/並行/Inline::Perl5 の3つ。memo「歴史の裏取り」2, 14 -->
 ----
 最強では？？
 ----
-Parrot VM が作られることが発表されました
+2001年、Parrot VM が作られることが発表されました
+→ 名前の由来はエイプリルフールのネタ (Perl と Python が合併！)
+<!-- memo 3 -->
+----
+Parrot は多言語 VM を目指してた
+→ Perl も Python も Ruby も動く！
+<!-- memo 13 -->
+----
+2005年 Pugs
+→ Audrey Tang さんが Haskell で書いた実装
+<!-- memo 5 -->
+----
+Pugs のために書かれたテストが Roast になった。
+仕様はテストとして提供されるようになった。
+<!-- memo 5, 9 -->
 ----
 そしてParrot終了
+<!-- Rakudo 2015.03 で Parrot バックエンド削除。memo 4 -->
 ----
 MoarVM 時代へ
 ----
 2015年のクリスマスに 6.c がリリース。
 2019年に Raku に改名。
+<!-- memo 7 -->
 ----
 Raku とは言語名。
 Rakudo は実装。
 ----
-Roast というものができた。
-仕様はテストとして提供されるようになった。
-----
-Rakudo は MoarVM と NQP からなっている
+Rakudo は NQP と Raku で書かれていて、MoarVM の上で動く
 ----
 MoarVM - Register Machine
 - 高速化できるらしい
 - 実装の難易度が上がるらしい
 ----
-NQP
-- 中間言語
+NQP (Not Quite Perl)
+- Rakudo を書くための小さな Raku
+<!-- memo 10 -->
+----
+ちなみに Perl5 の正規表現は
+→ 2026年9月、Rakudo からも Roast からも削除された
+→ mutsu も追随して PCRE2 ごと消しました
+<!-- memo 14 -->
 ----
 課題(だと僕が思っているもの)
 - 起動時のオーバーヘッドがある
