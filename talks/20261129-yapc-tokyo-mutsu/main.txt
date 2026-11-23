@@ -67,6 +67,12 @@ Pugs のために書かれたテストが Roast になった。
 <!-- memo 5, 9 -->
 <div class="en">The tests written for Pugs grew into Roast.<br>The spec became a test suite.</div>
 ----
+2010年 Rakudo Star
+→ コンパイラ + モジュール + ドキュメントをまとめた配布物
+→ "a useful and usable distribution of Perl 6"
+<!-- 2010-07-29 初リリース (early adopter 向け、Parrot 上)。今もほぼ毎月リリース中 (最新 2026.11)。memo「歴史の裏取り」15 -->
+<div class="en">2010: Rakudo Star<br>a distribution bundling the compiler, modules and docs<br>"a useful and usable distribution of Perl 6"</div>
+----
 2014年 MoarVM 登場
 → 2015年、Rakudo は Parrot から MoarVM へ
 <!-- Rakudo 2014.01 で MoarVM 対応、2015.03 で Parrot バックエンド削除。memo 4, 6 -->
@@ -748,6 +754,11 @@ ecosystem
 batteries included にしたい
 → Raku 版の bun みたいなやつ
 <div class="en">Aiming for batteries included<br>something like bun, for Raku</div>
+----
+モジュールを同梱する配布物は、Rakudo Star が2010年からやってきたこと
+→ mutsu はそれを「バイナリ1個 + mise 一発」でやってみてる
+<!-- Rakudo Star は今も継続中 (2026.11)。同梱モジュールは zef で入れる方式 -->
+<div class="en">Bundling modules is what Rakudo Star has done since 2010<br>mutsu tries it as "one binary + one mise command"</div>
 ----
 同梱してるもの
 - Cro::HTTP

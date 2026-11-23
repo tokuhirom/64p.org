@@ -16,6 +16,8 @@ EN = {
 "Parrot は多言語 VM を目指してた": "Parrot aimed to be a VM for many languages<br>Perl, Python, Ruby...",
 "2005年 Pugs": "2005: Pugs<br>An implementation written in Haskell by Audrey Tang",
 "Pugs のために書かれたテストが Roast になった。": "The tests written for Pugs grew into Roast.<br>The spec became a test suite.",
+"2010年 Rakudo Star": "2010: Rakudo Star<br>a distribution bundling the compiler, modules and docs<br>\"a useful and usable distribution of Perl 6\"",
+"モジュールを同梱する配布物は、Rakudo Star が2010年からやってきたこと": "Bundling modules is what Rakudo Star has done since 2010<br>mutsu tries it as \"one binary + one mise command\"",
 "2014年 MoarVM 登場": "2014: MoarVM arrives<br>2015: Rakudo moves from Parrot to MoarVM",
 "2015年のクリスマスに 6.c がリリース。": "Christmas 2015: 6.c is released.<br>2019: renamed to Raku.",
 "Raku とは言語名。": "Raku is the language.<br>Rakudo is an implementation.",

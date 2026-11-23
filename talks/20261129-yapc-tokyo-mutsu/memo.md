@@ -7,6 +7,13 @@
 
 数字は 2026-11-22 時点。当日朝に更新するもの → 末尾の「当日更新」参照。
 
+15. **Rakudo Star** — 2010-07-29 初リリース。コンパイラ + エコシステムのモジュール + ドキュメントのバンドル。当時の売り文句は "a useful and usable distribution of Perl 6"、"early adopter" 向けで「1.0 ではない」と明言。2017.01 で zef 同梱開始、panda は 2017 に非推奨→削除。今もほぼ毎月リリース（最新 2026.11, 2026-11-17）。公式には "batteries included" という表現は使っていない（"useful and usable"）
+    - https://rakudo.org/star
+    - https://github.com/rakudo/star
+    - https://rakudo.org/post/rakudo-star-2010-07
+    - https://rakudo.org/post/announce-rakudo-star-release-2017-01
+    - 注意: mutsu の PLAN.md は「公式エコシステムに batteries-included のディストリビューションはない」と書いているが、Rakudo Star がモジュール同梱の配布物として存在する。スライドでは「Rakudo Star が2010年からやってきたこと」と明記した
+
 ## Roast の物差し
 
 - ✅ mutsu #19036 → PR #19043 (2026-11-23 マージ) で spectest.data 基準に統一。`scripts/roast-compat.py`、定義は `docs/roast-compatibility.md`
