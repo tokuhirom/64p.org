@@ -94,7 +94,10 @@
 - ✅ 2026-09-29 v5.0.0 で Roast 100.00%（テスト単位 218,421 / 218,422）、9/30 v5.1.0 でファイル単位 1,424 / 1,424
 - 💤 9月前半はまだ 646〜676 / 1,464 files → 9/29 で一気に 100%（分母の数え方が途中で変わっている）
 - 💤 最新は v5.10.0（2026-11-19）で 1,425 / 1,425 files
-- 出典: https://github.com/ash/rakupp/blob/main/docs/status/MILESTONES.md
+- 💤 rakupp の 100% は spectest.data（Rakudo が「通るはず」として走らせるリスト, 1,425 files）が分母で、#?rakudo skip/todo を除外した数え方
+- 💤 同じ物差しで数えると mutsu も 1,422 / 1,425（99.8%）。残りは pseudo-6c/6d/6e の3ファイルだけ
+  → mutsu 側の基準を揃える issue: https://github.com/tokuhirom/mutsu/issues/19036
+- 出典: https://github.com/ash/rakupp/blob/main/docs/status/MILESTONES.md, https://github.com/ash/rakupp/blob/main/docs/status/COUNTING.md
 - ✅ bench CI で 9 月から rakupp v5.0.1 も計測
 - 💤 tree-walking evaluator。`--exe` でネイティブバイナリ化、Raku.js として WASM、`rakupp --mcp` で MCP サーバ
 - 💤 ecosystem は 1,182 / 2,584 dist が自身のテストを通過（README）
