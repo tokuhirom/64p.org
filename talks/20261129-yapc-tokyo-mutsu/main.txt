@@ -3,6 +3,7 @@ mutsu - 令和の時代に JIT 搭載の Raku インタープリタを実装し�
 YAPC::Tokyo 2026
 tokuhirom
 </div>
+<div class="en">mutsu: Building a Raku Interpreter with a JIT in the Reiwa Era</div>
 <!--
 40分の時間配分(目安)
  0:00 昔話                     4分
@@ -22,16 +23,21 @@ tokuhirom
 ----
 Raku はご存知？
 Perl6 と呼ばれていたもの
+<div class="en">Do you know Raku?<br>It used to be called Perl 6</div>
 ----
 *３分間昔話をします
+<div class="en">A 3-minute history lesson</div>
 ----
 2005年に就職してから Perl5 を使いはじめたのですが
+<div class="en">I started using Perl 5 when I got my first job in 2005</div>
 ----
 <!-- https://gihyo.jp/dev/serial/01/perl-hackers-hub/003901 -->
 2000年にぶち上げられたプロジェクトが Perl6
 実に26年経過しました。
+<div class="en">Perl 6 was announced in 2000.<br>That was 26 years ago.</div>
 ----
 どんなことができるようになるのか
+<div class="en">What was it going to give us?</div>
 ----
 - Grammar
 - Concurrency
@@ -39,110 +45,142 @@ Perl6 と呼ばれていたもの
 - Perl5 の正規表現もそのまま使える (`m:P5/.../`)
 - etc. etc.
 <!-- 6.c アナウンスに Grammar/並行/Inline::Perl5 の3つ。memo「歴史の裏取り」2, 14 -->
+<div class="en">Grammars / Concurrency / Interop with Perl 5 (CPAN modules) / Perl 5 regexes as-is / and more</div>
 ----
 2001年、Parrot VM が作られることが発表されました
 → 名前の由来はエイプリルフールのネタ (Perl と Python が合併！)
 <!-- memo 3 -->
+<div class="en">2001: the Parrot VM is announced<br>(the name came from an April Fools' joke: Perl and Python merging!)</div>
 ----
 Parrot は多言語 VM を目指してた
 → Perl も Python も Ruby も動く！
 <!-- memo 13 -->
+<div class="en">Parrot aimed to be a VM for many languages<br>Perl, Python, Ruby...</div>
 ----
 2005年 Pugs
 → Audrey Tang さんが Haskell で書いた実装
 <!-- memo 5 -->
+<div class="en">2005: Pugs<br>An implementation written in Haskell by Audrey Tang</div>
 ----
 Pugs のために書かれたテストが Roast になった。
 仕様はテストとして提供されるようになった。
 <!-- memo 5, 9 -->
+<div class="en">The tests written for Pugs grew into Roast.<br>The spec became a test suite.</div>
 ----
 2014年 MoarVM 登場
 → 2015年、Rakudo は Parrot から MoarVM へ
 <!-- Rakudo 2014.01 で MoarVM 対応、2015.03 で Parrot バックエンド削除。memo 4, 6 -->
+<div class="en">2014: MoarVM arrives<br>2015: Rakudo moves from Parrot to MoarVM</div>
 ----
 2015年のクリスマスに 6.c がリリース。
 2019年に Raku に改名。
 <!-- memo 7 -->
+<div class="en">Christmas 2015: 6.c is released.<br>2019: renamed to Raku.</div>
 ----
 Raku とは言語名。
 Rakudo は実装。
+<div class="en">Raku is the language.<br>Rakudo is an implementation.</div>
 ----
 Rakudo は NQP と Raku で書かれていて、MoarVM の上で動く
+<div class="en">Rakudo is written in NQP and Raku, and runs on MoarVM</div>
 ----
 MoarVM - Register Machine
 - spesh (型で特化する最適化) と JIT を持ってる
 - そのぶん実装の難易度は上がるらしい
 <!-- memo「歴史の裏取り」11 -->
+<div class="en">MoarVM: a register machine<br>with spesh (type specialization) and a JIT<br>which makes it harder to implement, I hear</div>
 ----
 NQP (Not Quite Perl)
 - Rakudo を書くための小さな Raku
 <!-- memo 10 -->
+<div class="en">a small Raku for writing Rakudo</div>
 ----
 ちなみに Perl5 の正規表現は
 → 2026年9月、Rakudo からも Roast からも削除された
 → mutsu も追随して PCRE2 ごと消しました
 <!-- memo 14 -->
+<div class="en">By the way, Perl 5 regexes...<br>were removed from both Rakudo and Roast in September 2026<br>and mutsu followed, deleting PCRE2 entirely</div>
 ----
 課題(だと僕が思っているもの)
 - 起動時のオーバーヘッドがある
+<div class="en">What I see as a challenge:<br>startup overhead</div>
 ----
 *なぜ作るのか
+<div class="en">Why build another one?</div>
 ----
 Raku 自体は好きなんですよ
+<div class="en">I really like Raku itself</div>
 ----
 でも、ちょっとしたスクリプトを書くには起動が重い。。
 → `raku -e ''` で 0.1 秒以上かかる
 <!-- bench-startup: raku 0.117s (Rakudo v2026.07, bench CI 2026-11-22) -->
+<div class="en">But startup feels heavy for small scripts...<br><code>raku -e ''</code> takes over 0.1 seconds</div>
 ----
 これって言語仕様のせいなの？
 実装の工夫で縮められるの？
+<div class="en">Is that because of the language spec?<br>Or can implementation choices shrink it?</div>
 ----
 僕の仮説
 → Rakudo はコンパイラも標準ライブラリも NQP と Raku で書かれていて、起動のたびにそれを読み込んでるから？
 → (ちゃんと調べたわけではないです)
 <!-- 起動が遅い原因を断定する現行の一次資料は見つからなかった。memo「歴史の裏取り」12 -->
+<div class="en">My hypothesis:<br>Rakudo's compiler and core library are written in NQP and Raku, and are loaded at every startup?<br>(I haven't actually verified this)</div>
 ----
 MoarVM にも spesh や JIT はある
 → でも、起動まで含めて別の設計にしたらどうなる？
+<div class="en">MoarVM does have spesh and a JIT<br>But what if we chose a different design, including startup?</div>
 ----
 Rust で全部書き直して JIT を載せたら
 速くなるのでは？
+<div class="en">What if we rewrote everything in Rust and added a JIT?<br>Would it be faster?</div>
 ----
 (Rakudo をディスりたいわけではないです)
 → 同じ言語仕様でもここまでやれる、を見せたい
 → それが Rakudo 側の改善のヒントになったら嬉しい
+<div class="en">(This is not a criticism of Rakudo)<br>I want to show how far the same language spec can go<br>and I'd be happy if it gives hints for improving Rakudo</div>
 ----
 とはいえ Raku の言語仕様はでかい。。
 → 一人で書くのはさすがに無理
+<div class="en">But Raku is a big language...<br>Too much for one person</div>
 ----
 ときは大AI時代
+<div class="en">Enter the age of AI</div>
 ----
 - テストがあれば実装は作れるらしい
 - テストを非公開にするプロジェクトが登場
+<div class="en">"If you have tests, you can build an implementation", they say<br>Some projects even started keeping their tests private</div>
 ----
 ( ﾟдﾟ)ﾊｯ!
 Raku には Roast があるから実装作れるのでは？
+<div class="en">Wait a minute!<br>Raku has Roast, so maybe I can build one?</div>
 ----
 (Roast を20年積み上げてきた人たちのおかげです)
+<div class="en">(Thanks to everyone who built up Roast over 20 years)</div>
 ----
 作ってみようと思いたつ
 (2026年2月)
+<div class="en">So I decided to try<br>(February 2026)</div>
 ----
 いまだ完成していない。
 → open な issue があと 200 くらいある
 <!-- 2026-11-22 時点で open issue 192 件。当日更新 -->
+<div class="en">It's still not finished.<br>About 200 open issues remain</div>
 ----
 テストがあれば実装が作れる、は嘘です！
+<div class="en">"Tests are all you need to build an implementation" is a lie!</div>
 ----
 (テストがないと作れない、のはほんと)
+<div class="en">(But without tests, you can't build one. That part is true)</div>
 ----
 元になるものをこの２つと定める。
 - [Raku/doc](https://github.com/Raku/doc)
 - [Raku/roast](https://github.com/Raku/roast)
 この２つをsubmoduleとしておく。
+<div class="en">Two sources of truth: Raku/doc and Raku/roast<br>Both added as git submodules</div>
 ----
 最初のゴールを設定する
 - **roast が全部通ること**
+<div class="en">The first goal:<br>pass all of roast</div>
 ----
 AI に document を読ませて、どういう実装手順で実装していくかを考える。
 - Language Core
@@ -153,60 +191,81 @@ AI に document を読ませて、どういう実装手順で実装していく�
 - Optimiziation
 - GC
 - REPL/Debugger, etc.
+<div class="en">Had the AI read the docs and plan the implementation steps</div>
 ----
 良さそう！！！
+<div class="en">Looks good!!!</div>
 ----
 ゴリゴリ実装していく。。
+<div class="en">And then: lots and lots of implementing...</div>
 ----
 *ちなみに今どれぐらいの規模かというと
+<div class="en">How big is it now?</div>
 ----
 2026年2月から約10ヶ月
 <!-- repo created 2026-02-05 -->
+<div class="en">About 10 months since February 2026</div>
 ----
 コミット数 33,457
 <!-- GitHub API, 2026-11-22 -->
+<div class="en">33,457 commits</div>
 ----
 マージした PR 14,851
 → 1日 50 PR ぐらい
+<div class="en">14,851 merged pull requests<br>about 50 per day</div>
 ----
 issue 3,902
+<div class="en">3,902 issues</div>
 ----
 Rust のコード 約108万行
 <!-- find src -name '*.rs' | xargs cat | wc -l / 2,975 files -->
+<div class="en">About 1.08 million lines of Rust</div>
 ----
 t/ のテストファイル 11,466
+<div class="en">11,466 test files in t/</div>
 ----
 ADR(設計判断の記録) 236本
+<div class="en">236 ADRs (architecture decision records)</div>
 ----
 ……どうしてこうなった？
+<div class="en">...how did this happen?</div>
 ----
 僕はほぼコードを書いてない。
+<div class="en">I wrote almost none of the code myself.</div>
 ----
 燃料は Claude の Ultra プラン
 (2月当時は Max 20x という名前でした)
 <!-- 2026-10-30 頃に Max 20x (月$200) が Ultra に改名。memo「AI の利用」参照 -->
+<div class="en">Fuel: Claude's Ultra plan<br>(called Max 20x back in February)</div>
 ----
 2月からずっとぶん回してる
 → 途中、ほかのことにも AI は使ってたけど
 → かなりの部分を mutsu に注ぎ込んでる
+<div class="en">Running it hard since February<br>I used AI for other things too,<br>but a large part went into mutsu</div>
 ----
 僕がやってるのは
 - ゴールを決める
 - 判断する
 - 押し戻す
 くらい
+<div class="en">What I do:<br>set goals / make decisions / push back</div>
 ----
 *KPI の話
+<div class="en">On KPIs</div>
 ----
 HISTORY-pass.svg というファイルを用意。
 Roast の達成率を描くグラフ。
 レポジトリにコミット。更新していく。
+<div class="en">A graph of Roast progress (HISTORY-pass.svg), committed to the repo and updated</div>
 ----
 <img src="history-pass.svg" style="max-width:95%; max-height:80vh;">
+<div class="en">Roast: files passing over time</div>
 ----
 右肩上がりになっていくので、楽しい
+<div class="en">Watching it go up is fun</div>
 ----
 趣味のOSS 開発で一番むずかしいのは、モチベーションの維持なので。。
+<div class="en">The hardest part of hobby OSS is staying motivated...</div>
 ----
 - 2月 147 からスタート
 - 2月末 500 突破
@@ -214,222 +273,292 @@ Roast の達成率を描くグラフ。
 - 6月 1200 突破
 - 7月 1271 でほぼ頭打ち
 <!-- HISTORY.tsv 分母は約1290 -->
+<div class="en">Feb: started at 147 / end of Feb: 500 / Apr: 1000 / Jun: 1200 / Jul: 1271, nearly flat</div>
 ----
 2月だけで 147 → 566
 → 簡単なところから埋まっていく
+<div class="en">147 → 566 in February alone<br>The easy ones get filled in first</div>
 ----
 4月あたりから伸びが鈍る
 → 残ってるのは難しいテストばかり
+<div class="en">Progress slowed around April<br>Only hard tests were left</div>
 ----
 襲い来る難しさ。。
+<div class="en">Here come the hard parts...</div>
 ----
 Roast を通す件数を KPI として設定する
 → 目先のテストを通すことに全力投球！してくれる
+<div class="en">Set the number of passing Roast tests as the KPI<br>The AI goes all-in on passing the next test</div>
 ----
 全力投球しすぎる。。
 → テスト専用のハック
 → ハードコード
 → 通しやすいテストのつまみ食い
+<div class="en">A little too all-in...<br>test-specific hacks / hard-coding / cherry-picking easy tests</div>
 ----
 AGENTS.md に「つまみ食い禁止」と書く羽目に
+<div class="en">Had to write "no cherry-picking" in AGENTS.md</div>
 ----
 KPI は大事。
 でも KPI はハックされる。
+<div class="en">KPIs matter.<br>But KPIs get gamed.</div>
 ----
 5月、「実用性」に舵を切る
 → Roast が通っても、普通のプログラムが動くとは限らない
+<div class="en">May: steering toward practicality<br>Passing Roast doesn't mean ordinary programs work</div>
 ----
 KPI を変えていく
 - roast pass rate
 - → ベンチマーク (raku との比較)
 - → ecosystem pass rate
+<div class="en">Changing the KPI:<br>roast pass rate → benchmarks (vs raku) → ecosystem pass rate</div>
 ----
 *パーサーの話
+<div class="en">The parser</div>
 ----
 パーサー、普通に実装させてたら詰んだ。
+<div class="en">Letting the AI write an ordinary parser hit a wall.</div>
 ----
 Perl6 はパーサーを自分で差し替えられる。
 → 普通の yacc/bison 的なパーサーでは表現できない
 → 簡単なケースは通せてたんだけど。。
 → Packrat に全部書き直す羽目になる
+<div class="en">In Raku you can swap out the grammar itself<br>A plain yacc/bison-style parser can't express that<br>Simple cases worked, but...<br>Ended up rewriting it all as a Packrat parser</div>
 ----
 そして今は RakuAST に移行中。
 → Rakudo 本体も 2026.09 で RakuAST がデフォルトになった
 → RakuAST は Rakudo の人たちが何年もかけて作ってきたもの
 → mutsu もそこに追従していく
+<div class="en">Now migrating to RakuAST<br>Rakudo made RakuAST the default in 2026.09<br>RakuAST is years of work by the Rakudo folks<br>and mutsu follows it</div>
 ----
 *Byte code interpreter の話
+<div class="en">The bytecode interpreter</div>
 ----
 Byte code interpreter にしたいと思い立つ。
+<div class="en">I wanted a bytecode interpreter.</div>
 ----
 AST の tree walking が実装は簡単
 → AIが byte code interpreter を嫌がる。。
 → Roast を通すという Goal 設定と矛盾しているからですよね。。
 → とにかく文句言ってくる
+<div class="en">Tree-walking the AST is easier to implement<br>The AI disliked the bytecode interpreter...<br>Because it conflicted with the goal of passing Roast<br>It kept pushing back</div>
 ----
 バイトコードで実装してね、と言っても
 → 「とりあえず tree walking で fallback しておきました！」
+<div class="en">Even when I asked for bytecode:<br>"I added a tree-walking fallback for now!"</div>
 ----
 (´・ω・`)
+<div class="en">(sigh)</div>
 ----
 結局ずるずる後回しにしていたが、、最終的に、この置換に一ヶ月かかった。
 → バイトコードインタープリタとtree walker が並行してると、二重に実装がある。
 → コードを直したのに直らない！ とかいって混乱する
+<div class="en">I kept putting it off, and the switch finally took a month.<br>With a bytecode VM and a tree walker side by side, everything exists twice<br>"I fixed it but it's still broken!"</div>
 ----
 人間も AI も、間違ったほうのコピーを直す
+<div class="en">Humans and AI alike fix the wrong copy</div>
 ----
 しかも二つの実装の挙動が微妙にずれてくる
 → codepoint 単位なのか grapheme 単位なのか
 → `div` の丸め方向
+<div class="en">And the two copies slowly drift apart<br>codepoints vs graphemes / rounding direction of <code>div</code></div>
 ----
 「1 operation = 1 implementation」
 というルールを決めた
 (2026年6月)
+<div class="en">The rule: "1 operation = 1 implementation"<br>(June 2026)</div>
 ----
 ルールを書いても守られない。。
+<div class="en">Rules alone don't get followed...</div>
 ----
 なので CI でチェックする
 → `make check-slow-path`
 → tree walking の fallback は減るのは OK、増えたら落ちる
+<div class="en">So CI enforces it<br><code>make check-slow-path</code>: fallbacks may decrease, never increase</div>
 ----
 6月、VM と Interpreter で二重に持ってるストアを消したい
+<div class="en">June: I wanted to remove the store duplicated between the VM and the interpreter</div>
 ----
 AI「構造的に不可能です」
+<div class="en">AI: "That is structurally impossible."</div>
 ----
 僕「設計からやり直して」
+<div class="en">Me: "Redesign it from scratch."</div>
 ----
 → 再設計したら、消えた
+<div class="en">After the redesign, it was gone</div>
 ----
 AI の「不可能」は
 「今の設計の延長だと不可能」くらいの意味
+<div class="en">When AI says "impossible",<br>it means "impossible as an extension of the current design"</div>
 ----
 *小さい差分に逃げる問題
+<div class="en">Escaping into small diffs</div>
 ----
 大きな設計変更をお願いすると
+<div class="en">When you ask for a big design change...</div>
 ----
 - 小さいスライスだけ出してくる
 - 設計ドキュメントだけ書いて終わる
 - 「リスクが高いので」
+<div class="en">It delivers only a tiny slice / writes a design doc and stops / "It's too risky"</div>
 ----
 (´・ω・`)
+<div class="en">(sigh)</div>
 ----
 AGENTS.md に "Refactor boldly" と書く
 → 「難しい/大きい/リスクが高い」は止まる理由にならない
+<div class="en">Wrote "Refactor boldly" in AGENTS.md<br>"Too hard / too big / too risky" is not a reason to stop</div>
 ----
 逃げ方その2: ネイティブ実装で置き換える
+<div class="en">Escape #2: replace it with a native implementation</div>
 ----
 JSON::Fast が動かない
 → AI「nqp:: op が 50 個ぐらい足りないので、Rust でネイティブ実装しました！」
 → ベンチが 1000 倍速くなりました！
+<div class="en">JSON::Fast didn't run<br>AI: "About 50 nqp:: ops are missing, so I reimplemented it natively in Rust!"<br>"The benchmark is 1000x faster!"</div>
 ----
 ……それもう JSON::Fast じゃないよね？
+<div class="en">...but that's not JSON::Fast anymore, is it?</div>
 ----
 実際に測ってみたら
 51 個中 42 個はもう動いてた
+<div class="en">When we actually measured:<br>42 of the 51 ops already worked</div>
 ----
 本物のモジュールをそのまま動かす。
 ネイティブで置き換えるのは禁止。
 (2026年8月)
+<div class="en">Run the real module as-is.<br>No native replacements.<br>(August 2026)</div>
 ----
 逃げ方その3: 「計測した結果、不要と判断しました」
+<div class="en">Escape #3: "Based on measurements, it isn't needed"</div>
 ----
 7月「nqp:: op の層は作らなくていいです」
 10月 やっぱり作る。111 op 実装。
+<div class="en">July: "We don't need an nqp:: op layer"<br>October: built it anyway, 111 ops</div>
 ----
 AI はもっともらしい理由を作るのがうまい
+<div class="en">AI is good at producing plausible reasons</div>
 ----
 なので、完了条件を「古いものが消えたこと」にする
 → 新しいものができただけでは完了にしない
+<div class="en">So "done" means the old thing is deleted<br>A new thing existing is not enough</div>
 ----
 *丸投げできないもの
+<div class="en">Things you can't just hand off</div>
 ----
 - GC
 - NaN-boxing
 - JIT
+<div class="en">GC / NaN-boxing / JIT</div>
 ----
 ここは AI と相談しながらも、最後は自分で決める
+<div class="en">I discuss these with the AI, but I make the final call</div>
 ----
 *GC
 ----
 最初は Arc (参照カウント) だけで動いてた
 → 循環参照がリークする
+<div class="en">At first it was just Arc (reference counting)<br>Cycles leaked</div>
 ----
 Raku だと循環参照はわりと普通に出てくる
 - 再帰するクロージャ
 - 親子関係のオブジェクト
 - Promise / Supply
+<div class="en">Cycles are common in Raku:<br>recursive closures / parent-child objects / Promise, Supply</div>
 ----
 GC がないインタープリタは、誰も使ってくれない
+<div class="en">Nobody will use an interpreter that leaks cycles</div>
 ----
 選んだのは
 非移動 (non-moving) の参照カウント + cycle collector
 <!-- ADR-0001 (2026-06-27) -->
+<div class="en">The choice:<br>non-moving reference counting + a cycle collector</div>
 ----
 なぜ？
 → Rust の Value がそこら中のスタックに生で転がってる
 → moving GC にすると、それを全部追いかけないといけない
 → 動かさないなら JIT もシンプルにできる
+<div class="en">Why?<br>Rust Values live raw on stacks everywhere<br>A moving GC would have to track all of them<br>Non-moving keeps the JIT simple too</div>
 ----
 7月5日 GC デフォルト on
+<div class="en">July 5: GC on by default</div>
 ----
 *NaN-boxing
 ----
 Value のサイズが 48 バイトもあった
+<div class="en">A Value was 48 bytes</div>
 ----
 NaN-boxing で 8 バイトに
 (7月12日)
+<div class="en">NaN-boxing brought it down to 8 bytes<br>(July 12)</div>
 ----
 コンパイルエラー 708 箇所
 → `cargo fix` で 558
 → 残り 150 は AI 4 体で並列に直す
+<div class="en">708 compile errors<br>558 fixed by <code>cargo fix</code><br>the other 150 by 4 AI agents in parallel</div>
 ----
 *JIT
 ----
 バックエンドは Cranelift
+<div class="en">Backend: Cranelift</div>
 ----
 - LLVM は重い (ビルドも起動も)
 - 手書きのアセンブラは CPU ごとにメンテが要る
 - Cranelift は pure Rust で、wasmtime での実績もある
+<div class="en">LLVM is heavy (build and startup) / hand-written assembly needs per-CPU maintenance / Cranelift is pure Rust and proven in wasmtime</div>
 ----
 method JIT にする
 → tracing JIT はやらない
 → OSR も最初はやらない
+<div class="en">A method JIT<br>no tracing JIT<br>no OSR at first</div>
 ----
 GC → NaN-boxing → JIT
 この順番は最初に決めておいた
+<div class="en">GC → NaN-boxing → JIT<br>This order was decided up front</div>
 ----
 GC を「参照カウント + 非移動 + 世代別じゃない」にしてあるので
 → JIT はスタックマップも write barrier もいらない
 → 参照カウントの増減さえ正しく出せばいい
 <!-- ADR-0004 §2.4, ADR-0001 -->
+<div class="en">Because the GC is refcounting + non-moving + non-generational,<br>the JIT needs no stack maps and no write barriers<br>It just has to emit the refcount increments and decrements correctly</div>
 ----
 実装開始から JIT デフォルト on まで 2日
 (7月12日〜13日)
 <!-- 最初の JIT PR #4471 作成 2026-07-12 20:45 JST → デフォルト on の #4482 マージ 2026-07-13 11:48 JST。PR ベースだと約15時間 -->
+<div class="en">2 days from starting the JIT to turning it on by default<br>(July 12-13)</div>
 ----
 7月13日 JIT デフォルト on
+<div class="en">July 13: JIT on by default</div>
 ----
 はやい！！！
+<div class="en">Fast!!!</div>
 ----
 教訓: 命令数 ≠ 時間
 → 行番号を記録するだけの命令 `SetSourceLine` が、実行命令の 21% を占めていた
 → 消して、代わりに毎命令で行番号を更新したら 7.8% 遅くなった
+<div class="en">Lesson: instruction count ≠ time<br><code>SetSourceLine</code>, which only records line numbers, was 21% of executed instructions<br>Removing it and updating the line on every instruction made it 7.8% slower</div>
 ----
 行番号が必要な命令でだけ引くようにして、やっと 3.4% 速くなった
 → 21% 減らしても 3.4%。JIT 有効時は ±0%
 <!-- mutsu news/2026-07.md 「baseline optimizations round 5」(#4489)。+7.8% / -3.4% は fib の命令数 -->
+<div class="en">Looking up the line only where needed finally made it 3.4% faster<br>21% fewer instructions, 3.4% gain. ±0% with the JIT on</div>
 ----
 測らないとわからない。。
+<div class="en">You can't know without measuring...</div>
 ----
 *ベンチマーク
+<div class="en">Benchmarks</div>
 ----
 bench CI というのを作った
 - 全ベンチを JIT on/off で計測
 - 毎回 rakudo と比べる
 - 7回の中央値
+<div class="en">A benchmark CI:<br>every benchmark with JIT on and off / compared with rakudo every time / median of 7 runs</div>
 ----
 数字を出すのは勝ち負けのためじゃなくて
 → 同じ Raku のコードがどこまで速くなりうるか、の目安
+<div class="en">The numbers are not about winning or losing<br>but a rough guide to how fast the same Raku code can get</div>
 ----
 mutsu / rakudo の時間比 (小さいほど mutsu が速い)
 (Rakudo v2026.07 で計測)
@@ -439,143 +568,186 @@ mutsu / rakudo の時間比 (小さいほど mutsu が速い)
 - grammar (JSON::Tiny): 0.13
 - method-call: 0.32
 <!-- bench-data f684d28 (2026-11-22) / Rakudo v2026.07 / whole-script -->
+<div class="en">Time ratio mutsu / rakudo (lower = mutsu faster), measured with Rakudo v2026.07<br>startup 0.07 / fib (JIT) 0.59 / mandelbrot (JIT) 0.21 / grammar (JSON::Tiny) 0.13 / method-call 0.32</div>
 ----
 起動
 - rakudo 117ms
 - mutsu 9ms
+<div class="en">Startup: rakudo 117ms / mutsu 9ms</div>
 ----
 少なくとも、言語仕様そのものが重いわけではなさそう
 → 組み込みを Rust で持って
 → 起動処理を地道に削っていけば、ここまで縮む
+<div class="en">At least the language spec itself doesn't seem to be what's heavy<br>Keep builtins in Rust,<br>and steadily trim startup work, and it gets this small</div>
 ----
 例: `say 1` の起動にかかる命令数
 → 1016万 → 766万 (-25%)
 → 組み込みの名前を全部なめてたインデックスを、最初に使うときまで遅延させる、とか
 <!-- mutsu news/2026-10/startup-skips-qualified-index-and-relocations.md (callgrind) -->
+<div class="en">Example: instructions to start <code>say 1</code><br>10.16M → 7.66M (-25%)<br>e.g. building an index of all builtin names lazily, on first use</div>
 ----
 ただ、これは公平な比較ではない
 → rakudo の起動と JIT のウォームアップ込みの時間
 → ベンチの題材自体、mutsu が最適化を頑張ってきたもの
+<div class="en">But this is not a fair comparison<br>It includes rakudo's startup and JIT warm-up<br>and the benchmarks are the ones mutsu has been optimizing for</div>
 ----
 処理部分だけで比べると
 - multi-dispatch: 1.45 (rakudo が速い)
 - JSON::Fast: 1.33 (rakudo が速い)
 - YAML パース: 0.93
+<div class="en">Comparing only the workload itself:<br>multi-dispatch 1.45 (rakudo faster) / JSON::Fast 1.33 (rakudo faster) / YAML parse 0.93</div>
 ----
 MoarVM の spesh / JIT は、温まると強い
 → mutsu 側にもまだまだ伸びしろがある
+<div class="en">MoarVM's spesh / JIT are strong once warmed up<br>mutsu still has plenty of room to grow</div>
 ----
 何をやって速くしたかは ADR と news/ に全部書いてある
 → よかったら覗いてみてください
+<div class="en">Everything we did to speed things up is written in the ADRs and news/<br>Please take a look</div>
 ----
 *もう一つの実装
+<div class="en">Another implementation</div>
 ----
 開発の途中で Raku++ (rakupp) の存在に気づく
 → Andrew Shitov さんが C++17 で一から書いた Raku 実装
+<div class="en">Midway, I learned about Raku++ (rakupp)<br>a Raku implementation written from scratch in C++17 by Andrew Shitov</div>
 ----
 始まったのは 2026年7月 (mutsu は 2月)
 → 同じ年に、別々のところで Raku の新しい実装が始まってた
 <!-- rakupp docs/status/MILESTONES.md: 初回コミット 2026-07-02, v5.0.0 (2026-09-29) で 100.00% of Roast, v5.1.0 (2026-09-30) でファイル単位も全通過 -->
+<div class="en">It started in July 2026 (mutsu: February)<br>New Raku implementations started independently in the same year</div>
 ----
 シンクロニシティ
+<div class="en">Synchronicity</div>
 ----
 しかも 9月末には Roast 100% 達成
+<div class="en">And it reached 100% of Roast by the end of September</div>
 ----
 はやい！！！
+<div class="en">Fast!!!</div>
 ----
 気づいたときは
 → 先にこれがあったら、mutsu 作らなかったかもな。。とちょっと思った
 → でも C++ なので、Rust 版だとどうなるのかな、とも思ったかも
+<div class="en">When I found it, I thought for a moment<br>"If this had existed first, maybe I wouldn't have built mutsu"<br>but also "it's C++, so what would a Rust one look like?"</div>
 ----
 ……で、mutsu はというと
 → Raku++ と同じ物差し (spectest.data) で数え直してみた
 <!-- mutsu #19036 / PR #19043。それまでは独自の数え方で 1,269 / 1,288 だった -->
+<div class="en">...and mutsu?<br>Recounted with the same yardstick as Raku++ (spectest.data)</div>
 ----
 1,425 / 1,425
 → mutsu も 100%！！！
 <!-- 最後の3ファイル (pseudo-6c/6d/6e) は PR #19007 で通過 -->
+<div class="en">1,425 / 1,425<br>mutsu is at 100% too!!!</div>
 ----
 今は bench CI で rakupp とも比べてる
 → 別の実装があると、お互いの伸びしろが見える
+<div class="en">Our benchmark CI now compares with rakupp too<br>Having other implementations shows everyone's room to grow</div>
 ----
 *Raku の世界がちょっと変わった
+<div class="en">The Raku world changed a little</div>
 ----
 週刊ニュース「Rakudo Weekly News」
 → 2019年当時、実用的な実装は Rakudo だけだったので、この名前
+<div class="en">The "Rakudo Weekly News"<br>named that way because in 2019, Rakudo was the only viable implementation</div>
 ----
 2026年10月
 Rakudo Weekly → Raku Weekly に改名
 <!-- https://rakuweekly.blog/2026/10/05/2026-40-pythonesque/ (Elizabeth Mattijsen, 2026.40) -->
+<div class="en">October 2026:<br>Rakudo Weekly → Raku Weekly</div>
 ----
 "there are now three viable implementations of the Raku Programming Language, of which “Rakudo” is only one."
 <!-- Elizabeth Mattijsen, Raku Weekly News 2026.40。要旨: Raku の実用的な実装は今3つあり、Rakudo はそのうちの1つ -->
 ----
 Raku++ と Mutsu
 → 名前が出てる！！！
+<div class="en">Raku++ and Mutsu<br>are mentioned by name!!!</div>
 ----
 嬉しい。。
+<div class="en">That made me happy</div>
 ----
 *AI を並列で走らせたら
+<div class="en">Running AI agents in parallel</div>
 ----
 1日 50〜100 PR マージされる世界
+<div class="en">A world where 50-100 PRs get merged per day</div>
 ----
 何が起きるか
+<div class="en">What happens?</div>
 ----
 ADR の番号がかぶる
 → 「最大番号 + 1」で採番してたら、並列 PR が同じ番号を取る
 → 6 回かぶった
 → ADR 番号 = issue 番号 にした
+<div class="en">ADR numbers collide<br>"max + 1" numbering made parallel PRs take the same number<br>6 collisions<br>Now ADR number = issue number</div>
 ----
 CI が詰まる
 → GitHub Actions の同時実行 20 ジョブの枠を食い尽くす
 → PR が 5〜15 分待ち
 → 重いテストは PR から外して、main で 1 時間ごとに回す
+<div class="en">CI gets clogged<br>Using up GitHub Actions' 20 concurrent jobs<br>PRs wait 5-15 minutes<br>Heavy tests moved off PRs to hourly runs on main</div>
 ----
 main が赤くなる
 → 約20 の PR がそれぞれ勝手に直そうとする
 → runner が埋まって、また壊れる
 → 「main is red」issue を 1 個立てて、直すのは 1 人だけ、にした
+<div class="en">main goes red<br>~20 PRs each try to fix it on their own<br>runners fill up, it breaks again<br>Now: open one "main is red" issue, and only one agent fixes it</div>
 ----
 flaky test
 → 調べたら、だいたい普通のバグだった
 → テストのポート番号がかぶってた、とか
+<div class="en">Flaky tests<br>turned out to be mostly ordinary bugs<br>e.g. tests colliding on port numbers</div>
 ----
 `while pgrep -f "make lint"`
 → 自分自身のシェルにマッチして永遠に終わらない
+<div class="en"><code>while pgrep -f "make lint"</code><br>matches its own shell and never ends</div>
 ----
 `pkill -f "make test"`
 → 自分のシェルを殺す
+<div class="en"><code>pkill -f "make test"</code><br>kills its own shell</div>
 ----
 (´・ω・`)
+<div class="en">(sigh)</div>
 ----
 submodule の ticket/issue 誤登録
+<div class="en">Issues filed in the wrong repository</div>
 ----
 roast や doc を submodule にしている
 → AI が mutsu の issue を本家のリポジトリに立てる
+<div class="en">roast and doc are submodules<br>so the AI filed mutsu issues in the upstream repositories</div>
 ----
 Raku のみなさん、すみませんでした。。
+<div class="en">Sorry, Raku folks...</div>
 ----
 AGENTS.md に「issue は tokuhirom/mutsu にだけ立てる」
+<div class="en">AGENTS.md now says: "file issues only in tokuhirom/mutsu"</div>
 ----
 AI がやらかしたら、全部ルールとして書き残す
 → AGENTS.md が 567 行になった
+<div class="en">Every AI mistake becomes a written rule<br>AGENTS.md is now 567 lines</div>
 ----
 *いまどうなってるか
+<div class="en">Where things stand</div>
 ----
 Roast (spectest.data) 1,425 / 1,425 ファイル
 → 100%！！！
 (Rakudo が実行するリストで、Rakudo と同じく #?rakudo の skip/todo を適用した数え方)
 <!-- mutsu scripts/roast-compat.py count (PR #19043, 2026-11-23)。当日 HISTORY.tsv の spec_pass 列で実測値を確認 -->
+<div class="en">Roast (spectest.data): 1,425 / 1,425 files, 100%!!!<br>(Rakudo's run list, with the same #?rakudo skip/todo applied)</div>
 ----
 ecosystem
 → 各 dist のテストを rakudo と mutsu で両方走らせて比べる
+<div class="en">Ecosystem:<br>each distribution's tests run on both rakudo and mutsu</div>
 ----
 9月 41.2%
 → 11月 99.2%
 <!-- 分母は rakudo で通る gradable dist 1,335。除外15件あり -->
+<div class="en">September 41.2% → November 99.2%</div>
 ----
 batteries included にしたい
 → Raku 版の bun みたいなやつ
+<div class="en">Aiming for batteries included<br>something like bun, for Raku</div>
 ----
 同梱してるもの
 - Cro::HTTP
@@ -585,29 +757,36 @@ batteries included にしたい
 - DBIish (SQLite)
 - OpenSSL
 - etc. etc.
+<div class="en">Bundled: Cro::HTTP, JSON::Fast, Text::CSV, YAMLish, DBIish (SQLite), OpenSSL, and more</div>
 ----
 パッケージマネージャも同梱
 → 本物の Zef を mzef として同梱
+<div class="en">A package manager is bundled too<br>the real Zef, as mzef</div>
 ----
 mise で一発で入る
 >||
 mise use -g github:tokuhirom/mutsu
 ||<
+<div class="en">One command with mise</div>
 ----
 Docker でも
 >||
 docker run --rm -it ghcr.io/tokuhirom/mutsu
 ||<
+<div class="en">Or with Docker</div>
 ----
 WebAssembly にもなる
 → ブラウザで動く playground
 → [tokuhirom.github.io/mutsu](https://tokuhirom.github.io/mutsu/)
+<div class="en">It also builds to WebAssembly<br>a playground that runs in the browser</div>
 ----
 *デモ
 <!-- WebAssembly 版 mutsu をスライドに埋め込み。CDN から wasm (約32MB) を読むので、事前に一度開いてキャッシュしておく -->
+<div class="en">Demo</div>
 ----
 ブラウザの中で mutsu が動きます
 → WebAssembly
+<div class="en">mutsu runs inside the browser<br>WebAssembly</div>
 ----
 <iframe src="demo.html?ex=hello" style="width:100%;height:82vh;border:0;"></iframe>
 <!-- iframe 内にフォーカスがあると j/k や矢印でページ送りできないので、外側をクリックしてから送る -->
@@ -622,72 +801,94 @@ WebAssembly にもなる
 <!-- iframe 内にフォーカスがあると j/k や矢印でページ送りできないので、外側をクリックしてから送る -->
 ----
 *そして
+<div class="en">And...</div>
 ----
 昨日 (11/28)
 mutsu 1.0.0 をリリースしました！！！
+<div class="en">Yesterday (Nov 28)<br>we released mutsu 1.0.0!!!</div>
 ----
 最初の安定版です。
+<div class="en">The first stable release.</div>
 ----
 まぁ issue はまだ 200 くらいあるし、バグもあると思うけど。。
 → 見つけたら issue ください
+<div class="en">There are still about 200 issues, and surely bugs...<br>If you find one, please file an issue</div>
 ----
 *巨人の肩の上
+<div class="en">On the shoulders of giants</div>
 ----
 mutsu は、Rakudo の人たちが積み上げてきたものの上に乗っかってる
+<div class="en">mutsu stands on what the Rakudo folks have built</div>
 ----
 - Roast: Pugs の頃から20年分積み上げられてきたテスト
 - Raku/doc: ドキュメント
 - 設計文書 (Synopsis)
 → これがなかったら、AI がいても絶対に作れなかった
+<div class="en">Roast: 20 years of tests since the Pugs days / Raku/doc / the design docs (Synopses)<br>Without these, even with AI, it could never have been built</div>
 ----
 挙動に迷ったら Rakudo が正解
 → AI にも「わからなかったら raku -e で確かめろ」と指示してる
 <!-- mutsu AGENTS.md: "raku is the reference oracle" -->
+<div class="en">When in doubt, Rakudo is the answer<br>The AI is told: "if unsure, check with raku -e"</div>
 ----
 Rakudo のコードもそのまま使わせてもらってる
 → `.DEPARSE` は Rakudo の RakuAST::Deparse をそのまま同梱
 → パッケージマネージャは本物の Zef をそのまま同梱
 <!-- ADR-14845, vendor/rakudo, vendor/zef -->
+<div class="en">We also use Rakudo's code as-is<br><code>.DEPARSE</code> ships Rakudo's RakuAST::Deparse verbatim<br>and the package manager is the real Zef</div>
 ----
 これができるのは、Rakudo も Roast も doc も Zef も OSS だから
 → みんな Artistic License 2.0
 <!-- rakudo.org/about, Raku/roast, Raku/doc, ugexe/zef の LICENSE。mutsu README のサードパーティ表 -->
+<div class="en">This is possible because Rakudo, Roast, doc and Zef are open source<br>all under the Artistic License 2.0</div>
 ----
 なので mutsu は、意図的にライセンスを Rakudo に合わせて Artistic License 2.0
 → Rakudo のコード片を持ってくるとき、これが一番問題が起きないはず
+<div class="en">So mutsu deliberately uses the same Artistic License 2.0 as Rakudo<br>which should cause the fewest problems when bringing over Rakudo code</div>
 ----
 OSS だと、こういう広がり方もする
 → 26年分の積み上げを土台に、別の実装が生えてくる
+<div class="en">Open source can spread like this too<br>new implementations growing on 26 years of groundwork</div>
 ----
 逆に言えば、mutsu も同じ
 → Artistic License 2.0 なので、Rust で Raku を作りたい人の土台にもなれるはず
+<div class="en">And the same goes for mutsu<br>Artistic License 2.0, so it can be a foundation for anyone building Raku in Rust</div>
 ----
 興味がある人がいたら
 → フォークして、もっといい実装を作ってみてください
 → そういう広がり方をしたら面白い
+<div class="en">If you're interested,<br>fork it and build a better implementation<br>It would be fun to see it spread that way</div>
 ----
 Raku コミュニティのみなさんに感謝！
+<div class="en">Thank you, Raku community!</div>
 ----
 *まとめ
+<div class="en">Summary</div>
 ----
 - KPI を設定して実装することが大事。
   - roast pass rate → ecosystem pass rate
 - でも KPI はハックされる
+<div class="en">Set KPIs to drive implementation (roast pass rate → ecosystem pass rate)<br>but KPIs get gamed</div>
 ----
 - AI は大きな変更から逃げる
 - AI の「不可能」は疑う
 - やらかしたらルールにして残す
+<div class="en">AI escapes from big changes / doubt AI's "impossible" / turn every mistake into a rule</div>
 ----
 - GC や JIT みたいな根っこの判断は人間がやる
+<div class="en">Humans make the foundational calls, like GC and JIT</div>
 ----
 - 設計のトレードオフを変えると、起動はここまで縮む
 - (温まった後は Rakudo が速いところもまだたくさんある)
+<div class="en">Changing design trade-offs can shrink startup this much<br>(after warm-up, Rakudo is still faster in many places)</div>
 ----
 令和の今でも Raku の実装は作れる！
+<div class="en">You can still build a Raku implementation today!</div>
 ----
 mutsu 1.0.0、使ってみてください
 >||
 mise use -g github:tokuhirom/mutsu
 ||<
+<div class="en">Please try mutsu 1.0.0</div>
 ----
 Enjoy!

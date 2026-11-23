@@ -9,6 +9,7 @@ YAPC::Tokyo 2026 (2026-11-29) のトーク。
 - `demo.html` — WebAssembly 版 mutsu のデモ（`?ex=hello|grammar|multi|concurrency`）。スライドから iframe で埋め込んでいる
 - `history-pass.svg` / `gen-history-graph.py` — Roast 通過ファイル数の推移グラフとその生成スクリプト
 - `fetch-mutsu-wasm.sh` — デモ用の wasm を取得するスクリプト
+- `add-english.py` — 各スライドに英語字幕 (`<div class="en">`) を付けるスクリプト。英訳はスクリプト内の辞書（スライドの最初の行がキー）。スライドを足したり直したりしたら辞書を更新して `python3 add-english.py` を再実行する（何度実行しても同じ結果になる）。未訳があると一覧を出して失敗する
 - `memo.md` — ネタメモ（採用/未採用、出典、当日更新リスト）
 
 ## 発表前の準備（ネットワークがあるうちに）
