@@ -90,6 +90,13 @@
   - ✅ でも C++ なので、Rust 版を作ったらどうなるのかな、とも思ったかも
   - ✅ 同じ年に別々に新実装が始まっている → シンクロニシティ
 
+## AI の利用（Claude）
+
+- ✅ Claude の Ultra プランを 2月からぶん回してきた。途中ほかのことにも AI は使ったが、かなりの部分を mutsu に注ぎ込んでいる（tokuhirom 談）
+- ✅ Ultra は 2026-10-30 頃に Max 20x（月 $200）から改名されたプラン。2月当時の名前は Max 20x。検証済みアカウントは 5時間制限なし、週の上限は残る
+  - 出典（二次情報）: https://smartscope.blog/en/blog/claude-max-20x-renamed-ultra-5-hour-limit-2026/ , https://www.buildmvpfast.com/blog/claude-max-plan-changes-ultra-5-hour-limit-2026 , https://support.claude.com/en/articles/17728952
+- 💤 レビューで「1日50PRを誰がどうレビュー・マージしているか、エージェント構成・並列数・コスト」を知りたいという声
+
 ## 開発の規模（GitHub API / リポジトリ, 2026-11-22）
 
 - ✅ リポジトリ作成 2026-02-05
