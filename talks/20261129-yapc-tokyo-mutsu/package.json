@@ -1,0 +1,9 @@
+{
+  "private": true,
+  "scripts": {
+    "check:layout": "node check-layout.js"
+  },
+  "devDependencies": {
+    "playwright": "1.65.1"
+  }
+}
