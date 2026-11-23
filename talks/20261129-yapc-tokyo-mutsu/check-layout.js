@@ -1,6 +1,7 @@
 // 全スライドが 16:9 の PC とスマホで画面内に収まり、文字が小さすぎないことを確認する。
 // 使い方: node check-layout.js        (失敗があれば一覧を出して終了コード 1)
 //   スクリーンショットも見たいとき: SHOTS=dir node check-layout.js
+//   一部のスライドだけ: SLIDES=0,56,133 node check-layout.js
 // Playwright と Chromium が必要。外部への通信は全部遮断した状態で開く（オフライン確認を兼ねる）。
 const http = require('http');
 const fs = require('fs');
@@ -47,7 +48,9 @@ function serve() {
     await page.goto(base + '#0');
     await page.waitForFunction(() => /^\d+$/.test(document.getElementById('total_page').textContent));
     const total = Number(await page.textContent('#total_page'));
+    const only = process.env.SLIDES ? process.env.SLIDES.split(',').map(Number) : null;
     for (let i = 0; i < total; i++) {
+      if (only && !only.includes(i)) continue;
       await page.evaluate(n => { location.hash = '#' + n; }, i);
       await page.waitForFunction(n => document.getElementById('current_page').textContent === String(n + 1)
         && document.getElementById('topics').dataset.fitOk !== undefined, i);

@@ -17,6 +17,14 @@
   textarea { flex: 3; min-height: 0; width:100%; resize:none; border:1px solid #ccc; background:var(--code-bg); color:var(--fg); }
   pre { flex: 2; min-height: 0; overflow:auto; background:var(--out-bg); color:var(--out-fg); white-space:pre-wrap; }
   pre.error { color:#fca5a5; }
+  /* スマホなど狭い画面 */
+  @media (max-width: 700px) {
+    body { padding:8px; gap:6px; }
+    .bar { font-size:15px; gap:8px; flex-wrap:wrap; }
+    .bar .status { font-size:12px; margin-left:0; width:100%; }
+    button { font-size:15px; padding:2px 10px; }
+    textarea, pre { font-size:13px; padding:8px; }
+  }
 </style>
 </head>
 <body>
