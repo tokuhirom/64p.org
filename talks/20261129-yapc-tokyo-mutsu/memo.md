@@ -56,6 +56,19 @@
     - https://raku.github.io/CCR/Remaster/Jonathan%20Worthington/Rakudo-Star-201202-out-and-the-focus-for-201203.html
     - https://use-perl.github.io/user/JonathanWorthington/journal/39500 (2009, "Rakudo just does a lot of work at startup")
 
+13. **Parrot は多言語 VM / Perl5 との相互運用を目指した** — 正しい。Parrot は Perl6 用に始まり、すぐに Perl・Python・Ruby・Tcl など動的言語全般の共通 VM を目指す方向に広がった。Parrot 1.0 (2009) は Perl6・Python・Ruby などをサポートと発表
+    - https://en.wikibooks.org/wiki/Parrot_Virtual_Machine/Introduction
+    - https://www.linux-magazine.com/Online/News/Parrot-1.0-Said-to-Speak-Your-Virtual-Language
+    - https://github.com/parrot/parrot ("never supplanted the existing VMs of those languages")
+14. **Perl5 の正規表現を Raku で使える（`m:P5/.../`）→ 捨てられた** — 正しい。2026年に Rakudo と roast の両方から削除
+    - Raku/problem-solving #133 (2019, vrurg): Perl5 からの移行という理由はもうないので非推奨・削除を提案 https://github.com/Raku/problem-solving/issues/133
+    - Raku/problem-solving #378 (2023-07-30, lizmat) "The fate of P5 regexes in a RakuAST world" https://github.com/Raku/problem-solving/issues/378
+    - rakudo #6708 (2026-09-21 マージ): `:P5`/`:Perl5` を既知の adverb から外す → "Adverb P5 not allowed on m" https://github.com/rakudo/rakudo/pull/6708 。続く `0dd07126b` で P5Regex の grammar/actions/slang ごと削除。Rakudo 2026.09 に入った
+    - roast `41679797` (lizmat): `S05-modifier/Perl_0.t`〜`Perl_10.t` の11ファイルを削除。"This will not be supported in any language level for now"
+    - ecosystem での `:P5` 利用は 2,558 dist 中 6 (≈0.23%)（mutsu #10225 の調査）
+    - mutsu も追随して PCRE2 エンジンごと削除（ADR-0138, 2026-10-01）。C ライブラリのビルド依存が1つ消えた
+    - ネタ: rakupp の Roast 分母が 1,434 → 1,424 になった一因もこの11ファイルの削除
+
 ## tokuhirom の発言・スタンス
 
 - ✅ 11/28 に 1.0.0 を出す。最初の安定版。「まだ使うな」ではない。バグはあると思う
