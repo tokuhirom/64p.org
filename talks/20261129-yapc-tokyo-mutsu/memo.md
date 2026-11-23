@@ -99,6 +99,12 @@
   - 出典（二次情報）: https://smartscope.blog/en/blog/claude-max-20x-renamed-ultra-5-hour-limit-2026/ , https://www.buildmvpfast.com/blog/claude-max-plan-changes-ultra-5-hour-limit-2026 , https://support.claude.com/en/articles/17728952
 - 💤 レビューで「1日50PRを誰がどうレビュー・マージしているか、エージェント構成・並列数・コスト」を知りたいという声
 
+## ライセンス
+
+- ✅ Rakudo / Roast / Raku/doc / old-design-docs / Zef はすべて Artistic License 2.0。mutsu もそれに合わせて Artistic License 2.0（tokuhirom 談: Rakudo に合わせた）
+- ✅ OSS だからこそ、テスト・ドキュメント・Rakudo のコード (RakuAST::Deparse)・Zef を取り込んで別実装を作れた
+  - 出典: https://rakudo.org/about ("licensed under the terms of the Artistic License 2.0") , https://github.com/rakudo/rakudo , mutsu README のサードパーティ表
+
 ## 開発の規模（GitHub API / リポジトリ, 2026-11-22）
 
 - ✅ リポジトリ作成 2026-02-05
