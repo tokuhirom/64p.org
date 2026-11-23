@@ -654,8 +654,8 @@ Rakudo のコードもそのまま使わせてもらってる
 → みんな Artistic License 2.0
 <!-- rakudo.org/about, Raku/roast, Raku/doc, ugexe/zef の LICENSE。mutsu README のサードパーティ表 -->
 ----
-なので mutsu もライセンスを Rakudo に合わせて Artistic License 2.0
-→ 借りたものを、同じ条件で返せるように
+なので mutsu は、意図的にライセンスを Rakudo に合わせて Artistic License 2.0
+→ Rakudo のコード片を持ってくるとき、これが一番問題が起きないはず
 ----
 OSS だと、こういう広がり方もする
 → 26年分の積み上げを土台に、別の実装が生えてくる
