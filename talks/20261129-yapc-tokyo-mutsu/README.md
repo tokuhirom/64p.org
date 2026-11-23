@@ -12,6 +12,7 @@ YAPC::Tokyo 2026 (2026-11-29) のトーク。
 - `add-english.py` — 各スライドに英語字幕 (`<div class="en">`) を付けるスクリプト。英訳はスクリプト内の辞書（スライドの最初の行がキー）。スライドを足したり直したりしたら辞書を更新して `python3 add-english.py` を再実行する（何度実行しても同じ結果になる）。未訳があると一覧を出して失敗する
 - `fit.js` — ページごとに文字サイズを自動調整して、本文と英語字幕が画面に収まるようにする（下限あり）。presen5 本体は触らずこのトークだけで読み込む
 - `check-layout.js` — 全スライドが PC (1920x1080 / 1280x720) とスマホ (iPhone 13 / Pixel 7) で画面内に収まり、文字が下限より小さくならないかを Playwright で検査する
+- `package.json` / `package-lock.json` — レイアウト検査用の Playwright のバージョンを固定する
 - `memo.md` — ネタメモ（採用/未採用、出典、当日更新リスト）
 
 ## 発表前の準備（ネットワークがあるうちに）
@@ -50,8 +51,15 @@ python3 -m http.server 8000
 スライドを直したら必ず実行する（外部通信を遮断した状態で開くので、オフライン確認も兼ねる）。
 
 ```sh
-node check-layout.js                       # 全スライド × 4画面。NG があれば一覧を出して終了コード 1
-SLIDES=0,56,133 SHOTS=/tmp/shots node check-layout.js   # 一部だけ、スクリーンショット付き
+npm ci
+npx playwright install chromium
+```
+
+`npm ci` は初回と `package-lock.json` が変わったときに実行する。Chromium のインストールも初回のみでよい。
+
+```sh
+npm run check:layout                       # 全スライド × 4画面。NG があれば一覧を出して終了コード 1
+SLIDES=0,56,133 SHOTS=/tmp/shots npm run check:layout   # 一部だけ、スクリーンショット付き
 ```
 
 文字の下限は PC が画面の高さの 3.5%（最低 28px）、スマホが 16px。収まらないと NG になるので、そのスライドは分割する。

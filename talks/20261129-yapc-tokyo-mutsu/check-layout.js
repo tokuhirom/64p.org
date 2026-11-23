@@ -49,6 +49,7 @@ function serve() {
     await page.waitForFunction(() => /^\d+$/.test(document.getElementById('total_page').textContent));
     const total = Number(await page.textContent('#total_page'));
     const only = process.env.SLIDES ? process.env.SLIDES.split(',').map(Number) : null;
+    let checked = 0;
     for (let i = 0; i < total; i++) {
       if (only && !only.includes(i)) continue;
       await page.evaluate(n => { location.hash = '#' + n; }, i);
@@ -81,8 +82,9 @@ function serve() {
       });
       if (shots) await page.screenshot({ path: path.join(shots, `${vp.name.replace(/\W+/g, '_')}-${String(i).padStart(3, '0')}.png`) });
       if (res.problems.length) failures.push(`[${vp.name}] #${i} (${res.size}px) ${res.first}\n    ${res.problems.join('\n    ')}`);
+      checked++;
     }
-    console.log(`${vp.name}: ${total} slides checked`);
+    console.log(`${vp.name}: ${checked} slides checked`);
     await ctx.close();
   }
   await browser.close();
