@@ -504,7 +504,7 @@ MoarVM の JIT は、温まったあとはちゃんと速い
 *Raku の世界がちょっと変わった
 ----
 週刊ニュース「Rakudo Weekly News」
-→ 2019年当時、まともに動く実装は Rakudo だけだったので、この名前
+→ 2019年当時、実用的な実装は Rakudo だけだったので、この名前
 ----
 2026年10月
 Rakudo Weekly → Raku Weekly に改名
@@ -555,7 +555,7 @@ submodule の ticket/issue 誤登録
 roast や doc を submodule にしている
 → AI が mutsu の issue を本家のリポジトリに立てる
 ----
-すみませんでした。。
+Raku のみなさん、すみませんでした。。
 ----
 AGENTS.md に「issue は tokuhirom/mutsu にだけ立てる」
 ----
@@ -631,6 +631,26 @@ mutsu 1.0.0 をリリースしました！！！
 ----
 まぁ issue はまだ 200 くらいあるし、バグもあると思うけど。。
 → 見つけたら issue ください
+----
+*巨人の肩の上
+----
+mutsu は、Rakudo の人たちが積み上げてきたものの上に乗っかってる
+----
+- Roast: Pugs の頃から何十年分も積み上げられてきたテスト
+- Raku/doc: ドキュメント
+- 設計文書 (Synopsis)
+→ これがなかったら、AI がいても絶対に作れなかった
+----
+挙動に迷ったら Rakudo が正解
+→ AI にも「わからなかったら raku -e で確かめろ」と指示してる
+<!-- mutsu AGENTS.md: "raku is the reference oracle" -->
+----
+Rakudo のコードもそのまま使わせてもらってる
+→ `.DEPARSE` は Rakudo の RakuAST::Deparse をそのまま同梱
+→ パッケージマネージャは本物の Zef をそのまま同梱
+<!-- ADR-14845, vendor/rakudo, vendor/zef -->
+----
+Rakudo を作ってきたみなさんに感謝！
 ----
 *まとめ
 ----
