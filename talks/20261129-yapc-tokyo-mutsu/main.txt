@@ -549,7 +549,22 @@ WebAssembly にもなる
 → [tokuhirom.github.io/mutsu](https://tokuhirom.github.io/mutsu/)
 ----
 *デモ
-<!-- REPL / playground / mzef install / Cro hello world -->
+<!-- WebAssembly 版 mutsu をスライドに埋め込み。CDN から wasm (約32MB) を読むので、事前に一度開いてキャッシュしておく -->
+----
+ブラウザの中で mutsu が動きます
+→ WebAssembly
+----
+<iframe src="demo.html?ex=hello" style="width:100%;height:82vh;border:0;"></iframe>
+<!-- iframe 内にフォーカスがあると j/k や矢印でページ送りできないので、外側をクリックしてから送る -->
+----
+<iframe src="demo.html?ex=grammar" style="width:100%;height:82vh;border:0;"></iframe>
+<!-- iframe 内にフォーカスがあると j/k や矢印でページ送りできないので、外側をクリックしてから送る -->
+----
+<iframe src="demo.html?ex=multi" style="width:100%;height:82vh;border:0;"></iframe>
+<!-- iframe 内にフォーカスがあると j/k や矢印でページ送りできないので、外側をクリックしてから送る -->
+----
+<iframe src="demo.html?ex=concurrency" style="width:100%;height:82vh;border:0;"></iframe>
+<!-- iframe 内にフォーカスがあると j/k や矢印でページ送りできないので、外側をクリックしてから送る -->
 ----
 *そして
 ----

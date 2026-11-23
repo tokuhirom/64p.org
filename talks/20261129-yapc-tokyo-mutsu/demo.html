@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>mutsu demo</title>
+<style>
+  :root { --bg:#f5f5f5; --fg:#222; --code-bg:#fff; --out-bg:#0f172a; --out-fg:#e2e8f0; --accent:#2563eb; }
+  html, body { margin:0; height:100%; background:var(--bg); color:var(--fg); font-family: ui-sans-serif, system-ui, sans-serif; }
+  body { display:flex; flex-direction:column; padding:12px 16px; box-sizing:border-box; gap:10px; }
+  .bar { display:flex; align-items:center; gap:12px; font-size:22px; }
+  .bar .title { font-weight:bold; }
+  .bar .status { margin-left:auto; color:#666; font-size:18px; }
+  button { font-size:22px; padding:4px 18px; border-radius:6px; border:1px solid var(--accent); background:var(--accent); color:#fff; cursor:pointer; }
+  button:disabled { opacity:.5; cursor:wait; }
+  textarea, pre { font: 26px/1.45 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; margin:0; padding:12px 16px; box-sizing:border-box; border-radius:8px; tab-size:4; }
+  textarea { flex: 3; min-height: 0; width:100%; resize:none; border:1px solid #ccc; background:var(--code-bg); color:var(--fg); }
+  pre { flex: 2; min-height: 0; overflow:auto; background:var(--out-bg); color:var(--out-fg); white-space:pre-wrap; }
+  pre.error { color:#fca5a5; }
+</style>
+</head>
+<body>
+<div class="bar">
+  <span class="title" id="title">mutsu</span>
+  <button id="run" disabled>Run (Ctrl+Enter)</button>
+  <span class="status" id="status">Loading mutsu (WebAssembly)…</span>
+</div>
+<textarea id="code" spellcheck="false"></textarea>
+<pre id="out"></pre>
+
+<!-- サンプル。type="text/raku" なのでブラウザは実行しない -->
+<script type="text/raku" id="ex-hello" data-title="Hello, Raku">
+say "Hello, YAPC::Tokyo!";
+say 2 ** 100;                 # Int は最初から多倍長
+say 0.1 + 0.2 == 0.3;         # Rat なので True
+say (1..Inf).grep(*.is-prime)[^10];   # 無限リストも遅延評価
+</script>
+
+<script type="text/raku" id="ex-grammar" data-title="Grammar">
+grammar Calc {
+    token TOP { <num>+ % <op> }
+    token num { \s* \d+ \s* }
+    token op  { '+' | '-' }
+}
+
+say Calc.parse("1 + 2 + 40 - 1");
+</script>
+
+<script type="text/raku" id="ex-multi" data-title="multi dispatch">
+multi fib(0)  { 0 }
+multi fib(1)  { 1 }
+multi fib($n) { fib($n - 1) + fib($n - 2) }
+
+my $t = now;
+say fib(20);
+say "{ now - $t } sec";
+</script>
+
+<script type="text/raku" id="ex-concurrency" data-title="Concurrency">
+my @promises = (1..5).map: -> $n {
+    start { $n ** 2 }
+};
+say await @promises;
+
+say (1, 2, 3) »*» 10;         # hyper operator
+say so 3 == any(1, 2, 3);     # junction
+</script>
+
+<script type="module">
+const VERSION = '0.26.1';   // TODO: 1.0.0 リリース後に更新
+const BASE = `https://cdn.jsdelivr.net/npm/@tokuhirom/mutsu@${VERSION}/`;
+
+// パッケージ同梱の <mutsu-code> は CDN 上の worker を new Worker() するため
+// 別オリジンのページからは起動できない。同じことをする worker を blob で作る。
+const workerSrc = `
+  import init, { Repl } from '${BASE}mutsu.js';
+  const ready = init();
+  self.onmessage = async ({ data }) => {
+    try {
+      await ready;
+      const repl = new Repl();
+      const r = JSON.parse(repl.evalBlock(data.code));
+      self.postMessage({ ok: true, output: r.output });
+    } catch (e) {
+      self.postMessage({ ok: false, error: String(e?.message ?? e) });
+    }
+  };
+  ready.then(() => self.postMessage({ booted: true }),
+             e => self.postMessage({ booted: false, error: String(e) }));
+`;
+const workerUrl = URL.createObjectURL(new Blob([workerSrc], { type: 'text/javascript' }));
+
+const $ = id => document.getElementById(id);
+const exId = new URLSearchParams(location.search).get('ex') || 'hello';
+const ex = document.getElementById('ex-' + exId) || $('ex-hello');
+$('title').textContent = ex.dataset.title;
+$('code').value = ex.textContent.replace(/^\n/, '').replace(/\s+$/, '\n');
+
+let worker;
+function boot() {
+  worker = new Worker(workerUrl, { type: 'module' });
+  worker.onmessage = ({ data }) => {
+    if ('booted' in data) {
+      $('status').textContent = data.booted ? `mutsu ${VERSION} (wasm) ready` : 'load failed: ' + data.error;
+      $('run').disabled = !data.booted;
+      return;
+    }
+    const ms = (performance.now() - started).toFixed(0);
+    $('out').className = data.ok ? '' : 'error';
+    $('out').textContent = data.ok ? data.output : data.error;
+    $('status').textContent = `done in ${ms} ms`;
+    $('run').disabled = false;
+  };
+}
+let started = 0;
+function run() {
+  if ($('run').disabled) return;
+  $('run').disabled = true;
+  $('status').textContent = 'running…';
+  started = performance.now();
+  worker.postMessage({ code: $('code').value });
+}
+$('run').addEventListener('click', run);
+$('code').addEventListener('keydown', e => {
+  if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) { e.preventDefault(); run(); }
+});
+boot();
+</script>
+</body>
+</html>
