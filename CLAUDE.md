@@ -156,6 +156,10 @@ mise install
 mise exec -- lefthook install
 ```
 
+## 発表スライド (`talks/`)
+
+`talks/` 配下を触るときは `talks/AGENTS.md` を読むこと。特に「チェックアウトしただけでネットワークなしで動くこと」は必須。
+
 ## 関連ファイル
 
 - `notes/src/*.md` — ノートのMarkdownソース（先頭にcreated/updatedのYAML frontmatter）
