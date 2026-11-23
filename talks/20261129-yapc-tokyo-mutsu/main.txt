@@ -650,6 +650,16 @@ Rakudo のコードもそのまま使わせてもらってる
 → パッケージマネージャは本物の Zef をそのまま同梱
 <!-- ADR-14845, vendor/rakudo, vendor/zef -->
 ----
+これができるのは、Rakudo も Roast も doc も Zef も OSS だから
+→ みんな Artistic License 2.0
+<!-- rakudo.org/about, Raku/roast, Raku/doc, ugexe/zef の LICENSE。mutsu README のサードパーティ表 -->
+----
+なので mutsu もライセンスを Rakudo に合わせて Artistic License 2.0
+→ 借りたものを、同じ条件で返せるように
+----
+OSS だと、こういう広がり方もする
+→ 26年分の積み上げを土台に、別の実装が生えてくる
+----
 Rakudo を作ってきたみなさんに感謝！
 ----
 *まとめ
