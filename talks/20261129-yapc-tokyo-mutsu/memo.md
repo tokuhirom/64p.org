@@ -102,7 +102,9 @@
 - 💤 tree-walking evaluator。`--exe` でネイティブバイナリ化、Raku.js として WASM、`rakupp --mcp` で MCP サーバ
 - 💤 ecosystem は 1,182 / 2,584 dist が自身のテストを通過（README）
 - 💤 rakupp のほうが速いベンチ: JSON::Fast（mutsu/rakupp 5.9）、startup（2.1）など
-- 💤 AI を開発に使っているかは README に記述なし（言わないこと）
+- 💤 AI の利用: README・JOURNEY.md には明記なし。ただし作者ブログに "OK, today, we have great friends and helpers, AI." とある（Raku++ — the fastest Raku compiler, 2026-07-13, AI カテゴリ）。コミット 58105a0（2026-11 の ecosystem sweep）は GitHub 上で ash と claude の共同作成表示
+  - どのツールをどの程度使っているかは不明。言うなら「作者のブログでも AI を helper と書いている」程度に留める
+  - 出典: https://andrewshitov.com/2026/07/13/raku-the-fastest-raku-compiler/ , https://github.com/ash/rakupp/commits/main
 
 ## Raku Weekly への改名
 
