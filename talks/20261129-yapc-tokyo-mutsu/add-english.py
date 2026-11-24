@@ -213,6 +213,30 @@ EN = {
 "\"there are now three viable implementations of the Raku Programming Language, of which “Rakudo” is only one.\"": "",
 }
 
+# 現行スライドで追加・修正した見出しと字幕。
+EN.update({
+"- Perl 6 の強力な正規表現（名前付き規則・キャプチャ・Grammar）": "Powerful regexes: named rules, captures, and grammars<br>Concurrency / Perl 5 interoperability, including CPAN modules",
+"正規表現で文法を組み立てる": "Compose named regex rules into a grammar<br>and read the captured key from the match",
+"Roast があっても、テストだけで実装が完成するわけではない": "Even with Roast, tests alone don't finish an implementation<br>It takes AI tokens, build time, CI resources, and development time",
+"Rust のビルドは遅い": "Rust builds take time<br>Every AI iteration adds waiting and CI cost<br>We had to tune how often the CI runs",
+"Roast は、実装を進めるための出発点": "Roast gives us a starting point for building one",
+"元になるものをこの２つと定める": "Two sources of truth: Raku/doc and Raku/roast<br>Initially referenced as git submodules",
+"KPI を変えていく": "Changing KPIs:<br>Roast pass rate → runtime versus Rakudo → ecosystem pass rate",
+"パーサーの次は、パース結果の表現も変えている": "Next, we're changing how we represent the parser's output<br>Moving the AST it produces to RakuAST<br>RakuAST is an AST, not a parser",
+"Rakudo は 2026.09 で RakuAST をデフォルトにした": "Rakudo made RakuAST the default in 2026.09<br>mutsu is following years of work by the Rakudo team",
+"新しいバイトコード経路を足すだけでは、二重実装は残る": "Adding a bytecode path alone leaves two implementations<br>We made removing the old tree-walker path part of \"done\"",
+"JSON::Fast が使う nqp:: op を 51 個洗い出した": "We listed the 51 nqp:: ops used by JSON::Fast<br>Only 9 failed in mutsu; the other 42 already worked",
+"ここで nqp:: op とは？": "What are nqp:: ops?<br>Low-level operations called by Raku modules<br>A shared layer used beyond JSON::Fast",
+"7月、AI は「共通の nqp:: op 層は不要」と判断": "July: AI said the shared nqp:: op layer was unnecessary<br>August: JSON::Fast exposed gaps<br>October: 111 ops implemented in the shared layer",
+"よく呼ばれる関数・メソッドを丸ごとネイティブコードにする": "Compile hot functions and methods as a whole<br>Defer switching a running loop into JIT code",
+"<img src=\"jit-on-off.svg\" style=\"max-width:95%; max-height:80vh;\">": "JIT on/off: median runtime of 7 runs; shorter is faster",
+"頼んでいない upstream の変更を AI が始める": "AI started changing upstream projects without being asked",
+"mutsu の作業を頼んだだけなのに": "I only asked for work on mutsu<br>AI filed bug reports and PRs against upstream Roast on its own<br>I never asked it to do that",
+"submodule だと upstream のリポジトリに辿れてしまう": "Submodules still led the AI to upstream repositories<br>So we switched Roast and doc to vendored copies",
+"ブラウザの中で mutsu が動きます": "mutsu runs inside the browser<br>Let's try the WebAssembly build",
+"- KPI を設定して実装することが大事": "Set KPIs to drive implementation:<br>Roast pass rate → faster than Rakudo → ecosystem pass rate<br>but KPIs get gamed",
+})
+
 SKIP = re.compile(r'^<iframe ')  # デモはそのまま
 src = open('main.txt').read()
 slides = src.split('\n----\n')

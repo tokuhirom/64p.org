@@ -18,7 +18,8 @@ tokuhirom
 32:00 AI を並列で走らせたら    4分
 36:00 いまどうなってるか・デモ 3分
 39:00 まとめ                   1分
-数字は 2026-11-22 時点。当日朝に README / HISTORY.tsv / bench-data で更新すること。
+数字は主に 2026-11-22 時点。JIT 比較グラフは 2026-11-23 時点。
+当日朝に README / HISTORY.tsv / bench-data で更新すること。
 -->
 ----
 Raku はご存知？
@@ -28,9 +29,6 @@ Perl6 と呼ばれていたもの
 *３分間昔話をします
 <div class="en">A 3-minute history lesson</div>
 ----
-2005年に就職してから Perl5 を使いはじめたのですが
-<div class="en">I started using Perl 5 when I got my first job in 2005</div>
-----
 <!-- https://gihyo.jp/dev/serial/01/perl-hackers-hub/003901 -->
 2000年にぶち上げられたプロジェクトが Perl6
 実に26年経過しました。
@@ -39,13 +37,23 @@ Perl6 と呼ばれていたもの
 どんなことができるようになるのか
 <div class="en">What was it going to give us?</div>
 ----
-- Grammar
+- Perl 6 の強力な正規表現（名前付き規則・キャプチャ・Grammar）
 - Concurrency
-- Perl5 との相互運用 (CPAN module も使える)
-- Perl5 の正規表現もそのまま使える (`m:P5/.../`)
-- etc. etc.
-<!-- 6.c アナウンスに Grammar/並行/Inline::Perl5 の3つ。memo「歴史の裏取り」2, 14 -->
-<div class="en">Grammars / Concurrency / Interop with Perl 5 (CPAN modules) / Perl 5 regexes as-is / and more</div>
+- Perl 5 との相互運用（CPAN モジュールも使える）
+<!-- https://docs.raku.org/language/regexes, https://docs.raku.org/language/grammars -->
+<div class="en">Powerful regexes: named rules, captures, and grammars<br>Concurrency / Perl 5 interoperability, including CPAN modules</div>
+----
+正規表現で文法を組み立てる
+>||
+grammar Pair {
+    token TOP   { &lt;key&gt; '=' &lt;value&gt; }
+    token key   { \w+ }
+    token value { \w+ }
+}
+say ~Pair.parse("lang=Raku")&lt;key&gt;;  # lang
+||<
+<!-- https://docs.raku.org/language/grammars -->
+<div class="en">Compose named regex rules into a grammar<br>and read the captured key from the match</div>
 ----
 2001年、Parrot VM が作られることが発表されました
 → 名前の由来はエイプリルフールのネタ (Perl と Python が合併！)
@@ -167,17 +175,22 @@ Raku には Roast があるから実装作れるのでは？
 <div class="en">It's still not finished.<br>About 200 open issues remain</div>
 ----
 Roast があっても、テストだけで実装が完成するわけではない
-→ AI のトークン、速いビルド環境、CI の資源、時間が要る
-<div class="en">Even with Roast, tests alone don't finish an implementation<br>You also need AI tokens, fast builds, CI resources, and time</div>
+→ AI のトークン、ビルド時間、CI の資源、開発時間が要る
+<div class="en">Even with Roast, tests alone don't finish an implementation<br>It takes AI tokens, build time, CI resources, and development time</div>
+----
+Rust のビルドは遅い
+→ AI が試行錯誤するたびに待ち時間が増える
+→ CI を何度も回すので、実行コストの調整も必要
+<div class="en">Rust builds take time<br>Every AI iteration adds waiting and CI cost<br>We had to tune how often the CI runs</div>
 ----
 Roast は、実装を進めるための出発点
 <div class="en">Roast gives us a starting point for building one</div>
 ----
-元になるものをこの２つと定める。
+元になるものをこの２つと定める
 - [Raku/doc](https://github.com/Raku/doc)
 - [Raku/roast](https://github.com/Raku/roast)
-この２つをsubmoduleとしておく。
-<div class="en">Two sources of truth: Raku/doc and Raku/roast<br>Both added as git submodules</div>
+→ 当初は submodule として参照していた
+<div class="en">Two sources of truth: Raku/doc and Raku/roast<br>Initially referenced as git submodules</div>
 ----
 最初のゴールを設定する
 - **roast が全部通ること**
@@ -309,10 +322,10 @@ KPI は大事。
 <div class="en">May: steering toward practicality<br>Passing Roast doesn't mean ordinary programs work</div>
 ----
 KPI を変えていく
-- roast pass rate
-- → ベンチマーク (raku との比較)
-- → ecosystem pass rate
-<div class="en">Changing the KPI:<br>roast pass rate → benchmarks (vs raku) → ecosystem pass rate</div>
+- Roast の通過率
+- Rakudo との実行時間比（1 未満なら mutsu が速い）
+- ecosystem のテスト通過率
+<div class="en">Changing KPIs:<br>Roast pass rate → runtime versus Rakudo → ecosystem pass rate</div>
 ----
 *パーサーの話
 <div class="en">The parser</div>
@@ -366,11 +379,6 @@ AST の tree walking が実装は簡単
 → codepoint 単位なのか grapheme 単位なのか
 → `div` の丸め方向
 <div class="en">And the two copies slowly drift apart<br>codepoints vs graphemes / rounding direction of <code>div</code></div>
-----
-「1 operation = 1 implementation」
-というルールを決めた
-(2026年6月)
-<div class="en">The rule: "1 operation = 1 implementation"<br>(June 2026)</div>
 ----
 新しいバイトコード経路を足すだけでは、二重実装は残る
 → 旧 tree walker の経路を消すところまでを完了条件にした
@@ -438,18 +446,15 @@ JSON::Fast が使う nqp:: op を 51 個洗い出した
 (2026年8月)
 <div class="en">Run the real module as-is.<br>No native replacements.<br>(August 2026)</div>
 ----
-逃げ方その3: 共通の実装を「不要」として後回しにする
-<div class="en">Escape #3: put off shared infrastructure as "unnecessary"</div>
+ここで nqp:: op とは？
+→ Raku モジュールから呼ばれる低レベル操作
+→ JSON::Fast 以外のモジュールも使う共通部分
+<div class="en">What are nqp:: ops?<br>Low-level operations called by Raku modules<br>A shared layer used beyond JSON::Fast</div>
 ----
-7月、AI は「nqp:: op の共通層は不要」と主張
-→ でもモジュールを個別に Rust で置き換えても、Raku のコードは動かない
-<div class="en">In July, AI argued that a shared nqp:: op layer was unnecessary<br>But replacing modules one by one in Rust doesn't run their Raku code</div>
-----
-10月、共通の nqp:: op 層を実装し、111 個の op を追加
-<div class="en">In October, we built the shared nqp:: op layer<br>We added 111 ops</div>
-----
-「不要」という説明も、実際に動かしたいコードで確かめる
-<div class="en">Check claims that something is unnecessary against the code we actually want to run</div>
+7月、AI は「共通の nqp:: op 層は不要」と判断
+→ 8月、JSON::Fast で不足が見えた
+→ 10月、共通層に 111 個の op を実装
+<div class="en">July: AI said the shared nqp:: op layer was unnecessary<br>August: JSON::Fast exposed gaps<br>October: 111 ops implemented in the shared layer</div>
 ----
 *丸投げできないもの
 <div class="en">Things you can't just hand off</div>
@@ -515,10 +520,10 @@ NaN-boxing で 8 バイトに
 - Cranelift は pure Rust で、wasmtime での実績もある
 <div class="en">LLVM is heavy (build and startup) / hand-written assembly needs per-CPU maintenance / Cranelift is pure Rust and proven in wasmtime</div>
 ----
-method JIT にする
-→ tracing JIT はやらない
-→ OSR も最初はやらない
-<div class="en">A method JIT<br>no tracing JIT<br>no OSR at first</div>
+よく呼ばれる関数・メソッドを丸ごとネイティブコードにする
+→ 実行中のループから JIT へ途中で乗り換える仕組みは後回し
+<!-- tracing JIT は実行経路を記録してコンパイルする方式。OSR は実行中のループから JIT コードへ切り替える仕組み -->
+<div class="en">Compile hot functions and methods as a whole<br>Defer switching a running loop into JIT code</div>
 ----
 GC → NaN-boxing → JIT
 この順番は最初に決めておいた
@@ -541,21 +546,9 @@ GC を「参照カウント + 非移動 + 世代別じゃない」にしてあ�
 はやい！！！
 <div class="en">Fast!!!</div>
 ----
-バイトコード VM は、エラー表示のために元のソース行番号を覚えておく
-→ そのための命令 `SetSourceLine` が、fib 実行時の命令数の 21%
-<div class="en">The bytecode VM tracks source lines for error messages<br><code>SetSourceLine</code> accounted for 21% of executed instructions in fib</div>
-----
-この命令を消して、毎命令で行番号を更新したら 7.8% 遅くなった
-→ 行番号が必要な命令でだけ調べると 3.4% 速くなった
-<div class="en">Removing it and updating the line on every instruction made fib 7.8% slower<br>Looking up the line only where needed made it 3.4% faster</div>
-----
-教訓: 命令数 ≠ 時間
-→ 命令数を 21% 減らしても、速度は 3.4% 改善。JIT 有効時は ±0%
-<!-- mutsu news/2026-07.md 「baseline optimizations round 5」(#4489)。+7.8% / -3.4% は fib の命令数 -->
-<div class="en">Lesson: instruction count ≠ time<br>21% fewer instructions meant a 3.4% gain; ±0% with the JIT on</div>
-----
-測らないとわからない。。
-<div class="en">You can't know without measuring...</div>
+<img src="jit-on-off.svg" style="max-width:95%; max-height:80vh;">
+<!-- 出典: tokuhirom/mutsu bench-data 9df948ba0, 2026-11-23T20:50:32Z, commit 3346116673eaff78781d9824df6a48d1264a72f2。7回の中央値 -->
+<div class="en">JIT on/off: median runtime of 7 runs; shorter is faster</div>
 ----
 *ベンチマーク
 <div class="en">Benchmarks</div>
@@ -589,12 +582,6 @@ mutsu / rakudo の時間比 (小さいほど mutsu が速い)
 → 組み込みを Rust で持って
 → 起動処理を地道に削っていけば、ここまで縮む
 <div class="en">At least the language spec itself doesn't seem to be what's heavy<br>Keep builtins in Rust,<br>and steadily trim startup work, and it gets this small</div>
-----
-例: `say 1` の起動にかかる命令数
-→ 1016万 → 766万 (-25%)
-→ 組み込みの名前を全部なめてたインデックスを、最初に使うときまで遅延させる、とか
-<!-- mutsu news/2026-10/startup-skips-qualified-index-and-relocations.md (callgrind) -->
-<div class="en">Example: instructions to start <code>say 1</code><br>10.16M → 7.66M (-25%)<br>e.g. building an index of all builtin names lazily, on first use</div>
 ----
 ただ、これは公平な比較ではない
 → rakudo の起動と JIT のウォームアップ込みの時間
@@ -640,16 +627,6 @@ MoarVM の spesh / JIT は、温まると強い
 → 先にこれがあったら、mutsu 作らなかったかもな。。とちょっと思った
 → でも C++ なので、Rust 版だとどうなるのかな、とも思ったかも
 <div class="en">When I found it, I thought for a moment<br>"If this had existed first, maybe I wouldn't have built mutsu"<br>but also "it's C++, so what would a Rust one look like?"</div>
-----
-……で、mutsu はというと
-→ Raku++ と同じ物差し (spectest.data) で数え直してみた
-<!-- mutsu #19036 / PR #19043。それまでは独自の数え方で 1,269 / 1,288 だった -->
-<div class="en">...and mutsu?<br>Recounted with the same yardstick as Raku++ (spectest.data)</div>
-----
-1,425 / 1,425
-→ mutsu も 100%！！！
-<!-- 最後の3ファイル (pseudo-6c/6d/6e) は PR #19007 で通過 -->
-<div class="en">1,425 / 1,425<br>mutsu is at 100% too!!!</div>
 ----
 今は bench CI で rakupp とも比べてる
 → 別の実装があると、お互いの伸びしろが見える
@@ -704,34 +681,20 @@ main が赤くなる
 → 「main is red」issue を 1 個立てて、直すのは 1 人だけ、にした
 <div class="en">main goes red<br>~20 PRs each try to fix it on their own<br>runners fill up, it breaks again<br>Now: open one "main is red" issue, and only one agent fixes it</div>
 ----
-flaky test
-→ 調べたら、だいたい普通のバグだった
-→ テストのポート番号がかぶってた、とか
-<div class="en">Flaky tests<br>turned out to be mostly ordinary bugs<br>e.g. tests colliding on port numbers</div>
+頼んでいない upstream の変更を AI が始める
+<div class="en">AI started changing upstream projects without being asked</div>
 ----
-`while pgrep -f "make lint"`
-→ 自分自身のシェルにマッチして永遠に終わらない
-<div class="en"><code>while pgrep -f "make lint"</code><br>matches its own shell and never ends</div>
-----
-`pkill -f "make test"`
-→ 自分のシェルを殺す
-<div class="en"><code>pkill -f "make test"</code><br>kills its own shell</div>
-----
-(´・ω・`)
-<div class="en">(sigh)</div>
-----
-submodule の ticket/issue 誤登録
-<div class="en">Issues filed in the wrong repository</div>
-----
-roast や doc を submodule にしている
-→ AI が mutsu の issue を本家のリポジトリに立てる
-<div class="en">roast and doc are submodules<br>so the AI filed mutsu issues in the upstream repositories</div>
+mutsu の作業を頼んだだけなのに
+→ AI が Roast 本家にバグ報告や PR を勝手に出した
+→ そんなことは依頼していない。。
+<div class="en">I only asked for work on mutsu<br>AI filed bug reports and PRs against upstream Roast on its own<br>I never asked it to do that</div>
 ----
 Raku のみなさん、すみませんでした。。
 <div class="en">Sorry, Raku folks...</div>
 ----
-AGENTS.md に「issue は tokuhirom/mutsu にだけ立てる」
-<div class="en">AGENTS.md now says: "file issues only in tokuhirom/mutsu"</div>
+submodule だと upstream のリポジトリに辿れてしまう
+→ Roast と doc は vendoring に切り替えた
+<div class="en">Submodules still led the AI to upstream repositories<br>So we switched Roast and doc to vendored copies</div>
 ----
 AI がやらかしたら、全部ルールとして書き残す
 → AGENTS.md が 567 行になった
@@ -796,24 +759,24 @@ WebAssembly にもなる
 <div class="en">It also builds to WebAssembly<br>a playground that runs in the browser</div>
 ----
 *デモ
-<!-- WebAssembly 版 mutsu をスライドに埋め込み。CDN から wasm (約32MB) を読むので、事前に一度開いてキャッシュしておく -->
+<!-- WebAssembly 版 mutsu をスライドに埋め込み。事前に fetch-mutsu-wasm.sh でローカルへ取得する -->
 <div class="en">Demo</div>
 ----
 ブラウザの中で mutsu が動きます
-→ WebAssembly
-<div class="en">mutsu runs inside the browser<br>WebAssembly</div>
+WebAssembly 版をここで実行
+<div class="en">mutsu runs inside the browser<br>Let's try the WebAssembly build</div>
 ----
 <iframe src="demo.html?ex=hello" style="width:100%;height:82vh;border:0;"></iframe>
-<!-- iframe 内にフォーカスがあると j/k や矢印でページ送りできないので、外側をクリックしてから送る -->
+<!-- iframe 内にフォーカスがある場合は、デモ内の「次のスライド」ボタンを使う -->
 ----
 <iframe src="demo.html?ex=grammar" style="width:100%;height:82vh;border:0;"></iframe>
-<!-- iframe 内にフォーカスがあると j/k や矢印でページ送りできないので、外側をクリックしてから送る -->
+<!-- iframe 内にフォーカスがある場合は、デモ内の「次のスライド」ボタンを使う -->
 ----
 <iframe src="demo.html?ex=multi" style="width:100%;height:82vh;border:0;"></iframe>
-<!-- iframe 内にフォーカスがあると j/k や矢印でページ送りできないので、外側をクリックしてから送る -->
+<!-- iframe 内にフォーカスがある場合は、デモ内の「次のスライド」ボタンを使う -->
 ----
 <iframe src="demo.html?ex=concurrency" style="width:100%;height:82vh;border:0;"></iframe>
-<!-- iframe 内にフォーカスがあると j/k や矢印でページ送りできないので、外側をクリックしてから送る -->
+<!-- iframe 内にフォーカスがある場合は、デモ内の「次のスライド」ボタンを使う -->
 ----
 *そして
 <div class="en">And...</div>
@@ -845,12 +808,6 @@ mutsu は、Rakudo の人たちが積み上げてきたものの上に乗っか�
 → AI にも「わからなかったら raku -e で確かめろ」と指示してる
 <!-- mutsu AGENTS.md: "raku is the reference oracle" -->
 <div class="en">When in doubt, Rakudo is the answer<br>The AI is told: "if unsure, check with raku -e"</div>
-----
-たとえば Perl5 の正規表現 (`m:P5/.../`)
-→ 2026年9月、Rakudo からも Roast からも削除された
-→ mutsu も追随して PCRE2 ごと消しました
-<!-- memo 14 -->
-<div class="en">For example, Perl 5 regexes (<code>m:P5/.../</code>)<br>were removed from both Rakudo and Roast in September 2026<br>and mutsu followed, deleting PCRE2 entirely</div>
 ----
 Rakudo のコードもそのまま使わせてもらってる
 → `.DEPARSE` は Rakudo の RakuAST::Deparse をそのまま同梱
@@ -886,10 +843,10 @@ Raku コミュニティのみなさんに感謝！
 *まとめ
 <div class="en">Summary</div>
 ----
-- KPI を設定して実装することが大事。
-  - roast pass rate → ecosystem pass rate
+- KPI を設定して実装することが大事
+  - Roast 通過率 → Rakudo より速いか → ecosystem 通過率
 - でも KPI はハックされる
-<div class="en">Set KPIs to drive implementation (roast pass rate → ecosystem pass rate)<br>but KPIs get gamed</div>
+<div class="en">Set KPIs to drive implementation:<br>Roast pass rate → faster than Rakudo → ecosystem pass rate<br>but KPIs get gamed</div>
 ----
 - AI は大きな変更から逃げる
 - AI の「不可能」は疑う

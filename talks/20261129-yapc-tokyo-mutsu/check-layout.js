@@ -87,6 +87,27 @@ function serve() {
     console.log(`${vp.name}: ${checked} slides checked`);
     await ctx.close();
   }
+
+  // デモ直前の j キーと、iframe にフォーカスした後の「次へ」を確認する。
+  const slides = fs.readFileSync(path.join(__dirname, 'main.txt'), 'utf8').split('\n----\n');
+  const intro = slides.findIndex(s => s.startsWith('ブラウザの中で mutsu が動きます'));
+  if (intro < 0) throw new Error('demo intro slide not found');
+  const demos = slides.slice(intro + 1).findIndex(s => !s.startsWith('<iframe '));
+  if (demos < 1) throw new Error('demo iframe slides not found');
+  const navCtx = await browser.newContext(VIEWPORTS[0].options);
+  await navCtx.route('**/*', r => /^http:\/\/127\.0\.0\.1:/.test(r.request().url()) ? r.continue() : r.abort());
+  const navPage = await navCtx.newPage();
+  await navPage.goto(base + '#' + intro);
+  await navPage.waitForFunction(n => location.hash === '#' + n, intro);
+  await navPage.keyboard.press('j');
+  await navPage.waitForFunction(n => location.hash === '#' + (n + 1), intro);
+  for (let i = 0; i < demos; i++) {
+    await navPage.frameLocator('iframe').locator('#next-slide').click();
+    await navPage.waitForFunction(n => location.hash === '#' + n, intro + i + 2);
+  }
+  console.log(`Navigation: j key and ${demos} demo buttons checked`);
+  await navCtx.close();
+
   await browser.close();
   srv.close();
   if (failures.length) {

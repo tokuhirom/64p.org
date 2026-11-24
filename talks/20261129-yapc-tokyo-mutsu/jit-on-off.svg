@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 680" role="img" aria-labelledby="title desc">
+<title id="title">JIT on/off の実行時間比較</title>
+<desc id="desc">4種類のベンチマークについて、JIT off を100%として JIT on の実行時間を比較。fib 65%、数値演算62%、日時の計算48%、メソッド呼び出し101%。</desc>
+<rect width="1200" height="680" fill="#fff"/>
+<text x="58" y="64" font-size="38" font-weight="700" fill="#17223b" font-family="sans-serif">JIT を有効にすると、どこが速くなる？</text>
+<text x="60" y="104" font-size="22" fill="#42526b" font-family="sans-serif">相対実行時間（JIT off = 100%）・短いほど速い</text>
+<rect x="830" y="76" width="22" height="18" fill="#b8c2d3"/>
+<text x="861" y="92" font-size="19" fill="#25324a" font-family="sans-serif">JIT off</text>
+<rect x="958" y="76" width="22" height="18" fill="#2877cc"/>
+<text x="989" y="92" font-size="19" fill="#25324a" font-family="sans-serif">JIT on</text>
+<text x="58" y="177" font-size="27" font-weight="600" fill="#17223b" font-family="sans-serif">fib</text>
+<rect x="330" y="140" width="600" height="32" rx="5" fill="#b8c2d3"/>
+<rect x="330" y="180" width="389.2" height="32" rx="5" fill="#2877cc"/>
+<text x="950" y="165" font-size="21" fill="#25324a" font-family="sans-serif">88.8 ms</text>
+<text x="950" y="205" font-size="21" font-weight="600" fill="#175aab" font-family="sans-serif">57.6 ms (-35%)</text>
+<text x="58" y="296" font-size="27" font-weight="600" fill="#17223b" font-family="sans-serif">数値演算</text>
+<rect x="330" y="259" width="600" height="32" rx="5" fill="#b8c2d3"/>
+<rect x="330" y="299" width="372.3" height="32" rx="5" fill="#2877cc"/>
+<text x="950" y="284" font-size="21" fill="#25324a" font-family="sans-serif">31.1 ms</text>
+<text x="950" y="324" font-size="21" font-weight="600" fill="#175aab" font-family="sans-serif">19.3 ms (-38%)</text>
+<text x="58" y="415" font-size="27" font-weight="600" fill="#17223b" font-family="sans-serif">日時の計算</text>
+<rect x="330" y="378" width="600" height="32" rx="5" fill="#b8c2d3"/>
+<rect x="330" y="418" width="290.3" height="32" rx="5" fill="#2877cc"/>
+<text x="950" y="403" font-size="21" fill="#25324a" font-family="sans-serif">126.7 ms</text>
+<text x="950" y="443" font-size="21" font-weight="600" fill="#175aab" font-family="sans-serif">61.3 ms (-52%)</text>
+<text x="58" y="534" font-size="27" font-weight="600" fill="#17223b" font-family="sans-serif">メソッド呼び出し</text>
+<rect x="330" y="497" width="600" height="32" rx="5" fill="#b8c2d3"/>
+<rect x="330" y="537" width="607.8" height="32" rx="5" fill="#2877cc"/>
+<text x="950" y="522" font-size="21" fill="#25324a" font-family="sans-serif">53.9 ms</text>
+<text x="950" y="562" font-size="21" font-weight="600" fill="#175aab" font-family="sans-serif">54.6 ms (+1%)</text>
+<line x1="58" y1="622" x2="1142" y2="622" stroke="#d4dce7"/>
+<text x="60" y="652" font-size="17" fill="#516077" font-family="sans-serif">mutsu bench CI・2026-11-23・同一コミット / 同一 runner・各7回の中央値</text>
+</svg>

@@ -12,6 +12,8 @@
   .bar .title { font-weight:bold; }
   .bar .status { margin-left:auto; color:#666; font-size:18px; }
   button { font-size:22px; padding:4px 18px; border-radius:6px; border:1px solid var(--accent); background:var(--accent); color:#fff; cursor:pointer; }
+  button[hidden] { display:none; }
+  #next-slide { background:#fff; color:var(--accent); }
   button:disabled { opacity:.5; cursor:wait; }
   textarea, pre { font: 26px/1.45 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; margin:0; padding:12px 16px; box-sizing:border-box; border-radius:8px; tab-size:4; }
   textarea { flex: 3; min-height: 0; width:100%; resize:none; border:1px solid #ccc; background:var(--code-bg); color:var(--fg); }
@@ -31,6 +33,7 @@
 <div class="bar">
   <span class="title" id="title">mutsu</span>
   <button id="run" disabled>Run (Ctrl+Enter)</button>
+  <button id="next-slide" type="button" hidden>次のスライド →</button>
   <span class="status" id="status">Loading mutsu (WebAssembly)…</span>
 </div>
 <textarea id="code" spellcheck="false"></textarea>
@@ -75,6 +78,15 @@ say so 3 == any(1, 2, 3);     # junction
 </script>
 
 <script type="module">
+if (window.parent !== window) {
+  const next = document.getElementById('next-slide');
+  next.hidden = false;
+  next.addEventListener('click', () => {
+    const current = Number(window.parent.location.hash.slice(1));
+    if (Number.isInteger(current)) window.parent.location.hash = '#' + (current + 1);
+  });
+}
+
 const VERSION = '0.26.1';   // TODO: 1.0.0 リリース後に更新して fetch-mutsu-wasm.sh を再実行
 // 本番は fetch-mutsu-wasm.sh で取ってきたローカルの vendor/mutsu-wasm/ を使う（ネットワーク不要）。
 // ローカルに無いとき（公開サイトなど）だけ CDN にフォールバックする。
