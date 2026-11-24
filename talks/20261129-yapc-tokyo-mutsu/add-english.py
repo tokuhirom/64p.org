@@ -227,7 +227,7 @@ EN.update({
 "新しいバイトコード経路を足すだけでは、二重実装は残る": "Adding a bytecode path alone leaves two implementations<br>We made removing the old tree-walker path part of \"done\"",
 "JSON::Fast が使う nqp:: op を 51 個洗い出した": "We listed the 51 nqp:: ops used by JSON::Fast<br>Only 9 failed in mutsu; the other 42 already worked",
 "ここで nqp:: op とは？": "What are nqp:: ops?<br>Low-level operations called by Raku modules<br>A shared layer used beyond JSON::Fast",
-"7月、AI は「共通の nqp:: op 層は不要」と判断": "July: AI said the shared nqp:: op layer was unnecessary<br>August: JSON::Fast exposed gaps<br>October: 111 ops implemented in the shared layer",
+"7月、AI は「共通の nqp:: op 層は不要」と判断": "July: AI said the shared nqp:: op layer was unnecessary<br>September: JSON::Fast exposed gaps<br>A module only runs once every op it uses exists, so adding ops one at a time barely helped<br>October: 111 ops implemented in the shared layer",
 "よく呼ばれる関数・メソッドを丸ごとネイティブコードにする": "Compile hot functions and methods as a whole<br>Defer switching a running loop into JIT code",
 "<img src=\"jit-on-off.svg\" style=\"max-width:95%; max-height:80vh;\">": "JIT on/off: median runtime of 7 runs; shorter is faster",
 "頼んでいない upstream の変更を AI が始める": "AI started changing upstream projects without being asked",
