@@ -8,10 +8,11 @@ YAPC::Tokyo 2026 (2026-11-29) のトーク。
 - `index.html` — presen5 のビューア
 - `demo.html` — WebAssembly 版 mutsu のデモ（`?ex=hello|grammar|multi|concurrency`）。スライドから iframe で埋め込んでいる
 - `history-pass.svg` / `gen-history-graph.py` — Roast 通過ファイル数の推移グラフとその生成スクリプト
+- `jit-on-off.tsv` / `gen-jit-graph.py` / `jit-on-off.svg` — bench CI の同一コミット・同一 runner で測った JIT オン・オフの7回中央値と、そのグラフ
 - `fetch-mutsu-wasm.sh` — デモ用の wasm を取得するスクリプト
 - `add-english.py` — 各スライドに英語字幕 (`<div class="en">`) を付けるスクリプト。英訳はスクリプト内の辞書（スライドの最初の行がキー）。スライドを足したり直したりしたら辞書を更新して `python3 add-english.py` を再実行する（何度実行しても同じ結果になる）。未訳があると一覧を出して失敗する
 - `fit.js` — ページごとに文字サイズを自動調整して、本文と英語字幕が画面に収まるようにする（下限あり）。presen5 本体は触らずこのトークだけで読み込む
-- `check-layout.js` — 全スライドが PC (1920x1080 / 1280x720) とスマホ (iPhone 13 / Pixel 7) で画面内に収まり、文字が下限より小さくならないかを Playwright で検査する
+- `check-layout.js` — 全スライドが PC (1920x1080 / 1280x720) とスマホ (iPhone 13 / Pixel 7) で画面内に収まり、文字が下限より小さくならないかを Playwright で検査する。デモ直前のキー操作と、各デモ内の「次のスライド」ボタンも確認する
 - `package.json` / `package-lock.json` — レイアウト検査用の Playwright のバージョンを固定する
 - `memo.md` — ネタメモ（採用/未採用、出典、当日更新リスト）
 
@@ -33,6 +34,8 @@ npm から `@tokuhirom/mutsu` を取ってきて integrity を検証し、`vendo
 ```sh
 python3 gen-history-graph.py ../../../mutsu/HISTORY.tsv history-pass.svg
 ```
+
+JIT 比較グラフの数値は [mutsu の bench-data](https://github.com/tokuhirom/mutsu/blob/9df948ba0/bench-history.tsv) の 2026-11-23 20:50:32 UTC、コミット `3346116673eaff78781d9824df6a48d1264a72f2` から抜き出したもの。数値を更新する場合は `jit-on-off.tsv` の同一実行に属するオン・オフの組を更新し、`python3 gen-jit-graph.py` で SVG を再生成する。
 
 ## 発表時
 
