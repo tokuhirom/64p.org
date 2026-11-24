@@ -84,6 +84,7 @@
     - ecosystem での `:P5` 利用は 2,558 dist 中 6 (≈0.23%)（mutsu #10225 の調査）
     - mutsu も追随して PCRE2 エンジンごと削除（ADR-0138, 2026-10-01）。C ライブラリのビルド依存が1つ消えた
     - ネタ: rakupp の Roast 分母が 1,434 → 1,424 になった一因もこの11ファイルの削除
+    - 💤 スライドからは削除（売り文句の「Perl5 の正規表現もそのまま使える」も含めて）
 
 ## tokuhirom の発言・スタンス
 
@@ -111,6 +112,10 @@
 
 ## 削ったネタ
 
+- 💤 「2005年に就職してから Perl5 を使いはじめた」の自己紹介スライド
+- 💤 Perl5 正規表現（`m:P5`）の削除の話
+- 💤 SetSourceLine（命令数 ≠ 時間）、`say 1` の起動命令数、flaky test、pgrep/pkill
+- 💤 Raku++ の節の「同じ物差しで数え直したら mutsu も 100%」
 - 💤 「最強では？？」→「そしてParrot終了」→「今ギョームでは go / どうしてこうなった？」の自虐の流れ。「Raku は失敗した」話に聞こえて滑るかもしれないので削除（2026-11-23）
 
 ## Rakudo コミッター視点レビュー（2026-11-23）
@@ -122,6 +127,12 @@
   - ベンチを最新 Rakudo で取り直すか
   - 起動は Raku++ のほうが約2倍速い、と一言入れるか
   - issue 誤登録の件数と後始末
+
+## 追加されたもの（2026-11-24、別の AI による修正）
+
+- ✅ 序盤に Grammar のコード例（`grammar Pair { ... }; say ~Pair.parse("lang=Raku")<key>;` → `lang`。mutsu wasm で動作確認済み）
+- ✅ 「Roast があってもテストだけで完成するわけではない → トークン・ビルド時間・CI・開発時間」→「Rust のビルドは遅い」
+- ✅ デモ内に「次のスライド」ボタン（iframe にフォーカスがあってもページ送りできる）
 
 ## ライセンス
 
@@ -145,7 +156,7 @@
 ## Roast の推移（HISTORY.tsv）
 
 - ✅ 2/12 開始 147 → 2/28 500 突破 → 4/14 1000 → 6/12 1200 → 7/12 1271 で頭打ち
-- ✅ 最新 1,269 / 1,288（11/22）
+- 💤 旧来の数え方での最新 1,269 / 1,288（11/22）。スライドは spectest.data 基準の 1,425 / 1,425 に統一したので出さない
 - 💤 README の数え方だと 1,426 / 1,454。プロポーザルは 1,433 / 1,464。数え方の違いを聞かれたら説明
 - 💤 リポジトリの HISTORY-pass.svg は横軸が日付スケールでなく、計測失敗が0に落ちる。スライドのグラフは `gen-history-graph.py` で描き直したもの
 
@@ -165,7 +176,7 @@
 
 - ✅ AI が tree walking で fallback したがる。置換に一ヶ月
 - ✅ 二重実装で間違ったほうを直す、挙動がずれる（codepoint vs grapheme、div の丸め）
-- ✅ 「1 operation = 1 implementation」（2026-06-07）
+- 💤 「1 operation = 1 implementation」（2026-06-07）。ルール名のスライドは削除。完了条件の話（旧 tree walker の経路を消すまでが完了）として残っている
 - ✅ `make check-slow-path` で fallback の数をラチェット
 - ✅ AI「構造的に不可能」→「設計からやり直して」→ single-store で消えた（docs/vm-single-store.md）
 - 💤 CP-3: `struct VM` を `Interpreter` に溶かして差し引き −794 行
@@ -175,8 +186,8 @@
 
 - ✅ "Refactor boldly"
 - ✅ JSON::Fast をネイティブ実装で置き換え、ベンチ 1000 倍 → 51 op 中 42 個はもう動いてた → ネイティブ代替禁止（2026-08-01, ADR-0096）
-- ✅ 7月「nqp:: op 層は作らない」→ 10月 撤回して 111 op 実装
-- ✅ 完了条件を「古いものが消えたこと」にする
+- ✅ 「nqp:: op とは？」の説明 → 7月「共通層は不要」→ 9月 JSON::Fast で不足が見える → 使う op が全部そろわないとモジュールは動かない → 10月 111 op 実装
+- ✅ 完了条件を「古いものが消えたこと」にする（Byte code interpreter の章: 旧 tree walker の経路を消すまでが完了）
 - 💤 OO::Monitors や `if` pragma も一時ネイティブ実装 → 撤去
 - 💤 nqp:: op は 578 個中 362 個実装（10/3）
 
@@ -184,8 +195,9 @@
 
 - ✅ GC: 非移動の参照カウント + cycle collector（ADR-0001, 6/27）。7/5 デフォルト on
 - ✅ NaN-boxing: Value 48 → 8 バイト（7/12）。エラー 708 箇所、cargo fix で 558、残り 150 を AI 4 体で並列
-- ✅ JIT: Cranelift、method JIT、tracing/OSR なし。J1→J5 を 2 日。7/13 デフォルト on
-- ✅ 命令数 ≠ 時間（SetSourceLine が 21% → 消したら 7.8% 遅くなった）
+- ✅ JIT: Cranelift、よく呼ばれる関数を丸ごとネイティブコードに（method JIT。tracing / OSR は用語ごとスライドから外した）。実装開始からデフォルト on まで 2 日。7/13 デフォルト on
+- ✅ JIT on/off グラフ（jit-on-off.svg）: fib 65%、数値演算 62%、日時の計算 48%、メソッド呼び出し 101%（bench-data 9df948ba0, 2026-11-23）
+- 💤 命令数 ≠ 時間（SetSourceLine が 21% → 素朴に消すと 7.8% 遅く、観測点だけにして 3.4% 改善）。唐突なので削除
 - ✅ 裏取り（GC/JIT の表現）:
   - スタックマップ不要は「参照カウントで、GC がスタックを走査しないから」、write barrier 不要は「世代別じゃないから」（ADR-0004 §2.4, ADR-0001）。非移動なのはコード中のポインタが動かないこと（forwarding 不要）に効く
   - JIT: 最初の PR #4471 作成 2026-07-12 20:45 JST → デフォルト on の #4482 マージ 2026-07-13 11:48 JST（PR ベースで約15時間）。スライドは「実装開始からデフォルト on まで 2日」
@@ -209,7 +221,7 @@
 - 💤 9月前半はまだ 646〜676 / 1,464 files → 9/29 で一気に 100%（分母の数え方が途中で変わっている）
 - 💤 最新は v5.10.0（2026-11-19）で 1,425 / 1,425 files
 - 💤 rakupp の 100% は spectest.data（Rakudo が「通るはず」として走らせるリスト, 1,425 files）が分母で、#?rakudo skip/todo を除外した数え方
-- 💤 同じ物差しで数えると mutsu も 1,422 / 1,425（99.8%）。残りは pseudo-6c/6d/6e の3ファイルだけ
+- 💤 同じ物差しで数えると mutsu も 1,422 / 1,425（99.8%）だった → その後 pseudo-6c/6d/6e も通って 1,425 / 1,425。Raku++ の節での「mutsu も 100%」は削除し、「いまどうなってるか」の 100% だけ残した
   → mutsu 側の基準を揃える issue: https://github.com/tokuhirom/mutsu/issues/19036
 - 出典: https://github.com/ash/rakupp/blob/main/docs/status/MILESTONES.md, https://github.com/ash/rakupp/blob/main/docs/status/COUNTING.md
 - ✅ bench CI で 9 月から rakupp v5.0.1 も計測
@@ -223,7 +235,7 @@
 ## 起動の速さ
 
 - ✅ 「Rakudo の起動が遅いのは NQP/Raku で書かれたコンパイラ・標準ライブラリを起動のたびに読むからでは？」は tokuhirom の仮説。調べたわけではない → スライドでも仮説と明言
-- ✅ mutsu 側の事実: `say 1` の起動命令数 10.16M → 7.66M (-25%)、ページフォルト ~950 → ~700（callgrind）。修飾名インデックスの遅延構築など（news/2026-10/startup-skips-qualified-index-and-relocations.md）
+- 💤 mutsu 側の事実（スライドからは削除）: `say 1` の起動命令数 10.16M → 7.66M (-25%)、ページフォルト ~950 → ~700（callgrind）。修飾名インデックスの遅延構築など（news/2026-10/startup-skips-qualified-index-and-relocations.md）
 - 💤 起動は Raku++ のほうが速い（bench-startup で mutsu/rakupp ≈ 2）
 
 ## Raku Weekly への改名
@@ -239,9 +251,9 @@
 - ✅ ADR 番号の衝突 6 回 → ADR 番号 = issue 番号
 - ✅ CI 詰まり（同時 20 ジョブ）→ 重いテストは main で毎時
 - ✅ main が赤 → 約20 PR が勝手に修正 → 「main is red」issue を1つ、直すのは1人
-- ✅ flaky の大半は普通のバグ（ポート衝突など）
-- ✅ `pgrep -f` / `pkill -f` で自分のシェルにマッチ → dev job runner（ADR-0126）
-- ✅ 本家リポジトリへの issue 誤登録 → AGENTS.md に禁止を明記
+- 💤 flaky の大半は普通のバグ（ポート衝突など）
+- 💤 `pgrep -f` / `pkill -f` で自分のシェルにマッチ → dev job runner（ADR-0126）
+- ✅ 頼んでいないのに AI が Roast 本家にバグ報告や PR を出した（Raku/roast issue #881「miss post」2026-02-21、PR #882 2026-02-27、どちらも closed）→ submodule をやめて vendoring に切り替え
 - ✅ AGENTS.md 567 行
 - 💤 lane 制: 13 lane + perf lane、1 lane 1 エージェント、issue コメントで claim（10/11〜）
 - 💤 ecosystem の「lock board」issue でエージェント同士が dist を取り合わない
