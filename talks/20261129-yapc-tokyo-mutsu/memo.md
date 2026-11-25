@@ -238,6 +238,20 @@
 - 💤 mutsu 側の事実（スライドからは削除）: `say 1` の起動命令数 10.16M → 7.66M (-25%)、ページフォルト ~950 → ~700（callgrind）。修飾名インデックスの遅延構築など（news/2026-10/startup-skips-qualified-index-and-relocations.md）
 - 💤 起動は Raku++ のほうが速い（bench-startup で mutsu/rakupp ≈ 2）
 
+## mutsu と Raku++ の差の調査レポート（docs/rakupp-gap-survey.md, 2026-11-25）
+
+https://github.com/tokuhirom/mutsu/blob/main/docs/rakupp-gap-survey.md
+
+- 💤 bench で mutsu が Raku++ に負けている 18 行を分解したレポート
+- 💤 JSON::Fast の行は「エンジン対エンジン」ではない: rakupp は JSON::Fast の Raku コードを実行せず、`JSON::Fast::from-json` を自前の C++ パーサーで答えている（`from-json` の先頭に `die` を置いても発火しない）。mutsu が「逃げ方その2」で禁止したネイティブ置き換えと同じ形の設計判断 → JSON::Fast は rakudo 比で読む
+  - 話すなら「どちらが正しいではなく設計の違い」として。Raku++ を下げるニュアンスは入れない
+- 💤 起動: 命令数はほぼ同じ（mutsu 7.7M / rakupp 8.1M）なのに mutsu が ~3ms 遅い。原因はページフォルト（mutsu ~1,200 / rakupp ~300）。mutsu は 85MB の PIE バイナリで、空のプログラムでも機械語を ~28MB 触る。rakupp は 24MB の静的リンク・非 PIE
+  - 以前 mutsu も起動を速くするため non-PIE で出荷 → セキュリティのため revert した話（#11104 / #11158）とつながる
+- 💤 命令数が同じか少なくても遅い: bench-ctor 1.23G vs 1.26G 命令なのに 234ms vs 167ms。I-cache / D-cache ミスと分岐予測ミスが原因 →「命令数 ≠ 時間」の別の例
+- 💤 malloc が命令の 10〜20%。jemalloc を LD_PRELOAD するだけで 5〜15% 速くなる行がある（split-subst -15.4%）
+- 💤 rakupp は Test モジュールが組み込み。mutsu は `use Test` だけで ~12ms
+- 💤 どの issue でも追っていなかった原因が3つ見つかった（起動時のページフォルト、アロケータ、regex 行のキャッシュミス）
+
 ## Raku Weekly への改名
 
 - ✅ 2026-10-05 の号（2026.40 Pythonesque, Elizabeth Mattijsen）で Rakudo Weekly News → Raku Weekly News に改名
