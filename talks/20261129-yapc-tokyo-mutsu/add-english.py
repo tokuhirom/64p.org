@@ -36,7 +36,7 @@ EN = {
 "(Rakudo をディスりたいわけではないです)": "(This is not a criticism of Rakudo)<br>I want to show how far the same language spec can go<br>and I'd be happy if it gives hints for improving Rakudo",
 "とはいえ Raku の言語仕様はでかい。。": "But Raku is a big language...<br>Too much for one person",
 "ときは大AI時代": "Enter the age of AI",
-"- テストがあれば実装は作れるらしい": "\"If you have tests, you can build an implementation\", they say<br>Some projects even started keeping their tests private",
+"- テストがあれば実装は作れるらしい": "\"If you have tests, you can build an implementation\", they say<br>There was even talk of making test suites private so AI could not reimplement them",
 "( ﾟдﾟ)ﾊｯ!": "Wait a minute!<br>Raku has Roast, so maybe I can build one?",
 "(Roast を20年積み上げてきた人たちのおかげです)": "(Thanks to everyone who built up Roast over 20 years)",
 "作ってみようと思いたつ": "So I decided to try<br>(February 2026)",

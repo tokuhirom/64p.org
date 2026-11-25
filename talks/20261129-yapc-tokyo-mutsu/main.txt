@@ -160,9 +160,9 @@ Rust で全部書き直して JIT を載せたら
 <div class="en">Enter the age of AI</div>
 ----
 - テストがあれば実装は作れるらしい
-- テストを非公開にするプロジェクトが登場
+- AI に再実装されないよう、テストを非公開にしようという話まで出てきた
 <!-- tldraw issue #8082「Move tests to closed source repo」(2026-02-25, steveruizok)。Cloudflare が AI で Next.js を1週間で移植した件への反応と見られた。翌日本人が「more of a joke」と訂正。https://github.com/tldraw/tldraw/issues/8082 https://simonwillison.net/2026/Feb/25/closed-tests/ 。memo「テスト非公開の件」 -->
-<div class="en">"If you have tests, you can build an implementation", they say<br>Some projects even started keeping their tests private</div>
+<div class="en">"If you have tests, you can build an implementation", they say<br>There was even talk of making test suites private so AI could not reimplement them</div>
 ----
 ( ﾟдﾟ)ﾊｯ!
 Raku には Roast があるから実装作れるのでは？

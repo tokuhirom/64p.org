@@ -27,7 +27,7 @@
 - その後 2026-10-04 に「chore: delete all unit tests」PR #11061（553 ファイル削除）が出たが、マージされずに 10-19 クローズ
   - https://github.com/tldraw/tldraw/pull/11061
 - 先例として、SQLite はコアは public domain だが網羅的なテストスイート（TH3）は非公開、という話もある（"Tests Are The New Moat" https://saewitz.com/tests-are-the-new-moat で言及。SQLite 側の一次情報は未確認）
-- スライドで「登場」と言い切ると半分ジョークだった点が抜けるので、言い方は要検討
+- スライドは「AI に再実装されないよう、テストを非公開にしようという話まで出てきた」にした（実際に非公開にしたとは言わない）
 
 ## Roast の物差し
 
