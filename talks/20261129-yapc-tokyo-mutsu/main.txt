@@ -5,24 +5,24 @@ tokuhirom
 </div>
 <div class="en">mutsu: Building a Raku Interpreter with a JIT in the Reiwa Era</div>
 <!--
-40分の時間配分(目安)  全202枚・1枚およそ12秒。デモは3分見ておく
+40分の時間配分(目安)  全193枚・1枚およそ12秒。デモは3分見ておく
  0:00 昔話（Perl6/Raku の歴史）  3.5分 (19枚)
  3:30 なぜ作るのか・大AI時代  4.5分 (23枚)
- 8:00 規模の数字  2分 (13枚)
-10:00 KPI の話  2.5分 (15枚)
+ 8:00 規模の数字  2.5分 (13枚)
+10:30 KPI の話  2分 (11枚)
 12:30 パーサー  1分 (5枚)
 13:30 Byte code interpreter  3分 (16枚)
-16:30 小さい差分に逃げる問題  2.5分 (12枚)
-19:00 丸投げできないもの（GC/NaN-boxing/JIT）  4.5分 (24枚)
-23:30 ベンチマーク  2分 (10枚)
-25:30 もう一つの実装・Raku Weekly  2.5分 (14枚)
-28:00 AI を並列で走らせたら  2分 (11枚)
-30:00 いまどうなってるか  2分 (11枚)
-32:00 デモ  3分 (6枚)
-35:00 1.0.0 リリース  0.5分 (4枚)
-35:30 巨人の肩の上  2分 (11枚)
-37:30 まとめ  1.5分 (8枚)
-39:00 終了（1分の余裕）
+16:30 小さい差分に逃げる問題  2分 (11枚)
+18:30 丸投げできないもの（GC/NaN-boxing/JIT）  4.5分 (23枚)
+23:00 ベンチマーク  2分 (10枚)
+25:00 もう一つの実装・Raku Weekly  2.5分 (14枚)
+27:30 AI のやらかし  1分 (6枚)
+28:30 いまどうなってるか  2分 (11枚)
+30:30 デモ  3分 (6枚)
+33:30 1.0.0 リリース  1分 (4枚)
+34:30 巨人の肩の上  2分 (11枚)
+36:30 まとめ  2分 (10枚)
+38:30 終了（1.5分の余裕）
 数字は主に 2026-11-22 時点。JIT 比較グラフは 2026-11-23 時点。
 当日朝に README / HISTORY.tsv / bench-data で更新すること。
 -->
@@ -160,8 +160,9 @@ Rust で全部書き直して JIT を載せたら
 <div class="en">Enter the age of AI</div>
 ----
 - テストがあれば実装は作れるらしい
-- テストを非公開にするプロジェクトが登場
-<div class="en">"If you have tests, you can build an implementation", they say<br>Some projects even started keeping their tests private</div>
+- AI に再実装されないよう、テストを非公開にしようという話まで出てきた
+<!-- tldraw issue #8082「Move tests to closed source repo」(2026-02-25, steveruizok)。Cloudflare が AI で Next.js を1週間で移植した件への反応と見られた。翌日本人が「more of a joke」と訂正。https://github.com/tldraw/tldraw/issues/8082 https://simonwillison.net/2026/Feb/25/closed-tests/ 。memo「テスト非公開の件」 -->
+<div class="en">"If you have tests, you can build an implementation", they say<br>There was even talk of making test suites private so AI could not reimplement them</div>
 ----
 ( ﾟдﾟ)ﾊｯ!
 Raku には Roast があるから実装作れるのでは？
@@ -192,10 +193,10 @@ Roast は、実装を進めるための出発点
 <div class="en">Roast gives us a starting point for building one</div>
 ----
 元になるものをこの２つと定める
-- [Raku/doc](https://github.com/Raku/doc)
-- [Raku/roast](https://github.com/Raku/roast)
+- [github.com/Raku/doc](https://github.com/Raku/doc) (ドキュメント)
+- [github.com/Raku/roast](https://github.com/Raku/roast) (テスト)
 → 当初は submodule として参照していた
-<div class="en">Two sources of truth: Raku/doc and Raku/roast<br>Initially referenced as git submodules</div>
+<div class="en">Two sources of truth: github.com/Raku/doc (docs) and github.com/Raku/roast (tests)<br>Initially referenced as git submodules</div>
 ----
 最初のゴールを設定する
 - **roast が全部通ること**
@@ -286,25 +287,6 @@ Roast の達成率を描くグラフ。
 趣味のOSS 開発で一番むずかしいのは、モチベーションの維持なので。。
 <div class="en">The hardest part of hobby OSS is staying motivated...</div>
 ----
-- 2月 147 からスタート
-- 2月末 500 突破
-- 4月 1000 突破
-- 6月 1200 突破
-- 7月 1271 でほぼ頭打ち
-<!-- HISTORY.tsv 分母は約1290 -->
-<div class="en">Feb: started at 147 / end of Feb: 500 / Apr: 1000 / Jun: 1200 / Jul: 1271, nearly flat</div>
-----
-2月だけで 147 → 566
-→ 簡単なところから埋まっていく
-<div class="en">147 → 566 in February alone<br>The easy ones get filled in first</div>
-----
-4月あたりから伸びが鈍る
-→ 残ってるのは難しいテストばかり
-<div class="en">Progress slowed around April<br>Only hard tests were left</div>
-----
-襲い来る難しさ。。
-<div class="en">Here come the hard parts...</div>
-----
 Roast を通す件数を KPI として設定する
 → 目先のテストを通すことに全力投球！してくれる
 <div class="en">Set the number of passing Roast tests as the KPI<br>The AI goes all-in on passing the next test</div>
@@ -338,7 +320,7 @@ KPI を変えていく
 パーサー、普通に実装させてたら詰んだ。
 <div class="en">Letting the AI write an ordinary parser hit a wall.</div>
 ----
-Perl6 はパーサーを自分で差し替えられる。
+Raku はパーサーを自分で差し替えられる。
 → 普通の yacc/bison 的なパーサーでは表現できない
 → 簡単なケースは通せてたんだけど。。
 → Packrat に全部書き直す羽目になる
@@ -416,8 +398,8 @@ AI の「不可能」は
 *小さい差分に逃げる問題
 <div class="en">Escaping into small diffs</div>
 ----
-大きな設計変更をお願いすると
-<div class="en">When you ask for a big design change...</div>
+逃げ方その1: 大きな設計変更をお願いすると
+<div class="en">Escape #1: when you ask for a big design change...</div>
 ----
 - 小さいスライスだけ出してくる
 - 設計ドキュメントだけ書いて終わる
@@ -442,6 +424,11 @@ JSON::Fast が動かない
 ……それもう JSON::Fast じゃないよね？
 <div class="en">...but that's not JSON::Fast anymore, is it?</div>
 ----
+ここで nqp:: op とは？
+→ Raku モジュールから呼ばれる低レベル操作
+→ JSON::Fast 以外のモジュールも使う共通部分
+<div class="en">What are nqp:: ops?<br>Low-level operations called by Raku modules<br>A shared layer used beyond JSON::Fast</div>
+----
 JSON::Fast が使う nqp:: op を 51 個洗い出した
 → mutsu で動かなかったのは 9 個。残り 42 個は動いていた
 <div class="en">We listed the 51 nqp:: ops used by JSON::Fast<br>Only 9 failed in mutsu; the other 42 already worked</div>
@@ -450,18 +437,6 @@ JSON::Fast が使う nqp:: op を 51 個洗い出した
 ネイティブで置き換えるのは禁止。
 (2026年8月)
 <div class="en">Run the real module as-is.<br>No native replacements.<br>(August 2026)</div>
-----
-ここで nqp:: op とは？
-→ Raku モジュールから呼ばれる低レベル操作
-→ JSON::Fast 以外のモジュールも使う共通部分
-<div class="en">What are nqp:: ops?<br>Low-level operations called by Raku modules<br>A shared layer used beyond JSON::Fast</div>
-----
-7月、AI は「共通の nqp:: op 層は不要」と判断
-→ 9月、JSON::Fast で不足が見えた
-→ モジュールは、使う op が全部そろって初めて動く。1個ずつ足しても動くモジュールが増えない
-→ 10月、共通層に 111 個の op を実装
-<!-- 9月: mutsu #8226 (2026-09-13) で JSON::Fast の 51 op を洗い出し。10月: #11488、PLAN.md「per dist the op set is a threshold function」 -->
-<div class="en">July: AI said the shared nqp:: op layer was unnecessary<br>September: JSON::Fast exposed gaps<br>A module only runs once every op it uses exists, so adding ops one at a time barely helped<br>October: 111 ops implemented in the shared layer</div>
 ----
 *丸投げできないもの
 <div class="en">Things you can't just hand off</div>
@@ -546,9 +521,6 @@ GC を「参照カウント + 非移動 + 世代別じゃない」にしてあ�
 (7月12日〜13日)
 <!-- 最初の JIT PR #4471 作成 2026-07-12 20:45 JST → デフォルト on の #4482 マージ 2026-07-13 11:48 JST。PR ベースだと約15時間 -->
 <div class="en">2 days from starting the JIT to turning it on by default<br>(July 12-13)</div>
-----
-7月13日 JIT デフォルト on
-<div class="en">July 13: JIT on by default</div>
 ----
 はやい！！！
 <div class="en">Fast!!!</div>
@@ -661,32 +633,8 @@ Raku++ と Mutsu
 嬉しい。。
 <div class="en">That made me happy</div>
 ----
-*AI を並列で走らせたら
-<div class="en">Running AI agents in parallel</div>
-----
-1日 50〜100 PR マージされる世界
-<div class="en">A world where 50-100 PRs get merged per day</div>
-----
-何が起きるか
-<div class="en">What happens?</div>
-----
-ADR の番号がかぶる
-→ 「最大番号 + 1」で採番してたら、並列 PR が同じ番号を取る
-→ 6 回かぶった
-→ ADR 番号 = issue 番号 にした
-<div class="en">ADR numbers collide<br>"max + 1" numbering made parallel PRs take the same number<br>6 collisions<br>Now ADR number = issue number</div>
-----
-CI が詰まる
-→ GitHub Actions の同時実行 20 ジョブの枠を食い尽くす
-→ PR が 5〜15 分待ち
-→ 重いテストは PR から外して、main で 1 時間ごとに回す
-<div class="en">CI gets clogged<br>Using up GitHub Actions' 20 concurrent jobs<br>PRs wait 5-15 minutes<br>Heavy tests moved off PRs to hourly runs on main</div>
-----
-main が赤くなる
-→ 約20 の PR がそれぞれ勝手に直そうとする
-→ runner が埋まって、また壊れる
-→ 「main is red」issue を 1 個立てて、直すのは 1 人だけ、にした
-<div class="en">main goes red<br>~20 PRs each try to fix it on their own<br>runners fill up, it breaks again<br>Now: open one "main is red" issue, and only one agent fixes it</div>
+*AI のやらかし
+<div class="en">When AI goes off on its own</div>
 ----
 頼んでいない upstream の変更を AI が始める
 <div class="en">AI started changing upstream projects without being asked</div>
@@ -850,6 +798,10 @@ Raku コミュニティのみなさんに感謝！
 *まとめ
 <div class="en">Summary</div>
 ----
+- テストがあれば AI で実装は作れる
+- ただしトークン・ビルド環境・CI・時間は要る
+<div class="en">With tests, AI can build an implementation<br>but it takes tokens, a build environment, CI and time</div>
+----
 - KPI を設定して実装することが大事
   - Roast 通過率 → Rakudo より速いか → ecosystem 通過率
 - でも KPI はハックされる
@@ -866,6 +818,10 @@ Raku コミュニティのみなさんに感謝！
 - 設計のトレードオフを変えると、起動はここまで縮む
 - (温まった後は Rakudo が速いところもまだたくさんある)
 <div class="en">Changing design trade-offs can shrink startup this much<br>(after warm-up, Rakudo is still faster in many places)</div>
+----
+- OSS なら、積み上げの上に別の実装が生える
+- mutsu もフォークしてみてください
+<div class="en">Open source lets new implementations grow on top of what came before<br>Please fork mutsu too</div>
 ----
 令和の今でも Raku の実装は作れる！
 <div class="en">You can still build a Raku implementation today!</div>

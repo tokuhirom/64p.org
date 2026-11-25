@@ -17,6 +17,18 @@
 - 💤 同梱モジュール数の比較: Rakudo Star の etc/modules.txt は 76 エントリ（依存込み、zef で入れる）。mutsu の batteries.lock は 43。数では Rakudo Star のほうが多い。違いは中身（mutsu は Cro::HTTP や Text::CSV、Star は LibXML・HTTP::UserAgent・Getopt::Long など）と、バイナリ1個 + mise / Docker / wasm という配り方
     - https://github.com/rakudo/star/blob/master/etc/modules.txt
 
+## テスト非公開の件（スライド「テストを非公開にするプロジェクトが登場」の出典）
+
+- tldraw の issue #8082「Move tests to closed source repo」（2026-02-25、steveruizok）。テストスイートを公開リポジトリから closed source のリポジトリへ移す、という内容
+  - https://github.com/tldraw/tldraw/issues/8082
+- Simon Willison が紹介。Cloudflare が AI で Next.js を Vite 上に1週間で移植した件への反応と見られた（Simon は "apparently" と書いており推測）
+  - https://simonwillison.net/2026/Feb/25/closed-tests/
+- ただし翌日（2026-02-26）本人が issue 内で "Sorry folks, this issue was more of a joke" と訂正。別リポジトリに移すと開発が遅くなる、とも。Simon の記事にも訂正の追記あり。issue は 2026-09-01 に stale で自動クローズ（not planned）
+- その後 2026-10-04 に「chore: delete all unit tests」PR #11061（553 ファイル削除）が出たが、マージされずに 10-19 クローズ
+  - https://github.com/tldraw/tldraw/pull/11061
+- 先例として、SQLite はコアは public domain だが網羅的なテストスイート（TH3）は非公開、という話もある（"Tests Are The New Moat" https://saewitz.com/tests-are-the-new-moat で言及。SQLite 側の一次情報は未確認）
+- スライドは「AI に再実装されないよう、テストを非公開にしようという話まで出てきた」にした（実際に非公開にしたとは言わない）
+
 ## Roast の物差し
 
 - ✅ mutsu #19036 → PR #19043 (2026-11-23 マージ) で spectest.data 基準に統一。`scripts/roast-compat.py`、定義は `docs/roast-compatibility.md`
@@ -155,7 +167,7 @@
 
 ## Roast の推移（HISTORY.tsv）
 
-- ✅ 2/12 開始 147 → 2/28 500 突破 → 4/14 1000 → 6/12 1200 → 7/12 1271 で頭打ち
+- 💤 2/12 開始 147 → 2/28 500 突破 → 4/14 1000 → 6/12 1200 → 7/12 1271 で頭打ち（「2月だけで 147→566」「4月から鈍る」「襲い来る難しさ」と合わせてスライドから削除。グラフで見せる）
 - 💤 旧来の数え方での最新 1,269 / 1,288（11/22）。スライドは spectest.data 基準の 1,425 / 1,425 に統一したので出さない
 - 💤 README の数え方だと 1,426 / 1,454。プロポーザルは 1,433 / 1,464。数え方の違いを聞かれたら説明
 - 💤 リポジトリの HISTORY-pass.svg は横軸が日付スケールでなく、計測失敗が0に落ちる。スライドのグラフは `gen-history-graph.py` で描き直したもの
@@ -186,7 +198,8 @@
 
 - ✅ "Refactor boldly"
 - ✅ JSON::Fast をネイティブ実装で置き換え、ベンチ 1000 倍 → 51 op 中 42 個はもう動いてた → ネイティブ代替禁止（2026-08-01, ADR-0096）
-- ✅ 「nqp:: op とは？」の説明 → 7月「共通層は不要」→ 9月 JSON::Fast で不足が見える → 使う op が全部そろわないとモジュールは動かない → 10月 111 op 実装
+- ✅ 「nqp:: op とは？」の説明
+- 💤 7月「共通層は不要」→ 9月 JSON::Fast で不足が見える → 使う op が全部そろわないとモジュールは動かない → 10月 111 op 実装（スライドから削除）
 - ✅ 完了条件を「古いものが消えたこと」にする（Byte code interpreter の章: 旧 tree walker の経路を消すまでが完了）
 - 💤 OO::Monitors や `if` pragma も一時ネイティブ実装 → 撤去
 - 💤 nqp:: op は 578 個中 362 個実装（10/3）
@@ -262,9 +275,9 @@ https://github.com/tokuhirom/mutsu/blob/main/docs/rakupp-gap-survey.md
 
 ## AI を並列で走らせる運用
 
-- ✅ ADR 番号の衝突 6 回 → ADR 番号 = issue 番号
-- ✅ CI 詰まり（同時 20 ジョブ）→ 重いテストは main で毎時
-- ✅ main が赤 → 約20 PR が勝手に修正 → 「main is red」issue を1つ、直すのは1人
+- 💤 ADR 番号の衝突 6 回 → ADR 番号 = issue 番号
+- 💤 CI 詰まり（同時 20 ジョブ）→ 重いテストは main で毎時
+- 💤 main が赤 → 約20 PR が勝手に修正 → 「main is red」issue を1つ、直すのは1人
 - 💤 flaky の大半は普通のバグ（ポート衝突など）
 - 💤 `pgrep -f` / `pkill -f` で自分のシェルにマッチ → dev job runner（ADR-0126）
 - ✅ 頼んでいないのに AI が Roast 本家にバグ報告や PR を出した（Raku/roast issue #881「miss post」2026-02-21、PR #882 2026-02-27、どちらも closed）→ submodule をやめて vendoring に切り替え
