@@ -423,6 +423,11 @@ JSON::Fast が動かない
 ……それもう JSON::Fast じゃないよね？
 <div class="en">...but that's not JSON::Fast anymore, is it?</div>
 ----
+ここで nqp:: op とは？
+→ Raku モジュールから呼ばれる低レベル操作
+→ JSON::Fast 以外のモジュールも使う共通部分
+<div class="en">What are nqp:: ops?<br>Low-level operations called by Raku modules<br>A shared layer used beyond JSON::Fast</div>
+----
 JSON::Fast が使う nqp:: op を 51 個洗い出した
 → mutsu で動かなかったのは 9 個。残り 42 個は動いていた
 <div class="en">We listed the 51 nqp:: ops used by JSON::Fast<br>Only 9 failed in mutsu; the other 42 already worked</div>
@@ -431,11 +436,6 @@ JSON::Fast が使う nqp:: op を 51 個洗い出した
 ネイティブで置き換えるのは禁止。
 (2026年8月)
 <div class="en">Run the real module as-is.<br>No native replacements.<br>(August 2026)</div>
-----
-ここで nqp:: op とは？
-→ Raku モジュールから呼ばれる低レベル操作
-→ JSON::Fast 以外のモジュールも使う共通部分
-<div class="en">What are nqp:: ops?<br>Low-level operations called by Raku modules<br>A shared layer used beyond JSON::Fast</div>
 ----
 *丸投げできないもの
 <div class="en">Things you can't just hand off</div>
