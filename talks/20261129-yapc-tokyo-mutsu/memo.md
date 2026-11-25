@@ -17,6 +17,18 @@
 - 💤 同梱モジュール数の比較: Rakudo Star の etc/modules.txt は 76 エントリ（依存込み、zef で入れる）。mutsu の batteries.lock は 43。数では Rakudo Star のほうが多い。違いは中身（mutsu は Cro::HTTP や Text::CSV、Star は LibXML・HTTP::UserAgent・Getopt::Long など）と、バイナリ1個 + mise / Docker / wasm という配り方
     - https://github.com/rakudo/star/blob/master/etc/modules.txt
 
+## テスト非公開の件（スライド「テストを非公開にするプロジェクトが登場」の出典）
+
+- tldraw の issue #8082「Move tests to closed source repo」（2026-02-25、steveruizok）。テストスイートを公開リポジトリから closed source のリポジトリへ移す、という内容
+  - https://github.com/tldraw/tldraw/issues/8082
+- Simon Willison が紹介。Cloudflare が AI で Next.js を Vite 上に1週間で移植した件への反応と見られた（Simon は "apparently" と書いており推測）
+  - https://simonwillison.net/2026/Feb/25/closed-tests/
+- ただし翌日（2026-02-26）本人が issue 内で "Sorry folks, this issue was more of a joke" と訂正。別リポジトリに移すと開発が遅くなる、とも。Simon の記事にも訂正の追記あり。issue は 2026-09-01 に stale で自動クローズ（not planned）
+- その後 2026-10-04 に「chore: delete all unit tests」PR #11061（553 ファイル削除）が出たが、マージされずに 10-19 クローズ
+  - https://github.com/tldraw/tldraw/pull/11061
+- 先例として、SQLite はコアは public domain だが網羅的なテストスイート（TH3）は非公開、という話もある（"Tests Are The New Moat" https://saewitz.com/tests-are-the-new-moat で言及。SQLite 側の一次情報は未確認）
+- スライドで「登場」と言い切ると半分ジョークだった点が抜けるので、言い方は要検討
+
 ## Roast の物差し
 
 - ✅ mutsu #19036 → PR #19043 (2026-11-23 マージ) で spectest.data 基準に統一。`scripts/roast-compat.py`、定義は `docs/roast-compatibility.md`
