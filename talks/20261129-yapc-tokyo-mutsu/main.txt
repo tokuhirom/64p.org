@@ -635,27 +635,6 @@ Raku++ と Mutsu
 嬉しい。。
 <div class="en">That made me happy</div>
 ----
-*AI を並列で走らせたら
-<div class="en">Running AI agents in parallel</div>
-----
-1日 50〜100 PR マージされる世界
-<div class="en">A world where 50-100 PRs get merged per day</div>
-----
-何が起きるか
-<div class="en">What happens?</div>
-----
-ADR の番号がかぶる
-→ 「最大番号 + 1」で採番してたら、並列 PR が同じ番号を取る
-→ 6 回かぶった
-→ ADR 番号 = issue 番号 にした
-<div class="en">ADR numbers collide<br>"max + 1" numbering made parallel PRs take the same number<br>6 collisions<br>Now ADR number = issue number</div>
-----
-CI が詰まる
-→ GitHub Actions の同時実行 20 ジョブの枠を食い尽くす
-→ PR が 5〜15 分待ち
-→ 重いテストは PR から外して、main で 1 時間ごとに回す
-<div class="en">CI gets clogged<br>Using up GitHub Actions' 20 concurrent jobs<br>PRs wait 5-15 minutes<br>Heavy tests moved off PRs to hourly runs on main</div>
-----
 main が赤くなる
 → 約20 の PR がそれぞれ勝手に直そうとする
 → runner が埋まって、また壊れる
