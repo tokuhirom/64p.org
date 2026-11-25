@@ -192,10 +192,10 @@ Roast は、実装を進めるための出発点
 <div class="en">Roast gives us a starting point for building one</div>
 ----
 元になるものをこの２つと定める
-- [Raku/doc](https://github.com/Raku/doc)
-- [Raku/roast](https://github.com/Raku/roast)
+- [github.com/Raku/doc](https://github.com/Raku/doc) (ドキュメント)
+- [github.com/Raku/roast](https://github.com/Raku/roast) (テスト)
 → 当初は submodule として参照していた
-<div class="en">Two sources of truth: Raku/doc and Raku/roast<br>Initially referenced as git submodules</div>
+<div class="en">Two sources of truth: github.com/Raku/doc (docs) and github.com/Raku/roast (tests)<br>Initially referenced as git submodules</div>
 ----
 最初のゴールを設定する
 - **roast が全部通ること**
