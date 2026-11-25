@@ -97,7 +97,7 @@ EN = {
 "→ 再設計したら、消えた": "After the redesign, it was gone",
 "AI の「不可能」は": "When AI says \"impossible\",<br>it means \"impossible as an extension of the current design\"",
 "*小さい差分に逃げる問題": "Escaping into small diffs",
-"大きな設計変更をお願いすると": "When you ask for a big design change...",
+"逃げ方その1: 大きな設計変更をお願いすると": "Escape #1: when you ask for a big design change...",
 "- 小さいスライスだけ出してくる": "It delivers only a tiny slice / writes a design doc and stops / \"It's too risky\"",
 "AGENTS.md に \"Refactor boldly\" と書く": "Wrote \"Refactor boldly\" in AGENTS.md<br>\"Too hard / too big / too risky\" is not a reason to stop",
 "逃げ方その2: ネイティブ実装で置き換える": "Escape #2: replace it with a native implementation",

@@ -397,8 +397,8 @@ AI の「不可能」は
 *小さい差分に逃げる問題
 <div class="en">Escaping into small diffs</div>
 ----
-大きな設計変更をお願いすると
-<div class="en">When you ask for a big design change...</div>
+逃げ方その1: 大きな設計変更をお願いすると
+<div class="en">Escape #1: when you ask for a big design change...</div>
 ----
 - 小さいスライスだけ出してくる
 - 設計ドキュメントだけ書いて終わる
