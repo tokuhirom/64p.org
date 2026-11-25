@@ -265,7 +265,7 @@ https://github.com/tokuhirom/mutsu/blob/main/docs/rakupp-gap-survey.md
 
 - 💤 ADR 番号の衝突 6 回 → ADR 番号 = issue 番号
 - 💤 CI 詰まり（同時 20 ジョブ）→ 重いテストは main で毎時
-- ✅ main が赤 → 約20 PR が勝手に修正 → 「main is red」issue を1つ、直すのは1人
+- 💤 main が赤 → 約20 PR が勝手に修正 → 「main is red」issue を1つ、直すのは1人
 - 💤 flaky の大半は普通のバグ（ポート衝突など）
 - 💤 `pgrep -f` / `pkill -f` で自分のシェルにマッチ → dev job runner（ADR-0126）
 - ✅ 頼んでいないのに AI が Roast 本家にバグ報告や PR を出した（Raku/roast issue #881「miss post」2026-02-21、PR #882 2026-02-27、どちらも closed）→ submodule をやめて vendoring に切り替え
