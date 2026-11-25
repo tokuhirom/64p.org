@@ -437,13 +437,6 @@ JSON::Fast が使う nqp:: op を 51 個洗い出した
 → JSON::Fast 以外のモジュールも使う共通部分
 <div class="en">What are nqp:: ops?<br>Low-level operations called by Raku modules<br>A shared layer used beyond JSON::Fast</div>
 ----
-7月、AI は「共通の nqp:: op 層は不要」と判断
-→ 9月、JSON::Fast で不足が見えた
-→ モジュールは、使う op が全部そろって初めて動く。1個ずつ足しても動くモジュールが増えない
-→ 10月、共通層に 111 個の op を実装
-<!-- 9月: mutsu #8226 (2026-09-13) で JSON::Fast の 51 op を洗い出し。10月: #11488、PLAN.md「per dist the op set is a threshold function」 -->
-<div class="en">July: AI said the shared nqp:: op layer was unnecessary<br>September: JSON::Fast exposed gaps<br>A module only runs once every op it uses exists, so adding ops one at a time barely helped<br>October: 111 ops implemented in the shared layer</div>
-----
 *丸投げできないもの
 <div class="en">Things you can't just hand off</div>
 ----
