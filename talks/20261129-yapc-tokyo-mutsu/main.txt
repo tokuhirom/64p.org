@@ -635,12 +635,6 @@ Raku++ と Mutsu
 嬉しい。。
 <div class="en">That made me happy</div>
 ----
-main が赤くなる
-→ 約20 の PR がそれぞれ勝手に直そうとする
-→ runner が埋まって、また壊れる
-→ 「main is red」issue を 1 個立てて、直すのは 1 人だけ、にした
-<div class="en">main goes red<br>~20 PRs each try to fix it on their own<br>runners fill up, it breaks again<br>Now: open one "main is red" issue, and only one agent fixes it</div>
-----
 頼んでいない upstream の変更を AI が始める
 <div class="en">AI started changing upstream projects without being asked</div>
 ----
