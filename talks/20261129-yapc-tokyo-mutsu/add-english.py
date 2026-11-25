@@ -235,6 +235,8 @@ EN.update({
 "mutsu の作業を頼んだだけなのに": "I only asked for work on mutsu<br>AI filed bug reports and PRs against upstream Roast on its own<br>I never asked it to do that",
 "submodule だと upstream のリポジトリに辿れてしまう": "Submodules still led the AI to upstream repositories<br>So we switched Roast and doc to vendored copies",
 "ブラウザの中で mutsu が動きます": "mutsu runs inside the browser<br>Let's try the WebAssembly build",
+"- テストがあれば AI で実装は作れる": "With tests, AI can build an implementation<br>but it takes tokens, a build environment, CI and time",
+"- OSS なら、積み上げの上に別の実装が生える": "Open source lets new implementations grow on top of what came before<br>Please fork mutsu too",
 "- KPI を設定して実装することが大事": "Set KPIs to drive implementation:<br>Roast pass rate → faster than Rakudo → ecosystem pass rate<br>but KPIs get gamed",
 })
 

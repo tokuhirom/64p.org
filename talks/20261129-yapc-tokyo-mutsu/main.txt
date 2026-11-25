@@ -5,7 +5,7 @@ tokuhirom
 </div>
 <div class="en">mutsu: Building a Raku Interpreter with a JIT in the Reiwa Era</div>
 <!--
-40分の時間配分(目安)  全191枚・1枚およそ12秒。デモは3分見ておく
+40分の時間配分(目安)  全193枚・1枚およそ12秒。デモは3分見ておく
  0:00 昔話（Perl6/Raku の歴史）  3.5分 (19枚)
  3:30 なぜ作るのか・大AI時代  4.5分 (23枚)
  8:00 規模の数字  2.5分 (13枚)
@@ -21,8 +21,8 @@ tokuhirom
 30:30 デモ  3分 (6枚)
 33:30 1.0.0 リリース  1分 (4枚)
 34:30 巨人の肩の上  2分 (11枚)
-36:30 まとめ  1.5分 (8枚)
-38:00 終了（2分の余裕）
+36:30 まとめ  2分 (10枚)
+38:30 終了（1.5分の余裕）
 数字は主に 2026-11-22 時点。JIT 比較グラフは 2026-11-23 時点。
 当日朝に README / HISTORY.tsv / bench-data で更新すること。
 -->
@@ -798,6 +798,10 @@ Raku コミュニティのみなさんに感謝！
 *まとめ
 <div class="en">Summary</div>
 ----
+- テストがあれば AI で実装は作れる
+- ただしトークン・ビルド環境・CI・時間は要る
+<div class="en">With tests, AI can build an implementation<br>but it takes tokens, a build environment, CI and time</div>
+----
 - KPI を設定して実装することが大事
   - Roast 通過率 → Rakudo より速いか → ecosystem 通過率
 - でも KPI はハックされる
@@ -814,6 +818,10 @@ Raku コミュニティのみなさんに感謝！
 - 設計のトレードオフを変えると、起動はここまで縮む
 - (温まった後は Rakudo が速いところもまだたくさんある)
 <div class="en">Changing design trade-offs can shrink startup this much<br>(after warm-up, Rakudo is still faster in many places)</div>
+----
+- OSS なら、積み上げの上に別の実装が生える
+- mutsu もフォークしてみてください
+<div class="en">Open source lets new implementations grow on top of what came before<br>Please fork mutsu too</div>
 ----
 令和の今でも Raku の実装は作れる！
 <div class="en">You can still build a Raku implementation today!</div>
