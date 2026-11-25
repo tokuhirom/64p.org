@@ -286,25 +286,6 @@ Roast の達成率を描くグラフ。
 趣味のOSS 開発で一番むずかしいのは、モチベーションの維持なので。。
 <div class="en">The hardest part of hobby OSS is staying motivated...</div>
 ----
-- 2月 147 からスタート
-- 2月末 500 突破
-- 4月 1000 突破
-- 6月 1200 突破
-- 7月 1271 でほぼ頭打ち
-<!-- HISTORY.tsv 分母は約1290 -->
-<div class="en">Feb: started at 147 / end of Feb: 500 / Apr: 1000 / Jun: 1200 / Jul: 1271, nearly flat</div>
-----
-2月だけで 147 → 566
-→ 簡単なところから埋まっていく
-<div class="en">147 → 566 in February alone<br>The easy ones get filled in first</div>
-----
-4月あたりから伸びが鈍る
-→ 残ってるのは難しいテストばかり
-<div class="en">Progress slowed around April<br>Only hard tests were left</div>
-----
-襲い来る難しさ。。
-<div class="en">Here come the hard parts...</div>
-----
 Roast を通す件数を KPI として設定する
 → 目先のテストを通すことに全力投球！してくれる
 <div class="en">Set the number of passing Roast tests as the KPI<br>The AI goes all-in on passing the next test</div>
