@@ -78,7 +78,7 @@ EN = {
 "KPI を変えていく": "Changing the KPI:<br>roast pass rate → benchmarks (vs raku) → ecosystem pass rate",
 "*パーサーの話": "The parser",
 "パーサー、普通に実装させてたら詰んだ。": "Letting the AI write an ordinary parser hit a wall.",
-"Perl6 はパーサーを自分で差し替えられる。": "In Raku you can swap out the grammar itself<br>A plain yacc/bison-style parser can't express that<br>Simple cases worked, but...<br>Ended up rewriting it all as a Packrat parser",
+"Raku はパーサーを自分で差し替えられる。": "In Raku you can swap out the grammar itself<br>A plain yacc/bison-style parser can't express that<br>Simple cases worked, but...<br>Ended up rewriting it all as a Packrat parser",
 "そして今は RakuAST に移行中。": "Now migrating to RakuAST<br>Rakudo made RakuAST the default in 2026.09<br>RakuAST is years of work by the Rakudo folks<br>and mutsu follows it",
 "*Byte code interpreter の話": "The bytecode interpreter",
 "Byte code interpreter にしたいと思い立つ。": "I wanted a bytecode interpreter.",

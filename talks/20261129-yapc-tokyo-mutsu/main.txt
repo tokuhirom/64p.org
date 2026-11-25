@@ -319,7 +319,7 @@ KPI を変えていく
 パーサー、普通に実装させてたら詰んだ。
 <div class="en">Letting the AI write an ordinary parser hit a wall.</div>
 ----
-Perl6 はパーサーを自分で差し替えられる。
+Raku はパーサーを自分で差し替えられる。
 → 普通の yacc/bison 的なパーサーでは表現できない
 → 簡単なケースは通せてたんだけど。。
 → Packrat に全部書き直す羽目になる
