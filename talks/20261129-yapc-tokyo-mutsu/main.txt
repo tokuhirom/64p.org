@@ -635,6 +635,9 @@ Raku++ と Mutsu
 嬉しい。。
 <div class="en">That made me happy</div>
 ----
+*AI のやらかし
+<div class="en">When AI goes off on its own</div>
+----
 頼んでいない upstream の変更を AI が始める
 <div class="en">AI started changing upstream projects without being asked</div>
 ----
