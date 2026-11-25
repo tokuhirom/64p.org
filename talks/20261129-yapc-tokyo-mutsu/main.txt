@@ -5,7 +5,7 @@ tokuhirom
 </div>
 <div class="en">mutsu: Building a Raku Interpreter with a JIT in the Reiwa Era</div>
 <!--
-40分の時間配分(目安)  全192枚・1枚およそ12秒。デモは3分見ておく
+40分の時間配分(目安)  全191枚・1枚およそ12秒。デモは3分見ておく
  0:00 昔話（Perl6/Raku の歴史）  3.5分 (19枚)
  3:30 なぜ作るのか・大AI時代  4.5分 (23枚)
  8:00 規模の数字  2.5分 (13枚)
@@ -13,7 +13,7 @@ tokuhirom
 12:30 パーサー  1分 (5枚)
 13:30 Byte code interpreter  3分 (16枚)
 16:30 小さい差分に逃げる問題  2分 (11枚)
-18:30 丸投げできないもの（GC/NaN-boxing/JIT）  4.5分 (24枚)
+18:30 丸投げできないもの（GC/NaN-boxing/JIT）  4.5分 (23枚)
 23:00 ベンチマーク  2分 (10枚)
 25:00 もう一つの実装・Raku Weekly  2.5分 (14枚)
 27:30 AI のやらかし  1分 (6枚)
@@ -520,9 +520,6 @@ GC を「参照カウント + 非移動 + 世代別じゃない」にしてあ�
 (7月12日〜13日)
 <!-- 最初の JIT PR #4471 作成 2026-07-12 20:45 JST → デフォルト on の #4482 マージ 2026-07-13 11:48 JST。PR ベースだと約15時間 -->
 <div class="en">2 days from starting the JIT to turning it on by default<br>(July 12-13)</div>
-----
-7月13日 JIT デフォルト on
-<div class="en">July 13: JIT on by default</div>
 ----
 はやい！！！
 <div class="en">Fast!!!</div>
