@@ -160,6 +160,7 @@ EN = {
 "2026年10月": "October 2026:<br>Rakudo Weekly → Raku Weekly",
 "Raku++ と Mutsu": "Raku++ and Mutsu<br>are mentioned by name!!!",
 "嬉しい。。": "That made me happy",
+"*AI のやらかし": "When AI goes off on its own",
 "*AI を並列で走らせたら": "Running AI agents in parallel",
 "1日 50〜100 PR マージされる世界": "A world where 50-100 PRs get merged per day",
 "何が起きるか": "What happens?",
