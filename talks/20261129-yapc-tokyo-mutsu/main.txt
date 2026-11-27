@@ -547,10 +547,10 @@ bench CI というのを作った
 <div class="en">How many times faster is mutsu than Rakudo? (whole script, including startup)</div>
 ----
 起動
-- rakudo 123ms
+- rakudo 159ms
 - mutsu 6ms
 <!-- bench-vs-rakudo.tsv の bench-startup+jit。当日 gen-bench-graph.py で取り直したら合わせて更新 -->
-<div class="en">Startup: rakudo 123ms / mutsu 6ms</div>
+<div class="en">Startup: rakudo 159ms / mutsu 6ms</div>
 ----
 少なくとも、言語仕様そのものが重いわけではなさそう
 → 組み込みを Rust で持って

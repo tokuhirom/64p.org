@@ -2,7 +2,7 @@
 <title>mutsu は Rakudo の何倍速い？（起動込み）</title>
 <rect width="1280" height="720" fill="#fff"/>
 <text x="60" y="70" font-size="40" font-weight="700" fill="#1f2937">mutsu は Rakudo の何倍速い？（起動込み）</text>
-<text x="62" y="112" font-size="22" fill="#5b6472">スクリプト全体の実行時間 / Rakudo v2026.07 / 横軸は対数</text>
+<text x="62" y="112" font-size="22" fill="#5b6472">スクリプト全体の実行時間 / Rakudo v2026.11 / 横軸は対数</text>
 <line x1="330.0" x2="330.0" y1="170" y2="630" stroke="#e5e7eb" stroke-width="1"/>
 <text x="330.0" y="660" font-size="18" fill="#5b6472" text-anchor="middle">30倍速い</text>
 <line x1="546.3" x2="546.3" y1="170" y2="630" stroke="#e5e7eb" stroke-width="1"/>
@@ -18,20 +18,20 @@
 <text x="987.6" y="156" font-size="20" fill="#257de0" text-anchor="end" font-weight="700">← mutsu が速い</text>
 <text x="1011.6" y="156" font-size="20" fill="#ec4647" font-weight="700">Rakudo が速い →</text>
 <text x="310" y="220" font-size="26" fill="#1f2937" text-anchor="end">起動</text>
-<rect x="397.7" y="198" width="602.0" height="36" rx="4" fill="#257de0"/>
-<text x="411.7" y="225" font-size="24" font-weight="700" fill="#fff" text-anchor="start">21倍速い</text>
+<rect x="363.7" y="198" width="635.9" height="36" rx="4" fill="#257de0"/>
+<text x="377.7" y="225" font-size="24" font-weight="700" fill="#fff" text-anchor="start">25倍速い</text>
 <text x="310" y="312" font-size="26" fill="#1f2937" text-anchor="end">Grammar (JSON::Tiny)</text>
-<rect x="586.7" y="290" width="412.9" height="36" rx="4" fill="#257de0"/>
-<text x="600.7" y="317" font-size="24" font-weight="700" fill="#fff" text-anchor="start">8.1倍速い</text>
+<rect x="555.9" y="290" width="443.7" height="36" rx="4" fill="#257de0"/>
+<text x="569.9" y="317" font-size="24" font-weight="700" fill="#fff" text-anchor="start">9.5倍速い</text>
 <text x="310" y="404" font-size="26" fill="#1f2937" text-anchor="end">マンデルブロ集合</text>
-<rect x="680.4" y="382" width="319.2" height="36" rx="4" fill="#257de0"/>
-<text x="694.4" y="409" font-size="24" font-weight="700" fill="#fff" text-anchor="start">5.1倍速い</text>
+<rect x="660.0" y="382" width="339.6" height="36" rx="4" fill="#257de0"/>
+<text x="674.0" y="409" font-size="24" font-weight="700" fill="#fff" text-anchor="start">5.6倍速い</text>
 <text x="310" y="496" font-size="26" fill="#1f2937" text-anchor="end">メソッド呼び出し</text>
-<rect x="763.1" y="474" width="236.5" height="36" rx="4" fill="#257de0"/>
-<text x="777.1" y="501" font-size="24" font-weight="700" fill="#fff" text-anchor="start">3.3倍速い</text>
+<rect x="769.2" y="474" width="230.4" height="36" rx="4" fill="#257de0"/>
+<text x="783.2" y="501" font-size="24" font-weight="700" fill="#fff" text-anchor="start">3.2倍速い</text>
 <text x="310" y="588" font-size="26" fill="#1f2937" text-anchor="end">fib</text>
-<rect x="917.0" y="566" width="82.6" height="36" rx="4" fill="#257de0"/>
-<text x="905.0" y="593" font-size="24" font-weight="700" fill="#1f2937" text-anchor="end">1.5倍速い</text>
+<rect x="963.0" y="566" width="36.6" height="36" rx="4" fill="#257de0"/>
+<text x="951.0" y="593" font-size="24" font-weight="700" fill="#1f2937" text-anchor="end">1.2倍速い</text>
 <line x1="999.6" x2="999.6" y1="170" y2="630" stroke="#1f2937" stroke-width="2"/>
-<text x="60" y="696" font-size="15" fill="#5b6472">出典: tokuhirom/mutsu bench-data, run 2026-11-27T04:47:22Z, commit 4345491bce9ae87d8fcef6d2404687af822c0943。JIT on。7回の中央値</text>
+<text x="60" y="696" font-size="15" fill="#5b6472">出典: tokuhirom/mutsu bench-data, run 2026-11-27T14:41:03Z, commit 8dca80ff57dc3746fd5aac861126b1f4e0283864。JIT on。7回の中央値</text>
 </svg>
