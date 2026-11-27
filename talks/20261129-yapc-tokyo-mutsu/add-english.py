@@ -204,7 +204,7 @@ EN = {
 "OSS だと、こういう広がり方もする": "Open source can spread like this too<br>new implementations growing on 26 years of groundwork",
 "逆に言えば、mutsu も同じ": "And the same goes for mutsu<br>Artistic License 2.0, so it can be a foundation for anyone building Raku in Rust",
 "興味がある人がいたら": "If you're interested,<br>fork it and build a better implementation<br>It would be fun to see it spread that way",
-"Raku コミュニティのみなさんに感謝！": "",  # 本文に英語も大きく出すので字幕なし
+"Larry と Raku コミュニティのみなさんに感謝！": "",  # 本文に英語も大きく出すので字幕なし
 "*まとめ": "Summary",
 "- KPI を設定して実装することが大事。": "Set KPIs to drive implementation (roast pass rate → ecosystem pass rate)<br>but KPIs get gamed",
 "- AI は大きな変更から逃げる": "AI escapes from big changes / doubt AI's \"impossible\" / turn every mistake into a rule",
