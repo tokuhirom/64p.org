@@ -310,7 +310,7 @@ https://github.com/tokuhirom/mutsu/blob/main/docs/rakupp-gap-survey.md
 
 ## 当日更新
 
-- [ ] ベンチのグラフを Rakudo 2026.11 の計測で描き直す（mutsu #19269 がマージされ、bench CI が回った後）: `python3 gen-bench-graph.py --from … --rakudo 2026.11`。「起動」スライドの ms も更新
+- [x] ベンチのグラフを Rakudo 2026.11 の計測で描き直した（bench-data 8dca80ff, 2026-11-27T14:41Z）。当日さらに新しい計測があれば同じコマンドで更新
 
 - [ ] `node check-layout.js` が OK（スライドを直したら毎回）
 

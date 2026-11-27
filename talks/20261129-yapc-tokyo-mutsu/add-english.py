@@ -141,7 +141,7 @@ EN = {
 "bench CI というのを作った": "A benchmark CI:<br>every benchmark with JIT on and off / compared with rakudo every time / median of 7 runs",
 "数字を出すのは勝ち負けのためじゃなくて": "The numbers are not about winning or losing<br>but a rough guide to how fast the same Raku code can get",
 "mutsu / rakudo の時間比 (小さいほど mutsu が速い)": "Time ratio mutsu / rakudo (lower = mutsu faster), measured with Rakudo v2026.07<br>startup 0.07 / fib (JIT) 0.59 / mandelbrot (JIT) 0.21 / grammar (JSON::Tiny) 0.13 / method-call 0.32",
-"起動": "Startup: rakudo 123ms / mutsu 6ms",
+"起動": "Startup: rakudo 159ms / mutsu 6ms",
 "少なくとも、言語仕様そのものが重いわけではなさそう": "At least the language spec itself doesn't seem to be what's heavy<br>Keep builtins in Rust,<br>and steadily trim startup work, and it gets this small",
 "例: `say 1` の起動にかかる命令数": "Example: instructions to start <code>say 1</code><br>10.16M → 7.66M (-25%)<br>e.g. building an index of all builtin names lazily, on first use",
 "ただ、これは公平な比較ではない": "But this is not a fair comparison<br>It includes rakudo's startup and JIT warm-up<br>and the benchmarks are the ones mutsu has been optimizing for",
