@@ -32,7 +32,8 @@ Perl6 と呼ばれていたもの
 <div class="en">Do you know Raku?<br>It used to be called Perl 6</div>
 ----
 *３分間昔話をします
-<div class="en">A 3-minute history lesson</div>
+<div style="font-size:45%; color:#666; font-weight:normal;">（昔のことなので、間違っていたらごめんなさい）</div>
+<div class="en">A 3-minute history lesson<br>(it was a long time ago, so forgive me if I get anything wrong)</div>
 ----
 <!-- https://gihyo.jp/dev/serial/01/perl-hackers-hub/003901 -->
 2000年7月、Larry Wall がぶち上げたプロジェクトが Perl6

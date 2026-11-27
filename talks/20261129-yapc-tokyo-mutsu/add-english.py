@@ -7,7 +7,7 @@ import re, sys
 EN = {
 "mutsu - 令和の時代に JIT 搭載の Raku インタープリタを実装した話": "mutsu: Building a Raku Interpreter with a JIT in the Reiwa Era",
 "Raku はご存知？": "Do you know Raku?<br>It used to be called Perl 6",
-"*３分間昔話をします": "A 3-minute history lesson",
+"*３分間昔話をします": "A 3-minute history lesson<br>(it was a long time ago, so forgive me if I get anything wrong)",
 "2005年に就職してから Perl5 を使いはじめたのですが": "I started using Perl 5 when I got my first job in 2005",
 "2000年7月、Larry Wall がぶち上げたプロジェクトが Perl6": "July 2000: Larry Wall announced Perl 6<br>in his State of the Onion talk<br>That was 26 years ago.",
 "どんなことができるようになるのか": "What was it going to give us?",
