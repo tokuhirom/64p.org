@@ -310,6 +310,8 @@ https://github.com/tokuhirom/mutsu/blob/main/docs/rakupp-gap-survey.md
 
 ## 当日更新
 
+- [ ] ベンチのグラフを Rakudo 2026.11 の計測で描き直す（mutsu #19269 がマージされ、bench CI が回った後）: `python3 gen-bench-graph.py --from … --rakudo 2026.11`。「起動」スライドの ms も更新
+
 - [ ] `node check-layout.js` が OK（スライドを直したら毎回）
 
 - [ ] Roast の数: mutsu で `scripts/roast-compat.py count`、HISTORY.tsv の `spec_pass` 列に実測が入っているか確認（PR #19043 以降、定期実行で入る）

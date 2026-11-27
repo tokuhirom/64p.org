@@ -542,20 +542,15 @@ bench CI というのを作った
 → 同じ Raku のコードがどこまで速くなりうるか、の目安
 <div class="en">The numbers are not about winning or losing<br>but a rough guide to how fast the same Raku code can get</div>
 ----
-mutsu / rakudo の時間比 (小さいほど mutsu が速い)
-(Rakudo v2026.07 で計測)
-- 起動: 0.07
-- fib (JIT): 0.59
-- mandelbrot (JIT): 0.21
-- grammar (JSON::Tiny): 0.13
-- method-call: 0.32
-<!-- bench-data f684d28 (2026-11-22) / Rakudo v2026.07 / whole-script -->
-<div class="en">Time ratio mutsu / rakudo (lower = mutsu faster), measured with Rakudo v2026.07<br>startup 0.07 / fib (JIT) 0.59 / mandelbrot (JIT) 0.21 / grammar (JSON::Tiny) 0.13 / method-call 0.32</div>
+<img src="bench-whole.svg" style="max-width:95%; max-height:80vh;">
+<!-- gen-bench-graph.py が bench-vs-rakudo.tsv（bench-data のスナップショット）から描く。Rakudo のバージョンはグラフに書いてある -->
+<div class="en">How many times faster is mutsu than Rakudo? (whole script, including startup)</div>
 ----
 起動
-- rakudo 117ms
-- mutsu 9ms
-<div class="en">Startup: rakudo 117ms / mutsu 9ms</div>
+- rakudo 123ms
+- mutsu 6ms
+<!-- bench-vs-rakudo.tsv の bench-startup+jit。当日 gen-bench-graph.py で取り直したら合わせて更新 -->
+<div class="en">Startup: rakudo 123ms / mutsu 6ms</div>
 ----
 少なくとも、言語仕様そのものが重いわけではなさそう
 → 組み込みを Rust で持って
@@ -567,11 +562,9 @@ mutsu / rakudo の時間比 (小さいほど mutsu が速い)
 → ベンチの題材自体、mutsu が最適化を頑張ってきたもの
 <div class="en">But this is not a fair comparison<br>It includes rakudo's startup and JIT warm-up<br>and the benchmarks are the ones mutsu has been optimizing for</div>
 ----
-処理部分だけで比べると
-- multi-dispatch: 1.45 (rakudo が速い)
-- JSON::Fast: 1.33 (rakudo が速い)
-- YAML パース: 0.93
-<div class="en">Comparing only the workload itself:<br>multi-dispatch 1.45 (rakudo faster) / JSON::Fast 1.33 (rakudo faster) / YAML parse 0.93</div>
+<img src="bench-section.svg" style="max-width:95%; max-height:80vh;">
+<!-- @section 系列。起動とウォームアップを除いた時間 -->
+<div class="en">Comparing only the workload (startup and warm-up excluded)</div>
 ----
 MoarVM の spesh / JIT は、温まると強い
 → mutsu 側にもまだまだ伸びしろがある

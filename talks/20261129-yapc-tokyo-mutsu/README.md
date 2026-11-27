@@ -9,6 +9,7 @@ YAPC::Tokyo 2026 (2026-11-29) のトーク。
 - `demo.html` — WebAssembly 版 mutsu のデモ（`?ex=hello|grammar|multi|concurrency`）。スライドから iframe で埋め込んでいる
 - `history-pass.svg` / `gen-history-graph.py` — Roast 通過ファイル数の推移グラフとその生成スクリプト
 - `jit-on-off.tsv` / `gen-jit-graph.py` / `jit-on-off.svg` — bench CI の同一コミット・同一 runner で測った JIT オン・オフの7回中央値と、そのグラフ
+- `bench-vs-rakudo.tsv` / `gen-bench-graph.py` / `bench-whole.svg` / `bench-section.svg` — Rakudo との実行時間比のグラフ。bench-data のスナップショットを TSV でコミットし、そこから SVG を描く
 - `fetch-mutsu-wasm.sh` — デモ用の wasm を取得するスクリプト
 - `add-english.py` — 各スライドに英語字幕 (`<div class="en">`) を付けるスクリプト。英訳はスクリプト内の辞書（スライドの最初の行がキー）。スライドを足したり直したりしたら辞書を更新して `python3 add-english.py` を再実行する（何度実行しても同じ結果になる）。未訳があると一覧を出して失敗する
 - `fit.js` — ページごとに文字サイズを自動調整して、本文と英語字幕が画面に収まるようにする（下限あり）。presen5 本体は触らずこのトークだけで読み込む
@@ -29,7 +30,17 @@ sh fetch-mutsu-wasm.sh            # demo.html の VERSION を取得
 npm から `@tokuhirom/mutsu` を取ってきて integrity を検証し、`vendor/mutsu-wasm/` に展開する（gitignore 済み）。
 バージョンを変えるときは `demo.html` の `const VERSION = ...` も合わせて書き換える。
 
-グラフを最新にする場合（mutsu リポジトリが隣にチェックアウトされている前提）:
+ベンチのグラフを最新の bench-data で描き直す場合:
+
+```sh
+git -C ../../../mutsu fetch origin bench-data
+git -C ../../../mutsu show FETCH_HEAD:bench-history.tsv > /tmp/bench-history.tsv
+python3 gen-bench-graph.py --from /tmp/bench-history.tsv --rakudo 2026.11
+```
+
+`--rakudo` で、そのバージョンの Rakudo と比べた計測だけを使う。「起動」スライドの ms も合わせて更新する。
+
+Roast のグラフを最新にする場合（mutsu リポジトリが隣にチェックアウトされている前提）:
 
 ```sh
 python3 gen-history-graph.py ../../../mutsu/HISTORY.tsv history-pass.svg

@@ -1,0 +1,14 @@
+# tokuhirom/mutsu bench-data, run 2026-11-27T04:47:22Z, commit 4345491bce9ae87d8fcef6d2404687af822c0943
+# rakudo: Welcome to Rakudo™ v2026.07.
+# 7 回の中央値。ratio = mutsu / rakudo（小さいほど mutsu が速い）
+benchmark	mutsu_s	rakudo_s	ratio
+bench-startup+jit	0.0058	0.1234	0.05
+bench-grammar-json-tiny+jit	0.0524	0.4267	0.12
+bench-mandelbrot+jit	0.0333	0.1685	0.20
+method-call+jit	0.0526	0.1749	0.30
+bench-fib+jit	0.1289	0.1961	0.66
+bench-grammar-json-tiny@section+jit	0.0098	0.0496	0.20
+bench-regex-match@section+jit	0.0227	0.1966	0.12
+bench-yaml-parse-big@section+jit	0.0158	0.0162	0.98
+bench-json-fast-spdx@section+jit	0.0282	0.0242	1.17
+bench-multi-dispatch@section+jit	0.1648	0.1167	1.41
