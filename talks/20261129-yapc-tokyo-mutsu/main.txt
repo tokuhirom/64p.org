@@ -817,8 +817,8 @@ Raku コミュニティのみなさんに感謝！
 <div class="en">Humans make the foundational calls, like GC and JIT</div>
 ----
 - 設計のトレードオフを変えると、起動はここまで縮む
-- (温まった後は Rakudo が速いところもまだたくさんある)
-<div class="en">Changing design trade-offs can shrink startup this much<br>(after warm-up, Rakudo is still faster in many places)</div>
+- (温まった後は Rakudo が速いところもまだある)
+<div class="en">Changing design trade-offs can shrink startup this much<br>(after warm-up, Rakudo is still faster in some places)</div>
 ----
 - OSS なら、積み上げの上に別の実装が生える
 - mutsu もフォークしてみてください
