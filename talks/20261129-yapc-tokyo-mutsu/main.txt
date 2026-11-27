@@ -719,15 +719,19 @@ WebAssembly 版をここで実行
 <div class="en">mutsu runs inside the browser<br>Let's try the WebAssembly build</div>
 ----
 <iframe src="demo.html?ex=hello" style="width:100%;height:82vh;border:0;"></iframe>
+<img class="print-only" src="demo-hello.png" alt="デモ（hello）の実行結果">
 <!-- iframe 内にフォーカスがある場合は、デモ内の「次のスライド」ボタンを使う -->
 ----
 <iframe src="demo.html?ex=grammar" style="width:100%;height:82vh;border:0;"></iframe>
+<img class="print-only" src="demo-grammar.png" alt="デモ（grammar）の実行結果">
 <!-- iframe 内にフォーカスがある場合は、デモ内の「次のスライド」ボタンを使う -->
 ----
 <iframe src="demo.html?ex=multi" style="width:100%;height:82vh;border:0;"></iframe>
+<img class="print-only" src="demo-multi.png" alt="デモ（multi）の実行結果">
 <!-- iframe 内にフォーカスがある場合は、デモ内の「次のスライド」ボタンを使う -->
 ----
 <iframe src="demo.html?ex=concurrency" style="width:100%;height:82vh;border:0;"></iframe>
+<img class="print-only" src="demo-concurrency.png" alt="デモ（concurrency）の実行結果">
 <!-- iframe 内にフォーカスがある場合は、デモ内の「次のスライド」ボタンを使う -->
 ----
 *そして

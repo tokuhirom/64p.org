@@ -41,7 +41,7 @@
     var availW = t.clientWidth;
 
     var min = minSize();
-    var media = t.querySelectorAll("iframe, img");
+    var media = t.querySelectorAll("iframe, img:not(.print-only)");
     if (media.length) {
       // 画像・デモの iframe があるページは文字サイズを固定し、メディアを残りの高さいっぱいにする
       t.style.fontSize = Math.max(min, Math.min(maxSize(), 0.6 * maxSize())) + "px";
