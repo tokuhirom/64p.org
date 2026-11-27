@@ -764,10 +764,10 @@ mutsu は、Rakudo の人たちが積み上げてきたものの上に乗っか�
 → これがなかったら、AI がいても絶対に作れなかった
 <div class="en">Roast: 20 years of tests since the Pugs days / Raku/doc / the design docs (Synopses)<br>Without these, even with AI, it could never have been built</div>
 ----
-挙動に迷ったら Rakudo が正解
+仕様は Roast。Roast に書いてないことは Rakudo に聞く
 → AI にも「わからなかったら raku -e で確かめろ」と指示してる
 <!-- mutsu AGENTS.md: "raku is the reference oracle" -->
-<div class="en">When in doubt, Rakudo is the answer<br>The AI is told: "if unsure, check with raku -e"</div>
+<div class="en">Roast is the spec; where Roast is silent, we ask Rakudo<br>The AI is told: "if unsure, check with raku -e"</div>
 ----
 Rakudo のコードもそのまま使わせてもらってる
 → `.DEPARSE` は Rakudo の RakuAST::Deparse をそのまま同梱

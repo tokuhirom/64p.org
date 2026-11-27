@@ -175,7 +175,7 @@ EN = {
 "*巨人の肩の上": "On the shoulders of giants",
 "mutsu は、Rakudo の人たちが積み上げてきたものの上に乗っかってる": "mutsu stands on what the Rakudo developers have built",
 "- Roast: Pugs の頃から20年分積み上げられてきたテスト": "Roast: 20 years of tests since the Pugs days / Raku/doc / the design docs (Synopses)<br>Without these, even with AI, it could never have been built",
-"挙動に迷ったら Rakudo が正解": "When in doubt, Rakudo is the answer<br>The AI is told: \"if unsure, check with raku -e\"",
+"仕様は Roast。Roast に書いてないことは Rakudo に聞く": "Roast is the spec; where Roast is silent, we ask Rakudo<br>The AI is told: \"if unsure, check with raku -e\"",
 "Rakudo のコードもそのまま使わせてもらってる": "We also use Rakudo's code as-is<br><code>.DEPARSE</code> ships Rakudo's RakuAST::Deparse verbatim<br>and the package manager is the real Zef",
 "これができるのは、Rakudo も Roast も doc も Zef も OSS だから": "This is possible because Rakudo, Roast, doc and Zef are open source<br>all under the Artistic License 2.0",
 "なので mutsu は、意図的にライセンスを Rakudo に合わせて Artistic License 2.0": "So mutsu deliberately uses the same Artistic License 2.0 as Rakudo<br>which should cause the fewest problems when bringing over Rakudo code",
