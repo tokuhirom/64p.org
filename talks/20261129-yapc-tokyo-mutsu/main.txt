@@ -35,9 +35,11 @@ Perl6 と呼ばれていたもの
 <div class="en">A 3-minute history lesson</div>
 ----
 <!-- https://gihyo.jp/dev/serial/01/perl-hackers-hub/003901 -->
-2000年にぶち上げられたプロジェクトが Perl6
+2000年7月、Larry Wall がぶち上げたプロジェクトが Perl6
+→ 年次講演 State of the Onion で発表
 実に26年経過しました。
-<div class="en">Perl 6 was announced in 2000.<br>That was 26 years ago.</div>
+<!-- 2000-07-19。Wikipedia "first announced on 19 July 2000" / perl.com の当時のレポート https://www.perl.com/pub/2000/07/perl6.html/ 。memo「歴史の裏取り」1 -->
+<div class="en">July 2000: Larry Wall announced Perl 6<br>in his State of the Onion talk<br>That was 26 years ago.</div>
 ----
 どんなことができるようになるのか
 <div class="en">What was it going to give us?</div>
