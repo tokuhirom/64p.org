@@ -294,7 +294,7 @@ https://github.com/tokuhirom/mutsu/blob/main/docs/rakupp-gap-survey.md
 
 ## 現状
 
-- ✅ ecosystem: 9月 41.2% → 11月 99.2%（分母は rakudo で通る gradable dist 1,335。除外15件。定義変更の影響もありそう → 聞かれたら正直に）
+- ✅ ecosystem: 9月 41% → 11月 100%（2026-11-27 集計、1,340/1,340、Rakudo 2026.11 で計測）。推移グラフ ecosystem-history.svg を追加。旧メモ: 9月 41.2% → 11月 99.2%（分母は rakudo で通る gradable dist 1,335。除外15件。定義変更の影響もありそう → 聞かれたら正直に）
 - ✅ batteries: Cro::HTTP, JSON::Fast, Text::CSV, YAMLish, DBIish(SQLite), OpenSSL など（modules/ に 42）
 - ✅ mzef（本物の Zef を同梱）、mise、Docker、WASM playground
 - 💤 Language Server（ADR-0065, AI エージェント向け）

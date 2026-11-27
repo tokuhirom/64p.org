@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" role="img" font-family="sans-serif">
+<title>ecosystem parity</title>
+<rect width="1280" height="720" fill="#fff"/>
+<text x="60" y="70" font-size="40" font-weight="700" fill="#1f2937">Rakudo で通るモジュールが、mutsu でも通る割合</text>
+<text x="62" y="112" font-size="22" fill="#5b6472">ecosystem の各 dist のテストを両方で実行（Rakudo で通る dist が分母）</text>
+<line x1="110" x2="1210" y1="630.0" y2="630.0" stroke="#e5e7eb"/><text x="96" y="637.0" font-size="20" fill="#5b6472" text-anchor="end">0%</text>
+<line x1="110" x2="1210" y1="534.0" y2="534.0" stroke="#e5e7eb"/><text x="96" y="541.0" font-size="20" fill="#5b6472" text-anchor="end">20%</text>
+<line x1="110" x2="1210" y1="438.0" y2="438.0" stroke="#e5e7eb"/><text x="96" y="445.0" font-size="20" fill="#5b6472" text-anchor="end">40%</text>
+<line x1="110" x2="1210" y1="342.0" y2="342.0" stroke="#e5e7eb"/><text x="96" y="349.0" font-size="20" fill="#5b6472" text-anchor="end">60%</text>
+<line x1="110" x2="1210" y1="246.0" y2="246.0" stroke="#e5e7eb"/><text x="96" y="253.0" font-size="20" fill="#5b6472" text-anchor="end">80%</text>
+<line x1="110" x2="1210" y1="150.0" y2="150.0" stroke="#e5e7eb"/><text x="96" y="157.0" font-size="20" fill="#5b6472" text-anchor="end">100%</text>
+<text x="395.7" y="664" font-size="20" fill="#5b6472" text-anchor="middle">10月</text>
+<text x="838.6" y="664" font-size="20" fill="#5b6472" text-anchor="middle">11月</text>
+<line x1="367.1" x2="367.1" y1="150" y2="630" stroke="#9ca3af" stroke-dasharray="6,6"/><text x="375.1" y="591.6" font-size="17" fill="#5b6472">Rakudo 2026.09 に更新</text>
+<line x1="1052.9" x2="1052.9" y1="150" y2="630" stroke="#9ca3af" stroke-dasharray="6,6"/><text x="1060.9" y="591.6" font-size="17" fill="#5b6472">Rakudo 2026.11 に更新</text>
+<polyline fill="none" stroke="#257de0" stroke-width="4" stroke-linejoin="round" points="110.0,432.7 124.3,420.7 138.6,420.7 152.9,415.9 167.1,411.1 181.4,391.9 195.7,383.8 210.0,379.9 224.3,373.7 238.6,365.5 252.9,355.4 267.1,347.8 281.4,341.0 295.7,336.2 310.0,325.7 324.3,315.1 338.6,306.0 367.1,296.4 381.4,298.3 410.0,279.6 424.3,249.4 438.6,246.0 467.1,247.4 481.4,240.7 495.7,235.0 510.0,230.6 524.3,216.7 538.6,212.9 567.1,210.5 581.4,210.0 595.7,208.1 610.0,207.6 624.3,211.0 638.6,207.6 667.1,213.4 681.4,228.2 695.7,220.1 710.0,213.4 724.3,213.4 738.6,213.4 767.1,217.7 795.7,209.0 810.0,197.5 824.3,197.0 838.6,190.3 852.9,190.8 867.1,192.7 881.4,186.0 895.7,175.4 910.0,175.4 924.3,164.9 938.6,162.5 952.9,163.9 981.4,160.1 995.7,156.7 1010.0,161.0 1024.3,155.8 1038.6,153.8 1052.9,155.8 1067.1,156.2 1081.4,156.2 1095.7,152.9 1110.0,154.3 1138.6,153.4 1152.9,154.8 1167.1,151.0 1181.4,150.0 1195.7,150.5 1210.0,150.0"/>
+<circle cx="110.0" cy="432.7" r="8" fill="#257de0"/><text x="124.0" y="440.7" font-size="30" font-weight="700" fill="#1f2937">41.1%</text>
+<circle cx="1210.0" cy="150.0" r="8" fill="#257de0"/><text x="1196.0" y="230.0" font-size="30" font-weight="700" fill="#1f2937" text-anchor="end">100%（1,340 / 1,340）</text>
+<text x="60" y="698" font-size="15" fill="#5b6472">出典: tokuhirom/mutsu ecosystem-data の ecosystem/history.tsv（2026-09-11〜2026-11-27、最新の集計 2026-11-27、Rakudo 2026.11）</text>
+</svg>
