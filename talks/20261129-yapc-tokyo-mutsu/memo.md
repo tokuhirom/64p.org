@@ -98,6 +98,11 @@
     - ネタ: rakupp の Roast 分母が 1,434 → 1,424 になった一因もこの11ファイルの削除
     - 💤 スライドからは削除（売り文句の「Perl5 の正規表現もそのまま使える」も含めて）
 
+16. **設計の歴史（RFC → Apocalypse → Exegesis → Synopsis）** — 2000年に誰でも出せる RFC を募集し 361 件。Larry が全部レビュー・分類して Apocalypse で回答（Programming Perl 第3版の章立てに対応）。Damian Conway の Exegesis が実例コードで解説。Synopsis が各 Apocalypse を要約し、後の変更も反映して正式な仕様になった。今の仕様は Roast で、Synopsis は歴史文書（2026-11-28 スライドに追加）
+    - https://www.oreilly.com/library/view/perl-6-essentials/0596004990/ch01s03.html
+    - https://www.perl.com/pub/2001/04/02/wall.html/ (Apocalypse 1, 2001-04-02)
+    - https://metacpan.org/pod/Perl6::Doc
+
 ## tokuhirom の発言・スタンス
 
 - ✅ Rakudo に貢献してきたコミッターが気を悪くしない内容にする（勝ち負けの言い方を避ける、原因は仮説と明言、感謝の節を入れる）
