@@ -5,7 +5,7 @@ tokuhirom
 </div>
 <div class="en">mutsu: Building a Raku Interpreter with a JIT in 2026</div>
 <!--
-40分の時間配分(目安)  全193枚・1枚およそ12秒。デモは3分見ておく
+40分の時間配分(目安)  全195枚・1枚およそ12秒。デモは3分見ておく
  0:00 昔話（Perl6/Raku の歴史）  3.5分 (20枚)
  3:30 なぜ作るのか・大AI時代  4.5分 (23枚)
  8:00 規模の数字  2.5分 (13枚)
