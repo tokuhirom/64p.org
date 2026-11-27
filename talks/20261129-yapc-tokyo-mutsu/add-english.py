@@ -9,7 +9,7 @@ EN = {
 "Raku はご存知？": "Do you know Raku?<br>It used to be called Perl 6",
 "*３分間昔話をします": "A 3-minute history lesson",
 "2005年に就職してから Perl5 を使いはじめたのですが": "I started using Perl 5 when I got my first job in 2005",
-"2000年にぶち上げられたプロジェクトが Perl6": "Perl 6 was announced in 2000.<br>That was 26 years ago.",
+"2000年7月、Larry Wall がぶち上げたプロジェクトが Perl6": "July 2000: Larry Wall announced Perl 6<br>in his State of the Onion talk<br>That was 26 years ago.",
 "どんなことができるようになるのか": "What was it going to give us?",
 "- Grammar": "Grammars / Concurrency / Interop with Perl 5 (CPAN modules) / Perl 5 regexes as-is / and more",
 "2001年、Parrot VM が作られることが発表されました": "2001: the Parrot VM is announced<br>(the name came from an April Fools' joke: Perl and Python merging!)",
