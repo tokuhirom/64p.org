@@ -9,6 +9,8 @@
       /* 英語話者向けの字幕。add-english.py が main.txt に入れる */
       #topics .en { position:fixed; left:0; right:0; bottom:0; padding:10px 24px 14px; font-size:24px; line-height:1.4; color:#555; background:rgba(245,245,245,.94); border-top:1px solid #ddd; text-align:center; font-weight:normal; font-family: "Helvetica Neue", Arial, sans-serif; }
       #topics .en code { font-size:100%; }
+      /* PDF（印刷）用: 字幕は本文の下に小さくグレーで */
+      .print_topics .en { display:block; margin-top:.8em; font-size:42%; line-height:1.4; color:#666; font-weight:normal; font-family: "Helvetica Neue", Arial, sans-serif; }
       /* 余白は文字サイズに比例させる（fit.js が文字サイズを縮めたときに余白だけ残らないように） */
       #topics ul li { margin-bottom: .3em; }
       #topics h3 { padding: .2em; }
