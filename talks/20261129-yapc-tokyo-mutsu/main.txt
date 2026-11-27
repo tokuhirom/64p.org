@@ -6,7 +6,7 @@ tokuhirom
 <div class="en">mutsu: Building a Raku Interpreter with a JIT in 2026</div>
 <!--
 40分の時間配分(目安)  全193枚・1枚およそ12秒。デモは3分見ておく
- 0:00 昔話（Perl6/Raku の歴史）  3.5分 (19枚)
+ 0:00 昔話（Perl6/Raku の歴史）  3.5分 (20枚)
  3:30 なぜ作るのか・大AI時代  4.5分 (23枚)
  8:00 規模の数字  2.5分 (13枚)
 10:30 KPI の話  2分 (11枚)
@@ -41,6 +41,13 @@ Perl6 と呼ばれていたもの
 → 実に26年経過しました。
 <!-- 2000-07-19。Wikipedia "first announced on 19 July 2000" / perl.com の当時のレポート https://www.perl.com/pub/2000/07/perl6.html/ 。memo「歴史の裏取り」1 -->
 <div class="en">July 2000: Larry Wall announced Perl 6<br>in his State of the Onion talk<br>That was 26 years ago.</div>
+----
+設計はコミュニティから
+→ 2000年、改善案 (RFC) を募集して 361 件集まる
+→ Larry が全部読んで分類し、Apocalypse (2001年〜) として回答
+→ Damian Conway の Exegesis がコード例で解説し、Synopsis が仕様をまとめた
+<!-- O'Reilly "Perl 6 Essentials" ch.1 (361 RFCs を Larry が分類), Apocalypse 1 は 2001-04-02 https://www.perl.com/pub/2001/04/02/wall.html/ 。Synopsis が後に正式な仕様になり、今は Roast が仕様。memo「歴史の裏取り」16 -->
+<div class="en">The design came from the community<br>2000: an open call for proposals (RFCs) drew 361 of them<br>Larry read and classified them all, and answered in the Apocalypses (from 2001)<br>Damian Conway's Exegeses explained them with code, and the Synopses summarized the spec</div>
 ----
 どんなことができるようになるのか
 <div class="en">What did it promise?</div>

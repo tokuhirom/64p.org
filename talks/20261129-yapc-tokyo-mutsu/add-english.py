@@ -9,6 +9,7 @@ EN = {
 "Raku はご存知？": "Do you know Raku?<br>It used to be called Perl 6",
 "*３分間昔話をします": "A 3-minute history lesson<br>(it was a long time ago, so forgive me if I get anything wrong)",
 "2000年7月、Larry Wall がぶち上げたプロジェクトが Perl6": "July 2000: Larry Wall announced Perl 6<br>in his State of the Onion talk<br>That was 26 years ago.",
+"設計はコミュニティから": "The design came from the community<br>2000: an open call for proposals (RFCs) drew 361 of them<br>Larry read and classified them all, and answered in the Apocalypses (from 2001)<br>Damian Conway's Exegeses explained them with code, and the Synopses summarized the spec",
 "どんなことができるようになるのか": "What did it promise?",
 "- Perl 6 の強力な正規表現（名前付き規則・キャプチャ・Grammar）": "Powerful regexes: named rules, captures, and grammars<br>Concurrency / Perl 5 interoperability, including CPAN modules",
 "正規表現で文法を組み立てる": "Compose named regex rules into a grammar<br>and read the captured key from the match",
