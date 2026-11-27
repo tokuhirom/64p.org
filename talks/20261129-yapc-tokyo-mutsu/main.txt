@@ -179,9 +179,10 @@ Raku には Roast があるから実装作れるのでは？
 <div class="en">So I decided to try<br>(February 2026)</div>
 ----
 いまだ完成していない。
-→ open な issue があと 200 くらいある
-<!-- 2026-11-22 時点で open issue 192 件。当日更新 -->
-<div class="en">It's still not finished.<br>About 200 open issues remain</div>
+→ 残っている issue は 70 くらい
+→ (ほかに性能改善のメモが 90 くらい。重複も多め)
+<!-- 2026-11-28 時点: open issue 167 件 = todo:perf 94 + それ以外 73。todo:perf は重複が多い。当日更新 -->
+<div class="en">It's still not finished.<br>About 70 open issues remain<br>(plus about 90 performance notes, many of them duplicates)</div>
 ----
 Roast があっても、テストだけで実装が完成するわけではない
 → AI のトークン、ビルド時間、CI の資源、開発時間が要る
@@ -747,9 +748,9 @@ mutsu 1.0.0 をリリースしました！！！
 最初の安定版です。
 <div class="en">The first stable release.</div>
 ----
-まぁ issue はまだ 200 くらいあるし、バグもあると思うけど。。
+まぁ issue はまだ 70 くらいあるし、バグもあると思うけど。。
 → 見つけたら issue ください
-<div class="en">There are still about 200 issues, and surely bugs...<br>If you find one, please file an issue</div>
+<div class="en">There are still about 70 open issues, and surely bugs...<br>If you find one, please file an issue</div>
 ----
 *巨人の肩の上
 <div class="en">On the shoulders of giants</div>
