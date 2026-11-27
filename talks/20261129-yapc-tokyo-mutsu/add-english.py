@@ -12,7 +12,7 @@ EN = {
 "どんなことができるようになるのか": "What did it promise?",
 "- Perl 6 の強力な正規表現（名前付き規則・キャプチャ・Grammar）": "Powerful regexes: named rules, captures, and grammars<br>Concurrency / Perl 5 interoperability, including CPAN modules",
 "正規表現で文法を組み立てる": "Compose named regex rules into a grammar<br>and read the captured key from the match",
-"2001年、Parrot VM が作られることが発表されました": "2001: the Parrot VM is announced<br>(the name came from an April Fools' joke: Perl and Python merging!)",
+"2001年4月1日、エイプリルフールのネタ「Perl と Python が合併して Parrot に！」": "April 1, 2001: an April Fools' joke announced Perl and Python merging into \"Parrot\"<br>The name was then adopted for the Perl 6 VM, Parrot",
 "Parrot は多言語 VM を目指してた": "Parrot aimed to be a VM for many languages<br>Perl, Python, Ruby...",
 "2005年 Pugs": "2005: Pugs<br>An implementation written in Haskell by Audrey Tang",
 "Pugs のために書かれたテストが Roast になった。": "The tests written for Pugs grew into Roast<br>The test suite became the spec",

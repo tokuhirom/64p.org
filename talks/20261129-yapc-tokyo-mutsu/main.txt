@@ -63,10 +63,10 @@ say ~Pair.parse("lang=Raku")&lt;key&gt;;  # lang
 <!-- https://docs.raku.org/language/grammars -->
 <div class="en">Compose named regex rules into a grammar<br>and read the captured key from the match</div>
 ----
-2001年、Parrot VM が作られることが発表されました
-→ 名前の由来はエイプリルフールのネタ (Perl と Python が合併！)
+2001年4月1日、エイプリルフールのネタ「Perl と Python が合併して Parrot に！」
+→ その名前を借りて、Perl 6 用の VM「Parrot」が作られることに
 <!-- memo 3 -->
-<div class="en">2001: the Parrot VM is announced<br>(the name came from an April Fools' joke: Perl and Python merging!)</div>
+<div class="en">April 1, 2001: an April Fools' joke announced Perl and Python merging into "Parrot"<br>The name was then adopted for the Perl 6 VM, Parrot</div>
 ----
 Parrot は多言語 VM を目指してた
 → Perl も Python も Ruby も動く！

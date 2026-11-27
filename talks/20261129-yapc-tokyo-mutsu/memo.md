@@ -47,7 +47,7 @@
    - https://github.com/rakudo/rakudo/blob/main/docs/announce/2015.12.md ("staying compatible with Perl 5 (via Inline::Perl5)")
    - https://github.com/niner/Inline-Perl5 ("Supports Perl 5 modules including XS modules")
    - https://github.com/Raku/old-design-docs/blob/master/S01-overview.pod
-3. **Parrot VM が作られることが発表された** — 2001年。名前は 2001-04-01 のエイプリルフールのジョーク（Perl と Python が合併）が由来で、実際の VM は 2001年9月に登場
+3. **Parrot VM が作られることが発表された** — 2001年。時系列はジョークが先（2001-04-01、Perl.com の記事 URL /2001/04/01/）、Parrot という名前は後から VM プロジェクトが採用（Wikipedia: "The name was later adopted by the Parrot project"）。スライドもこの順にした（2026-11-28）。名前は 2001-04-01 のエイプリルフールのジョーク（Perl と Python が合併）が由来で、実際の VM は 2001年9月に登場
    - https://en.wikipedia.org/wiki/Parrot_virtual_machine
    - https://www.perl.com/pub/2001/09/18/parrot.html/ ("destined to be the Perl 6 Virtual Machine")
    - https://developers.slashdot.org/story/01/09/12/133208/parrot-for-real
