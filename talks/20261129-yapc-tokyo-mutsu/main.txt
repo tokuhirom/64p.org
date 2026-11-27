@@ -794,7 +794,7 @@ OSS だと、こういう広がり方もする
 <div class="en">If you're interested,<br>fork it and build a better implementation<br>It would be fun to see it spread that way</div>
 ----
 Raku コミュニティのみなさんに感謝！
-<div class="en">Thank you, Raku community!</div>
+Thank you, Raku community!
 ----
 *まとめ
 <div class="en">Summary</div>
