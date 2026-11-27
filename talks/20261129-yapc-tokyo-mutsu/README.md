@@ -10,6 +10,7 @@ YAPC::Tokyo 2026 (2026-11-29) のトーク。
 - `history-pass.svg` / `gen-history-graph.py` — Roast 通過ファイル数の推移グラフとその生成スクリプト
 - `jit-on-off.tsv` / `gen-jit-graph.py` / `jit-on-off.svg` — bench CI の同一コミット・同一 runner で測った JIT オン・オフの7回中央値と、そのグラフ
 - `bench-vs-rakudo.tsv` / `gen-bench-graph.py` / `bench-whole.svg` / `bench-section.svg` — Rakudo との実行時間比のグラフ。bench-data のスナップショットを TSV でコミットし、そこから SVG を描く
+- `gen-demo-shots.js` / `demo-*.png` — PDF（印刷）用のデモの静止画。印刷では iframe の中身が出ないので、代わりにこの画像を出す。デモを変えたら `node gen-demo-shots.js` で撮り直す（先に fetch-mutsu-wasm.sh が必要）
 - `fetch-mutsu-wasm.sh` — デモ用の wasm を取得するスクリプト
 - `add-english.py` — 各スライドに英語字幕 (`<div class="en">`) を付けるスクリプト。英訳はスクリプト内の辞書（スライドの最初の行がキー）。スライドを足したり直したりしたら辞書を更新して `python3 add-english.py` を再実行する（何度実行しても同じ結果になる）。未訳があると一覧を出して失敗する
 - `fit.js` — ページごとに文字サイズを自動調整して、本文と英語字幕が画面に収まるようにする（下限あり）。presen5 本体は触らずこのトークだけで読み込む
