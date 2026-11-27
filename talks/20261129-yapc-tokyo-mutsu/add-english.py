@@ -209,7 +209,7 @@ EN = {
 "- KPI を設定して実装することが大事。": "Set KPIs to drive implementation (roast pass rate → ecosystem pass rate)<br>but KPIs get gamed",
 "- AI は大きな変更から逃げる": "AI escapes from big changes / doubt AI's \"impossible\" / turn every mistake into a rule",
 "- GC や JIT みたいな根っこの判断は人間がやる": "Humans make the foundational calls, like GC and JIT",
-"- 設計のトレードオフを変えると、起動はここまで縮む": "Changing design trade-offs can shrink startup this much<br>(after warm-up, Rakudo is still faster in many places)",
+"- 設計のトレードオフを変えると、起動はここまで縮む": "Changing design trade-offs can shrink startup this much<br>(after warm-up, Rakudo is still faster in some places)",
 "令和の今でも Raku の実装は作れる！": "You can still build a Raku implementation today!",
 "mutsu 1.0.0、使ってみてください": "Please try mutsu 1.0.0",
 "Enjoy!": "",
