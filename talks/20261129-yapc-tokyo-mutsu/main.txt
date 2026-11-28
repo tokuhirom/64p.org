@@ -5,7 +5,7 @@ tokuhirom
 </div>
 <div class="en">mutsu: Building a Raku Interpreter with a JIT in 2026</div>
 <!--
-40分の時間配分(目安)  全198枚・1枚およそ12秒。デモは3分見ておく
+40分の時間配分(目安)  全197枚・1枚およそ12秒。デモは3分見ておく
  0:00 昔話（Perl6/Raku の歴史）  3.5分 (20枚)
  3:30 なぜ作るのか・大AI時代  4.5分 (23枚)
  8:00 規模の数字  2.5分 (13枚)
@@ -251,11 +251,9 @@ AI に document を読ませて、どういう実装手順で実装していく�
 - issue 3,902
 - Rust のコード 約108万行
 - t/ のテストファイル 11,466
+- ADR(設計判断の記録) 236本
 <!-- repo created 2026-02-05。GitHub API, 2026-11-22。Rust 行数: find src -name '*.rs' | xargs cat | wc -l (2,975 files) -->
-<div class="en">How big is it now?<br>About 10 months since February 2026 / 33,457 commits / 14,851 merged pull requests (about 50 a day)<br>3,902 issues / about 1.08 million lines of Rust / 11,466 test files in t/</div>
-----
-ADR(設計判断の記録) 236本
-<div class="en">236 ADRs (architecture decision records)</div>
+<div class="en">How big is it now?<br>About 10 months since February 2026 / 33,457 commits / 14,851 merged pull requests (about 50 a day)<br>3,902 issues / about 1.08 million lines of Rust / 11,466 test files in t/<br>236 ADRs (architecture decision records)</div>
 ----
 ……どうしてこうなった？
 <div class="en">...how did this happen?</div>
