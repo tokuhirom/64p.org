@@ -40,7 +40,7 @@
 - 公式サイトの About: 小さな布片を縫い合わせて一つの大きな作品を作る技法のように、また異なるシステムを繋ぐグルー言語である Perl のスピリットのように、エンジニア一人ひとりの日々の営みを起点として、多様な技術や人々が織り合わされ、確かな絆を育む場を目指す
   - https://yapcjapan.org/2026tokyo/
   - https://gihyo.jp/article/2026/08/yapc-tokyo-2026
-- ✅ スライドに入れた: 規模の章「今回の YAPC のテーマは『パッチワーク』→ mutsu は 14,851 枚のパッチを縫い合わせてできている」、巨人の肩の上の最後「mutsu もパッチワーク」。ほかに Perl らしいキーワードとして「プログラマの三大美徳」と「TMTOWTDI → There's More Than One Way To Implement It」も追加（出典: https://perldoc.perl.org/perlglossary ）
+- ✅ スライドに入れた: 巨人の肩の上の最後「今回の YAPC のテーマは『パッチワーク』→ mutsu もパッチワーク…」（規模の章の「14,851 枚のパッチ」は不要とのことで削除）。ほかに Perl らしいキーワードとして「プログラマの三大美徳」と「TMTOWTDI → There's More Than One Way To Implement It」も追加（出典: https://perldoc.perl.org/perlglossary ）
 - （元の案）mutsu 自体がパッチワーク（Roast・doc・Rakudo の RakuAST::Deparse・Zef・同梱モジュールを縫い合わせ、14,851 個の PR（パッチ）で作った）
 
 ## 歴史の裏取り（2026-11-23 調査）
