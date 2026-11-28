@@ -273,6 +273,7 @@ https://github.com/tokuhirom/mutsu/blob/main/docs/rakupp-gap-survey.md
 
 ## これから（native kernels）
 
+- ✅ JIT の deoptimization は native kernels とは別に入れる予定（tokuhirom 談）。最初の JIT（ADR-0004）で入れなかったのは、当時はまだ時期じゃなかっただけ。native kernels は「deopt しない」ルールのまま（途中で戻らず最初からやり直す）なので、質問されたらこの違いを説明する
 - ✅ ADR-19288「Native kernels」（2026-11-28 採用）: 整数・浮動小数だけで閉じた sub / ループを Cranelift で型付きのネイティブコードにし、続行できなければ region を先頭から通常経路で再実行。ADR-0004 の「deopt しない」ルールは維持。Raku++ の IntKernel（v5.2.0 で fib −97%）を調べて決めた設計。fib/tak/mandelbrot/int-arith で Raku++ と命令数が 7〜20倍差
   - https://github.com/tokuhirom/mutsu/blob/main/docs/adr/19288-native-int-num-kernels.md
 
