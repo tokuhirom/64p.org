@@ -8,7 +8,7 @@ EN = {
 "今回の YAPC のテーマは「パッチワーク」": "This YAPC's theme is \"patchwork\"<br>mutsu is a patchwork too: stitched together from Roast, the docs, Rakudo's code, Zef and the bundled modules<br>possible because they are all open source under the same license",
 "There's More Than One Way To Do It": "",
 "プログラマの三大美徳 (Larry Wall)": "Larry Wall's three virtues of a programmer<br>Impatience: I can't wait 0.1 seconds for <code>raku -e ''</code><br>Laziness: let the AI write the code<br>Hubris: try to build a Raku implementation by myself",
-"mutsu - 令和の時代に JIT 搭載の Raku インタープリタを実装した話": "mutsu: Building a Raku Interpreter with a JIT in 2026",
+"mutsu - 令和の時代に JIT 搭載の Raku インタープリタを実装した話": "mutsu: Building a Raku Interpreter with a JIT in 2026<br>mutsu is pronounced /mɯtsɯ/ (\"MOO-tsoo\")",
 "Raku はご存知？": "Do you know Raku?<br>It used to be called Perl 6",
 "*３分間昔話をします": "A 3-minute history lesson<br>(it was a long time ago, so forgive me if I get anything wrong)",
 "2000年7月、Larry Wall がぶち上げたプロジェクトが Perl6": "July 2000: Larry Wall announced Perl 6<br>in his State of the Onion talk<br>That was 26 years ago.",
