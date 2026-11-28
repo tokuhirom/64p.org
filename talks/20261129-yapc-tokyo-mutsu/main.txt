@@ -5,7 +5,7 @@ tokuhirom
 </div>
 <div class="en">mutsu: Building a Raku Interpreter with a JIT in 2026</div>
 <!--
-40分の時間配分(目安)  全195枚・1枚およそ12秒。デモは3分見ておく
+40分の時間配分(目安)  全198枚・1枚およそ12秒。デモは3分見ておく
  0:00 昔話（Perl6/Raku の歴史）  3.5分 (20枚)
  3:30 なぜ作るのか・大AI時代  4.5分 (23枚)
  8:00 規模の数字  2.5分 (13枚)
@@ -757,6 +757,20 @@ mutsu 1.0.0 をリリースしました！！！
 まぁ issue はまだ 70 くらいあるし、バグもあると思うけど。。
 → 見つけたら issue ください
 <div class="en">There are still about 70 open issues, and surely bugs...<br>If you find one, please file an issue</div>
+----
+*これから
+<div class="en">What's next</div>
+----
+だいたい月1回リリース
+→ ecosystem 100% を保てた月だけ出す
+<!-- mutsu PLAN.md「Release cadence and gate」(2026-11-24): gate は dist parity 100%、前回から退行なし、release:A の issue なし -->
+<div class="en">A release about once a month<br>only in months when ecosystem parity stays at 100%</div>
+----
+- フロントエンドを RakuAST 中心に作り直す
+- もっと速く（Raku++ との差の調査で、起動時のページフォルト・メモリ確保・キャッシュミスが原因と分かった）
+- ecosystem のテストの実行時間も Rakudo 並みに
+<!-- PLAN.md §0 (RakuAST becomes the frontend IR), docs/rakupp-gap-survey.md, PLAN.md「Next cycle (December 2026)」3. Ecosystem wall time -->
+<div class="en">Rebuild the frontend around RakuAST<br>Get faster (comparing with Raku++ pointed at startup page faults, memory allocation and cache misses)<br>Bring ecosystem test-suite run times to Rakudo's level</div>
 ----
 *巨人の肩の上
 <div class="en">On the shoulders of giants</div>
