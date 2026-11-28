@@ -5,7 +5,7 @@ tokuhirom
 </div>
 <div class="en">mutsu: Building a Raku Interpreter with a JIT in 2026</div>
 <!--
-40分の時間配分(目安)  全203枚・1枚およそ12秒。デモは3分見ておく
+40分の時間配分(目安)  全204枚・1枚およそ12秒。デモは3分見ておく
  0:00 昔話（Perl6/Raku の歴史）  3.5分 (20枚)
  3:30 なぜ作るのか・大AI時代  4.5分 (23枚)
  8:00 規模の数字  2.5分 (13枚)
@@ -114,10 +114,18 @@ Rakudo は NQP と Raku で書かれていて、MoarVM の上で動く
 <div class="en">Rakudo is written in NQP and Raku, and runs on MoarVM</div>
 ----
 MoarVM - Register Machine
-- spesh (型で特化する最適化) と JIT を持ってる
+- レジスタマシンなので高速化できるらしい
 - そのぶん実装の難易度は上がるらしい
 <!-- memo「歴史の裏取り」11 -->
-<div class="en">MoarVM: a register machine<br>with spesh (type specialization) and a JIT<br>which makes it harder to implement, I hear</div>
+<div class="en">MoarVM: a register machine<br>which can make it faster, I hear<br>but harder to implement, I hear</div>
+----
+MoarVM の spesh
+→ 実行しながら、来る値の型を観察する
+→ 「ここはほぼ毎回 Int」なら、Int 決め打ちの速い版を作る
+→ 外れたら、普通の実行に戻る (deoptimization)
+→ 速い版は、さらに JIT で機械語に
+<!-- jnthn の設計メモ: 観察 (logging) → 特化 → ガード → 外れたら deopt。https://gist.github.com/jnthn/8ee6dc06edc7cd860059b87ffabb86b5 https://gist.github.com/jnthn/e95d41dbe418740f07e1fb277266a333 。moarvm.org: hot code を引数の型で特化し、x64 では JIT -->
+<div class="en">MoarVM's spesh<br>Watch the types of values while the code runs<br>If a spot almost always sees Int, build a fast version that assumes Int<br>If the guess is wrong, fall back to normal execution (deoptimization)<br>The fast version is then JIT-compiled to machine code</div>
 ----
 NQP (Not Quite Perl)
 - Rakudo を書くための小さな Raku
