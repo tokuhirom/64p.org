@@ -402,7 +402,7 @@
     // -------------------------------------------------------------------------
     
     document.addEventListener("DOMContentLoaded", function () {
-        fetch('main.txt')
+        fetch('main.txt', { cache: 'no-cache' }) // GitHub Pages は max-age=600 なので、更新がすぐ見えるよう毎回確認する
             .then(response => response.text())
             .then(text => {
                 try {
