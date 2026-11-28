@@ -5,7 +5,7 @@ tokuhirom
 </div>
 <div class="en">mutsu: Building a Raku Interpreter with a JIT in 2026</div>
 <!--
-40分の時間配分(目安)  全197枚・1枚およそ12秒。デモは3分見ておく
+40分の時間配分(目安)  全195枚・1枚およそ12秒。デモは3分見ておく
  0:00 昔話（Perl6/Raku の歴史）  3.5分 (20枚)
  3:30 なぜ作るのか・大AI時代  4.5分 (23枚)
  8:00 規模の数字  2.5分 (13枚)
@@ -425,21 +425,12 @@ AGENTS.md に "Refactor boldly" と書く
 <div class="en">Dodge #2: swap in a native implementation</div>
 ----
 JSON::Fast が動かない
-→ AI「nqp:: op が 50 個ぐらい足りないので、Rust でネイティブ実装しました！」
+→ AI「Rakudo の内部実装に依存していて実装が大変すぎるので、ネイティブコードにしました！」
 → ベンチが 1000 倍速くなりました！
-<div class="en">JSON::Fast didn't run<br>AI: "About 50 nqp:: ops are missing, so I reimplemented it natively in Rust!"<br>"The benchmark is 1000x faster!"</div>
+<div class="en">JSON::Fast didn't run<br>AI: "It depends on Rakudo internals and is way too hard to support, so I made it native code!"<br>"The benchmark is 1000x faster!"</div>
 ----
 ……それもう JSON::Fast じゃないよね？
 <div class="en">...but that's not JSON::Fast anymore, is it?</div>
-----
-ここで nqp:: op とは？
-→ Raku モジュールから呼ばれる低レベル操作
-→ JSON::Fast 以外のモジュールも使う共通部分
-<div class="en">What are nqp:: ops?<br>Low-level VM operations used inside Rakudo, and called directly by some modules<br>A shared layer used beyond JSON::Fast</div>
-----
-JSON::Fast が使う nqp:: op を 51 個洗い出した
-→ mutsu で動かなかったのは 9 個。残り 42 個は動いていた
-<div class="en">We listed the 51 nqp:: ops used by JSON::Fast<br>Only 9 failed in mutsu; the other 42 already worked</div>
 ----
 本物のモジュールをそのまま動かす。
 ネイティブで置き換えるのは禁止。
