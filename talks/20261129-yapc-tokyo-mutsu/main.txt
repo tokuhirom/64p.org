@@ -214,10 +214,9 @@ Roast は、実装を進めるための出発点
 <div class="en">The first goal:<br>pass all of Roast</div>
 ----
 AI に document を読ませて、どういう実装手順で実装していくかを考える。
-- Language Core
+- Basic types / Operators
 - Object System
 - Regex and Grammars
-- Advanced Features
 - Bytecode VM
 - Optimization
 - GC
