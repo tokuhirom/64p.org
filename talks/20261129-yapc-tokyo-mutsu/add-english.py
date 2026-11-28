@@ -52,7 +52,7 @@ EN = {
 "AI に document を読ませて、どういう実装手順で実装していくかを考える。": "Had the AI read the docs and plan the implementation steps",
 "良さそう！！！": "Looks good!!!",
 "ゴリゴリ実装していく。。": "And then: lots and lots of implementing...",
-"*ちなみに今どれぐらいの規模かというと": "How big is it now?",
+"*ちなみに今どれぐらいの規模かというと": "How big is it now?<br>About 10 months since February 2026 / 33,457 commits / 14,851 merged pull requests (about 50 a day)<br>3,902 issues / about 1.08 million lines of Rust / 11,466 test files in t/",
 "2026年2月から約10ヶ月": "About 10 months since February 2026",
 "コミット数 33,457": "33,457 commits",
 "マージした PR 14,851": "14,851 merged pull requests<br>about 50 per day",
