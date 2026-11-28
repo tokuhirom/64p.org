@@ -636,6 +636,11 @@ Rakudo Weekly → Raku Weekly に改名
 "there are now three viable implementations of the Raku Programming Language, of which “Rakudo” is only one."
 <!-- Elizabeth Mattijsen, Raku Weekly News 2026.40。要旨: Raku の実用的な実装は今3つあり、Rakudo はそのうちの1つ -->
 ----
+There's More Than One Way To Do It
+→ There's More Than One Way To **Implement** It
+→ Rakudo、Raku++、mutsu
+<!-- TMTOWTDI は Perl のモットー (https://perldoc.perl.org/perlglossary "the Perl Motto")。YAPC::Tokyo 2026 公式サイトの About にも出てくる -->
+----
 Raku++ と Mutsu
 → 名前が出てる！！！
 <div class="en">Raku++ and Mutsu<br>are mentioned by name!!!</div>

@@ -5,6 +5,7 @@
 import re, sys
 
 EN = {
+"There's More Than One Way To Do It": "",
 "プログラマの三大美徳 (Larry Wall)": "Larry Wall's three virtues of a programmer<br>Impatience: I can't wait 0.1 seconds for <code>raku -e ''</code><br>Laziness: let the AI write the code<br>Hubris: try to build a Raku implementation by myself",
 "mutsu - 令和の時代に JIT 搭載の Raku インタープリタを実装した話": "mutsu: Building a Raku Interpreter with a JIT in 2026",
 "Raku はご存知？": "Do you know Raku?<br>It used to be called Perl 6",
