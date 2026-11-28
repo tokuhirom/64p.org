@@ -177,6 +177,7 @@ EN = {
 "だいたい月1回リリース": "A release about once a month<br>only in months when ecosystem parity stays at 100%",
 "- バグを潰す（残り issue 70 くらい）": "Fix bugs (about 70 open issues)<br>Keep following Rakudo as it evolves<br>Rebuild the frontend around RakuAST",
 "- JIT に deoptimization を入れる": "Add deoptimization to the JIT<br>Today it can't speculate on types and fall back when the guess is wrong<br>Get faster (comparing with Raku++ pointed at startup page faults, memory allocation and cache misses)<br>Bring ecosystem test-suite run times to Rakudo's level",
+"native kernels (ADR-19288、11/28 に採用)": "Native kernels (ADR-19288, accepted on Nov 28)<br>Compile functions and loops that only use integers and floats into typed native code<br>If a kernel can't continue, rerun it from the start on the normal path<br>Raku++'s integer kernels gave us the idea",
 "*巨人の肩の上": "On the shoulders of giants",
 "mutsu は、Rakudo の人たちが積み上げてきたものの上に乗っかってる": "mutsu stands on what the Rakudo developers have built",
 "- Roast: Pugs の頃から20年分積み上げられてきたテスト": "Roast: 20 years of tests since the Pugs days / Raku/doc / the design docs (Synopses)<br>Without these, even with AI, it could never have been built",
