@@ -28,6 +28,8 @@
             } else {
                 this.page = Number(location.hash.substr(1)) || 0;
             }
+            // スライドを減らした後の古いリンクなど、範囲外のページ番号は端に寄せる
+            this.page = Math.max(0, Math.min(Math.floor(this.page), this.sections.length - 1));
         },
         init_sections: function() {
             this.sections = this.data.split('\n----\n');
@@ -327,7 +329,12 @@
         // ブラウザの戻る/進むや手動での #N 変更に追従する
         window.addEventListener("hashchange", function () {
             var p = Number(location.hash.substr(1));
-            if (!Presen.sections || isNaN(p) || p === Presen.page || p < 0 || p >= Presen.sections.length) {
+            if (!Presen.sections || isNaN(p)) {
+                return;
+            }
+            p = Math.max(0, Math.min(Math.floor(p), Presen.sections.length - 1));
+            if (p === Presen.page) {
+                location.hash = "#" + p; // 範囲外の番号を打ち込まれたら表示中のページに戻す
                 return;
             }
             Presen.page = p;
