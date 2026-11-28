@@ -5,7 +5,7 @@ tokuhirom
 </div>
 <div class="en">mutsu: Building a Raku Interpreter with a JIT in 2026</div>
 <!--
-40分の時間配分(目安)  全199枚・1枚およそ12秒。デモは3分見ておく
+40分の時間配分(目安)  全200枚・1枚およそ12秒。デモは3分見ておく
  0:00 昔話（Perl6/Raku の歴史）  3.5分 (20枚)
  3:30 なぜ作るのか・大AI時代  4.5分 (23枚)
  8:00 規模の数字  2.5分 (13枚)
@@ -778,6 +778,13 @@ mutsu 1.0.0 をリリースしました！！！
 - ecosystem のテストの実行時間も Rakudo 並みに
 <!-- mutsu ADR-0004 §2.3: 今の JIT は guard/deopt/OSR exit を持たない（コンパイルできるかを静的に決めて、できない関数は丸ごと除外）。docs/rakupp-gap-survey.md、PLAN.md「Next cycle (December 2026)」3. Ecosystem wall time -->
 <div class="en">Add deoptimization to the JIT<br>Today it can't speculate on types and fall back when the guess is wrong<br>Get faster (comparing with Raku++ pointed at startup page faults, memory allocation and cache misses)<br>Bring ecosystem test-suite run times to Rakudo's level</div>
+----
+native kernels (ADR-19288、11/28 に採用)
+→ 整数・浮動小数だけで完結する関数やループを、型付きのネイティブコードにする
+→ 続けられなくなったら、最初から普通の経路でやり直す
+→ Raku++ の integer kernel がヒント
+<!-- mutsu docs/adr/19288-native-int-num-kernels.md: Accepted 2026-11-28。closed int/num regions を Cranelift で型付きに lowering、bail したら region を先頭から generic path で再実行 (D4)。ADR-0004 の no deopt ルールは維持。rakupp の src/IntKernel.cpp (CHANGELOG v5.2.0 "fib −97%") を調べた上での設計。対象: fib/tak/mandelbrot/int-arith など rakupp と 7〜20倍の命令数差がある行 -->
+<div class="en">Native kernels (ADR-19288, accepted on Nov 28)<br>Compile functions and loops that only use integers and floats into typed native code<br>If a kernel can't continue, rerun it from the start on the normal path<br>Raku++'s integer kernels gave us the idea</div>
 ----
 *巨人の肩の上
 <div class="en">On the shoulders of giants</div>
