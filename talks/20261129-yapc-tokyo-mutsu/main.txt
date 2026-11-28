@@ -5,7 +5,7 @@ tokuhirom
 </div>
 <div class="en">mutsu: Building a Raku Interpreter with a JIT in 2026</div>
 <!--
-40分の時間配分(目安)  全190枚・1枚およそ12秒。デモは3分見ておく
+40分の時間配分(目安)  全189枚・1枚およそ12秒。デモは3分見ておく
  0:00 昔話（Perl6/Raku の歴史）  3.5分 (20枚)
  3:30 なぜ作るのか・大AI時代  4.5分 (23枚)
  8:00 規模の数字  2.5分 (13枚)
@@ -646,14 +646,10 @@ ecosystem
 → 各 dist のテストを rakudo と mutsu で両方走らせて比べる
 <div class="en">Ecosystem:<br>each distribution's tests run on both Rakudo and mutsu</div>
 ----
-9月 41%
-→ 11月 <span style="font-size:250%; font-weight:bold; color:#d4380d; white-space:nowrap;">100%!!!</span>
-<!-- ecosystem-data summary.json (2026-11-27): dist parity 100.0% (1,340/1,340)、Rakudo 2026.11 で計測。分母は Rakudo で通る dist。範囲外 (exclude.txt) 14 dist、accepted divergence 14 ファイルは KPI の外 (ADR-0130) -->
-<div class="en">September 41% → November 100%!!!<br>(of the 1,340 distributions whose tests pass on Rakudo)</div>
-----
 <img src="ecosystem-history.svg" style="max-width:95%; max-height:80vh;">
+<!-- ecosystem-data summary.json (2026-11-27): dist parity 100.0% (1,340/1,340)、Rakudo 2026.11 で計測。分母は Rakudo で通る dist。範囲外 (exclude.txt) 14 dist、accepted divergence 14 ファイルは KPI の外 (ADR-0130) -->
 <!-- gen-eco-graph.py が ecosystem-history.tsv / ecosystem-summary.json から描く。点線は比較対象の Rakudo を上げて分母を取り直したところ -->
-<div class="en">Share of distributions that pass on Rakudo and also pass on mutsu</div>
+<div class="en">Share of distributions that pass on Rakudo and also pass on mutsu<br>September 41% → November 100% (1,340 / 1,340)</div>
 ----
 batteries included にしたい
 → Raku 版の bun みたいなやつ
