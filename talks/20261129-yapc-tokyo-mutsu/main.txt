@@ -5,7 +5,7 @@ tokuhirom
 </div>
 <div class="en">mutsu: Building a Raku Interpreter with a JIT in 2026</div>
 <!--
-40分の時間配分(目安)  全204枚・1枚およそ12秒。デモは3分見ておく
+40分の時間配分(目安)  全203枚・1枚およそ12秒。デモは3分見ておく
  0:00 昔話（Perl6/Raku の歴史）  3.5分 (20枚)
  3:30 なぜ作るのか・大AI時代  4.5分 (23枚)
  8:00 規模の数字  2.5分 (13枚)
@@ -250,11 +250,6 @@ AI に document を読ませて、どういう実装手順で実装していく�
 マージした PR 14,851
 → 1日 50 PR ぐらい
 <div class="en">14,851 merged pull requests<br>about 50 per day</div>
-----
-今回の YAPC のテーマは「パッチワーク」
-→ mutsu は 14,851 枚のパッチを縫い合わせてできている
-<!-- YAPC::Tokyo 2026 のテーマ https://yapcjapan.org/2026tokyo/ 。PR 数は 2026-11-22 時点 -->
-<div class="en">This YAPC's theme is "patchwork"<br>mutsu is stitched together from 14,851 patches</div>
 ----
 issue 3,902
 <div class="en">3,902 issues</div>
@@ -848,10 +843,11 @@ OSS だと、こういう広がり方もする
 → そういう広がり方をしたら面白い
 <div class="en">If you're interested,<br>fork it and build a better implementation<br>It would be fun to see it spread that way</div>
 ----
-mutsu もパッチワーク
-→ Roast、doc、Rakudo のコード、Zef、同梱モジュールを縫い合わせてできている
+今回の YAPC のテーマは「パッチワーク」
+→ mutsu もパッチワーク。Roast、doc、Rakudo のコード、Zef、同梱モジュールを縫い合わせてできている
 → 縫い合わせられたのは、どれも OSS で同じライセンスだったから
-<div class="en">mutsu is a patchwork too<br>stitched together from Roast, the docs, Rakudo's code, Zef and the bundled modules<br>possible because they are all open source under the same license</div>
+<!-- YAPC::Tokyo 2026 のテーマ https://yapcjapan.org/2026tokyo/ -->
+<div class="en">This YAPC's theme is "patchwork"<br>mutsu is a patchwork too: stitched together from Roast, the docs, Rakudo's code, Zef and the bundled modules<br>possible because they are all open source under the same license</div>
 ----
 Larry と Raku コミュニティのみなさんに感謝！
 Thanks, Larry! Thanks, Raku community!
