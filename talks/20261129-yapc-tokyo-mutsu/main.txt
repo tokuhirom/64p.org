@@ -166,6 +166,13 @@ Rust で全部書き直して JIT を載せたら
 → 一人で書くのはさすがに無理
 <div class="en">But Raku is a big language...<br>Too much for one person</div>
 ----
+プログラマの三大美徳 (Larry Wall)
+- 短気: `raku -e ''` の 0.1 秒が待てない
+- 怠惰: 自分では書かずに AI に書かせる
+- 傲慢: Raku の実装を一人で作ろうとする
+<!-- 三大美徳 (laziness, impatience, hubris) は Programming Perl 初版が初出。https://perldoc.perl.org/perlglossary の hubris: "the third great virtue of a programmer" -->
+<div class="en">Larry Wall's three virtues of a programmer<br>Impatience: I can't wait 0.1 seconds for <code>raku -e ''</code><br>Laziness: let the AI write the code<br>Hubris: try to build a Raku implementation by myself</div>
+----
 ときは大AI時代
 <div class="en">Enter the age of AI</div>
 ----
