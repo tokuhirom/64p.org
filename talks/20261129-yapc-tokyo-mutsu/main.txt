@@ -647,7 +647,7 @@ ecosystem
 <div class="en">Ecosystem:<br>each distribution's tests run on both Rakudo and mutsu</div>
 ----
 9月 41%
-→ 11月 100%！！！
+→ 11月 <span style="font-size:250%; font-weight:bold; color:#d4380d; white-space:nowrap;">100%!!!</span>
 <!-- ecosystem-data summary.json (2026-11-27): dist parity 100.0% (1,340/1,340)、Rakudo 2026.11 で計測。分母は Rakudo で通る dist。範囲外 (exclude.txt) 14 dist、accepted divergence 14 ファイルは KPI の外 (ADR-0130) -->
 <div class="en">September 41% → November 100%!!!<br>(of the 1,340 distributions whose tests pass on Rakudo)</div>
 ----
