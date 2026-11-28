@@ -1,9 +1,10 @@
 mutsu - 令和の時代に JIT 搭載の Raku インタープリタを実装した話
+<div style="font-size:60%; font-weight:normal;">mutsu /mɯtsɯ/（ムツ）</div>
 <div style="text-align:right; font-size: 50%;">
 YAPC::Tokyo 2026
 tokuhirom
 </div>
-<div class="en">mutsu: Building a Raku Interpreter with a JIT in 2026</div>
+<div class="en">mutsu: Building a Raku Interpreter with a JIT in 2026<br>mutsu is pronounced /mɯtsɯ/ ("MOO-tsoo")</div>
 <!--
 40分の時間配分(目安)  全189枚・1枚およそ12秒。デモは3分見ておく
  0:00 昔話（Perl6/Raku の歴史）  3.5分 (20枚)
