@@ -221,7 +221,7 @@
 ## GC / NaN-boxing / JIT
 
 - ✅ GC: 非移動の参照カウント + cycle collector（ADR-0001, 6/27）。7/5 デフォルト on
-- ✅ NaN-boxing: Value 48 → 8 バイト（7/12）。エラー 708 箇所、cargo fix で 558、残り 150 を AI 4 体で並列
+- 💤 NaN-boxing: Value 48 → 8 バイト（7/12）。思い入れが薄いのでスライドから削除。エラー 708 箇所、cargo fix で 558、残り 150 を AI 4 体で並列
 - ✅ JIT: Cranelift、よく呼ばれる関数を丸ごとネイティブコードに（method JIT。tracing / OSR は用語ごとスライドから外した）。実装開始からデフォルト on まで 2 日。7/13 デフォルト on
 - ✅ JIT on/off グラフ（jit-on-off.svg）: fib 65%、数値演算 62%、日時の計算 48%、メソッド呼び出し 101%（bench-data 9df948ba0, 2026-11-23）
 - 💤 命令数 ≠ 時間（SetSourceLine が 21% → 素朴に消すと 7.8% 遅く、観測点だけにして 3.4% 改善）。唐突なので削除
