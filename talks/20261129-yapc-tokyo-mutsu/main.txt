@@ -637,8 +637,8 @@ AI がやらかしたら、全部ルールとして書き残す
 <div class="en">Where things stand</div>
 ----
 Roast (spectest.data) 1,425 / 1,425 ファイル
-→ 100%！！！
-(Rakudo が実行するリストで、Rakudo と同じく #?rakudo の skip/todo を適用した数え方)
+→ <span style="font-size:250%; font-weight:bold; color:#d4380d; white-space:nowrap;">100%!!!</span>
+<div style="font-size:45%; color:#666; font-weight:normal;">(Rakudo が実行するリストで、Rakudo と同じく #?rakudo の skip/todo を適用した数え方)</div>
 <!-- mutsu scripts/roast-compat.py count (PR #19043, 2026-11-23)。当日 HISTORY.tsv の spec_pass 列で実測値を確認 -->
 <div class="en">Roast (spectest.data): 1,425 / 1,425 files, 100%!!!<br>(Rakudo's run list, with the same #?rakudo skip/todo applied)</div>
 ----
