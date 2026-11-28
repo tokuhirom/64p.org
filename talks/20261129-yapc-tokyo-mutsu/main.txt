@@ -6,7 +6,7 @@ tokuhirom
 </div>
 <div class="en">mutsu: Building a Raku Interpreter with a JIT in 2026<br>mutsu is pronounced /mɯtsɯ/ ("MOO-tsoo")</div>
 <!--
-40分の時間配分(目安)  全189枚・1枚およそ12秒。デモは3分見ておく
+40分の時間配分(目安)  全190枚・1枚およそ12秒。デモは3分見ておく
  0:00 昔話（Perl6/Raku の歴史）  3.5分 (20枚)
  3:30 なぜ作るのか・大AI時代  4.5分 (23枚)
  8:00 規模の数字  2.5分 (13枚)
@@ -27,6 +27,16 @@ tokuhirom
 数字は主に 2026-11-22 時点。JIT 比較グラフは 2026-11-23 時点。
 当日朝に README / HISTORY.tsv / bench-data で更新すること。
 -->
+----
+*Agenda
+- Raku の昔話
+- なぜ作るのか・いまの規模
+- どうやって作ったか（KPI・パーサー・バイトコード・GC・JIT）
+- ベンチマーク
+- もう一つの実装と、Raku の世界の変化
+- いまどうなってるか・デモ・これから
+- まとめ
+<div class="en">Agenda<br>A bit of Raku history / Why build it, and how big it is now / How it was built (KPIs, parser, bytecode, GC, JIT)<br>Benchmarks / Another implementation, and how the Raku world changed / Where things stand, demo, what's next / Wrap-up</div>
 ----
 Raku はご存知？
 Perl6 と呼ばれていたもの
